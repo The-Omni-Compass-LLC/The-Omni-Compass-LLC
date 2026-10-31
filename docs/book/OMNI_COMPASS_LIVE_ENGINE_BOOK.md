@@ -36,8 +36,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
-work for the same bill.
+faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
+every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
 
 **Where the page shows it.** The live benchmark engine page plays every benchmark back from its own SHA-256-checked files, native
 beside Omni-Compass on top of native, lane by lane, and runs the engine's own runs in the page: the Python's seeded runs, and
@@ -903,8 +903,8 @@ while it answers with no series yet or a round had no answer in time, a red octa
 waits to be wired. A wired slot lights its own row on the **Auxiliary Input Board** under the monitor wall (`#auxBoard`): one
 tile a gauge, its value, its readings since it was wired and its reading. The slot files each reading under the arm the system
 ran in: where the system serves its control panel's own series (`omni_control_mode` at autopilot, `omni_control_governor_up`,
-`omni_control_master_switch_on`, `tools/omni_control.py`), from those; where only the exporter's master switch answers and reads
-0, native; otherwise the arm the slot declares, switched by the reader when the system is switched. Changing a wired slot's
+`omni_control_master_switch_on`, `tools/omni_control.py`), from those; otherwise the arm the slot declares, switched by the reader
+when the system is switched (never the exporter's `omni_master_switch`, which drops to 0 at the governor's first stop and stays there). Changing a wired slot's
 address, query or native unwires it, so no window holds two systems' readings. Once each window holds four readings, each gauge
 is read by the key on the two windows' means (the 0.5% floor; work up GAIN, time waited or failed down GAIN, a resource down a cut
 and GAIN, up power given; the requests for each dollar up GAIN, down power given): one run of the reader's own system, never a
@@ -917,7 +917,7 @@ its top, over the page's own drawing, each of their breakers shows it, and the o
 records. A banner over the board names the slot until *The wall back to this page's engine* is pressed, the fuse box's own
 *Disconnect* is pressed or the connection fails. *Beside a record* sets the slot beside one of the repository's real records
 only, a standing three-run table of live software (class L) or the GPU card's metered run (class P), the native's own records
-first; our own models (class S) are never offered, and a row a record itself marks a declared model says so in its gauge. Every
+first; no model run (class S) is ever offered, and a row a live record itself works out from a declared model says so in its gauge. Every
 row of the record is shown, LOSS rows included, with its counts by word and its engine; the record ran on its own engine and the
 governor installed today on the engine that stands, so the two are never read as one engine. The reader's system and the record
 are two systems set side by side, neither a result of the other. The page writes nothing to the reader's system: the
@@ -3841,7 +3841,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-10-31 21:12 UTC on omni-v23 (digest c96ea4105d8747db) from commit 541d8e9d6fb5.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-10-31 23:08 UTC on omni-v23 (digest c96ea4105d8747db) from commit 11ad40c088f7.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.
@@ -5325,7 +5325,7 @@ Green, GAINING: low in its band with room to climb, or a GAIN. Dark, AWAITING: t
 
 **1 Control Panel**
 
-Fuse Box. The first row is the master switches: each acts on the whole page at once, through the same code as the console and the dock, both sides alike (the kill switch hands everything back to native; the dial, the body and the time). Under it, seven tabs: Drive (the plant's conditions and faults, the heartbeat, the profile with its actuation, its contract and each route's bill), Mechanism Knobs (the engine's own constants, one group at a time), Scenarios and Injection Grid, Monitor Breakers (one per monitor: its light and word, green GAINING, yellow STEADY, red REDLINING, red OVER THE LINE; ON runs it live, REST stops its drawing; a way to it), Prometheus Metrics (the live model as a Prometheus endpoint, the same series section L.11 exposes), Commands (the request a running governor would take for each press), Auxiliary Input (ten slots, each waiting to be wired to an organism of your own: its Prometheus, the native it runs, Omni-Compass on top or not; a wired slot lights its own row on the board under the wall, and one press flips the wall's monitors that carry a Prometheus query to it; it is set beside the repository's real records only, never a model) and All Tabs (the whole panel at once). Every switch is logged with its decision; Back to the factory tune puts all of it back.
+Fuse Box. The first row is the master switches: each acts on the whole page at once, through the same code as the console and the dock, both sides alike (the kill switch hands everything back to native; the dial, the body and the time). Under it, seven tabs: Drive (the plant's conditions and faults, the heartbeat, the profile with its actuation, its contract and each route's bill), Mechanism Knobs (the engine's own constants, one group at a time), Scenarios and Injection Grid, Monitor Breakers (one per monitor: its light and word, green GAINING, yellow STEADY, red REDLINING, red OVER THE LINE; ON runs it live, REST stops its drawing; a way to it), Prometheus Metrics (the live model as a Prometheus endpoint, the same series section L.11 exposes), Commands (the request a running governor would take for each press), Auxiliary Input (ten slots, each waiting to be wired to an organism of your own: its Prometheus, the native it runs, Omni-Compass on top or not; a wired slot lights its own row on the board under the wall, and one press flips the wall's monitors that carry a Prometheus query to it; it is set beside the repository's real records only, never a model run) and All Tabs (the whole panel at once). Every switch is logged with its decision; Back to the factory tune puts all of it back.
 
 Mechanism Knobs. Not the plant's conditions of the Drive tab: these turn the engine's own equations while it runs. Each knob is a constant of the brain (omnicompass/core.py), the compass law (omnicompass/compass_law.py), the governor's law (omnicompass/adapter.py, nervous_system.py), Omni-Compass's push, lift-off and tune-down on each muscle, the model's native controller, or one muscle's body. Turned, the next decision of the live stress-test model is computed with it, on Omni-Compass's side; native's controller knobs move every native controller, the one under Omni-Compass on native too. The harness replays recorded positions, so turning a knob moves the live benchmark engine to the model. A knob turned from the factory turns violet; ↺ puts that one back; Back to the factory tune puts every one back. The monitors (the strip, the rings, the phase plane, the brain's state, the status board) show the mechanism of action as it changes.
 
