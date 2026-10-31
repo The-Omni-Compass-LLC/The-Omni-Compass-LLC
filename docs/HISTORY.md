@@ -146,7 +146,7 @@ compass with the same work sent to both:
 swings, energy equal or lower, and not one pod left without a machine. Machines: up to 2% fewer. Omni gives a machine
 back only when a paired trial shows the service no slower without it, and on these clusters one machine fewer made
 requests 30-45% slower in most trials, so it kept them and spent them on speed and work (earlier engines without that
-check parked 29-36%: `docs/history/`). All of it together, real machines only: **the Omni index +12.9%**
+check parked 29-36%: `docs/history/`). All of it together, real software on real computers (the software end, not bare metal and not the chip): **the Omni index +12.9%**
 (`results/OMNI_INDEX.md`).
 
 **Omni v1** (`docs/OMNI_V1.md`): the engine is frozen and fingerprinted (`OMNI_V1.json`), and every test above runs

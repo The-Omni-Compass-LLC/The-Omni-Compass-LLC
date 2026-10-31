@@ -15,8 +15,9 @@ No outside party has reviewed or approved these results.
 
 **The main engine** is the engine that stands (omni-v23, `OMNI_V23.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
-every 60 s with the fast checks every 5 s; the compass law at the max on a cluster of one's own (its balance point 0.3) and at
-the tune-down in a cloud (0.4, the machines alone, a bill never bigger than native's); the verdict's 2% allowance on a
+every 60 s with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
+a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds
+ran until then; in a cloud the bill is judged beside the work, a tune whose bill rises for the same work not admissible); the verdict's 2% allowance on a
 give-back trial of 20 minutes; the cruise wait of 120 s, never under two readings; every muscle on its own card where one was
 found (`realms/muscle_cards_v5.csv`) and the engine's setting for the rest. **Every published benchmark result is this one
 engine at this one tune**, on the systems, loads and harness that benchmark names, native against Omni-Compass on top of native.
@@ -97,8 +98,9 @@ LOSS on none.
 `tools/tune_study.py` runs every tune of a declared grid on the model's plant that moves every 5 s (`tools/model_gate.py`, whose
 worker passes any of the governor's own arguments through `--ctl`), keeps every job's reading so a stopped search resumes,
 and applies the rule of section 2 in `judge()`: `admissible`, `dominates_main`, the rank by F, and `stands`. Its tests hold the
-rule on readings built for the purpose: a tune with any LOSS against native is not admissible; in a cloud a bigger bill is
-not admissible; a tune with a service GAIN and no LOSS dominates, power given beside it; the main tune stands when nothing
+rule on readings built for the purpose: a tune with any LOSS against native is not admissible; in a cloud a bigger bill for
+the same work is not admissible (the cloud's judged number is the work per dollar, and on the model's plant the work is fixed by
+its own load, so a bigger bill is a smaller work per dollar); a tune with a service GAIN and no LOSS dominates, power given beside it; the main tune stands when nothing
 dominates it.
 
 The same rule already chose the part of the factory tune that is set muscle by muscle. `tools/tune_cards.py` searched each

@@ -8,8 +8,8 @@ This connects GitHub to an Amazon Web Services (AWS) account so two workflows ca
 
 - **`eks-metered`**: a real Amazon Elastic Kubernetes Service cluster, native Kubernetes (with its own cluster autoscaler)
   against the same with Omni-Compass on top, the machines Amazon bills counted every 15 seconds, the organisms with the
-  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set at the
-  tune-down with the governor on the machines alone, so the bill can only fall or stay. The same
+  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set with the
+  whole engine at the max on top of the cloud's own autoscaler, the bill judged beside the work (31 October). The same
   design as Azure's `aks-metered` (`docs/K8S_COMPASS_PREREGISTRATION.md`).
 - **`cloud-organism`** with `cloud` = `aws`: the big organisms (the whole tower and the four stacked, the
   real cluster inside, at 100 copies) on one rented 8-processor machine, the same test Azure's `big-organism-detached` runs.

@@ -375,7 +375,7 @@ def board(runs: list, camp: dict | None = None) -> list:
             if "|" not in x:
                 continue
             label = x.split("|")[0]
-            out.append({"group": f"{cloud} Bill at the Tune-Down", "name": label, "workflow": wf,
+            out.append({"group": f"{cloud} at the Max, the Bill Beside the Work", "name": label, "workflow": wf,
                         "tables": [], "now": ("running now" if label.split()[0] in running_titles else "in the queue") if on else
                         "not yet run: its queue's switch is off"})
     gp = ROOT / "scripts" / "gpu_campaign_profiles.json"

@@ -777,8 +777,8 @@ OPERATOR_OUTLINE = [
     ("The Engine Version and the Three-Run Rule", ("M", "The Engine Version and the Three-Run Rule")),
     ("PART", "The Implementer's Guide: Omni-Compass on a Cloud",
      "For the engineer who installs it on Azure, Google Cloud or Amazon Web Services and keeps it in service: the path and "
-     "its gates, the permissions, each cloud step by step, the response-time feed, the cloud mode, day two, the graphics "
-     "processor, observability, change and risk, planning the saving, own racks and private clouds, hardening, a fleet, "
+     "its gates, the permissions, each cloud step by step, the response-time feed, the cloud itself, day two, the graphics "
+     "processor, observability, change and risk, planning a cloud run, own racks and private clouds, hardening, a fleet, "
      "the failure drills, a complete installation, and the questions implementers ask."),
     ("The Implementer's Path: From an Empty Account to a Governed Cluster",
      ("M", "The Implementer's Path: From an Empty Account to a Governed Cluster")),
@@ -788,15 +788,15 @@ OPERATOR_OUTLINE = [
     ("Google Kubernetes Engine, Step by Step", ("M", "Google Kubernetes Engine, Step by Step")),
     ("Amazon Elastic Kubernetes Service, Step by Step", ("M", "Amazon Elastic Kubernetes Service, Step by Step")),
     ("The Response-Time Feed and the Line", ("M", "The Response-Time Feed and the Line")),
-    ("Running in the Cloud: the Machines Alone, the Bill and the Alarm Minutes",
-     ("M", "Running in the Cloud: the Machines Alone, the Bill and the Alarm Minutes")),
+    ("Running in the Cloud: the Whole Engine, the Bill and the Alarm Minutes",
+     ("M", "Running in the Cloud: the Whole Engine, the Bill and the Alarm Minutes")),
     ("Day Two: Running Omni-Compass in Production", ("M", "Day Two: Running Omni-Compass in Production")),
     ("The Graphics Processor: Putting the Governor on a Card", ("M", "The Graphics Processor: Putting the Governor on a Card")),
     ("Observability: Feeding the Governor from Your Monitoring, and Watching It",
      ("M", "Observability: Feeding the Governor from Your Monitoring, and Watching It")),
     ("Change Management, Risk and Compliance", ("M", "Change Management, Risk and Compliance")),
-    ("Planning the Saving Before the Run: Capacity, Cost and the Shape of Load",
-     ("M", "Planning the Saving Before the Run: Capacity, Cost and the Shape of Load")),
+    ("Planning a Cloud Run: Capacity, Cost and the Shape of Load",
+     ("M", "Planning a Cloud Run: Capacity, Cost and the Shape of Load")),
     ("On Your Own Racks and in Private Clouds",
      ("M", "On Your Own Racks and in Private Clouds")),
     ("Hardening and the Supply Chain",
@@ -1308,7 +1308,7 @@ def chapter_flow(src, nb):
         raise KeyError(kind)
     flow = md_flow(prepare(src, nb), shift=shift)
     if kind == "X":                                           # the install manifests: the appendix text, then the files
-        for rel in ["deploy/install/omni-compass.yaml", "deploy/install/rbac-machines.yaml", "deploy/install/omni-compass-cloud.yaml",
+        for rel in ["deploy/install/omni-compass.yaml", "deploy/install/rbac-cloud.yaml", "deploy/install/omni-compass-cloud.yaml",
                     "deploy/rbac-target.yaml", "deploy/Dockerfile", "deploy/Dockerfile.cloud"]:
             flow += source_listing(rel, nb)
     return flow

@@ -1372,6 +1372,42 @@ Carlo (`tools/engine_runs.py`), replacing the 1,000 tier of 15 October. Every gr
 ladder 1, 10, 100 and 500 (`scripts/dispatch_grid.py`); runs started before it stay as their own record. Paid cloud and GPU runs
 stay at 1, 10 and 100 copies with at most 100 repetitions.
 
+## Amendment (31 October 2026, written before any set at the max starts): every cloud set runs the whole engine at the max; the machines alone of 14 October struck
+
+The founder's words of 31 October ("Why is there any hard rule written ... Whatever the math does and falls out is whatever
+happens. All we need to do is tune up what the math does to the best way we can and let whatever falls out fall out. And when it
+falls out wrong, the tuning is wrong"; "What I care is to make the cloud the best it can be with Omni-Compass in it, as well as
+on site with Omni-Compass on it, and we have to sit and tune and tweak both scenarios"). The section "In the cloud, the machines
+alone" above is struck from this amendment on: no set started after it runs `OMNI_MACHINES_ONLY=1`, `dial save` or the
+governor's `--give-back-only` (the switch is gone from the rig and the workflows; the flag leaves the governor with the next
+engine version, and nothing passes it). Every cloud set runs Omni-Compass on top at the max, every muscle: the service sensed and
+its pod target moved inside the autoscaler's cover, the processor conveyed, the declared power model read, the replica room read
+live as on kind (`replica_ceiling` empty), and the machine lever parking and waking machines the cloud's own autoscaler made; the
+autoscaler, native's machine controller, stays in every arm and alone adds machines (`scripts/kind_nodepool.sh` asks the cloud
+for none). The bill (machine-hours at list price) is read by the one key beside work, response time, failures and alert
+minutes, and the cloud's judged number is the work per dollar: the work answered within the line for each dollar of the bill.
+The bill may rise where the work rises more, a rise read as power given beside the work it bought; a tune whose work per dollar
+falls against native is not admissible (`docs/THE_TUNE.md`), a fault of the tune, root-caused in the model first
+(`tools/model_gate.py`, whose cloud setting is the max from this amendment); the founder's order of 18 October, never raise its
+bill, is read the same way, by judging, never by tying the engine's hands. Every set at
+the max is its own A, B and C under the stopping rule of 19 October and the cap of 12 October (100 paired repetitions; 1, 10 and
+100 copies); the sets started before this amendment (omni-v18's steady set; omni-v21's steady set, 25 of 100 repetitions when
+this was written) finish as the tune-down's record and are read in no table with a set at the max. Google's and Amazon's queues
+carry the same change behind their switches.
+
+The same evening, before any set at the max started (the founder's words: "We never make the bill smaller ... they're looking to
+do more work with the money they're spending"; and then, "We're pushing 1% more bill, but we're getting ~12% more work ... anybody
+will pay 1% more for 10% more product"): the cloud is judged by its work per dollar, and these sets cannot read it as built. Each
+sends a fixed rate of requests (`LOADGEN=open`), so its work is the same in both arms by design and a set at the max could show
+only the bill beside a faster answer; the factory beat's ladder on omni-v23 reads the cloud setting at the max with the
+machine-hours up 9% to 35% across the beats, 14% at 60 s, on a plant whose work is fixed the same way
+(`results/model_gate/V23_LADDER.md`, our own models, class S). Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`)
+until its sets carry the load whose work grows with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, the
+completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
+here, on the engine that stands then.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

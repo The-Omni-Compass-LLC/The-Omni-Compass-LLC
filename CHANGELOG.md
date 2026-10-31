@@ -2,6 +2,26 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-10-31: the cloud at the max; no hard rule; the factory beat read again
+- **The cloud's rule of 14 October is struck** (the founder's words of 31 October: "Why is there any hard rule written ...
+  Whatever the math does and falls out is whatever happens ... when it falls out wrong, the tuning is wrong"; "make the cloud
+  the best it can be with Omni-Compass in it, as well as on site"). Every cloud set runs the whole engine at the max, every
+  muscle, on top of the cloud's own autoscaler, and the bill is judged beside the work by the one key, never ruled: every cloud
+  workflow's dial defaults to `max` and sets no machines-only switch (`aks-metered`, `aks-metered-full`, `gke-metered`,
+  `eks-metered`, `byoc-metered`), every `scripts/*_queue.txt` entry reads `dial=max` with the replica room read live, the rig
+  wires the same muscles on every platform (`scripts/kind_bench.sh`, `OMNI_MACHINES_ONLY` and `GIVE_BACK_ONLY` gone), the cloud
+  install file passes the max (`deploy/install/omni-compass-cloud.yaml`), the model gate's cloud setting is the max
+  (`tools/model_gate.py`, `tools/orchestrators_arm.py`, `tools/heartbeat_sweep.py`), and `tests/test_cloud_at_the_max.py`
+  holds it (the machines-only test removed). The governor's `--give-back-only` flag, an engine file, leaves with the
+  next version. Preregistered before any set at the max: `docs/K8S_COMPASS_PREREGISTRATION.md` (the amendment of 31 October),
+  `docs/PACE_PREREGISTRATION.md` (amendment 5), `docs/WHOLE_SYSTEM_PREREGISTRATION.md`. The sets that ran under the struck rule
+  (omni-v18's and omni-v21's Azure steady sets) stand as the tune-down's record.
+- **The factory beat is read again on the engine that stands** (`docs/PACE_PREREGISTRATION.md`, amendment 4, the pick rule
+  written before the run): on omni-v17's ladder 10 s read strongest on the service against 60 s (the kind setting: the minutes
+  over the line down 18.4%, pods waiting down 9.9%, machine-hours down 1.4%; 20 s: 14.7%, 6.8%, 0.8%), a reading of an engine
+  that no longer stands, so the pick is made on omni-v23's ladder; 60 s, set on 22 October for the reads of the cluster, is one
+  setting of the dial like every other.
+
 ## 2026-10-31: omni-v23 stands: Omni direct keeps every muscle Omni-Compass cannot be
 - **omni-v23** (`OMNI_V23.json`, fingerprint `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`): omni-v22 with one guard in the
   Kubernetes governor's pod muscle of its own, on the founder's order of 31 October ("any muscle that we don't have, Omni-Compass
@@ -2730,7 +2750,7 @@ every one a sentence, a count or a drawing. Each is closed here, in the page, it
   `scripts/kind_bench.sh`): no pod autoscaler moved (`--sensed none/none`), no processor conveyed, no power capped, so the
   pods are exactly native's; the governor only parks machines Azure already made, after its own trial, and wakes them on
   a breach. No engine file changed: existing settings only. Written into the Kubernetes preregistration before any run
-  at the tune-down. Test: `tests/test_cloud_machines_only.py` (a breach moves no pod target; the cloud's settings; the
+  at the tune-down. Test: tests/test_cloud_machines_only.py, removed on 31 October when the founder struck the cloud's rule (a breach moves no pod target; the cloud's settings; the
   machine lever never asks for a machine the cluster does not have).
 - Both manuals (sections 7.1 and 10.1), the README, CLAUDE.md and the next version's plan say so.
 

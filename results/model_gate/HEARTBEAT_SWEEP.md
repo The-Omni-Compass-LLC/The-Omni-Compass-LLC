@@ -88,7 +88,7 @@ Our own model (evidence class S): what each beat of the governor does against na
 
 Native's means over the seeds: machine-hours 133.076; energy per used core-hour 0.036; pods waiting for a place 7.311; 95th percentile response 79.914; 99th percentile response 153.537; minutes over the line 27.000.
 
-## In the cloud: the cloud's own autoscaler makes and deletes machines in every arm; the governor on the machines alone (--give-back-only)
+## In the cloud: the cloud's own autoscaler makes and deletes machines in every arm; the governor on top (the runs of 22 October in this record: on the machines alone, --give-back-only, the cloud's rule of 14 October; from 31 October, the founder's order of that day, the max with every muscle, the bill judged)
 
 ### omni-v16 against native
 
