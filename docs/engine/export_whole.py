@@ -46,7 +46,11 @@ WS = ROOT / "results" / "WHOLE_SYSTEM.json"
 GAUGES = ("work", "speed", "machines", "energy", "bill")
 SPENT = {"machines", "energy", "bill"}
 GAUGE_WORDS = {"work": "work (more)", "speed": "speed (the 95th percentile response, shorter)", "machines": "machines (fewer)",
-               "energy": "energy (less)", "bill": "the bill (smaller)"}
+               "energy": "energy (held at native's: the same power)", "bill": "the bill (held at native's: the same bill)"}
+# the founder's order of 31 October 2026 (tools/whole_system.py, COMPOSED and HELD): the whole organism is shown at the software end;
+# work, speed and machines are composed; the energy and the bill are held at native's, exactly 1, and never enter the index
+COMPOSED = ("work", "speed", "machines")
+HELD = ("energy", "bill")
 # the three pieces a stack is bought in, each a group of the file's layers (matched by the layer's number in the file's own names)
 GROUPS = [
     ("software", "Software", (3, 4)),
@@ -108,10 +112,14 @@ def compose(parts: list[dict]) -> dict:
         mu = sum(x[0] for x in have)
         var = sum((x[1] or 0.0) ** 2 for x in have)
         out["gauges"][g] = dict(factor(mu, math.sqrt(var), g), layers=len(have))
-    k = len(out["gauges"])
+    for g in HELD:
+        if g in out["gauges"]:
+            out["gauges"][g]["held"] = True
+    comp = [v for g, v in out["gauges"].items() if g in COMPOSED]
+    k = len(comp)
     if k:
-        mus = [v["mu"] for v in out["gauges"].values()]
-        sig = [v["sigma"] for v in out["gauges"].values()]
+        mus = [v["mu"] for v in comp]
+        sig = [v["sigma"] for v in comp]
         mu = sum(mus) / k
         s_ind, s_cor = math.sqrt(sum(s * s for s in sig)) / k, sum(sig) / k
         out["index"] = {"mu": mu, "ratio": math.exp(mu), "pct": 100 * (math.exp(mu) - 1), "gauges": k,
@@ -185,7 +193,10 @@ def main(out):
     data = {"file": "results/WHOLE_SYSTEM.md", "json": "results/WHOLE_SYSTEM.json", "tool": "tools/whole_system.py", "gauges": list(GAUGES), "gauge_words": GAUGE_WORDS,
             "groups": groups, "scenarios": [{"key": k, "name": n, "groups": list(g), "two_piece": list(t) if t else None} for k, n, g, t in SCENARIOS],
             "results": results, "separability": {"pairs": sep, "n": len(sep), "agree": sum(1 for s in sep if s.get("agree"))}, "beside": d.get("beside") or {},
-            "rule": "R(g) = ∏ℓ Rℓ(g), log R = Σℓ log Rℓ, the variances added; a scenario sums the layers it stacks; the index is the mean of the gauge logarithms, "
+            "composed": list(COMPOSED), "held": list(HELD),
+            "rule": "R(g) = ∏ℓ Rℓ(g), log R = Σℓ log Rℓ, the variances added; a scenario sums the layers it stacks; work, speed and machines are composed at the software end, "
+                    "the energy and the bill held at native's (exactly 1) and the chip and the wire entered as exactly 1 (the founder's order of 31 October 2026); "
+                    "the index is the mean of the three composed gauges' logarithms, "
                     "its 95% interval under two bounds (the gauges independent; perfectly correlated); two readings: by the index's rule, only what held the same way "
                     "in all three of our runs enters; with every interval carried, everything measured enters with its interval; each composed factor's word by the key's "
                     "floor (0.5% or more by the gauge's aim, STEADY under it), whether its interval stands clear of no change said beside it"}
