@@ -5,7 +5,8 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 # Shadow pilot on any Kubernetes cluster (the current kubectl context): Omni-Compass runs read-only beside the cluster's
-# own autoscalers, decides what it would do every 15 s with the benchmarked closure law, and writes nothing.
+# own autoscalers, decides what it would do at the engine's factory beat (60 s; OMNI_INTERVAL sets another) with the
+# benchmarked closure law, and writes nothing.
 #   1. applies deploy/pilot/rbac-shadow.yaml and proves with `kubectl auth can-i` that the identity can read and cannot
 #      write (the run stops if any write permission exists);
 #   2. captures telemetry (fleet/capture/kube_capture.sh) and runs the controller in observe mode for DURATION seconds;
@@ -15,6 +16,7 @@
 set -euo pipefail
 OUT_DIR="${OUT_DIR:-shadow_out}"; DURATION="${DURATION:-3600}"; IDLE_W="${IDLE_W:-100}"; DYN_W="${DYN_W:-150}"
 LAW="${LAW:-tuning/GLOBAL_LEAGUE_PREREGISTRATION.json}"; mkdir -p "$OUT_DIR"
+IV="${OMNI_INTERVAL:-60}"   # the factory beat (omni-v17 on), the same default as the governor's own
 kubectl apply -f deploy/pilot/rbac-shadow.yaml >/dev/null
 SA="system:serviceaccount:omni-shadow:omni-shadow"; can() { kubectl auth can-i "$@" --as="$SA"; }
 {
@@ -24,8 +26,8 @@ SA="system:serviceaccount:omni-shadow:omni-shadow"; can() { kubectl auth can-i "
     echo "$v: $(can $v)"; done
 } | tee "$OUT_DIR/rbac_shadow.txt"
 ! sed -n '/== cannot/,$p' "$OUT_DIR/rbac_shadow.txt" | grep ": yes$" >/dev/null || { echo "shadow identity can write: stopping"; exit 1; }
-python -m omni_controller.controller --kubectl "$(pwd)/scripts/kubectl_as.sh" --mode observe --interval 15 \
-  --iterations $(( DURATION / 15 )) --closure "$LAW" --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" \
+python -m omni_controller.controller --kubectl "$(pwd)/scripts/kubectl_as.sh" --mode observe --interval "$IV" \
+  --iterations $(( DURATION / IV )) --closure "$LAW" --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" \
   > "$OUT_DIR/controller.log" 2>&1 &
 ctl=$!
 export POWER_CMD="${POWER_CMD:-}"

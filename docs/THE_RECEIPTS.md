@@ -99,6 +99,17 @@ The max's guarantees, one by one, with the code path that makes each one true: `
 conservation and convergence, the safety shield's 2,000,000 adversarial cases, the C++ twins equal to the Python: 
 `docs/STATE_OF_PLAY.md`, "Verified in code".
 
+### The archive itself
+
+Every archived run carries `SHA256SUMS_ALL.txt`, the SHA-256 of every file in its folder. A sum is a fingerprint: it shows
+that a file has not changed since the sum was written, not who wrote it. From 31 October 2026 the archive job signs each
+run's sums with Sigstore, keyless, under GitHub's own identity for that job, and the signature is entered in Sigstore's
+public transparency log (`SHA256SUMS_ALL.txt.sigstore.json` beside the sums). `python3 tools/verify_receipt.py <run folder>`
+checks every file against its sum and the sums against their signature; a run archived before that day reads "sums only".
+`python3 tools/reproduce.py` rebuilds every table from the archived runs. Neither check is an outside review: they show that
+the files and the tables have not changed, not that an outside party has repeated the runs (`docs/PILOT_PROTOCOL.md` is how
+that is done).
+
 ## 3. What would change these readings
 
 - A P run on a real card that shows no difference in the card's own energy at the same work would leave the energy
