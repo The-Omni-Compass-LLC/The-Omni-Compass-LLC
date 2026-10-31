@@ -1433,6 +1433,17 @@ the bill, both from the same run.
   family is free (the omni-v21 steady set already running finishes first). The four sets of the open load wait behind the
   meter's, each on the founder's word. Google's and Amazon's queues carry the same change behind their switches.
 
+## Amendment (31 October 2026, night, written before any counted set with the work meter runs): a cloud set must show that Omni-Compass holds
+
+On the founder's words of 31 October, night ("We don't have to show benefit. We know that. We just need to show we hold, and
+then we know where the benefit lives, and we can explain"), the claim every cloud set of this preregistration is read for is
+that Omni-Compass holds through the cloud (`DISCLOSURES.md`, section 10; `tools/places.py`): every judged gauge (the work done,
+the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key,
+in each of runs A, B and C as each run's own word reads it. The bill, the machine-hours and the energy are resources, read beside
+it (a rise power given, never a LOSS by itself), with the work per dollar beside the bill (the amendment above). A set holds when
+its runs read no LOSS; a LOSS is root-caused and fixed in the model first, as everywhere. The benefit is not this set's claim: it
+is shown where it lives, at the software end, and explained through the wire. Nothing else about the sets changes.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---

@@ -31,6 +31,7 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **do no harm.** Omni-Compass's one goal: to strengthen the organism it governs and keep it healthy, working at the best state its own muscles can carry. Harm is judged at the organism: less output than native (less work; more time waited, missed or failed) or less health (a muscle past its own limit, a service over its own line, anything made to fail). Every muscle only as far as it can go, never past. The engine that stands keeps the strictest form: every muscle judged on itself, never below native, nothing traded between muscles; where it cannot bring a knob a GAIN, that knob stays native. *Source: `DISCLOSURES.md`.*
 - **at its limit on native.** A knob native already runs at the top of its range: the max has nothing above native to give it, so Omni-Compass reads it and leaves it native. It reads STEADY. *Source: `CLAUDE.md`; `realms/compass_arm_v5.py`.*
 - **alert minute.** A whole minute whose 95th percentile, failed requests counted over, was over the line: a minute over the line wakes a person. In the cloud the aim is no alert minute at all; one on Omni-Compass's side is found and fixed, never accepted. *Source: `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md`; `CLAUDE.md`.*
+- **hold.** Omni-Compass on top of native harms nothing in a place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS; the cloud's and the chip's benchmarks must show it. *Source: `DISCLOSURES.md`.*
 - **health.** The explicit operating requirements: correctness, service limits, resource bounds and every applicable hardware limit. *Source: `docs/FACTORY_PROFILE.md`.*
 - **the bill of a route.** C(r, a) = Σₖ c(r, a, k), the sum of a route's cost components inside the declared boundary, and the saving S(r, a) = (C(r, native) − C(r, a)) / C(r, native); a component with no recorded price leaves the total unresolved. *Source: `docs/FACTORY_PROFILE.md`.*
 
@@ -41,7 +42,12 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **Omni-Compass on native.** The same system with Omni-Compass on top of all of it, every native controller still running underneath. On Kubernetes, Omni-Compass on top of Kubernetes on top of the muscles. The arm every table carried as "omni", its machine key unchanged. Blue on the page. *Source: `CLAUDE.md`.*
 - **the yardstick.** Kubernetes' published autoscaling rule, written by us from its documentation (a description of a rule, not Kubernetes' code): the native that Omni-Compass on native is read against in the real three-run test of section 2a, the Scorecard. *Source: `docs/OMNI_ORCHESTRATOR.md`.*
 - **the three places Omni-Compass lives.** Omni-Compass sits at both ends of the cloud's wire and at every layer between: the software end (the cluster, Kubernetes, its add-ons, its governors and the services on it), the cloud between them (the machines it bills, metered) and the bare metal (the card, the chip, and the machine: the kernel, bare metal, Kepler). *Source: `tools/whole_system.py`.*
-- **the cloud as the wire.** The cloud is the wire between the chip at one end and the software at the other, and makes no benefit of its own. Through the cloud the bare metal belongs to the provider (no tenant can read its meters or write its chips' limits), so a cloud run shows two things: that the engine holds on the cloud's machines as it does on site, and how much of the software end's gain comes through the wire, read as work per dollar beside the bill (the machines counted every fifteen seconds, the bill at list price): more work for the same money, never a smaller bill as the aim. Every cloud set runs the whole engine at the max from 31 October (the founder's order of that day struck the tune-down on the machines alone); the work and the speed are made on the software end and the bare-metal end. *Source: `tools/whole_system.py`; `DISCLOSURES.md`; `CLAUDE.md`.*
+- **the cloud as the wire.** The cloud is the wire between the chip at one end and the software at the other, and makes no benefit of its own. Through the cloud the bare metal belongs to the provider (no tenant can read its meters or write its chips' limits), so what a cloud run must show is that the engine holds on the cloud's machines as it does on site: no judged gauge LOSS against native, the work per dollar read beside the bill (the machines counted every fifteen seconds, the bill at list price). The benefit is shown where it lives, at the software end, and explained through the wire, never claimed for the wire itself. Every cloud set runs the whole engine at the max from 31 October (the founder's order of that day struck the tune-down on the machines alone). *Source: `tools/whole_system.py`; `DISCLOSURES.md`; `CLAUDE.md`.*
+- **the software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores and the services they serve, with Omni-Compass on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters, rented runners never called bare metal and never called the chip. *Source: `DISCLOSURES.md`.*
+- **on site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill, so the software end's benefit is the same there. In our own models the on-site plant keeps every machine it starts with. *Source: `DISCLOSURES.md`.*
+- **through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its benchmark must show that Omni-Compass holds there. *Source: `DISCLOSURES.md`.*
+- **the chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not tested by any run here and is not claimed. *Source: `DISCLOSURES.md`.*
+- **where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own, and a resource the chip's runs cut (its energy at the tune-down) is read beside the work, never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest. *Source: `DISCLOSURES.md`.*
 - **a governor's way.** The third arm in our models: a governor or orchestrator (the Kubernetes scheduler and its bin-packing profile, Kueue, Volcano, KAI, Koordinator, CruiseKube, Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio) as the body of the catalog muscles that stand for its knobs, sitting on the organism's clock on the same injections; Omni-Compass on top of the governor governs both bodies. Read per muscle, like for like. Its knobs run under their own native controllers, so it reads native's work index by construction; the governors as their projects ship them run on real Kubernetes in section 4e (class L). *Source: `tools/injection_grid.py`.*
 - **governing engine.** The executable mathematical rules that turn observations and internal state into governing decisions. *Source: `docs/FACTORY_PROFILE.md`.*
 - **native baseline.** The system's documented configuration and behaviour with no Omni-Compass governing it: every muscle under its own native controller, as its vendor ships it. *Source: `docs/FACTORY_PROFILE.md`.*
@@ -1998,6 +2004,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the C++ twin | term | 1 (#s-health); 4g (#s-github); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); E (#s-monlist); G (#s-disclose) |
 | calm | term | 3e (#s-decision); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the centre | term | 3a (#s-engines); 5f (#s-lab); 5h (#s-math); B (#s-guide) |
+| the chip | term | 4f (#s-stacks); 5d (#s-whole); B (#s-guide) |
 | the climb | term | 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
 | the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | collector | term | 3i (#s-dash) |
@@ -2037,6 +2044,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | health | term | 3g (#s-brain); 4a (#s-ops); 5d (#s-whole) |
 | the heartbeat | term | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | the heat debt | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
+| hold | term | 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
 | the immune system | term | 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | the injection | term | 3c (#s-desk); 5a (#s-proof); 5b (#s-cpp); 5c (#s-scn); 5i (#s-fail); B (#s-guide) |
 | the injection grid | term | 5c (#s-scn); B (#s-guide) |
@@ -2067,6 +2075,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Omni-Compass | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 2d (#s-loss); 2e (#s-status); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5g (#s-master); 5h (#s-math); 5i (#s-fail); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); E (#s-monlist); G (#s-disclose) |
 | Omni-Compass on native | term, arm | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 3f (#s-plane); 3i (#s-dash); 4a (#s-ops); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Omni-Compass's blue | term | 2c (#s-board); 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4d (#s-cloud); 4g (#s-github); 5d (#s-whole); B (#s-guide); D (#s-read) |
+| on site | term | 2b (#s-answer); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | one pedal | term | 3c (#s-desk); 4a (#s-ops); B (#s-guide); G (#s-disclose) |
 | the orchestra | term | 4e (#s-orch); 5d (#s-whole); 5e (#s-fleet); B (#s-guide) |
 | Orchestra Organism | organism | 4e (#s-orch); 5d (#s-whole); 5e (#s-fleet); B (#s-guide) |
@@ -2094,6 +2103,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the seven organisms | term | 3a (#s-engines); 5e (#s-fleet); B (#s-guide) |
 | shown, not judged | term | 5e (#s-fleet); D (#s-read) |
 | the snapshot | term | 3a (#s-engines); 5h (#s-math) |
+| the software end | term | 2b (#s-answer); B (#s-guide) |
 | Spine | organism | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the spine | term | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the stack | term | B (#s-guide) |
@@ -2104,6 +2114,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | template | term | 5e (#s-fleet) |
 | the three places Omni-Compass lives | term | 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | three runs A, B and C | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5c (#s-scn); 5d (#s-whole); 5h (#s-math); 5i (#s-fail); B (#s-guide); C (#s-problem); D (#s-read) |
+| through the cloud | term | 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | the tower | term | 1 (#s-health); B (#s-guide) |
 | the traffic signal | term | 0 (#s-wall); 2a (#s-bottom); B (#s-guide) |
 | the tune-down | term | 3c (#s-desk); 3e (#s-decision); 4d (#s-cloud); 5b (#s-cpp); 5h (#s-math); B (#s-guide); G (#s-disclose) |
@@ -2120,7 +2131,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | ρ* | term | 5h (#s-math) |
 | σ | term | 3c (#s-desk); 3g (#s-brain); 3h (#s-verdict); 5a (#s-proof); 5h (#s-math) |
 
-Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's six buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; preset; protocol 4; the seal; the yardstick.
+Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's six buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; preset; protocol 4; the seal; where the benefit lives; the yardstick.
 
 ---
 
