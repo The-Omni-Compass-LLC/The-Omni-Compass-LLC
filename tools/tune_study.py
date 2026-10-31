@@ -38,19 +38,28 @@ from tools.model_gate import GAUGES, PACE_GAUGES, reading, run  # noqa: E402
 
 # the knobs searched and their values, declared before the run (docs/THE_TUNE.md, section 4); the main tune is one point of
 # each grid: the beat the founder set (60 s) and the compass's balance point the dial ships (0.3 at the max, 0.4 at the tune-down)
-GRIDS = {"kind": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.2, 0.3, 0.4]},
-         "cloud": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.3, 0.4, 0.5]}}
-MAIN = {"kind": {"beat": 60, "compass-center": 0.3}, "cloud": {"beat": 60, "compass-center": 0.4}}
-WORDS = {"kind": "the kind benchmark's setting: the compass law at the max, every autoscaler sensed",
-         "cloud": "the cloud's setting: the compass law on top of the cloud's own autoscaler (the tune-down on the machines alone "
-                  "until 31 October; the max from then, the founder's order of that day)"}
+# The second search (docs/THE_TUNE.md, section 4b, written before its run on 31 October): the two declared operating
+# conditions of the factory profile, on site and in the cloud, each its own grid of the beat and the cover's floor (omni-v24's
+# knob, --cover-floor). The first search's grids (22 October: the beat and the compass's balance point, the kind and the
+# cloud's settings) are kept in its own record, results/model_gate/V17_TUNE.json, which judge() reads by its own grids.
+GRIDS = {"onsite": {"beat": [10, 20, 30, 60, 90, 120], "cover-floor": [0.6, 0.8, 1.0]},
+         "cloud": {"beat": [10, 20, 30, 60, 90, 120], "cover-floor": [0.6, 0.8, 0.9, 0.95, 1.0]},
+         "kind": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.2, 0.3, 0.4]}}
+MAIN = {"onsite": {"beat": 60, "cover-floor": 0.6}, "cloud": {"beat": 60, "cover-floor": 0.6},
+        "kind": {"beat": 60, "compass-center": 0.3}}
+WORDS = {"onsite": "on site: the kind rig's own machines, made at the start and already paid for, no cluster autoscaler, the "
+                   "compass law at the max",
+         "kind": "the kind benchmark's setting: the compass law at the max, every autoscaler sensed",
+         "cloud": "the cloud's setting: the compass law at the max on top of the cloud's own autoscaler, the bill its machine-hours "
+                  "(the tune-down on the machines alone until 31 October, struck that day)"}
+PLANT = {"onsite": "static", "kind": "kind", "cloud": "cloud"}   # the model gate's plant for each setting (--setting)
 # what the organism is served by: time waited, missed or short (the one key's LOSS gauges in this model)
 SERVICE = ("pending_pod_minutes_per_hour", "p95_ms", "alert_minutes", "hpa_shortfall_minutes_per_hour")
 BILL = "machine_hours"                       # the cloud's aim: the same work for a bill never bigger than native's
 
 
-def tunes(setting):
-    g = GRIDS[setting]
+def tunes(setting, grids=None):
+    g = (grids or GRIDS)[setting]
     names = list(g)
     return [dict(zip(names, vals)) for vals in itertools.product(*(g[n] for n in names))]
 
@@ -73,7 +82,7 @@ def collect(tree, settings, seeds, days, jobs, out):
         def one(j):
             arm, t, s = j
             name = "native" if t is None else key(t)
-            args = ["--worker", arm, "--seed", str(s), "--days", str(days), "--fine", "--setting", setting,
+            args = ["--worker", arm, "--seed", str(s), "--days", str(days), "--fine", "--setting", PLANT[setting],
                     "--period", str(60.0 if t is None else float(t["beat"]))]
             if t is not None and ctl(t):
                 args += ["--ctl", ctl(t)]
@@ -81,8 +90,8 @@ def collect(tree, settings, seeds, days, jobs, out):
         with ThreadPoolExecutor(jobs) as ex:
             for name, s, r in ex.map(one, todo):
                 res.setdefault(setting, {}).setdefault(name, {})[str(s)] = r
-    return {"tree": str(Path(tree).resolve()), "seeds": [int(s) for s in seeds], "days": days, "grids": GRIDS, "main": MAIN,
-            "per_seed": res}
+    return {"tree": str(Path(tree).resolve()), "seeds": [int(s) for s in seeds], "days": days,
+            "grids": {s: GRIDS[s] for s in settings}, "main": {s: MAIN[s] for s in settings}, "per_seed": res}
 
 
 def judge(study):
@@ -108,7 +117,7 @@ def judge(study):
             gains = [g for g in aims if vn[g]["word"] == "GAIN"]
             score = (len(gains), sum(-vn[g]["relative"] for g in gains))
             mean = {g: sum(by[s][g] for s in seeds) / len(seeds) for g in PACE_GAUGES}
-            rows[name] = {"tune": next(t for t in tunes(setting) if key(t) == name), "mean": mean, "vs_native": vn,
+            rows[name] = {"tune": next(t for t in tunes(setting, study.get("grids")) if key(t) == name), "mean": mean, "vs_native": vn,
                           "vs_main": vm, "admissible": admissible, "dominates_main": dominates, "score": score}
         ranked = sorted((n for n in rows if rows[n]["admissible"]), key=lambda n: rows[n]["score"], reverse=True)
         out[setting] = {"main": main_key, "rows": rows, "ranked": ranked,
@@ -167,7 +176,7 @@ def render(study, verdict, out_md):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--tree", help="the checkout whose engine is tuned")
-    ap.add_argument("--settings", default="kind,cloud")
+    ap.add_argument("--settings", default="onsite,cloud")
     ap.add_argument("--seeds", default="101-108", help="development seeds, kept apart from the gate's 1 to 8")
     ap.add_argument("--days", type=float, default=1.0)
     ap.add_argument("--jobs", type=int, default=2)

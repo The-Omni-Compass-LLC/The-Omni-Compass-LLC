@@ -232,28 +232,6 @@ def worker(n):
 UNBOUNDED = sys.maxsize   # no top but what the system itself refuses (the founder's rule of 13 October: from 1 up, unbounded)
 
 
-def apply_give_back_only(a):
-    """The cloud's rule in one word (v7, --give-back-only; the founder's order of 14 October, night): the governor moves
-    the machines alone. No autoscaler moved (no service sensed), no processor conveyed, no power or clock capped, no pod
-    resized, started or held, no replica cap raised, the tune-down dial; machines are given back only after their own
-    trial and woken on a breach, so the pods are exactly native's and the bill can only fall or stay. It is enforced here,
-    in the governor, whatever else the command line says."""
-    if not getattr(a, "give_back_only", False):
-        return
-    a.sensed = "none/none"
-    for k in ("cap_deployments", "rightsize_deployments", "coldstart_deployments", "power_cmd", "rapl_cmd", "cpufreq_cmd",
-              "gpu_power_cmd", "cooling_cmd", "contain_namespaces"):
-        if hasattr(a, k):
-            setattr(a, k, "")
-    for k in ("batch", "batch_pace", "strict_replicas", "pod_reflex_writes"):
-        if hasattr(a, k):
-            setattr(a, k, False)
-    a.replica_ceiling = 0
-    a.dial = "save"
-    if getattr(a, "mode", "observe") == "target":
-        a.mode = "nodepool"
-
-
 # the muscles the operator can leave native, one by one (omni-v14; the founder's order of 20 October: "knobs on every monitor
 # to turn off and on such a mechanism, a muscle"). A muscle named here is never written by the governor: it stays where native
 # runs it, and every other muscle runs as before. The engine decides with the whole body in view either way.
@@ -340,7 +318,6 @@ def cpu_target(h):
 class Controller:
     def __init__(self, a, kube: Kube | None = None):
         self.a = a
-        apply_give_back_only(a)
         a.native_muscles = native_muscles(getattr(a, "native", ""))        # omni-v14: the muscles left native
         if a.native_muscles:
             a.pod_reflex_writes = False if "replicas" in a.native_muscles else getattr(a, "pod_reflex_writes", False)
@@ -586,6 +563,18 @@ class Controller:
         tpl = dep["spec"]["template"]["spec"]
         req = sum(to_milli(c.get("resources", {}).get("requests", {}).get("cpu", "0")) for c in tpl.get("containers", []))
         return req if req > 0 else None
+
+    def _cover(self):
+        """The cover's floor as a share of the operator's target (--cover-floor, omni-v24; 0.6 the factory's), held inside
+        [0.1, 1.0]; an unset or zero floor reads the factory's."""
+        return min(1.0, max(0.1, float(getattr(self.a, "cover_floor", 0.6) or 0.6)))
+
+    def _bounds(self, orig, g=1.0):
+        """The compass's cover on an autoscaler's target, in the pods' own terms: (hi, lo) with hi the operator's target
+        times the conveyed gain g (native's promise) and lo the cover's floor, never under 10%; a floor of 1.0 makes lo =
+        hi, the pod count native's own target gives (omni-v24)."""
+        hi = float(orig) * g
+        return hi, min(hi, max(10.0, self._cover() * float(orig)) * g)
 
     def _placeable_target(self, h, s, lo_t, hi_t, rise=1.0):
         """The fail-up's target (omni-v19): the cover's floor lo_t where the machines in service can place the pods it asks
@@ -905,7 +894,7 @@ class Controller:
             dem = used / req
             self.demand[key] = [(t_, v_) for t_, v_ in self.demand.get(key, []) if time.time() - t_ <= 600.0] + [(time.time(), dem)]
             # the target: the compass's push and pull inside its cover, as on an autoscaler's target (the decision above)
-            hi_t, lo_t = orig_t, max(10.0, 0.6 * orig_t)
+            hi_t, lo_t = self._bounds(orig_t)
             x = self.own_x.get(key, hi_t)
             if not move:
                 pass                                                 # between decisions: the target the last decision set
@@ -1468,7 +1457,7 @@ class Controller:
                 elif self.compass_law is not None:
                     # the compass's push and pull on the target, inside its cover [60% of the operator's, the operator's]
                     # (in queue terms, times the conveyed gain): a lower target is more pods, so the up force lowers it
-                    g_ = self._gain(h); hi_t = orig * g_; lo_t = max(10.0, 0.6 * orig) * g_
+                    g_ = self._gain(h); hi_t, lo_t = self._bounds(orig, g_)
                     x = self.compass_law_x.get((ns, name), hi_t)
                     load = not any(blind.values()) and s["pending"] == 0 and not obs["slo_clean"]
                     if self.compass_law.p >= self.compass_law.band.wall_high and load:
@@ -1615,14 +1604,15 @@ def parser():
     ap.add_argument("--verdict-recheck", type=int, default=None, help="decisions before a refused machine is tried again (unset: --verdict-recheck-s)")
     ap.add_argument("--verdict-recheck-s", type=float, default=7200.0, help="seconds before a refused machine is tried again")
     ap.add_argument("--verdict-trial-s", type=float, default=1200.0, help="seconds a give-back trial's phase may take before it is abandoned")
-    ap.add_argument("--give-back-only", action="store_true",
-                    help="the cloud's rule in one word (v7): the machines alone, given back after their own trial and woken on a "
-                         "breach; no autoscaler moved, no processor conveyed, no power capped, the tune-down; so the bill can "
-                         "only fall or stay")
     ap.add_argument("--compass-tau", type=float, default=60.0, help="seconds the service takes to follow a lever (the compass's damping)")
     ap.add_argument("--compass-center", type=float, default=None,
                     help="where the compass holds the service (0 the bare service time, 1 the SLO); default 0.3 at the max, "
                          "0.4 at the tune-down")
+    ap.add_argument("--cover-floor", type=float, default=0.6,
+                    help="the lowest share of the operator's own autoscaler target the compass may set, its cover's floor "
+                         "(omni-v24): 0.6, the factory's, asks for up to 1/0.6 of the pods native's target would; 1.0 "
+                         "leaves the pod count native's. A knob, read in each declared setting by the tune study "
+                         "(docs/THE_TUNE.md), never a rule")
     ap.add_argument("--dial", choices=["max", "save"], default=os.environ.get("OMNI_DIAL", "max"),
                     help="max (default): the most work, faster, never a machine given back below the cluster's own; save: "
                          "the tune-down (the v5 edge toward the line, machines given back where the response time allows)")

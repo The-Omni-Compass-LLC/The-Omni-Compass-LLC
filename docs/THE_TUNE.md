@@ -133,6 +133,45 @@ preregistered seeds were never read by either search.
   22 October); the floor check and a warm reserve in the cloud (the same session's); each muscle's card at each beat (the
   founder's "each beat its own combination").
 
+## 4b. The second search: on site and in the cloud, each its own tune (written before its run, 31 October, evening)
+
+- **Why.** The founder's words of 31 October: "we have to sit and tune and tweak both scenarios in two different scenarios ...
+  when it falls out wrong, the tuning is wrong"; and for the cloud, "keep the wire bill exactly the way it is, and achieve all the
+  work and all the benefit in simply the software". The factory beat's ladder on omni-v23 (`results/model_gate/V23_LADDER.md`)
+  read the cloud's setting at the max with the machine-hours, its bill, up 9% to 35% across the beats (14% at 60 s): that tune is
+  not admissible in the cloud. Its cause, read in the model's own files (seed 103 at 60 s: 26% more pods and 18% more machines
+  than native for the same work served): the compass asks for up to 1/0.6 of native's pods, they fill room the machines already
+  have, and the cloud's autoscaler then removes fewer machines and adds more. The cover's floor, written into every engine before
+  as 0.6, is the knob that sets how far that push goes, so omni-v24's candidate makes it one (`--cover-floor`; 0.6 is the
+  factory's, and at it the candidate decides as omni-v23, which the model gate reads; 1.0 leaves the pod count native's) and
+  this search reads it in each setting. A probe before the search, written here so nothing is hidden: seed 103 at 60 s in the
+  cloud's setting with the floor at 1.0 and 0.8, to see that the knob reaches the bill at all; the rule below was frozen before it
+  was read.
+- **Engine.** omni-v24's candidate: omni-v23 (digest `c96ea4105d8747db`) with the cover's floor a knob and the struck
+  `--give-back-only` flag removed.
+- **Settings.** The two declared operating conditions of the factory profile: on site (`onsite`: the kind rig's own machines,
+  made at the start and already paid for, no cluster autoscaler, a parked machine kept at its standby draw;
+  `tools/model_gate.py` `StaticFineSim`, `docs/PACE_PREREGISTRATION.md` amendment 5) and in the cloud (`cloud`: the plant with
+  the cloud's own autoscaler, the bill its machine-hours). Both on the plant that moves every 5 s, the compass law at the max.
+- **Knobs and values.** The beat P ∈ {10, 20, 30, 60, 90, 120} s and the cover's floor f, on site ∈ {0.6, 0.8, 1.0} (eighteen
+  tunes) and in the cloud ∈ {0.6, 0.8, 0.9, 0.95, 1.0} (thirty tunes: the probe read the floor at 1.0 exactly native's on every
+  gauge of seed 103, so the cloud's admissible tunes, if any, lie near it, and the grid is finer there), the factory tune among
+  them (60 s, 0.6). The 5 s beat is left out for its running time and its cost, read in both ladders
+  (`results/model_gate/V23_LADDER.md`; the on-site ladder of 31 October).
+- **Seeds.** 101 to 108, one day each, native on the same seeds; the gate's seeds 1 to 8 stay untouched for the reading of the
+  chosen tunes.
+- **Rule.** Section 2's, as `tools/tune_study.py` `judge()` applies it, each setting on its own: admissible = no gauge reads LOSS
+  against native, and in the cloud no rise in the machine-hours; a tune dominates the factory tune when it is admissible and,
+  against it, no service gauge reads LOSS (in the cloud no rise in the bill) and one reads GAIN; admissible tunes ranked by the
+  service gauges that read GAIN against native, then by their summed improvement. Each setting's tune is the admissible tune
+  ranked first; where the factory tune is not admissible, the ranked first is the candidate. Read again on the gate's seeds 1 to
+  8 against native and against omni-v23 before it is written as that setting's factory tune, and landed as omni-v24 only through
+  the model gate, with no LOSS. If no tune is admissible in a setting, nothing is chosen there: the cause is found and fixed in
+  the model first, and the founder is told.
+- **Outcome.** Its own page, `results/model_gate/V24_TUNE.md` (`tools/tune_study.py --judge ... --page`), every tune of both
+  settings with its readings and verdicts; the founder is told what it read either way. Evidence class S, our own models: it
+  says which tune the models favour, never what a benchmark found.
+
 ## 5. The common language: the engine, its profiles, the bench and the bill (the founder's master specification of 24 October)
 
 Omni-Compass consists of a **governing engine**, its **muscle adapters**, a **complete configuration profile** and a **validation

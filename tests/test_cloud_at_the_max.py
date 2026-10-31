@@ -76,11 +76,14 @@ class CloudAtTheMax(unittest.TestCase):
                 self.assertNotIn('"--sensed", "none/none"', code)
                 self.assertNotIn('"--dial", "save"', code)
 
-    def test_the_engine_still_parses_the_flag_until_the_next_version_removes_it(self):
-        # the flag is an engine file's: nothing passes it any more, and it leaves with the next version through the model gate
+    def test_the_struck_flag_left_the_governor_with_omni_v24(self):
+        # the flag was an engine file's; it left with omni-v24 through the model gate, and the governor now refuses it
+        import contextlib, io
         from omni_controller.controller import parser
         a = parser().parse_args(["--mode", "nodepool"])
-        self.assertFalse(getattr(a, "give_back_only", False))
+        self.assertFalse(hasattr(a, "give_back_only"))
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+            parser().parse_args(["--mode", "nodepool", "--give-back-only"])
 
 
 if __name__ == "__main__":

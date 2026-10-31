@@ -57,10 +57,10 @@ class Rule(unittest.TestCase):
         self.assertNotIn(bad, v["ranked"])
 
     def test_in_the_cloud_a_bigger_bill_is_not_admissible(self):
-        dear = "beat30-compass-center0.4"
+        dear = "beat30-cover-floor0.8"
         v = TS.judge(study("cloud", {dear: lambda s: {"alert_minutes": 8.0 + wob(s), "machine_hours": 11.0 + wob(s)}}))["cloud"]
         self.assertFalse(v["rows"][dear]["admissible"])
-        cheap = "beat90-compass-center0.4"
+        cheap = "beat90-cover-floor1"
         v = TS.judge(study("cloud", {cheap: lambda s: {"machine_hours": 9.0 + wob(s)}}))["cloud"]
         self.assertEqual(v["dominating"], [cheap])                 # the same work for a smaller bill dominates in the cloud
 
@@ -78,6 +78,19 @@ class Rule(unittest.TestCase):
         self.assertEqual(TS.key({"beat": 90, "compass-center": 0.2}), "beat90-compass-center0.2")
         self.assertIn(TS.MAIN["kind"], TS.tunes("kind"))
         self.assertIn(TS.MAIN["cloud"], TS.tunes("cloud"))
+        self.assertIn(TS.MAIN["onsite"], TS.tunes("onsite"))
+        # the second search (31 October): the cover's floor reaches the governor as its own knob, the beat as the period
+        self.assertEqual(TS.ctl({"beat": 10, "cover-floor": 1.0}), "--cover-floor 1")
+        self.assertEqual(TS.PLANT["onsite"], "static")              # on site: the fixed machines' plant, no cluster autoscaler
+
+    def test_a_study_is_judged_by_its_own_grids(self):
+        # the first search's record (22 October) is judged by the grids it ran, whatever the tool searches now
+        s = study("kind", {})
+        s["grids"] = {"kind": {"beat": [60, 90], "compass-center": [0.3]}}
+        s["main"] = {"kind": {"beat": 60, "compass-center": 0.3}}
+        s["per_seed"]["kind"] = {k: v for k, v in s["per_seed"]["kind"].items() if k in ("native", "beat60-compass-center0.3", "beat90-compass-center0.3")}
+        v = TS.judge(s)["kind"]
+        self.assertEqual(set(v["rows"]), {"beat60-compass-center0.3", "beat90-compass-center0.3"})
 
 
 if __name__ == "__main__":
