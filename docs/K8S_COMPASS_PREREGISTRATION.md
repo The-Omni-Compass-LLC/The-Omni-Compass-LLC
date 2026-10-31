@@ -1372,6 +1372,36 @@ Carlo (`tools/engine_runs.py`), replacing the 1,000 tier of 15 October. Every gr
 ladder 1, 10, 100 and 500 (`scripts/dispatch_grid.py`); runs started before it stay as their own record. Paid cloud and GPU runs
 stay at 1, 10 and 100 copies with at most 100 repetitions.
 
+## Amendment (31 October 2026, written before any set at the max starts): every cloud set runs the whole engine at the max; the machines alone of 14 October struck
+
+The founder's words of 31 October ("Why is there any hard rule written ... Whatever the math does and falls out is whatever
+happens. All we need to do is tune up what the math does to the best way we can and let whatever falls out fall out. And when it
+falls out wrong, the tuning is wrong"; "What I care is to make the cloud the best it can be with Omni-Compass in it, as well as
+on site with Omni-Compass on it, and we have to sit and tune and tweak both scenarios"). The section "In the cloud, the machines
+alone" above is struck from this amendment on: no set started after it runs `OMNI_MACHINES_ONLY=1`, `dial save` or the
+governor's `--give-back-only` (the switch is gone from the rig and the workflows; the flag leaves the governor with the next
+engine version, and nothing passes it). Every cloud set runs Omni-Compass on top at the max, every muscle: the service sensed and
+its pod target moved inside the autoscaler's cover, the processor conveyed, the declared power model read, the replica room read
+live as on kind (`replica_ceiling` empty), and the machine lever parking and waking machines the cloud's own autoscaler made; the
+autoscaler, native's machine controller, stays in every arm and alone adds machines (`scripts/kind_nodepool.sh` asks the cloud
+for none). The bill (machine-hours at list price) is read as a service gauge with its aim lower, by the one key, beside work,
+response time, failures and alert minutes; a tune that raises it is not admissible (`docs/THE_TUNE.md`), so the founder's order
+of 18 October, never raise its bill, holds by judging the bill, not by tying the engine's hands, and a bill that rose is a fault of
+the tune, root-caused in the model first (`tools/model_gate.py`, whose cloud setting is the max from this amendment). Every set at
+the max is its own A, B and C under the stopping rule of 19 October and the cap of 12 October (100 paired repetitions; 1, 10 and
+100 copies); the sets started before this amendment (omni-v18's steady set; omni-v21's steady set, 25 of 100 repetitions when
+this was written) finish as the tune-down's record and are read in no table with a set at the max. Google's and Amazon's queues
+carry the same change behind their switches.
+
+The same evening, before any set at the max started: in the cloud the aim is more work for the same bill (the founder's words of
+31 October: "We never make the bill smaller ... they're looking to do more work with the money they're spending"), and the
+factory beat's ladder on omni-v23 (`results/model_gate/V23_LADDER.md`, our own models, class S) reads the cloud setting at the
+max with the machine-hours, and so the bill, up 9% to 35% across the beats, 14% at the factory's 60 s. That tune is not
+admissible in the cloud, so no set at the max starts on it: Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`) until
+the version whose cloud tune reads the bill held in the model gate lands; then its sets start as written here, on that engine.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

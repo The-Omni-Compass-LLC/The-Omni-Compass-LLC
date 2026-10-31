@@ -726,8 +726,9 @@ def run_one(organism, setting, orch, arm, k, base=20261025, keep=None):
         from omni_controller.controller import Controller, parser
         lat_path = out / "latency.csv"
         s = SETTINGS[setting]
-        law = ["--law", "compass", "--dial", "save", "--sensed", "none/none", "--give-back-only"] if s["ca"] else \
-              ["--law", "compass", "--cap-deployments", "default/php-apache", "--sensed", "default/php-apache"]
+        # the compass law at the max with every muscle in both settings (the founder's order of 31 October: no hard rule; the
+        # cloud's tune-down on the machines alone of 14 October, --dial save --sensed none/none --give-back-only, is struck)
+        law = ["--law", "compass", "--cap-deployments", "default/php-apache", "--sensed", "default/php-apache"]
         argv = ["--mode", "nodepool", "--active-nodes-only", "--interval", "60", "--floor-interval", str(DT),
                 "--reflex-window-s", "15", "--min-nodes", str(s["min"]), "--max-nodes", str(s["max"]), "--max-node-step", "1",
                 "--node-scale-cmd", "SIMSCALE {n}", "--latency-file", str(lat_path), "--slo-ms", str(SLO_MS),

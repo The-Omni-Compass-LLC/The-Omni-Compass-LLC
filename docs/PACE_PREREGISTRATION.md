@@ -172,6 +172,21 @@ against 60 s, and then the real runs of this preregistration read it: amendment 
 beat and 60 s one of the dial's arms. The development reading is written on the ladder's page before the gate runs, and the
 seeds are not changed after.
 
+## Amendment 5 (31 October, written before the ladder's cloud half runs on it): the cloud setting at the max
+
+The founder's order of 31 October (no hard rule; the cloud at the max; `CLAUDE.md`, Orders of 31 October) struck the cloud's
+tune-down on the machines alone of 14 October. From this amendment the model gate's cloud setting is the max with every muscle
+on top of the cloud's own autoscaler (`tools/model_gate.py`: the compass law at the max, the service sensed, the lever parking
+and waking what exists, the autoscaler alone adding machines), and the ladder's cloud half (amendment 4) is read on it; a cloud
+half read at the tune-down on 31 October before this amendment is not used for the pick. Rule 1 of amendment 4 reads the cloud
+setting's machine-hours as the bill, aim lower. At the max the two settings are one model: the same plant (the 5 s plant with
+the cloud's own autoscaler) and the same law; one seed (101) at 60 s read every model gauge identical in the two, only the
+governor's own processor time differing (a measured time). So the kind setting's ladder, started at 16:47 UTC on the omni-v23
+tree, is the reading of both, and nothing is run twice. The kind rig's own machines (every worker made at the start, no
+cluster autoscaler: on site, machines already paid for) are a plant of their own; its ladder is written into the gate and
+read under the same rule before the on-site factory beat is picked. The real runs of this preregistration are on kind and do not change; the Azure
+sets take the same change in `docs/K8S_COMPASS_PREREGISTRATION.md` (the amendment of 31 October).
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---

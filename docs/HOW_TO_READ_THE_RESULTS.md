@@ -112,7 +112,8 @@ route's bill is resolved yet. A whole-workload index (the composition's one numb
 resource bounds and every applicable hardware limit; each reading Hⱼ has its limit Lⱼ. A result names which of the two
 objectives its tune served: the most healthy production, maximise E[P(θ)] subject to Hⱼ(θ) ≤ Lⱼ for every j (the max, the
 default brain), or the least cost per unit of completed production, minimise E[C(θ) ⁄ P(θ)] subject to the same requirements
-(the tune-down, a cloud's machines alone). P is the useful output, the work done inside the line. A requirement crossed is
+(the tune-down, `dial save`, a tune anyone may set; the clouds ran it until 31 October, when the founder struck that rule and
+every cloud runs the max with the bill judged beside the work). P is the useful output, the work done inside the line. A requirement crossed is
 read on its own gauge (time over the line, failed requests, alert minutes) and never traded away.
 
 **The verdict rules.** Every judged gauge is read by the one key (`tools/readings.py`, the key at the top of this page): the

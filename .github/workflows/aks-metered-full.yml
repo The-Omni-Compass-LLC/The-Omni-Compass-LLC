@@ -5,10 +5,10 @@
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 # Full-control AKS variant: HPA, pod CPU limits and model-based power sensing enabled.
 # This does not enable host RAPL, clock control or physical power metering.
-# Shares the machines-only workflow quota queue; preserves failed-run evidence.
+# Shares the aks-metered workflow's quota queue; preserves failed-run evidence.
 name: aks-metered-full
 run-name: ${{ format('aks-metered-full {0} dial {1}', github.event.inputs.load_steps != '' && format('burst {0}', github.event.inputs.load_steps)
-  || 'steady', github.event.inputs.dial || 'save') }}
+  || 'steady', github.event.inputs.dial || 'max') }}
 'on':
   workflow_dispatch:
     inputs:
@@ -42,8 +42,8 @@ run-name: ${{ format('aks-metered-full {0} dial {1}', github.event.inputs.load_s
           lets the fleet fill (empty: the manifest''s 10)'
         default: ''
       dial:
-        description: 'Dial: save or max'
-        default: save
+        description: 'Dial: max (the factory tune, the whole engine) or save (the tune-down, a changed tune)'
+        default: max
 concurrency:
   group: azure-benchmark-${{ github.event.inputs.location || 'eastus' }}
   cancel-in-progress: false
@@ -164,8 +164,7 @@ jobs:
         LOAD_STEPS: ${{ github.event.inputs.load_steps || '1' }}
         AKS_MAX_NODES: ${{ github.event.inputs.max_workers || '4' }}
         HPA_MAX: ${{ github.event.inputs.hpa_max || '' }}
-        OMNI_DIAL: ${{ github.event.inputs.dial || 'save' }}
-        OMNI_MACHINES_ONLY: '0'
+        OMNI_DIAL: ${{ github.event.inputs.dial || 'max' }}
         CLOSURE: tuning/GLOBAL_LEAGUE_PREREGISTRATION.json
     - if: always()
       run: python3 scripts/azure_capacity.py cleanup --group "$AZ_RG"
