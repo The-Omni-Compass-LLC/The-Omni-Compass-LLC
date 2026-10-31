@@ -2,7 +2,7 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-**More work, faster, on fewer machines, with less energy, on top of the stack you already run.**
+**More work, faster, on fewer machines, for the same energy and the same bill, on top of the stack you already run.**
 
 **Open the live benchmark engine (the running page):** <https://claude.ai/artifact/PmGS8ogFLMQiuyjU2YEFn3>. The file in this repository, [`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`](docs/engine/OMNI_COMPASS_LIVE_ENGINE.html), is its source: GitHub shows a page's source as text and does not run it, so open the link above, or download the file and open it in a browser. **The whole engine in one file** (every monitor, knob and record inside it, about 15 MB, for a phone, a laptop or a website): [`docs/live/index.html`](docs/live/index.html), built from the page by `docs/engine/build_standalone.py`; with GitHub Pages serving `docs/` it opens at <https://the-omni-compass-llc.github.io/The-Omni-Compass-LLC/live/>.
 
@@ -13,7 +13,7 @@
 
 ## Benefit Against Native
 
-**Not yet read on the engine that stands (omni-v23)**: the Omni index stands on omni-v21 until omni-v23's tables land ([`results/OMNI_INDEX.md`](results/OMNI_INDEX.md)). On omni-v21, the figure of record reads **GAIN 5.2%**, every real test together by the index's own rule, its tables holding 105 rows GAIN, 16 LOSS and 45 power given (the benefit sheet reads it GAIN AND LOSS), never read as omni-v23's. The LOSS ledger ([`docs/LOSS_LEDGER.md`](docs/LOSS_LEDGER.md)) lists every LOSS row of the newest tables, 334 in all, 163 of them Omni-Compass against its own native, the rows do no harm is judged by, each with its cause where one is written.
+**Not yet read on the engine that stands (omni-v23)**: the Omni index stands on omni-v21 until omni-v23's tables land ([`results/OMNI_INDEX.md`](results/OMNI_INDEX.md)). On omni-v21, the figure of record reads **GAIN 5.0%**, every real test together by the index's own rule, its tables holding 105 rows GAIN, 16 LOSS and 45 power given (the benefit sheet reads it GAIN AND LOSS), never read as omni-v23's. The LOSS ledger ([`docs/LOSS_LEDGER.md`](docs/LOSS_LEDGER.md)) lists every LOSS row of the newest tables, 334 in all, 163 of them Omni-Compass against its own native, the rows do no harm is judged by, each with its cause where one is written.
 
 
 One real test of the whole loop, on omni-v21, the newest engine with its three runs in (the engine that stands, omni-v23, runs it again), three runs on GitHub's own machines, on Omni-Compass's own orchestrator (`omni_orchestrator`), the organism run without Kubernetes: native is Kubernetes' published autoscaling rule on the muscles, as written by The Omni-Compass LLC, and the other side is Omni-Compass on top of the same rule. It is one test, not the figure of record. On top of native, Omni-Compass did 8.5% more work than native, its 95th-percentile response time 13.0% shorter.
@@ -188,8 +188,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
-work for the same bill.
+faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
+every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
 
 **What the record shows.** Every claim is a paired comparison of native and Omni-Compass on top of native, run three
 times (A, B and C) and read by the key below; every row is kept, LOSS included. The newest combined reading is at the top of
@@ -248,13 +248,14 @@ Omni-Compass is software. It always sits on top of a native controller, and it c
 - **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
 - **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
-- **Where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **Where the benefit lives.** At the software end, where it is made and measured. It shows through on two receipts, native against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their receipts. Four places are tested because a buyer asks about all four; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 | Place | Its benchmark | What it must show | Its readings |
 |---|---|---|---|
 | The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
-| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds; the work per dollar read beside the bill | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
-| The chip | a graphics card on Lambda, its own power meter, class P | that it holds; its energy read beside the work | `results/gpu/` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the software end's gain on the cloud's own bill: the work per dollar, native against Omni-Compass | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
+| The chip | a graphics card on Lambda, its own power meter, class P | that it holds, and the software end's gain on the card's own meter: the work per joule, native against Omni-Compass | `results/gpu/` |
 | On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
 | The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
 
