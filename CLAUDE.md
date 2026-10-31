@@ -500,7 +500,15 @@ the founder overrides one in the conversation.
   10 s read strongest on the service against 60 s (the kind setting: the minutes over the line down 18.4%, pods waiting down
   9.9%, machine-hours down 1.4%; 20 s: 14.7%, 6.8%, 0.8%), a reading of an engine that no longer stands, so the pick is made on
   omni-v23's ladder; 60 s, set on 22 October for the reads of the cluster, is one setting of the dial like every other, and the
-  beat that reads best lands as the next version through the model gate, told, not asked.
+  beat that reads best lands as the next version through the model gate, told, not asked. Read the same evening
+  (`results/model_gate/V23_LADDER.md`, class S, seeds 101 to 108, the plant with the cloud's own autoscaler at the max, which is
+  the cloud's setting and the kind setting at once): on the service 10 s reads best (against native pods waiting down 16%,
+  the 95th percentile down 30%, the minutes over the line down 58%, all GAIN; 20 s waits more pods than 60 s, LOSS), but every
+  beat buys machine-hours (up 9% to 35% against native, 14% at 60 s): the governor asks for pods ahead of the load and the
+  cloud's autoscaler adds machines for them. In a cloud that is a bigger bill, a benefit with a cost (the founder's words of 31
+  October: the chip and the cloud are the cost proof), so by the rule written before the run no beat qualifies there and 60 s
+  stays until the tune itself holds the bill (the next version, through the model gate); the on-site beat is read on the kind
+  rig's own fixed machines, a plant of its own, before it is picked.
 
 ## Orders of 24 October
 

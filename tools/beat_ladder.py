@@ -41,7 +41,9 @@ def same(a, b) -> bool:
 SETTINGS = (("pace_cloud", "cloud", "the cloud's setting: the compass law on top of the cloud's own autoscaler (the ladder of 22 and "
                                     "23 October read it at the tune-down on the machines alone, the cloud's rule of 14 October; from "
                                     "31 October, the founder's order of that day, the max with every muscle, the bill judged)"),
-            ("pace_kind", "kind", "the kind benchmark's setting: the compass law at the max, every autoscaler sensed"))
+            ("pace_kind", "kind", "the kind benchmark's setting: the compass law at the max, every autoscaler sensed, on the plant with "
+                                  "the cloud's own autoscaler (from 31 October the same model as the cloud's at the max, "
+                                  "docs/PACE_PREREGISTRATION.md amendment 5)"))
 NAMES = {"machine_hours": "Machine hours (a day)", "kwh_per_core_hour": "Energy per core-hour (kWh)",
          "pending_pod_minutes_per_hour": "Pods waiting for a place (minutes an hour)",
          "hpa_shortfall_minutes_per_hour": "Pod autoscaler short of its target (minutes an hour)",
@@ -215,6 +217,12 @@ def main(argv=None):
     ap.add_argument("--first-note", default="", help="what the fix was and why the first reading is kept")
     a = ap.parse_args(argv)
     reports = [json.loads(Path(p).read_text()) for p in a.reports]
+    # a report may carry one setting only (31 October: at the max the cloud's setting and the kind benchmark's are one model,
+    # docs/PACE_PREREGISTRATION.md amendment 5, so one ladder reads both): the page writes the settings every report carries
+    global SETTINGS
+    SETTINGS = tuple(s for s in SETTINGS if all(s[0] in r["models"] for r in reports))
+    if not SETTINGS:
+        raise SystemExit("no pace setting is in every report")
     lad = ladder(reports)
     lad["sources"] = a.source_names or a.reports
     if a.first:
