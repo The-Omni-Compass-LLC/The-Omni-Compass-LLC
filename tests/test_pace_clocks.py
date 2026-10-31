@@ -109,6 +109,10 @@ class ControllerClocks(unittest.TestCase):
         a = parser().parse_args(["--audit", ""])
         self.assertEqual((a.interval, a.floor_interval), (60.0, 5.0))
         self.assertIn('OMNI_INTERVAL="${OMNI_INTERVAL:-60}"', (ROOT / "scripts" / "kind_bench.sh").read_text())
+        shadow = (ROOT / "scripts" / "pilot_shadow.sh").read_text()             # the pilot's shadow kit decides at the same beat
+        self.assertIn('IV="${OMNI_INTERVAL:-60}"', shadow)
+        self.assertIn('--interval "$IV"', shadow)
+        self.assertNotIn("--interval 15", shadow)
         for f in ("deploy/install/omni-compass.yaml", "deploy/install/omni-compass-cloud.yaml", "deploy/controller.yaml"):
             self.assertIn('"--interval", "60"', (ROOT / f).read_text(), f)
         # the staleness bound follows the beat: three of the beats the exporter measures, at any setting of the dial

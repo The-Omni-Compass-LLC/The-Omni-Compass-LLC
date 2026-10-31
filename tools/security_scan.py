@@ -62,6 +62,9 @@ REVIEWED = {
     ("B310", "scripts/latency_probe.py"): FIXED_URL + " (the service under test)",
     ("B310", "scripts/restart_aks.py"): FIXED_URL + " (the GitHub API)",
     ("B310", "tools/artifact_legal.py"): FIXED_URL + " (raw.githubusercontent.com)",
+    ("B310", "tools/health_watch.py"): FIXED_URL + " (the GitHub API)",
+    ("B310", "tools/omni_alert_bridge.py"): FIXED_URL + " (the operator's own control panel, --panel)",
+    ("B310", "tools/orchestrator_show.py"): FIXED_URL + " (the showing's own agents on 127.0.0.1, their ports written in the code)",
     ("B310", "tools/llm_workload.py"): FIXED_URL + " (the model server under test)",
     ("B310", "tools/prom_feed.py"): FIXED_URL + " (the operator's Prometheus)",
     ("B310", "tools/run_ycsb.py"): FIXED_URL + " (the YCSB release, checked against its published digest)",
@@ -72,6 +75,9 @@ REVIEWED = {
                                         "the repository's own workflow files",
     ("B608", "tools/run_pgbench.py"): "SQL built from the benchmark's own fixed names to create its throwaway database, never "
                                       "from input",
+    ("B608", "tools/run_sysbench.py"): "SQL built from the benchmark's own account name (SYSBENCH_USER, set by its own "
+                                       "workflow) and its fixed statement names, read on the benchmark's throwaway database; "
+                                       "never text read from the network",
     ("B610", "tools/live_reps.py"): "not Django: a local function named extra() inside an f-string",
 }
 

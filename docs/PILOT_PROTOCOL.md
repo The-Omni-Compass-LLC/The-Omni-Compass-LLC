@@ -4,37 +4,106 @@
 
 > **Before you wire anything:** read [`DISCLOSURES.md`](../DISCLOSURES.md). Omni-Compass acts only through the wires it is given; it cannot be slapped on. If your paired receipts differ from the published benchmarks in direction, the first presumption is wiring: check the installation with section 4.5 of the manual (*Wired right or wired wrong*).
 
-## Phase 0: Simulation evaluation (evaluator's own environment)
-Run `python verify.py`. Pass criterion: VERIFICATION: PASS.
+A pilot is the one proof our own runs cannot give: Omni-Compass on top of the licensee's own native controllers, on the
+licensee's own systems and work, read against native by the licensee's own engineers. Every result The Omni-Compass LLC
+publishes was run and scored by its own code, and every table says that no outside party has reviewed or approved it. A
+pilot run by this protocol is how that changes. The protocol was rewritten on 31 October 2026 for the engine that stands:
+native stays on in every arm, Omni-Compass moves native's knobs and never replaces native, and the readings are the
+receipts and the service gauges, read by the one key.
 
-## Phase 1: Shadow (2 to 4 weeks)
-- Capture: `OUT=capture.csv INTERVAL=15 DURATION=<seconds> POWER_CMD="<site power in watts>" bash fleet/capture/kube_capture.sh` (read-only).
-- Replay: `python fleet/capture_replay.py capture.csv --idle-w <W> --dyn-w <W> --site-limit-w <W> --out replay/` gives Omni-Compass's recommended node count, power cap and HPA target per decision.
-- Governor in OBSERVE on production telemetry read directly from nodes (kubelet/cAdvisor metrics, power meters, queue depth).
-- No write credentials are issued.
-- Logged per interval: directive, native actions taken, and the observed outcome.
-- Pass criteria, agreed before start: logged directives never violate I1 to I5; counterfactual analysis on at least N recorded incidents shows the directive would have reduced time-to-recovery or energy without a backlog increase beyond an agreed bound.
+## Before day one: the agreement and the license
 
-## Phase 2: Guarded control, one loop at a time (4 to 8 weeks)
-Order: power capping; node count (Cluster Autoscaler set to observe); replica count (HPA set to observe).
-- Each loop is handed over separately, with the reset tested at handover and at exit.
-- Pass criteria per loop, fixed in advance: SLO attainment not below the preceding shadow baseline at the agreed confidence level; zero shield invariant violations; energy per unit of completed work reported with confidence intervals.
-- Exit: any criterion failed triggers the reset and returns the loop to its native controller.
+- The evaluation license covers evaluation and simulation: test and staging systems, the models and `verify.py`.
+- Governing live, customer-facing traffic is production use, and production use needs the signed, paid Omni-Compass
+  Enterprise License first.
+- A pilot on a production system, the read-only shadow included, runs only under a pilot agreement signed with The
+  Omni-Compass LLC before day one. The agreement names the systems, the dates, the rules on this page and who receives
+  the readings.
 
-## Scoring your own pilot
-Capture the baseline (a period before the controller, or a matched node pool left on your normal autoscaler) and the
-Omni-Compass period or pool with fleet/capture/kube_capture.sh, then:
-`python pilot/score.py --baseline baseline.csv --omni omni.csv [--idle-w W --dyn-w W]`
-It reports node-hours and energy per used CPU core-hour, utilisation, pending-pod minutes and HPA shortfall minutes, each
-with a bootstrap 95% interval over hourly blocks. Energy is measured if the captures include power_w. Run long enough
-for at least 24 blocks per side, and compare matched pools at the same time where possible, because traffic changes
-between periods.
+## What runs, and what does not
 
-## Phase 3: Component retirement
-A decision component is retired only after its loop has passed Phase 2 and a one-at-a-time removal shows no degradation (keep-or-remove rule, Manual Chapter 6). Execution and security components are retained.
+- **The governor** (`omni_controller/controller.py`; on a graphics card, `omni_controller/gpu_governor.py`) sits on top
+  of the native controllers already there: Kubernetes' pod autoscaler and cluster autoscaler, the card's own power
+  management. Native stays on in both arms. Omni-Compass sets native's knobs (the autoscaler's target and range, the
+  machines in service, the CPU limits, the card's power limit) and never takes native's place.
+- **The engine at its factory tune**, as shipped (`docs/FACTORY_PROFILE.md`), at the factory beat. Any knob may be
+  turned. A changed tune's readings are its own, and turning a knob can change every metric in either direction
+  (`DISCLOSURES.md`, section 3).
+- **Not the pilot:** the C++ engine and `verify.py`. They check that the engine's two copies compute the same and that
+  the code does what its rules say (phase 0). They govern nothing.
+- **Omni-Compass by itself** (the third arm: native's autoscalers off, Omni-Compass the only controller on those knobs)
+  runs only where the licensee chooses it, after phase 2, preregistered as `docs/SOLO_PREREGISTRATION.md` is.
+
+## Phase 0: the code checked (one day, the evaluator's own machine)
+
+Run `python3 verify.py`. Pass: `VERIFICATION: PASS`. This includes the parity tests of the C++ engine against the Python
+(`tests/test_cpp_*_parity.py`), the shield's invariants and the reading rules. `python3 tools/reproduce.py` rebuilds every
+published table from its archived raw runs and exits 1 on any difference.
+
+## Phase 1: shadow (one week, no write rights)
+
+- The shadow kit (`docs/PILOT_KIT.md`, `scripts/pilot_shadow.sh`): the governor in observe mode at the factory beat,
+  under an identity that can read and cannot write. The kit proves this with `kubectl auth can-i` and stops if any write
+  right exists.
+- Logged at every decision: what Omni-Compass would set, what native did and what followed (`shadow_out/audit.jsonl`),
+  with the count of writes, which must be 0.
+- Pass, agreed before the start: no write, and no logged decision that breaks the shield's invariants I1 to I5 (claim C7,
+  `docs/CLAIMS_REGISTER.md`).
+
+## The handover (one day)
+
+One muscle at a time, in this order: the power cap, the machines in service, the pod autoscaler's target and range, then
+the CPU limits. `--native MUSCLE[,...]` leaves every muscle not yet handed over where native runs it. At each handover
+the reset is tested: everything goes back to native, and the native settings are read back equal to the snapshot taken
+at the start.
+
+## Phase 2: the paired pilot (30 days: three runs of 10 days, A, B and C)
+
+- **The pairing:** two matched pools at the same time, the same work split between them: native alone on one,
+  Omni-Compass on top of native on the other. Where one pool is all there is, alternate whole days between the arms,
+  with the same days of the week in each.
+- **The three runs:** days 1 to 10 are run A, days 11 to 20 run B, days 21 to 30 run C. Each run is read on its own, and
+  the three are read together by the three-run rule (`tools/confirm_abc.py`).
+- **The stops:** the kill switch is tested on the first day and the last. It is instant, for security only, and puts
+  every setting back to native (`omnicompass/master.py`, `tools/omni_switch.py`). The lease is tested once: stop the
+  governor's process and watch the plug walk every setting back to native gradually.
+- **Pass:** the pilot holds. Nothing the service is judged on reads LOSS against native in run A, B or C by the one key,
+  and every resource that rose is read beside the work it bought, as power given.
+
+## What to read: the receipts and the service gauges
+
+| Where | The receipt, native against Omni-Compass | Read from |
+|---|---|---|
+| Through the cloud | the work per dollar: the work completed over the provider's bill for each arm's machines | the provider's own cost export and the licensee's request or job counts |
+| The chip | the work per joule: the work completed over the card's own energy counter, with its clocks, temperature and throttle reasons beside it | the card's published interface (`nvidia-smi`, NVML) |
+| On site | the work per machine-hour: the pool is the owner's, so its hours are no bill | the capture below |
+| The service, every place | the 95th percentile response time (the 90th and 99th beside it), the minutes over the response line, the pods waiting for a place, the failed requests, the work completed | the licensee's own monitoring |
+| Omni-Compass itself | every write it made, read back, and every reason | its audit (`--audit`) |
+
+Capture both arms read-only with `fleet/capture/kube_capture.sh`, then score each run:
+
+`python3 pilot/score.py --baseline native.csv --omni omni.csv [--idle-w W --dyn-w W]`
+
+It reports node-hours and energy per used CPU core-hour, utilisation, pending-pod minutes and the autoscaler's shortfall
+minutes, each with a bootstrap 95% interval over hourly blocks. Energy is measured only where the capture holds a meter's
+`power_w`; where no meter reads it, energy is not scored. Each run needs at least 24 hourly blocks per arm (a 10-day run
+holds about 240).
+
+## Reading it
+
+Every gauge is read by the one key (`tools/readings.py`, `docs/HOW_TO_READ_THE_RESULTS.md`): GAIN, STEADY or LOSS by what
+the gauge is for, never by the sign of its number. Time waited, missed or failed that fell is a GAIN; work that rose is a
+GAIN; a resource spent or held that fell is a cut, a GAIN, and one that rose is power given, never a LOSS. A mean change
+under 0.5% reads STEADY. Across the three runs a reading is GAIN or LOSS in all three when every run moved the same way
+clear of zero; the runs disagree when clear runs moved in opposite directions, and that is a finding to look into, not a
+result.
 
 ## Reporting
-All pilot metrics, including failures, are reported in the same format as the benchmark results.
+
+Every row is reported, LOSS included, in the key's words, with the run it came from. The readings, the captures and their
+SHA-256 sums go to the licensee and to The Omni-Compass LLC as the pilot agreement says. Where the pilot's direction
+differs from the published benchmarks, the first presumption is the wiring (section 4.5 of the manual), and the pilot
+goes on once the wiring is checked.
 
 ---
 
