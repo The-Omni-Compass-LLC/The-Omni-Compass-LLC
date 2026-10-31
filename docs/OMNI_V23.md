@@ -74,7 +74,7 @@ pass on the tree; no C++ twin changes (the Kubernetes governor has none).
 
 ## What is run again
 
-Every benchmark runs again on omni-v23 from 16:30 UTC on 31 October 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the conductor's
+Every benchmark runs again on omni-v23 from 20:00 UTC on 31 October 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the conductor's
 campaign, `scripts/dispatch_grid.py`). The omni-v22 runs started before that moment run to their end as omni-v22's record; nothing is
 cancelled. The entry `kubernetes by itself` runs on the rig as amended, three arms, its table kept in the record and not carried on
 the front page (the founder's order of 25 October).

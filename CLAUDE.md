@@ -45,7 +45,7 @@ the founder overrides one in the conversation.
 
 ## The engine: Omni v23 stands (v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`) stands on main from 31 October, 16:30 UTC, on the
+- **Omni v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`) stands on main from 31 October, evening (its campaign from 20:00 UTC), on the
   founder's order of that day (Orders of 31 October: Omni direct keeps every muscle Omni-Compass cannot be; "any muscle that we don't
   have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever") and the standing order that every fix lands as
   the next version, told, not asked: omni-v22 with one guard in the Kubernetes governor's pod muscle of its own
@@ -61,7 +61,7 @@ the founder overrides one in the conversation.
   allowed to create an autoscaler in the workload's namespace for the hand-back alone. The model gate against omni-v22
   (`results/model_gate/V23_VS_V22.md`): identical on every gauge of all 11 models and every seed, no LOSS (no model refuses a write;
   the guard's proof is `tests/test_own_replicas.py`, `HandBack`, and the arm's own files when the entry runs again). Every benchmark
-  runs again on it from 16:30 UTC on 31 October.
+  runs again on it from 20:00 UTC on 31 October.
 - **Omni v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files; `docs/OMNI_V22.md`) stood on main from 30 to 31 October, on the founder's
   order of that morning ("find out why they went one way or the other and tweak it and turn it and tune it to the best possible way for
   an Omni Compass engine to interact with this as a system governor ... bring to a solid A mechanism"): omni-v21 with the five data

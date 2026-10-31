@@ -46,7 +46,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "results" / "grid_v23" / "DISPATCHED.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "The-Omni-Compass-LLC/The-Omni-Compass-LLC")   # tools/repo.py HOME: the conductor runs from its own fetched copy, alone
-SINCE = "2026-10-31T16:30:00Z"  # only this campaign, omni-v23 (the founder's order of 17 October: every fix makes the next version and everything runs again); earlier engines are historical
+SINCE = "2026-10-31T20:00:00Z"  # only this campaign, omni-v23 (the founder's order of 17 October: every fix makes the next version and everything runs again); earlier engines are historical
 ENGINE = "omni-v23"                 # the engine whose grid this is (tools/omni_version.py)
 SIZES = (1, 10, 100, 500)           # free GitHub only: the ladder of the Python's 500-run Monte Carlo (the founder's order of 25 October)
 RUNS = 500                         # nested 1/10/100/500 runs on free GitHub runners
@@ -106,7 +106,7 @@ MAX_TRIES = 3                      # a repetition whose job failed this many tim
 # then C, and never while a run that goes first waits for a runner. A workflow's runs started since RERUN_SINCE are read
 # back by count, in the queue's own order, so nothing is started twice (a run dispatched by hand counts as started)
 RERUNS = ROOT / "scripts" / "reruns.txt"
-RERUN_SINCE = "2026-10-31T16:30:00Z"   # omni-v23: every benchmark runs again from a little after the moment the engine landed on main (24 October)
+RERUN_SINCE = "2026-10-31T20:00:00Z"   # omni-v23: every benchmark runs again from a little after the moment the engine landed on main (24 October)
 # the kind rig as amended on 18 October (scripts/kind_bench.sh pulls the served image onto every worker before each arm,
 # docs/POD_START_WAIT.md): a run of a workflow that builds a kind cluster counts only when its own commit carries the
 # pre-puller (RIG_FILE, read from GitHub at the run's head commit), so no table mixes the two rigs and no run is counted on
@@ -129,7 +129,7 @@ RERUN_PER_TICK = 6                 # reruns released at most in one tick
 # founder's order of 16 October: the Azure run is the measure of the other two), each behind its own switch line
 # (switch=on | off): off until that cloud's secrets are in the repository, so nothing is rented before the founder says
 AZURE_QUEUE = ROOT / "scripts" / "azure_queue.txt"
-AZURE_SINCE = "2026-10-31T16:30:00Z"   # omni-v23: every Azure set runs again on the engine that stands; the sets of earlier engines already
+AZURE_SINCE = "2026-10-31T20:00:00Z"   # omni-v23: every Azure set runs again on the engine that stands; the sets of earlier engines already
                                        # started run to their end (nothing is cancelled) and stay as their own engine's record, counted in no v23 table
 AZURE_WF = "aks-metered.yml"
 # The clouds whose cluster a tester builds in the provider's own console and hands over by its kubeconfig (byoc-metered.yml,

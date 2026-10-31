@@ -36,6 +36,9 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v21 | 5.2% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v21 | 3.8% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v21 | 8.1% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v21 | 3.8% | GAIN | S |
@@ -58,9 +61,6 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 | Kafka, the consumer group's size | omni-v21 | 1.0% | GAIN AND LOSS | L |
 | Drone swarms, the three untouched cells | omni-v21 | 3.0% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | 1.5% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -74,7 +74,7 @@ Omni-Compass cannot be. A write of a workload's own scale that the cluster refus
 refusals in a row the knob goes back to native's own pod autoscaler, made from the operator's target and range recorded on the
 workload, and the muscle leaves the workload to it, so the organism never runs with a knob nobody moves. 64 of its 65 files are
 omni-v22's bytes; the model gate against omni-v22 (`results/model_gate/V23_VS_V22.md`, class S) read identical on every gauge of every
-model, no LOSS. Every benchmark runs again on it from 16:30 UTC on 31 October (`scripts/reruns.txt`); the omni-v22 runs started before
+model, no LOSS. Every benchmark runs again on it from 20:00 UTC on 31 October (`scripts/reruns.txt`); the omni-v22 runs started before
 run to their end as omni-v22's record.
 
 **omni-v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files; `docs/OMNI_V22.md`), on main from 30 to 31 October: the five data

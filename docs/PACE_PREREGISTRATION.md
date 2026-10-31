@@ -146,7 +146,7 @@ over the line down 18.4%, pods waiting down 9.9%, machine-hours down 1.4%; 20 s:
 reading of an engine that no longer stands, written here so the pick below is not steered by it.
 
 **The run** (our own models, class S): `tools/model_gate.py --models pace_cloud,pace_kind --pace-periods 60,5,10,15,20,30,40,45,50,75,90,120
---seeds 101-108 --days 1` on the omni-v23 tree (the engine that stands from 31 October, 16:30 UTC), the tune study's development
+--seeds 101-108 --days 1` on the omni-v23 tree (the engine that stands from 31 October, evening), the tune study's development
 seeds (`docs/THE_TUNE.md`, rule 4), the page written by `tools/beat_ladder.py` beside the gate's other records in `results/model_gate/`. Seeds 109 to 116 are
 added in a second report only if the rule below leaves two beats that neither dominates; nothing else about the run changes
 after it starts. Written at 16:40 UTC; the ladder's kind setting started at 16:47 UTC (its cloud setting, started with it, was
