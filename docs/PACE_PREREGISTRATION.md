@@ -187,6 +187,29 @@ cluster autoscaler: on site, machines already paid for) are a plant of their own
 read under the same rule before the on-site factory beat is picked. The real runs of this preregistration are on kind and do not change; the Azure
 sets take the same change in `docs/K8S_COMPASS_PREREGISTRATION.md` (the amendment of 31 October).
 
+## Amendment 6 (31 October, night): the model's stand-in corrected; the ladder read again on it, in the cloud and on site
+
+The model's stand-in cluster (`pilot/selfpilot.py`) listed its pods with none of the metadata a real cluster gives every pod and as
+one repeated object per workload, and took only the autoscaler's target among the governor's writes: the governor's count of the
+room beside a workload failed on its first pod (4 to 7 of its decisions a day lost on the 5 s plant), every running pod of a workload
+read as on one machine, and the raise of the autoscaler's range never landed. It is corrected (`tests/test_model_standin.py`). Every
+ladder and gate read before the correction ran on the faulty stand-in and stands as its own record, none of them picking the factory
+beat: omni-v17's and omni-v23's ladders (`results/model_gate/V17_LADDER.md`, `V23_LADDER.md`), the gates to omni-v23, and the
+live-engine session's reading of 31 October, whose 10 s candidate dropped 163 decisions against 23 at 60 s on the gate's seeds (six
+times the decisions, six times the drops) and was not landed.
+
+On the founder's words of 31 October, night ("You pick and find out"; "you're supposed to see one in 99, 5 in 95, 10 in 90, and tell
+me which one is the best result for an organism"), amendment 4's run is read again on the corrected model, unchanged in every other
+way: the same twelve beats, seeds 101 to 108, one day, omni-v23's rules (the candidate tree it runs on decides as omni-v23 at any
+beat set on its command line). It is read in both places: in the cloud (`pace_cloud`, the plant with the cloud's own autoscaler, at
+the max; amendment 5) and on site (`pace_onsite`, the kind rig's own machines made at the start, no cluster autoscaler; amendment 5).
+Amendment 4's frozen rule picks each place's beat. Beside every beat stand the response time's tails read from every request the
+model answered, the 90th, 95th and 99th percentiles (the worst 10, 5 and 1 in 100), shown and never added to the rule. The pick is
+then read on the untouched seeds 1 to 8 against omni-v23 at its shipped 60 s and lands only through the model gate with no LOSS.
+Written while the run was under way (started at 20:27 UTC on the corrected tree): the cloud's rows at 60 s and 5 s had been seen,
+and so had readings at 10 s and 20 s taken on the same corrected model by the tune study (`docs/THE_TUNE.md`); the rule was frozen
+before any of them, and none of it changes.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
