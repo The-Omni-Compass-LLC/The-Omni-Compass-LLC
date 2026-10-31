@@ -16,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools import verify_receipt as vr  # noqa: E402
+from tools.repo import URL  # noqa: E402
 
 WORKFLOW = ROOT / ".github" / "workflows" / "archive-run.yml"
 
@@ -40,10 +41,9 @@ class FakeCert:
         return type("Ext", (), {"value": type("Raw", (), {"value": self.fields[key]})()})()
 
 
-OURS = {"issuer": vr.ISSUER, "repository_id": vr.REPOSITORY_ID, "owner_id": vr.OWNER_ID,
-        "repository": "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC",
-        "signer": "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/.github/workflows/archive-run.yml@refs/heads/main",
-        "trigger": "schedule", "run": "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/1/attempts/1"}
+OURS = {"issuer": vr.ISSUER, "repository_id": vr.REPOSITORY_ID, "owner_id": vr.OWNER_ID, "repository": URL,
+        "signer": f"{URL}/.github/workflows/archive-run.yml@refs/heads/main", "trigger": "schedule",
+        "run": f"{URL}/actions/runs/1/attempts/1"}
 
 
 class Sums(unittest.TestCase):

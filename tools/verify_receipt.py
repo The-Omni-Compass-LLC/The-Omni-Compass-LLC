@@ -40,8 +40,8 @@ BUNDLE = SUMS + ".sigstore.json"
 # GitHub Actions' identity, as Sigstore's certificate authority writes it into the signing certificate (the extensions
 # of Fulcio's arc 1.3.6.1.4.1.57264.1, each a DER UTF8String)
 ISSUER = "https://token.actions.githubusercontent.com"
-REPOSITORY_ID = "1390458092"          # The-Omni-Compass-LLC/The-Omni-Compass-LLC (its number survives a rename)
-OWNER_ID = "334396871"                # The-Omni-Compass-LLC
+REPOSITORY_ID = "1390458092"          # GitHub's number for the repository tools/repo.py names (it survives a rename)
+OWNER_ID = "334396871"                # GitHub's number for the organization that owns it
 WORKFLOW = "/.github/workflows/archive-run.yml@refs/heads/"
 OID = {"issuer": "1.3.6.1.4.1.57264.1.8", "signer": "1.3.6.1.4.1.57264.1.9", "repository": "1.3.6.1.4.1.57264.1.12",
        "repository_id": "1.3.6.1.4.1.57264.1.15", "owner_id": "1.3.6.1.4.1.57264.1.17", "trigger": "1.3.6.1.4.1.57264.1.20",
