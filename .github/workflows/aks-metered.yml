@@ -10,7 +10,7 @@
 # group is deleted at the end whatever happens.
 name: aks-metered
 run-name: >-
-  ${{ format('aks-metered {0}{1}{2}{6} dial {5} {3} {4}', github.event.inputs.load_steps != '' && format('burst {0}', github.event.inputs.load_steps) || 'steady',
+  ${{ format('aks-metered {0}{1}{2}{6} dial {5} {3} {4}', github.event.inputs.loadgen == 'meter' && format('work meter {0}', github.event.inputs.rate_steps) || (github.event.inputs.load_steps != '' && format('burst {0}', github.event.inputs.load_steps) || 'steady'),
      github.event.inputs.organism != '' && format(' organism {0} x{1}', github.event.inputs.organism, github.event.inputs.organism_scale) || '',
      github.event.inputs.replica_ceiling != '' && format(' replica room {0}', github.event.inputs.replica_ceiling) || '',
      github.event.inputs.location || 'eastus', github.event.inputs.worker_pools != '' && 'pools' || (github.event.inputs.vm_size || 'Standard_D2s_v4'),
@@ -37,6 +37,8 @@ on:
       replica_ceiling: {description: "Omni-Compass's replica room: the most replicas it may raise the app's cap to while the cap binds and the line is threatened, handed back once the demand holds still (the compass law; docs/AKS_REPLICA_ROOM_PREREGISTRATION.md); native keeps the operator's cap. 0: the operator's cap, never moved (the cloud sets: the bill at native's work); N: a ceiling of the operator's own; empty: read live (what the machines can hold, one pod under)", default: ""}
       stop_looks: {description: "The preregistered stopping rule (tools/stop_rule.py, the amendment of 19 October): looks, in paired repetitions, at which the set stops once its bill is read (99% intervals; never on a LOSS); empty: every repetition runs", default: ""}
       dial: {description: "The dial of Omni-Compass on top: max, the factory tune (the whole engine, every muscle; the founder's order of 31 October for every cloud: the bill judged beside the work by the one key, never ruled), or save, the tune-down (native's work on the least resource; a changed tune, its receipts its own)", default: "max"}
+      loadgen: {description: "The load: open, a fixed rate of requests, the same work in both arms (every set before 31 October); meter, the work meter's rising rates with every answer counted, so the work can grow and the receipt reads the work per dollar (docs/K8S_COMPASS_PREREGISTRATION.md, the amendment of 31 October)", default: "open"}
+      rate_steps: {description: "The work meter's rates, requests per second, rising, one per step (loadgen meter only)", default: ""}
 # one Azure set at a time per machine family and region (each family has its own 10-vCPU allowance): the default family
 # (Standard_D2s_v4 in eastus, and every multi-pool fleet, which uses it too) keeps the one queue it always had; a set on
 # another family or in another region queues on its own and runs beside it
@@ -154,7 +156,8 @@ jobs:
           REP: ${{ matrix.rep }}
           ARMS: ${{ github.event.inputs.arms || 'native compass' }}
           DURATION: ${{ github.event.inputs.duration_s || '900' }}
-          LOADGEN: open
+          LOADGEN: ${{ github.event.inputs.loadgen || 'open' }}
+          RATE_STEPS: ${{ github.event.inputs.rate_steps || '' }}
           LOAD_STEPS: ${{ github.event.inputs.load_steps || '' }}
           ORGANISM: ${{ github.event.inputs.organism || '' }}
           LOAD_MAX: ${{ github.event.inputs.load_max || '6' }}
