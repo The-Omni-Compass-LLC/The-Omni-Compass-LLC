@@ -58,8 +58,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, the same
-work for a smaller bill.
+faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
+work for the same bill.
 
 **What the record shows so far.** Every claim is a paired comparison of native and Omni-Compass on top of native, and since
 23 October of Omni-Compass direct beside them, on the same machines with the same work, run three separate times (A, B and C)
@@ -646,7 +646,7 @@ installed is a quarter off the bill.
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
-- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
+- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
   - Real Kubernetes (GitHub): 28.4% GAIN
   - Real database (PostgreSQL behind PgBouncer, GitHub): 4.1% GAIN
   - Real database buffer pool (MySQL under sysbench, GitHub): 3.2% GAIN
@@ -3271,7 +3271,7 @@ at once.
 | H8 | It writes outside what the operator allows | A capability contract (minimum, maximum, resolution, step and rate limits) and a safety contract (hard bounds, forbidden contexts, fail closed) on every muscle (`omnicompass/muscle_sdk.py`: `CapabilityContract`, `SafetyContract`) | `tests/test_muscle_sdk.py` |
 | H9 | It uses more privilege than its job needs | Least-privilege service account (`deploy/kind/rbac-omni.yaml`), and every arm records what it can and cannot do (`kubectl auth can-i`, `rbac_omni.txt` in each run's folder) | The receipts in every run folder on the branch `raw` |
 | H10 | It expands while a security hold is on | The shield: no expansion during a security hold (invariant I1), with a C++ twin checked against the Python (`omnicompass/shield.py`, `cpp/`) | `tests/test_shield_properties.py`, `tests/test_cpp_shield_parity.py`, `tests/test_cpp_shield_adversarial.py` |
-| H11 | In the cloud, it raises the bill | Machines alone (`--give-back-only`): no pod autoscaler moved, no processor conveyed, no power capped. It only parks a machine the cloud already made, after its own trial, and wakes it on a breach (`scripts/kind_bench.sh`, `OMNI_MACHINES_ONLY=1`) | Azure: no difference in the bill on the engine of 13 October (`results/live/AKS_BILL.md`); the Azure sets run one at a time on the engine that stands. Google and Amazon: **undetermined**, not yet run. |
+| H11 | In the cloud, it raises the bill for the same work | The bill is judged, never ruled (the founder's order of 31 October struck the machines-alone rule of 14 October): every cloud set reads the bill beside the work it bought by the one key, the cloud's judged number the work per dollar: a factory tune whose work per dollar falls against native (a bigger bill for the same work) is not admissible (`docs/THE_TUNE.md`) and is a fault of the tune, root-caused in the model first; the machine lever asks the cloud for no machine (`scripts/kind_nodepool.sh`); paid sets capped at 100 repetitions and 1, 10 and 100 copies | Azure: no difference in the bill on the engine of 13 October, at the tune-down on the machines alone (`results/live/AKS_BILL.md`); the sets at the max wait, held, for the load whose work grows with the speed (the work meter), so each reads the work per dollar. Google and Amazon: **undetermined**, not yet run. |
 | H12 | A test machine's limit is reported as the governor's effect | Paired arms on the same runner, rotated order, the refusal rules for an unhealthy window, and the kind rig's image pre-puller (`docs/POD_START_WAIT.md`). `tools/confirm_abc.py` marks any table whose runs differ in engine or rig | `tests/test_confirm_abc.py`, `tests/test_pod_phases.py`, `tests/test_release_campaign.py` |
 | H13 | The hand-back itself is turned against the system: a record another local user planted makes the watchdog run a command or stop a process, or a governor's pid given to another process gets that process stopped | The watchdog acts only on records of its own user that no other user can write, read without following a link; a pid counts as the governor's only while its process started before the governor registered (`tools/omni_switch.py`, 18 October). Every threat of misuse is set out in `docs/THREAT_MODEL.md` | `tests/test_switch_trust.py` (each fault reproduced on the tool as it stood, gone on the fix) |
 
@@ -3350,7 +3350,7 @@ analysis: **no outside security review or penetration test has been made**, and 
 | T7 | The engine's code is changed | The engine is fingerprinted: `OMNI_V16.json` names the digest of its 55 files, and `python3 tools/omni_version.py` names the engine a checkout carries, or what differs from every fingerprint. `python3 verify.py` holds every place that names the engine to the engine that stands (`tools/land_engine.py --check`) | `tests/` (the release manifest and the version tool); every run's receipt names the engine its commit carries | Releases are not signed artefacts, the repository's bots commit unsigned, and nothing checks the fingerprint when a governor starts |
 | T8 | A dependency is replaced (a Python package, a GitHub action) | Every package pip installs is pinned to an exact version with the SHA-256 of every file PyPI publishes for it (`requirements-lock.txt`, hash-checking mode), with a software bill of materials (`sbom/omni-compass.cdx.json`, `sbom/omni-compass.spdx.json`, written by `tools/sbom.py`); every action a workflow uses is named by its commit, its tag beside it (407 uses, 19 October); `security-scan.yml` audits every pin against the public vulnerability databases each week; Dependabot watches both the packages and the actions (`.github/dependabot.yml`) | `tests/test_supply_chain.py` fails a push with an action named by tag or a package without hashes; `tools/sbom.py --check` in `verify.py` | Closed for what Omni-Compass installs; the tools a benchmark machine installs from its own package manager (kind, kubectl, the databases) are pinned by version, not by hash |
 | T9 | A secret leaks from a workflow | Secrets reach only workflows started on this repository (a push or a dispatch); no workflow runs on `pull_request_target`, so no fork's code ever runs with them. Secrets are kept in GitHub's store only, and GitHub masks them in every log. A key stored in another form is named by its shape before any cloud's login step reads it, never a character of it printed (`tools/cloud_key_check.py`), because a login step's own refusal can quote the first characters of what it was given, and a piece of a secret is not masked (21 October: Azure's did, on a public run page) | Every workflow names its token's rights; `tests/test_cloud_check.py` fails a push that leaves any Azure login without the shape check before it; the 28 that only build, run and upload get `contents: read` and nothing else (18 October). `tests/test_workflow_permissions.py` fails a push that leaves any workflow on the repository's default, or gives a read-only token to a workflow that pushes, starts a run or reads another run's files | — |
-| T10 | A run spends money it should not | In a cloud, the governor works on the machines alone: it parks a machine the cloud already made and wakes it on a breach, and moves no pod, conveys no processor and caps no power (`OMNI_MACHINES_ONLY=1`). A cloud's set starts only after that cloud's $0 check passes (Google, Amazon and, since 22 October, Azure: the key, the login, the plan, the machine type, every quota; `tools/cloud_key_check.py`). Nothing is rented for the grid | `results/live/AKS_BILL.md`; `tests/test_cloud_check.py` | The credentials in the secrets can create clusters; their scope is set in each cloud's console |
+| T10 | A run spends money it should not | In a cloud the whole engine runs at the max (the founder's order of 31 October) on top of the cloud's own autoscaler, which alone adds machines; the governor's lever parks a machine that exists and wakes it, and asks the cloud for none (`scripts/kind_nodepool.sh`); the bill is judged beside the work it bought, a tune whose work per dollar falls against native not admissible (`docs/THE_TUNE.md`), and paid sets stay at 100 repetitions and 1, 10 and 100 copies. A cloud's set starts only after that cloud's $0 check passes (Google, Amazon and, since 22 October, Azure: the key, the login, the plan, the machine type, every quota; `tools/cloud_key_check.py`). Nothing is rented for the grid | `results/live/AKS_BILL.md`; `tests/test_cloud_check.py` | The credentials in the secrets can create clusters; their scope is set in each cloud's console |
 | T11 | The evidence is changed after the run | Every archived run is kept byte for byte on the branch `raw` with its SHA-256 sums (`scripts/raw_archive.sh`); every table names its runs and is rebuilt by its own tool from them | `tests/test_raw_archive.py` | Audit lines are not signed when written; the sums protect them from the moment they are archived |
 | T12 | The system's control plane is taken away (the API server frozen, the metrics server gone) | The governor holds on a reading it cannot make; a failed decision writes nothing; its lease runs 300 s at a 60-second decision, so a short outage does not hand back what is working | The extended fault test (queued, A, B and C: `docs/K8S_COMPASS_PREREGISTRATION.md`) | Whatever the runs read is reported |
 
@@ -6007,7 +6007,7 @@ Omni-Compass idling the machines it gives back, which the autoscaler then delete
 every work machine that exists, every 15 seconds, priced at Azure's list price for its family (`tools/live_reps.py`,
 `POOL_PRICES`); each cluster is deleted when its arm ends, so nothing keeps billing.
 
-![Wiring schematic: a managed cloud cluster, the machines alone (the cloud mode). The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](figures/s_cloud_machines.svg)
+![Wiring schematic: a managed cloud cluster, the whole engine at the max on top of the cloud's own autoscaler. The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](figures/s_cloud_machines.svg)
 
 **Sizing the fleet to the lever.** The smallest saving a fleet can show is one machine. On 4 workers one machine is
 25% of the fleet, so only a saving of about 30% or more can clear the noise; on 15 workers about 10%; on 96 about 3%.
@@ -6023,17 +6023,15 @@ so 9 × workers lets the fleet fill), the same in both arms. The preregistered d
 
 ![Modelled trace: one pedal over a burst, machines against demand (class S: the rules of the pedal drawn over the burst 1 4 1 6 1 9, five decisions a step). Native's autoscaler adds a machine when pods cannot be placed and removes one after its own delay; with Omni-Compass on top the push adds capacity at once at the wall and the lift off gives it back one machine at a time through the gate and the trial, never below the floor of 2.](figures/t_pedal.svg)
 
-**In the cloud, the bill is the gauge, and it is never raised.** In a public cloud every machine that exists is billed,
-whether it carries work or not, so the aim on a managed cluster is native's work for a smaller bill, never a bigger one.
-The cloud therefore runs at the tune-down (`dial save`, the `dial` input of `aks-metered` and its default) with the governor
-on the machines alone (`OMNI_MACHINES_ONLY=1`): it moves no pod autoscaler, conveys no processor and caps no power, so the
-pods are exactly native's and the cloud's own autoscaler alone makes machines; the governor parks a machine the cloud
-already made only after its own trial shows the response time holds, and wakes it on a breach. It can hold no
-more pods and no more machines than native: the bill can only fall or stay, and it falls in the quiet stretches between
-bursts and in a day's trough. The
-max (`dial max`) belongs where the machines are already paid for (your own racks, a chip whose heat line is its limit),
-where more work from the same machines is the gain; in a cloud it buys speed with machines, and every machine it adds is
-on the bill. The benefit of the max is taken before the cloud, in the service's own engine, or after it, in the chip.
+**In the cloud, the work the bill buys.** In a public cloud every machine that exists is billed, whether it carries work
+or not. The cloud runs the whole engine at the max, as on site (`dial max`, the `dial` input of `aks-metered` and its default;
+the founder's order of 31 October struck the tune-down on the machines alone of 14 October): the governor moves the service's
+pod target inside its autoscaler's cover, conveys the processor a machine can spare, and parks a machine the cloud already
+made only after its own trial shows the response time holds, waking it on a breach; the cloud's own autoscaler, native's
+machine controller, stays in every arm and alone adds machines. The benefit is made at the software end and at the chip and
+comes through the wire as work per dollar: more work for the same money. A smaller bill is never the aim; a company that
+wants a cut turns the dial down (`dial save`, a changed tune, its receipts its own). The bill is shown beside the work it
+bought, never ruled.
 In the cloud, as everywhere, the governor's fast checks (the scheduling floor, the pod reflex, and the conveyance every 15
 seconds whichever check falls due) run every 5 seconds, three times as fast as the HPA's own 15-second check, and its full
 decision every 60 seconds, the main engine's beat (omni-v17; omni-v16 decided every 15 seconds, the HPA's own pace, and every
@@ -6066,9 +6064,9 @@ sec all over heart beat"), and the same afternoon, having read the reads of the 
 (`results/model_gate/V17_LADDER.md`; on the live engine page, the page's section 1j, `#s-dial`), and three runs read every beat against native and
 against 60 s (`docs/PACE_PREREGISTRATION.md`, amendment 3). The cushion each muscle keeps is set in
 seconds by its own climb, wobble and reaction time, so it is the same at any pace; a longer period would not widen it, only
-leave the governor blind for longer between looks. In the cloud v7 also makes the whole rule one flag, `--give-back-only`, enforced in the governor
+leave the governor blind for longer between looks. In the cloud v7 also made the whole rule one flag, `--give-back-only`, enforced in the governor
 itself: every actuator but the node pool off, the replica ceiling 0, the dial at the tune-down (`docs/OMNI_V7.md`,
-section 5).
+section 5); the founder's order of 31 October struck that rule, and nothing passes the flag since.
 
 ![Flowchart: parking and waking a machine in the cloud. At every full decision: a 95th percentile over the line, or a blind feed, wakes every parked machine at once; a pod waiting for a place, checked every 5 s, wakes one machine within 5 s while the pod lands on a parked one at once; otherwise, only with the release gate open and the trial allowing it, one machine is parked (a PreferNoSchedule taint, its pods marked first to go), and the cloud's own autoscaler deletes it once empty, on its own schedule.](figures/f_park.svg)
 
@@ -7781,7 +7779,8 @@ route's bill is resolved yet. A whole-workload index (the composition's one numb
 resource bounds and every applicable hardware limit; each reading Hⱼ has its limit Lⱼ. A result names which of the two
 objectives its tune served: the most healthy production, maximise E[P(θ)] subject to Hⱼ(θ) ≤ Lⱼ for every j (the max, the
 default brain), or the least cost per unit of completed production, minimise E[C(θ) ⁄ P(θ)] subject to the same requirements
-(the tune-down, a cloud's machines alone). P is the useful output, the work done inside the line. A requirement crossed is
+(the tune-down, `dial save`, a tune anyone may set; the clouds ran it until 31 October, when the founder struck that rule and
+every cloud runs the max with the bill judged beside the work). P is the useful output, the work done inside the line. A requirement crossed is
 read on its own gauge (time over the line, failed requests, alert minutes) and never traded away.
 
 **The verdict rules.** Every judged gauge is read by the one key (`tools/readings.py`, the key at the top of this page): the
@@ -8984,11 +8983,14 @@ large fleet's reading does not exist yet, and nothing about the bill on a real c
 **A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
 between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
 carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on site or off site).
-Omni-Compass can live in all three places. On the wire alone, as every cloud run in this repository is set (the tune-down on
-the machines only, the pods exactly native's), it can only park machines the cloud's own autoscaler already made, after its own
-trial; so a cloud run alone can show at most a small cut in the bill of the wire. It cannot show the work and the speed gained
-at the software end, nor the energy and the throughput gained at the bare metal, because neither end is under it; those are
-measured where Omni-Compass sits on them and composed with the wire into one organism and one bill by the product law
+Omni-Compass can live in all three places. The wire makes no benefit of its own. Until 31 October every cloud run in this
+repository was set on the wire alone (the tune-down on the machines only, the pods exactly native's), so it could only park
+machines the cloud's own autoscaler already made, after its own trial, and show at most a small cut in the bill of the wire.
+From 31 October (the founder's order of that day) every cloud set runs the whole engine at the max on the cloud's cluster, the
+software end, so its receipt shows that the engine holds there as on site and how much of that end's gain comes through the
+wire, read as work per dollar beside the bill: more work for the same money, never a smaller bill as the aim. The energy and
+the throughput gained at the bare metal are the provider's and not under it; they are measured where Omni-Compass sits on
+the chip and composed with the wire into one organism and one bill by the product law
 R(g) = ∏ℓ Rℓ(g), log R = Σℓ log Rℓ, the variances added (`tools/whole_system.py`, `results/WHOLE_SYSTEM.md`; regrouped into
 places and routes by `docs/engine/export_whole.py`). A provider that ran Omni-Compass on its own back end would see that
 benefit on its own chips and racks; no tenant can meter it, so it is never claimed here as a measurement. No run has stacked the
@@ -12332,6 +12334,42 @@ Carlo (`tools/engine_runs.py`), replacing the 1,000 tier of 15 October. Every gr
 ladder 1, 10, 100 and 500 (`scripts/dispatch_grid.py`); runs started before it stay as their own record. Paid cloud and GPU runs
 stay at 1, 10 and 100 copies with at most 100 repetitions.
 
+### 66.55 Amendment (31 October 2026, written before any set at the max starts): every cloud set runs the whole engine at the max; the machines alone of 14 October struck
+
+The founder's words of 31 October ("Why is there any hard rule written ... Whatever the math does and falls out is whatever
+happens. All we need to do is tune up what the math does to the best way we can and let whatever falls out fall out. And when it
+falls out wrong, the tuning is wrong"; "What I care is to make the cloud the best it can be with Omni-Compass in it, as well as
+on site with Omni-Compass on it, and we have to sit and tune and tweak both scenarios"). The section "In the cloud, the machines
+alone" above is struck from this amendment on: no set started after it runs `OMNI_MACHINES_ONLY=1`, `dial save` or the
+governor's `--give-back-only` (the switch is gone from the rig and the workflows; the flag leaves the governor with the next
+engine version, and nothing passes it). Every cloud set runs Omni-Compass on top at the max, every muscle: the service sensed and
+its pod target moved inside the autoscaler's cover, the processor conveyed, the declared power model read, the replica room read
+live as on kind (`replica_ceiling` empty), and the machine lever parking and waking machines the cloud's own autoscaler made; the
+autoscaler, native's machine controller, stays in every arm and alone adds machines (`scripts/kind_nodepool.sh` asks the cloud
+for none). The bill (machine-hours at list price) is read by the one key beside work, response time, failures and alert
+minutes, and the cloud's judged number is the work per dollar: the work answered within the line for each dollar of the bill.
+The bill may rise where the work rises more, a rise read as power given beside the work it bought; a tune whose work per dollar
+falls against native is not admissible (`docs/THE_TUNE.md`), a fault of the tune, root-caused in the model first
+(`tools/model_gate.py`, whose cloud setting is the max from this amendment); the founder's order of 18 October, never raise its
+bill, is read the same way, by judging, never by tying the engine's hands. Every set at
+the max is its own A, B and C under the stopping rule of 19 October and the cap of 12 October (100 paired repetitions; 1, 10 and
+100 copies); the sets started before this amendment (omni-v18's steady set; omni-v21's steady set, 25 of 100 repetitions when
+this was written) finish as the tune-down's record and are read in no table with a set at the max. Google's and Amazon's queues
+carry the same change behind their switches.
+
+The same evening, before any set at the max started (the founder's words: "We never make the bill smaller ... they're looking to
+do more work with the money they're spending"; and then, "We're pushing 1% more bill, but we're getting ~12% more work ... anybody
+will pay 1% more for 10% more product"): the cloud is judged by its work per dollar, and these sets cannot read it as built. Each
+sends a fixed rate of requests (`LOADGEN=open`), so its work is the same in both arms by design and a set at the max could show
+only the bill beside a faster answer; the factory beat's ladder on omni-v23 reads the cloud setting at the max with the
+machine-hours up 9% to 35% across the beats, 14% at 60 s, on a plant whose work is fixed the same way
+(`results/model_gate/V23_LADDER.md`, our own models, class S). Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`)
+until its sets carry the load whose work grows with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, the
+completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
+here, on the engine that stands then.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
 ## 67. The Pod Start Wait on One Shared Host
 
 
@@ -14447,13 +14485,15 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`; `tools/deviations.py --check`, run by `verify.py`, fails a push where this register is not what they give. Each amendment's reason, and what it changed, is written in the preregistration it amends; this register is the index to all of them, newest first. The timing is the amendment's own statement in its heading. Earlier windows, runs and tables keep the rule they ran under, and a three-run table never pools runs from either side of an amendment that changes what it reads.
 
-91 amendments in 18 preregistrations: 73 before the runs it governs; 11 not stated in its heading; 7 after runs began.
+93 amendments in 18 preregistrations: 75 before the runs it governs; 11 not stated in its heading; 7 after runs began.
 
 | Date | Preregistration | Amendment | Timing |
 |---|---|---|---|
 | 2026-10-31 | `docs/SOLO_PREREGISTRATION.md` | Amendment 2 (31 October 2026, written before the runs it governs): Omni direct keeps every muscle Omni-Compass cannot be | before the runs it governs |
 | 2026-10-31 | `docs/SOLO_PREREGISTRATION.md` | Amendment 1 (31 October 2026, written before the runs it governs): the arm's pod writes were refused by the rig's own identity | before the runs it governs |
+| 2026-10-31 | `docs/PACE_PREREGISTRATION.md` | Amendment 5 (31 October, written before the ladder's cloud half runs on it): the cloud setting at the max | before the runs it governs |
 | 2026-10-31 | `docs/PACE_PREREGISTRATION.md` | Amendment 4 (31 October, written before any reading of the ladder was seen): the factory beat read again on the engine that stands | before the runs it governs |
+| 2026-10-31 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (31 October 2026, written before any set at the max starts): every cloud set runs the whole engine at the max; the machines alone of 14 October struck | before the runs it governs |
 | 2026-10-30 | `docs/YCSB_PREREGISTRATION.md` | Amendment 6 (2026-10-30, declared before any run on it): the max on the cache, through the server's own account of a miss (the next engine's candidate) | before the runs it governs |
 | 2026-10-30 | `docs/REDIS_PREREGISTRATION.md` | Amendment 5 (2026-10-30, declared before any run on it): the max on the cache's ceiling, with the working set's floor (the next engine's candidate) | before the runs it governs |
 | 2026-10-30 | `docs/POSTGRES_PREREGISTRATION.md` | Amendment 4 (2026-10-30, declared before any run on it): the max on the pooler's pool (the next engine's candidate) | before the runs it governs |
@@ -14900,7 +14940,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
-- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
+- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
   - Real Kubernetes (GitHub): 28.4% GAIN
   - Real database (PostgreSQL behind PgBouncer, GitHub): 4.1% GAIN
   - Real database buffer pool (MySQL under sysbench, GitHub): 3.2% GAIN
@@ -15254,8 +15294,8 @@ it: the engine's fingerprint, the harness, the load and the window. The same eng
 another purpose, gives another result, and that result is its own.
 
 A team that wants a different outcome sets the inputs for it and reads its own receipts against native: the most work at any
-spend (the max, the default); the same work as native for a smaller bill (the tune-down on the machines alone, the cloud's
-rule); a muscle held at a limit of the team's own choosing (its card, or its cover); a knob left native (watched, never
+spend (the max, the default, in a cloud as on site since 31 October); the same work as native for a smaller bill (the tune-down,
+a tune anyone may set); a muscle held at a limit of the team's own choosing (its card, or its cover); a knob left native (watched, never
 written). Each of those is a legitimate setting of the inputs, and each has its own result. What no reader may do is read one
 tune's receipt as another's, or read a receipt without its inputs. The factory tune is the one setting whose receipts this book publishes (the Declaration of the factory tune, `DISCLOSURES.md`, section 3); the dial and the cards are the inputs a licensee may change, and a changed tune's results are its own (section 76.6). Where a result read elsewhere differs from the
 published one, the first presumption is an input: the wiring, the settings or the reading (`DISCLOSURES.md`, section 4).
@@ -15308,7 +15348,8 @@ explicit, and each reported result names its objective and its exact profile:
 
   minimise E[C(θ) ⁄ P(θ)] subject to the same requirements
 
-(what that completed production costs: the tune-down, the cloud's machines alone).
+(what that completed production costs: the tune-down, `dial save`, a tune anyone may set; the clouds ran it until 31 October,
+when the founder struck that rule and every cloud runs the max, the bill judged beside the work).
 
 **How a configuration is chosen.** The factory baseline is established in eight steps: (1) verify the mechanisms:
 observations, units, authority, actuation, read-back, limits and recovery; (2) exercise the six governing intervals and the
@@ -16420,7 +16461,7 @@ engine change, and no engine file moved for this measurement.
 
 #### 88.3.9 Validation
 
-Six shared-host regressions pass (`tests/test_convey_shared_host.py`: each node keeps its own arithmetic under the top, a busy or unread host holds every raise, a busy host still lowers, a start holds nothing, separate machines are never held, an unreadable quota holds nothing). Nine quota regressions pass (`tests/test_quota_convey.py`, among them: an unreadable quota is no budget known); the original source fails both the full-quota regression and the admission-rejection regression. Existing conveyance integration checks pass unchanged. The verdict's rule tests (`tests/test_verdict_interval.py`, `tests/test_verdict.py`: v6's medians kept under `judge="median"`, a noiseless 1.5% rise refused against a 1% allowance under v7), the time-correct tests (`tests/test_time_correct.py`, `tests/test_cloud_cadence.py`) and the cloud tests (`tests/test_cloud_machines_only.py`) pass, as do every verdict user's tests (Redis, Kafka, pgbench, sysbench, YCSB, CPU power, GPU). Live GitHub trials on the v7 commit (KEDA's add-ons, Goldilocks, CruiseKube, capacity) repeats the original cap 1500m / repetition 4 / 1200-second-per-arm case at the original request rates. Its completion and measured result must be read from its artifact, with any LOSS retained. The trial cannot launch Azure, Google, Amazon or GPUs.
+Six shared-host regressions pass (`tests/test_convey_shared_host.py`: each node keeps its own arithmetic under the top, a busy or unread host holds every raise, a busy host still lowers, a start holds nothing, separate machines are never held, an unreadable quota holds nothing). Nine quota regressions pass (`tests/test_quota_convey.py`, among them: an unreadable quota is no budget known); the original source fails both the full-quota regression and the admission-rejection regression. Existing conveyance integration checks pass unchanged. The verdict's rule tests (`tests/test_verdict_interval.py`, `tests/test_verdict.py`: v6's medians kept under `judge="median"`, a noiseless 1.5% rise refused against a 1% allowance under v7), the time-correct tests (`tests/test_time_correct.py`, `tests/test_cloud_cadence.py`) and the cloud tests (tests/test_cloud_machines_only.py (removed on 31 October, when the founder struck the cloud's rule)) pass, as do every verdict user's tests (Redis, Kafka, pgbench, sysbench, YCSB, CPU power, GPU). Live GitHub trials on the v7 commit (KEDA's add-ons, Goldilocks, CruiseKube, capacity) repeats the original cap 1500m / repetition 4 / 1200-second-per-arm case at the original request rates. Its completion and measured result must be read from its artifact, with any LOSS retained. The trial cannot launch Azure, Google, Amazon or GPUs.
 
 The organisms the candidate is run on are the seven of 16 October (the spine, the 267 muscles every stack runs on, the seventh; `docs/THE_SPINE.md`): they are groupings of catalog rows made in the runners, so the candidate's fingerprint did not move for them, and every organism table on this engine lists the spine first.
 
@@ -18291,7 +18332,7 @@ compass with the same work sent to both:
 swings, energy equal or lower, and not one pod left without a machine. Machines: up to 2% fewer. Omni gives a machine
 back only when a paired trial shows the service no slower without it, and on these clusters one machine fewer made
 requests 30-45% slower in most trials, so it kept them and spent them on speed and work (earlier engines without that
-check parked 29-36%: `docs/history/`). All of it together, real machines only: **the Omni index +12.9%**
+check parked 29-36%: `docs/history/`). All of it together, real software on real computers (the software end, not bare metal and not the chip): **the Omni index +12.9%**
 (`results/OMNI_INDEX.md`).
 
 **Omni v1** (`docs/OMNI_V1.md`): the engine is frozen and fingerprinted (`OMNI_V1.json`), and every test above runs

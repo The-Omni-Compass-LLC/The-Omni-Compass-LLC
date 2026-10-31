@@ -107,7 +107,8 @@ the most healthy production the system can deliver (the max, the default brain),
 
   minimise E[C(θ) / P(θ)] subject to the same requirements,
 
-what that completed production costs (the tune-down, the cloud's machines alone). P is the useful output (work done inside the
+what that completed production costs (the tune-down, `dial save`, a tune anyone may set; the clouds ran it until 31 October, when
+the founder struck that rule: every cloud runs the max, the bill judged beside the work). P is the useful output (work done inside the
 line), C the whole-workload cost inside the declared boundary, Hⱼ each health reading and Lⱼ its limit. Each reported result names
 its objective and its exact profile.
 

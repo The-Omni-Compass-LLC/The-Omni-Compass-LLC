@@ -103,8 +103,8 @@ cloud's queue reads `switch=on` (on the founder's word) and its newest **cloud-c
 
 Every repetition's files are this run's artifacts, archived onto the branch `raw` by the archive bot. They are read with the same
 tools as Azure's (`tools/live_reps.py`, `tools/confirm_abc.py`), by the one key (`tools/readings.py`), three runs, A, B and C.
-In a cloud Omni-Compass is to show one thing: the same work as native for a smaller bill, never a bigger one (the founder's order
-of 14 October). The engine is the same on every cloud; what differs is the wire to it: this workflow, the paired script, the
+In a cloud Omni-Compass shows that the engine holds on the cloud's machines as it does on site, and the work per dollar: more work
+for the same bill, never a smaller bill as the aim (the founder's words of 31 October, which struck the order of 14 October). The engine is the same on every cloud; what differs is the wire to it: this workflow, the paired script, the
 queue and the kubeconfig check.
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.

@@ -467,15 +467,16 @@ TERMS = [
       [("tools/whole_system.py", "Omni-Compass sits at both ends and at every layer between"),
        ("tools/whole_system.py", "the machine (the kernel, bare metal, Kepler)")],
       aka=["bare metal", "the software end"]),
-    T("the cloud as the wire", A, "The cloud is the wire between the chip at one end and the software at the other. A cloud run "
-      "can show only the bill of the machines it parks: through the cloud the bare metal belongs to the provider (no tenant can "
-      "read its meters or write its chips' limits), so the cloud's benefit is what the provider itself meters and bills, the "
-      "machines counted every fifteen seconds and the bill at list price. Every cloud set runs Omni-Compass at the tune-down on "
-      "the machines alone: the same work as native for a smaller bill, never a bigger one. The work and the speed live on the "
-      "software end and the bare-metal end.",
+    T("the cloud as the wire", A, "The cloud is the wire between the chip at one end and the software at the other, and makes no "
+      "benefit of its own. Through the cloud the bare metal belongs to the provider (no tenant can read its meters or write its "
+      "chips' limits), so a cloud run shows two things: that the engine holds on the cloud's machines as it does on site, and how "
+      "much of the software end's gain comes through the wire, read as work per dollar beside the bill (the machines counted every "
+      "fifteen seconds, the bill at list price): more work for the same money, never a smaller bill as the aim. Every cloud set "
+      "runs the whole engine at the max from 31 October (the founder's order of that day struck the tune-down on the machines "
+      "alone); the work and the speed are made on the software end and the bare-metal end.",
       [("tools/whole_system.py", "the cloud is the wire between the chip at one end and the software at the other"),
        (DIS, "The cloud's back end is not ours to meter."),
-       (CL, "the same work as native for a smaller bill, never a bigger one")], aka=["the cloud", "the bill"]),
+       (CL, "judged number is the work per dollar")], aka=["the cloud", "the bill"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
       "Omni-Compass rose). The law is omnicompass/compass_law.py (CompassLaw): a band with 5% cushions, two antagonist forces, "

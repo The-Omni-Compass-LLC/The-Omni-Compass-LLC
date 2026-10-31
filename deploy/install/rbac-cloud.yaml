@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The cloud's grant (the Operator's Manual, section 14.3): the watch role of omni-compass.yaml plus the writes the whole engine
+# makes on a managed cluster at the max, the same writes the kind rig grants (deploy/kind/rbac-omni.yaml; the founder's order of
+# 31 October: no hard rule; the machines-alone grant of 14 October is struck). Cluster-wide: park a machine (a PreferNoSchedule
+# taint) and wake it, patch nodes; mark a parked machine's pods first to go (the pod-deletion-cost annotation), patch pods. In
+# the service's own namespace, by name: move its autoscaler's target, its floor and its cap inside the replica room and record
+# the operator's own on the object, get, patch and update its HorizontalPodAutoscaler; record its pods' original processor
+# limit on its Deployment, get, patch and update the Deployment; give its running pods the processor their machine can spare,
+# in place, and hand it back, get and patch pods/resize. Nothing else: no delete, no eviction, no create, no cloud credential
+# (the cloud's own autoscaler, with the provider's identity, alone adds machines). Set <namespace> and <deployment> (the
+# service, as --sensed and --cap-deployments name it in omni-compass-cloud.yaml) before applying; one Role and RoleBinding
+# per governed service.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: omni-compass-cloud-machines}
+rules:
+  - apiGroups: [""]
+    resources: [nodes]
+    verbs: [patch]
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: omni-compass-cloud-machines}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: omni-compass-cloud-machines}
+subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: omni-compass-cloud-service, namespace: "<namespace>"}
+rules:
+  - apiGroups: [autoscaling]
+    resources: [horizontalpodautoscalers]
+    resourceNames: ["<deployment>"]
+    verbs: [get, patch, update]
+  - apiGroups: [apps]
+    resources: [deployments]
+    resourceNames: ["<deployment>"]
+    verbs: [get, patch, update]
+  - apiGroups: [""]
+    resources: [pods/resize]
+    verbs: [get, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: omni-compass-cloud-service, namespace: "<namespace>"}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: omni-compass-cloud-service}
+subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]
