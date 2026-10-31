@@ -22,7 +22,7 @@ the page carries the commit, the time and GitHub's own list of the runs running 
 `tools/omni_version.py` reads on the page and rebuilds every record on it; `--check` fails a page whose engine differs.
 
 <!-- counts: written by docs/engine/build_live_engine.py at every build; never edited by hand -->
-**The counts of the records on the page** (omni-v22, digest `0e23a0bc561b900a`), written by the build from the records it made, so a check rebuilds them exactly:
+**The counts of the records on the page** (omni-v23, digest `c96ea4105d8747db`), written by the build from the records it made, so a check rebuilds them exactly:
 
 | What | Count |
 |---|---|

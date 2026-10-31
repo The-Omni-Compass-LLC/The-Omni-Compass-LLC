@@ -104,7 +104,7 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **the conveyance.** Moving a conserved budget between organs (site watts, cluster cores): moved, never created, down the gradient of need. On Kubernetes the governor raises a running pod's processor limit in place to the room its machine can still give under 75% busy, bounded by the namespace's quota, and hands every limit back to the operator's on a shared host at its top: the unit answers at its machine's speed, not its paper quota's, with no unit and no machine added. *Source: `docs/CONVEYANCE_LAW.md`; `docs/OMNI_ORCHESTRATOR.md`; `CLAUDE.md`.*
 - **the factory tune.** The engine as The Omni-Compass LLC tuned and ships it, every muscle on the setting found for it (its own card where one was kept, the engine's own setting otherwise). Every published benchmark result is one engine at its one factory tune; a changed tune's results are the tuner's own. One button returns every knob to it. *Source: `DISCLOSURES.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **the live tuning engine.** The live benchmark engine page and its control panel: every knob, button and monitor turns in real time to show the mechanism of action with native alone, with Omni-Compass on top, or both; what it shows at any other setting is the engine's range, never a benchmark result. *Source: `DISCLOSURES.md`.*
-- **the heartbeat's six buttons.** On the page the governor's full decision comes at one of six beats, 10, 15, 30, 60, 90 or 120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/FACTORY_PROFILE.md`.*
+- **the heartbeat's seven buttons.** On the page the governor's full decision comes at one of seven beats, 10, 15, 30, 60, 90 or 120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/FACTORY_PROFILE.md`.*
 - **factory profile.** The complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, decision interval and every other default. Selected after the mechanisms are verified, candidates are tested together and the choice is validated on fresh workloads; frozen at release, while the engine's state, commands and allocations go on responding. Today's is omni-v19's; the best validated factory profile is not yet established. *Source: `docs/FACTORY_PROFILE.md`.*
 - **candidate profile.** A proposed combination of settings under evaluation; on the page, the best beat of a sweep with the factory's other knobs ("Try the candidate"). It becomes a factory profile only after validation and a new release. *Source: `docs/FACTORY_PROFILE.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **active profile.** The settings actually governing the current run, named on the page as factory, candidate or custom with its fingerprint. *Source: `docs/FACTORY_PROFILE.md`.*
@@ -2018,7 +2018,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Energy / Facility / Industrial | organism | 3c (#s-desk); C (#s-problem) |
 | the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | evidence classes P, L, S | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); E (#s-monlist); G (#s-disclose) |
-| factory profile | term | B (#s-guide); G (#s-disclose) |
+| factory profile | term | 1 (#s-health); B (#s-guide); G (#s-disclose) |
 | the factory tune | term | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
 | fail up | term | 5h (#s-math); B (#s-guide) |
 | family | term | 2c (#s-board); 3b (#s-feed); 5e (#s-fleet); B (#s-guide) |
@@ -2115,12 +2115,13 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Whole Organism | organism | 2b (#s-answer); 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Whole Tower | organism | B (#s-guide) |
 | work waiting in line | term | 3b (#s-feed); B (#s-guide) |
+| the yardstick | term | 5d (#s-whole) |
 | κ | term | 3g (#s-brain); 5h (#s-math) |
 | ν | term | 3g (#s-brain); 5h (#s-math) |
 | ρ* | term | 5h (#s-math) |
 | σ | term | 3c (#s-desk); 3g (#s-brain); 3h (#s-verdict); 5a (#s-proof); 5h (#s-math) |
 
-Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's six buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; preset; protocol 4; the seal; the yardstick.
+Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's seven buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; preset; protocol 4; the seal.
 
 ---
 
