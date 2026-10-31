@@ -8,7 +8,7 @@ Built by `tools/beat_ladder.py` from `results/model_gate/V16_PACE.json` and `the
 
 ## The cloud's setting
 
-The cloud's setting: the compass law at the tune-down, the machines alone.
+The cloud's setting: the compass law on top of the cloud's own autoscaler (the ladder of 22 and 23 October read it at the tune-down on the machines alone, the cloud's rule of 14 October; from 31 October, the founder's order of that day, the max with every muscle, the bill judged).
 
 What each beat buys and what it costs, against native (the value, then the word):
 
@@ -240,7 +240,7 @@ Counts over all seeds, by beat: decisions 5 s 138,240, 10 s 69,120, 15 s 46,080,
 
 ## The kind benchmark's setting
 
-The kind benchmark's setting: the compass law at the max, every autoscaler sensed.
+The kind benchmark's setting: the compass law at the max, every autoscaler sensed, on the plant with the cloud's own autoscaler (from 31 October the same model as the cloud's at the max, docs/PACE_PREREGISTRATION.md amendment 5).
 
 What each beat buys and what it costs, against native (the value, then the word):
 

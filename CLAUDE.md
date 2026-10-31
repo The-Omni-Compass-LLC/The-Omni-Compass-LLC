@@ -467,6 +467,52 @@ the founder overrides one in the conversation.
   runs" only a note on its strength, never a condition; in prose a result is said run by run (run A GAIN, run B GAIN, run C GAIN,
   the mean GAIN), never as "a gain only if all three agree".
 
+- **No hard rule; the cloud at the max** (the founder's words of 31 October: "Why is there any hard rule written ... Whatever the
+  math does and falls out is whatever happens. All we need to do is tune up what the math does to the best way we can and let
+  whatever falls out fall out. And when it falls out wrong, the tuning is wrong"; and, on the cloud: "What I care is to make the
+  cloud the best it can be with Omni-Compass in it, as well as on site with Omni-Compass on it, and we have to sit and tune and
+  tweak both scenarios"). The cloud's rule of 14 October (the tune-down on the machines alone: `OMNI_MACHINES_ONLY=1`, `dial save`,
+  the governor's `--give-back-only`, "nothing in a cloud adds a machine") is struck. Every cloud set runs the whole engine at the
+  max, every muscle, on top of the cloud's own autoscaler (native's machine controller, which stays in every arm and alone adds
+  machines; the lever parks and wakes what exists and asks the cloud for none, `scripts/kind_nodepool.sh`); in the cloud the
+  judged number is the work per dollar, the work answered within the line for each dollar of the bill (the founder's words of 31
+  October, evening: "We're pushing 1% more bill, but we're getting ~12% more work ... anybody will pay 1% more for 10% more
+  product"): the bill may rise where the work rises more, a rise read as power given beside the work it bought and never a LOSS by
+  itself, and a tune whose work per dollar falls against native is not admissible (`docs/THE_TUNE.md`), a fault of the tune,
+  root-caused in the model first; "never raise its bill" (18 October) is read the same way, by judging, never by tying the
+  engine's hands. The two scenarios, on site and in the cloud, are the factory profile's declared operating
+  conditions, each tuned through the tune study. In code: every cloud workflow's dial defaults to `max` and sets no machines-only
+  switch, every `scripts/*_queue.txt` entry reads `dial=max` with the replica room read live as on kind, the rig wires the same
+  muscles on every platform (`scripts/kind_bench.sh`), the model gate's cloud setting is the max (`tools/model_gate.py`), and
+  `tests/test_cloud_at_the_max.py` holds it; the governor's own `--give-back-only` flag, an engine file, leaves with the next
+  version. The Azure sets started before this order (omni-v18's steady set; omni-v21's, 25 of 100 repetitions on 31 October) finish
+  as the tune-down's record; the sets at the max start as their own A, B and C (`docs/K8S_COMPASS_PREREGISTRATION.md`, the
+  amendment of 31 October) once they can read the work per dollar: the Azure sets as built send a fixed rate of requests, so their
+  work cannot grow and a set at the max could show only the bill beside a faster answer (on omni-v23 at the max our model reads the
+  machine-hours up 9% to 35% across the beats, 14% at 60 s, with the work fixed by the model's own load,
+  `results/model_gate/V23_LADDER.md`, class S). Azure's queue is held (`switch=off`) until its sets carry the load whose work grows
+  with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, built for kind), and nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
+  100 repetitions.
+- **The factory setting is found, then locked; the knobs are for seeing it move** (the founder's words of 31 October: "We'll have
+  all these buttons that allow people to ... change it to see what happens when things move ... nothing breaks, it'll just change
+  all these metrics ... we are going to find the most optimal state in every scenario with Omni-Compass, and then we will know
+  that that's the setting, and we will lock the engine in that scenario ... When everybody buys a car, the engine's already tuned
+  and running ... that is what we're attempting to get: the factory settings to the best"). The order of 24 October (one factory
+  profile, found and then frozen; the live engine its tuning bench) stands as he restated it. The factory beat is read again on the
+  engine that stands (`docs/PACE_PREREGISTRATION.md`, amendment 4, the pick rule written before the run): on omni-v17's ladder
+  10 s read strongest on the service against 60 s (the kind setting: the minutes over the line down 18.4%, pods waiting down
+  9.9%, machine-hours down 1.4%; 20 s: 14.7%, 6.8%, 0.8%), a reading of an engine that no longer stands, so the pick is made on
+  omni-v23's ladder; 60 s, set on 22 October for the reads of the cluster, is one setting of the dial like every other, and the
+  beat that reads best lands as the next version through the model gate, told, not asked. Read the same evening
+  (`results/model_gate/V23_LADDER.md`, class S, seeds 101 to 108, the plant with the cloud's own autoscaler at the max, which is
+  the cloud's setting and the kind setting at once): on the service 10 s reads best (against native pods waiting down 16%,
+  the 95th percentile down 30%, the minutes over the line down 58%, all GAIN; 20 s waits more pods than 60 s, LOSS), but every
+  beat buys machine-hours (up 9% to 35% against native, 14% at 60 s): the governor asks for pods ahead of the load and the
+  cloud's autoscaler adds machines for them. With the model's work fixed by its own load that is a bigger bill for the same work,
+  the work per dollar down, so by the rule no beat qualifies in the cloud's setting on this plant and 60 s stays until the second
+  search reads it (`docs/THE_TUNE.md`, section 4b); the on-site beat is read on the kind rig's own fixed machines, a plant of its
+  own, before it is picked.
+
 ## Orders of 24 October
 
 - **One factory profile, found and then frozen; the live engine its tuning bench** (the founder's words of 24 October, late night:
@@ -519,8 +565,9 @@ the founder overrides one in the conversation.
   or not, and code it to wire it the same way that the Azure is running"). The removal of that morning was built here and never
   pushed; it is undone whole. Every Google and Amazon workflow (`gke-metered`, `eks-metered`, `cloud-organism`), paired script,
   queue, machine tool, setup page, $0 check, manual chapter, live page monitor and page mention stands, wired as Azure's sets run
-  today: the same harness (`scripts/kind_bench.sh` in its managed-cluster mode, the main engine's 60 s beat), the tune-down on the
-  machines alone, 100 paired repetitions a set under the preregistered stopping rule (`stop_looks`, `tools/stop_rule.py`), the $0
+  today: the same harness (`scripts/kind_bench.sh` in its managed-cluster mode, the main engine's 60 s beat), the whole engine at
+  the max from 31 October (the tune-down on the machines alone until then), 100 paired repetitions a set under the preregistered
+  stopping rule (`stop_looks`, `tools/stop_rule.py`), the $0
   check before any set. Both queues read `switch=off`, so the conductor neither checks nor starts anything for them; every page,
   board row and monitor reads them "not yet run". On the founder's word a queue's switch goes on (Google once its key is stored
   whole, Amazon once its account is on the Paid plan) and its sets start behind its own check. The engine, Python and its C++
@@ -572,7 +619,8 @@ the founder overrides one in the conversation.
   than a controller the two Omni-Compass arms are one arm). Preregistered before any run (`docs/SOLO_PREREGISTRATION.md`); the engine
   that carries it (a pod muscle of its own, the models' arm with the pool's autoscaler off) lands as the next version through the model
   gate, and its runs go to GitHub's machines, three runs, read beside the other two. No cloud by itself without the founder's word
-  (the order of 14 October: nothing in a cloud adds a machine). The pages and the words say the three arms; the third's column appears
+  (the order of 14 October, nothing in a cloud adds a machine, was struck on 31 October; a cloud by itself still waits for his
+  word). The pages and the words say the three arms; the third's column appears
   from its first run, nothing written for it before.
 - **The live engine is the operating control panel** (the founder's words: "build a live engine's mechanism, interpreting what it
   sees, as well as giving it knobs and buttons ... in every canvas section block ... every monitor needs to have a light in it ...
@@ -859,7 +907,9 @@ the founder overrides one in the conversation.
 
 ## Orders of 14 October
 
-- **In the cloud, the bill** (the founder's order of 14 October, night). In a cloud (Azure now; Google and Amazon when he
+- **In the cloud, the bill** (the founder's order of 14 October, night; **struck on 31 October**, Orders of 31 October: no hard
+  rule, every cloud at the max with the bill judged beside the work; kept here as the record of the sets that ran under it).
+  In a cloud (Azure now; Google and Amazon when he
   starts them) Omni-Compass is to show one thing: the same work as native for a smaller bill, never a bigger one. Every
   cloud set runs Omni-Compass on top at the tune-down (`dial save`) on the machines alone (`OMNI_MACHINES_ONLY=1`): no pod
   autoscaler moved, no processor conveyed, no power capped, so the pods are exactly native's; the governor only parks a
@@ -892,7 +942,7 @@ the founder overrides one in the conversation.
     to how the code is written, and nothing is disclosed or disclaimed about it. It is at least half the Owner's length
     (the founder's order of 14 October, night) and carries the implementer's whole cloud path (Part VI, chapters 13 to
     30, with the install files in `deploy/install/` and `deploy/Dockerfile.cloud`): Google and Amazon ready the way Azure
-    is, the governor on the machines alone in every cloud.
+    is, the whole engine at the max in every cloud (31 October; the machines alone until then).
   - **The Owner's Manual, the master** (`docs/OMNI_COMPASS_OWNERS_MANUAL.md` and `.pdf`, `build_book.py --owner`):
     everything and all, for whoever owns or licenses Omni-Compass and so must know the whole mechanism: the philosophy and
     theory (`docs/book/THEORY.md`, `docs/book/DECLARATION.md`), the mathematics, the mechanism, how it is built, the

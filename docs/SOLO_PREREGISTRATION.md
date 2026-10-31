@@ -36,9 +36,10 @@ default brain; the dial's tune-down is the only arm that may give back below the
 - **Native's own loop is the actuator and cannot be switched off**: the GPU's firmware, the robot's servo, the drone's
   autopilot, the grid's tap changer, and in our models the batteries' dispatch and the cooling units' staging. Each is labelled
   "native's own loop is the actuator: the same arm".
-- **Not run: the cloud.** By itself, Omni-Compass would have to make machines with the cloud's autoscaler off; the order of 14
-  October is that in a cloud it never adds a machine and only parks one the cloud made (`--give-back-only`), and every set costs
-  money. A cloud arm by itself waits for the founder's word.
+- **Not run: the cloud.** By itself, Omni-Compass would have to make machines with the cloud's autoscaler off, and every set costs
+  money (the order of 14 October, that in a cloud it never adds a machine and only parks one the cloud made, was struck on 31
+  October with the rest of the cloud's machines-alone rule; the cloud's own autoscaler still makes every machine in the arms
+  that run). A cloud arm by itself waits for the founder's word.
 
 ## What the engine that stands does by itself (read first, our own model)
 

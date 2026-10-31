@@ -126,12 +126,15 @@ Omni-Compass consists of a **governing engine**, its **muscle adapters**, a **co
 
 **A cloud is just a wire.** It is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site). Omni-Compass can live in all three places. On the wire alone, as every cloud run
-in this repository is set (the tune-down on the machines only, the pods exactly native's), it can only park machines the
-cloud's own autoscaler already made, after its own trial, so a cloud run alone can show at most a small cut in the bill of the
-wire. It cannot show the work and the speed gained at the software end, nor the energy and the throughput gained at the bare
-metal, because neither end is under it; those are measured where Omni-Compass sits on them (the cluster and its services; the
-card and the machine) and composed with the wire into one organism and one bill ([`DISCLOSURES.md`](DISCLOSURES.md), section 9).
+racks, the data center, on site or off site). Omni-Compass can live in all three places. The wire makes no benefit of its
+own. Until 31 October every cloud run in this repository was set on the wire alone (the tune-down on the machines only, the
+pods exactly native's), so it could only park machines the cloud's own autoscaler already made, after its own trial, and show
+at most a small cut in the bill of the wire. From 31 October (the founder's order of that day: no hard rule) every cloud set
+runs the whole engine at the max on the cloud's cluster, the software end, so its receipt shows that the engine holds there as
+on site and how much of that end's gain comes through the wire, read as work per dollar beside the bill: more work for the same
+money, never a smaller bill as the aim. The energy and the throughput gained at the bare metal are not under a tenant; those
+are measured where Omni-Compass sits on them (the cluster and its services; the card and the machine) and composed with the
+wire into one organism and one bill ([`DISCLOSURES.md`](DISCLOSURES.md), section 9).
 A provider that ran Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter
 it, so it is never claimed here as a measurement.
 
@@ -183,8 +186,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, the same
-work for a smaller bill.
+faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
+work for the same bill.
 
 **What the record shows.** Every claim is a paired comparison of native and Omni-Compass on top of native, run three
 times (A, B and C) and read by the key below; every row is kept, LOSS included. The newest combined reading is at the top of
@@ -412,7 +415,7 @@ outside and its factory tune; the plug and the rules its wires obey; the wiring 
 (Kubernetes, databases, message brokers, caches, GPUs, the processor itself, the data center under the servers, robots
 and drones); operating it; checking it on your own system; **the implementer's guide for the cloud** (Part VI, chapters
 13 to 30: the path and its gates, least privilege, Azure, Google Cloud and Amazon step by step, the response-time feed,
-the cloud mode, day two, the graphics processor, observability, change and risk, planning the saving before the run, own
+the cloud itself, day two, the graphics processor, observability, change and risk, planning a cloud run, own
 racks and private clouds, hardening and the supply chain, a fleet under continuous delivery, the failure drill book, and
 one installation start to finish); and back matter with every muscle, its wiring and its card, the install manifests,
 the implementer's checklists, the governor's settings (the Kubernetes governor's and the two card governors'), the audit
@@ -432,7 +435,7 @@ own table; its source appendix prints every file of the engine's fingerprint. Ea
 printed in the book itself, built from its text (`docs/book/build_book.py`). All three books carry one numbering (chapter.section), and every cross-reference in
 them is rewritten to it when the book is built and checked against the headings on the built PDF. Its text is
 [`docs/OMNI_COMPASS_MANUAL.md`](docs/OMNI_COMPASS_MANUAL.md); the cloud install files are `deploy/install/`
-(`omni-compass.yaml`, `rbac-machines.yaml`, `omni-compass-cloud.yaml`) and `deploy/Dockerfile.cloud`. It is written for the CTO who decides, the
+(`omni-compass.yaml`, `rbac-cloud.yaml`, `omni-compass-cloud.yaml`) and `deploy/Dockerfile.cloud`. It is written for the CTO who decides, the
 engineer who wires and the operator who runs it; the published results are on this page and in `results/`.
 
 [`docs/OMNI_COMPASS_OWNERS_MANUAL.pdf`](docs/OMNI_COMPASS_OWNERS_MANUAL.pdf), the Owner's Manual, is the master: everything
@@ -511,8 +514,9 @@ proof and its wiring: [`docs/MECHANISM_OF_ACTION.md`](docs/MECHANISM_OF_ACTION.m
 **Where the benefit is taken, and why nobody babysits it.** On machines already paid for (your own racks, a chip at its heat
 line) the max takes the benefit as more work from the same machines; in a chip the aim is more work at native's own
 heat, never hotter. In a
-public cloud the benefit is the bill: there the governor moves the machines alone (pods, processor limits and power stay
-native's) and parks only machines the cloud already made, so the bill can only fall or stay, never rise. Either way it runs on autopilot, self-running, self-steering and self-auditing like a
+public cloud the whole engine runs at the max as well, every muscle, on top of the cloud's own autoscaler, and the bill is
+judged beside the work by the one key, never ruled (the founder's order of 31 October: no hard rule; in the cloud the judged
+number is the work per dollar, and a tune whose work per dollar falls against native is not admissible, `docs/THE_TUNE.md`). Either way it runs on autopilot, self-running, self-steering and self-auditing like a
 self-driving car: nobody turns a knob, nobody checks its work and nobody has to react; every change is the governor's own, logged with its reason, made as the
 reading approaches the line rather than after it is crossed; every Kubernetes and cloud receipt
 counts the babysitting tax in both arms (the alert minutes an on-call page would be open, and the commands the governor

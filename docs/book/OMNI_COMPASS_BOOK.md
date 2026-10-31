@@ -36,8 +36,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, the same
-work for a smaller bill.
+faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
+work for the same bill.
 
 **Where the proof is.** This book shows how to wire, tune, run and check Omni-Compass. The mechanism, the mathematics and
 every result, each a paired comparison of native and Omni-Compass on top of native run three times, every row kept, LOSS
@@ -55,10 +55,12 @@ installation's own (section 4.8). The words are written once, with their exact m
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site), and Omni-Compass can live in all three places. Installed on the wire alone, as
-the cloud mode of Part Six installs it, it can only park machines the cloud's own autoscaler already made, so a cloud receipt
-alone can show at most a small cut in the bill of the wire; what Omni-Compass does at the software end and at the bare metal is
-measured where it sits on them (Part Six, chapter 14; `DISCLOSURES.md`, section 9).
+racks, the data center, on site or off site), and Omni-Compass can live in all three places. The wire makes no benefit of its
+own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and a cloud run shows two things only,
+that the engine holds the same on a cloud's machines as on site (no LOSS against native) and how much of the software end's
+gain comes through the wire, read as work per dollar: more work for the same money (Part Six, chapter 20; `DISCLOSURES.md`,
+Chapter 10). A smaller bill is never the aim; how a company spends the gain, as more work or as a cut, is its own choice. Where
+Omni-Compass sits on neither end, a cloud's bill shows nothing of Omni-Compass.
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
 run on. It does not make a system immune to failure, delay or drift: it keeps each muscle inside its own limits and shows, row
@@ -1032,8 +1034,8 @@ it: the engine's fingerprint, the harness, the load and the window. The same eng
 another purpose, gives another result, and that result is its own.
 
 A team that wants a different outcome sets the inputs for it and reads its own receipts against native: the most work at any
-spend (the max, the default); the same work as native for a smaller bill (the tune-down on the machines alone, the cloud's
-rule); a muscle held at a limit of the team's own choosing (its card, or its cover); a knob left native (watched, never
+spend (the max, the default, in a cloud as on site since 31 October); the same work as native for a smaller bill (the tune-down,
+a tune anyone may set); a muscle held at a limit of the team's own choosing (its card, or its cover); a knob left native (watched, never
 written). Each of those is a legitimate setting of the inputs, and each has its own result. What no reader may do is read one
 tune's receipt as another's, or read a receipt without its inputs. The factory tune (section 4.1) is the one setting whose receipts this book publishes; the dial (section 4.2) and the cards (section 4.3) are the inputs a licensee may change, and section 4.6 says what a changed tune's results are. Where a result read elsewhere differs from the
 published one, the first presumption is an input: the wiring, the settings or the reading (`DISCLOSURES.md`, section 4).
@@ -1478,11 +1480,11 @@ up to three times its sample count, before it decides. Every judgement is in the
 or `past the allowance`) and `interval_ln`, so an operator can see why a machine stayed given back or came back (Appendix
 L, `verdict`).
 
-**The cloud's rule is one flag.** `--give-back-only` turns off every pod, processor, power, clock, cooling and batch
-actuator, sets the replica ceiling to 0 and the dial to the tune-down, and leaves the node pool as the only knob, whatever
-else the command line says: the governor can then only park a machine the cloud already made, after its own trial, and wake
-it on a breach, so the bill can only fall or stay. The cloud install file (`deploy/install/omni-compass-cloud.yaml`) passes
-it; chapter 20 is written on it.
+**The cloud runs the whole engine.** Until 31 October one flag, `--give-back-only`, turned off every pod, processor, power,
+clock, cooling and batch actuator in a cloud and left the node pool as the only knob (the founder's order of 14 October). His
+order of 31 October struck it: no hard rule; the cloud install file (`deploy/install/omni-compass-cloud.yaml`) passes the max
+with every muscle, nothing passes the flag, and it leaves the governor with the next engine version. Chapter 20 is written on
+the cloud at the max, the bill judged beside the work.
 
 None of these is a setting an operator tunes (Appendix K lists each with its shipped value). They are stated so that the
 audit lines they write are read as the rules they are, and so that a reading taken on this engine is never set beside one
@@ -1772,7 +1774,7 @@ and never governed), and one or several **work pools** under Azure's own cluster
 Omni-Compass idling the machines it gives back, which the autoscaler then deletes on its own schedule. The bill counts
 every work machine that exists, every 15 seconds, priced at Azure's list price for its family; each cluster is deleted when its arm ends, so nothing keeps billing.
 
-![Wiring schematic: a managed cloud cluster, the machines alone (the cloud mode). The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](figures/s_cloud_machines.svg)
+![Wiring schematic: a managed cloud cluster, the whole engine at the max on top of the cloud's own autoscaler. The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](figures/s_cloud_machines.svg)
 
 **Sizing the fleet to the lever.** The smallest saving a fleet can show is one machine. On 4 workers one machine is
 25% of the fleet, so only a saving of about 30% or more can clear the noise; on 15 workers about 10%; on 96 about 3%.
@@ -1785,23 +1787,22 @@ machines can hold, lets the omni arm raise that cap while it binds and hand it b
 3.4). A cloud region can refuse a new cluster for hours at a time; check the subscription's allowances before building
 anything, so that a refusal costs cents and not a cluster. The account setup, click by click, is in `docs/AZURE_SETUP.md`.
 
-**In the cloud, the bill is the gauge, and it is never raised.** In a public cloud every machine that exists is billed,
-whether it carries work or not, so the aim on a managed cluster is native's work for a smaller bill, never a bigger one.
-The cloud therefore runs at the tune-down (`dial save`, the `dial` input of `aks-metered` and its default) with the governor
-on the machines alone (`OMNI_MACHINES_ONLY=1`, which starts the governor with its one cloud flag, `--give-back-only`): it moves no pod autoscaler, conveys no processor and caps no power, so the
-pods are exactly native's and the cloud's own autoscaler alone makes machines; the governor parks a machine the cloud
-already made only after its own trial shows the response time holds, and wakes it on a breach. It can hold no
-more pods and no more machines than native: the bill can only fall or stay, and it falls in the quiet stretches between
-bursts and in a day's trough. The
-max (`dial max`) belongs where the machines are already paid for (your own racks, a chip whose heat line is its limit),
-where more work from the same machines is the gain; in a cloud it buys speed with machines, and every machine it adds is
-on the bill. The benefit of the max is taken before the cloud, in the service's own engine, or after it, in the chip.
+**In the cloud, the work the bill buys.** In a public cloud every machine that exists is billed, whether it carries work
+or not. The cloud runs the whole engine at the max, as on site (`dial max`, the `dial` input of `aks-metered` and its default;
+the founder's order of 31 October struck the tune-down on the machines alone of 14 October): the governor moves the service's
+pod target inside its autoscaler's cover, conveys the processor a machine can spare, and parks a machine the cloud already
+made only after its own trial shows the response time holds, waking it on a breach; the cloud's own autoscaler, native's
+machine controller, stays in every arm and alone adds machines. The benefit is made at the software end and at the chip and
+comes through the wire as work per dollar: more work for the same money. A smaller bill is never the aim; a company that
+wants a cut turns the dial down (`dial save`, a changed tune, its receipts its own). The bill is shown beside the work it
+bought, never ruled.
 In the cloud, as everywhere, the governor's fast check (a parked machine woken for pods that wait) runs every 5 seconds,
 three times as fast as the autoscaler's own 15-second check, and its full decision every 60 seconds, the main engine's beat
 (a dial: 15 seconds, the autoscaler's own pace, is one of its settings); a pod's start and a new machine's join are not shortened by deciding faster, so the governor acts on the reading while it climbs, before the
-line. On machines already paid for, the fast checks also give the running pods the processor their machine already has,
-which takes seconds and needs no new pod; in the cloud mode that lever is off, because a pod given more processor reads
-busier to its autoscaler, which then asks for more pods and, through them, more machines.
+line. On machines already paid for and in a cloud alike, the fast checks also give the running pods the processor their
+machine already has, which takes seconds and needs no new pod (the founder's order of 31 October struck the cloud's rule that
+switched this lever off: a pod given more processor may read busier to its autoscaler and ask for more pods, and what that does
+to the bill is read beside the work it bought, never ruled).
 
 ### 8.2 A database behind its connection pooler
 
@@ -2141,7 +2142,7 @@ so a reviewer reading a run's log sees what the governor saw and did at each min
 **Reading the command acknowledgements: requested, commanded, acknowledged.** The governor keeps three settings apart for
 every muscle at every decision, and the audit records each (Appendix L):
 
-- **Requested**: what the decision asked for (`decision`: `nodes_recommended`, and outside the cloud mode
+- **Requested**: what the decision asked for (`decision`: `nodes_recommended`, and wherever a service is sensed
   `hpa_target_recommended`).
 - **Commanded**: what was sent once every limit was applied, the cover, the muscle's own limits and, at the max, never below
   native (`write`: the command as it ran, and why; `shield_interventions` counts how often a request was clipped).
@@ -2441,7 +2442,7 @@ averaged away.
 
 # Part Six. The Implementer's Guide: Omni-Compass on a Cloud
 
-*For the engineer who installs it on Azure, Google Cloud or Amazon Web Services and keeps it in service: the path and its gates, the permissions, each cloud step by step, the response-time feed, the cloud mode, day two, the graphics processor, observability, change and risk, planning the saving, own racks and private clouds, hardening, a fleet, the failure drills, a complete installation, and the questions implementers ask.*
+*For the engineer who installs it on Azure, Google Cloud or Amazon Web Services and keeps it in service: the path and its gates, the permissions, each cloud step by step, the response-time feed, the cloud itself, day two, the graphics processor, observability, change and risk, planning a cloud run, own racks and private clouds, hardening, a fleet, the failure drills, a complete installation, and the questions implementers ask.*
 
 
 ## 14. The Implementer's Path: From an Empty Account to a Governed Cluster
@@ -2459,10 +2460,10 @@ not, it is written once here or in chapters 15, 19, 20 and 21.
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
 racks, the data center, on site or off site). Omni-Compass can live in all three places: on the software end (the cluster and
 its services, chapters 7 and 8), on the bare metal (the card and the machine, chapter 22 and section 8.9) and on the wire
-itself, the cloud mode of this part. On the wire alone it moves the machines alone (chapter 20): it can only park machines the
-cloud's own autoscaler already made, after its own trial, so a cloud receipt alone can show at most a small cut in the bill of
-the wire. It cannot show the work and the speed gained at the software end, nor the energy and the throughput gained at the
-bare metal, because neither end is under it. An installation that wants the whole benefit installs Omni-Compass at each place
+itself, the cloud of this part. The wire makes no benefit of its own (chapter 20): on a managed cluster the governor runs the
+whole engine on the cluster and its services, the software end, so a cloud receipt shows that the engine holds there as on
+site and how much of that end's gain comes through the wire as work per dollar. It cannot show the energy and the
+throughput gained at the bare metal, because the provider's chips are not under it. An installation that wants the whole benefit installs Omni-Compass at each place
 it owns, receipts each one where it sits, and composes them into one organism and one bill (`DISCLOSURES.md`, section 9; the
 bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far,
 and the company's expectation for each place, are in the Owner's Manual; neither is your receipt.
@@ -2490,15 +2491,15 @@ Kubernetes Metrics API (`metrics.k8s.io`, served by metrics-server: built into A
 Kubernetes Engine, installed by the implementer on Amazon Elastic Kubernetes Service); a HorizontalPodAutoscaler
 (HPA) on each service it governs, scaling on CPU utilisation; a cluster autoscaler on the work node pools (the
 provider's own, or Karpenter on Amazon); a namespace and a service account for the governor; and a response-time feed
-for each service whose line it holds (chapter 19). In-place pod resize (the `pods/resize` subresource) is needed only
-where the governor conveys processor to running pods, which it never does in the cloud mode of chapter 20.
+for each service whose line it holds (chapter 19). In-place pod resize (the `pods/resize` subresource) is needed
+where the governor conveys processor to running pods, which it does in a cloud as on site (chapter 20).
 
 **What it never touches, in any mode.** The governor never creates, deletes, evicts or restarts a pod; never changes a
 container image, a command, an environment variable or a request; never changes a node's machine type or a pool's
-configuration in the provider; never holds a cloud credential in the cloud mode (it acts through the Kubernetes API
+configuration in the provider; never holds a cloud credential (it acts through the Kubernetes API
 alone); and never writes a setting it has not first recorded on the object it writes, so that every setting can be put
-back from the object itself (chapter 9). In the cloud mode it also never moves a pod autoscaler, never conveys
-processor and never caps power: it moves the machines alone (chapter 20).
+back from the object itself (chapter 9). In a cloud it moves the same muscles as on site, on top of the cloud's own
+autoscaler, which stays in every arm and alone adds machines (chapter 20).
 
 ### 14.3 The eight phases and their gates
 
@@ -2548,8 +2549,8 @@ run builds a fresh cluster for every arm and deletes it when the arm ends, so no
 
 Chapter 15 sets the permissions, identically on every cloud. Chapters 16, 17 and 18 build the cluster and install the
 governor on Azure, Google Cloud and Amazon Web Services, click by click and command by command. Chapter 19 sets up the
-response-time feed and the line, on any cloud. Chapter 20 is the cloud mode itself: why the governor moves the machines
-alone in a cloud, what that guarantees about the bill, and how to read the bill and the alarm minutes. Chapter 21 is
+response-time feed and the line, on any cloud. Chapter 20 is the cloud itself: the whole engine on a managed cluster,
+what a cloud run can show (the engine holding as on site, and work per dollar), and how to read the bill and the alarm minutes. Chapter 21 is
 day two: running the governor as a service, upgrades, rollbacks, the watchdog, alarms and a fleet of clusters. Chapter
 21 is the graphics processor, written for the implementer who will put the governor on a card, rented or owned.
 Chapter 23 connects the governor to the company's own monitoring in both directions, and chapter 24 maps the installation
@@ -2592,26 +2593,30 @@ The table is the complete list. A verb not in it is not needed at that level and
 | Watch | `autoscaling` | `horizontalpodautoscalers` | `get`, `list` | read each autoscaler's target, range and current replicas |
 | Watch | `apps` | `deployments`, `replicasets`, `daemonsets` | `get`, `list` | read what each autoscaler scales, and tell workload pods from per-node agents |
 | Watch | core | `configmaps` (the one security-hold ConfigMap, by name) | `get` | read the security hold, where one is wired |
-| Machines (the cloud mode) | core | `nodes` | `patch` | park a machine (a `PreferNoSchedule` taint) and wake it (remove the taint); a machine someone else cordoned is never uncordoned |
+| Machines | core | `nodes` | `patch` | park a machine (a `PreferNoSchedule` taint) and wake it (remove the taint); a machine someone else cordoned is never uncordoned |
 | Machines | core | `pods` | `patch` | mark the pods on a parked machine first to go (the `pod-deletion-cost` annotation), so the autoscaler's own scale-down removes them first |
-| Pod target (not in the cloud mode) | `autoscaling` | `horizontalpodautoscalers` (each governed one, by name) | `patch`, `update` | move the autoscaler's CPU target inside its cover, and record the operator's own target on the object |
-| Processor conveyance (not in the cloud mode) | core | `pods/resize` | `get`, `patch` | resize a running pod's processor limit in place; no pod is restarted |
-| Pod muscle of its own (`--own-replicas`; not in the cloud mode) | `apps` | `deployments/scale` (each named workload) | `get`, `patch`, `update` | set the replica count of a workload no autoscaler governs through its own scale subresource, never below the operator's count (`deploy/rbac-own-pods.yaml`); under RBAC `deployments/scale` is a resource of its own, which a grant on `deployments` does not carry |
+| Pod target | `autoscaling` | `horizontalpodautoscalers` (each governed one, by name) | `patch`, `update` | move the autoscaler's CPU target inside its cover, and record the operator's own target on the object |
+| Processor conveyance | core | `pods/resize` | `get`, `patch` | resize a running pod's processor limit in place; no pod is restarted |
+| Pod muscle of its own (`--own-replicas`, the arm by itself; never in a cloud without the founder's word) | `apps` | `deployments/scale` (each named workload) | `get`, `patch`, `update` | set the replica count of a workload no autoscaler governs through its own scale subresource, never below the operator's count (`deploy/rbac-own-pods.yaml`); under RBAC `deployments/scale` is a resource of its own, which a grant on `deployments` does not carry |
 | Batch admission (where wired) | `batch` | `jobs` | `patch` | admit held work |
 
 Two verbs are absent from every level and are refused by review if they appear: `delete` on anything, and `create` on
 `pods/eviction`. The governor does not delete or evict; a parked machine is emptied by the cluster autoscaler's own
 scale-down, as it would be without the governor, and only once its pods have gone by the autoscaler's own rules.
 
-### 15.3 The cloud mode's role, complete
+### 15.3 The cloud's grant, complete
 
-For the cloud mode of chapter 20 (the machines alone), the grant is the watch role plus two verbs. Apply it in place of
-the level-2 and level-3 files of chapter 7:
+On a managed cluster the governor runs the whole engine at the max (chapter 20; the founder's order of 31 October struck the
+machines-alone grant of 14 October), so the grant is the watch role plus the writes the kind rig grants
+(`deploy/kind/rbac-omni.yaml`), in one file (`deploy/install/rbac-cloud.yaml`): cluster-wide, the machines and the pods'
+deletion-cost mark; in the service's own namespace, by name, its autoscaler, its Deployment's record of the original limit,
+and the running pods' processor. Set `<namespace>` and `<deployment>` to the service that `--sensed` and `--cap-deployments`
+name, one Role and RoleBinding per governed service, and apply it in place of the level-2 and level-3 files of chapter 7:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
-metadata: {name: omni-compass-machines}
+metadata: {name: omni-compass-cloud-machines}
 rules:
   - apiGroups: [""]
     resources: [nodes]
@@ -2622,14 +2627,36 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
-metadata: {name: omni-compass-machines}
-roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: omni-compass-machines}
+metadata: {name: omni-compass-cloud-machines}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: omni-compass-cloud-machines}
+subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: omni-compass-cloud-service, namespace: "<namespace>"}
+rules:
+  - apiGroups: [autoscaling]
+    resources: [horizontalpodautoscalers]
+    resourceNames: ["<deployment>"]
+    verbs: [get, patch, update]
+  - apiGroups: [apps]
+    resources: [deployments]
+    resourceNames: ["<deployment>"]
+    verbs: [get, patch, update]
+  - apiGroups: [""]
+    resources: [pods/resize]
+    verbs: [get, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: omni-compass-cloud-service, namespace: "<namespace>"}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: omni-compass-cloud-service}
 subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]
 ```
 
 The watch role is in the install manifest (`deploy/install/omni-compass.yaml`, printed in Appendix I); it grants only
-`get` and `list`. Together the two files are everything the governor can do in the cloud mode, and every write it makes
-is in its audit with the command and the reason.
+`get` and `list`. Together the two files are everything the governor can do in a cloud, and every write it makes is in its
+audit with the command and the reason.
 
 ### 15.4 Proving the grant before the governor runs
 
@@ -2645,8 +2672,16 @@ for v in "get nodes" "list pods" "get horizontalpodautoscalers.autoscaling" "lis
 done
 ```
 
-In the cloud mode the answers are `yes` for the four reads and for `patch nodes` and `patch pods`, and `no` for
-everything else, including `patch horizontalpodautoscalers.autoscaling`, `patch pods/resize` and `patch deployments/scale`.
+In a cloud the answers across all namespaces are `yes` for the four reads and for `patch nodes` and `patch pods`, and `no`
+for everything else, including `patch deployments/scale`, `delete pods`, `create pods/eviction`, `delete nodes` and `create
+pods`; the service's own writes are granted in its namespace by name, so prove them there, each answering `yes`:
+
+```bash
+NS=<namespace>; D=<deployment>
+kubectl auth can-i patch horizontalpodautoscalers.autoscaling/$D -n $NS --as=$SA
+kubectl auth can-i patch deployments.apps/$D -n $NS --as=$SA
+kubectl auth can-i patch pods --subresource=resize -n $NS --as=$SA
+```
 Any other answer is a grant to correct before the governor starts, not after. Where `--own-replicas` names a workload,
 prove its scale write by name (`kubectl auth can-i patch deployment/NAME --subresource=scale -n NAMESPACE --as=$SA`): a
 grant on `deployments` alone answers `yes` to `patch deployment/NAME` and `no` here, and the governor's every pod write
@@ -2654,12 +2689,13 @@ would be refused.
 
 ### 15.5 No cloud credential
 
-In the cloud mode the governor holds no credential of the cloud provider: no Azure service principal, no Google service
-account key, no Amazon access key, no workload-identity binding. It parks and wakes machines through the Kubernetes
-API; the provider's own cluster autoscaler, with the provider's own identity, makes and deletes machines. This is a
-security property worth stating to a reviewer in one sentence: an attacker who took the governor's pod would hold a
-Kubernetes service account that can read the cluster's shape and taint nodes and annotate pods, and nothing that can
-spend money in the provider, open a network path or read a secret.
+In a cloud the governor holds no credential of the cloud provider: no Azure service principal, no Google service
+account key, no Amazon access key, no workload-identity binding. It parks and wakes machines, moves the autoscalers'
+targets and resizes the pods' processor through the Kubernetes API; the provider's own cluster autoscaler, with the
+provider's own identity, makes and deletes machines. This is a security property worth stating to a reviewer in one
+sentence: an attacker who took the governor's pod would hold a Kubernetes service account that can read the cluster's
+shape, taint nodes, annotate pods, move an autoscaler's target and resize a pod's processor, and nothing that can create
+or delete anything, spend money in the provider directly, open a network path or read a secret.
 
 The paired runs from GitHub (Appendices F to H) are different: there the workflow itself builds and deletes clusters,
 and it holds a provider credential as a GitHub secret (`AZURE_CREDENTIALS`, `GCP_CREDENTIALS`, `AWS_ACCESS_KEY_ID` and
@@ -2766,8 +2802,11 @@ kubectl autoscale deployment <service> -n <namespace> --cpu-percent=<target> --m
 kubectl get hpa -n <namespace>
 ```
 
-The target, the minimum and the maximum are the service owner's, written down before the governor is installed. In the
-cloud mode the governor never moves them; they are recorded because the receipt's native arm runs on them.
+The target, the minimum and the maximum are the service owner's, written down before the governor is installed. The
+governor moves the target inside that cover, raises the floor ahead of a climb (the pod reflex) and the cap within its
+replica room only while the cap binds and the line is threatened (Appendix K, `--replica-ceiling`), hands each back once
+the demand holds still, records the owner's own settings on the object so the reset puts them back, and the receipt's
+native arm runs on the owner's settings untouched.
 
 ### 16.4 The registry and the governor's image
 
@@ -2781,7 +2820,7 @@ az acr build -r $ACR -t omni-compass-cloud:<version> -f deploy/Dockerfile.cloud 
 ```
 
 The first image is the shipped one (`deploy/Dockerfile`): the governor, non-root, read-only, with `kubectl`. The second
-adds what the cloud mode needs to move machines and to feed itself, and is written once for every cloud in section
+adds what a cloud needs to move machines and to feed itself, and is written once for every cloud in section
 19.4. Tag images with the engine version printed by `python3 tools/omni_version.py` and the commit, never `latest`, so
 the audit of any decision can be tied to the exact code that made it.
 
@@ -2912,7 +2951,7 @@ class provides a persistent volume (section 21.4).
 
 The workflow `gke-metered` is the same design as Azure's, on clusters it builds and deletes itself, with Google's billed
 machines counted every 15 seconds at the list price of the machine type; Appendix G connects it to a project, click by
-click. It runs at the tune-down with the governor on the machines alone, as every cloud set does (chapter 20), and its
+click. It runs the whole engine at the max, as every cloud set does from 31 October (chapter 20), and its
 run title carries the load and the dial.
 
 ### 17.7 Tearing down
@@ -3043,7 +3082,7 @@ The governor watches and writes nothing (section 16.5). For an audit that outliv
 
 The workflow `eks-metered` is the same design as Azure's and Google's, on clusters it builds with eksctl and deletes
 itself, Amazon's billed instances counted every 15 seconds at list price; Appendix H connects it to an account, click by
-click. It runs at the tune-down with the governor on the machines alone (chapter 20).
+click. It runs the whole engine at the max, as every cloud set does from 31 October (chapter 20).
 
 ### 18.7 Tearing down
 
@@ -3121,7 +3160,7 @@ INTERVAL=5 N=5 DURATION=31536000 python3 scripts/latency_probe.py http://<servic
 ```
 
 It sends `N` requests back to back, pauses `INTERVAL` seconds, and repeats for `DURATION` seconds; each request has a
-10-second timeout, and a timeout or an error is written as `ok=0`. In the cloud mode it runs as a second container in the
+10-second timeout, and a timeout or an error is written as `ok=0`. In a cloud it runs as a second container in the
 governor's own pod (section 20.4), writing to a volume both containers share. A probe measures a synthetic request; it
 is the right feed where the service has one representative endpoint, and the wrong one where the customer's requests
 differ widely in cost.
@@ -3159,29 +3198,31 @@ percentile with `ok=0` rows for the interval's failures. Two rules keep it hones
 A governor reads one feed (`--latency-file`), and a cluster has one governor on its machines (the one-writer rule,
 section 6.2). Where several services share the governed machines, the feed must speak for all of them: either the feed of
 the service most sensitive to a lost machine, or an adapter (section 19.4) that writes, for each short interval, the worst
-of the services' own 95th percentiles against their own lines, scaled to one line. Outside the cloud mode `--sensed`
-names the services whose autoscalers the feed speaks for, and only those are moved; in the cloud mode no autoscaler is
-moved at all, and the feed is the guard on the machines the governor parks: a machine is parked only while the line
-holds, and a breach wakes it at the next decision.
+of the services' own 95th percentiles against their own lines, scaled to one line. `--sensed` names the services whose
+autoscalers the feed speaks for, and only those are moved, in a cloud as on site; the feed is also the guard on the
+machines the governor parks: a machine is parked only while the line holds, and a breach wakes it at the next decision.
 
 
-## 20. Running in the Cloud: the Machines Alone, the Bill and the Alarm Minutes
+## 20. Running in the Cloud: the Whole Engine, the Bill and the Alarm Minutes
 
 
-### 20.1 Why the governor moves the machines alone in a cloud
+### 20.1 What the governor moves in a cloud, and how the bill is read
 
-In a public cloud every machine that exists is billed, whether it carries work or not, so the benefit a cloud can show
-is the bill: the same work as native for a smaller bill, never a bigger one, and never more alarms. The governor has
-three levers a cloud would let it pull besides the machines: the pod autoscaler's target, the processor of running pods
-and their power. In a cloud each of them can only raise the bill: a lower pod target asks for more pods, and more pods
-ask the cloud for machines; more processor for a pod makes it read busier to its autoscaler, which then asks for more
-pods; and a power cap saves nothing a cloud bills. So in a cloud the governor moves the machines alone:
+In a public cloud every machine that exists is billed, whether it carries work or not, so the bill is a gauge of its own
+there: a service gauge, its aim lower, read by the one key beside the work, the response time, the failures and the alert
+minutes. The governor has four levers in a cloud: the pod autoscaler's target, the processor of running pods, their power
+model and the machines. Until 31 October it pulled the machines alone, by rule (the founder's order of 14 October: a lower
+pod target asks for more pods, more pods ask the cloud for machines, and the bill was kept from rising by moving nothing
+else). The founder's order of 31 October struck that rule: no hard rule; the whole engine runs at the max in a cloud as on
+site, and what the bill does is judged, never ruled. So in a cloud the governor moves every muscle, and the machines so:
 
 ![Flowchart: parking and waking a machine in the cloud. At every full decision: a 95th percentile over the line, or a blind feed, wakes every parked machine at once; a pod waiting for a place, checked every 5 s, wakes one machine within 5 s while the pod lands on a parked one at once; otherwise, only with the release gate open and the trial allowing it, one machine is parked (a PreferNoSchedule taint, its pods marked first to go), and the cloud's own autoscaler deletes it once empty, on its own schedule.](figures/f_park.svg)
 
-- **No pod autoscaler is moved.** Every HPA keeps the operator's own target, range and cap, so the pods are exactly the
-  pods native would run.
-- **No processor is conveyed and no power is capped.**
+- **The pod autoscaler's target** is moved inside the autoscaler's own cover, as on site (chapter 7): the compass moves the
+  target, native's autoscaler keeps its range and cap, and a target that would ask for pods the machines cannot place is
+  handed back to native's own (omni-v21's immune rule). The replica room is read live, as on kind.
+- **The processor** is conveyed: a serving pod gets the processor its machine can spare and gives it back where a
+  neighbour wants it (chapter 8); **the power model** is read, and a cap written only where a meter is wired.
 - **The machines.** The governor parks a machine the cloud's autoscaler already made, only after its own trial shows the
   service's response time holds without it (within 2% of the response time with it, through the release gate, one
   machine at a time), and wakes it on a breach: at the next full decision (within 60 seconds) for a response time over
@@ -3190,33 +3231,43 @@ pods; and a power cap saves nothing a cloud bills. So in a cloud the governor mo
   once. A parked machine whose pods have gone is deleted by the cloud's
   own autoscaler, on the cloud's own schedule.
 
-The governor never asks the cloud for a machine (its machine lever cannot ask for more machines than the cluster has),
-and it can hold no more pods than native's autoscaler gives it. **The bill can only fall or stay.** It falls where native
-holds machines the service does not need: the quiet stretches between bursts, the hours of a day's trough, the weekend.
-It stays where native is already short of machines; there the governor has nothing to give back, and the receipt reads
-STEADY on the bill.
+The governor asks the cloud for no machine itself: a pool the cloud's autoscaler owns refuses a count set by hand, so the
+autoscaler, native's machine controller, stays in every arm and alone adds machines, for the pods the governor's target
+asks for (its machine lever, `scripts/kind_nodepool.sh`, never asks for more machines than the cluster has). **The bill is
+judged, never ruled.** It falls where native holds machines the service does not need: the quiet stretches between
+bursts, the hours of a day's trough, the weekend. It may rise where the target asks for pods ahead of the load and the
+autoscaler adds a machine for them; a rise reads power given beside the work and the speed it bought, and the cloud's
+judged number is the work per dollar: a tune whose work per dollar falls against native is not admissible as the factory
+tune (`docs/THE_TUNE.md`): it is a fault of the tune, root-caused in the model first. Where native is already short of machines the governor has nothing to give back,
+and the receipt reads STEADY on the bill.
 
-**What a cloud receipt can show, and what it cannot.** The cloud mode is Omni-Compass on the wire alone (Part Six's opening,
-"The cloud is a wire"): its receipt is the bill of the machines a cloud run can park, and nothing more. The software end's work
-and speed and the bare metal's energy are not under it and are not on its receipt; they are measured where Omni-Compass sits
-on them. The direct arm (section 1.1) is never run in a cloud: by itself Omni-Compass would have to make machines with the
-cloud's autoscaler off, and in a cloud it never adds a machine.
+**What a cloud receipt can show, and what it cannot.** The cloud is a wire (Part Six's opening): it makes no benefit of its
+own. A cloud receipt shows two things: that the engine holds on the cloud's machines as it does on site (every gauge read
+against native by the one key, no LOSS), and how much of the software end's gain comes through the wire, read as work per
+dollar beside the bill. The bare metal's energy is the provider's and is not on its receipt; it is measured where
+Omni-Compass sits on the chip. Where Omni-Compass sits on neither end, the cloud's bill shows nothing of Omni-Compass. The
+arm by itself (section 1.1) is never run in a cloud without the founder's word: by itself Omni-Compass would have to make
+machines with the cloud's autoscaler off.
 
 ### 20.2 The dial in the cloud
 
-The cloud runs at the tune-down (`--dial save`): native's work on the least resource. The max (`--dial max`) is for
-machines already paid for (a company's own racks, a card whose heat line is its limit), where more work from the same
-machines is the gain; it is never used in a cloud, and a run of the max in a cloud is never read as a bill result.
+The cloud runs at the max (`--dial max`), the factory tune, as on site: the most healthy work from what each muscle can carry,
+the bill shown beside it (the founder's order of 31 October). The tune-down (`--dial save`, native's work on the least
+resource) is a tune any company may set where it wants a cut rather than more work; it is a changed tune, and its receipts
+are its own. Until 31 October every cloud set ran at the tune-down on the machines alone (the order of 14 October), and those
+sets stand as their own record, read in no table with a set at the max.
 
-### 20.3 The settings the cloud mode writes
+### 20.3 The settings a cloud runs
 
-| Setting | Value in the cloud mode | Why |
+| Setting | Value in a cloud | Why |
 |---|---|---|
 | `--mode` | `nodepool` | the machine lever |
 | `--law` | `compass` | the compass holds the response time in its band and gives machines back through the trial |
-| `--dial` | `save` | the tune-down |
-| `--sensed` | `none/none` | names no service, so no HPA is moved; every HPA keeps the operator's target |
-| `--cap-deployments`, `--power-cmd` | absent | no processor conveyed, no power capped |
+| `--dial` | `max` | the factory tune, as on site |
+| `--sensed` | `<namespace>/<deployment>` | the service whose autoscaler's target is moved inside its cover; its range and cap stay the operator's |
+| `--cap-deployments` | `<namespace>/<deployment>` | the pods whose processor is conveyed in place, and handed back where a neighbour wants it |
+| `--replica-ceiling` | absent: read live | the replica room: how far the cap may rise while it binds and the line is threatened (what the machines can hold, one pod under), handed back once the demand holds still |
+| `--power-cmd` | absent | a rented machine has no meter the tenant can read; no power is capped |
 | `--latency-file`, `--slo-ms` | the feed and the line (chapter 19) | the guard on every machine parked |
 | `--node-scale-cmd` | `bash /app/scripts/kind_nodepool.sh {n}` | parks and wakes machines that exist; never asks for one |
 | `--node-restore-cmd` | `bash /app/scripts/kind_nodepool.sh 100000` | on a reset, wakes every parked machine (the script caps the number at the machines that exist) |
@@ -3248,15 +3299,15 @@ COPY tools/prom_feed.py /app/tools/prom_feed.py
 USER 10001
 ```
 
-![Deployment diagram: the governor on a managed cluster. One namespace, one service account, one Deployment of one replica (the one writer): the controller container with its command line, the probe beside it writing the feed to a shared volume, and the watchdog holding the lease; the audit, the feed and the kill file each on their own volume. Outside the pod: the API server, reached through one kubectl proxy and granted get, list, patch nodes and patch pods, nothing else; the service and its autoscaler, untouched in the cloud mode; and the work pools under the cloud's own autoscaler, where machines are tainted, untainted and their pods marked first to go. No cloud credential is in the pod.](figures/s_deploy.svg)
+![Deployment diagram: the governor on a managed cluster. One namespace, one service account, one Deployment of one replica (the one writer): the controller container with its command line, the probe beside it writing the feed to a shared volume, and the watchdog holding the lease; the audit, the feed and the kill file each on their own volume. Outside the pod: the API server, reached through one kubectl proxy and granted get, list, patch nodes and patch pods, and in the service's namespace by name its autoscaler, its Deployment's records and its pods' processor, nothing else; the service and its autoscaler, whose target the governor moves inside its cover; and the work pools under the cloud's own autoscaler, where machines are tainted, untainted and their pods marked first to go. No cloud credential is in the pod.](figures/s_deploy.svg)
 
 Build the shipped image first and pass it as the base (`--build-arg BASE=<registry>/omni-compass:<version>`). The
-governing Deployment is `deploy/install/omni-compass-cloud.yaml` (printed in Appendix I). Apply the machines role of
-section 15.3 (`deploy/install/rbac-machines.yaml`) first, set the image, the service's URL and the line, and replace the
-watch Deployment:
+governing Deployment is `deploy/install/omni-compass-cloud.yaml` (printed in Appendix I). Apply the cloud's grant of
+section 15.3 (`deploy/install/rbac-cloud.yaml`) first, set the image, the service, the service's URL and the line, and
+replace the watch Deployment:
 
 ```bash
-kubectl apply -f deploy/install/rbac-machines.yaml
+kubectl apply -f deploy/install/rbac-cloud.yaml
 kubectl apply -f deploy/install/omni-compass-cloud.yaml
 kubectl -n omni-compass set image deployment/omni-compass controller=<registry>/omni-compass-cloud:<version> \
   probe=<registry>/omni-compass-cloud:<version>
@@ -3273,7 +3324,7 @@ evidence that the service holds without the machine. That evidence is the paired
 
 ### 20.5 What to expect, hour by hour
 
-| Hour of a typical day | Native | With Omni-Compass on top, machines alone |
+| Hour of a typical day | Native | With Omni-Compass on top, the whole engine |
 |---|---|---|
 | The peak | every machine the pods need | the same machines; nothing parked while the line is at risk |
 | The descent after a peak | machines held until the autoscaler's own scale-down finds them unneeded | machines parked one at a time as each trial passes; their pods leave first on the autoscaler's next scale-down |
@@ -3282,10 +3333,13 @@ evidence that the service holds without the machine. That evidence is the paired
 
 ![Modelled trace: one pedal over a burst, machines against demand (class S: the rules of the pedal drawn over the burst 1 4 1 6 1 9, five decisions a step). Native's autoscaler adds a machine when pods cannot be placed and removes one after its own delay; with Omni-Compass on top the push adds capacity at once at the wall and the lift off gives it back one machine at a time through the gate and the trial, never below the floor of 2.](figures/t_pedal.svg)
 
-The savings come from two places: the machines the governor parks before native's autoscaler would find them unneeded,
-and the empty machines the cloud deletes sooner because their pods were marked first to go. Neither changes how many pods
-run, and neither delays a pod: a parked machine carries a `PreferNoSchedule` taint, so a pod that finds the open machines
-full lands on a parked one at once.
+The work per dollar comes from three places: the processor conveyed to the running pods, which answer faster on the
+machines already billed; the pod target moved ahead of the load, so the service is ready before the line; and the
+machines the governor parks before native's autoscaler would find them unneeded, whose empty machines the cloud deletes
+sooner because their pods were marked first to go. None of them delays a pod: a parked machine carries a
+`PreferNoSchedule` taint, so a pod that finds the open machines full lands on a parked one at once. Where the target asks
+for pods ahead of the load, the cloud's autoscaler may add a machine for them: the bill it adds is read beside the work it
+bought.
 
 ### 20.6 Reading the bill and the alarm minutes
 
@@ -3293,26 +3347,27 @@ Every paired receipt on a cloud carries these rows, and they are read by the rul
 
 | Row | Its aim | How to read it |
 |---|---|---|
-| compute bill at list price ($) | lower | a cut is GAIN; STEADY where native was already short of machines; a rise is power given, and in the cloud mode it is a fault to find, because the mode cannot hold more machines than native |
+| completed work per dollar of the bill | higher | the cloud's one number: the work answered within the line for each dollar of the bill; a rise is GAIN (more work for the same money), a fall is power given (money spent for speed, never a LOSS); read only where the load lets the work grow and the answers are counted |
+| compute bill at list price ($) | lower | shown beside the work it bought; a cut is GAIN, a rise is power given; a smaller bill is never the aim, and a tune whose bill rises against native for the same work is not admissible as the factory tune (`docs/THE_TUNE.md`) |
 | machines billed, machine-hours | lower | as the bill |
-| response time, 95th and 99th percentile | lower | must read STEADY or GAIN; a LOSS is a wiring fault to find first (section 5.5) |
+| response time, 95th and 99th percentile | lower | read by the one key; a LOSS is a wiring fault to find first (section 5.5) |
 | failed requests | lower | must read STEADY or GAIN |
 | alert minutes | lower | the whole minutes whose 95th percentile, failed requests counted over, was over the line: the minutes an on-call page would be open. The aim in a cloud is none at all; an alert minute on the omni side is found and fixed |
 | settings commands the governor wrote on its own | shown | the machines it parked and woke, each in its audit with its reason; no person touched either arm |
-| HPA replicas | shown | must match native's within the noise in the cloud mode; a difference is a wiring fault (an HPA moved) |
+| HPA replicas | shown | the pods each arm ran; with the target moved they may differ from native's, and the machines they asked for are on the bill row |
 
-**A run of one day of real traffic says more than any burst.** The bill's saving lives in the quiet hours; a paired run
-of a steady load at the service's peak can read STEADY on the bill, honestly, because at the peak there is nothing to give
+**A run of one day of real traffic says more than any burst.** The machines given back live in the quiet hours; a paired
+run of a steady load at the service's peak can read STEADY on the bill, honestly, because at the peak there is nothing to give
 back. The day-shaped load of the repository's own cloud sets (the Google 2011 trace on one to nine load generators) is
 the test that shows the trough.
 
-### 20.7 What the cloud mode never does
+### 20.7 What the governor never does in a cloud
 
-It never raises a pod autoscaler's cap, target or range; never resizes a pod; never caps power; never asks the cloud for
-a machine; never deletes a machine (the cloud's autoscaler does, on its own schedule, once a machine is empty); never
-evicts or deletes a pod; and never holds a cloud credential. Each of those is checked from outside the governor at the
-end of every paired arm: every HPA back at the operator's, every pod's limit at its shipped value, every machine back in
-service, no `omnicompass.io/` record left on any object.
+It never moves a pod autoscaler's floor or cap but within its replica room, handed back once the demand holds still (it
+moves the target inside them); never caps power where no meter is wired; never asks the cloud for a machine; never deletes a machine (the cloud's autoscaler does, on its own schedule, once a
+machine is empty); never evicts or deletes a pod; and never holds a cloud credential. Each of those is checked from outside
+the governor at the end of every paired arm: every HPA back at the operator's, every pod's limit back at its shipped value,
+every machine back in service, no `omnicompass.io/` record left on any object.
 
 
 ## 21. Day Two: Running Omni-Compass in Production
@@ -3335,7 +3390,8 @@ should expect.
 
 ### 21.2 The watchdog and the lease, in a cluster
 
-A governor that dies without handing back leaves its settings in place: in the cloud mode, machines parked. The lease
+A governor that dies without handing back leaves its settings in place: in a cloud, machines parked, a moved target and
+conveyed limits. The lease
 covers that case. Before its first write the governor registers the exact command that puts every setting back
 (`python -m omni_controller.controller --restore-only`, which restores from the annotations on the objects themselves,
 so it needs no memory of the dead process) and renews a lease every decision. The watchdog
@@ -3436,7 +3492,7 @@ company's configuration repository and deploy them like any other workload, and 
 (within 60 seconds), and a pod that cannot be placed wakes one at the next fast check (within 5 seconds). If alert minutes persist with machines parked, turn the governor OFF (section 21.3), which wakes every
 machine, and read the audit for the decision that parked the last one: its trial, its readings and the feed's age.
 
-**The governor parks nothing for days.** In the cloud mode at a steady peak that is the right answer: there is nothing to
+**The governor parks nothing for days.** In a cloud at a steady peak that is the right answer: there is nothing to
 give back. Otherwise read `"verdict"` records: trials abandoned for too little work mean the feed is too thin (section
 18.3); trials refused mean the service is slower without the machine, and the governor is right to keep it.
 
@@ -3542,7 +3598,7 @@ on every new card model.
 Where the cards are nodes of a Kubernetes cluster (the vendor's device plugin exposing `nvidia.com/gpu`), the card
 governor runs as a privileged agent on each GPU node (it writes the card's own settings, which needs the host's
 management interface), one per node, with its feed taken from the serving pods on that node. It never schedules or
-moves a pod; the cluster's own scheduler and autoscaler place the work, and the cloud mode of chapter 20 governs the
+moves a pod; the cluster's own scheduler and autoscaler place the work, and the governor of chapter 20 governs the
 machines, if the cards are in a cloud. The two governors are different writers of different settings and never touch the
 same one.
 
@@ -3673,7 +3729,7 @@ five minutes, the service at its line in more than 10% of decisions, the master 
 unreadable, and the governor's own processor above half a core. The staleness bound is three of the governor's own beats
 as the exporter measures them (180 s at the main engine's 60 s, 45 s at 15 s, 360 s at 120 s), so it needs no edit when the
 dial is turned; the other rules count in minutes and hours, not in decisions. The alert that matters most is not the governor's: it is the service's own line.
-An installation in the cloud mode is judged first by whether that alert fires more often with the governor than without
+An installation in a cloud is judged first by whether that alert fires more often with the governor than without
 it, and the paired receipt's alert-minutes row (section 20.6) is the same measure taken under control.
 
 ### 23.5 The control panel: the buttons, behind sign-in, every press logged
@@ -3821,7 +3877,7 @@ turn the governor OFF, and every setting it ever wrote is back at the operator's
 | Risk | Control | Evidence |
 |---|---|---|
 | The governor makes a decision that harms the service | it gives back a machine only after its own trial shows the response time holds; a breach wakes it at the next decision; nothing is given back while a sense is blind | the `verdict` and `decision` records; the paired receipt |
-| The governor raises the bill | in the cloud mode it moves no pod autoscaler and never asks the cloud for a machine (chapter 20) | the grant (no autoscaler write); HPA replicas equal to native's in the receipt |
+| The governor raises the bill | in a cloud the bill is judged by the one key beside the work it bought: a tune whose work per dollar falls against native is not admissible as the factory tune (chapter 20, `docs/THE_TUNE.md`); the governor asks the cloud for no machine itself | the receipt's bill row; the machine lever's grant (patch nodes, patch pods; no cloud credential) |
 | The governor dies holding machines parked | the lease and the watchdog hand everything back from the records on the objects (section 21.2); a parked machine never blocks a pod | the watchdog drill |
 | Someone else moves the same setting | the one-writer rule; the drift is visible in every decision | the `proprioception` field of each `authority` record |
 | A compromised governor is used against the cluster | least privilege: read, patch nodes and patch pods; no delete, no eviction, no secrets, no cloud credential (chapter 15) | the role and its proof |
@@ -3865,21 +3921,23 @@ the governor its writes and be the only person able to stop it.
 ### 24.6 Communicating the installation
 
 The people who will notice the governor are the service's on-call engineers, and they are told before it governs: what
-it moves (in the cloud mode, only which machines are in service), what it never moves, how a parked machine looks in
+it moves (the service's autoscaler target inside its cover, the pods' processor and which machines are in service), what it never moves, how a parked machine looks in
 `kubectl get nodes` (a `PreferNoSchedule` taint, `omnicompass.io/idle`), where its audit is, how to turn it OFF, and who
 holds the switch. An engineer who finds a tainted node at three in the morning and does not know why is the failure this
 section exists to prevent.
 
 
-## 25. Planning the Saving Before the Run: Capacity, Cost and the Shape of Load
+## 25. Planning a Cloud Run: Capacity, Cost and the Shape of Load
 
 
 A paired run costs days of the implementer's time and the price of two clusters. Before it is spent, the implementer can
-bound, from the company's own monitoring and with arithmetic alone, how large a saving the cloud mode could show on the
-pools it will govern, and where in the day that saving lives. This chapter gives that bound, the settings that move it,
-and the pricing terms that decide whether a machine-hour saved is a dollar saved. Nothing in it predicts what the governor
-will do: the bound is a ceiling that no machine lever on top of the same pods can pass, and the paired run (phase 5) is
-the only measurement of how much of it the governor takes while the line holds.
+bound, from the company's own monitoring and with arithmetic alone, how many machine-hours the machine lever could give
+back on the pools it will govern, and where in the day they live. This chapter gives that bound, the settings that move it,
+and the pricing terms that decide whether a machine-hour given back is a dollar. It is one part of a cloud run's reading:
+the work per dollar the software end buys (the processor conveyed, the target moved ahead of the load) is measured only by
+the paired run, and a smaller bill is never the aim (chapter 20). Nothing in it predicts what the governor will do: the
+bound is a ceiling that no machine lever on top of the same pods can pass, and the paired run (phase 5) is the only
+measurement of how much of it the governor takes while the line holds.
 
 ### 25.1 Where the bill of a governed pool comes from
 
@@ -3889,7 +3947,7 @@ existed in it, of each machine's price per hour times the hours it existed:
 B = Σₘ pₘ hₘ, hₘ = ∫₀ᵀ 1[m exists at t] dt .
 
 For a pool of one machine family at list price p, this is B = p ∫₀ᵀ N(t) dt, where N(t) is the number of
-machines in the pool at time t. The cloud mode lowers B in one way only: it makes machines exist for fewer hours. It
+machines in the pool at time t. The machine lever lowers B in one way only: it makes machines exist for fewer hours. It
 parks a machine (a `PreferNoSchedule` taint, chapter 20), marks that machine's pods first to go
 (`controller.kubernetes.io/pod-deletion-cost`), so that the next scale-down of the service's own HPA removes them first,
 and leaves the machine to empty; the cloud's own cluster autoscaler then deletes the empty machine on its own schedule.
@@ -3925,9 +3983,10 @@ R = ∫₀ᵀ (N(t) − N[req] (t))⁺ dt ≈ Σₖ Δ t (N(tₖ) − N[req]�
 where (x)⁺ = max(x, 0) and Δ t is the sampling interval. R is an upper bound for three reasons, each of
 which a real cluster exhibits: perfect packing is not achievable (pods have affinity rules, topology spread constraints
 and sizes that do not tile a machine); the scheduler places pods by its own scoring, not by packing; and a machine that is
-parked must also empty before the cloud deletes it. The cloud mode never asks the cloud for a machine and never holds more
-pods than native's autoscaler gives it, so the governed pool can never fall below N[req] by the governor's action, and
-it does not try to: every machine it parks first passes its own trial against the line.
+parked must also empty before the cloud deletes it. The machine lever never asks the cloud for a machine, so the governed
+pool can never fall below N[req] by its action, and it does not try to: every machine it parks first passes its own trial
+against the line. (A pod target moved ahead of the load may ask native's autoscaler for more pods, and the cloud's
+autoscaler for a machine to hold them; that machine is on the bill row beside the work it bought.)
 
 **The billable room.** Where the company holds a commitment that pays for K machines of the family whether they exist or
 not (section 25.5), only machine-hours above K reach the bill:
@@ -3941,7 +4000,7 @@ included), U[c] (t) the processor in use, and C′[c] one machine's allocatabl
 
 N[gov] (t) = max(N[f], ⌈((1+h) Q′[c] (t))/(C′[c])⌉, ⌈(U[c] (t))/(C′[c])⌉), h = 0.5,
 
-so the room the cloud mode can take is at most R[gov] = ∫₀ᵀ (N(t) − N[gov] (t))⁺ dt ≤ R. A pool whose pods'
+so the room the machine lever can take is at most R[gov] = ∫₀ᵀ (N(t) − N[gov] (t))⁺ dt ≤ R. A pool whose pods'
 requests, with half again to spare, already fill the machines the cluster autoscaler keeps has R[gov] = 0: there is
 nothing to park, and a paired run on it reads STEADY on the bill, correctly.
 
@@ -4042,7 +4101,7 @@ that changes the profile between arms is not a paired run.
 | A reservation, committed-use discount or savings plan covering K machines of the family | nothing below K; the full price above K | size commitments to the governed pool's floor and trough, not its peak; R[$] of section 25.2 |
 | Spot or preemptible | the spot price | govern the on-demand pools first; a spot pool's machines can vanish on the provider's notice, governor or not |
 | Software licensed per machine or per core (a commercial operating system, an agent billed per node) | that licence too, where it is billed by the hour the machine exists | add it to p |
-| The cluster's own fee (the control plane), storage, network egress, load balancers | nothing | never in the bill rows of a receipt; the cloud mode moves none of them |
+| The cluster's own fee (the control plane), storage, network egress, load balancers | nothing | never in the bill rows of a receipt; the governor moves none of them |
 
 The bill rows of a receipt (section 20.6) price machine-hours at the provider's list price for the family, because list
 price is the one price both arms share and anyone can check. The company's own discounts change the dollars, never the
@@ -4101,7 +4160,7 @@ processor and, where wired, the power, each at its limit.
 |---|---|---|
 | What an idle machine costs | its full hourly price | its idle power, and its share of cooling |
 | The dial | the tune-down (`--dial save`) | the max (`--dial max`), the default |
-| The levers | the machines alone (chapter 20) | the pods, the processor, the power and the machines, level by level (section 7.3) |
+| The levers | the same levers, each moved toward the least resource (the v5 edge) | the pods, the processor, the power and the machines, level by level (section 7.3) |
 | What the receipt is judged on | the bill, at native's work, speed and failures | work, speed, misses and failures; the power it took shown beside them as power given |
 | The meter | the provider's bill at list price | the machine's own meter, a wall meter, or the facility's (evidence class P) |
 
@@ -4327,9 +4386,11 @@ On OpenShift the security context constraints of section 26.3 play this part.
 
 A `ValidatingAdmissionPolicy` (Kubernetes 1.30 and later, which every current managed Kubernetes version satisfies)
 evaluates rules written in the Common Expression Language (CEL) against every write a chosen identity makes, and refuses
-a write that breaks them, after role-based access control has allowed it. The two policies below bind the governor's
-service account, and only it, to the writes the cloud mode makes: on a node, its own idle taint and nothing else; on a
-pod, its own deletion-cost mark and nothing else.
+a write that breaks them, after role-based access control has allowed it. The four policies below bind the governor's
+service account, and only it, to the writes it makes in a cloud: on a node, its own idle taint and nothing else; on a pod,
+its own deletion-cost mark and nothing else (a pod's processor is resized through the `pods/resize` subresource, which the
+pod policy does not match and the grant names apart); on the service's autoscaler, its target, floor and cap and its own
+records, never what it scales or how; on the service's Deployment, its own records and nothing else.
 
 ```yaml
 # The governor's writes on machines: its own idle taint (PreferNoSchedule), nothing else.
@@ -4403,6 +4464,78 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding
 metadata: {name: omni-compass-pods}
 spec: {policyName: omni-compass-pods, validationActions: [Deny]}
+---
+# The governor's writes on the service's autoscaler: its target, floor and cap, and its own records, nothing else.
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata: {name: omni-compass-autoscalers}
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - {apiGroups: ["autoscaling"], apiVersions: ["v2"], operations: ["UPDATE"], resources: ["horizontalpodautoscalers"]}
+  matchConditions:
+    - name: the-governor
+      expression: "request.userInfo.username == 'system:serviceaccount:omni-compass:omni-compass'"
+  validations:
+    - expression: "object.spec.scaleTargetRef == oldObject.spec.scaleTargetRef"
+      message: "the governor never changes what an autoscaler scales"
+    - expression: >-
+        has(object.spec.behavior) == has(oldObject.spec.behavior) &&
+        (!has(object.spec.behavior) || object.spec.behavior == oldObject.spec.behavior)
+      message: "the governor never changes how an autoscaler scales"
+    - expression: >-
+        has(object.spec.metrics) == has(oldObject.spec.metrics) &&
+        (!has(object.spec.metrics) || object.spec.metrics.size() == oldObject.spec.metrics.size())
+      message: "the governor adds or removes no metric (it moves a target)"
+    - expression: >-
+        has(object.metadata.labels) == has(oldObject.metadata.labels) &&
+        (!has(object.metadata.labels) || object.metadata.labels == oldObject.metadata.labels)
+      message: "the governor changes no label of an autoscaler"
+    - expression: >-
+        (!has(object.metadata.annotations) || object.metadata.annotations.all(k, k.startsWith('omnicompass.io/') ||
+           (has(oldObject.metadata.annotations) && k in oldObject.metadata.annotations &&
+            oldObject.metadata.annotations[k] == object.metadata.annotations[k]))) &&
+        (!has(oldObject.metadata.annotations) || oldObject.metadata.annotations.all(k, k.startsWith('omnicompass.io/') ||
+           (has(object.metadata.annotations) && k in object.metadata.annotations)))
+      message: "the governor changes no annotation of an autoscaler but its own omnicompass.io/ records"
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata: {name: omni-compass-autoscalers}
+spec: {policyName: omni-compass-autoscalers, validationActions: [Deny]}
+---
+# The governor's writes on the service's Deployment: its own records (the pods' original processor limit), nothing else.
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata: {name: omni-compass-deployments}
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - {apiGroups: ["apps"], apiVersions: ["v1"], operations: ["UPDATE"], resources: ["deployments"]}
+  matchConditions:
+    - name: the-governor
+      expression: "request.userInfo.username == 'system:serviceaccount:omni-compass:omni-compass'"
+  validations:
+    - expression: "object.spec == oldObject.spec"
+      message: "the governor changes nothing in a Deployment's spec"
+    - expression: >-
+        has(object.metadata.labels) == has(oldObject.metadata.labels) &&
+        (!has(object.metadata.labels) || object.metadata.labels == oldObject.metadata.labels)
+      message: "the governor changes no label of a Deployment"
+    - expression: >-
+        (!has(object.metadata.annotations) || object.metadata.annotations.all(k, k.startsWith('omnicompass.io/') ||
+           (has(oldObject.metadata.annotations) && k in oldObject.metadata.annotations &&
+            oldObject.metadata.annotations[k] == object.metadata.annotations[k]))) &&
+        (!has(oldObject.metadata.annotations) || oldObject.metadata.annotations.all(k, k.startsWith('omnicompass.io/') ||
+           (has(object.metadata.annotations) && k in object.metadata.annotations)))
+      message: "the governor changes no annotation of a Deployment but its own omnicompass.io/ records"
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata: {name: omni-compass-deployments}
+spec: {policyName: omni-compass-deployments, validationActions: [Deny]}
 ```
 
 **Prove the policies before the governor relies on them.** A policy is proved the way the grant is (section 15.4): by
@@ -4419,19 +4552,29 @@ kubectl --as=$SA taint node $N omnicompass.io/idle:PreferNoSchedule-         # a
 kubectl --as=$SA label pod $P -n $NS omni-test=1                             # refused: changes no label of a pod
 kubectl --as=$SA annotate pod $P -n $NS controller.kubernetes.io/pod-deletion-cost=-1000 --overwrite   # admitted
 kubectl --as=$SA annotate pod $P -n $NS controller.kubernetes.io/pod-deletion-cost-                    # admitted
+D=<the service's Deployment, its autoscaler of the same name>
+kubectl --as=$SA patch hpa $D -n $NS --type=merge -p '{"spec":{"scaleTargetRef":{"name":"omni-test"}}}' # refused: never what it scales
+kubectl --as=$SA annotate hpa $D -n $NS omnicompass.io/drill=1                # admitted
+kubectl --as=$SA annotate hpa $D -n $NS omnicompass.io/drill-                 # admitted
+kubectl --as=$SA label deployment $D -n $NS omni-test=1                       # refused: changes no label of a Deployment
+kubectl --as=$SA annotate deployment $D -n $NS omnicompass.io/drill=1         # admitted
+kubectl --as=$SA annotate deployment $D -n $NS omnicompass.io/drill-          # admitted
 ```
 
-Each refusal names the policy and its message. Keep the eight answers with the installation record beside the grant's
-proof. Run the drill in a quiet hour: the two admitted taint commands park and wake the machine `$N` for a moment, and
-the two admitted annotations mark and unmark one pod.
+Each refusal names the policy and its message. Keep the fourteen answers with the installation record beside the grant's
+proof. Run the drill in a quiet hour: the two admitted taint commands park and wake the machine `$N` for a moment, the
+two admitted pod annotations mark and unmark one pod, and the four admitted record annotations come and go on the
+service's autoscaler and Deployment.
 
 **What `failurePolicy: Fail` means here.** If the policy itself cannot be evaluated, the governor's write is refused,
 never admitted. A refused write is recorded as `refused` in the governor's audit (section 21.4); a refused park leaves a
 machine in service, and a refused wake leaves a machine parked, which never blocks a pod. The policy can therefore stop
 the governor from saving, never make it harm.
 
-The cloud mode needs nothing the policies forbid: the shipped machine script parks and wakes machines with the idle
-taint alone, marks pods with the deletion-cost annotation alone, and never cordons or uncordons a machine (section 29.1).
+A cloud needs nothing the policies forbid: the shipped machine script parks and wakes machines with the idle taint alone,
+marks pods with the deletion-cost annotation alone, and never cordons or uncordons a machine (section 29.1); the governor
+moves an autoscaler's target, floor and cap and records the owner's own settings in `omnicompass.io/` annotations on the
+autoscaler and the Deployment, and resizes a pod's processor through `pods/resize` alone.
 
 ### 27.5 The network: two endpoints
 
@@ -4539,7 +4682,7 @@ assumed.
 | `--min-nodes` and `MIN_NODES` | per kind | the floor, at least the zones the service needs serving |
 | `WORKER_SEL` | per kind | the label of the governed pools, `omni-role=work` by convention |
 | The image digest | **never** | one engine version, one build, one signature |
-| `--mode`, `--law`, `--dial`, `--sensed`, `--interval`, `--floor-interval`, `--max-node-step`, the node commands | **never** | the cloud mode as section 20.3 writes it; a cluster that differs is not in the cloud mode and its receipt is its own |
+| `--mode`, `--law`, `--dial`, `--sensed`, `--cap-deployments`, `--interval`, `--floor-interval`, `--max-node-step`, the node commands | **never** | the cloud's settings as section 20.3 writes them; a cluster that differs runs a changed tune and its receipt is its own |
 
 ### 28.3 The configuration as code
 
@@ -4553,7 +4696,7 @@ half and its watch half, and keep a base for each phase:
 omni-compass/
   base/identity/        namespace, service account, watch role and binding (from deploy/install/omni-compass.yaml)
   base/watch/           the watch Deployment (from deploy/install/omni-compass.yaml)
-  base/govern/          rbac-machines.yaml, omni-compass-cloud.yaml, the network policy and admission policies (chapter 27)
+  base/govern/          rbac-cloud.yaml, omni-compass-cloud.yaml, the network policy and admission policies (chapter 27)
   overlays/<cluster>/   kustomization.yaml: identity + watch, or identity + govern, and this cluster's settings
 ```
 
@@ -4618,7 +4761,7 @@ deletion-cost mark.
 
 ### 28.5 Many services on one cluster
 
-The cloud mode governs machines, and machines are shared. Where several services run on the governed pools, the
+The governor's machine lever governs machines, and machines are shared. Where several services run on the governed pools, the
 governor's single feed must speak for all of them (section 19.6): the feed of the service most sensitive to a lost
 machine, or an adapter that writes the worst of the services' own percentiles against their own lines. Three practical
 rules follow:
@@ -4694,14 +4837,14 @@ the cluster, still Ready and still usable, with a mark asking new pods to go els
 | Failure | What the governor does | What you see | What you do |
 |---|---|---|---|
 | The governor's process is killed (out of memory, a signal) | nothing; the watchdog in the same pod finds the process gone within 10 seconds and runs the governor's recorded restore, waking every parked machine and removing its marks; the kubelet restarts the governor's container | the watchdog's `handed back` record; the container's restart count rises; the restarted governor's first decisions | find why it died (`kubectl describe pod`, the container's last state); an out-of-memory kill means the limit is too low for the cluster's size |
-| The governor hangs | its lease stops being renewed; after five decision periods (300 seconds at the cloud mode's 60) the watchdog kills it and runs the restore | the watchdog's record with `hung: true` | as above |
+| The governor hangs | its lease stops being renewed; after five decision periods (300 seconds at the main engine's 60) the watchdog kills it and runs the restore | the watchdog's record with `hung: true` | as above |
 | The governor's pod is deleted or evicted gracefully (a drain of the system pool, an upgrade, `kubectl delete pod`) | on `SIGTERM` it hands every setting back, reads each back and exits; the Deployment starts a new pod, which starts ON | the audit record `master switch: OFF; every setting handed back; exiting`, then a new pod's first decisions | nothing, unless the new pod cannot be placed |
 | The machine under the governor fails abruptly | nothing can act for it at that moment; the parked machines stay parked, which blocks no pod; the Deployment starts a new pod on another system machine, which begins from the cluster as it finds it | the pod rescheduled; if the system pool has one machine, the pod waits for the provider's repair | run the system pool on at least two machines in production, so the governor's pod always has somewhere to go |
 | The feed stops (the probe's container dies, the adapter stops writing) | after twice its window with no new row the governor reads the feed as blind: it gives nothing back, treats the reading as past its wall, and wakes a parked machine each decision while the sense stays blind | `authority` records whose `senses.blind` names `latency`, with a growing `latency_age_s`; the probe container's restarts | restore the feed (section 19.3 on a probe restart); the governor resumes on its own |
 | The service stops answering (every request fails) | no served row means no reading: blind, as above | as above, and the service's own alert | the service's own incident; the governor has already stopped giving back and is waking what it parked |
 | The feed lies (a reading that does not track the service) | the governor cannot know; it acts on the reading it is given | the dashboard's two response-time lines disagree (section 23.3) | turn the governor OFF until the feed is fixed; this is why the feed is checked before the governor watches (section 19.5) |
 | The API server is unreachable or throttling | each decision that cannot read the cluster writes an `error` record (with the count of consecutive failures) and changes nothing; the fast checks record their own errors | `error` records; the provider's own control-plane status | nothing on the governor's side: it resumes when the API answers; parked machines stay usable meanwhile |
-| A write is refused (the role, an admission policy, a conflict) | the command's failure is recorded as `refused` with its exit code; with `--max-nodes` set, as the cloud manifest sets it, the governor's top is unchanged, and it issues the count again at its next decision while the machines in service differ from it | `refused` records | read the reason; a policy refusal of a write the cloud mode needs means the policy is wrong (chapter 27); a role refusal means the grant is missing (chapter 15) |
+| A write is refused (the role, an admission policy, a conflict) | the command's failure is recorded as `refused` with its exit code; with `--max-nodes` set, as the cloud manifest sets it, the governor's top is unchanged, and it issues the count again at its next decision while the machines in service differ from it | `refused` records | read the reason; a policy refusal of a write the governor needs means the policy is wrong (chapter 27); a role refusal means the grant is missing (chapter 15) |
 | A person cordons a governed machine (maintenance) | the machine script leaves a machine someone else cordoned alone: it never uncordons it, never counts it in service or parked, and removes its own idle mark from it, if any | the machine `SchedulingDisabled`; a `proprioception` drift while the cordoned machine still carries work | none needed; for a long maintenance, also remove the machine's `omni-role=work` label so the governor no longer sees it at all, and put the label back afterwards |
 | The provider upgrades the cluster or a node pool (cordon, drain, surge machines) | as for a cordon; surge machines join open and are counted | the upgrade's own events | scale the governor to zero before the upgrade starts (its hand-back wakes everything) and back to one when the upgrade completes, so the upgrade runs exactly as it does without the governor |
 | The cluster autoscaler deletes a parked, empty machine | nothing; that is the saving (section 25.1) | the machine gone; the next decision counts one fewer | nothing |
@@ -4856,7 +4999,7 @@ traffic, compressed no further than the autoscaler's ten-minute profile allows.
 ### 30.4 Days 3 to 7: the paired run
 
 The paired run (phase 5, section 16.6) builds two identical clusters for each repetition, one native and one with
-Omni-Compass on top in the cloud mode, drives the same recorded day through both, and deletes both. Its receipt is read
+Omni-Compass on top at the max, drives the same recorded day through both, and deletes both. Its receipt is read
 row by row (section 20.6), and before the installation proceeds it must show: the bill and the machine-hours reading
 GAIN or STEADY; response time, failed requests and alert minutes reading STEADY or GAIN; HPA replicas equal to native's
 within the noise. A LOSS row stops the installation until its cause is found in the wiring and the run is repeated
@@ -4907,7 +5050,7 @@ and the governor's command line, written whole (section 28.3), carries `--min-no
 for the first day, `--dry-run`. Then:
 
 ```bash
-kubectl apply -f deploy/install/rbac-machines.yaml              # the machines role (section 15.3), approved in the change record
+kubectl apply -f deploy/install/rbac-cloud.yaml                 # the cloud's grant (section 15.3), approved in the change record
 kubectl -n omni-compass delete deployment omni-compass           # the watch Deployment goes; the governing one replaces it
 kubectl apply -k overlays/shop-prod                              # the governing Deployment, with --dry-run
 kubectl -n omni-compass get pod -l app=omni-compass              # READY 3/3: governor, probe, watchdog
@@ -4952,13 +5095,16 @@ The questions below are the ones platform teams ask in the first week, answered 
 answer points to the section that holds the detail.
 
 **Does Omni-Compass replace our cluster autoscaler or our HPA?** No. It sits on top of both and never replaces either
-(section 1.1). In the cloud mode it moves neither: the HPA keeps the operator's target, and the cluster autoscaler keeps
-making and deleting machines on its own schedule; the governor parks and wakes machines between them (chapter 20).
+(section 1.1). In a cloud the HPA keeps the operator's range and cap (the governor moves its target inside them, and its
+floor and cap within the replica room, handing each back), and the cluster autoscaler keeps making and deleting machines on
+its own schedule; the governor parks and wakes machines between them (chapter 20).
 
-**Can it make our bill bigger?** In the cloud mode, no: it moves no pod autoscaler, so the pods are native's; it never asks
-the cloud for a machine, so the machines are native's or fewer. The bill can only fall or stay (section 20.1). Outside
-the cloud mode, on machines already paid for, the max may spend resource to buy work; that spending is shown as power
-given beside the work it bought, and it is never used in a cloud.
+**Can it make our bill bigger?** It can, and the receipt shows it. At the max the governor may move a service's target
+ahead of the load, and the cloud's autoscaler may add a machine for the pods it asks for; the bill row shows that spend as
+power given beside the work and the speed it bought, and the cloud's own number is the work per dollar (section 20.6). A
+smaller bill is never the aim: the factory tune aims at more work for each dollar, and a tune whose work per dollar falls
+against native is not admissible as the factory tune (`docs/THE_TUNE.md`). A company that wants a cut instead
+turns the dial down (`--dial save`); how it spends the gain is its own choice.
 
 **Can it wake our on-call engineer?** It is built so that it should not: it acts on the reading as it climbs toward the
 line, a breach wakes a parked machine at the next decision, and nothing is given back while the line is at risk. The receipt counts
@@ -4973,12 +5119,13 @@ times as fast as the HPA's own 15-second check; its full decision runs every 15 
 objects themselves (section 21.2); a parked machine never blocks a pod even before that, because its taint is
 `PreferNoSchedule`; and the native controllers carry the service as they did before the governor was installed.
 
-**Does it need cloud credentials?** Not in the cloud mode (section 15.5). It acts through the Kubernetes API with a service
-account that can read the cluster and patch nodes and pods, and nothing else.
+**Does it need cloud credentials?** No (section 15.5). It acts through the Kubernetes API with a service account that can
+read the cluster, patch nodes and pods, and in the service's namespace by name move its autoscaler, record on its
+Deployment and resize its pods' processor, and nothing else.
 
 **Does it work with Karpenter, KEDA, the Vertical Pod Autoscaler or a descheduler?** Karpenter: yes, in place of the
 cluster autoscaler; consolidation removes a parked machine once it is empty (section 18.2). KEDA: yes; KEDA drives the
-HPA, and in the cloud mode the governor does not touch the HPA at all. The Vertical Pod Autoscaler: yes, if it does not
+HPA, and the governor moves that HPA's target inside its cover as it moves any other. The Vertical Pod Autoscaler: yes, if it does not
 also act on the nodes; it changes requests, which the governor reads. A descheduler that uncordons or rebalances nodes
 is a second writer of the setting the governor moves, and must be configured to leave tainted nodes alone (section 21.8).
 
@@ -5135,13 +5282,13 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | Buffer pool | InnoDB's cache of table and index pages, the one memory setting every MySQL operator sizes; resized online by the server in whole chunks |
 | Chunk | the unit in which MySQL resizes its buffer pool (128 MB as shipped); the knob's notch on that stack |
 | Page cache | the operating system's own cache of file contents; where the data fits in it, a storage-engine miss is a read from memory and a decompression, not a disk read, and the gain available to the cache knob is smaller |
-| Cloud mode | the governor on top of a public cloud's cluster at the tune-down, moving machines alone: no pod autoscaler moved, no processor conveyed, no power capped, no machine asked for; the bill can only fall or stay (chapter 20) |
+| Cloud mode | the governor on top of a public cloud's cluster: since 31 October the whole engine at the max, the bill judged beside the work by the one key; until then, by the order of 14 October, the tune-down on the machines alone (chapter 20) |
 | Parked machine | a machine the governor has closed to new work with the taint `omnicompass.io/idle:PreferNoSchedule`; it stays Ready and usable, its pods are marked first to go, and the cloud's autoscaler deletes it once it is empty |
 | Taint, `PreferNoSchedule` | a mark on a machine that the scheduler treats as a preference against placing new pods there, never as a refusal; the only taint the governor writes |
 | Cordon | a machine marked unschedulable (`kubectl cordon`), by a person, an upgrade or a repair; the governor never cordons or uncordons a machine, and leaves a cordoned machine alone |
 | Pod deletion cost | the annotation `controller.kubernetes.io/pod-deletion-cost`, by which a ReplicaSet removes the lowest-cost pods first when it scales down; the governor marks a parked machine's pods with it so that they leave first |
 | Cluster autoscaler | the cloud's own controller that adds a machine when pods cannot be placed and deletes a machine that has been unneeded for its configured time; native, never changed by the governor (Karpenter plays the same part on Amazon) |
-| HorizontalPodAutoscaler (HPA) | the Kubernetes controller that sets a service's replica count from its pods' measured use against a target; native, and in the cloud mode never moved |
+| HorizontalPodAutoscaler (HPA) | the Kubernetes controller that sets a service's replica count from its pods' measured use against a target; native, its target moved by the governor inside its cover and its floor and cap within the replica room, each handed back |
 | Room | the machine-hours a pool holds above what its pods' requests need; the upper bound on any machine lever's saving, measured before any run (section 25.2) |
 | Billable room | the room above the machines a commitment already pays for: the part of the room that can reach the bill (section 25.2) |
 | Feed | the file of rows `elapsed_seconds,latency_ms,ok` the governor reads its response times from: the probe's, or an adapter's (chapters 19 and 23) |
@@ -5179,7 +5326,7 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | OFF, one muscle (Kubernetes) | `touch /tmp/omni.kill` |
 | OFF, one card | `sudo touch /tmp/omni-gpu-kill` |
 | The whole harness OFF, ON, status, watchdog | `python3 tools/omni_switch.py off|on|status|watchdog` |
-| Cloud mode: the machines role, then the governing Deployment (dry run first) | `kubectl apply -f deploy/install/rbac-machines.yaml`, then `kubectl apply -f deploy/install/omni-compass-cloud.yaml` (chapter 20) |
+| Cloud: the cloud's grant, then the governing Deployment (dry run first) | `kubectl apply -f deploy/install/rbac-cloud.yaml`, then `kubectl apply -f deploy/install/omni-compass-cloud.yaml` (chapter 20) |
 | Cloud mode: the cloud image | `docker build -f deploy/Dockerfile.cloud --build-arg BASE=<registry>/omni-compass:<version> -t <registry>/omni-compass-cloud:<version> .` |
 | Cloud mode: OFF, the switch of record | `kubectl -n omni-compass scale deployment/omni-compass --replicas=0` (section 21.3) |
 | Cloud mode: OFF from inside the pod | `kubectl -n omni-compass exec deploy/omni-compass -c controller -- touch /tmp/omni.kill` |
@@ -5199,8 +5346,8 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | `verify.py`, `tools/omni_version.py`, `tools/seal.py`, `RELEASE_MANIFEST.json` | checking the copy before it is installed (chapter 33) |
 | `deploy/Dockerfile` | the container image: non-root, read-only root filesystem, no Linux capabilities |
 | `deploy/install/omni-compass.yaml` | the watch-mode install with a read-only identity (level 1) |
-| `deploy/install/rbac-machines.yaml` | the cloud mode's machines role: patch nodes and patch pods, nothing else (section 15.3) |
-| `deploy/install/omni-compass-cloud.yaml` | the cloud mode's governing Deployment: the governor, its probe and its watchdog in one pod, shipped with `--dry-run` (chapter 20, Appendix I) |
+| `deploy/install/rbac-cloud.yaml` | the cloud's grant: patch nodes and pods, and in the service's namespace by name its autoscaler, its Deployment's records and its pods' processor, nothing else (section 15.3) |
+| `deploy/install/omni-compass-cloud.yaml` | the cloud's governing Deployment: the governor, its probe and its watchdog in one pod, shipped with `--dry-run` (chapter 20, Appendix I) |
 | `deploy/Dockerfile.cloud` | the cloud image: the shipped image with `jq`, the machine script, the probe, the Prometheus feed adapter and the switch tool |
 | `scripts/kind_nodepool.sh` | the machine script: keeps `{n}` machines in service by the idle taint alone; never creates, deletes, cordons or uncordons a machine, and never moves a pod |
 | `tools/prom_feed.py` | the response-time feed from the company's own Prometheus (section 23.8) |
@@ -5288,11 +5435,11 @@ pods it started), not to be counted for or against it.
 | Cloud: `trial abandoned (too little work)` in most `verdict` records | the feed is thinner than twenty rows a minute, or the service is idle | densify the feed (section 23.1); at an idle service, nothing is given back on trial, by design |
 | Cloud: `step refused: the muscle is slower there` in most `verdict` records | the service is slower without the machine | the governor is right to keep it; the pool has no room at this load (section 25.2) |
 | Cloud: the governor parks nothing for days and its trials are never begun | the pool already holds only what the pods' requests need with the governor's spare, or the floor is the pool | read N[gov] from the room sampler (section 25.3); STEADY on the bill is then the honest receipt |
-| Cloud: `refused` records with code 1 on every park | the machines role is not bound, or an admission policy refuses the taint | `kubectl auth can-i patch nodes --as=system:serviceaccount:omni-compass:omni-compass`; the policy's message names the rule (section 27.4) |
+| Cloud: `refused` records with code 1 on every park | the cloud's grant is not bound, or an admission policy refuses the taint | `kubectl auth can-i patch nodes --as=system:serviceaccount:omni-compass:omni-compass`; the policy's message names the rule (section 27.4) |
 | Cloud: a parked machine is never deleted though its pods are gone | the cluster autoscaler's unneeded time is long, a DaemonSet or a pod it will not move remains, or a PodDisruptionBudget allows no disruption | read the autoscaler's own status (its config map or events, `kubectl -n kube-system describe configmap cluster-autoscaler-status`) for the machine's reason (section 25.4) |
 | Cloud: the audit is empty after a restart | the audit was on the pod's `emptyDir` | mount a persistent volume at `/var/log/omni` and ship the file (section 21.4) |
 | Cloud: the governor starts again minutes after it was scaled to zero | a continuous-delivery controller restored Git's replica count | make the OFF switch a Git change, or tell the controller to ignore the replica count (section 28.4) |
-| Cloud: HPA replicas differ from native's in a cloud receipt | an autoscaler was moved, which the cloud mode never does | check the command line for `--sensed none/none` and the absence of `--cap-deployments` and `--power-cmd` (section 20.3); a run with them is not in the cloud mode |
+| Cloud: the bill rises against native for the same work | the target moved ahead of the load asked the cloud's autoscaler for machines the work did not need | read the work per dollar row and the trial records; a factory tune whose bill rises for the same work is a fault of the tune, written to the next version's list with its cause (`docs/THE_TUNE.md`) |
 | Cloud: the cloud image build fails at `FROM` | the base image argument was not given | pass `--build-arg BASE=<registry>/omni-compass:<version>` (section 20.4) |
 
 
@@ -7624,8 +7771,8 @@ That block is a password for this one purpose; never paste it anywhere but the G
 
 **Actions** tab, then **aks-metered** on the left, then **Run workflow**, then the green **Run workflow** button. The
 defaults are the preregistered design (5 repetitions, native and native with Omni-Compass on top, 900 measured seconds,
-Standard_D2s_v4 in eastus, the governor at the tune-down on the machines alone: the pods exactly native's, so the bill can
-only fall or stay). About 6 hours on GitHub. Each cluster is deleted when its arm ends, and the resource group at the end of every
+Standard_D2s_v4 in eastus, the whole engine at the max on top of Azure's own autoscaler, the bill judged beside the work: the
+founder's order of 31 October). About 6 hours on GitHub. Each cluster is deleted when its arm ends, and the resource group at the end of every
 repetition whatever happens, so nothing keeps billing.
 
 If Azure answers **quota exceeded**: in the portal, search **Subscriptions**, open yours, and upgrade it to
@@ -7726,8 +7873,8 @@ This connects GitHub to a Google Cloud account so two workflows can run the same
 
 - **`gke-metered`**: a real Google Kubernetes Engine cluster, native Kubernetes (with Google's own cluster autoscaler)
   against the same with Omni-Compass on top, the machines Google bills counted every 15 seconds, the organisms with the
-  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set at the
-  tune-down with the governor on the machines alone, so the bill can only fall or stay. The same
+  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set with the
+  whole engine at the max on top of the cloud's own autoscaler, the bill judged beside the work (31 October). The same
   design as Azure's `aks-metered` (`docs/K8S_COMPASS_PREREGISTRATION.md`).
 - **`cloud-organism`** with `cloud` = `gcp`: the big organisms (the whole tower and the four stacked, the
   real cluster inside, at 100 copies) on one rented 8-processor machine, the same test Azure's `big-organism-detached` runs.
@@ -7845,8 +7992,8 @@ This connects GitHub to an Amazon Web Services (AWS) account so two workflows ca
 
 - **`eks-metered`**: a real Amazon Elastic Kubernetes Service cluster, native Kubernetes (with its own cluster autoscaler)
   against the same with Omni-Compass on top, the machines Amazon bills counted every 15 seconds, the organisms with the
-  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set at the
-  tune-down with the governor on the machines alone, so the bill can only fall or stay. The same
+  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set with the
+  whole engine at the max on top of the cloud's own autoscaler, the bill judged beside the work (31 October). The same
   design as Azure's `aks-metered` (`docs/K8S_COMPASS_PREREGISTRATION.md`).
 - **`cloud-organism`** with `cloud` = `aws`: the big organisms (the whole tower and the four stacked, the
   real cluster inside, at 100 copies) on one rented 8-processor machine, the same test Azure's `big-organism-detached` runs.
@@ -7932,8 +8079,8 @@ GitHub.
 
 
 Every file an installation applies or builds, printed in full from the repository: the watch install (namespace, service
-account, the read-only role and the watch Deployment), the cloud mode's grant and its governing Deployment, the
-pod-target grant of level 2 (never in the cloud mode), and the two container images. Each file carries the legal notice
+account, the read-only role and the watch Deployment), the cloud's grant and its governing Deployment, the pod-target
+grant of level 2 (in a cloud it is part of the cloud's grant), and the two container images. Each file carries the legal notice
 at its head; the `<...>` values are the installation's own.
 
 
@@ -7964,7 +8111,7 @@ are kept with the installation record (section 15.7).
 
 - [ ] Namespace `omni-compass` and service account `omni-compass` created.
 - [ ] The watch role applied (`deploy/install/omni-compass.yaml`).
-- [ ] For the cloud mode, the machines role applied (`deploy/install/rbac-machines.yaml`) and nothing else.
+- [ ] In a cloud, the cloud's grant applied (`deploy/install/rbac-cloud.yaml`, its namespace and Deployment set) and nothing else.
 - [ ] `kubectl auth can-i` output of section 15.4 matches the table exactly; kept.
 - [ ] No cloud credential given to the governor.
 
@@ -7990,7 +8137,7 @@ are kept with the installation record (section 15.7).
 - [ ] The run made on one engine version; its commit recorded.
 - [ ] The receipt read row by row: every row GAIN, STEADY or LOSS by the rules of chapter 12.
 - [ ] Every LOSS explained as wiring and fixed, and the run repeated; none cut.
-- [ ] In the cloud mode: HPA replicas equal to native's within the noise; the bill STEADY or GAIN.
+- [ ] In a cloud: every gauge read against native by the one key; the work per dollar and the bill read side by side.
 - [ ] The receipt signed by the service owner and by finance (the bill rows).
 
 ### J.7 Phase 6: govern
@@ -8024,7 +8171,7 @@ changes one runs a changed tune, whose receipts are its own (section 4.6).
 
 ### K.1 The settings an installation writes
 
-| Setting | Default | The cloud mode's value | What it is |
+| Setting | Default | The cloud's value | What it is |
 |---|---|---|---|
 | `--slo-ms` | 0 (no line) | the service's line | the 95th-percentile response time the service must meet, in milliseconds (section 19.1) |
 | `--latency-file` | none | `/feed/latency.csv` | the feed: rows `elapsed_seconds,latency_ms,ok` (section 19.2) |
@@ -8034,9 +8181,9 @@ changes one runs a changed tune, whose receipts are its own (section 4.6).
 | `--node-restore-cmd` | none | `bash /app/scripts/kind_nodepool.sh 100000` | the command a reset runs: every parked machine woken |
 | `WORKER_SEL` (environment) | every machine that is not the control plane | `omni-role=work` | the label selector of the machines that may be parked |
 | `NODE_CUSHION` (environment) | 0 | 0 | whole machines the operator holds back from the lever |
-| `--sensed` | every HPA | `none/none` | the services whose autoscalers the feed speaks for; `none/none` names none, so no autoscaler is moved |
-| `--dial` | `max` | `save` | the max, or the tune-down (section 4.2) |
-| `--replica-ceiling` | -1 (read live) | not used (no autoscaler is moved) | how far a sensed autoscaler's cap may be raised; 0 keeps the operator's cap |
+| `--sensed` | every HPA | the service, `<namespace>/<deployment>` | the services whose autoscalers the feed speaks for, and only those are moved; `none/none` names none |
+| `--dial` | `max` | `max` | the max, the factory tune in a cloud as on site, or the tune-down (section 4.2) |
+| `--replica-ceiling` | -1 (read live) | -1 (read live) | how far a sensed autoscaler's cap may be raised while it binds and the line is threatened (what the machines can hold, one pod under), handed back once the demand holds still; 0 keeps the operator's cap |
 | `--audit` | `omni_audit.jsonl` | `/var/log/omni/audit.jsonl` | the audit file (section 21.4) |
 | `--kill-file` | `/tmp/omni.kill` | `/tmp/omni.kill` | the file whose presence turns the governor OFF (section 21.3) |
 | `--dry-run` | off | on for the first day, then removed | decide and record every command, write none |
@@ -8044,16 +8191,16 @@ changes one runs a changed tune, whose receipts are its own (section 4.6).
 | `--own-replicas` (and `OMNI_OWN_REPLICAS`) | none | absent (no cloud runs by itself without the owner's word) | omni-v18: the workloads (`namespace/name`, comma-separated) whose pods Omni-Compass runs by itself, with no autoscaler on them: their target from the workload's `omnicompass.io/target-utilization` annotation (else `--own-target`), their range from `omnicompass.io/replica-range` (`min,max`); a workload an autoscaler governs keeps its autoscaler and nothing is written; the count the workload shipped with is recorded on it and handed back by the reset |
 | `--own-every-s` | 15 | 15 | seconds between two reconciliations of those workloads' pods on the fast checks, the pod autoscaler's own sync |
 | `--kubectl` | `kubectl` | `kubectl` | the client the governor reads and writes through |
-| `--site-limit-w`, `--power-cmd` | none | absent | a site's power limit and the command that prints its watts (level 7; never in a cloud); the command runs without a shell unless it holds a pipe, a redirect or a variable |
+| `--site-limit-w`, `--power-cmd` | none | absent | a site's power limit and the command that prints its watts (level 7; a rented machine has no meter the tenant reads); the command runs without a shell unless it holds a pipe, a redirect or a variable |
 | `--cooling-cmd`, `--cooling-min-c`, `--cooling-max-c`, `--cooling-restore-c` | none; 18, 27, 22 °C | absent | the facility's cooling setpoint command and band (section 8.10) |
 
-### K.2 The settings the cloud mode fixes
+### K.2 The settings a cloud fixes
 
-| Setting | Default | The cloud mode's value | What it is |
+| Setting | Default | The cloud's value | What it is |
 |---|---|---|---|
 | `--mode` | `observe` | `nodepool` | `observe` writes nothing; `target` moves autoscaler targets; `nodepool` also moves machines |
 | `--law` | `governor` | `compass` | the law the governor holds the service with |
-| `--interval` | 15 s | 15 s | the full decision period (section 4.4) |
+| `--interval` | 60 s | 60 s | the full decision period, the main engine's beat (a dial from 5 to 120 s; section 4.4) |
 | `--floor-interval` | 5 s | 5 s | the fast checks' period, between decisions, in `nodepool` mode |
 | `--max-node-step` | 2 | 1 | the most machines one decision moves |
 | `--active-nodes-only` | off | on | count only machines in service |
@@ -8062,9 +8209,10 @@ changes one runs a changed tune, whose receipts are its own (section 4.6).
 | `--restore-only` | off | used only by the watchdog | put every setting back from the cluster's own records and exit |
 | `--no-api-proxy` | off | off | read through a new client process every time instead of one local API proxy (costs more processor) |
 
-### K.3 The switches of the other muscles (outside the cloud mode)
+### K.3 The switches of the other muscles
 
-These turn on muscles of levels 2 to 7 (section 7.3) on machines already paid for. None of them is used in a cloud.
+These turn on muscles of levels 2 to 7 (section 7.3). In a cloud the factory tune turns on the conveyance
+(`--cap-deployments`, section 20.3); the others are wired where a site's own stack carries their muscles.
 
 | Setting | What it turns on |
 |---|---|
@@ -8081,7 +8229,7 @@ These turn on muscles of levels 2 to 7 (section 7.3) on machines already paid fo
 | `--rapl-cmd`, `--cpufreq-cmd`, `--cpufreq-policy-root`, `--cpufreq-require-schedutil`, `--cpu-max-khz` | the processor's own frequency governor under its power meter (section 8.9) |
 | `--gpu-query-cmd`, `--gpu-power-cmd`, `--gpu-max-w`, `--gpu-temp-limit` | a graphics card's power reading and limit through commands (chapter 22 uses the card governor instead) |
 | `--thermal-model` | the heat muscle's state from the harness's heat model (for modelled runs only) |
-| `--give-back-only` | the cloud mode in one flag: every switch above is turned off whatever else is passed, the replica ceiling is 0, the dial is at the tune-down and the node pool is the only knob |
+| `--give-back-only` | the cloud's struck rule in one flag (14 to 31 October): every switch above off whatever else is passed, the replica ceiling 0, the dial at the tune-down, the node pool the only knob; nothing passes it since 31 October, and it leaves with the next engine version |
 
 ### K.4 The factory tune
 
@@ -8155,7 +8303,7 @@ factory-tuned: an installation writes the first group and leaves the rest as shi
 
 
 The audit (`audit.jsonl`, section 21.4) is one JSON object a line. Every object carries `time` (seconds since the Unix
-epoch, from the governor's clock) and one key that names its kind. The records an implementer reads in the cloud mode
+epoch, from the governor's clock) and one key that names its kind. The records an implementer reads in a cloud
 are below, in the order a decision writes them; the fields not listed are the engine's own state, recorded for the
 owner's analysis and not needed to operate the governor.
 
@@ -8166,7 +8314,7 @@ owner's analysis and not needed to operate the governor.
 | `verdict` | when a give-back trial begins, ends or is abandoned | `verdict`: `trial`, `step allowed`, `step refused: the muscle is slower there`, `trial abandoned (service not calm)` or `trial abandoned (too little work)`; `step` (machines given back on trial); `machines_given_back_allowed` (how many may stay given back); `machines_native` (the machines the cluster held when the governor started); on `step allowed` and `step refused`, `reading` (`GAIN`, `STEADY`, `LOSS` or `past the allowance`, the trial's reading against the reference) and `interval_ln` (the 95% intervals behind it, in log units) |
 | `cruise` | when work has waited for a place for several decisions, and when it stops | `cruise`: `on` or `off`; `pending` (pods waiting); while cruise is on, every machine is in service and the governor stands back |
 | `authority` | every decision | `senses.blind` (each sense, `true` when it is blind), `senses.latency_age_s` (seconds since the feed's newest row), `proprioception` (for the machines, the drift between the count last commanded and the count now in service, as a share of the command: 0 means the command landed), `node_gate.ok` and `node_gate.reason` (whether the release gate would let a machine go, and why not) |
-| `decision` | every decision | `nodes_observed` (machines in service), `nodes_recommended` (machines the governor wants in service), `pending` (pods waiting for a place), `latency_p95_ms` (the feed's 95th percentile over its window), `slo_clean` (the line met over the last decisions), `mode`; outside the cloud mode, `hpa_target_recommended` |
+| `decision` | every decision | `nodes_observed` (machines in service), `nodes_recommended` (machines the governor wants in service), `pending` (pods waiting for a place), `latency_p95_ms` (the feed's 95th percentile over its window), `slo_clean` (the line met over the last decisions), `mode`; wherever a service is sensed, `hpa_target_recommended` |
 | `write` | each command the governor runs | `write` (the command, as its argument list), `why` (`node pool size` from a decision, `scheduling floor (pending pods)` from a fast check, `reset: restore node pool` from a reset), `dry_run` |
 | `refused` | each command that exits non-zero | `refused.nodes` (the count asked), `refused.now` (the count in service), `refused.code` (the exit code), `why`, `pool_top` |
 | `decision_ms` | after every decision | the decision's own duration in milliseconds |
@@ -8178,7 +8326,7 @@ owner's analysis and not needed to operate the governor.
 | `error` | a decision or a fast check fails (the API unreachable, a read refused) | `error` (the exception), `stderr` (the client's last output), `consecutive_failures` |
 | `decision` with a text value | `killed` (the kill file is present: every setting handed back, nothing written), `restore only: every setting handed back` (the watchdog's restore), `master switch: OFF; every setting handed back; exiting` (`SIGTERM` or the master switch) | the text itself |
 | `overhead` | when the governor's process exits | `cpu_s` (processor seconds of the governor and every command it ran), `wall_s`, `cores_mean` (their ratio: the governor's own cost in cores) |
-| `idle_floor` | outside the cloud mode, when the service is idle and the pool goes to its floor | `from`, `to`, `demand`, `at_idle` |
+| `idle_floor` | when the service is idle and the pool goes to its floor | `from`, `to`, `demand`, `at_idle` |
 | `compass` | every decision | the engine's own reading, for the owner's analysis |
 
 ### L.3 Six searches that answer most questions
@@ -8198,7 +8346,7 @@ script takes seconds. A drift that stays above zero across several decisions is 
 
 ### L.4 The records of the other muscles
 
-Outside the cloud mode the muscles of levels 2 to 7 (section 7.3) write their own records. Each is one JSON object with
+The muscles of levels 2 to 7 (section 7.3) write their own records, in a cloud as on site where they are wired. Each is one JSON object with
 `time`, as in L.1; the fields an implementer reads:
 
 | Record | When | Fields |
@@ -8313,7 +8461,7 @@ run's summary and as an artifact. The inputs below are the workflows' own; a run
 | `organism`, `load_max`, `organism_scale` | empty, 6, 1 | one of the repository's seven organisms (the spine among them) with this cluster inside it, its peak load, and its copies on one clock (1, 10 or 100); empty runs the service alone |
 | `dial` | `save` | the dial of Omni-Compass on top: `save`, the tune-down, for every bill result; `max` is never read as a bill result (section 20.2) |
 
-Every cloud workflow runs the governor in the cloud mode (`OMNI_MACHINES_ONLY=1`, which passes `--give-back-only`, chapter 20).
+Every cloud workflow runs the whole engine at the max (`dial max`, its default since 31 October; chapter 20).
 
 ### N.2 The inputs of each cloud
 
@@ -8323,7 +8471,7 @@ Every cloud workflow runs the governor in the cloud mode (`OMNI_MACHINES_ONLY=1`
 | | `vm_size` | `Standard_D2s_v4` | the work machines' size |
 | | `tier` | `free` | the clusters' control-plane tier, `free` or `standard` (outside the bill; the way past free-tier capacity refusals) |
 | | `worker_pools`, `pool_prices` | empty | several work pools, one machine family each with its own top (`size:max,...`), and each pool's list price (`work0=<price>;work1=<price>;...`): the way past a per-family allowance |
-| | `replica_ceiling` | empty | outside the cloud mode only: how far the governor may raise the service's replica cap; the cloud mode moves no autoscaler |
+| | `replica_ceiling` | empty | how far the governor may raise the service's replica cap while it binds and the line is threatened; empty reads it live (what the machines can hold, one pod under), as on kind; 0 keeps the operator's cap |
 | `gke-metered` | `project` | the `GCP_PROJECT` secret | the Google Cloud project |
 | | `zone` | `us-central1-a` | the zone |
 | | `machine` | `e2-standard-2` | the work machines' type |
@@ -8346,10 +8494,9 @@ account that cannot rent or a short quota spends no set, and what the check prin
 ### N.3 A second Azure workflow, for machines already paid for
 
 `aks-metered-full` runs the same paired design with the governor's full wiring on the service (the pod autoscaler's
-target, the pods' processor limits and the modelled power sense) instead of the machines alone. It exists to measure the
-governor's levers beside the cloud's own, not to make a bill result: in a cloud every extra pod is billed, and the cloud
-mode alone is read for the bill (chapter 20). Its inputs are the shared ones above, with a burst of `1 4 1 6 1 9` and three
-repetitions of 600 seconds by default.
+target, the pods' processor limits and the modelled power sense). Since 31 October `aks-metered` itself runs the same full
+wiring (chapter 20), so the two differ only in their inputs: `aks-metered-full`'s are the shared ones above, with a burst of
+`1 4 1 6 1 9` and three repetitions of 600 seconds by default, and its receipt is read like any other cloud set's.
 
 ### N.4 Reading the run
 

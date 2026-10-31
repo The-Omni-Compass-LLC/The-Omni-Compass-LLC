@@ -10,8 +10,9 @@ or 5 seconds do better than 15, is 20 different, what does a faster beat cost th
 plant, against native, in two settings.
 
   cloud    the cloud's plant (cloud_model below, the model gate's cloud model with the shipped actuator, cut into 5-second steps):
-           the cloud's own autoscaler makes and deletes machines in every arm; the governor on the machines alone
-           (--give-back-only), as every cloud set runs it.
+           the cloud's own autoscaler makes and deletes machines in every arm; the governor on top at the max with every
+           muscle, as every cloud set runs it from 31 October (the founder's order of that day, no hard rule, struck the
+           machines alone of 14 October; the records written before it read the governor on the machines alone).
   onsite   pilot/selfpilot.py's plant cut into 5-second steps: native is the pod autoscaler with the cluster autoscaler;
            with Omni-Compass the governor sizes the pool itself (nodepool mode, the max), as the live page's trace 5e.
 
@@ -331,8 +332,11 @@ def one(setting, arm, seed, period, out, cand, days=1.0):
                   "--node-scale-cmd", "SIMSCALE {n}", "--min-nodes", str(sim.c.pool.min_nodes),
                   "--max-nodes", str(sim.c.pool.max_nodes), "--headroom", "0.5"]
         if setting == "cloud":
-            argv = ["--mode", "nodepool", "--law", "compass", "--dial", "save", "--sensed", "none/none", *common,
-                    "--active-nodes-only", "--max-node-step", "1", "--give-back-only"]
+            # the max with every muscle on top of the cloud's own autoscaler (the founder's order of 31 October: no hard rule; the
+            # runs of 22 October in the record were at the tune-down on the machines alone, --dial save --sensed none/none
+            # --give-back-only, the cloud's rule of 14 October, struck that day)
+            argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", *common,
+                    "--active-nodes-only", "--max-node-step", "1"]
         else:
             argv = ["--mode", "nodepool", *common]
         ctl = Controller(parser().parse_args(argv), kube=k)
@@ -418,8 +422,9 @@ NAMES = {"machine_hours": "Machine-hours", "kwh_per_core_hour": "Energy per used
          "alert_minutes": "Minutes over the line"}
 SETTING = {"onsite": "On-site: native is the pod autoscaler with the cluster autoscaler; with Omni-Compass the governor sizes "
                      "the pool on top of the pod autoscaler (the max)",
-           "cloud": "In the cloud: the cloud's own autoscaler makes and deletes machines in every arm; the governor on the "
-                    "machines alone (--give-back-only)"}
+           "cloud": "In the cloud: the cloud's own autoscaler makes and deletes machines in every arm; the governor on top (the "
+                    "runs of 22 October in this record: on the machines alone, --give-back-only, the cloud's rule of 14 October; "
+                    "from 31 October, the founder's order of that day, the max with every muscle, the bill judged)"}
 
 
 def table(results, out_md):
