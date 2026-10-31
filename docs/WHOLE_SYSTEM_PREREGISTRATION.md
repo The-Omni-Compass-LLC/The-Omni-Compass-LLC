@@ -55,7 +55,7 @@ and its cause is found in the mechanism or the wiring (`DISCLOSURES.md`, section
 
 ## 5. What is fixed before the first run
 
-The engine that stands (omni-v22, or the newest that stands when the run starts; a run names its engine), the loads named
+The engine that stands (omni-v23, or the newest that stands when the run starts; a run names its engine), the loads named
 above, the gauges above, the stopping rule of the cloud stack (`tools/stop_rule.py`), and the arms. Any change after this
 page is an amendment below it, dated, before the run it governs.
 

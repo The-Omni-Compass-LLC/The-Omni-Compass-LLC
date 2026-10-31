@@ -742,7 +742,7 @@ installed is a quarter off the bill.
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v22, fingerprint 0e23a0bc561b900a (65 files).
+- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
@@ -757,11 +757,14 @@ installed is a quarter off the bill.
   - Real database cache (MongoDB under YCSB, GitHub): 0.6% LOSS
   - Real messaging (Apache Kafka, GitHub): 1.0% power given
 
-**On the engine that stands (omni-v22): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v21 | 5.2% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v21 | 3.8% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v21 | 8.1% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v21 | 3.8% | GAIN | S |
@@ -784,9 +787,6 @@ installed is a quarter off the bill.
 | Kafka, the consumer group's size | omni-v21 | 1.0% | GAIN AND LOSS | L |
 | Drone swarms, the three untouched cells | omni-v21 | 3.0% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | 1.5% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -902,10 +902,12 @@ its own rule; Omni-Compass sets the ceiling that rule works under.
 This matters to a referee for a precise reason: every benchmark in this manual sets **omni** (Omni-Compass on native: the
 same system with Omni-Compass on top) against **native** (the system with its own controller, as shipped and as the operator
 set it), and there is no comparison in which Omni-Compass on native is a rival to that controller. Since the founder's order
-of 23 October a third arm, **Omni-Compass direct**, runs beside them: Omni-Compass talking to the muscles directly, a knob's
-native controller switched off only where Omni-Compass carries that muscle itself and has proven it can move the knob, Omni-Compass
-then the only controller moving it, and every muscle Omni-Compass cannot be kept, native, under it (the founder's order of 31
-October, `docs/SOLO_PREREGISTRATION.md` amendment 2; on Kubernetes the pod autoscaler removed where Omni-Compass's own pod muscle
+of 23 October a third arm, **the arm by itself** (called Omni-Compass direct that day), runs beside them as a mechanism test: a
+knob's native controller switched off only where Omni-Compass carries that muscle itself and has proven it can move the knob,
+Omni-Compass then the only controller moving it, and every muscle Omni-Compass cannot be kept, native, under it. On Kubernetes that
+is Omni-Compass's own pod rule in place of the autoscaler's arithmetic and nothing else, because Omni-Compass is a brain with no
+organs there: it can be direct to a knob, never to a muscle (the founder's analysis of 31 October, `docs/SOLO_PREREGISTRATION.md`
+amendment 2; on Kubernetes the pod autoscaler removed where Omni-Compass's own pod muscle
 takes the workload, no cluster autoscaler on kind, the API server, the scheduler and the kubelet kept; `--own-replicas`, omni-v19;
 in the models `realms/harness.py` SOLO; Omni-Compass's own orchestrator, `omni_orchestrator/`). Where native is a setting rather than a controller, or its own loop is the actuator, the two
 Omni-Compass arms are one arm; no cloud runs direct without the founder's word (`docs/SOLO_PREREGISTRATION.md`). The three
@@ -1429,7 +1431,7 @@ and the other as power given in all three of our runs, because that is what happ
 ### 3.5 Where the evidence stands today, read honestly
 
 Every number below is from a three-run table, each row naming the engine its table ran on; the evidence class of each is in
-the table it points to. The engine that stands is **omni-v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files;
+the table it points to. The engine that stands is **omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files;
 `docs/OMNI_V22.md`, on main since 30 October): the five data stores' wires at the max, each spend gated on the store's own account
 of what a miss costs and on the host's room, never below native (`tools/store_brain.py`); every table below is omni-v21's or an
 earlier engine's own record until omni-v22's three runs of each benchmark land. omni-v21 (`docs/OMNI_V21.md`, 25 to 30 October):
@@ -1449,6 +1451,9 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---:|---|---|
 | Every real test together: the Omni index (omni-v21) | **GAIN AND LOSS** | 5.2% GAIN | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 | Robustness: the two-hour run (omni-v21) | **GAIN AND LOSS** | 3.8% LOSS | mean response cut 29% to 43% (GAIN); p95 cut 25% to 57% (GAIN); time over the line cut 30% to 41% (GAIN); failed requests cut 9% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 28% (GAIN); replicas up 29% to 50% (power given); pods started up 68% to 226% (power given); pod start wait, total (s) up 90% to 324% (LOSS); pod start wait, mean (s) up 24% to 27% (LOSS) | `results/live/V21_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run (omni-v21) | **GAIN AND LOSS** | 8.1% GAIN | mean response cut 30% to 40% (GAIN); p95 cut 28% to 48% (GAIN); time over the line cut 33% to 35% (GAIN); failed requests cut 9% to 13% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 25% (GAIN); replicas up 2.3% to 7.3% (power given); pod start wait, total (s) up 10% to 79% (LOSS); robust: failed requests in the 300 s after the kill (%) cut 3.7% to 4.3% (GAIN); robust: time over the line in the 300 s after the kill (% of samples) cut 0.5% to 2.6% (GAIN) | `results/live/V21_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots (omni-v21) | **GAIN** | 3.8% GAIN | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V21_MUJOCO.md` |
@@ -1471,9 +1476,6 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | Kafka, the consumer group's size (omni-v21) | **GAIN AND LOSS** | 1.0% LOSS | p99 cut 0.1% to 3.0% (GAIN); median cut 0.0% to 4.3% (GAIN); mean cut 0.1% to 5.1% (GAIN); messages waiting, mean cut 0.4% to 6.0% (GAIN); host CPU busy cut 1.2% to 2.3% (GAIN); host CPU-seconds cut 1.3% to 2.3% (GAIN); CPU per 1,000 inside the line cut 2.0% to 2.5% (GAIN); mean up 0% to 12% (LOSS); messages waiting, mean up 0% to 11% (LOSS); consumers running up 0% to 17% (power given); consumers most at once up 0% to 83% (power given); p99 up 0.6% to 9.1% (LOSS) | `results/live/V21_KAFKA.md` |
 | Drone swarms, the three untouched cells (omni-v21) | **GAIN** | 3.0% GAIN | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V21_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries (omni-v21) | **GAIN** | 1.5% GAIN | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V21_CITYLEARN.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 
 <!-- end of the evidence -->
 
@@ -1512,7 +1514,7 @@ is published as Omni-Compass 1.0, with the older fingerprints kept as the road t
 "Versioned" has a precise meaning here. The engine is a fixed set of files (63 on v21), and `OMNI_V21.json` holds one
 SHA-256 for each of them and one digest over all of them; `OMNI_V20.json` back to `OMNI_V5.json`, `OMNI_V3.json`, `OMNI_V2.json`
 and `OMNI_V1.json` do the same for the earlier sets. `python3 tools/omni_version.py` hashes the files in a checkout and prints
-which fingerprint they match (for this edition, `omni-v22 (digest 0e23a0bc561b900a, 65 files)`), or, when they match none,
+which fingerprint they match (for this edition, `omni-v23 (digest c96ea4105d8747db, 65 files)`), or, when they match none,
 which files differ from the nearest; with `--commit <sha>` it asks the same of any pushed commit, which is how every
 three-run table checks that its runs A, B and C were on the same engine before it combines them, and refuses if they were
 not. The versions differ in exactly the ways their records name, and a reader can check that from the fingerprints rather
@@ -1554,7 +1556,7 @@ machinery that supplies workloads, executes comparisons, checks requirements and
 the complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, the
 decision interval and every other default. A **candidate profile** is a proposed combination of settings under evaluation; the
 **active profile** is the settings actually governing the current run; a **custom profile** is an identifiable configuration
-that differs from the released factory profile. The released factory profile is omni-v22's (`OMNI_V22.json`): the governor's
+that differs from the released factory profile. The released factory profile is omni-v23's (`OMNI_V23.json`): the governor's
 full decision every 60 s, the fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`) and on
 the engine's own setting otherwise; it is the profile every published result ran on. The physiological words of this book
 (muscle, organism, nervous system, defensive system, health) are engineering analogies, each pointing to concrete code, signals,
@@ -3733,7 +3735,7 @@ three runs, which the bottom line carries: Omni-Compass on native against native
 machines +3.1% fewer, serving units +10.2% more; Omni-Compass direct against native, work +7.5%, the 95th percentile +12.1%
 faster, machines +2.5% fewer, serving units +5.2% more; Omni-Compass direct against Omni-Compass on native, work +1.4%, the 95th
 percentile +2.9% faster, machines +0.6% more, serving units +4.6% fewer. No pair reads LOSS on any gauge. The test runs again on
-omni-v22, the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+omni-v23, the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
 these results.
 
 ### 16.2 The organisms with the real cluster inside, and the big organisms
@@ -3975,7 +3977,7 @@ or approved these results.
   the discomfort are native's to the last digit. Two rows read "the runs differ" on the time uncomfortable, though the paired
   change is exactly zero in every run: CityLearn's own value moved by at most 3.6 × 10⁻⁵ between runs, in both arms alike.
   In all, 27 score-rows GAIN, 1 power given and no LOSS. The wire's road since then: omni-v9 reads the coming hour, and omni-v10
-  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v22, the engine that stands, carry it unchanged.
+  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v23, the engine that stands, carry it unchanged.
 
 ### 16.5b The ten organisms two ways: the twenty scenarios (modelled, class S)
 
@@ -4048,7 +4050,7 @@ happened to work. The numbers of earlier engines are the road, in `docs/history`
 | Drone swarms (omni-v11) | S | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN; the closest approach spent to about 0.16 m (shown); collisions on a mission draw outside the counted cells, a fault in the wire fixed in omni-v12, its runs under way (section 16.5) | `results/live/V11_SWARM.md` |
 | Buildings with batteries (omni-v11) | S | 27 score-rows GAIN, 1 power given, no LOSS; the batteries of the outage districts native | `results/live/V11_CITYLEARN.md` |
 
-**Running now and next.** Every benchmark runs again on omni-v22, the engine that stands, released by the conductor
+**Running now and next.** Every benchmark runs again on omni-v23, the engine that stands, released by the conductor
 (`scripts/dispatch_grid.py`, `scripts/reruns.txt`: A of every benchmark, then B, then C), the steady and wandering Kubernetes
 tests among them; Azure one run at a time in its region (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day;
 A, B and C); the grid with the real cluster inside on GitHub's free runners. The runs of earlier engines already started
@@ -4068,7 +4070,7 @@ GAIN and LOSS (or power given) both hold in all three of our runs, a trade shown
 its realms label (`results/realms_v5`): a GAIN on work, speed or misses is write, the energy the max took for it power given and
 never a trade; SAME AS NATIVE and AT ITS LIMIT ON NATIVE are watch.
 
-What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v22); it changes what an operator connects.
+What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v23); it changes what an operator connects.
 
 **The same verdict, live (built 9 October, running since 10 October).** The page judges after the fact; the founder's order is that the
 brain judge in real time, on the knob, before it writes. On the five live stacks that is now in the harnesses (section 9.4;

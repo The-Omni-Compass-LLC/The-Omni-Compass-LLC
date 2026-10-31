@@ -12,7 +12,7 @@ class (P a physical meter, L live software, S our own models) and its original r
 |---|---|---|
 | CEO, board, strategic acquirer | [Due diligence](DUE_DILIGENCE.md) | [State of play](STATE_OF_PLAY.md), [claims register](CLAIMS_REGISTER.md), [every LOSS kept](LOSS_LEDGER.md), [limitations](LIMITATIONS.md) |
 | CFO, investment committee | [Benefit sheet](BENEFIT_SHEET.md) | [The Omni index](../results/OMNI_INDEX.md), [evidence ledger](EVIDENCE_LEDGER.md), [the cloud bill's setup](AZURE_SETUP.md) |
-| CTO, chief architect | [Mechanism of action](MECHANISM_OF_ACTION.md) | [Canonical engine](CANONICAL_ENGINE.md), [the engine that stands, omni-v22](OMNI_V22.md), [formal status](FORMAL_STATUS.md), [wiring verdicts](WIRING_VERDICTS.md) |
+| CTO, chief architect | [Mechanism of action](MECHANISM_OF_ACTION.md) | [Canonical engine](CANONICAL_ENGINE.md), [the engine that stands, omni-v23](OMNI_V23.md), [formal status](FORMAL_STATUS.md), [wiring verdicts](WIRING_VERDICTS.md) |
 | Engineering, SRE, operations | [The Operator's Manual](OMNI_COMPASS_MANUAL.md) | [Integration manual](INTEGRATION_MANUAL.md), [pilot protocol](PILOT_PROTOCOL.md), [the benchmark harness](HARNESS.md) |
 | Security, legal, IP | [Repository standards](REPOSITORY_STANDARDS.md) | [Security policy](../SECURITY.md), [threat model](THREAT_MODEL.md), [safety case](SAFETY_CASE.md), [license](../LICENSE), [disclosures](../DISCLOSURES.md) |
 | Independent benchmark referee | [How to read the results](HOW_TO_READ_THE_RESULTS.md) | [The referee's audit pack](audit/README.md), [the verdict audit](../results/verdict_audit/VERDICT_AUDIT.md), [every reading recomputed](audit/STATISTICAL_VALIDATION.md), [preregistrations](K8S_COMPASS_PREREGISTRATION.md) |

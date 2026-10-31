@@ -108,7 +108,7 @@ no-write check did not fire either. The workload stayed at the operator's count,
   printed (`end_reads.err`: `horizontalpodautoscalers.autoscaling "php-apache" not found`). Both runs count as started in the
   campaign and are read in no table.
 
-**What changes, in the rig only (no engine file moves; omni-v22 stands).** (1) The identity gains `get`, `patch` and `update` on
+**What changes, in the rig only (no engine file moved; omni-v22 stood).** (1) The identity gains `get`, `patch` and `update` on
 `deployments/scale` for the named workload alone (`deploy/kind/rbac-omni.yaml`; for a licensee `deploy/rbac-own-pods.yaml`, the
 Operator's Manual, chapter 14). (2) The preflight proves the scale write by name in the "can" list and proves that the load
 generator's scale is refused in the "cannot" list. (3) The end-of-window record of the solo arm reads the workload's own object
@@ -129,7 +129,11 @@ receive from the muscle, and give and use all; but any muscle that we don't have
 if that's Kubernetes or whatever."
 
 **What "by itself" means from this amendment on.** Omni-Compass talks to the muscles directly and is the brain, the
-orchestrator and the scheduler wherever it carries those muscles itself. A knob's native controller is switched off in this arm
+orchestrator and the scheduler wherever it carries those muscles itself. On a Kubernetes stack it carries none of those organs
+(the founder's analysis of 31 October: "Omni-Compass is only a brain. It has no organs ... Omni-Compass would have to become the
+Kubernetes mechanism to be what's considered direct"), so on Kubernetes the arm by itself is Omni-Compass's own pod rule in place
+of the autoscaler's arithmetic and nothing else, never called direct, a mechanism test kept in the record and not a product arm;
+the one test where the word holds is the orchestrator showing without Kubernetes. A knob's native controller is switched off in this arm
 only where Omni-Compass carries that muscle and has proven, before the window, that it can move the knob (amendment 1's probe,
 by name). Every muscle Omni-Compass cannot be stays in the arm, native, under it: on Kubernetes the API server, the scheduler
 and the kubelet, and any autoscaler Omni-Compass has no muscle for on that platform (on kind the pod autoscaler is removed
@@ -141,8 +145,11 @@ any decision of Omni-Compass by itself failed is refused: by itself, a knob Omni
 failed decision left that knob unmoved (`scripts/kind_bench.sh`, `INVALID RUN: by itself ...`; `tests/test_kind_rig_rbac.py`).
 The three omni-v21 runs and the two omni-v22 runs of amendment 1 would have been refused by this rule at their first repetition.
 (3) The engine's own answer, a knob whose writes Omni-Compass finds refused handed back to native's own controller so the
-organism never runs with a hole, is the next version's guard, built on its own branch and gated against the engine that stands
-before it lands; until it lands a refused write ends the arm as invalid, never as a result.
+organism never runs with a hole, is omni-v23's guard (`docs/OMNI_V23.md`, landed 31 October through the model gate against
+omni-v22, `results/model_gate/V23_VS_V22.md`, identical on every gauge): at three refusals in a row the governor makes native's own
+pod autoscaler from the operator's target and range recorded on the workload and leaves the workload to it; the rig refuses such a
+window as a result of the arm by itself (the organism kept a controller; Omni-Compass did not run the arm by itself), and the
+identity may create an autoscaler in the workload's namespace for that hand-back alone.
 
 ---
 

@@ -16,7 +16,7 @@ by The Omni-Compass LLC's own code. No outside party has reviewed or approved th
 | E. Statistical integrity | PASS | the key's rule applied to every row (`tests/test_verdict_audit.py`, `tests/test_audit_export.py`): STEADY of three kinds kept apart, the raw change with its true sign, the confidence and the stability printed apart from the word | — |
 | F. Security | NOT RUN | — | the workflow, dependency and secret audit |
 | G. Live benchmark engine | PASS | built on omni-v21; `build_live_engine.py --check` passes; the browser acceptance, 13 of 13 | — |
-| H. Documentation | PARTLY | the engine that stands named as omni-v22 on the page, its manual and its appraisal; the documents indexed by reader | the claim-evidence matrix over every published claim |
+| H. Documentation | PARTLY | the engine that stands named as omni-v23 on the page, its manual and its appraisal; the documents indexed by reader | the claim-evidence matrix over every published claim |
 | I. Release verification | PARTLY | the tests named above, run on the commit | `verify.py` in full and GitHub's verify run on the pushed commit |
 | J. Independent reproducibility | NOT RUN | — | the checks repeated in a separate clean environment from the documented commands |
 

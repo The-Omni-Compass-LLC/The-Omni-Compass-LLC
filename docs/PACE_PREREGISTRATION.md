@@ -134,6 +134,44 @@ wait (120 s) had rounded to one decision, so one reading with a pod waiting put 
 fix (the cruise wait never fewer than two readings; `docs/OMNI_V17.md`, section 3), so the compass90 and compass120 arms run
 the corrected rule; every other arm's counts are unchanged by it.
 
+## Amendment 4 (31 October, written before any reading of the ladder was seen): the factory beat read again on the engine that stands
+
+The founder's words of 31 October ("60 seconds is a disadvantage, it's not a benefit ... we have to have the basic line engine
+tuned to what we call the basic setting, and then we lock that, and anybody can turn and tweak it to another scenario"), under
+his rule of 23 October that the factory beat is the best beat the sweeps read. The one ladder on record
+(`results/model_gate/V17_LADDER.md`) read omni-v17, seeds 1 to 8, one day; on it every beat read pods waiting for a place LOSS
+against native in both settings, the engine's fault fixed in omni-v21 (the immune hand-back on a waiting pod), so no beat was
+admissible there and it picks none. On its service gauges 10 s read strongest against 60 s (the kind setting: the minutes
+over the line down 18.4%, pods waiting down 9.9%, machine-hours down 1.4%; 20 s: down 14.7%, 6.8% and 0.8%), and that is a
+reading of an engine that no longer stands, written here so the pick below is not steered by it.
+
+**The run** (our own models, class S): `tools/model_gate.py --models pace_cloud,pace_kind --pace-periods 60,5,10,15,20,30,40,45,50,75,90,120
+--seeds 101-108 --days 1` on the omni-v23 tree (the engine that stands from 31 October, evening), the tune study's development
+seeds (`docs/THE_TUNE.md`, rule 4), the page written by `tools/beat_ladder.py` beside the gate's other records in `results/model_gate/`. Seeds 109 to 116 are
+added in a second report only if the rule below leaves two beats that neither dominates; nothing else about the run changes
+after it starts. Written at 16:40 UTC; the ladder's kind setting started at 16:47 UTC (its cloud setting, started with it, was
+stopped at 16:47 when the founder struck the cloud's rule of 14 October, before any of its readings was written); this amendment
+was committed before any reading of either was seen.
+
+**The rule that picks the factory beat** (frozen now):
+
+1. Admissible: a beat at which no gauge reads LOSS against native in either setting (`docs/THE_TUNE.md`, the admissible set;
+   in the cloud setting the machine-hours stand for the bill and may not read power given).
+2. Among the admissible beats, the one no other admissible beat dominates on the service gauges (pods waiting for a place, the
+   95th percentile response, the minutes over the line, the pod autoscaler short of its target; the machine-hours in the cloud
+   setting), each pair read against each other seed by seed by the one key (`docs/THE_TUNE.md`, dominance: no service gauge
+   LOSS, one GAIN; nothing traded).
+3. Where two or more beats remain and none dominates another, the one with the fewest reads of the cluster a day stands: the
+   governor's own cost is the only tie-break, and the service is never traded for it.
+4. If no beat is admissible, the factory beat stays at 60 s, every LOSS row goes on the next version's list with its cause, and
+   nothing is picked from a faulty reading.
+
+The beat picked is a candidate, not a result: it is read in the model gate on the untouched seeds 1 to 8 against omni-v23 at its
+shipped 60 s (`--pace-periods 60,<beat>`), lands as the next version only where it reads no LOSS there against native and
+against 60 s, and then the real runs of this preregistration read it: amendment 3's arms, the compass arm at the new factory
+beat and 60 s one of the dial's arms. The development reading is written on the ladder's page before the gate runs, and the
+seeds are not changed after.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---

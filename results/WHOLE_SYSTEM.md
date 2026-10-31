@@ -43,9 +43,9 @@ Each layer's own measurement, read two ways, and what it enters the composition 
 |  |  | speed (the 95th percentile response, lower) | ×1.0014 (+0.1%; -0.1% to +0.4%) | ×1.0011 (+0.1%; -0.5% to +0.7%) | STEADY | its own factor |
 |  |  | machines (fewer) | ×1.0232 (+2.3%; +2.0% to +2.7%) | ×1.0224 (+2.2%; +1.8% to +2.7%) | GAIN | its own factor |
 |  |  | energy (a declared model on the cluster, the card's own meter on the chip) | ×1.0054 (+0.5%; +0.1% to +1.0%) | ×1.0071 (+0.7%; +0.2% to +1.2%) | GAIN | held at native's, the same power: on the cluster a declared model of the machines row, never a meter, so it is shown, not composed |
-| 5. the cloud (Azure, the bill metered), class L | 3 | speed (the 95th percentile response, lower) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×1.0440 (+4.4%; -21.5% to +38.8%) | GAIN | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
-|  |  | machines (fewer) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×0.9761 (-2.4%; -10.0% to +5.8%) | power given | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
-|  |  | the bill (the cloud's metered bill) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×0.9918 (-0.8%; -18.8% to +21.2%) | power given | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
+| 5. the cloud (Azure, the bill metered), class L | 4 | speed (the 95th percentile response, lower) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×1.0434 (+4.3%; -15.8% to +29.3%) | GAIN | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
+|  |  | machines (fewer) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×0.9790 (-2.1%; -7.9% to +4.0%) | power given | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
+|  |  | the bill (the cloud's metered bill) | ×1.0000 (+0.00%; +0.00% to +0.00%) | ×0.9899 (-1.0%; -10.5% to +9.5%) | power given | the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds |
 | 2. the machine (the kernel, bare metal, Kepler) | 0 | every gauge | not yet run (register row 79) | not yet run | not measured | exactly 1 |
 
 The card's primary gauge, work per energy (served requests per kJ): ×0.9989 (-0.1%; -0.6% to +0.4%) over its 3 runs, STEADY, under the floor (the three runs' mean 0.11%); the same runs read the 95th percentile response +0.03% (the runs disagree) and the energy drawn +0.1% (STEADY, under the floor (the three runs' mean 0.12%)). It is omni-v21's card governor at the factory tune (the dial at the max) on top of native's power cap at 70% of the card's top, read by the card's own meter (class P). The chip's work and energy read STEADY at the factory tune, so the chip enters the composition as exactly 1: the chip kept exactly as native runs it is what its own meter reads. The tune-down's three runs (results/gpu/V21_A100_SAVE_ABC.md) read the same requests served for 0.7% to 0.85% less of the card's energy in each run, GAIN by the mean of the three runs: a changed tune, its own record, shown and never composed.
@@ -104,6 +104,7 @@ The card's primary gauge, work per energy (served requests per kJ): ×0.9989 (-0
 **5. the cloud (Azure, the bill metered), class L**
 
 - Azure Kubernetes Service, Azure's own cluster autoscaler underneath, the compass law, 4 paired repetitions, one run (the engine of commit 5b2832f (4 October 2026); `results/live/AKS_BILL.md`): speed: ×1.2537 (+25.4%; -24.3% to +107.6%), one run: the interval includes zero; machines: ×0.9918 (-0.8%; -18.8% to +21.2%), one run: the interval includes zero; bill: ×0.9918 (-0.8%; -18.8% to +21.2%), one run: the interval includes zero
+- Azure Kubernetes Service, Azure's own cluster autoscaler underneath, the steady set, 98 paired repetitions in one run (Omni-Compass at the tune-down on the machines alone) (omni-v18; `results/live/AKS_STEADY_100_OMNI_V18.md`): speed: ×1.0418 (+4.2%; -2.4% to +11.2%), one run: the interval includes zero; machines: ×0.9880 (-1.2%; -3.6% to +1.2%), one run: the interval includes zero; bill: ×0.9880 (-1.2%; -3.6% to +1.2%), one run: the interval includes zero
 - Azure Kubernetes Service, a 4-worker fleet, the steady set, 5 paired repetitions, one run (omni-v1; `results/live/V1_AKS_STEADY.json`): speed: ×1.0215 (+2.2%; -20.9% to +32.0%), one run: the interval includes zero; machines: ×0.9623 (-3.8%; -15.6% to +9.7%), one run: the interval includes zero
 - Azure Kubernetes Service, a 4-worker fleet, the burst, 5 paired repetitions, one run (omni-v1; `results/live/V1_AKS_BURST.json`): speed: ×0.8884 (-11.2%; -53.2% to +68.7%), one run: the interval includes zero; machines: ×0.9744 (-2.6%; -6.0% to +1.0%), one run: the interval includes zero
 
@@ -199,12 +200,12 @@ The benefit above is the software end's. This section is the other half a buyer 
 
 2 rows: 2 GAIN, 0 STEADY, 0 power given, 0 LOSS, 0 where the runs disagree. No LOSS row.
 
-**the wire (the cloud's metered bill, class L)** (`results/live/AKS_BILL.md`, `results/live/V1_AKS_STEADY.json`, `results/live/V1_AKS_BURST.json`)
+**the wire (the cloud's metered bill, class L)** (`results/live/AKS_STEADY_100_OMNI_V18.md`, `results/live/AKS_BILL.md`, `results/live/V1_AKS_STEADY.json`, `results/live/V1_AKS_BURST.json`)
 
 | Part | Gauge | Reading against native |
 |---|---|---|
-| Azure, one run of four paired repetitions, and the v1 fleet's one-run sets | the compute bill at list price | power given: Omni-Compass 0.8% more than native (95%: 17.5% less to 23.2% more); its 95% interval includes no change |
-| the same runs | machines billed | power given: Omni-Compass 2.5% more than native (95%: 5.5% less to 11.1% more); its 95% interval includes no change |
+| Azure: the steady set's 100 paired repetitions (one run), the compass law's four (one run) and the v1 fleet's one-run sets, their mean | the compute bill at list price | power given: Omni-Compass 1.0% more than native (95%: 8.7% less to 11.7% more); its 95% interval includes no change |
+| the same runs | machines billed | power given: Omni-Compass 2.1% more than native (95%: 3.9% less to 8.5% more); its 95% interval includes no change |
 
 2 rows: 0 GAIN, 0 STEADY, 2 power given, 0 LOSS, 0 where the runs disagree. No LOSS row.
 
@@ -261,7 +262,7 @@ Omni-Compass on the organism alone (compassbare against nativebare) and on top o
 ## 6. What is missing, and what replaces what
 
 - **The machine** (the kernel, bare metal, Kepler and the machine's own meter; register row 79): not yet run. It enters as exactly 1.
-- **The card on the engine that stands**: the omni-v22 runs on Lambda (one exact commit, on the founder's word) replace the omni-v21 rows; the chip enters as exactly 1 whatever they read, and they stand beside it.
+- **The card on the engine that stands**: the omni-v23 runs on Lambda (one exact commit, on the founder's word) replace the omni-v21 rows; the chip enters as exactly 1 whatever they read, and they stand beside it.
 - **The cloud at the tune-down**: the omni-v12 Azure sets (A, B and C of the steady set, the two bursts and the real day) give the bill its three-run reading; Google and Amazon follow on the same harness.
 - **Every cluster and service table on omni-v12**: the campaign (`scripts/reruns.txt`) reruns every benchmark; each row above is replaced by its omni-v12 table as it lands, and this page is rebuilt (`python3 tools/whole_system.py`).
 - **The stacked run**: Omni-Compass at every layer at once against native at every layer, the one measurement that makes the total class L and P instead of a composition. Preregistered before any run in `docs/WHOLE_SYSTEM_PREREGISTRATION.md` (three stacks: the cluster and its services on GitHub's machines; the cloud at the tune-down on Azure; the card beside the cluster on Lambda); its place is written here before its result exists.

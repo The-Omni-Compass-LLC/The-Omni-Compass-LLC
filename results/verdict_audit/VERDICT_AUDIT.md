@@ -4,7 +4,7 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `8aa378506a5bc917`). The engine that stands is omni-v22. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
+Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `8aa378506a5bc917`). The engine that stands is omni-v23. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
 
 ## The counts
 
@@ -12,8 +12,8 @@ Written by `tools/verdict_audit.py` from the three-run tables as they stand (dig
 |---|---|
 | Three-run tables | 245: 85 standing, 98 superseded, 60 the road, 2 taken out |
 | Standing tables, Omni-Compass against its native | 55 |
-| Standing tables on the engine that stands (omni-v22) | 0 |
-| Standing tables not yet run again on omni-v22 | 85 |
+| Standing tables on the engine that stands (omni-v23) | 0 |
+| Standing tables not yet run again on omni-v23 | 85 |
 | Rows recomputed from their stored values | 8063 of 11069 |
 | Stored readings the key reads otherwise | 0 |
 | Markdown readings unlike their JSON twin | 0 |

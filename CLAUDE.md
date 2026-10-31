@@ -43,9 +43,26 @@ the founder overrides one in the conversation.
 - Scaling: floor of 2 machines, no ceiling, every machine usable. Traffic tests step by one (1 2 3 2 3 4 …).
 - Nothing is hardwired. Anything that doesn't work is removed, not just switched off.
 
-## The engine: Omni v22 stands (v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
+## The engine: Omni v23 stands (v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files; `docs/OMNI_V22.md`) stands on main from 30 October, on the founder's
+- **Omni v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`) stands on main from 31 October, evening (its campaign from 20:00 UTC), on the
+  founder's order of that day (Orders of 31 October: Omni direct keeps every muscle Omni-Compass cannot be; "any muscle that we don't
+  have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever") and the standing order that every fix lands as
+  the next version, told, not asked: omni-v22 with one guard in the Kubernetes governor's pod muscle of its own
+  (`omni_controller/controller.py`, `_own_pods`, `_own_refused`, `OWN_REFUSALS`). A write of a workload's own scale that the cluster
+  refuses (its permission, its admission, its API) is recorded in the audit and the decision goes on, the cluster keeping the last
+  count that landed; at three refusals in a row Omni-Compass cannot be that knob's muscle, so it makes native's own pod autoscaler
+  from the operator's target and range recorded on the workload (`kubectl autoscale`; with no range recorded, one to ten times the
+  operator's count), audits the hand-back and leaves the workload to it for the rest of the run; a write that lands ends the run of
+  refusals. Every other arm is untouched (Omni on native never removes native's controller); 64 of its 65 files are omni-v22's
+  bytes. Found the same day: every arm by itself on kind since omni-v19 had its pod writes refused by the rig's own identity (the scale
+  subresource was not granted) and ran with no controller on the pod count; both rig faults fixed (`docs/SOLO_PREREGISTRATION.md`,
+  amendments 1 and 2), the rig refusing a window of that arm in which a decision failed or the knob was handed back, the identity
+  allowed to create an autoscaler in the workload's namespace for the hand-back alone. The model gate against omni-v22
+  (`results/model_gate/V23_VS_V22.md`): identical on every gauge of all 11 models and every seed, no LOSS (no model refuses a write;
+  the guard's proof is `tests/test_own_replicas.py`, `HandBack`, and the arm's own files when the entry runs again). Every benchmark
+  runs again on it from 20:00 UTC on 31 October.
+- **Omni v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files; `docs/OMNI_V22.md`) stood on main from 30 to 31 October, on the founder's
   order of that morning ("find out why they went one way or the other and tweak it and turn it and tune it to the best possible way for
   an Omni Compass engine to interact with this as a system governor ... bring to a solid A mechanism"): omni-v21 with the five data
   stores' wires brought to the max. The store wires were written on 9 and 10 October, before the order of 12 October that the max is
@@ -434,6 +451,21 @@ the founder overrides one in the conversation.
   line"). A fix is pushed to main as soon as its release check reads PASS, the kept branches levelled with it; the website follows
   main's head; the live engine page on main is rebuilt by the repository's own code from the engine that stands, and every push
   is read on GitHub's own verify before it is called done.
+- **"Direct" means becoming the mechanism; on Kubernetes no arm is direct** (the founder's analysis of 31 October, afternoon:
+  "Omni-Compass is only a brain. It has no organs ... Only Compass would have to become the Kubernetes mechanism to be what's
+  considered direct"). On a Kubernetes stack Omni-Compass is a brain with no organs: the scheduler places every pod and the kubelet
+  runs every container in every arm, so Omni-Compass can be direct to a knob there, never to a muscle. The arm by itself on
+  Kubernetes is Omni-Compass's own pod rule in place of the autoscaler's arithmetic and nothing else; it is never called direct, it
+  is a mechanism test kept in the record, and the product has two sides (the order of 25 October). The one test where the word
+  holds is the orchestrator showing without Kubernetes, where Omni-Compass's own small orchestrator is the organs; its third arm
+  read nothing better than Omni-Compass on native (work LOSS by the mean of its three runs) and stays in the record. Every page and
+  manual names the arm so (the Operator's and Owner's arm tables, `docs/OMNI_ORCHESTRATOR.md`, `docs/OMNI_V23.md`,
+  `docs/SOLO_PREREGISTRATION.md` amendment 2).
+- **Each run's own word stands by itself** (the founder's words of 31 October: "A gain in any run in itself is a gain ... Each one
+  is independent and says whatever it says within itself"). Every run's cell carries that run's own word on its own number, as the
+  one key of 24 October already reads it; the three-run column is the mean's word from half a percent up, "in all three of our
+  runs" only a note on its strength, never a condition; in prose a result is said run by run (run A GAIN, run B GAIN, run C GAIN,
+  the mean GAIN), never as "a gain only if all three agree".
 
 ## Orders of 24 October
 
@@ -1005,10 +1037,10 @@ the founder overrides one in the conversation.
 ## Repository
 
 - Referee and underwriter level. Only finals up front; old material goes to `docs/history` / `archive/` or is removed.
-  One version is always the main one; `main` and the working branch, `v22` (the engine that stands, 30 October), stay in
-  sync, and `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v21`
-  (7770532ed5, omni-v21 with the GPU rig's readiness barrier), one exact commit, until the founder's next GPU rental, which starts from the
-  engine that stands then. `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
+  One version is always the main one; `main` and the working branch, `v23` (the engine that stands, 31 October), stay in
+  sync, and `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v23`,
+  levelled with main at every landing, its head the one exact commit the founder's next GPU rental starts from (the last rental ran
+  7770532ed5, omni-v21 with the GPU rig's readiness barrier, 30 October). `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
   is history** (the founder's order of 17 October: "We won long past 5"): it is never merged into `main` and `main` is
   never merged or pushed into it; nothing is read across engines.
 - **The raw receipts live on the branch `raw`** (18 October): its root is what `results/live/raw/` held (every archived run,

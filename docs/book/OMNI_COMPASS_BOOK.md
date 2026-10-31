@@ -42,8 +42,8 @@ work for a smaller bill.
 **Where the proof is.** This book shows how to wire, tune, run and check Omni-Compass. The mechanism, the mathematics and
 every result, each a paired comparison of native and Omni-Compass on top of native run three times, every row kept, LOSS
 included, are in the Owner's Manual and in `results/`. The only number that applies to your system is the one your own paired
-runs produce. The first thing the Owner's Manual, the README and the live engine page show is the bottom line: one light (green
-and round THRIVING, yellow and diamond STEADY, red and octagonal REDLINING) and one number against native for each way to run
+runs produce. The first thing the Owner's Manual, the README and the live benchmark engine page show is the bottom line: one light (green
+and round GAINING, yellow and diamond STEADY, red and octagonal REDLINING) and one number against native for each way to run
 Omni-Compass (native alone, Omni-Compass on native, Omni-Compass direct) and for each route a whole workload is bought by (on
 site, through the cloud). This book carries none of those numbers.
 
@@ -360,7 +360,7 @@ Every judged reading in Omni-Compass is one of three words: **GAIN**, **STEADY**
 | Word | What each letter stands for | Its sense in underwriting | What it means in a table |
 |---|---|---|---|
 | **GAIN** | **G** Growth (asset appreciation); **A** Advantage (risk reduction); **I** Improvement (margin expansion); **N** Net-positive (profitable outcome) | surplus and positive variance | the gauge moved toward its declared aim against native: more work done, a shorter wait, fewer misses or failures, or a resource cut |
-| **STEADY** | **E** Equalized (zero variance); **V** Verified baseline (expected norm); **E** Equilibrium (balanced risk); **N** Neutral (no net change) | the break-even baseline: equilibrium | native and Omni-Compass within 0.5% of each other: the mean of the three runs' changes under the 0.5% floor, or no change at all; a knob native already runs at the top of its range is STEADY, at its limit on native |
+| **STEADY** | **S** Stable (zero variance); **T** True to baseline (expected norm); **E** Equilibrium (balanced risk); **A** At par (no net change); **D** Drift-free (within the 0.5% floor); **Y** Yield held (nothing lost) | the par baseline: equilibrium | native and Omni-Compass within 0.5% of each other: the mean of the three runs' changes under the 0.5% floor, or no change at all; a knob native already runs at the top of its range is STEADY, at its limit on native |
 | **LOSS** | **L** Leakage (capital drain); **O** Off-track (adverse selection); **S** Setback (claim liability); **S** Subpar (negative variance) | actuarial deficit and exposure | the gauge moved away from its declared aim: less work done, a longer wait, more misses or failures |
 
 How the sign of a number becomes a word:
@@ -371,13 +371,13 @@ How the sign of a number becomes a word:
 - **Work bought with each unit of a resource** (work per energy): a rise is a cut in what each unit of work took, a GAIN; a fall is power given, because it falls when more power is given for the same work.
 - So a minus can read GAIN (a response time cut 65%, a bill cut 30%) and a plus can read LOSS (failed requests up).
 - **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; STEADY is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **STEADY, under the floor**, with its size.
-- **The sign beside a word** (the same order): the number next to a word carries the word's sign, never the gauge's raw direction, so that no one mistakes which way a number went: GAIN **+**, LOSS **−**, STEADY **=**. A bill cut 3% reads GAIN +3%, failed requests up 2% read LOSS −2%, and a change under the 0.5% floor reads STEADY =0.3%.
+- **Two numbers, never mixed** (the referee's work order of 25 October): every row shows native's value and Omni-Compass's, the **raw change** (Omni-Compass − native) / native with its true sign, + for a rise and − for a fall whatever the gauge is for, labelled raw, and apart from it the word with its size and no sign. A bill cut 3% reads raw −3.0%, GAIN 3.0%; failed requests up 2% read raw +2.0%, LOSS 2.0%; a pod start wait from 0.22 s to 0.83 s reads raw +275.0%, LOSS 275.0%; a change under the 0.5% floor reads STEADY 0.3%. No raw sign is ever turned to match a word.
 
 Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads STEADY (the same as native); AT ITS LIMIT ON NATIVE reads STEADY (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads STEADY (inside the noise, within the guardrails); NOT ESTABLISHED reads STEADY (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
 
 Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **STEADY, under the floor**: the mean moved less than 0.5%. **STEADY, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
 
-Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, break-even or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
+Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
 Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
@@ -610,7 +610,7 @@ together, and each pair is read on its own: omni against native, direct against 
 |---|---|---|
 | Native | the native controllers alone, as shipped and as the operator set them | the governor not installed, or OFF (chapter 9) |
 | Omni-Compass on native (omni) | the native controllers, with Omni-Compass moving the settings they expose | the governor at the level granted (chapter 7) |
-| Omni-Compass direct | Omni-Compass talking to the muscles directly, the brain, the orchestrator and the scheduler wherever it carries those muscles itself; a knob's native controller switched off only where Omni-Compass carries that muscle and has proven it can move the knob, and every muscle Omni-Compass cannot be kept, native, under it (on Kubernetes the pod autoscaler removed from the workload Omni-Compass's own pod muscle governs; the API server, the scheduler and the kubelet stay; the founder's order of 31 October, `docs/SOLO_PREREGISTRATION.md` amendment 2) | `--own-replicas namespace/name` on a workload no autoscaler governs (Appendix K); on the kind rig `ARM=solo` (`scripts/kind_bench.sh`); chapter 11 |
+| The arm by itself (called Omni-Compass direct on 23 October) | On Kubernetes, Omni-Compass's own pod rule in place of the autoscaler's arithmetic, and nothing else: Omni-Compass is a brain with no organs there, so every organ of Kubernetes (the API server, the scheduler, the kubelet) and every muscle Omni-Compass cannot be stay, native, under it; a knob's native controller is switched off only where Omni-Compass carries that muscle and has proven it can move the knob. The word direct overstates it on Kubernetes (the founder's analysis of 31 October): Omni-Compass can be direct to a knob there, never to a muscle. A mechanism test kept in the record, not a product arm (`docs/SOLO_PREREGISTRATION.md` amendment 2) | `--own-replicas namespace/name` on a workload no autoscaler governs (Appendix K); on the kind rig `ARM=solo` (`scripts/kind_bench.sh`); chapter 11 |
 
 Where native is a setting and not a controller (a cache's ceiling, a buffer pool, a pooler's pool size, a consumer group's
 size), or where native's own loop is the actuator and cannot be switched off (the card's firmware, a servo, an autopilot, a
@@ -789,8 +789,8 @@ stand on it:
 **Ten organisms, three arms each.** Beside the seven organisms of the catalog the repository reads three more, each a
 grouping of catalog rows or of real tables and none a product: the **orchestra**, the muscles that stand for the knobs of the
 governors and orchestrators (the Kubernetes scheduler, Kueue, Volcano, the KAI scheduler, Koordinator, CruiseKube, Crane,
-KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio; `tools/run_orchestra.py`); the **live engine's own
-organism** of sixty muscles, the one the live engine page draws (`docs/engine/export_harness_trace.py`); and the **whole
+KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio; `tools/run_orchestra.py`); the **live benchmark engine's own
+organism** of sixty muscles, the one the live benchmark engine page draws (`docs/engine/export_harness_trace.py`); and the **whole
 organism** in its three places, the software end, the cloud's wire and the bare metal, composed from the real tables
 (`tools/whole_system.py`). Each of the ten is read two ways, native and Omni-Compass on native (Omni-Compass is never by
 itself, the founder's order of 25 October): twenty scenarios, written by `python3 tools/scenarios_20.py` into
@@ -921,7 +921,7 @@ the engine's own setting for every other muscle. The whole tune is fixed and fin
 (`python3 tools/omni_version.py`), so an installation can always tell whether it is running the factory tune or a tune of
 its own. Every published result is the factory tune of the engine its table names (`python3 tools/omni_version.py`), and is run again on each engine that stands.
 In the words of `docs/FACTORY_PROFILE.md`, the factory tune is the **factory profile**: the complete, versioned set of
-Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v22's. The best validated
+Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v23's. The best validated
 factory profile for the declared operating conditions has not yet been established: it is chosen only after every mechanism
 is verified and the settings are tuned and validated together (`docs/FACTORY_PROFILE.md`, section 5), and until then the
 released profile stands and no other is locked as the baseline.
@@ -931,7 +931,7 @@ realm; none is presented as such. What the factory tune fixes is the starting po
 muscle on the setting that was found for it, every muscle wired, nothing switched off.
 
 **One tuned engine, and a tuning bench.** Every benchmark result is one engine at one tune: the engine that stands at its factory
-tune. The live engine page (the Live Engine Manual) and the control panel's buttons (Chapter 10) are a tuning bench. On the bench
+tune. The live benchmark engine page (the Live Benchmark Engine Manual) and the control panel's buttons (Chapter 10) are a tuning bench. On the bench
 every knob can be turned in real time: the beat, the dial, the pedal, each muscle driven or left native, up or down, in or out,
 minus or plus. It shows the mechanism of action with native alone, with Omni-Compass on top, or both side by side. Treat
 Omni-Compass as you would any engine. Turning the mixture, the intake, the exhaust, the firing or the pistons changes what a car's
@@ -993,7 +993,7 @@ written down before the first counted run:
 | **The floor** | the least a pool may run on | two machines by default; never below 1 for any muscle |
 | **The allowance** (`--allow`) | the most a step on trial may cost the muscle's own work | 2%, the same on every muscle |
 | **The site's limits** (`--site-limit-w`, `--cooling-min-c`, `--cooling-max-c`, `--cooling-restore-c`) | the facility's power limit and the setpoint band | the facility engineer, inside the equipment's ratings |
-| **The heartbeat** (`--interval`) | how often the governor takes its full decision: the main engine every 60 s, a dial from 5 to 120 s; the fast checks stay every 5 s | the factory's 60 s, or the operator's own beat; the live engine page shows every beat beside native, with what it buys and what it costs (the page's section 1j) |
+| **The heartbeat** (`--interval`) | how often the governor takes its full decision: the main engine every 60 s, a dial from 5 to 120 s; the fast checks stay every 5 s | the factory's 60 s, or the operator's own beat; the live benchmark engine page shows every beat beside native, with what it buys and what it costs (the page's section 1j) |
 
 ![The compass band and the smoothing of the force. (a) The service reading placed in its band as a position p from 0, calm, to 1, the operator's line; the walls at 0.05 and 0.95 leave a cushion of 5% at each edge, and the centre c is where the needle comes to rest (0.5 by default; on a service 0.3 at the max and 0.4 at the tune-down). (b) The force F = A·tanh(r/A) against the raw force r = K[P]·(p − c) + K[D]·v, the pull toward the centre plus the push against the reading's motion: near the centre a spring, far out a curve that flattens into the authority A and never passes it. Past the upper wall the up side goes to A at once, and the down side may not act until the reading is back inside the band.](figures/band.svg)
 
@@ -1063,7 +1063,7 @@ running system:
    result is never read as a custom profile's.
 5. Keep the command line and the control panel's log with the receipts, so the profile that produced them can be named.
 
-On the live tuning bench (the live engine page; how to read it is the Live Engine Manual's) every turned knob makes the
+On the live tuning bench (the live benchmark engine page; how to read it is the Live Benchmark Engine Manual's) every turned knob makes the
 **active profile**, the settings governing the run in front of you, a custom one, named by its fingerprint; the sweep's best
 beat can be tried as a **candidate profile**, a proposed combination under evaluation. Neither becomes a factory
 configuration without validation and a new release declaration, and no profile is locked as the baseline today.
@@ -1077,7 +1077,7 @@ configuration without validation and a new release declaration, and no profile i
 | The kill switch (security only) | turns every Omni-Compass governor on the machine off at once | `python3 tools/omni_switch.py off` or `POST /v1/kill` (role security): each governor restores and exits, none starts while the switch is off, and two holders of the security role arm it again (chapter 9) |
 
 Return to native is an operator's control and leaves the master switch on; the kill switch is separate, for security only,
-and instant. On the live engine page, which runs no real system, both act on what runs in the page.
+and instant. On the live benchmark engine page, which runs no real system, both act on what runs in the page.
 
 ---
 
@@ -1404,8 +1404,8 @@ respect a limit the wires do not carry.
 
 ### 6.5 The rules of the engine that stands, as an operator meets them
 
-The engine that stands in this edition is **omni-v22** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
-quoted here ran on omni-v7, whose rules omni-v22 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
+The engine that stands in this edition is **omni-v23** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
+quoted here ran on omni-v7, whose rules omni-v23 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
 and the interval table; omni-v11 added one guard to the Kubernetes governor; omni-v12 holds a raise the cluster's admission
 refused until something changes, and the swarm's wire acts on a neighbour at once; omni-v13 hands the CPU limits it gave back to
 the operator's on a shared host at its top while another workload there has room of its own, and counts every other pod by its
@@ -1586,7 +1586,7 @@ python3 tools/run_gpu_card.py results/sim/gpu_two_wire/eval                  # t
 ```
 
 Pass: `VERIFICATION: PASS`. Nothing in your systems is touched.
-What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v22 (digest 0e23a0bc561b900a, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
+What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v23 (digest c96ea4105d8747db, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
 
 **Level 1 - Watch (read-only).**
 
@@ -2154,7 +2154,7 @@ to a limit is **held at the muscle's limit**. A command not yet acknowledged is 
 new order goes on top of it (rule 6 above). A command the system refused is recorded (`refused`, with its exit code and why)
 and **held**: it is not written again at every check (a processor raise the cluster's admission refused is held until the
 pod's limit changes, the raise shrinks or its wait passes). A request that never lands, or a drift that never closes, is a
-wiring question before it is anything else (section 5.5). The live engine page shows the same states for each decision on its
+wiring question before it is anything else (section 5.5). The live benchmark engine page shows the same states for each decision on its
 own model: the settings requested, those that landed as asked, those held at a muscle's limit, and those still moving.
 
 

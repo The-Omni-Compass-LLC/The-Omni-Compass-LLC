@@ -317,6 +317,23 @@ def cloud_tests():
                 t["gauges"][g] = {"row": key, "reading": "one run: the interval includes zero" if lo < 0 < hi else "one run: clear of the noise",
                                   "judged": False, "est": log_ratio(AIM[g], n_, o_, lo, hi, 4), "runs": [(n_, o_)]}
         out.append(t)
+    # the steady set of 100 paired repetitions (results/live/AKS_STEADY_100_OMNI_V18.md, one run, the stopping rule's looks): the
+    # cloud's best measurement on record, Omni-Compass on top of native at the tune-down on the machines alone
+    p100 = LIVE / "AKS_STEADY_100_OMNI_V18.json"
+    if p100.exists():
+        d = json.loads(p100.read_text())
+        rows = (d.get("paired") or {}).get("compass") or {}
+        n = len((d.get("repetitions") or {}).get("compass") or []) or None
+        t = {"test": (f"Azure Kubernetes Service, Azure's own cluster autoscaler underneath, the steady set, {n} paired repetitions in one run "
+                      "(Omni-Compass at the tune-down on the machines alone)"),
+             "source": "results/live/AKS_STEADY_100_OMNI_V18.md", "runs": ["40069633316"], "engine": "omni-v18", "pairs": [n], "gauges": {}}
+        for g, key in CLOUD_MEASURES.items():
+            row = rows.get(key)
+            if row:
+                lo, hi = row.get("ci95") or (None, None)
+                t["gauges"][g] = {"row": key, "reading": "one run: the interval includes zero" if not row.get("significant") else "one run: clear of the noise",
+                                  "judged": False, "est": log_ratio(AIM[g], row["native"], row["omni"], lo, hi, n), "runs": [(row["native"], row["omni"])]}
+        out.append(t)
     for name, f in (("the steady set", "V1_AKS_STEADY.json"), ("the burst", "V1_AKS_BURST.json")):
         p = LIVE / f
         if not p.exists():
@@ -413,10 +430,10 @@ def cost_ledger(measured):
                       mrow("4", "energy", "the host's processor seconds", "the services: the host's own count of processor time, a stand-in for energy, never a meter")) if r]
     if sw:
         pieces.append({"piece": "the energy the software end drew (class L inputs, no meter)", "sources": ["results/live (the cluster and service tables)"], "rows": sw})
-    cl = [r for r in (mrow("5", "bill", "the compute bill at list price", "Azure, one run of four paired repetitions, and the v1 fleet's one-run sets"),
+    cl = [r for r in (mrow("5", "bill", "the compute bill at list price", "Azure: the steady set's 100 paired repetitions (one run), the compass law's four (one run) and the v1 fleet's one-run sets, their mean"),
                       mrow("5", "machines", "machines billed", "the same runs")) if r]
     if cl:
-        pieces.append({"piece": "the wire (the cloud's metered bill, class L)", "sources": ["results/live/AKS_BILL.md", "results/live/V1_AKS_STEADY.json", "results/live/V1_AKS_BURST.json"], "rows": cl})
+        pieces.append({"piece": "the wire (the cloud's metered bill, class L)", "sources": ["results/live/AKS_STEADY_100_OMNI_V18.md", "results/live/AKS_BILL.md", "results/live/V1_AKS_STEADY.json", "results/live/V1_AKS_BURST.json"], "rows": cl})
     pieces.append({"piece": "the machine (the kernel, bare metal, Kepler and the machine's own meter)", "sources": ["register row 79"], "rows": [],
                    "state": "not yet run"})
     for pc in pieces:

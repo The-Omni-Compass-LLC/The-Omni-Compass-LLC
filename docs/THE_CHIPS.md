@@ -94,7 +94,7 @@ on an uncapped card there is no door: the firmware is already at the top.
 
 ## 5. What the chip proof still needs, step by step, with what each step costs
 
-Each step starts from the GPU branch of the engine that stands (`gpu-omni-v22`, one exact commit), prints its price first,
+Each step starts from the GPU branch of the engine that stands (`gpu-omni-v23`, one exact commit), prints its price first,
 and rents nothing before the founder's word.
 
 1. **Run A's cause, then the cap at the stopping rule's repetitions.** Read run A's files (`raw`, `run-40485609401/`): the

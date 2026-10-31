@@ -2,6 +2,25 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-10-31: omni-v23 stands: Omni direct keeps every muscle Omni-Compass cannot be
+- **omni-v23** (`OMNI_V23.json`, fingerprint `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`): omni-v22 with one guard in the
+  Kubernetes governor's pod muscle of its own, on the founder's order of 31 October ("any muscle that we don't have, Omni-Compass
+  cannot be it: it has to be there, if that's Kubernetes or whatever"). A write of a workload's own scale that the cluster refuses is
+  recorded and the decision goes on; at three refusals in a row the knob goes back to native's own pod autoscaler, made from the
+  operator's target and range recorded on the workload, and the muscle leaves the workload to it: the organism never runs with a
+  knob nobody moves. 64 of 65 files are omni-v22's bytes; the model gate against omni-v22 (`results/model_gate/V23_VS_V22.md`) read
+  identical on every gauge, no LOSS; `tests/test_own_replicas.py` (`HandBack`) proves the guard. Every benchmark runs again on it
+  from 16:30 UTC.
+- **The arm by itself, found void since 24 October** (`docs/SOLO_PREREGISTRATION.md`, amendments 1 and 2): the kind rig's identity
+  never granted the scale subresource the pod muscle writes, so every solo arm's pod writes were refused, 15 of 15 decisions a
+  window, while the machines and conveyance wrote as always; from 29 October the rig's own end read of the removed autoscaler ended
+  the arm with exit 1. The identity gains the grant (and `create` on autoscalers for omni-v23's hand-back), the preflight proves the
+  writes by name, the solo arm's end record is the workload's own, a window with a failed decision or a hand-back is refused as a
+  result of that arm; `tests/test_kind_rig_rbac.py`. omni-v21's three runs and omni-v22's two of the entry are read in no table; the
+  entry runs again, A, B and C, behind the campaign.
+- **Orders of 31 October** (CLAUDE.md): Omni direct keeps every muscle Omni-Compass cannot be; every fix pushed, the website
+  following main, the live engine defensible in line.
+
 ## 2026-10-30: omni-v22 stands: the data stores' wires at the max, through each store's own account of a miss
 - **The hand-back lands** (`omni_controller/controller.py`, `omni_controller/muscles.py`, in omni-v22): every step of the Kubernetes
   governor's hand-back is tried 5 times against a transient failure of the cluster's API, each muscle on its own, and what did not

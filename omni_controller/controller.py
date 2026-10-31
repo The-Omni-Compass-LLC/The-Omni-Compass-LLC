@@ -67,6 +67,10 @@ RANGE_ANN = "omnicompass.io/original-replica-range"
 OWN_REPL_ANN = "omnicompass.io/original-own-replicas"
 OWN_TARGET_ANN = "omnicompass.io/target-utilization"
 OWN_RANGE_ANN = "omnicompass.io/replica-range"
+# omni-v23 (the founder's order of 31 October: every muscle Omni-Compass cannot be stays; a knob left with no working controller
+# fails the whole system): a write of the workload's own scale the cluster refuses this many times in a row hands the knob back
+# to native's own pod autoscaler, made from the operator's own target and range recorded on the workload
+OWN_REFUSALS = 3
 
 
 def to_milli(v: str) -> float:
@@ -467,6 +471,8 @@ class Controller:
         self.own_x = {}                # (ns, name) -> the compass's continuous target for a workload of its own, before rounding
         self._own_F = 0.0              # the compass's force of the last decision
         self.own_hist = {}             # (ns, name) -> the recommendations of the last window (fewer pods only to their highest)
+        self.own_refused = {}          # (ns, name) -> writes of its scale the cluster refused in a row (omni-v23)
+        self.own_handed = set()        # (ns, name) handed back to native's own autoscaler after OWN_REFUSALS refusals (omni-v23)
         self.demand = {}               # (ns, hpa) -> [(time, demand)]: the CPU its pods use, in units of one pod's request
         self.pinned = {}               # (ns, hpa) -> [time]: decisions at which the autoscaler stood at its replica cap
 
@@ -868,6 +874,9 @@ class Controller:
         out = {}
         for ns, name in self.own:
             key = (ns, name)
+            if key in self.own_handed:
+                self.audit({"own_replicas": f"{ns}/{name}", "held": "handed back to native's own autoscaler: nothing written"})
+                continue
             if key in governed:
                 self.audit({"own_replicas": f"{ns}/{name}", "held": "an autoscaler governs it: its own muscle stands, nothing written"})
                 continue
@@ -926,14 +935,45 @@ class Controller:
                 want = min(want, cur)                                # shield I1: no expansion during a security hold
             if want == cur:
                 continue
-            if OWN_REPL_ANN not in ann:
-                self.k.write(["annotate", "deployment", name, "-n", ns, "--overwrite", f"{OWN_REPL_ANN}={cur}"], "own pods: record the operator's count")
-            self.k.write(["scale", "deployment", name, "-n", ns, f"--replicas={want}"],
-                         f"own pods: {cur} -> {want} (busy {util:.0f}% of the request, target {x:.0f}%, the operator's {orig_t:.0f}%)")
+            try:
+                if OWN_REPL_ANN not in ann:
+                    self.k.write(["annotate", "deployment", name, "-n", ns, "--overwrite", f"{OWN_REPL_ANN}={cur}"], "own pods: record the operator's count")
+                self.k.write(["scale", "deployment", name, "-n", ns, f"--replicas={want}"],
+                             f"own pods: {cur} -> {want} (busy {util:.0f}% of the request, target {x:.0f}%, the operator's {orig_t:.0f}%)")
+            except subprocess.CalledProcessError as e:
+                self._own_refused(key, orig_t, lo0, hi0, orig, e)       # omni-v23: the knob never left with no controller
+                continue
+            self.own_refused.pop(key, None)                              # a write that landed ends the run of refusals
             out[key] = want
         if out:
             self.audit({"own_replicas": {f"{k[0]}/{k[1]}": v for k, v in out.items()}})
         return out
+
+    def _own_refused(self, key, orig_t, lo0, hi0, orig, e):
+        """omni-v23 (the founder's order of 31 October: Omni direct keeps every muscle Omni-Compass cannot be; a knob left with no
+        working controller fails the whole system and is never a result). A write of the workload's own scale that the cluster
+        refuses (its permission, its admission, its API) is recorded, and the decision goes on: the cluster keeps the last count
+        that landed. At OWN_REFUSALS refusals in a row Omni-Compass cannot be this knob's muscle, so the knob goes back to native's
+        own pod autoscaler, made from the operator's own target and range recorded on the workload, and the muscle leaves the
+        workload to it for the rest of the run (the snapshot's governed set holds it from the next decision on; the reset leaves
+        native's autoscaler standing). Nothing is forced: the organism never runs with a knob nobody moves."""
+        ns, name = key
+        n = self.own_refused.get(key, 0) + 1
+        self.own_refused[key] = n
+        err = (getattr(e, "stderr", "") or str(e) or "")[-300:]
+        self.audit({"own_replicas": f"{ns}/{name}", "refused": n, "error": err})
+        if n < OWN_REFUSALS or key in self.own_handed:
+            return
+        self.own_handed.add(key)
+        hi = hi0 if hi0 < 10 ** 6 else max(10, 10 * max(1, int(orig)))   # no range recorded: ten times the operator's count
+        try:
+            self.k.write(["autoscale", "deployment", name, "-n", ns, f"--cpu-percent={int(round(orig_t))}", f"--min={lo0}", f"--max={hi}"],
+                         f"own pods: the cluster refused the muscle's write {n} times in a row: the knob handed back to native's "
+                         f"own autoscaler at the operator's target {orig_t:.0f}% and range {lo0},{hi}")
+            self.audit({"own_replicas": f"{ns}/{name}", "handed_back": "native's own pod autoscaler", "after_refusals": n,
+                        "target": orig_t, "range": [lo0, hi]})
+        except subprocess.CalledProcessError as e2:
+            self.audit({"own_replicas": f"{ns}/{name}", "hand_back_refused": (getattr(e2, "stderr", "") or str(e2) or "")[-300:]})
 
     def pod_reflex(self):
         """The fast pod reflex (manuscript Section 5.3, preemptive coherence): the HPA's own staffing rule,

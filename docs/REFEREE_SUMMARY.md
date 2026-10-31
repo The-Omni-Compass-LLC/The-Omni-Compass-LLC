@@ -32,7 +32,7 @@ hands every setting back to native's value when it stops, dies or is switched of
 
 ## 3. Real Kubernetes, each gain beside its cost (L, three runs of ten pairs, kind on one GitHub runner)
 
-The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v22, the engine that stands since 30 October, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
+The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v23, the engine that stands since 31 October, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
 
 | Test | Gain, the same in all three of our runs | What it cost |
 |---|---|---|
