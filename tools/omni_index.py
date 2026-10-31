@@ -192,8 +192,10 @@ def tests():
             out.append({"category": cat, "test": label.format(wl=wl),
                         "source": f"results/live/{fname}", "runs": [x["run"] for x in data["runs"]], "v1": False, "measures": r})
     for t in out:
-        g = gmean([m["ratio"] for m in t["measures"].values()])
+        g = gmean([scored_ratio(t["category"], k, m["ratio"]) for k, m in t["measures"].items()])
         t["index_pct"] = 100 * (g - 1) if g else None
+        r = gmean([m["ratio"] for m in t["measures"].values()])          # the reading of 4 October, energy scored
+        t["resource_pct"] = 100 * (r - 1) if r else None
         s = gmean([m["ratio"] for k, m in t["measures"].items() if k in SERVICE])
         t["service_pct"] = 100 * (s - 1) if s else None
     return out
@@ -206,6 +208,27 @@ def tests():
 # program preregistered. Where a governor buys service with a resource (Redis's memory, Kafka's consumers) the two readings
 # part; where it gives a resource back for the same service (the databases) the service reading says nothing moved.
 SERVICE = {"work", "speed"}
+# The software end's reading, the headline from 31 October (the founder's order of that evening: the benefit is claimed at the
+# software end alone; the chip is left as it ships and the wire as it is; "take out" the energy that is a model's guess about
+# the chip). Energy that no meter read (a declared power model's watts on kind, the host's processor seconds on the data
+# stores: no meter on a GitHub runner) is shown beside every test and never scored; energy is scored only where a meter read
+# it (class P, the card's own meter). The reading declared on 4 October, every measure scored, is printed beside it.
+SCORED = {"work", "speed", "machines"}
+METERED = {"Real card (NVIDIA, its own meter)"}
+
+
+def scored_ratio(category, key, ratio):
+    """A measure as the headline scores it: work, speed and machines as measured; energy as measured only where a meter read it
+    (the card's own meter), and everywhere else as native's, the same juice (the founder's words of 31 October: "more work ...
+    for that same juice and for that same bill"): never dropped, because a geometric mean of fewer measures would weigh the
+    rest more and read higher with nothing gained."""
+    if key == "energy" and category not in METERED:
+        return 1.0
+    return ratio
+
+
+def scored_keys(category):
+    return SCORED | {"energy"}
 
 
 def pct(x):
@@ -281,24 +304,34 @@ def main():
     head = gmean(real)
     cat_s = {c: gmean([1 + t["service_pct"] / 100 for t in v if t["service_pct"] is not None]) for c, v in cats.items()}
     head_s = gmean([cat_s[c] for c in REAL if c in cat_s and cat_s[c]])
+    cat_r = {c: gmean([1 + t["resource_pct"] / 100 for t in v if t.get("resource_pct") is not None]) for c, v in cats.items()}
+    head_r = gmean([cat_r[c] for c in REAL if c in cat_r and cat_r[c]])     # the reading of 4 October, energy scored
     avg = lambda c, m: gmean([t["measures"][m]["ratio"] for t in cats[c] if m in t["measures"]])
     L = ["# The Omni index: more for the same, or the same for less", "",
          "Every measure of every test is a ratio oriented so that above 1 is a GAIN against the system's declared aim with Omni-Compass on "
          "top of native: work (more), speed (a lower response time), machines (fewer: a cut), energy (less: a cut). Below 1 is a LOSS "
          "for work and speed, and power given for machines and energy (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). A test's index is the "
-         "geometric mean of its ratios; a category is the geometric mean of its tests; the headline is the geometric "
-         "mean of the real categories, each weighted the same. Modelled muscles are shown beside it, never inside it. "
+         "geometric mean of its scored ratios; a category is the geometric mean of its tests; the headline is the geometric "
+         "mean of the real categories, each weighted the same. Scored as measured: work, speed and machines, the software end's own "
+         "results, and energy where a meter read it (the card's own meter). Everywhere else (a declared power model's watts on "
+         "kind, the host's processor seconds on the data stores: no meter on a GitHub runner) the energy is a model's estimate "
+         "about the chip: it is shown beside every test and scored as native's, the same juice (the founder's words of 31 "
+         "October: \"more work ... for that same juice and for that same bill\"), never dropped, because a geometric mean of "
+         "fewer measures would weigh the rest more and read higher with nothing gained. Modelled muscles are shown beside it, never inside it. "
          "Every number is read from the test's own newest three-run table (`results/live/V<n>_*.json`, the newest engine with all three runs, made by "
          "`tools/confirm_abc.py`, `tools/pgbench_abc.py`, `tools/kafka_abc.py`, `tools/redis_abc.py`, `tools/ycsb_abc.py` and `tools/sysbench_abc.py` from the three archived runs; `tools/omni_index.py`).", "",
          f"## Headline: Omni-Compass on top of native, real software on real computers (the software end, class L; not bare metal and not the chip, which enters as its own category), judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
-         f"{index_word(head, head_s)}** (more for the same, or the same for less, across work, speed, machines and energy)", "",
+         f"{index_word(head, head_s)}** (more work, faster, on fewer machines, for the same energy and the same bill: the software "
+         "end's reading, work, speed and machines as measured, energy as native's where no meter read it)", "",
+         f"The reading declared on 4 October, every measure scored, the modelled energy included: **{pw(head_r, index_word(head_r, head_s))}, "
+         f"{index_word(head_r, head_s)}**, printed beside the headline so nothing moves out of sight; its energy is a model's estimate, never a meter's.", "",
          "A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`): GAIN, LOSS or power given in all three of our "
          "runs counts, as the geometric mean of the runs' ratios; STEADY (no difference beyond the noise) counts as exactly 1, so "
          "nothing inside the noise is claimed either way. " + engines_sentence(ts) + " Real Kubernetes, the real database, real messaging, the real cache, the real database's storage-engine cache and the real "
          "database's buffer pool are the real categories in; the steady and wandering Kubernetes tests join when their omni-v23 runs land, Azure and the card as their three-run tables land. A category's "
          "tuning workload is shown in its own table and never counted. Where native sat at its knee by design (nine tenths of its measured capacity), "
          "a queue that Omni keeps short makes the speed ratio large: that is what the test measures, and the resource it takes stands beside it. Each table names the engine it ran on.", "",
-         "| Category | Index (work, speed, machines, energy) | Service reading (work and speed only) | More work by | Faster by (native p95 / omni p95) | Fewer machines by | Less energy by | Tests |",
+         "| Category | Index (work, speed, machines) | Service reading (work and speed only) | More work by | Faster by (native p95 / omni p95) | Fewer machines by | Less energy by (shown, not scored where no meter read it) | Tests |",
          "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for c in list(REAL) + ["Modelled muscles (evidence S)"]:
         if c in cats:
@@ -349,6 +382,7 @@ def main():
     (ROOT / "results" / "OMNI_INDEX.md").write_text("\n".join(_legal_stamp(with_own_runs(L))) + "\n")
     (ROOT / "results" / "OMNI_INDEX.json").write_text(json.dumps(
         {"headline_pct": None if head is None else 100 * (head - 1),
+         "resource_headline_pct_4_october": None if head_r is None else 100 * (head_r - 1),
          "service_headline_pct": None if head_s is None else 100 * (head_s - 1),
          "categories": {c: None if g is None else 100 * (g - 1) for c, g in cat_g.items()},
          "service_categories": {c: None if g is None else 100 * (g - 1) for c, g in cat_s.items()}, "tests": ts}, indent=1) + "\n")

@@ -58,20 +58,29 @@ TERMS = (
      "that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no "
      "LOSS."),
     ("Where the benefit lives",
-     "At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries "
-     "the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work "
-     "for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read "
-     "beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit "
-     "is shown where it lives and explained for the rest."),
+     "At the software end, where it is made and measured. It shows through on two receipts, native against Omni-Compass: the "
+     "chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). The chip and "
+     "the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof "
+     "of no harm in its place; the benefit is shown where it lives and explained for the rest."),
+    ("One mechanism, in one place, felt along the whole path",
+     "Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the "
+     "chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the "
+     "software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the "
+     "effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and "
+     "the chip show that it holds and carry the gain to their receipts. Four places are tested because a buyer asks about all "
+     "four; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same "
+     "cars."),
 )
 
 ROWS = (
     ("The software end", "Kubernetes and the data stores on GitHub's machines (kind), class L",
      "the benefit, by the one key, and that it holds", "`docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md`"),
     ("Through the cloud", "Kubernetes through Azure's AKS, the machines it bills, class L",
-     "that it holds; the work per dollar read beside the bill", "`results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md`"),
+     "that it holds, and the software end's gain on the cloud's own bill: the work per dollar, native against Omni-Compass",
+     "`results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md`"),
     ("The chip", "a graphics card on Lambda, its own power meter, class P",
-     "that it holds; its energy read beside the work", "`results/gpu/`"),
+     "that it holds, and the software end's gain on the card's own meter: the work per joule, native against Omni-Compass",
+     "`results/gpu/`"),
     ("On site", "the software end on the owner's own machines; in our own models the on-site plant, class S",
      "the software end's benefit, the machines' hours no bill", "`results/model_gate/`"),
     ("The whole organism", "the places composed by the product law, class S of P and L",
