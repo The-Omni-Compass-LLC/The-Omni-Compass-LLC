@@ -478,7 +478,12 @@ the founder overrides one in the conversation.
   chip run must show is that Omni-Compass holds there: no judged gauge LOSS against native (the work done, the response time, the
   minutes over the line, the pods waiting, the failures), the bill, the machine-hours and the energy read beside it as resources
   (a rise power given), the work per dollar beside the bill. The benefit is shown where it lives, at the software end, measured on
-  real software on real computers, and explained through the wire, never claimed for the wire. The words for the places (the
+  real software on real computers, and explained through the wire, never claimed for the wire. It shows through on two receipts,
+  native against Omni-Compass (the founder's words of the same night: "we can show it defensively as a difference from native to
+  omnicompass on its receipt of a GPU or bill of a cloud, because that's the only two things we're trying to show through"): the
+  card's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). One mechanism, in one
+  place, felt along the whole path: Omni-Compass acts at the software end alone, and four places are tested because a buyer asks
+  about all four. The words for the places (the
   software end, on site, through the cloud, the chip, hold, where the benefit lives) are written once in `tools/places.py` and
   stand word for word on the README, `DISCLOSURES.md` (section 10), `docs/HOW_TO_READ_THE_RESULTS.md` and the three manuals
   (`python3 tools/places.py --fix`; `--check`, run by `verify.py`, fails any page that differs), and in the live engine's glossary

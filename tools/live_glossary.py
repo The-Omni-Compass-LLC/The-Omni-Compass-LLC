@@ -505,11 +505,16 @@ TERMS = [
       "rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS; "
       "the cloud's and the chip's benchmarks must show it.",
       [(DIS, "A place holds when its runs read no LOSS.")], aka=["holds"]),
-    T("where the benefit lives", A, "At the software end, where it is measured. The cloud's wire and the chip are where "
-      "Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own, and a resource the "
-      "chip's runs cut (its energy at the tune-down) is read beside the work, never claimed as the benefit. A benchmark that holds "
-      "is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.",
+    T("where the benefit lives", A, "At the software end, where it is made and measured; it shows through on two receipts, native "
+      "against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each "
+      "dollar). The chip and the wire add no gain of their own: they are where Omni-Compass must hold.",
       [(DIS, "A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.")]),
+    T("one mechanism, in one place", A, "Omni-Compass acts in one place, the software end, on top of the controllers a stack "
+      "already runs, and changes nothing in the chip or the network or the cloud. Its effect travels the whole path the work "
+      "travels (the software, the wire, the chip and back), so it is checked at every place: the software end shows the gain, the wire "
+      "and the chip show that it holds and carry the gain to their receipts.",
+      [(DIS, "Four places are tested because a buyer asks about all four; one mechanism makes the gain")],
+      aka=["felt along the whole path"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
       "Omni-Compass rose). The law is omnicompass/compass_law.py (CompassLaw): a band with 5% cushions, two antagonist forces, "
