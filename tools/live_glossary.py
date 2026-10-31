@@ -1036,6 +1036,15 @@ TERMS = [
     T("Prometheus Metrics", W, "The fuse box's tab that prints the live model in Prometheus's text exposition format, with the "
       "series a running system serves beside each one and the PromQL the Grafana wall draws it with.",
       [(PAGE_F, "Prometheus Metrics Endpoint")], aka=["Metrics tab", "Prometheus"]),
+    T("Auxiliary Input", D, "The fuse box's AUX button and its tab: ten slots, each waiting to be wired to an organism of the "
+      "reader's own, a cluster, a service, a database or a card. A slot reads that system's own Prometheus every 15 s, read only, "
+      "under the native controller it names (every real native; Red Hat OpenShift Container Platform, IBM Turbonomic and VMware "
+      "vSphere marked not runnable until licensed), with Omni-Compass on top of it or not. A wired slot lights its own row on the "
+      "Auxiliary Input Board under the wall, one press flips the wall's monitors to it, and it is set beside the repository's real "
+      "records only (live software, class L; the card's meter, class P), never a model. Its two windows, native alone and "
+      "Omni-Compass on top, are one run of the reader's own system each, read by the one key; the page writes nothing to that system.",
+      [(PAGE_F, "ten slots, each waiting to be wired to an organism of your own"), (MAN, "The Auxiliary Input: ten slots for the reader's own organisms.")],
+      aka=["AUX", "the auxiliary input", "Auxiliary Input Board", "AUX slots"]),
     T("Commands", D, "The fuse box's tab that lists every control beside the request a running governor takes for it and its "
       "role; the mechanism's knobs and the plant's conditions have none.",
       [(PAGE_F, "Governor API Commands")], aka=["Commands tab"]),
