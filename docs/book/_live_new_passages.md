@@ -216,7 +216,8 @@ at once.
 
 **A changed tune is not a result.** Every knob of this panel shows a variation of the mechanism (class S, our own model). The
 benchmarks prove the factory tune only; a tune other than the factory's is its tuner's, and so are its readings. This is the one
-place on the page where a person may turn the engine away from its factory tune, break it by hand and watch it break; the factory
+place on the page where a person may turn the engine away from its factory tune, change its mechanism of action by hand and watch every
+monitor move with it; the factory
 button puts it back.
 
 ---

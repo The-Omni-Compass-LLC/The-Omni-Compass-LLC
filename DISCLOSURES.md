@@ -98,8 +98,9 @@ bands and the service lines are exposed); a changed tune is the licensee's own, 
 in The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
 published, never as a number to live with (the founder's order of 23 October 2026). The one place a LOSS is meant to be seen
 is the live benchmark engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
-to watch the system react and the brain hold or recover: that showing is the proof that the mechanism can be broken only by
-leaving it, and a changed tune's readings are the licensee's own.
+to watch the system react and the brain hold or recover: that showing is the proof that the factory tune is the best state found, and that a turned knob never breaks the engine:
+it changes its mechanism of action, how its muscles and the organism share the work, toward the purpose the new setting asks for, and a
+changed tune's readings are the licensee's own.
 
 **The factory profile, and the profile that comes next.** The factory tune is one complete configuration profile, the factory
 profile: every governing rule, gain, margin, decision interval and default setting shipped together, versioned and fingerprinted.

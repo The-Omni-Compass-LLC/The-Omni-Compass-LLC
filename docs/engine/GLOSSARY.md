@@ -1981,7 +1981,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Term | Kind | Where on the page |
 |---|---|---|
 | the 0.5% floor | term | 2a (#s-bottom); 3d (#s-dial); 3f (#s-plane); 4c (#s-live); 4d (#s-cloud); 5h (#s-math); B (#s-guide); D (#s-read) |
-| the 95% interval on Student's t | term | 2b (#s-answer); 2c (#s-board); 3f (#s-plane); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
+| the 95% interval on Student's t | term | 2c (#s-board); 3f (#s-plane); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | A | term | 5h (#s-math) |
 | a changed tune's violet | term | B (#s-guide) |
 | a governor's way | term | B (#s-guide) |
@@ -2019,7 +2019,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | evidence classes P, L, S | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); E (#s-monlist); G (#s-disclose) |
 | factory profile | term | B (#s-guide); G (#s-disclose) |
-| the factory tune | term | 1 (#s-health); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
+| the factory tune | term | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
 | fail up | term | 5h (#s-math); B (#s-guide) |
 | family | term | 2c (#s-board); 3b (#s-feed); 5e (#s-fleet); B (#s-guide) |
 | the fast checks | term | 3d (#s-dial); 4a (#s-ops); C (#s-problem) |
@@ -2112,7 +2112,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the two-way plug | term | 3a (#s-engines); 3e (#s-decision); 3i (#s-dash); 4a (#s-ops); 4c (#s-live); 5a (#s-proof); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | Variation Switchboard | term | 1 (#s-health); 5c (#s-scn) |
 | the verdict | term | 2a (#s-bottom); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
-| Whole Organism | organism | 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| Whole Organism | organism | 2b (#s-answer); 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Whole Tower | organism | B (#s-guide) |
 | work waiting in line | term | 3b (#s-feed); B (#s-guide) |
 | κ | term | 3g (#s-brain); 5h (#s-math) |

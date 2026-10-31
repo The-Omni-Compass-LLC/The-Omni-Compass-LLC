@@ -923,7 +923,8 @@ at once.
 
 Every knob of this panel shows a variation of the mechanism (class S, our own model). The benchmarks prove the factory profile
 only; a custom profile is its tuner's, and so are its readings. This is the one place on the page where a person may turn the
-engine away from its factory profile, break it by hand and watch it break; the factory buttons put it back.
+engine away from its factory profile, change its mechanism of action by hand and watch every
+monitor move with it; the factory buttons put it back.
 
 ### 2.24 Scenarios and Injection Grid, and the Monitor Breakers
 
@@ -1509,7 +1510,7 @@ first panel and in its fuse box, and in every monitor's own knobs, puts back two
 muscle driven, Omni-Compass ON, the 60 s beat, the factory profile restored and any hold released, the mechanism's knobs at the
 factory) and the page's plant at rest (the day as written, demand ×1, noise σ 0, sense delay
 +0, no fault held, the load profile as written, speed 1×, running, no frame load, and the heartbeat sweep monitor on 60 s,
-on-site, pods waiting, against native). It says what it put back. Turn anything, break it, watch it break; this button brings
+on-site, pods waiting, against native). It says what it put back. Turn anything and watch the mechanism change, never break; this button brings
 all of it back. Native alone is not a tune: it is the kill switch. The control panel's
 own factory button also turns every breaker ON.
 
