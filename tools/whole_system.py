@@ -569,7 +569,7 @@ def main(argv=None):
     (by_layer_c, total_c, idx_c) = results[("without the card (the cluster, the services and the cloud)", "carried")]
     (by_layer_a, total_a, idx_a) = results[("with the card's one run", "carried")]
     L.append("Read: the headline is the row **without the card, by the index's rule**: it counts only what held the same way in all three of our runs, "
-             f"on real machines (class L), and composes the cluster, the services on it and the cloud: **{pct(math.exp(idx[0]))}** over the gauges, "
+             f"on real software on GitHub's own machines (class L, the software end; never bare metal), and composes the cluster, the services on it and the cloud: **{pct(math.exp(idx[0]))}** over the gauges, "
              f"speed {pct(interval(total['speed'])[0])}, machines {pct(interval(total['machines'])[0])}, energy {pct(interval(total['energy'])[0])}, "
              f"work {pct(interval(total['work'])[0]) if total['work'] else 'not taken'}, the bill {pct(interval(total['bill'])[0]) if total['bill'] else 'not taken'}. "
              "With every interval carried the same layers read "
