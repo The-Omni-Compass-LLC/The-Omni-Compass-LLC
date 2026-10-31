@@ -151,7 +151,10 @@ def render(lad, sources, out_md):
              "own processor is timed on the machine that ran each report, so each beat's processor is read against the 60 s "
              "beat of its own report.",
              ""]
-    for model, setting, words in SETTINGS:
+    # the settings this record carries (31 October: at the max one model reads the cloud's and the kind benchmark's, so a
+    # record may hold one; tools/model_reread.py renders a record without main()'s filter)
+    present = [s for s in SETTINGS if s[0] in lad["models"]]
+    for model, setting, words in present:
         t = lad["models"][model]
         beats = t["beats"]
         name = lambda b: f"every {b} s" + (" (the main engine)" if b == MAIN else "")
@@ -194,7 +197,7 @@ def render(lad, sources, out_md):
     if first:                                  # the reading that caught a fault, kept beside the corrected beats
         lines += [f"## The first reading of every {' and '.join(first['beats'])} s, before the fix", "", first["note"], "",
                   f"From `{first['source']}`; its native and 60 s read the same as this page's, seed by seed.", ""]
-        for model, setting, words in SETTINGS:
+        for model, setting, words in [s for s in present if s[0] in first["models"]]:
             lines += [f"{words[0].upper()}{words[1:].split(':')[0]}, against native and against 60 s:", "",
                       "| Beat | " + " | ".join(NAMES[g] for g in SUMMARY) + " |", "|---|" + "---|" * len(SUMMARY)]
             for b in first["beats"]:
