@@ -13,8 +13,9 @@ Two settings, each as the repository already wires it, on seeds 3000, 3001 and 3
   selfpilot  pilot/selfpilot.py run_day: the HPA with the Cluster Autoscaler (native) against the controller in
              nodepool mode on top of the HPA, the Cluster Autoscaler off, the controller's own defaults (the max)
   cloud      tools/model_gate.py worker, the cloud's setting: the cloud's own autoscaler makes and deletes machines in both
-             arms; the controller (the compass law, the tune-down, --give-back-only) only parks a machine that exists,
-             after its verdict's trial, and wakes it on a breach
+             arms; the controller on top at the max with every muscle (the founder's order of 31 October struck the tune-down
+             on the machines alone): the target moved inside the autoscaler's cover, and a machine that exists parked after its
+             verdict's trial and woken on a breach
 
 Every 15 s tick, both arms: machines in service, booting or parked, the pods the HPAs want and the pods waiting for a
 place, the demand, and the response time of a queue on the running pods (the model gate's own formula, computed the same
@@ -166,10 +167,10 @@ def run(setting, seed, arm):
         return ticks, decisions
     audit = tmp / "audit.jsonl"
     if setting == "cloud":
-        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "save", "--sensed", "none/none", "--interval", "60",
+        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--interval", "60",
                 "--latency-file", str(lat_path), "--slo-ms", str(SLO_MS), "--audit", str(audit), "--kill-file", str(tmp / "kill"),
                 "--node-scale-cmd", "SIMSCALE {n}", "--min-nodes", str(sim.c.pool.min_nodes), "--max-nodes", str(sim.c.pool.max_nodes),
-                "--headroom", "0.5", "--active-nodes-only", "--max-node-step", "1", "--give-back-only"]
+                "--headroom", "0.5", "--active-nodes-only", "--max-node-step", "1"]
         ctl = Controller(parser().parse_args(argv), kube=cloud_kube(sim))
     else:
         argv = ["--mode", "nodepool", "--interval", "0", "--audit", str(audit), "--kill-file", str(tmp / "kill"),

@@ -42,7 +42,8 @@ GRIDS = {"kind": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.2, 0.3
          "cloud": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.3, 0.4, 0.5]}}
 MAIN = {"kind": {"beat": 60, "compass-center": 0.3}, "cloud": {"beat": 60, "compass-center": 0.4}}
 WORDS = {"kind": "the kind benchmark's setting: the compass law at the max, every autoscaler sensed",
-         "cloud": "the cloud's setting: the compass law at the tune-down, the machines alone"}
+         "cloud": "the cloud's setting: the compass law on top of the cloud's own autoscaler (the tune-down on the machines alone "
+                  "until 31 October; the max from then, the founder's order of that day)"}
 # what the organism is served by: time waited, missed or short (the one key's LOSS gauges in this model)
 SERVICE = ("pending_pod_minutes_per_hour", "p95_ms", "alert_minutes", "hpa_shortfall_minutes_per_hour")
 BILL = "machine_hours"                       # the cloud's aim: the same work for a bill never bigger than native's

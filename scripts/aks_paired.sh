@@ -66,9 +66,7 @@ for arm in "${order[@]}"; do
   client_bin="${RUNNER_TEMP:-/tmp}/omni-aks-kubectl"
   python3 scripts/aks_kubectl.py install --version "$server_version" --directory "$client_bin"
   export PATH="$client_bin:$PATH"
-  client_checks=()
-  [ "${OMNI_MACHINES_ONLY:-0}" != 1 ] || client_checks+=(--machines-only)
-  python3 scripts/aks_kubectl.py check "${client_checks[@]}"
+  python3 scripts/aks_kubectl.py check   # the full wiring on every cloud (the founder's order of 31 October): the resize wire checked
   # 24 October: in 3 of the steady set's first 9 repetitions the work machines did not read Ready within 600 s and the
   # repetition ended before any measurement. The nodes' own conditions and the pools' states are kept in the repetition's
   # files whenever the wait runs out, so the cause is read from the run, and the wait is given once more before it fails

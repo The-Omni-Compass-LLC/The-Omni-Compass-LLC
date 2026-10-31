@@ -130,7 +130,7 @@ def index_part():
     h, s = d.get("headline_pct"), d.get("service_headline_pct")
     sheet = load("results/BENEFIT_SHEET.json") or {}
     eng = next((r.get("engine") for r in sheet.get("rows", []) if r.get("file") == "results/OMNI_INDEX.md"), None) or "the engines named in its tables"
-    out = [f"The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run "
+    out = [f"The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run "
            f"tables of {eng}, each named in its table): {num_word(h, s is not None and s < -0.05)} on the "
            f"resource reading (work, speed, machines, energy), {num_word(s, True)} on the service reading (work and "
            "speed alone). Source: results/OMNI_INDEX.md."]
