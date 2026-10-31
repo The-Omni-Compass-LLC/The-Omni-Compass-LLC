@@ -205,20 +205,16 @@ measurement of the provider's machines.
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on-site or off-site). Omni-Compass can live in all three places. The wire makes no benefit of its
-own. Until 31 October every cloud run in this repository was set on the wire alone (the tune-down on the machines only, the
-pods exactly native's), so it could only park machines the cloud's own autoscaler already made, after its own trial, and show
-at most a small cut in the bill of the wire. From 31 October (the founder's order of that day: no hard rule) every cloud set
-runs the whole engine at the max on the cloud's cluster, the software end, so its receipt shows that the engine holds there
-as on site and how much of that end's gain comes through the wire, read as work per dollar beside the bill: more work for
-the same money, never a smaller bill as the aim. The energy and the throughput gained at the bare metal are not under a
-tenant; those are measured where Omni-Compass sits on them (the cluster and the services; the
-card and the machine), and composed with the wire into one organism and one bill by the law above. A cloud provider that ran
-Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter it, so it is never
-claimed here as a measurement. The company's expected ranges for the three places (the founder's figures of 24 October: about
-3 to 4% from the software end, 2 to 3% from the bare metal, about 5% from the two together, 1 to 2% from the wire alone) are
-an expectation, written as such wherever they appear, never a result; the measured readings stand beside them, and where they
-differ the measurement stands.
+racks, the data center). Omni-Compass can live in all three places; the wire makes no benefit of its own. Until 31 October
+every cloud run here was set on the wire alone (the tune-down on the machines only), so it could at most park machines the
+cloud already made and cut the wire's bill a little. From 31 October (the founder's order of that day: no hard rule) every
+cloud set runs the whole engine at the max on the cloud's cluster, so its receipt shows that the engine holds there as on site
+and the work per dollar beside the bill: more work for the same money, never a smaller bill as the aim. The bare metal's
+energy and throughput are not under a tenant; they are measured where Omni-Compass sits on them (the card and the machine) and
+composed with the wire by the law above. A provider running Omni-Compass on its own back end would see that benefit on its own
+chips and racks; no tenant can meter it, so it is never claimed here as a measurement. The company's expected ranges (the
+founder's figures of 24 October: about 3 to 4% from the software end, 2 to 3% from the bare metal, about 5% from the two
+together, 1 to 2% from the wire alone) are an expectation, never a result; where a measurement differs, the measurement stands.
 
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
 beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the
