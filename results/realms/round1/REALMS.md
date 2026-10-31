@@ -20,7 +20,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## Every muscle alone, by realm
 
-| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
+| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Compute / AI / Cloud | 250 | 43 | 11 | 71 | 4 | 121 | 0 |
 | Physics / Robotics / Autonomous | 88 | 22 | 7 | 47 | 9 | 3 | 0 |
@@ -30,7 +30,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## By knob: what kind of authority Omni held
 
-| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
+| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | capacity | 344 | 60 | 2 | 36 | 18 | 228 | 0 | -10.9% |
 | setpoint | 55 | 26 | 20 | 6 | 3 | 0 | 0 | +3.3% |

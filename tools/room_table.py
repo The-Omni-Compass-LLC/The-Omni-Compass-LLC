@@ -124,11 +124,11 @@ def page(rows: list[dict]) -> str:
                  f"{r['gain']} | {r['same']} | {r['limit']} | {r['loss']} |")
         for k in ("muscles", "gain", "same", "limit", "loss"):
             tot[k] += r[k]
-    L += ["", f"**All rows:** {len(rows)} (family, plant, knob); muscles {tot['muscles']}; GAIN {tot['gain']}; EVEN, the same as native {tot['same']}; "
-          f"EVEN, at its limit on native {tot['limit']}; LOSS {tot['loss']}.", "",
-          "**How to read a row.** Room up or down near 1.0 with GAIN on most muscles: the law takes the room. Room with EVEN, the "
+    L += ["", f"**All rows:** {len(rows)} (family, plant, knob); muscles {tot['muscles']}; GAIN {tot['gain']}; STEADY, the same as native {tot['same']}; "
+          f"STEADY, at its limit on native {tot['limit']}; LOSS {tot['loss']}.", "",
+          "**How to read a row.** Room up or down near 1.0 with GAIN on most muscles: the law takes the room. Room with STEADY, the "
           "same as native: the room exists and the law does not take it; those muscles are the first work of `docs/THE_ROOM.md` "
-          "section 5.2. A one-point band with EVEN at its limit: nothing to take; a muscle of our own can move the wall only where "
+          "section 5.2. A one-point band with STEADY at its limit: nothing to take; a muscle of our own can move the wall only where "
           "the wall is the design. A LOSS anywhere is a wiring fault to find (section 2 of that page), never the muscle's."]
     return "\n".join(stamp(L)) + "\n"
 

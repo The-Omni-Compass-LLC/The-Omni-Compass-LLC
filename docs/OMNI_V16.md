@@ -89,10 +89,10 @@ nowhere else: the conveyance comes every 15 s exactly (omni-v15: about 3.7 passe
 schedule (omni-v15's decisions drifted by the steps' own time). The model gate's other columns, each engine against native,
 read as they read for omni-v15 (the same rows, the same numbers at 60 s), because nothing but the clocks moved.
 
-At 15 s, where omni-v15's rules counted in decisions ran four times as fast, every gauge reads EVEN against omni-v15, and the
+At 15 s, where omni-v15's rules counted in decisions ran four times as fast, every gauge reads STEADY against omni-v15, and the
 machines parked over the eight days fall from 4,212 to 1,782 (omni-v15 at 60 s: 1,464): the pace no longer changes what a
 rule means. As shipped (the model `cluster_shipped`: omni-v16 at its default of 15 s against omni-v15 at its 60 s, each started
-without a period, as an install file starts it), every gauge reads EVEN: machine hours +2.4%, energy per core-hour −0.5%, the
+without a period, as an install file starts it), every gauge reads STEADY: machine hours +2.4%, energy per core-hour −0.5%, the
 pods waiting for a place −28.5%, the 95th percentile −0.3%, the alert minutes −0.9%. No LOSS against the engine it replaces.
 
 The brain's lock (`results/LOCK_AMENDMENTS.json`) takes an amendment for `omnicompass/adapter.py`: the stack simulator steps
@@ -102,20 +102,20 @@ at 60 s, so the held-out seeds replay unchanged (`verify.py`).
 
 omni-v16 alone, eight seeds of a day each on a plant that moves every 5 s, at 60, 15, 10 and 5 s, each faster pace paired by
 seed against 60 s and against native. In the cloud's setting (the tune-down, machines alone), against 60 s, every service
-reading is EVEN at every pace (at 15 s: pending pod minutes −12.1%, the 95th percentile −0.0%, alert minutes +0.5%, machine
+reading is STEADY at every pace (at 15 s: pending pod minutes −12.1%, the 95th percentile −0.0%, alert minutes +0.5%, machine
 hours −0.4%) and energy per core-hour falls 2.6% at 15 s (GAIN); the power cap's request moves more (power given). In the
 kind benchmark's setting (the compass law at the max, every autoscaler sensed), against 60 s, the alert minutes fall 14.7% at
-15 s and 18.4% at 10 and 5 s (GAIN), the autoscaler's shortfall 6% at 10 and 5 s (GAIN), and every other reading is EVEN.
+15 s and 18.4% at 10 and 5 s (GAIN), the autoscaler's shortfall 6% at 10 and 5 s (GAIN), and every other reading is STEADY.
 Omni's own processor: 1.6 to 1.7 s an hour at 60 s, 2.7 at 15 s, 3.4 at 10 s, 5.5 at 5 s (under a thousandth of one core
 at 5 s); its reads: 1,650 an hour at 60 s, 2,190 at 15 s, 3,600 at 5 s. No LOSS against 60 s at any pace.
 
 Against native, the rows read as the engine reads them at every pace, the old 60 s default included, and some read LOSS.
 The pods waiting for a place: in the kind setting about four times native's at every pace (pending pod minutes an hour:
 native 8.2; 32.0 at 60 s, 33.5 at 15 s, 28.8 and 28.6 at 10 and 5 s), LOSS at every pace; in the cloud's setting about twice
-(20.9 at 60 s, 18.4 at 15 s), LOSS at 15 and 5 s and EVEN at 60 and 10 s only by the seeds' spread; on the model gate's 15 s
-plant, +121.6% at 15 s (LOSS) and +209.8% at 60 s (EVEN by the spread). In the cloud's setting at 15 s two small rows read LOSS
-as well: the 95th percentile, +0.47% on the 5 s plant and +0.36% on the gate's (at 60 s +0.49% and +0.63%, EVEN by the
-spread), and the alert minutes, +2.31% on the 5 s plant (at 60 s +1.85%, EVEN). Against 60 s every one of them reads EVEN,
+(20.9 at 60 s, 18.4 at 15 s), LOSS at 15 and 5 s and STEADY at 60 and 10 s only by the seeds' spread; on the model gate's 15 s
+plant, +121.6% at 15 s (LOSS) and +209.8% at 60 s (STEADY by the spread). In the cloud's setting at 15 s two small rows read LOSS
+as well: the 95th percentile, +0.47% on the 5 s plant and +0.36% on the gate's (at 60 s +0.49% and +0.63%, STEADY by the
+spread), and the alert minutes, +2.31% on the 5 s plant (at 60 s +1.85%, STEADY). Against 60 s every one of them reads STEADY,
 the 15 s point estimates the smaller, so they are the engine's and not the pace's: the faster pace narrows the seeds' spread
 until the rows clear zero. They are on the next version's list to be root-caused (`docs/CHANGE_CONTROL.md`), beside the
 blink model's alert minutes (+2.35% against native at 60 s, LOSS, the same in every gate since omni-v13).

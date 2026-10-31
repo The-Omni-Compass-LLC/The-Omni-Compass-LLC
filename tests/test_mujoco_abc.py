@@ -5,7 +5,7 @@
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The robot arms' A/B/C rule (tools/mujoco_abc.py): a deterministic simulator, so the three runs must reproduce; a gauge
 reads GAIN or LOSS in all three of our runs by what it is for when they do (energy and force are resources spent: a rise reads
-power given), EVEN under one part in a million, "the runs differ" when they do not; any added tracking error or cycle over the
+power given), STEADY under one part in a million, "the runs differ" when they do not; any added tracking error or cycle over the
 takt reads LOSS; a robot the paired trial left native is listed as nothing
 for Omni to move; a robot the task could not run on is listed with the reason."""
 import json
@@ -38,7 +38,7 @@ def main():
     assert M.verdict([more] * 3, "tracking_rms_rad", "never more") == "**LOSS in all three of our runs**", "more tracking error is a LOSS"
     assert M.verdict([more] * 3, "over_line_share", "never more") == "**LOSS in all three of our runs**", "a cycle over the takt is a LOSS"
     assert M.verdict([rec(copper_j=110.0)] * 3, "copper_j", "spent") == "**power given in all three of our runs**", "more copper heating is power given"
-    assert M.verdict([same] * 3, "standing_j", "lower") == "EVEN, the same"
+    assert M.verdict([same] * 3, "standing_j", "lower") == "STEADY, the same"
     assert M.verdict([same] * 3, "cycle_s", "shown") == "shown, not judged"
     other = rec(energy_j=991.0)
     assert M.verdict([same, same, other], "energy_j", "lower") == "**the runs differ**"
@@ -57,7 +57,7 @@ def main():
         assert "| idle | 300.0 | 285.0 | yes |" in txt, "the robot the trial left native is listed as nothing to move"
         assert "| broken | `RuntimeError: cannot track` |" in txt
         assert "Not one engine's three runs" in txt
-    print("PASS  robot arms A/B/C rule: reproduced runs read GAIN, EVEN or LOSS by what each gauge is for, a run that differs is a finding, added tracking error or a "
+    print("PASS  robot arms A/B/C rule: reproduced runs read GAIN, STEADY or LOSS by what each gauge is for, a run that differs is a finding, added tracking error or a "
           "cycle over the takt is a LOSS, a robot left native is nothing to move, a robot that cannot run is listed")
 
 

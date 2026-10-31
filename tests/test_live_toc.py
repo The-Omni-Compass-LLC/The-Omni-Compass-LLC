@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The live engine's table of contents is its headings (the structure referee of 22 October: nineteen entries differed from the
+"""The live benchmark engine's table of contents is its headings (the structure referee of 22 October: nineteen entries differed from the
 headings they pointed at): every entry that points at a section or a part carries that section's heading or that part's title,
 word for word, and every entry's target exists on the page."""
 import html

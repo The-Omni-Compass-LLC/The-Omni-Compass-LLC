@@ -28,7 +28,7 @@ results.
 
 On the kind rig the governor's role cannot read the namespace's quota. As written since omni-v7, an unreadable quota is "no
 budget known", and the cluster's admission is the authority. In the omni-v11 capacity test admission refused each raise; the
-refusal was read back and audited, so nothing wrong was ever set, and the table read EVEN. But the governor asked again at every
+refusal was read back and audited, so nothing wrong was ever set, and the table read STEADY. But the governor asked again at every
 fast check: a controller that repeats a refused command every few seconds loads the API server and fills its own audit. In
 omni-v12 the refusal is the authority's answer. The same raise is held until something changes: the pod's limit (another writer
 moved it), a smaller raise (the budget moved), or the wait (5 minutes, then 10, 20, 40, 60, never longer). An accepted raise

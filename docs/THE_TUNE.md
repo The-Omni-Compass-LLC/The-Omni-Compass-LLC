@@ -2,7 +2,7 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-The founder's order of 22 October, evening: the live engine and the main benchmark engine are two different things. The live
+The founder's order of 22 October, evening: the live benchmark engine and the main benchmark engine are two different things. The live
 engine gives the buttons, knobs and monitors that turn every muscle and mechanism up or down, in or out, on or off; the real
 benchmarks prove one engine at one tune, and every page must say that turning any knob can change every metric in any
 direction. The main engine's tune is not a guess: it is the tune found, by measuring every gauge across the knobs, to serve the
@@ -13,7 +13,7 @@ No outside party has reviewed or approved these results.
 
 ## 1. Two things, never one
 
-**The main engine** is the engine that stands (omni-v19, `OMNI_V19.json`, `python3 tools/omni_version.py`) at its factory tune:
+**The main engine** is the engine that stands (omni-v23, `OMNI_V23.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
 every 60 s with the fast checks every 5 s; the compass law at the max on a cluster of one's own (its balance point 0.3) and at
 the tune-down in a cloud (0.4, the machines alone, a bill never bigger than native's); the verdict's 2% allowance on a
@@ -21,7 +21,7 @@ give-back trial of 20 minutes; the cruise wait of 120 s, never under two reading
 found (`realms/muscle_cards_v5.csv`) and the engine's setting for the rest. **Every published benchmark result is this one
 engine at this one tune**, on the systems, loads and harness that benchmark names, native against Omni-Compass on top of native.
 
-**The tuning bench** is the live engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, read by the Live Engine Manual) with
+**The tuning bench** is the live benchmark engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, read by the Live Benchmark Engine Manual) with
 the control panel's buttons (`tools/omni_control.py`): a live tuning engine. Every knob, button and monitor there can be turned
 in real time: the heartbeat at its six stops, 10, 15, 30, 60, 90 and 120 s (any value from 5 to 120 s on the control panel), the dial between the max and the tune-down, the pedal, each muscle driven or left
 native, up or down, in or out, minus or plus. The bench shows the mechanism of action at each setting with native alone, with
@@ -49,7 +49,7 @@ g⁰(s) ∈ ℝⁿ, and Omni-Compass on top of native at tune θ gives g(θ, s) 
 where higher serves; a resource spent or held, which is power. The paired difference dⱼ(θ; s) = gⱼ(θ, s) − g⁰ⱼ(s) has a mean
 d̄ⱼ over the seeds and a 95% interval [ℓⱼ, uⱼ] by Student's t on |Ω| − 1 degrees of freedom (`omnicompass/student_t.py`). Its
 size is rⱼ(θ) = d̄ⱼ ⁄ ḡ⁰ⱼ, and the reading Rⱼ(θ), by the founder's order of 24 October (a change of 0.5% or more either way is a
-change), is EVEN when |rⱼ(θ)| < 0.005; otherwise GAIN when rⱼ lies on the side the aim serves, and on the other side LOSS for a time
+change), is STEADY when |rⱼ(θ)| < 0.005; otherwise GAIN when rⱼ lies on the side the aim serves, and on the other side LOSS for a time
 waited, missed or failed or for work and power given for a resource. The interval [ℓⱼ, uⱼ] is printed beside the word and says
 how far the seeds' noise reaches; the word does not wait on it. The same key
 reads one tune against another, θ′ against θ, with g(θ, s) in the place of g⁰(s).
@@ -250,8 +250,8 @@ contract, the measurement boundary, the profile's identity, the costs, the requi
 ## 9. Where it is written
 
 The disclosure of section 1 stands in `DISCLOSURES.md` section 3 (the factory tune), near the top of the README and of the
-live engine page, and in all three manuals: the Operator's Manual (section 3.1, the factory tune and the bench, without the engine's internals), the Owner's Manual
-(the tune and its mathematics, this page's sections 1 and 2) and the Live Engine Manual (its opening: the page is a tuning bench).
+live benchmark engine page, and in all three manuals: the Operator's Manual (section 3.1, the factory tune and the bench, without the engine's internals), the Owner's Manual
+(the tune and its mathematics, this page's sections 1 and 2) and the Live Benchmark Engine Manual (its opening: the page is a tuning bench).
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 

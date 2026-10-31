@@ -4,9 +4,9 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-> **Read again on 24 October 2026 by the rule that stands** (`tools/reread.py`, `tools/readings.py`): a change of 0.5% or more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; EVEN is kept for a change under 0.5%. Where every run moved the same way, clear of zero, the word reads in all three of our runs; otherwise by the mean of our three runs, with the count of runs that stood beyond the noise. The numbers are the runs' own; only the words were read again, and this rule replaces the one the text below describes.
+> **Read again on 24 October 2026 by the rule that stands** (`tools/reread.py`, `tools/readings.py`): a change of 0.5% or more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; STEADY is kept for a change under 0.5%. Where every run moved the same way, clear of zero, the word reads in all three of our runs; otherwise by the mean of our three runs, with the count of runs that stood beyond the noise. The numbers are the runs' own; only the words were read again, and this rule replaces the one the text below describes.
 
-Redis as shipped with the operator's memory ceiling (64 MB, allkeys-lru) is native; omni is the compass law on the ceiling through Redis's own console inside [16, 512] MB, holding the application's own request latency at 40% of the 2 ms line, a hit inside and a miss with its store trip outside (`docs/REDIS_PREREGISTRATION.md`). Each run holds three paired repetitions; the paired difference's 95% interval within a run, and the same sign with every interval clear of zero across the three runs, make a reading **GAIN** or **LOSS in all three of our runs** (judged by what the gauge is for, never by the sign of its number; a resource spent that rose reads **power given**, never a loss); a run whose interval includes zero reads **EVEN, no difference beyond the noise** (with the count of such runs); clear runs pointing different ways read **the runs disagree**. Failed requests: any rise in any run reads **LOSS in at least one of our runs**. Memory held is the resource; the host's CPU-seconds, the compass's own cost included, are measured on GitHub's shared runner, and no energy is claimed beyond them. The tuning workload is shown and not counted. Every row is shown, LOSS included.
+Redis as shipped with the operator's memory ceiling (64 MB, allkeys-lru) is native; omni is the compass law on the ceiling through Redis's own console inside [16, 512] MB, holding the application's own request latency at 40% of the 2 ms line, a hit inside and a miss with its store trip outside (`docs/REDIS_PREREGISTRATION.md`). Each run holds three paired repetitions; the paired difference's 95% interval within a run, and the same sign with every interval clear of zero across the three runs, make a reading **GAIN** or **LOSS in all three of our runs** (judged by what the gauge is for, never by the sign of its number; a resource spent that rose reads **power given**, never a loss); a run whose interval includes zero reads **STEADY, no difference beyond the noise** (with the count of such runs); clear runs pointing different ways read **the runs disagree**. Failed requests: any rise in any run reads **LOSS in at least one of our runs**. Memory held is the resource; the host's CPU-seconds, the compass's own cost included, are measured on GitHub's shared runner, and no energy is claimed beyond them. The tuning workload is shown and not counted. Every row is shown, LOSS included.
 
 | Run | GitHub run | Commit | Engine | Workloads |
 |---|---|---|---|---:|
@@ -20,20 +20,20 @@ Redis 7.0.15; 1500 requests a second offered; a miss costs the declared 5 ms sto
 
 | Gauge | native (A) | omni (A) | A | B | C | Reading |
 |---|---:|---:|---:|---:|---:|---|
-| work inside the response line (requests a second answered within the line) | 1,183 | 1,196 | +1.0% (+0.3 to +1.8) | +1.0% (+0.2 to +1.7) | +0.8% (+0.5 to +1.2) | **GAIN in all three of our runs** |
-| throughput (requests a second) | 1,500 | 1,500 | -0.0% (-0.0 to +0.0) | +0.0% (-0.0 to +0.0) | -0.0% (-0.0 to +0.0) | EVEN, under the floor (the three runs' mean 0.00%) |
-| cache hit rate | 0.789 | 0.798 | +1.0% (+0.4 to +1.7) | +1.0% (+0.2 to +1.7) | +0.9% (+0.5 to +1.2) | **GAIN in all three of our runs** |
-| latency, 95th percentile (ms) | 5.52 | 5.52 | +0.0% (-0.2 to +0.3) | +0.0% (-0.2 to +0.3) | +0.0% (-0.5 to +0.5) | EVEN, under the floor (the three runs' mean 0.02%) |
-| latency, 99th percentile (ms) | 5.59 | 5.6 | +0.1% (-0.2 to +0.3) | +0.1% (-0.1 to +0.3) | +0.7% (-0.8 to +2.1) | EVEN, under the floor (the three runs' mean 0.29%) |
-| latency, mean (ms) | 1.24 | 1.2 | -3.3% (-6.7 to +0.1) | -2.8% (-5.3 to -0.4) | -2.1% (-3.3 to -0.9) | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
-| failed requests | 0 | 0 | +0 (+0 to +0) | +0 (+0 to +0) | +0 (+0 to +0) | EVEN, the same |
-| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 65.5 | +2.4% (+0.8 to +3.9) | +1.9% (-0.7 to +4.6) | +1.9% (-0.3 to +4.2) | **power given by the mean of our three runs, beyond the noise in 1 of 3** |
-| memory used, mean (MB) | 61.2 | 62.3 | +1.7% (+0.6 to +2.9) | +1.6% (-0.4 to +3.6) | +1.5% (+0.1 to +2.8) | **power given by the mean of our three runs, beyond the noise in 2 of 3** |
-| keys evicted | 138,152 | 133,440 | -3.4% (-6.1 to -0.8) | -3.1% (-6.0 to -0.2) | -2.7% (-4.1 to -1.3) | shown, not judged |
-| host CPU busy (share of the run) | 0.104 | 0.105 | +1.0% (-12.4 to +14.4) | -5.5% (-6.2 to -4.8) | -2.3% (-15.0 to +10.3) | **the runs disagree** |
-| host CPU-seconds | 182.7 | 184.6 | +1.0% (-13.7 to +15.8) | -6.0% (-6.7 to -5.2) | -2.7% (-16.7 to +11.3) | **the runs disagree** |
-| host CPU-seconds per 1,000 requests inside the line | 0.343 | 0.343 | +0.0% (-15.4 to +15.5) | -6.9% (-7.0 to -6.7) | -3.5% (-17.2 to +10.2) | **GAIN by the mean of our three runs, beyond the noise in 1 of 3** |
-| ceiling changes written (the knob's moves) | 0 | 21.7 | +21.7 (+15.9 to +27.4) | +19.7 (+12.1 to +27.3) | +19 (+14 to +24) | shown, not judged |
+| work inside the response line (requests a second answered within the line) | 1,183 | 1,196 | 1183 → 1196; raw +1.0% (95%: +0.3% to +1.8%); GAIN | 1184 → 1195; raw +1.0% (95%: +0.2% to +1.7%); GAIN | 1183 → 1193; raw +0.8% (95%: +0.5% to +1.2%); GAIN | **GAIN in all three of our runs** |
+| throughput (requests a second) | 1,500 | 1,500 | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | STEADY, under the floor (the three runs' mean 0.00%) |
+| cache hit rate | 0.789 | 0.798 | 0.7894 → 0.7976; raw +1.0% (95%: +0.4% to +1.7%), +0.0082 in the gauge's unit; GAIN | 0.7894 → 0.7969; raw +1.0% (95%: +0.2% to +1.7%), +0.0075 in the gauge's unit; GAIN | 0.7893 → 0.796; raw +0.9% (95%: +0.5% to +1.2%), +0.0067 in the gauge's unit; GAIN | **GAIN in all three of our runs** |
+| latency, 95th percentile (ms) | 5.52 | 5.52 | 5.519 → 5.521; raw ±0.0% (95%: −0.2% to +0.3%); STEADY | 5.728 → 5.73; raw ±0.0% (95%: −0.2% to +0.3%); STEADY | 5.751 → 5.751; raw ±0.0% (95%: −0.5% to +0.5%); STEADY | STEADY, under the floor (the three runs' mean 0.02%) |
+| latency, 99th percentile (ms) | 5.59 | 5.6 | 5.595 → 5.598; raw +0.1% (95%: −0.2% to +0.3%); STEADY | 5.784 → 5.792; raw +0.1% (95%: −0.1% to +0.3%); STEADY | 5.812 → 5.85; raw +0.7% (95%: −0.8% to +2.1%); LOSS | STEADY, under the floor (the three runs' mean 0.29%) |
+| latency, mean (ms) | 1.24 | 1.2 | 1.241 → 1.199; raw −3.3% (95%: −6.7% to +0.1%); GAIN | 1.339 → 1.302; raw −2.8% (95%: −5.3% to −0.4%); GAIN | 1.355 → 1.326; raw −2.1% (95%: −3.3% to −0.9%); GAIN | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
+| failed requests | 0 | 0 | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | STEADY, the same |
+| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 65.5 | 64 → 65.51; raw +2.4% (95%: +0.8% to +3.9%); power given | 64 → 65.24; raw +1.9% (95%: −0.7% to +4.6%); power given | 64 → 65.23; raw +1.9% (95%: −0.3% to +4.2%); power given | **power given by the mean of our three runs, beyond the noise in 1 of 3** |
+| memory used, mean (MB) | 61.2 | 62.3 | 61.19 → 62.26; raw +1.7% (95%: +0.6% to +2.9%); power given | 61.19 → 62.17; raw +1.6% (95%: −0.4% to +3.6%); power given | 61.2 → 62.1; raw +1.5% (95%: +0.1% to +2.8%); power given | **power given by the mean of our three runs, beyond the noise in 2 of 3** |
+| keys evicted | 138,152 | 133,440 | 1.382e+05 → 1.334e+05; raw −3.4% (95%: −6.1% to −0.8%) | 1.381e+05 → 1.339e+05; raw −3.1% (95%: −6.0% to −0.2%) | 1.382e+05 → 1.345e+05; raw −2.7% (95%: −4.1% to −1.3%) | shown, not judged |
+| host CPU busy (share of the run) | 0.104 | 0.105 | 0.1036 → 0.1046; raw +1.0% (95%: −12.4% to +14.4%), +0.0010 in the gauge's unit; power given | 0.1131 → 0.107; raw −5.5% (95%: −6.2% to −4.8%), −0.0062 in the gauge's unit; GAIN | 0.1348 → 0.1316; raw −2.3% (95%: −15.0% to +10.3%), −0.0032 in the gauge's unit; GAIN | **the runs disagree** |
+| host CPU-seconds | 182.7 | 184.6 | 182.7 → 184.6; raw +1.0% (95%: −13.7% to +15.8%); power given | 187.7 → 176.5; raw −6.0% (95%: −6.7% to −5.2%); GAIN | 227.5 → 221.4; raw −2.7% (95%: −16.7% to +11.3%); GAIN | **the runs disagree** |
+| host CPU-seconds per 1,000 requests inside the line | 0.343 | 0.343 | 0.3431 → 0.3432; raw ±0.0% (95%: −15.4% to +15.5%), +0.0001 in the gauge's unit; STEADY | 0.3523 → 0.3281; raw −6.9% (95%: −7.0% to −6.7%), −0.0242 in the gauge's unit; GAIN | 0.4272 → 0.4123; raw −3.5% (95%: −17.2% to +10.2%), −0.0149 in the gauge's unit; GAIN | **GAIN by the mean of our three runs, beyond the noise in 1 of 3** |
+| ceiling changes written (the knob's moves) | 0 | 21.7 | 0 → 21.67; raw +21.6667 in the gauge's unit (95%: +15.9293 to +27.4040) | 0 → 19.67; raw +19.6667 in the gauge's unit (95%: +12.0769 to +27.2564) | 0 → 19; raw +19.0000 in the gauge's unit (95%: +14.0313 to +23.9687) | shown, not judged |
 
 The ceiling handed back to native's and read back at the end of every omni arm in every run: yes.
 
@@ -45,20 +45,20 @@ Redis 7.0.15; 1500 requests a second offered; a miss costs the declared 5 ms sto
 
 | Gauge | native (A) | omni (A) | A | B | C | Reading |
 |---|---:|---:|---:|---:|---:|---|
-| work inside the response line (requests a second answered within the line) | 1,076 | 1,075 | -0.1% (-0.2 to +0.0) | +0.0% (-0.0 to +0.0) | -0.0% (-0.1 to +0.1) | EVEN, under the floor (the three runs' mean 0.04%) |
-| throughput (requests a second) | 1,500 | 1,500 | -0.0% (-0.0 to +0.0) | +0.0% (-0.0 to +0.0) | -0.0% (-0.0 to +0.0) | EVEN, under the floor (the three runs' mean 0.00%) |
-| cache hit rate | 0.718 | 0.717 | -0.1% (-0.1 to -0.0) | -0.0% (-0.0 to +0.0) | -0.0% (-0.2 to +0.1) | EVEN, under the floor (the three runs' mean 0.03%) |
-| latency, 95th percentile (ms) | 5.73 | 5.73 | +0.0% (-0.1 to +0.2) | -0.0% (-0.3 to +0.3) | -0.1% (-0.3 to +0.2) | EVEN, under the floor (the three runs' mean 0.02%) |
-| latency, 99th percentile (ms) | 5.79 | 5.8 | +0.2% (+0.1 to +0.3) | +0.2% (-0.3 to +0.6) | +0.1% (-0.3 to +0.5) | EVEN, under the floor (the three runs' mean 0.15%) |
-| latency, mean (ms) | 1.73 | 1.74 | +0.3% (-0.1 to +0.7) | +0.0% (-0.5 to +0.5) | +0.2% (-0.1 to +0.5) | EVEN, under the floor (the three runs' mean 0.19%) |
-| failed requests | 0 | 0 | +0 (+0 to +0) | +0 (+0 to +0) | +0 (+0 to +0) | EVEN, the same |
-| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 62.4 | -2.5% (-2.8 to -2.1) | -2.5% (-2.7 to -2.3) | -2.3% (-2.8 to -1.9) | **GAIN in all three of our runs** |
-| memory used, mean (MB) | 57.2 | 56.5 | -1.2% (-1.6 to -0.8) | -1.2% (-1.3 to -1.0) | -1.0% (-1.3 to -0.7) | **GAIN in all three of our runs** |
-| keys evicted | 71,693 | 71,860 | +0.2% (+0.2 to +0.3) | +0.0% (-0.0 to +0.1) | +0.0% (-0.3 to +0.4) | shown, not judged |
-| host CPU busy (share of the run) | 0.154 | 0.142 | -7.7% (-36.2 to +20.7) | -5.8% (-52.5 to +40.9) | -7.9% (-48.1 to +32.3) | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
-| host CPU-seconds | 106.1 | 96.3 | -9.2% (-42.4 to +24.0) | -6.7% (-61.1 to +47.8) | -9.0% (-53.8 to +35.8) | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
-| host CPU-seconds per 1,000 requests inside the line | 0.547 | 0.497 | -9.1% (-42.3 to +24.1) | -6.7% (-61.1 to +47.8) | -9.0% (-53.7 to +35.7) | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
-| ceiling changes written (the knob's moves) | 0 | 6 | +6 (+6 to +6) | +6 (+6 to +6) | +6 (+6 to +6) | shown, not judged |
+| work inside the response line (requests a second answered within the line) | 1,076 | 1,075 | 1076 → 1075; raw −0.1% (95%: −0.2% to ±0.0%); STEADY | 1076 → 1076; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1076 → 1076; raw ±0.0% (95%: −0.1% to +0.1%); STEADY | STEADY, under the floor (the three runs' mean 0.04%) |
+| throughput (requests a second) | 1,500 | 1,500 | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | STEADY, under the floor (the three runs' mean 0.00%) |
+| cache hit rate | 0.718 | 0.717 | 0.7178 → 0.7172; raw −0.1% (95%: −0.1% to ±0.0%), −0.0006 in the gauge's unit; STEADY | 0.7175 → 0.7175; raw ±0.0% (95%: ±0.0% to ±0.0%), ±0.0000 in the gauge's unit; STEADY | 0.7176 → 0.7175; raw ±0.0% (95%: −0.2% to +0.1%), −0.0001 in the gauge's unit; STEADY | STEADY, under the floor (the three runs' mean 0.03%) |
+| latency, 95th percentile (ms) | 5.73 | 5.73 | 5.733 → 5.735; raw ±0.0% (95%: −0.1% to +0.2%); STEADY | 5.752 → 5.751; raw ±0.0% (95%: −0.3% to +0.3%); STEADY | 5.757 → 5.754; raw −0.1% (95%: −0.3% to +0.2%); STEADY | STEADY, under the floor (the three runs' mean 0.02%) |
+| latency, 99th percentile (ms) | 5.79 | 5.8 | 5.786 → 5.797; raw +0.2% (95%: +0.1% to +0.3%); STEADY | 5.807 → 5.815; raw +0.2% (95%: −0.3% to +0.6%); STEADY | 5.813 → 5.82; raw +0.1% (95%: −0.3% to +0.5%); STEADY | STEADY, under the floor (the three runs' mean 0.15%) |
+| latency, mean (ms) | 1.73 | 1.74 | 1.735 → 1.74; raw +0.3% (95%: −0.1% to +0.7%); STEADY | 1.749 → 1.75; raw ±0.0% (95%: −0.5% to +0.5%); STEADY | 1.747 → 1.75; raw +0.2% (95%: −0.1% to +0.5%); STEADY | STEADY, under the floor (the three runs' mean 0.19%) |
+| failed requests | 0 | 0 | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | STEADY, the same |
+| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 62.4 | 64 → 62.43; raw −2.5% (95%: −2.8% to −2.1%); GAIN | 64 → 62.4; raw −2.5% (95%: −2.7% to −2.3%); GAIN | 64 → 62.5; raw −2.3% (95%: −2.8% to −1.9%); GAIN | **GAIN in all three of our runs** |
+| memory used, mean (MB) | 57.2 | 56.5 | 57.15 → 56.46; raw −1.2% (95%: −1.6% to −0.8%); GAIN | 57.16 → 56.5; raw −1.2% (95%: −1.3% to −1.0%); GAIN | 57.15 → 56.57; raw −1.0% (95%: −1.3% to −0.7%); GAIN | **GAIN in all three of our runs** |
+| keys evicted | 71,693 | 71,860 | 7.169e+04 → 7.186e+04; raw +0.2% (95%: +0.2% to +0.3%) | 7.178e+04 → 7.179e+04; raw ±0.0% (95%: ±0.0% to +0.1%) | 7.177e+04 → 7.18e+04; raw ±0.0% (95%: −0.3% to +0.4%) | shown, not judged |
+| host CPU busy (share of the run) | 0.154 | 0.142 | 0.154 → 0.1421; raw −7.7% (95%: −36.2% to +20.7%), −0.0119 in the gauge's unit; GAIN | 0.1386 → 0.1306; raw −5.8% (95%: −52.5% to +40.9%), −0.0080 in the gauge's unit; GAIN | 0.1386 → 0.1276; raw −7.9% (95%: −48.1% to +32.3%), −0.0110 in the gauge's unit; GAIN | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
+| host CPU-seconds | 106.1 | 96.3 | 106.1 → 96.3; raw −9.2% (95%: −42.4% to +24.0%); GAIN | 93.07 → 86.88; raw −6.7% (95%: −61.1% to +47.8%); GAIN | 92.89 → 84.53; raw −9.0% (95%: −53.8% to +35.8%); GAIN | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
+| host CPU-seconds per 1,000 requests inside the line | 0.547 | 0.497 | 0.5473 → 0.4975; raw −9.1% (95%: −42.3% to +24.1%), −0.0498 in the gauge's unit; GAIN | 0.4805 → 0.4485; raw −6.7% (95%: −61.1% to +47.8%), −0.0320 in the gauge's unit; GAIN | 0.4796 → 0.4364; raw −9.0% (95%: −53.7% to +35.7%), −0.0431 in the gauge's unit; GAIN | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** |
+| ceiling changes written (the knob's moves) | 0 | 6 | 0 → 6; raw +6.0000 in the gauge's unit (95%: +6.0000 to +6.0000) | 0 → 6; raw +6.0000 in the gauge's unit (95%: +6.0000 to +6.0000) | 0 → 6; raw +6.0000 in the gauge's unit (95%: +6.0000 to +6.0000) | shown, not judged |
 
 The ceiling handed back to native's and read back at the end of every omni arm in every run: yes.
 
@@ -70,20 +70,20 @@ Redis 7.0.15; 1500 requests a second offered; a miss costs the declared 5 ms sto
 
 | Gauge | native (A) | omni (A) | A | B | C | Reading |
 |---|---:|---:|---:|---:|---:|---|
-| work inside the response line (requests a second answered within the line) | 1,267 | 1,281 | +1.1% (+0.6 to +1.7) | +1.0% (-1.1 to +3.0) | +1.6% (+1.6 to +1.7) | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
-| throughput (requests a second) | 1,500 | 1,500 | +0.0% (-0.0 to +0.0) | -0.0% (-0.0 to +0.0) | +0.0% (-0.0 to +0.0) | EVEN, the same |
-| cache hit rate | 0.845 | 0.855 | +1.1% (+0.6 to +1.7) | +1.0% (-1.1 to +3.1) | +1.7% (+1.6 to +1.7) | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
-| latency, 95th percentile (ms) | 5.76 | 5.75 | -0.1% (-0.3 to +0.2) | +0.0% (-0.1 to +0.1) | -0.0% (-0.8 to +0.7) | EVEN, under the floor (the three runs' mean 0.02%) |
-| latency, 99th percentile (ms) | 5.82 | 5.83 | +0.0% (-0.3 to +0.4) | +0.2% (+0.1 to +0.2) | +0.1% (-0.3 to +0.5) | EVEN, under the floor (the three runs' mean 0.11%) |
-| latency, mean (ms) | 1.06 | 1.01 | -5.0% (-6.9 to -3.1) | -3.9% (-13.2 to +5.3) | -7.3% (-7.7 to -6.9) | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
-| failed requests | 0 | 0 | +0 (+0 to +0) | +0 (+0 to +0) | +0 (+0 to +0) | EVEN, the same |
-| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 64.3 | +0.5% (-1.6 to +2.6) | +0.2% (-3.3 to +3.7) | +1.4% (+0.2 to +2.7) | **power given by the mean of our three runs, beyond the noise in 1 of 3** |
-| memory used, mean (MB) | 61.3 | 61.3 | +0.0% (-1.3 to +1.4) | -0.0% (-3.6 to +3.5) | +1.0% (+0.2 to +1.8) | EVEN, under the floor (the three runs' mean 0.34%) |
-| keys evicted | 103,421 | 97,098 | -6.1% (-9.1 to -3.2) | -5.1% (-16.7 to +6.4) | -8.9% (-9.2 to -8.6) | shown, not judged |
-| host CPU busy (share of the run) | 0.124 | 0.116 | -6.5% (-15.0 to +2.1) | -1.7% (-7.8 to +4.3) | +4.1% (-5.8 to +13.9) | **the runs disagree** |
-| host CPU-seconds | 207.7 | 192.7 | -7.2% (-16.9 to +2.5) | -1.8% (-9.0 to +5.4) | +4.5% (-6.9 to +15.9) | **the runs disagree** |
-| host CPU-seconds per 1,000 requests inside the line | 0.364 | 0.334 | -8.2% (-18.1 to +1.6) | -2.8% (-8.0 to +2.5) | +2.8% (-8.6 to +14.3) | **the runs disagree** |
-| ceiling changes written (the knob's moves) | 0 | 21.0 | +21 (+21 to +21) | +20.3 (+12.7 to +27.9) | +22.3 (+19.5 to +25.2) | shown, not judged |
+| work inside the response line (requests a second answered within the line) | 1,267 | 1,281 | 1267 → 1281; raw +1.1% (95%: +0.6% to +1.7%); GAIN | 1267 → 1280; raw +1.0% (95%: −1.1% to +3.0%); GAIN | 1267 → 1287; raw +1.6% (95%: +1.6% to +1.7%); GAIN | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
+| throughput (requests a second) | 1,500 | 1,500 | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | STEADY, under the floor (the three runs' mean 0.00%) |
+| cache hit rate | 0.845 | 0.855 | 0.8449 → 0.8546; raw +1.1% (95%: +0.6% to +1.7%), +0.0097 in the gauge's unit; GAIN | 0.8452 → 0.8534; raw +1.0% (95%: −1.1% to +3.1%), +0.0082 in the gauge's unit; GAIN | 0.8448 → 0.8588; raw +1.7% (95%: +1.6% to +1.7%), +0.0140 in the gauge's unit; GAIN | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
+| latency, 95th percentile (ms) | 5.76 | 5.75 | 5.755 → 5.752; raw −0.1% (95%: −0.3% to +0.2%); STEADY | 5.732 → 5.733; raw ±0.0% (95%: −0.1% to +0.1%); STEADY | 5.513 → 5.511; raw ±0.0% (95%: −0.8% to +0.7%); STEADY | STEADY, under the floor (the three runs' mean 0.02%) |
+| latency, 99th percentile (ms) | 5.82 | 5.83 | 5.823 → 5.825; raw ±0.0% (95%: −0.3% to +0.4%); STEADY | 5.798 → 5.808; raw +0.2% (95%: +0.1% to +0.2%); STEADY | 5.607 → 5.614; raw +0.1% (95%: −0.3% to +0.5%); STEADY | STEADY, under the floor (the three runs' mean 0.11%) |
+| latency, mean (ms) | 1.06 | 1.01 | 1.059 → 1.006; raw −5.0% (95%: −6.9% to −3.1%); GAIN | 1.046 → 1.005; raw −3.9% (95%: −13.2% to +5.3%); GAIN | 0.9623 → 0.892; raw −7.3% (95%: −7.7% to −6.9%), −0.0703 in the gauge's unit; GAIN | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
+| failed requests | 0 | 0 | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | STEADY, the same |
+| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 64.3 | 64 → 64.33; raw +0.5% (95%: −1.6% to +2.6%); power given | 64 → 64.14; raw +0.2% (95%: −3.3% to +3.7%); STEADY | 64 → 64.9; raw +1.4% (95%: +0.2% to +2.7%); power given | **power given by the mean of our three runs, beyond the noise in 1 of 3** |
+| memory used, mean (MB) | 61.3 | 61.3 | 61.3 → 61.33; raw ±0.0% (95%: −1.3% to +1.4%); STEADY | 61.3 → 61.28; raw ±0.0% (95%: −3.6% to +3.5%); STEADY | 61.29 → 61.91; raw +1.0% (95%: +0.2% to +1.8%); power given | STEADY, under the floor (the three runs' mean 0.34%) |
+| keys evicted | 103,421 | 97,098 | 1.034e+05 → 9.71e+04; raw −6.1% (95%: −9.1% to −3.2%) | 1.032e+05 → 9.79e+04; raw −5.1% (95%: −16.7% to +6.4%) | 1.035e+05 → 9.429e+04; raw −8.9% (95%: −9.2% to −8.6%) | shown, not judged |
+| host CPU busy (share of the run) | 0.124 | 0.116 | 0.1239 → 0.1159; raw −6.5% (95%: −15.0% to +2.1%), −0.0080 in the gauge's unit; GAIN | 0.1149 → 0.1129; raw −1.7% (95%: −7.8% to +4.3%), −0.0020 in the gauge's unit; GAIN | 0.09927 → 0.1033; raw +4.1% (95%: −5.8% to +13.9%), +0.0040 in the gauge's unit; power given | **the runs disagree** |
+| host CPU-seconds | 207.7 | 192.7 | 207.7 → 192.7; raw −7.2% (95%: −16.9% to +2.5%); GAIN | 192.3 → 188.8; raw −1.8% (95%: −9.0% to +5.4%); GAIN | 173.6 → 181.4; raw +4.5% (95%: −6.9% to +15.9%); power given | **the runs disagree** |
+| host CPU-seconds per 1,000 requests inside the line | 0.364 | 0.334 | 0.3643 → 0.3343; raw −8.2% (95%: −18.1% to +1.6%), −0.0300 in the gauge's unit; GAIN | 0.3371 → 0.3279; raw −2.8% (95%: −8.0% to +2.5%), −0.0093 in the gauge's unit; GAIN | 0.3046 → 0.3132; raw +2.8% (95%: −8.6% to +14.3%), +0.0086 in the gauge's unit; power given | **the runs disagree** |
+| ceiling changes written (the knob's moves) | 0 | 21.0 | 0 → 21; raw +21.0000 in the gauge's unit (95%: +21.0000 to +21.0000) | 0 → 20.33; raw +20.3333 in the gauge's unit (95%: +12.7436 to +27.9231) | 0 → 22.33; raw +22.3333 in the gauge's unit (95%: +19.4647 to +25.2020) | shown, not judged |
 
 The ceiling handed back to native's and read back at the end of every omni arm in every run: yes.
 
@@ -95,26 +95,26 @@ Redis 7.0.15; 1500 requests a second offered; a miss costs the declared 5 ms sto
 
 | Gauge | native (A) | omni (A) | A | B | C | Reading |
 |---|---:|---:|---:|---:|---:|---|
-| work inside the response line (requests a second answered within the line) | 925.5 | 937.2 | +1.3% (+1.1 to +1.4) | +1.2% (+1.2 to +1.3) | +1.3% (+1.1 to +1.5) | **GAIN in all three of our runs** |
-| throughput (requests a second) | 1,500 | 1,500 | -0.0% (-0.0 to +0.0) | -0.0% (-0.0 to +0.0) | -0.0% (-0.0 to +0.0) | EVEN, under the floor (the three runs' mean 0.00%) |
-| cache hit rate | 0.617 | 0.625 | +1.3% (+1.2 to +1.4) | +1.2% (+1.2 to +1.3) | +1.3% (+1.2 to +1.5) | **GAIN in all three of our runs** |
-| latency, 95th percentile (ms) | 5.49 | 5.49 | +0.0% (-0.2 to +0.2) | +0.0% (-0.2 to +0.2) | -0.0% (-0.2 to +0.2) | EVEN, under the floor (the three runs' mean 0.01%) |
-| latency, 99th percentile (ms) | 5.56 | 5.56 | +0.1% (-0.1 to +0.2) | +0.2% (-0.1 to +0.4) | +0.3% (-0.1 to +0.6) | EVEN, under the floor (the three runs' mean 0.17%) |
-| latency, mean (ms) | 2.13 | 2.09 | -1.9% (-2.3 to -1.4) | -1.7% (-2.0 to -1.5) | -1.8% (-2.5 to -1.2) | **GAIN in all three of our runs** |
-| failed requests | 0 | 0 | +0 (+0 to +0) | +0 (+0 to +0) | +0 (+0 to +0) | EVEN, the same |
-| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 65.5 | +2.3% (+2.1 to +2.6) | +2.2% (+2.1 to +2.3) | +2.3% (+2.1 to +2.5) | **power given in all three of our runs** |
-| memory used, mean (MB) | 60.7 | 62.0 | +2.1% (+2.0 to +2.3) | +2.0% (+2.0 to +2.1) | +1.7% (+1.5 to +1.8) | **power given in all three of our runs** |
-| keys evicted | 243,216 | 234,806 | -3.5% (-3.6 to -3.3) | -3.4% (-3.5 to -3.3) | -1.0% (-1.3 to -0.6) | shown, not judged |
-| host CPU busy (share of the run) | 0.11 | 0.096 | -12.9% (-20.3 to -5.5) | -2.6% (-22.6 to +17.4) | +2.4% (-15.8 to +20.7) | **the runs disagree** |
-| host CPU-seconds | 193.7 | 166.3 | -14.2% (-21.9 to -6.5) | -2.9% (-25.7 to +20.0) | +2.9% (-18.0 to +23.8) | **the runs disagree** |
-| host CPU-seconds per 1,000 requests inside the line | 0.465 | 0.394 | -15.3% (-22.9 to -7.6) | -4.0% (-26.7 to +18.7) | +1.5% (-19.4 to +22.5) | **the runs disagree** |
-| ceiling changes written (the knob's moves) | 0 | 13.7 | +13.7 (+10.8 to +16.5) | +13 (+13 to +13) | +16 (+16 to +16) | shown, not judged |
+| work inside the response line (requests a second answered within the line) | 925.5 | 937.2 | 925.5 → 937.2; raw +1.3% (95%: +1.1% to +1.4%); GAIN | 925.7 → 937; raw +1.2% (95%: +1.2% to +1.3%); GAIN | 925.5 → 937.7; raw +1.3% (95%: +1.1% to +1.5%); GAIN | **GAIN in all three of our runs** |
+| throughput (requests a second) | 1,500 | 1,500 | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | 1500 → 1500; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY | STEADY, under the floor (the three runs' mean 0.00%) |
+| cache hit rate | 0.617 | 0.625 | 0.6172 → 0.625; raw +1.3% (95%: +1.2% to +1.4%), +0.0078 in the gauge's unit; GAIN | 0.6174 → 0.6249; raw +1.2% (95%: +1.2% to +1.3%), +0.0075 in the gauge's unit; GAIN | 0.6174 → 0.6256; raw +1.3% (95%: +1.2% to +1.5%), +0.0083 in the gauge's unit; GAIN | **GAIN in all three of our runs** |
+| latency, 95th percentile (ms) | 5.49 | 5.49 | 5.487 → 5.488; raw ±0.0% (95%: −0.2% to +0.2%); STEADY | 5.675 → 5.676; raw ±0.0% (95%: −0.2% to +0.2%); STEADY | 5.693 → 5.692; raw ±0.0% (95%: −0.2% to +0.2%); STEADY | STEADY, under the floor (the three runs' mean 0.01%) |
+| latency, 99th percentile (ms) | 5.56 | 5.56 | 5.559 → 5.563; raw +0.1% (95%: −0.1% to +0.2%); STEADY | 5.724 → 5.733; raw +0.2% (95%: −0.1% to +0.4%); STEADY | 5.748 → 5.765; raw +0.3% (95%: −0.1% to +0.6%); STEADY | STEADY, under the floor (the three runs' mean 0.17%) |
+| latency, mean (ms) | 2.13 | 2.09 | 2.128 → 2.088; raw −1.9% (95%: −2.3% to −1.4%); GAIN | 2.257 → 2.218; raw −1.7% (95%: −2.0% to −1.5%); GAIN | 2.267 → 2.226; raw −1.8% (95%: −2.5% to −1.2%); GAIN | **GAIN in all three of our runs** |
+| failed requests | 0 | 0 | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | 0 → 0; raw ±0.0000 in the gauge's unit (95%: ±0.0000 to ±0.0000) | STEADY, the same |
+| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 65.5 | 64 → 65.5; raw +2.3% (95%: +2.1% to +2.6%); power given | 64 → 65.41; raw +2.2% (95%: +2.1% to +2.3%); power given | 64 → 65.48; raw +2.3% (95%: +2.1% to +2.5%); power given | **power given in all three of our runs** |
+| memory used, mean (MB) | 60.7 | 62.0 | 60.7 → 61.98; raw +2.1% (95%: +2.0% to +2.3%); power given | 60.7 → 61.93; raw +2.0% (95%: +2.0% to +2.1%); power given | 60.7 → 61.73; raw +1.7% (95%: +1.5% to +1.8%); power given | **power given in all three of our runs** |
+| keys evicted | 243,216 | 234,806 | 2.432e+05 → 2.348e+05; raw −3.5% (95%: −3.6% to −3.3%) | 2.431e+05 → 2.349e+05; raw −3.4% (95%: −3.5% to −3.3%) | 2.431e+05 → 2.408e+05; raw −1.0% (95%: −1.3% to −0.6%) | shown, not judged |
+| host CPU busy (share of the run) | 0.11 | 0.096 | 0.1102 → 0.096; raw −12.9% (95%: −20.3% to −5.5%), −0.0142 in the gauge's unit; GAIN | 0.1353 → 0.1317; raw −2.6% (95%: −22.6% to +17.4%), −0.0035 in the gauge's unit; GAIN | 0.1389 → 0.1422; raw +2.4% (95%: −15.8% to +20.7%), +0.0034 in the gauge's unit; power given | **the runs disagree** |
+| host CPU-seconds | 193.7 | 166.3 | 193.7 → 166.3; raw −14.2% (95%: −21.9% to −6.5%); GAIN | 226.1 → 219.6; raw −2.9% (95%: −25.7% to +20.0%); GAIN | 231.5 → 238.1; raw +2.9% (95%: −18.0% to +23.8%); power given | **the runs disagree** |
+| host CPU-seconds per 1,000 requests inside the line | 0.465 | 0.394 | 0.4651 → 0.3941; raw −15.3% (95%: −22.9% to −7.6%), −0.0710 in the gauge's unit; GAIN | 0.5425 → 0.5207; raw −4.0% (95%: −26.7% to +18.7%), −0.0218 in the gauge's unit; GAIN | 0.5557 → 0.5643; raw +1.5% (95%: −19.4% to +22.5%), +0.0086 in the gauge's unit; power given | **the runs disagree** |
+| ceiling changes written (the knob's moves) | 0 | 13.7 | 0 → 13.67; raw +13.6667 in the gauge's unit (95%: +10.7980 to +16.5353) | 0 → 13; raw +13.0000 in the gauge's unit (95%: +13.0000 to +13.0000) | 0 → 16; raw +16.0000 in the gauge's unit (95%: +16.0000 to +16.0000) | shown, not judged |
 
 The ceiling handed back to native's and read back at the end of every omni arm in every run: yes.
 
 The brain's own verdict on the knob in the omni arms, one trial at a time on the stack itself (the objective: resource): run A: acting: 64 to 72 (10 trials, 1 allowed, 0 refused); acting: 64 to 72 (10 trials, 1 allowed, 0 refused); acting: 64 to 72 (10 trials, 1 allowed, 0 refused); run B: acting: 64 to 72 (10 trials, 1 allowed, 0 refused); acting: 64 to 72 (8 trials, 1 allowed, 0 refused); acting: 64 to 72 (9 trials, 1 allowed, 0 refused); run C: acting: 64 to 80 (11 trials, 2 allowed, 0 refused); acting: 64 to 80 (10 trials, 2 allowed, 0 refused); acting: 64 to 80 (11 trials, 2 allowed, 0 refused).
 
-**Across 3 untouched workloads: 11 gauge-rows GAIN, 0 LOSS, 3 power given (each in all three of our runs, or by the mean of the three: a change of 0.5% or more), 16 EVEN, 6 where the runs disagree.**
+**Across 3 untouched workloads: 11 gauge-rows GAIN, 0 LOSS, 3 power given (each in all three of our runs, or by the mean of the three: a change of 0.5% or more), 16 STEADY, 6 where the runs disagree.**
 
 ---
 

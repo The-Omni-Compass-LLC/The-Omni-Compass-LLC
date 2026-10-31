@@ -52,18 +52,17 @@ def engine(run_dir):
 
 def verdict(rs, direction, key=None):
     """The three-run reading of one gauge, by rule, from its three within-run paired results: GAIN, LOSS, power given,
-    EVEN or the runs disagree, by what the gauge is for (tools/readings.py)."""
+    STEADY or the runs disagree, by what the gauge is for (tools/readings.py)."""
     return stack_reading(rs, direction, SAME_REL, key)
 
 
 def cell(r, key):
+    """One run in separate fields (the referee's work order of 25 October): native's value → Omni-Compass's, the raw change with its
+    true sign and its 95% interval (tools/confirm_abc.py cell, one format for every table)."""
     if r is None:
         return "n/a"
-    nat, d, lo, hi = r["native"], r["diff"], r["ci95"][0], r["ci95"][1]
-    if key == "failed" or not nat:
-        return f"{d:+.3g} ({lo:+.3g} to {hi:+.3g})"
-    return f"{100 * d / abs(nat):+.1f}% ({100 * lo / abs(nat):+.1f} to {100 * hi / abs(nat):+.1f})"
-
+    from tools.confirm_abc import cell as fields
+    return fields(r)
 
 def fmt(v):
     return f"{v:.3g}" if abs(v) < 10 else f"{v:,.1f}" if abs(v) < 1000 else f"{v:,.0f}"

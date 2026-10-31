@@ -242,9 +242,9 @@ The table `docs/THE_ROOM.md` section 5.1 calls for, built by `tools/room_table.p
 | physics_robotics_autonomous | Spacecraft & Flight Software | motion_axis | capacity | 4 | one point: at its limit on native | 0 | 0 | the axis's peak speed is the machine's own; native's everyday setting is the limit where no peak lies above it (physics) | 0 | 0 | 4 | 0 |
 | physics_robotics_autonomous | Spacecraft & Flight Software | motion_axis | power | 4 | one point: at its limit on native | 0 | 0 | the drive's torque or power limit at full on native (physics) | 0 | 0 | 4 | 0 |
 
-**All rows:** 235 (family, plant, knob); muscles 1107; GAIN 530; EVEN, the same as native 156; EVEN, at its limit on native 421; LOSS 0.
+**All rows:** 235 (family, plant, knob); muscles 1107; GAIN 530; STEADY, the same as native 156; STEADY, at its limit on native 421; LOSS 0.
 
-**How to read a row.** Room up or down near 1.0 with GAIN on most muscles: the law takes the room. Room with EVEN, the same as native: the room exists and the law does not take it; those muscles are the first work of `docs/THE_ROOM.md` section 5.2. A one-point band with EVEN at its limit: nothing to take; a muscle of our own can move the wall only where the wall is the design. A LOSS anywhere is a wiring fault to find (section 2 of that page), never the muscle's.
+**How to read a row.** Room up or down near 1.0 with GAIN on most muscles: the law takes the room. Room with STEADY, the same as native: the room exists and the law does not take it; those muscles are the first work of `docs/THE_ROOM.md` section 5.2. A one-point band with STEADY at its limit: nothing to take; a muscle of our own can move the wall only where the wall is the design. A LOSS anywhere is a wiring fault to find (section 2 of that page), never the muscle's.
 
 ---
 

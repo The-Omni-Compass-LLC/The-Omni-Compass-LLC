@@ -35,7 +35,7 @@ across engine versions.
 - Never present a modelled result as a measurement: class **P** is a physical meter, class **L** is live software (the real
   thing), class **S** is our own model.
 - Never leave out a row that went against Omni-Compass when you summarize a result.
-- Every judged reading is **GAIN**, **EVEN** or **LOSS**, set by what the gauge is for, never by its sign; a resource
+- Every judged reading is **GAIN**, **STEADY** or **LOSS**, set by what the gauge is for, never by its sign; a resource
   spent that rose is **power given**, never a loss. Better/worse and toward/away are not used. The key is at the top of
   `docs/HOW_TO_READ_THE_RESULTS.md`; `python3 tools/summary.py` prints the whole summary straight after a pull.
 - The notice closes with the filing sentence and the website, and nothing after it: "All patents, copyrights and

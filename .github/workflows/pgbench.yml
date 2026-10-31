@@ -19,7 +19,7 @@ on:
         default: "3"
       step_s:
         description: "Seconds per notch of the load"
-        default: "20"
+        default: "30"
       objective:
         description: "What the brain's verdict judges a step by: resource (work, speed, connections and CPU together, the index's reading) or service (work and speed alone)"
         default: "resource"
@@ -81,13 +81,28 @@ jobs:
           pgbouncer --version | head -1
           pgbench --version
           python3 tools/run_pgbench.py --setup
+      - name: The runner's own stall record, both arms alike (logging only; native's behaviour unchanged)
+        run: |
+          # store fix of 25 October: the omni-v16 tpcb_hot runs had write stalls of 1 to 6 seconds in native arms too; these
+          # records put every stall second in the run's files, so a stall of the runner is read as the runner's, never as Omni's
+          sudo apt-get install -y -q sysstat procps
+          sudo -u postgres psql -qc "ALTER SYSTEM SET log_checkpoints = on" -c "ALTER SYSTEM SET log_lock_waits = on" -c "ALTER SYSTEM SET log_autovacuum_min_duration = 0" -c "SELECT pg_reload_conf()"
+          sudo -u postgres psql -Atc "SHOW log_checkpoints" -c "SHOW log_lock_waits"
+          mkdir -p out/host
+          nohup sh -c 'vmstat -n -t 1 > out/host/vmstat.log 2>&1' >/dev/null 2>&1 &
+          nohup sh -c 'iostat -x -t -y 1 > out/host/iostat.log 2>&1' >/dev/null 2>&1 &
+          sleep 2; ls -la out/host
       - name: Run the workload, native and omni
         run: |
           set +e
           python3 tools/run_pgbench.py --workloads "${{ matrix.workload }}" --reps "${{ github.event.inputs.reps }}" --step-s "${{ github.event.inputs.step_s }}" --out out --objective "${{ github.event.inputs.objective || 'resource' }}" > run.log 2>&1
           code=$?
           grep "^==\|Error\|error" run.log | tail -12 | while IFS= read -r l; do echo "::notice::$l"; done
-          mkdir -p out; cp run.log out/
+          mkdir -p out out/host; cp run.log out/
+          pkill -x vmstat || true; pkill -x iostat || true
+          # PostgreSQL's own log (checkpoints, lock waits, autovacuum) for the run's window
+          for f in /var/log/postgresql/*.log; do [ -f "$f" ] && sudo cp "$f" "out/host/$(basename "$f")"; done
+          sudo chown -R "$(id -u)" out/host || true
           [ "$code" = 0 ] || { echo "::error::${{ matrix.workload }} ended with exit $code"; tail -40 run.log; exit "$code"; }
       - name: Attach README, licenses and disclosures to this artifact
         id: omni_legal_export_1

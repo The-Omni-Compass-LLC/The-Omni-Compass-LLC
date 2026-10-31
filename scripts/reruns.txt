@@ -3,8 +3,8 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-# The omni-v19 campaign (the founder's order of 17 October: a new version means everything runs again on it): A of every
-# entry, then B, then C; released by the grid conductor from the moment omni-v19 landed on main. MySQL, Redis and MongoDB
+# The omni-v23 campaign (the founder's order of 17 October: a new version means everything runs again on it): A of every
+# entry, then B, then C; released by the grid conductor from the moment omni-v23 landed on main. MySQL, Redis and MongoDB
 # run twice: native as the operator sets it (the preregistered setting) and native exactly as the vendor ships it.
 # Every data store runs at the tune-down (objective=resource) and at the max (objective=service, the default brain, 12
 # October): MySQL, MongoDB and PostgreSQL had run at the tune-down alone until 18 October (their runs at the max stand in
@@ -13,6 +13,8 @@
 # into a new block at the end, below an added=<UTC> line, never among the entries above it: there it would take the place of
 # a run already started (scripts/dispatch_grid.py, rerun_queue).
 # Google, Amazon and physical GPU jobs are prepared but excluded. Pool/report workflows run only with source runs.
+# Omni-Compass by itself (omni-v19, docs/SOLO_PREREGISTRATION.md): the steady load with the three arms in rotation, native,
+# Omni-Compass and native, and Omni-Compass by itself (the pod autoscaler removed, Omni-Compass's own pod muscle on the workload).
 # The batch stream through Kueue and through Volcano (docs/BATCH_QUEUE_PREREGISTRATION.md, register row 63; the founder's list
 # of 19 October, night) closes the first block: written before the campaign opened, so its runs are the campaign's own.
 core benchmark|benchmark.yml|
@@ -30,6 +32,7 @@ Linux CPU governor and meter capability|cpu-power.yml|
 Azure full-control six-stage burst|aks-metered-full.yml|reps=3;duration_s=600;load_steps=1 4 1 6 1 9;dial=save
 large organisms on Azure|big-organism.yml|organisms=tower,stack;size=100;reps=3;duration_s=2880
 kubernetes steady|benchmark-reps.yml|duration_s=900;arms=native compass;loadgen=open
+kubernetes by itself|benchmark-reps.yml|duration_s=900;arms=native compass solo;loadgen=open
 # The decision pace, the heartbeat dial (docs/PACE_PREREGISTRATION.md, amendment 3, written before the omni-v17 campaign
 # opened): native, Omni-Compass on top at the main engine's 60 s (the founder's word of 22 October, afternoon), and the same
 # deciding every 5, 15, 30, 75, 90 and 120 s, eight arms in every repetition.
@@ -133,3 +136,10 @@ kubernetes batch four ways on a group of two clusters through Open Cluster Manag
 # the hour it was pushed, after its trial, read back by their count in that workflow.
 added=2026-10-20T18:30:00Z
 kubernetes batch four ways on a group of two clusters through Armada|kind-group.yml|duration_s=1500;arms=nativebare native compassbare compass;orch=armada
+# Added on 31 October, once the omni-v22 campaign was under way: released after every entry above, A, B and C. Omni-Compass by
+# itself again, on the rig as amended (docs/SOLO_PREREGISTRATION.md, amendment 1): its A and B above on omni-v22 (41115877114,
+# 41153103781) had the governor's every pod write refused (the identity lacked the workload's scale subresource, since omni-v19) and
+# the arm marked invalid by the rig's own read of the autoscaler it removes by design; both count as started above and are read in
+# no table; its C above runs on the amended rig.
+added=2026-10-31T02:40:00Z
+kubernetes by itself|benchmark-reps.yml|duration_s=900;arms=native compass solo;loadgen=open

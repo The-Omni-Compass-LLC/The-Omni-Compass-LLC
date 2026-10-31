@@ -60,6 +60,11 @@ GITST=$(git -c safe.directory='*' status --porcelain -- omni_controller omnicomp
   || { echo "git cannot read this clone: run from a fresh git clone of the repository"; exit 1; }
 [ -z "$GITST" ] || { echo "the code has local changes: the counted runs only on committed code (git stash, or a fresh clone)"; exit 1; }
 echo "code: commit $(git -c safe.directory='*' rev-parse --short HEAD), unchanged"
+# the engine this run's code is, read by the version tool on the card itself and packed with every result (27 October: the
+# page typed the A100 run's engine into a sentence, because the receipt did not carry it)
+$PY tools/omni_version.py > "results/gpu/engine-$STAMP.txt" 2>&1 || true
+echo "dial: ${OMNI_DIAL:-max} (the card governor's dial: max, the factory tune; save, the tune-down)" >> "results/gpu/engine-$STAMP.txt"
+echo "engine: $(head -n 1 "results/gpu/engine-$STAMP.txt")"
 
 echo "== wire check (both wires follow, read back and go home; nothing runs if this fails)"
 $PY tools/gpu_wire_check.py --gpu "$GPU" --smi "$SMI" | tee "results/gpu/wirecheck-$STAMP.txt"
@@ -77,7 +82,7 @@ PHASE=smoke REPS="${SMOKE_REPS:-3}" DURATION="${SMOKE_DURATION:-180}" COOLDOWN="
   OUT="results/gpu/smoke-$STAMP" bash scripts/gpu_paired.sh
 smoke_rc=$?
 set -e
-PACK=("results/gpu/smoke-$STAMP" "$ENVELOPE" "results/gpu/wirecheck-$STAMP.txt")
+PACK=("results/gpu/smoke-$STAMP" "$ENVELOPE" "results/gpu/wirecheck-$STAMP.txt" "results/gpu/engine-$STAMP.txt")
 if [ "$smoke_rc" != 0 ]; then
   echo "SMOKE INVALID (exit $smoke_rc): the wiring needs a fix before any counted run. Send the packed file back."
 elif [ -n "${STOP_AFTER_SMOKE:-}" ]; then

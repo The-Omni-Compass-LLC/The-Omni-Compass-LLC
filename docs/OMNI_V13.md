@@ -83,7 +83,7 @@ Against omni-v12, on the same seeds, **no reading is a LOSS in any model**:
 
 Against native in `convey_batch`, omni-v12 read LOSS on six gauges: the queue +1.50%, the job turnaround +10.7%, the 95th
 percentile +14.8%, the requests served −2.5%, the pod start wait +1.9% and the alert minutes +9.8%. omni-v13 reads the queue
-identical to native's, the 95th percentile (−5.3%) and the start wait EVEN, and three LOSS rows. The job turnaround +0.05%
+identical to native's, the 95th percentile (−5.3%) and the start wait STEADY, and three LOSS rows. The job turnaround +0.05%
 (0.04 to 0.17 s a job): the queue's first reading spans the seconds before the batch pods ran, so the web's limits are raised
 once and handed back 15 s later; the rule that closes it is on the next version's list. The requests served −2.1% and the
 alert minutes +9.8%: both engines read the same way with no batch at all on this 3-core host, while the real KubeRay runs

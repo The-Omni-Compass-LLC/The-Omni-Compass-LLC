@@ -78,7 +78,7 @@ block. All four values come from the same app.
 
 1. In the Azure portal, search **App registrations**, click **All applications**, and open the app (or **+ New
    registration**, name `omni-compass-github-2`, **Register**). Its **Overview** shows three numbers; skip **Object ID**.
-2. On GitHub, open **https://github.com/The-Omni-Compass-LLC/The-Omni-Compass/settings/secrets/actions**. For each box
+2. On GitHub, open **https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/settings/secrets/actions**. For each box
    below, click its pencil (or **New repository secret** if it is not listed), paste the one value, and save:
    - `AZURE_CLIENT_ID`: the app's **Application (client) ID**.
    - `AZURE_TENANT_ID`: the app's **Directory (tenant) ID**.

@@ -27,7 +27,7 @@ Arms, the same organism, the same seed, the same demand:
 Writes organism.json (every plant's receipt, the steps, the replica trace, the cluster's watts as the organism saw
 them) and appends each replica change to load_schedule.log in the format scripts/kind_bench.sh writes.
 
-Sizes (--scale): 1, 10, 100 or 500 copies of the organism governed together on one clock (as tools/run_hil.py), the
+Sizes (--scale): 1, 10, 100 or 1,000 copies of the organism governed together on one clock (as tools/run_hil.py), the
 one real cluster inside. A large organism is built before the window opens: this file writes organism.ready when it is
 built and starts on the epoch written to the go file (--go-file), so the cluster's window and the organism's clock open
 together however long the build takes.
@@ -113,7 +113,7 @@ def main(argv=None):
     ap.add_argument("--start-at", type=float, default=0.0, help="epoch second the window opens (built before, run after)")
     ap.add_argument("--go-file", default="", help="wait for this file (the window's start epoch inside) after organism.ready")
     ap.add_argument("--scale", type=int, default=int(os.environ.get("ORGANISM_SCALE", 1)),
-                    help="copies of the organism on one clock (1, 10, 100, 500)")
+                    help="copies of the organism on one clock (1, 10, 100, 1000)")
     ap.add_argument("--seed", type=int, default=int(os.environ.get("ORGANISM_SEED", SEED0)))
     ap.add_argument("--load-max", type=int, default=int(os.environ.get("LOAD_MAX", 6)),
                     help="load-generator replicas at the organism's peak demand (the operator's load, declared before the run)")

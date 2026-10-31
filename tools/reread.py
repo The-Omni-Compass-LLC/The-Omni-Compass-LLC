@@ -7,7 +7,7 @@
 """Every three-run table read again by the rule that stands (tools/readings.py three_run_reading), from its own data.
 
 The founder's order of 24 October 2026: a change of 0.5% or more either way is a change, and reads GAIN, LOSS or power given by
-what the gauge is for; EVEN is kept for a change under 0.5%. Each table's JSON holds every run's paired values for every gauge
+what the gauge is for; STEADY is kept for a change under 0.5%. Each table's JSON holds every run's paired values for every gauge
 (native, Omni-Compass, the difference and its 95% interval), so every reading is read again from them, never typed in:
 
   JSON tables  (results/live and results/orchestrator, V<n>_*.json): every gauge that carries its aim and its three runs is read
@@ -15,7 +15,7 @@ what the gauge is for; EVEN is kept for a change under 0.5%. Each table's JSON h
                beside that run's own word), the tallies under the table are counted again, and a note under the title says the
                table was read again and by which rule. The numbers themselves never change.
   Markdown-only tables  (the deterministic simulators: CityLearn, pandapower, MuJoCo, the swarms): a row that reads GAIN, LOSS
-               or power given in all three runs whose runs' mean change is under 0.5% reads EVEN, under the floor.
+               or power given in all three runs whose runs' mean change is under 0.5% reads STEADY, under the floor.
 
 A gauge read from single pairs (one pair a run, no interval: the 24-hour robustness run) keeps its reading: no noise can be
 judged there. A row whose reading is a receipt of its own kind (the robustness test's hand-back facts) is not a gauge and
@@ -38,7 +38,7 @@ from tools.readings import (EVEN_FLOOR, SIZE_FLOOR, Tally, reading_kind, run_wor
 
 DIRS = (ROOT / "results" / "live", ROOT / "results" / "orchestrator")
 NOTE = ("> **Read again on 24 October 2026 by the rule that stands** (`tools/reread.py`, `tools/readings.py`): a change of 0.5% or "
-        "more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; EVEN is kept for "
+        "more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; STEADY is kept for "
         "a change under 0.5%. Where every run moved the same way, clear of zero, the word reads in all three of our runs; otherwise "
         "by the mean of our three runs, with the count of runs that stood beyond the noise. The numbers are the runs' own; only the "
         "words were read again, and this rule replaces the one the text below describes.")
@@ -71,7 +71,8 @@ def readable(g):
     if any(r.get("native") is None or r.get("diff") is None for r in rs):
         return False
     ci = [r.get("ci95") or [] for r in rs]
-    return all(len(c) == 2 and all(isinstance(x, (int, float)) and x == x for x in c) for c in ci)
+    finite = [len(c) == 2 and all(isinstance(x, (int, float)) and x == x for x in c) for c in ci]
+    return any(finite)          # a run with no interval (one pair) stands inside its noise (tools/readings.py significant)
 
 
 def bare(s):
@@ -111,9 +112,14 @@ def patch_md(md, seq, kind):
             i += 1
             if ln.startswith("|") and not ln.startswith("|---") and bare(cells(ln)[-1]) == bare(old):
                 cs = cells(ln)
-                cs[-1] = f" {new if new.startswith(('EVEN', 'shown', 'no value')) else '**' + new + '**'} "
+                cs[-1] = f" {new if new.startswith(('STEADY', 'shown', 'no value')) else '**' + new + '**'} "
                 if kind and readable(g) and len(cs) == 5:
                     cs[1:4] = [f" {kind_cell(r, run_word(r, g['aim']))} " for r in g["runs"]]
+                elif kind and readable(g) and len(cs) == 6:      # the capacity test's rows: the cap, then the measure
+                    cs[2:5] = [f" {kind_cell(r, run_word(r, g['aim']))} " for r in g["runs"]]
+                elif kind == "store" and len(cs) == 7 and isinstance(g.get("runs"), list) and len(g["runs"]) == 3 \
+                        and all(isinstance(r, dict) and r.get("native") is not None and r.get("diff") is not None for r in g["runs"]):
+                    cs[3:6] = [f" {kind_cell(r, run_word(r, g['aim']) if g.get('aim') else None)} " for r in g["runs"]]   # a data store's rows: native → Omni-Compass on every run
                 lines[i - 1] = "|" + "|".join(cs) + "|"
                 break
     return "\n".join(lines)
@@ -164,7 +170,7 @@ def retally(md, data, stack):
 
 def md_only(path):
     """A deterministic simulator's Markdown table: a row read GAIN, LOSS or power given in all three runs whose runs' mean change
-    is under 0.5% reads EVEN, under the floor. Returns (changes, new text)."""
+    is under 0.5% reads STEADY, under the floor. Returns (changes, new text)."""
     text, n, out = path.read_text(), 0, []
     pct = re.compile(r"^\s*([+−-])(\d+(?:\.\d+)?)%")
     for ln in text.split("\n"):
@@ -184,6 +190,24 @@ def md_only(path):
     return n, "\n".join(out)
 
 
+def reread_pair(p: Path, write: bool = True):
+    """One table (its .json and .md) read again by the rule that stands, as main() reads every table: returns (readings
+    changed, whether the page's text changed). tools/reproduce.py applies it to a table it rebuilds, so a rebuilt table is
+    compared with the published one as both stand under the same rule."""
+    n, data, seq = reread_json(p)
+    md = p.with_suffix(".md")
+    if not md.exists():
+        return n, False
+    text = md.read_text()
+    kind = "| Measure | A | B | C | Reading |" in text or ("store" if "| native (A) | omni (A) | A | B | C | Reading |" in text else False)
+    stack = next((m for s, m in STACKS.items() if re.search(rf"_{s}(_|\.json$)", p.name)), None)
+    new_text = retally(with_note(patch_md(text, seq, kind)), data, stack) if seq else text
+    if write and (n or new_text != text):
+        p.write_text(json.dumps(data, indent=1) + "\n")
+        md.write_text(new_text if new_text.endswith("\n") else new_text + "\n")
+    return n, new_text != text
+
+
 def main(argv):
     check, total, tables = "--check" in argv, 0, 0
     for d in DIRS:
@@ -199,19 +223,10 @@ def main(argv):
                 tables += changed
                 total += n
                 continue
-            n, data, seq = reread_json(p)
-            if not md.exists():
-                continue
-            text = md.read_text()
-            kind = "| Measure | A | B | C | Reading |" in text
-            stack = next((m for s, m in STACKS.items() if re.search(rf"_{s}(_|\.json$)", p.name)), None)
-            new_text = retally(with_note(patch_md(text, seq, kind)), data, stack) if seq else text
-            if n or new_text != text:
+            n, changed = reread_pair(p, write=not check)
+            if n or changed:
                 tables += 1
                 total += n
-                if not check:
-                    p.write_text(json.dumps(data, indent=1) + "\n")
-                    md.write_text(new_text if new_text.endswith("\n") else new_text + "\n")
         for md in sorted(d.glob("V*_*.md")):
             if md.with_suffix(".json").exists():
                 continue

@@ -26,7 +26,7 @@ class Summary(unittest.TestCase):
             lines = [l for l in out.splitlines() if l.strip()]
             self.assertIn("The Omni-Compass LLC", lines[0])
             self.assertTrue(lines[-1].rstrip("*").endswith("www.omni-compass.com"), lines[-1])
-            for w in ("GAIN", "EVEN", "LOSS", "Growth", "The Omni index", "Run and scored by The Omni-Compass LLC's own code"):
+            for w in ("GAIN", "STEADY", "LOSS", "Growth", "The Omni index", "Run and scored by The Omni-Compass LLC's own code"):
                 self.assertIn(w, out)
             self.assertIsNone(re.search(r"\b(better|worse)\b", out.replace("Better, same and worse are not used", "")))
 

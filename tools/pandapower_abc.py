@@ -6,7 +6,7 @@
 """The A/B/C table for the power grid (docs/OMNI_V1.md): the untouched SimBench grids run three times as separate GitHub
 runs on the same frozen engine (tools/run_pandapower.py), both load models each. pandapower is deterministic, so the three
 runs must give the same numbers: a gauge reads GAIN or LOSS in all three of our runs when all three agree on the sign (judged
-by what the gauge is for, never by its sign; a resource spent that rose reads power given), EVEN when the change is under one
+by what the gauge is for, never by its sign; a resource spent that rose reads power given), STEADY when the change is under one
 part in a million, and "the runs differ" when they do not reproduce, which is a finding about the simulator or the harness and
 is said so. Aims are the preregistration's (docs/PANDAPOWER_PREREGISTRATION.md): energy drawn, the energy dissipated in lines
 and transformers, net import and tap operations are resources spent (a fall is a cut, a GAIN; tap operations were declared in
@@ -24,8 +24,9 @@ except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from tools.readings import with_own_runs, in_all_three, aim, EVEN_SAME, SHOWN, DETERMINISTIC_RULE, ACROSS_HEAD, ACROSS_RULE, across_cells, across_counts, reproduced_reading  # noqa: E402  (every table says whose runs these are)
+from tools.repo import NAME as REPO_NAME  # noqa: E402  (the repository's name, written once)
 
-SAME_REL = 1e-6          # a change under one part in a million of the value reads "same" (amendment 11)
+SAME_REL = 1e-9          # "the same" only to nine decimal places of the value (tools/readings.py EXACT_REL; the referee's work order of 25 October)
 REPRO_REL = 1e-9         # two runs of a deterministic simulator agree to this, or they did not reproduce
 MODELS = [("zip", "ZIP loads (40% Z, 30% I, 30% P)"), ("constant_power", "constant-power loads (SimBench as shipped)")]
 GAUGES = [("load_energy_mwh", "energy the loads drew (MWh)", "spent"), ("losses_mwh", "energy dissipated in lines and transformers (MWh)", "spent"),
@@ -87,7 +88,7 @@ def verdict(recs, model, k, direction):
 def engine(run):
     """The Omni version the run's commit carries, from the GitHub run record; unknown when it cannot be read."""
     try:
-        sha = subprocess.run(["gh", "api", f"repos/the-omni-compass-llc/the-omni-compass/actions/runs/{run}", "--jq", ".head_sha"],
+        sha = subprocess.run(["gh", "api", f"repos/{REPO_NAME}/actions/runs/{run}", "--jq", ".head_sha"],
                              capture_output=True, text=True, timeout=60).stdout.strip()
         if len(sha) != 40 or any(c not in "0123456789abcdef" for c in sha):
             return "?", "unknown"
@@ -114,7 +115,7 @@ def main(argv=None):
          "deterministic grid simulator with the grid's own voltage control as native. Omni sits on top of it, moving the "
          "substation setpoint one whole tap at a time under the frozen rules (`docs/PANDAPOWER_PREREGISTRATION.md`). The same "
          "grids ran three times as separate GitHub runs on the same frozen engine, a full year each, both load models. Because "
-         "the simulator is deterministic, the runs must reproduce each other: " + DETERMINISTIC_RULE + ", **EVEN, the same** when the change is under one part in a million, "
+         "the simulator is deterministic, the runs must reproduce each other: " + DETERMINISTIC_RULE + ", **STEADY, the same** when the change is under one part in a billion (nine decimal places), "
          "and **the runs differ** when they do not reproduce. Energy drawn, the energy dissipated in lines and transformers, net import "
          "and tap operations are resources spent: a fall is a cut, a GAIN, and a rise is power given (more tap operations were declared "
          "in advance as Omni's expected cost). Bus-steps outside 0.95-1.05: any rise is a LOSS. Every row is shown, LOSS included.", "",

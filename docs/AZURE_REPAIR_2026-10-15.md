@@ -4,7 +4,7 @@
 
 ## Evidence and limits
 
-The full-control AKS run 38693801818 completed its first paired repetition. Its next two repetitions failed on Azure CPU quota. Later full-control dispatches also failed capacity checks. These are failures of the test machinery, so they give no GAIN, EVEN or LOSS reading of the service.
+The full-control AKS run 38693801818 completed its first paired repetition. Its next two repetitions failed on Azure CPU quota. Later full-control dispatches also failed capacity checks. These are failures of the test machinery, so they give no GAIN, STEADY or LOSS reading of the service.
 
 The source also showed three preventable hazards: resource-group cleanup returned before deletion finished; cluster-delete errors were suppressed; and separate Azure suites could compete for the same regional machine-family allowance. Multi-pool preflight counted each pool separately rather than aggregating a shared family, and included the system node only when pool and system size names matched exactly. The live owner of occupied quota has not been established.
 

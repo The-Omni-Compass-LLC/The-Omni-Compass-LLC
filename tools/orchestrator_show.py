@@ -329,7 +329,7 @@ def word(gauge: str, diffs: list[float], base: list[float]) -> dict:
     rel = m / (sum(base) / n) if sum(base) else float("nan")
     aim = AIMS[gauge]
     if lo <= 0 <= hi:
-        w = "EVEN"
+        w = "STEADY"
     elif aim == "work":
         w = "GAIN" if lo > 0 else "LOSS"
     elif aim == "wait":
@@ -449,7 +449,7 @@ th{color:var(--muted);font-weight:600}
 .chart .ct{font-size:13px;font-weight:600;fill:var(--fg)}.chart .ax{font-size:11px;fill:var(--muted)}
 .chart .lg{font-size:12px;font-weight:600}.chart .grid{stroke:var(--line)}.chart .mark{stroke:#c0392b;stroke-dasharray:3 3}
 .chart .ml{font-size:10px;fill:#c0392b}
-.GAIN{color:#1e8e3e;font-weight:700}.EVEN{color:#b08900;font-weight:700}.LOSS{color:#c0392b;font-weight:700}
+.GAIN{color:#1e8e3e;font-weight:700}.STEADY{color:#b08900;font-weight:700}.LOSS{color:#c0392b;font-weight:700}
 .given{color:#2563c9;font-weight:700}
 code{font-size:.88em}
 """
@@ -495,7 +495,7 @@ code{font-size:.88em}
                      "machines": "machines on, mean a step", "units": "units standing, mean a step"}
             for key, r in readings.items():
                 cmp_, g = key.rsplit(": ", 1)
-                cls = "GAIN" if r["word"].startswith("GAIN") else "EVEN" if r["word"] == "EVEN" else "LOSS" if r["word"] == "LOSS" else "given"
+                cls = "GAIN" if r["word"].startswith("GAIN") else "STEADY" if r["word"] == "STEADY" else "LOSS" if r["word"] == "LOSS" else "given"
                 H.append(f"<tr><td>{html.escape(cmp_)}: {names[g]}</td><td class='num'>{r['mean']:+.1f} ({100 * r['rel']:+.1f}%)</td>"
                          f"<td class='num'>{r['lo']:+.1f} to {r['hi']:+.1f}</td><td class='{cls}'>{r['word']}</td></tr>")
             H.append("</table>")

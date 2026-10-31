@@ -41,7 +41,7 @@ omni-v18 and against native, and the founder hears what it read.
 ## What a native arm alone can show
 
 A LOSS read in a native arm is native's own. A LOSS in Omni direct with no immune reaction recorded is the mechanism's, and
-it is fixed. The live engine's knobs are the one place a reader may push the engine past its factory tune and watch a LOSS
+it is fixed. The live benchmark engine's knobs are the one place a reader may push the engine past its factory tune and watch a LOSS
 appear, and watch the brain hold or recover (the Orders of 23 October).
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.

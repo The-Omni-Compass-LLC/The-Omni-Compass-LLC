@@ -197,8 +197,10 @@ def main(pdf, md_path):
     parts = {re.match(r"^# Part (\w+)\.", ln).group(1) for ln in md if re.match(r"^# Part \w+\.", ln)}
     # a reference that follows another document's name (`DISCLOSURES.md`, section 4; `LICENSE`, section 10; the other
     # manual; the founder's manuscript) carries that document's numbering: not this book's to check
-    external = re.compile(r"(\.md`|\.md\)|LICENSE`|Manual,|Manual's|DISCLOSURES|of the manual)\W*$")
-    own_name = ("Owner's Manual" if "OWNERS" in md_path.upper() else "Live Engine Manual" if "LIVE_ENGINE" in md_path.upper()
+    # a reference after another document's name keeps that document's numbering; "the page's section 3a" is the live benchmark
+    # engine page's own numbering, as docs/book/build_book.py reads it (its EXTERNAL)
+    external = re.compile(r"(\.md`|\.md\)|LICENSE`|Manual,|Manual's|DISCLOSURES|of the manual|the page['’]s)\W*$")
+    own_name = ("Owner's Manual" if "OWNERS" in md_path.upper() else "Live Benchmark Engine Manual" if "LIVE_ENGINE" in md_path.upper()
                 else "Operator's Manual")
 
     def foreign(prev, ln, start):

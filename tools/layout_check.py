@@ -32,13 +32,15 @@ ROOT = Path(__file__).resolve().parents[1]
 ROOT_ALLOWED = {
     # the front door
     "README.md", "CHANGELOG.md", "CITATION.cff", "SECURITY.md",
+    # a person's own system for the Monte Carlo 500 (the live engine's button, monte-carlo.yml)
+    "systems",
     # the license and the intellectual property
     "LICENSE", "LICENSES", "NOTICE", "PATENTS.md", "TRADEMARKS.md", "THIRD_PARTY_NOTICES.md", "REUSE.toml",
     "DISCLOSURES.md", "LICENSING_FAQ.md", "ENTERPRISE_LICENSE.md", "CLAUDE.md",
     # the same rules for every AI assistant that reads this repository (Codex, Copilot, Gemini, Cursor)
     "AGENTS.md", "GEMINI.md", ".cursorrules", "llms.txt",   # llms.txt: read by AI crawlers at the root, the notice in it
     # build, verification and metadata
-    "pyproject.toml", "requirements.txt", "requirements-lock.txt", "verify.py", "RELEASE_MANIFEST.json", "OMNI_V1.json", "OMNI_V2.json", "OMNI_V3.json", "OMNI_V5.json", "OMNI_V6.json", "OMNI_V7.json", "OMNI_V8.json", "OMNI_V9.json", "OMNI_V10.json", "OMNI_V11.json", "OMNI_V12.json", "OMNI_V13.json", "OMNI_V14.json", "OMNI_V15.json", "OMNI_V16.json", "OMNI_V17.json", "OMNI_V18.json", "OMNI_V19.json", "codemeta.json",
+    "pyproject.toml", "requirements.txt", "requirements-lock.txt", "verify.py", "RELEASE_MANIFEST.json", "OMNI_V1.json", "OMNI_V2.json", "OMNI_V3.json", "OMNI_V5.json", "OMNI_V6.json", "OMNI_V7.json", "OMNI_V8.json", "OMNI_V9.json", "OMNI_V10.json", "OMNI_V11.json", "OMNI_V12.json", "OMNI_V13.json", "OMNI_V14.json", "OMNI_V15.json", "OMNI_V16.json", "OMNI_V17.json", "OMNI_V18.json", "OMNI_V19.json", "OMNI_V20.json", "OMNI_V21.json", "OMNI_V22.json", "OMNI_V23.json", "codemeta.json",
     "docker-compose.yml", ".gitignore", ".gitattributes", ".dockerignore", ".github", ".fossa.yml", ".snyk",
     # code and evidence
     "omnicompass", "omni_controller", "omni_orchestrator", "realms", "cpp", "tools", "scripts", "tests", "deploy", "fleet", "pilot",
@@ -67,7 +69,7 @@ def prose_only(text: str) -> str:
 
 STANDS = [re.compile(r"\b[Oo]mni[- ]v(\d+)\b\**`?\)?[^.;()]{0,25}\bstands\b(?! (?:as|for|with|in|at|beside))"),
           re.compile(r"stands on main[^.;]{0,20}[Oo]mni[- ]v(\d+)"),
-          re.compile(r"\bthe (?:newest )?engine (?:on main|that stands)[^.;]{0,15}\b[Oo]mni[- ]v(\d+)"),
+          re.compile(r"\bthe (?:newest )?engine (?:on main|that stands)[^.;]{0,15}?\b[Oo]mni[- ]v(\d+)"),   # the first engine named after it
           re.compile(r"[Ee]ngine that stands[,:]?\s*\(?\**`?omni-v(\d+)")]
 
 
@@ -133,6 +135,8 @@ def main():
             t = m.group(1)
             if "://" in t or t.startswith(("mailto:", "/")):
                 continue
+            if not any(c in t for c in "./") and not (ROOT / base / t).exists():
+                continue                   # a formula's argument, u[req](k), read as a link: no file has neither a dot nor a slash
             q = (base / t).as_posix()
             q = str(Path(q)).replace("\\", "/")
             norm = Path(*[x for x in Path(q).parts])

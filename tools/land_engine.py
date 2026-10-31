@@ -20,7 +20,7 @@ file list (tools/layout_check.py); a release group for the version (tools/releas
 the files the version changed); and the catalog's and the index's lines that name the engine.
 
 The words are written by a person, because they say what changed and why: docs/OMNI_VN.md, the README, the state of play,
-CLAUDE.md, the CHANGELOG, both manuals, the receipts and the live engine's page. --check reads every one of them and names any
+CLAUDE.md, the CHANGELOG, both manuals, the receipts and the live benchmark engine's page. --check reads every one of them and names any
 that still calls an older engine the one that stands. Nothing else moves: every earlier fingerprint, table and result stays
 where it is, as that engine's record.
 """
@@ -66,6 +66,18 @@ WORDS = [
     ("docs/OMNI_COMPASS_MANUAL.md", r'The engine that stands in this edition is \*\*omni-v(\d+)\*\*'),
     ("docs/OMNI_COMPASS_MANUAL.md", r'prints `omni-v(\d+) \(digest'),
     ("docs/engine/OMNI_COMPASS_LIVE_ENGINE.html", r'<html[^>]*data-engine="omni-v(\d+)"'),
+    # 27 October 2026: each of these still held an older engine's number two and three versions on, unseen by this check
+    ("README.md", r'The engine that stands\s+is omni-v(\d+) \(`OMNI_V(\d+)\.json`'),
+    ("README.md", r"The released factory profile is omni-v(\d+)'s"),
+    ("docs/FACTORY_PROFILE.md", r"The released factory profile is omni-v(\d+)'s \(`OMNI_V(\d+)\.json`"),
+    ("docs/OMNI_COMPASS_OWNERS_MANUAL.md", r"The released factory profile is omni-v(\d+)'s \(`OMNI_V(\d+)\.json`"),
+    ("docs/OMNI_COMPASS_OWNERS_MANUAL.md", r"The engine that stands is \*\*omni-v(\d+)\*\* \(`OMNI_V(\d+)\.json`"),
+    ("docs/OMNI_COMPASS_OWNERS_MANUAL.md", r"for this edition, `omni-v(\d+) \(digest"),
+    ("docs/STATE_OF_PLAY.md", r"## The engine that stands\s+\*\*omni-v(\d+)\*\* \(`OMNI_V(\d+)\.json`"),    ("docs/engine/OMNI_COMPASS_LIVE_ENGINE.html", r"The engine that stands is omni-v(\d+) \(<code>docs/OMNI_V(\d+)\.md</code>\)"),    ("docs/engine/APPRAISAL.md", r"\*\*Engine\.\*\* The engine that stands is \*\*omni-v(\d+)\*\* \(`OMNI_V(\d+)\.json`"),    ("docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md", r"\(omni-v(\d+), `OMNI_V(\d+)\.json`\)\. The page names its engine"),
+    ("docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md", r"It covers the page as built on omni-v(\d+);"),
+    ("docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md", r"### 3\.2 The sections, as built on omni-v(\d+)"),
+    ("docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md", r"the page stands on \(omni-v(\d+)\)\."),
+    ("docs/OMNI_COMPASS_MANUAL.md", r"quoted here ran on omni-v7, whose rules omni-v(\d+) carries"),
 ]
 SINCE_RE = r'((?:\bSINCE|RERUN_SINCE|AZURE_SINCE) = ")[^"]+(")'
 

@@ -75,7 +75,7 @@ On the rented machine (the repository is public while the benchmarks run; if it 
 fine-grained token in the URL):
 
 ```bash
-git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass the-omni-compass
+git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC the-omni-compass
 cd the-omni-compass
 git log --oneline -1       # the commit you are about to test; write it down
 pip install -r requirements.txt

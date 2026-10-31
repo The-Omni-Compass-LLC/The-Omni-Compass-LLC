@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""Records the stacks the live engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) replays one at a time beside the
+"""Records the stacks the live benchmark engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) replays one at a time beside the
 live controller: each stack's own model in the repository, run as the repository runs it, native first and then
 Omni-Compass on top of native, the same load on the same seed, second by second.
 
@@ -39,7 +39,7 @@ from tools.readings import relative_runs_reading  # noqa: E402  (the one key, wr
 
 def reading(runs, aim):
     """The three-run rule, the one key's (tools/readings.py, the founder's order of 24 October 2026: a change of 0.5% or more,
-    the mean of the runs, is a change, read by the gauge's aim; EVEN only under 0.5%)."""
+    the mean of the runs, is a change, read by the gauge's aim; STEADY only under 0.5%)."""
     return relative_runs_reading(runs, aim)
 
 
@@ -250,31 +250,25 @@ def table_title(stem):
     title = text.splitlines()[0].lstrip("# ").split(": the A/B/C")[0].strip()
     for obj in ("service", "resource"):
         if f"(the objective: {obj})" in text:
-            title += f" (the verdict's objective: {obj})"
+            title += f", {obj} objective"
     if stem.endswith("_SHIPPED") and "as shipped" not in title:
-        title += " (native exactly as the vendor ships it)"
+        title += ", native as shipped"
     return title
 
 
 def receipt_word(rd):
-    r = rd.replace("**", "").strip().lower()
-    for w, key in (("gain", "GAIN"), ("loss", "LOSS"), ("power given", "power given"), ("even", "EVEN")):
-        if r.startswith(w):
-            return key
-    if "disagree" in r:
-        return "the runs disagree"     # clear runs pointing different ways: the test is unstable there
-    if "runs differ" in r:
-        return "the runs differ"       # a deterministic simulator's runs did not reproduce (tools/readings.py DIFFER)
-    return "shown"
+    """A reading's word, from the key's one reader (tools/readings.py word_of); a row shown and not judged reads "shown"."""
+    from tools.readings import word_of
+    return word_of(rd) or "shown"
 
 
-NUM = r"[-+\u2212=]?\d[\d,]*(?:\.\d+)?(?:e[-+]?\d+)?"   # a cell beside EVEN carries "=" (the key's sign rule, 20 October)
+NUM = r"[-+\u2212=]?\d[\d,]*(?:\.\d+)?(?:e[-+]?\d+)?"   # a cell beside STEADY carries "=" (the key's sign rule, 20 October)
 
 
 def even_reason(abc):
-    """Why an EVEN row is EVEN, read from its three runs' own cells (each 'change (low to high)', or a change alone): the
+    """Why a STEADY row is STEADY, read from its three runs' own cells (each 'change (low to high)', or a change alone): the
     kind and the bound. 'same': every run reads zero with a zero-wide interval (Omni-Compass held it native); 'split': a run
-    is clear of zero but not all three the same way (EVEN by the three-run rule); else the largest change any run's interval
+    is clear of zero but not all three the same way (STEADY by the three-run rule); else the largest change any run's interval
     still allows: 'tight' within 2%, 'within' within 10%, 'wide' past 10% (too noisy to tell at these repetitions); a table
     that prints no interval: 'changes', the largest change read."""
     import re
@@ -299,6 +293,61 @@ def even_reason(abc):
         kind = ("tight" if b <= 2 else "within" if b <= 10 else "wide") if pct else "within"
         return {"kind": kind, "bound": b, "pct": pct}
     return {"kind": "changes", "bound": max(abs(ch) for ch, _, _ in runs), "pct": pct}
+
+
+AIM_CODE = {"higher": "up", "lower": "down", "spent": "spent", "work per resource": "per", "never more": "never", "never less": "up"}
+
+
+def runs_of(src, rows):
+    """Each judged row's aim and each run's own word and raw change, from the table's JSON twin (the mathematics seat of 24
+    October): since tools/reread.py rewrote the kind tables, each run's printed number wears that run's word's sign, so a page
+    that read the cell's sign as the gauge's direction printed the opposite word. The JSON holds every run's native, difference
+    and interval; each row is matched to its gauge in order by its reading, as tools/reread.py patch_md matches them. A row of a
+    table with no JSON twin (an outside simulator's) is left as printed: its cells carry the gauge's own direction.
+      aim  up, down, spent, per or never (tools/readings.py HIGHER, LOWER, SPENT, WORK_PER, NEVER_MORE)
+      rw   each run's own word (tools/readings.py run_word: 0.5% or more read by the aim, STEADY under it; None for never more)
+      rv   each run's raw change as [change, low, high, in percent of native]: percent where native is not zero, else the
+           gauge's own unit"""
+    j = Path(src).with_suffix(".json")
+    if not j.exists():
+        return
+    from tools.reread import gauges, bare
+    from tools.readings import aim as aim_of, run_word
+    try:
+        data = json.loads(j.read_text(encoding="utf-8"))
+    except ValueError:
+        return
+    if not isinstance(data, dict):
+        return
+    i = 0
+    for path, g in gauges(data):
+        rd, aim_raw, rs = bare(g.get("reading")), g.get("aim"), g.get("runs")
+        while i < len(rows):
+            row = rows[i]; i += 1
+            if bare(row["r"].split("shown and not counted: ")[-1]) == rd:
+                row["key"] = path[-1]                     # the gauge's own name in the table's JSON (for the key's resource list)
+                a = aim_of(aim_raw) if aim_raw else None
+                if a in AIM_CODE and isinstance(rs, list) and len(rs) == 3 and all(isinstance(r, dict) and r.get("diff") is not None
+                                                                                  and r.get("native") is not None for r in rs):
+                    row["aim"] = AIM_CODE[a]
+                    row["rw"] = [run_word(r, a) for r in rs]
+                    rv = []
+                    for r in rs:
+                        nat, d = r["native"], r["diff"]
+                        lo, hi = (list(r.get("ci95") or []) + [None, None])[:2]
+                        ok = lambda v: isinstance(v, (int, float)) and v == v
+                        if nat:
+                            rv.append([round(100 * d / abs(nat), 4), round(100 * lo / abs(nat), 4) if ok(lo) else None,
+                                       round(100 * hi / abs(nat), 4) if ok(hi) else None, True])
+                        else:
+                            rv.append([round(d, 6), round(lo, 6) if ok(lo) else None, round(hi, 6) if ok(hi) else None, False])
+                    row["rv"] = rv
+                    from tools.readings import evidence
+                    ev = evidence(rs, a)        # the evidence apart from the word (the referee's work order of 25 October)
+                    row["ev"] = {k: (round(v, 4) if isinstance(v, float) else [round(x, 4) for x in v] if k == "mean_ci95_pct" else v)
+                                 for k, v in ev.items() if k in ("strength", "steady", "disagree", "runs", "clear", "clear_with_mean",
+                                                                 "with_mean", "mean_pct", "mean_ci95_pct") and v is not None}
+                break
 
 
 def receipt(name, path=None):
@@ -331,13 +380,20 @@ def receipt(name, path=None):
     count = {}
     for r in rows:
         count[r["w"]] = count.get(r["w"], 0) + 1
+    runs_of(src, rows)
     title = table_title(name) if not path else title
-    even = [{"s": r["s"], "g": r["g"], "abc": r["abc"], **even_reason(r["abc"])} for r in rows if r["w"] == "EVEN"]
+    even = [{"s": r["s"], "g": r["g"], "abc": r["abc"], "r": r["r"], **{k: r[k] for k in ("aim", "rw", "rv") if k in r}, **even_reason(r["abc"])}
+            for r in rows if r["w"] == "STEADY"]
     # the rows a table shows and does not judge (its preregistration's own rule), kept so their sizes are seen: a resource a
     # table only shows, CPU used beside a response time, is the price of the work
-    shown = [{"s": r["s"], "g": r["g"], "abc": r["abc"], "r": r["r"], **({"tuning": True} if r["w"] == "tuning" else {})}
+    # a shown row carries no aim of its own (its table does not judge it); whether it is a resource spent or held is the key's own list
+    # (tools/readings.py SPENT_GAUGES, by the gauge's name in the table's JSON), never a guess from its words: a row of a table with no
+    # JSON twin carries no such mark
+    from tools.readings import SPENT_GAUGES
+    shown = [{"s": r["s"], "g": r["g"], "abc": r["abc"], "r": r["r"], **({"tuning": True} if r["w"] == "tuning" else {}),
+              **({"key": r["key"], "spent": r["key"] in SPENT_GAUGES} if "key" in r else {})}
              for r in rows if r["w"] in ("shown", "tuning")]
-    return {"file": f"results/live/{name}.md" if not path else None, "title": title, "rows": [r for r in rows if r["w"] not in ("EVEN", "shown", "tuning")],
+    return {"file": f"results/live/{name}.md" if not path else None, "title": title, "rows": [r for r in rows if r["w"] not in ("STEADY", "shown", "tuning")],
             "count": count, "even": even, "shown": shown}
 
 
@@ -393,10 +449,10 @@ def receipts():
 
 
 # ---- every muscle of the catalog and the seven organisms, on the engine that stands -----------------------------------
-ORGANISMS = {"spine": "The spine, the muscles every stack runs on", "compute_ai_cloud": "Compute / AI / Cloud",
+ORGANISMS = {"spine": "Spine", "compute_ai_cloud": "Compute / AI / Cloud",
              "physics_robotics_autonomous": "Physics / Robotics / Autonomous", "energy_facility_industrial": "Energy / Facility / Industrial",
-             "distribution_specialized": "Distribution / Specialized", "stack": "The four stacked, every shared muscle in each",
-             "tower": "The whole tower, every muscle once"}
+             "distribution_specialized": "Distribution / Specialized", "stack": "Four Stacked",
+             "tower": "Whole Tower"}
 REALM_CODE = {"compute_ai_cloud": "C", "physics_robotics_autonomous": "P", "energy_facility_industrial": "E", "distribution_specialized": "D"}
 
 

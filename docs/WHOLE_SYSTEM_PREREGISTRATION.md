@@ -13,7 +13,7 @@ tables). The stacked run is the measurement that replaces the composition: Omni-
 every layer native in the other, paired, the same gauges. The question it answers is the one the composition assumes:
 does a layer's factor stand when the layers around it also carry Omni-Compass? The stacked table and the composed total
 are printed side by side, per gauge, as TOP ÷ composed with its 95% interval (`tools/whole_system.py`, section 3), read by
-the one key: GAIN, EVEN or LOSS by the gauge's aim, never by the sign of the number.
+the one key: GAIN, STEADY or LOSS by the gauge's aim, never by the sign of the number.
 
 ## 2. The arms
 
@@ -47,7 +47,7 @@ has run; until then it enters the composition as exactly 1 and the stacked run d
 
 ## 4. The reading
 
-Every judged row gets GAIN, EVEN or LOSS by the three-run rule (`tools/readings.py`). The composition test: for each gauge
+Every judged row gets GAIN, STEADY or LOSS by the three-run rule (`tools/readings.py`). The composition test: for each gauge
 present in both, log(R_stacked) − Σℓ log(Rℓ) with its interval (the stacked estimate's variance plus the composed sum's);
 agree within the noise when the interval includes zero. A disagreement is reported as what it is: the layers interact
 there, and the stacked number is the one that stands for that gauge. Nothing is re-aimed after a reading; a LOSS row stays
@@ -55,7 +55,7 @@ and its cause is found in the mechanism or the wiring (`DISCLOSURES.md`, section
 
 ## 5. What is fixed before the first run
 
-The engine that stands (omni-v19, or the newest that stands when the run starts; a run names its engine), the loads named
+The engine that stands (omni-v23, or the newest that stands when the run starts; a run names its engine), the loads named
 above, the gauges above, the stopping rule of the cloud stack (`tools/stop_rule.py`), and the arms. Any change after this
 page is an amendment below it, dated, before the run it governs.
 

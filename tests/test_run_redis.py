@@ -79,7 +79,7 @@ def main():
             {"native": {"hit_rate": 0.69, "maxmemory_mb_mean": 64.0, "failed": 0}, "omni": {"hit_rate": 0.96, "maxmemory_mb_mean": 160.0, "failed": 0}}]
     assert R.paired(reps, "hit_rate", "higher")["reading"] == "GAIN"
     assert R.paired(reps, "maxmemory_mb_mean", "spent")["reading"] == "power given", "more memory held is power given"
-    assert R.paired(reps, "failed", "never more")["reading"] == "EVEN, the same"
+    assert R.paired(reps, "failed", "never more")["reading"] == "STEADY, the same"
     reps[2]["omni"]["failed"] = 2
     assert R.paired(reps, "failed", "never more")["reading"] == "**LOSS in a repetition**"
     assert R.COVER_MB == (16, 512) and R.NATIVE_MB == 64 and R.LINE_MS == 2.0 and R.MISS_PENALTY_MS > R.LINE_MS, "a miss lies outside the line by construction"

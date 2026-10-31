@@ -39,7 +39,7 @@ Read by that key, the ladder omni-v9 ran shows that no glide reads a LOSS anywhe
 | phase 2 | net-zero shortfall | -7.53% GAIN | -4.77% GAIN | -3.38% GAIN | -2.54% GAIN | -1.99% GAIN |
 | phase 3 | the bill | -6.60% GAIN | -7.32% GAIN | -8.10% GAIN | -8.43% GAIN | -8.32% GAIN |
 | phase 3 | the ramping | -5.05% GAIN | -1.91% GAIN | +2.32% power given | +6.18% power given | +9.59% power given |
-| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% EVEN | +0.25% power given | +0.41% power given |
+| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% STEADY | +0.25% power given | +0.41% power given |
 
 So 0.0875 is the glide that cuts the bill most with no LOSS: the founder's rule for the tune. Nothing else in the wire changed. The
 compass law, its gain (0.5), its response (1 h), its reading (the coming hour, from the same hour of the past seven days), its band
@@ -121,11 +121,11 @@ is CityLearn's own (each over no battery at all), and every row is read by the o
 | monthly unevenness | 0.9892 | -2.28% GAIN | -1.58% GAIN |
 | net-zero shortfall | 1.1315 | -2.78% GAIN | -0.98% GAIN |
 
-Across the districts above: omni-v9 45 GAIN, 0 EVEN, 0 power given, 0 LOSS; omni-v10 43 GAIN, 0 EVEN, 2 power given, 0 LOSS.
+Across the districts above: omni-v9 45 GAIN, 0 STEADY, 0 power given, 0 LOSS; omni-v10 43 GAIN, 0 STEADY, 2 power given, 0 LOSS.
 
 **Alameda County and Travis County (100 buildings each)** were still running locally when this version was pushed; this
 machine runs each neighbourhood for hours, and their omni-v9 runs read no LOSS (`docs/OMNI_V9.md`, section 3). No score in them
-that can read a LOSS moves with the glide: they carry no price (the bill is 1.0 in both arms, EVEN by construction), no outage
+that can read a LOSS moves with the glide: they carry no price (the bill is 1.0 in both arms, STEADY by construction), no outage
 (energy not served is 0 in both arms) and no comfort the electric batteries touch (time uncomfortable +0.00% on omni-v9). Every
 other score there is a resource spent or held, where a rise is power given. Their three runs on GitHub, with every other
 district, make the omni-v10 CityLearn table; the local runs are added here when they finish.
@@ -136,7 +136,7 @@ ramping, the unevenness and the net-zero distance. The highest peak holds where 
 against −11.26%), and that district's daily unevenness falls further (−0.94% against −0.09%). Two rows of the 2022 phase 3 rose
 and are power given: the ramping +6.18% and the net-zero shortfall +0.25%. A little more electricity is bought than at omni-v9
 while the bill falls further, so each unit bought costs less on average. None of these five districts carries the occupants' own scores (energy not served, time uncomfortable); in the 2023 districts
-they are native's to the last digit, and in Alameda and Travis they read EVEN on omni-v9.
+they are native's to the last digit, and in Alameda and Travis they read STEADY on omni-v9.
 
 **Shown, power given.** In some months the peak hour with Omni-Compass on top rises above native's. With omni-v10 that happens in
 3 months in the robustness district (omni-v9: 2), 3 in the tuning district (3), 1 in the 2022 phase 2 (1), 1 in the 2022 phase 3 (1)
@@ -161,7 +161,7 @@ steered outside the outage hours and handed back to native through each outage. 
 |---|---:|---:|---:|
 | phase 2, local evaluation | +0.19% power given | -2.68% GAIN | -0.12% GAIN |
 | phase 2, online evaluation 1 | -0.09% GAIN | **+0.69% LOSS** | -0.04% GAIN |
-| phase 2, online evaluation 2 | -0.11% GAIN | -0.15% GAIN | +0.00% EVEN |
+| phase 2, online evaluation 2 | -0.11% GAIN | -0.15% GAIN | +0.00% STEADY |
 | phase 2, online evaluation 3 | -0.09% GAIN | -1.44% GAIN | -0.06% GAIN |
 | phase 3, district 1 | -0.25% GAIN | -2.47% GAIN | -0.04% GAIN |
 | phase 3, district 2 | -0.37% GAIN | -0.38% GAIN | -0.03% GAIN |

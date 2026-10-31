@@ -17,7 +17,7 @@ A change is significant when its paired 95% interval excludes zero. A response t
 | response time, mean (ms) | 116.2 | 82.4 | −29.1%, GAIN, significant |
 | response time, 95th percentile (ms) | 244.3 | 144.7 | −40.8%, GAIN, significant |
 | response time, 99th percentile (ms) | 367.7 | 234.1 | −36.4%, GAIN, significant |
-| failed requests (%) | 0 | 0 | EVEN |
+| failed requests (%) | 0 | 0 | STEADY |
 | pods not yet running, pod-minutes | 0.207 | 0.54 | +161%, not significant (set 15: +488%) |
 | replicas, mean | 8.80 | 9.24 | +5.0%, not significant |
 

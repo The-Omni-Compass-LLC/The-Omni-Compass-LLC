@@ -60,7 +60,9 @@ for arm in "${order[@]}"; do
   if [[ "$base" =~ ^compass([0-9]+)$ ]]; then pace="${BASH_REMATCH[1]}"; base=compass; fi
   if ! OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-60}}" ARM="$base" BATCH_QUEUE="$queue" ADDONS="$addons" CRUISEKUBE="$cruise" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
     # a run that fails its own checks is recorded as invalid and left out of the table, never silently counted
-    echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid" | tee "bench-$arm-$REP/INVALID"; fail=1
+    echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid"
+    [ -f "bench-$arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$arm-$REP/INVALID"
+    fail=1
   fi
 done
 kind delete cluster --name omni-bench >/dev/null 2>&1 || true

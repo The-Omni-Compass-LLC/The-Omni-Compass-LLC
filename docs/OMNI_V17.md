@@ -47,14 +47,14 @@ In the cloud's setting (the compass law at the tune-down, the machines alone), e
 | Beat | Reads a day | Omni's own processor (s an hour) | Pods waiting (min an hour) | 95th percentile (ms) | Minutes over the line (a day) | Autoscaler short (min an hour) | Machine-hours (a day) | Energy per core-hour (kWh) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | native | | | 8.18 | 79.94 | 27.00 | 1.20 | 133.08 | 0.0357 |
-| every 5 s | 86,412 | 5.51 | 16.52 LOSS | 80.18 EVEN | 27.50 EVEN | 1.20 EVEN | 129.67 EVEN | 0.0344 GAIN |
-| every 10 s | 60,924 | 3.38 | 15.92 EVEN | 80.11 EVEN | 27.12 EVEN | 1.20 EVEN | 133.40 EVEN | 0.0346 GAIN |
-| every 15 s | 52,545 | 2.68 | 18.36 LOSS | 80.31 LOSS | 27.62 LOSS | 1.20 EVEN | 131.48 EVEN | 0.0341 GAIN |
-| every 30 s | 44,009 | 2.07 | 18.59 LOSS | 80.22 LOSS | 27.38 EVEN | 1.20 EVEN | 132.19 EVEN | 0.0347 GAIN |
-| **every 60 s (the main engine)** | 39,691 | 1.69 | 20.88 EVEN | 80.33 EVEN | 27.50 EVEN | 1.20 EVEN | 131.98 EVEN | 0.0350 EVEN |
-| every 75 s | 38,928 | 1.66 | 19.30 EVEN | 80.20 EVEN | 27.38 EVEN | 1.20 EVEN | 131.21 GAIN | 0.0350 GAIN |
-| every 90 s | 38,396 | 1.60 | 18.27 EVEN | 80.35 EVEN | 27.62 EVEN | 1.20 EVEN | 131.29 GAIN | 0.0350 GAIN |
-| every 120 s | 37,415 | 1.58 | 14.01 EVEN | 80.08 EVEN | 27.12 EVEN | 1.20 EVEN | 130.93 EVEN | 0.0352 EVEN |
+| every 5 s | 86,412 | 5.51 | 16.52 LOSS | 80.18 STEADY | 27.50 STEADY | 1.20 STEADY | 129.67 STEADY | 0.0344 GAIN |
+| every 10 s | 60,924 | 3.38 | 15.92 STEADY | 80.11 STEADY | 27.12 STEADY | 1.20 STEADY | 133.40 STEADY | 0.0346 GAIN |
+| every 15 s | 52,545 | 2.68 | 18.36 LOSS | 80.31 LOSS | 27.62 LOSS | 1.20 STEADY | 131.48 STEADY | 0.0341 GAIN |
+| every 30 s | 44,009 | 2.07 | 18.59 LOSS | 80.22 LOSS | 27.38 STEADY | 1.20 STEADY | 132.19 STEADY | 0.0347 GAIN |
+| **every 60 s (the main engine)** | 39,691 | 1.69 | 20.88 STEADY | 80.33 STEADY | 27.50 STEADY | 1.20 STEADY | 131.98 STEADY | 0.0350 STEADY |
+| every 75 s | 38,928 | 1.66 | 19.30 STEADY | 80.20 STEADY | 27.38 STEADY | 1.20 STEADY | 131.21 GAIN | 0.0350 GAIN |
+| every 90 s | 38,396 | 1.60 | 18.27 STEADY | 80.35 STEADY | 27.62 STEADY | 1.20 STEADY | 131.29 GAIN | 0.0350 GAIN |
+| every 120 s | 37,415 | 1.58 | 14.01 STEADY | 80.08 STEADY | 27.12 STEADY | 1.20 STEADY | 130.93 STEADY | 0.0352 STEADY |
 
 In the kind benchmark's setting (the compass law at the max, every autoscaler sensed):
 
@@ -65,10 +65,10 @@ In the kind benchmark's setting (the compass law at the max, every autoscaler se
 | every 10 s | 60,942 | 3.43 | 28.80 LOSS | 76.85 GAIN | 19.38 GAIN | 1.12 GAIN | 149.17 power given | 0.0384 power given |
 | every 15 s | 52,490 | 2.66 | 33.51 LOSS | 76.93 GAIN | 20.25 GAIN | 1.14 GAIN | 151.78 power given | 0.0389 power given |
 | every 30 s | 43,869 | 2.01 | 34.09 LOSS | 76.99 GAIN | 21.25 GAIN | 1.16 GAIN | 151.78 power given | 0.0389 power given |
-| **every 60 s (the main engine)** | 39,444 | 1.58 | 31.96 LOSS | 77.18 GAIN | 23.75 GAIN | 1.19 EVEN | 151.29 power given | 0.0388 power given |
-| every 75 s | 38,836 | 1.66 | 29.15 LOSS | 77.17 GAIN | 21.75 GAIN | 1.19 EVEN | 149.50 power given | 0.0384 power given |
-| every 90 s | 38,254 | 1.52 | 28.10 LOSS | 77.01 GAIN | 22.62 GAIN | 1.20 EVEN | 148.78 power given | 0.0383 power given |
-| every 120 s | 37,536 | 1.47 | 22.51 LOSS | 76.99 GAIN | 22.88 GAIN | 1.24 EVEN | 148.18 power given | 0.0382 power given |
+| **every 60 s (the main engine)** | 39,444 | 1.58 | 31.96 LOSS | 77.18 GAIN | 23.75 GAIN | 1.19 STEADY | 151.29 power given | 0.0388 power given |
+| every 75 s | 38,836 | 1.66 | 29.15 LOSS | 77.17 GAIN | 21.75 GAIN | 1.19 STEADY | 149.50 power given | 0.0384 power given |
+| every 90 s | 38,254 | 1.52 | 28.10 LOSS | 77.01 GAIN | 22.62 GAIN | 1.20 STEADY | 148.78 power given | 0.0383 power given |
+| every 120 s | 37,536 | 1.47 | 22.51 LOSS | 76.99 GAIN | 22.88 GAIN | 1.24 STEADY | 148.18 power given | 0.0382 power given |
 
 Each beat against the main engine's 60 s, and every gauge in full, is on the ladder's page.
 
@@ -86,7 +86,7 @@ them go: the rule no longer asked for work that waits "decision after decision",
 (`omni_controller/controller.py`): the cruise wait is never fewer than two readings, `max(2, round(120 / period))`, when it
 is derived from seconds; a count an operator sets by hand (`--cruise-after`) stands as set. At every beat up to 80 s the count
 is what it was (24 at 5 s, 8 at 15 s, 4 at 30 s, 2 at 60 and 75 s), so nothing below 80 s moves; at 90 and 120 s it is 2
-(`tests/test_pace_clocks.py`, which fails on the unfixed rule). Corrected, the kind benchmark's setting reads at 90 s, against 60 s, the machine-hours down 1.7%, EVEN, the minutes over the line down 4.7%, EVEN, the pods waiting down 12.1%, EVEN, the 95th percentile down 0.2%, EVEN; at 120 s the machine-hours down 2.1%, EVEN, the minutes over the line down 3.7%, EVEN, the pods waiting down 29.6%, GAIN; machines parked over the eight days 190 and 119 against 329 at 60 s. No other count of the
+(`tests/test_pace_clocks.py`, which fails on the unfixed rule). Corrected, the kind benchmark's setting reads at 90 s, against 60 s, the machine-hours down 1.7%, STEADY, the minutes over the line down 4.7%, STEADY, the pods waiting down 12.1%, STEADY, the 95th percentile down 0.2%, STEADY; at 120 s the machine-hours down 2.1%, STEADY, the minutes over the line down 3.7%, STEADY, the pods waiting down 29.6%, GAIN; machines parked over the eight days 190 and 119 against 329 at 60 s. No other count of the
 governor's falls to a single reading between 5 and 120 s: the breach's clear time (180 s) is 2 decisions at 120 s, the strict
 window (300 s) 2, the trial's phase (1,200 s) 10; the brain's dwell is one step by design and its waits round to the nearest
 step. In the cloud's setting (the machines alone, at the tune-down) every service, machine-hour and energy reading at 90 and
@@ -100,8 +100,8 @@ Set at 60 s, the main engine gives up what 15 s bought in the models, and it is 
 setting: in the kind benchmark's setting the minutes over the line are 23.75 a day at 60 s against 20.25 at 15 s (+17.3%: read
 the other way, 15 s against 60 s, −14.7%, GAIN, so 60 s against 15 s is a LOSS by the key), still 12.0% fewer than native's
 27.0 (GAIN against native); in the cloud's setting the energy per core-hour is 2.6% more at 60 s than at 15 s (power given).
-Every other row reads EVEN between the two. The model gate's own models read the change as shipped (`cluster_shipped`, each
-checkout started without a period, as an install file starts it: omni-v17 at its 60 s against omni-v16 at its 15 s): every gauge reads EVEN: the machine-hours −2.3%, the energy per core-hour +0.5%, pods waiting for a place +39.8%, the autoscaler's shortfall +0.2%, the 95th percentile +0.3%, the minutes over the line +0.9%; no LOSS against omni-v16.
+Every other row reads STEADY between the two. The model gate's own models read the change as shipped (`cluster_shipped`, each
+checkout started without a period, as an install file starts it: omni-v17 at its 60 s against omni-v16 at its 15 s): every gauge reads STEADY: the machine-hours −2.3%, the energy per core-hour +0.5%, pods waiting for a place +39.8%, the autoscaler's shortfall +0.2%, the 95th percentile +0.3%, the minutes over the line +0.9%; no LOSS against omni-v16.
 
 ## The rows against native that read LOSS (the engine's, at every beat)
 
@@ -153,7 +153,7 @@ manuals. The levers rig gives each phase the 3, 2 and 3 minutes its checks were 
 omni-v17 changes no gain, preset or muscle, and one rule only at beats slower than 80 s: at any beat up to 80 s set on the
 command line it makes omni-v16's decisions at that beat (the cruise wait's count is unchanged there), and at 60 s those are
 omni-v15's (4,578 audit records on the model cluster, none different, `results/model_gate/V16_VS_V15.md`). The model gate against
-omni-v16 (every model that sets its own period reads identical to omni-v16 on every gauge and every seed (9 models and the verdict); as shipped, omni-v17 at its 60 s against omni-v16 at its 15 s, every gauge reads EVEN; no LOSS against omni-v16.). The brain's C++ twin takes the period on every call and is unchanged (`results/SEAL.json`); the brain's
+omni-v16 (every model that sets its own period reads identical to omni-v16 on every gauge and every seed (9 models and the verdict); as shipped, omni-v17 at its 60 s against omni-v16 at its 15 s, every gauge reads STEADY; no LOSS against omni-v16.). The brain's C++ twin takes the period on every call and is unchanged (`results/SEAL.json`); the brain's
 lock takes no amendment.
 
 ## The real runs

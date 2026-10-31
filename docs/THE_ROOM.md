@@ -36,7 +36,7 @@ the gauge can move inside the cover:
 in the gauge's own direction of aim. Two statements follow from the definitions alone:
 
 1. **The gain on a muscle is bounded by the worth of its room.** Whatever law Omni-Compass runs, its reading on that gauge
-   satisfies Δg ≤ max(Wᵤ, W_d). A muscle with r = 0 has W = 0 and can only read EVEN. The catalog's own word for it is
+   satisfies Δg ≤ max(Wᵤ, W_d). A muscle with r = 0 has W = 0 and can only read STEADY. The catalog's own word for it is
    **at its limit on native**: native already runs the knob at the top of its range, Omni-Compass reads it and leaves it.
 2. **A LOSS on a muscle is never the muscle's.** With the lever inside the cover and the law pulling the reading toward
    the band's centre with a bounded force, the gauge can fall below native in only two ways: the lever was pushed **past**
@@ -50,8 +50,8 @@ in the gauge's own direction of aim. Two statements follow from the definitions 
 | reading | what it says about the room | what Omni-Compass does |
 |---|---|---|
 | **GAIN** | r > 0 and the law took some of its worth | holds it; the next version asks whether more of the worth is reachable |
-| **EVEN, at its limit on native** | r = 0: native is at the wall of the band | reads the knob and leaves it native; nothing can be gained here by any law |
-| **EVEN, the same as native** | r > 0 but the law took none of its worth | the room exists and is not taken: this is the room to reverse-engineer (section 5) |
+| **STEADY, at its limit on native** | r = 0: native is at the wall of the band | reads the knob and leaves it native; nothing can be gained here by any law |
+| **STEADY, the same as native** | r > 0 but the law took none of its worth | the room exists and is not taken: this is the room to reverse-engineer (section 5) |
 | **LOSS** | a limit was crossed or a wire is wrong | root-caused and fixed, through the model gate, as the next version; never carried |
 
 ## 4. What the catalog reads today, by this law
@@ -62,8 +62,8 @@ under its own load and the line), all 1,107 muscles:
 | reading | muscles |
 |---|---:|
 | GAIN | 527 |
-| EVEN, at its limit on native | 421 |
-| EVEN, the same as native | 159 |
+| STEADY, at its limit on native | 421 |
+| STEADY, the same as native | 159 |
 | LOSS | 0 |
 
 So 421 muscles have no room by construction (admission knobs native already opens fully, power limits native already runs at
@@ -113,12 +113,12 @@ while cutting machines 26.5% (`docs/OMNI_ORCHESTRATOR.md`). By section 2 that is
 a crossed limit: the muscle at its wall was the **processor core**; the room rule counted paper requests and saw room where
 the core had none; two units busy at once on one core each took twice as long. The brain had no wire to that limit. With the
 limit wired (a machine's room measured as the processor it can still give at full speed, the engine's own 75% rule), the
-same showing read work EVEN, the 95th percentile EVEN and the machines cut 5.4%: the harm gone, the cut kept. The law held;
+same showing read work STEADY, the 95th percentile STEADY and the machines cut 5.4%: the harm gone, the cut kept. The law held;
 the wall had to be wired.
 
 ## 7. The second wall of 23 October: the unit's own paper quota, and the engine's conveyance
 
-With the busy rule wired the showing read EVEN on work and on the 95th percentile, and EVEN is the reading of a room not taken
+With the busy rule wired the showing read STEADY on work and on the 95th percentile, and STEADY is the reading of a room not taken
 (section 3). The files said where the room was. In both arms no request ever waited in line (the front's line read 0 at every
 second of every step), so the response time was not a shortage of units; it was the unit's own wall: a request of about 40 ms
 of processor inside a quota of 250 millicores (25 ms of every 100 ms period) takes 115 ms or more of wall-clock time, and
@@ -134,7 +134,7 @@ and the work (closed-loop clients) can rise at most by the same factor; neither 
 of thought between requests is the organism's own limit.
 
 Read on the quick form (six steps of 15 s, one run of each arm, class L): the 50th percentile 90 → 79 ms, the 95th 176 → 146 ms
-(down 13%, EVEN at six pairs), the work up 3.6% (EVEN), machines down 6.6% (EVEN), units up 23% (power given: the twin follows
+(down 13%, STEADY at six pairs), the work up 3.6% (STEADY), machines down 6.6% (STEADY), units up 23% (power given: the twin follows
 the work; see section 8), 0 failed, 0 wrong. The full form is read next. The same mechanism stands in the engine on top of
 Kubernetes (the kind rigs: the pods' limits conveyed), so this is one mechanism read at two levels, by itself and on top of
 native, as the founder's order of 23 October requires.

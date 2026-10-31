@@ -79,7 +79,7 @@ two units and every machine held) and off. 1,507 requests through the drills, 1,
 
 ## 2b. The showing with the engine's own mechanisms, 23 October evening (quick form)
 
-The two showings above read EVEN where the organism had room, and EVEN is the reading of a room not taken (`docs/THE_ROOM.md`,
+The two showings above read STEADY where the organism had room, and STEADY is the reading of a room not taken (`docs/THE_ROOM.md`,
 section 3). The files said where it was: in both arms no request ever waited in line at any second of any step, so the
 response time was not a shortage of units but **the unit's own paper quota** (a 40 ms request inside 250 m, 25 ms of every
 100 ms period, takes 115 ms or more). Omni's brain, holding the yardstick's own count with a force that never fired under the
@@ -100,8 +100,8 @@ verdict**; all four are in the brain now (section 1). The same rig and clients, 
 | processor conveyed above the requests (core-minutes) | 0 | 0.6 | Omni's walls raised; Kubernetes never moves one |
 | processor-seconds used by the units | 52.6 | 55.6 | up 6%: more work done |
 
-Read by the one key, step by step (six pairs, the exact Student t interval): requests answered **EVEN**, up 3.6% a step
-(−6.7 to +20.7); the 95th percentile **EVEN**, down 13.3% a step (−50.4 to +7.7 ms); machines on **EVEN**, down 6.6% a step
+Read by the one key, step by step (six pairs, the exact Student t interval): requests answered **STEADY**, up 3.6% a step
+(−6.7 to +20.7); the 95th percentile **STEADY**, down 13.3% a step (−50.4 to +7.7 ms); machines on **STEADY**, down 6.6% a step
 (−0.9 to +0.2); units standing **power given**, up 23.4% a step (+0.4 to +1.6). No row reads LOSS. Six pairs of 15 s are
 too few for a 13% fall in the 95th percentile to clear zero; the full form (18 steps of 25 s) is read next, and the three-run
 reading after it.
@@ -144,7 +144,7 @@ run of each arm, class L, every number from the run's own files):
 
 **Read by the one key, step by step (18 pairs, the exact Student t interval):** requests answered **GAIN**, up 4.7% a step
 (+14.8 to +37.4 requests a step, the interval clear of zero); the 95th percentile **GAIN**, down 9.9% a step (−31.3 to −4.9 ms,
-clear of zero); units standing **GAIN, a cut**, down 10.3% a step (−1.5 to −0.2 units, clear of zero); machines on **EVEN**,
+clear of zero); units standing **GAIN, a cut**, down 10.3% a step (−1.5 to −0.2 units, clear of zero); machines on **STEADY**,
 down 1.7% (−0.2 to +0.0). No row reads LOSS. More work, faster, on fewer units, on the same machines, nothing failed: the
 first reading of Omni direct against Kubernetes' own rule that the key calls GAIN, and still one run of each arm,
 not the three-run reading.
@@ -153,7 +153,7 @@ Where it came from, in the files. Conveyance stood a mean of 160 m above the req
 back when a second unit joined a machine), so the lone units answered at their machines' speed: the 50th percentile 100 → 90 ms.
 The verdict ran 12 trials: 9 abandoned by the traffic gate (the arrivals moved more than 15% inside the phase), 2 refused (the
 muscle was slower at the step), 1 allowed at 140 s (the response times at one unit below the twin read GAIN within the
-allowance), kept to the end: that is the unit cut, 10% fewer units for more work. Machines stayed EVEN because on this rig the
+allowance), kept to the end: that is the unit cut, 10% fewer units for more work. Machines stayed STEADY because on this rig the
 count has no room (`docs/THE_ROOM.md`, section 8) and six half-processor machines are the whole fleet; the cut would reach the
 machines on a fleet where the count has room. **One body** (3 → 6 → 3 clients, 120 s): 16 of 16 tasks finished, the service
 2,447 requests, 0 failed, 0 wrong, 95th percentile 162 ms. **The drills** (four clients): a unit killed, a machine lost and
@@ -165,8 +165,12 @@ repaired, the control plane killed and started again (every unit taken back), th
 The founder's order of 23 October, evening: the three arms are always shown together. **Native:** Kubernetes' rule on the
 muscles (the yardstick). **Omni on native:** Omni-Compass on top of that rule, the engine's strict form as on the kind rigs: the
 units are the rule's and never fewer, Omni adds a unit the beat work waits and past the wall, conveys each unit's wall, places by
-the busy rule, packs, parks and wakes machines (brain `omni_native`, `omni_orchestrator/control.py`). **Omni direct:** Omni alone
-on the muscles, no Kubernetes (brain `omni`). Every pair is read by the one key, paired by step: Omni on native against native,
+the busy rule, packs, parks and wakes machines (brain `omni_native`, `omni_orchestrator/control.py`). **Omni direct:** Omni-Compass
+on the muscles directly, itself the brain, the orchestrator and the scheduler, because in this one test it carries every one of
+those muscles (the placement, the room rule, the machines, built from scratch for it); no Kubernetes (brain `omni`). This is the
+only test where the word direct holds: on a Kubernetes stack Omni-Compass is a brain with no organs and can be direct to a knob
+only, never to a muscle (the founder's analysis of 31 October). Where it does not carry a muscle, that muscle stays, native, under
+it: a knob left with no working controller fails the whole system and is never a result (`docs/SOLO_PREREGISTRATION.md` amendment 2). Every pair is read by the one key, paired by step: Omni on native against native,
 Omni direct against native, and Omni direct against Omni on native. The showing runs all three in one go
 (`tools/orchestrator_show.py`), the report carries three columns, and the GitHub run (`orchestrator.yml`) prints the three.
 
@@ -199,11 +203,11 @@ Both are held by unit tests (`tests/test_orchestrator.py`, 20 tests).
 
 Read by the one key, paired by step:
 
-- **Omni on native against native:** work GAIN, up 8.3%; the 95th percentile EVEN, down 1.9%; machines EVEN, down 5.6%; units
+- **Omni on native against native:** work GAIN, up 8.3%; the 95th percentile STEADY, down 1.9%; machines STEADY, down 5.6%; units
   power given, up 36.5%.
-- **Omni direct against native:** work GAIN, up 9.1%; the 95th percentile EVEN, down 14.8%; machines EVEN, down 5.6%; units
+- **Omni direct against native:** work GAIN, up 9.1%; the 95th percentile STEADY, down 14.8%; machines STEADY, down 5.6%; units
   power given, up 23.5%.
-- **Omni direct against Omni on native:** work EVEN, up 0.7%; the 95th percentile GAIN, down 13.2%; machines EVEN; units GAIN, a
+- **Omni direct against Omni on native:** work STEADY, up 0.7%; the 95th percentile GAIN, down 13.2%; machines STEADY; units GAIN, a
   cut, down 9.5%.
 
 The batch job beside the service: 746 requests, 0 failed; the drills: 1,711 requests, 0 failed. Two trials began in 90 s and
@@ -215,11 +219,11 @@ host.
 
 | Pair | Work | The 95th percentile | Machines | Units |
 |---|---|---|---|---|
-| Omni on native against native | **GAIN in all three** (up 5.2%, 5.3%, 7.4%) | **GAIN in all three** (down 9.0%, 12.1%, 7.5%) | EVEN (down 2.2%, 4.6%, 2.4%) | power given in all three (up 11.0%, 8.9%, 10.8%) |
-| Omni direct against native | **GAIN in all three** (up 7.3%, 5.7%, 9.4%) | **GAIN in all three** (down 9.8%, 15.7%, 10.8%) | EVEN (down 2.2%, 3.1%, 2.2%) | EVEN (up 6.9%, down 0.3%, up 9.0%) |
-| Omni direct against Omni on native | EVEN (up 2.0%, 0.4%, 1.9%) | EVEN (down 0.9%, 4.1%, 3.6%) | EVEN | EVEN (down 3.7%, 8.5%, 1.7%) |
+| Omni on native against native | **GAIN in all three** (up 5.2%, 5.3%, 7.4%) | **GAIN in all three** (down 9.0%, 12.1%, 7.5%) | STEADY (down 2.2%, 4.6%, 2.4%) | power given in all three (up 11.0%, 8.9%, 10.8%) |
+| Omni direct against native | **GAIN in all three** (up 7.3%, 5.7%, 9.4%) | **GAIN in all three** (down 9.8%, 15.7%, 10.8%) | STEADY (down 2.2%, 3.1%, 2.2%) | STEADY (up 6.9%, down 0.3%, up 9.0%) |
+| Omni direct against Omni on native | STEADY (up 2.0%, 0.4%, 1.9%) | STEADY (down 0.9%, 4.1%, 3.6%) | STEADY | STEADY (down 3.7%, 8.5%, 1.7%) |
 
-No LOSS in any pair in any run; nothing failed and nothing wrong in any arm of any run (28,528 to 34,837 requests a run across the three arms), the batch job and the drills included. Both Omni-Compass arms do more work than native, answer faster, and pay for it in units (power given); Omni direct and Omni on native read EVEN against each other on every gauge in the three runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+No LOSS in any pair in any run; nothing failed and nothing wrong in any arm of any run (28,528 to 34,837 requests a run across the three arms), the batch job and the drills included. Both Omni-Compass arms do more work than native, answer faster, and pay for it in units (power given); Omni direct and Omni on native read STEADY against each other on every gauge in the three runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 
 ## 3. What it covers, and what it does not yet
@@ -244,7 +248,7 @@ scaling, lifecycle, recovery and coordination, on one host, with no request lost
 the control plane's death or the kill switch. With the engine's own mechanisms in its brain (conveyance, the reflex, the twin
 read as Kubernetes would, the fold under the verdict), in one full-form run of each arm on this rig (section 2c) it read
 against Kubernetes' own rule: work GAIN (up 4.7%), the 95th percentile GAIN (down 9.9%), units GAIN, a cut (down 10.3%),
-machines EVEN, nothing failed and nothing wrong. That is one run of each arm, class L, on one host: the three-run reading (A,
+machines STEADY, nothing failed and nothing wrong. That is one run of each arm, class L, on one host: the three-run reading (A,
 B and C on GitHub's machines from one commit) and the comparison against Kubernetes itself on the kind rig are what would make
 it a benchmark result. Equivalent output and complete functional coverage of a declared organism are targets to engineer
 toward, not results this showing establishes.

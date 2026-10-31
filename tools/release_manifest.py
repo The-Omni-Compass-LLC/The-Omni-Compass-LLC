@@ -26,8 +26,29 @@ MANIFEST = ROOT / "RELEASE_MANIFEST.json"
 RECEIPT = ROOT / "results" / "VERIFY_RECEIPT.txt"
 
 GROUPS = {
+    "benchmark_integrity": ["tools/bench_integrity.py", "tests/test_bench_integrity.py", "pilot/bench_report.py",
+                            "scripts/kind_bench.sh", "scripts/kind_paired.sh", "scripts/aks_paired.sh",
+                            ".github/workflows/six-kube.yml", "docs/REPAIR_20261029.md",
+                            "tools/omni_switch.py", "scripts/kind_faults.sh", "tests/test_faults_extended.py",
+                            "tests/test_switch_trust.py", "verify.py"],
     "engine_v8_citylearn": ["OMNI_V8.json", "tools/run_citylearn.py", "docs/OMNI_V8.md", "docs/CITYLEARN_PREREGISTRATION.md"],
-    "engine_v19": ["OMNI_V19.json", "tools/omni_version.py", "docs/OMNI_V19.md"],   # extend with the files omni-v19 changed
+    "engine_v23": ["OMNI_V23.json", "tools/omni_version.py", "docs/OMNI_V23.md", "omni_controller/controller.py",
+                   "tests/test_own_replicas.py", "results/model_gate/V23_VS_V22.md", "results/model_gate/V23_VS_V22.json",
+                   "deploy/kind/rbac-omni.yaml", "scripts/kind_bench.sh", "tests/test_kind_rig_rbac.py", "docs/SOLO_PREREGISTRATION.md"],
+    "engine_v22": ["OMNI_V22.json", "tools/omni_version.py", "docs/OMNI_V22.md", "tools/store_brain.py", "tools/knob_verdict.py",
+                   "tools/run_sysbench.py", "tools/run_ycsb.py", "tools/run_redis.py", "tools/run_kafka.py", "tools/run_pgbench.py",
+                   "tools/store_gate.py", "tools/kafka_model.py", "tools/redis_model.py", "tests/test_store_brain.py", "tests/test_redis_twin.py",
+                   "tests/test_kafka_twin.py", "results/model_gate/V22_STORE_GATE.md", "results/model_gate/V22_STORE_GATE.json",
+                   "results/model_gate/V22_REDIS_MODEL.md", "results/model_gate/V22_KAFKA_MODEL.md", "results/model_gate/V22_KAFKA_MODEL_UNTOUCHED.md",
+                   "results/model_gate/V22_KAFKA_MODEL_20S.md", "docs/STORE_ROOT_CAUSES_2026-10-30.md", "docs/MYSQL_PREREGISTRATION.md",
+                   "docs/YCSB_PREREGISTRATION.md", "docs/POSTGRES_PREREGISTRATION.md", "docs/REDIS_PREREGISTRATION.md", "docs/KAFKA_PREREGISTRATION.md"],
+    "engine_v21": ["OMNI_V21.json", "tools/omni_version.py", "docs/OMNI_V21.md"],   # extend with the files omni-v21 changed
+    "engine_v20": ["OMNI_V20.json", "tools/omni_version.py", "docs/OMNI_V20.md", "tools/run_sysbench.py", "tools/run_kafka.py", "tools/run_ycsb.py", "tools/run_redis.py", "tools/run_pgbench.py", ".github/workflows/pgbench.yml", "tools/store_gate.py", "results/model_gate/STORE_GATE.md", "results/model_gate/STORE_GATE.json", "tests/test_store_wires.py", "tests/test_store_gate.py", "docs/STORE_LOSS_ROOT_CAUSES_2026-10-25.md"],
+    "engine_v19": ["OMNI_V19.json", "tools/omni_version.py", "docs/OMNI_V19.md", "omni_controller/controller.py", "realms/harness.py",
+                   "realms/plants.py", "tests/test_own_replicas.py", "results/model_gate/V19_VS_V18.md", "results/model_gate/V19_VS_V18.json",
+                   "results/model_gate/SOLO_V19.md", "results/model_gate/SOLO_V19.json", "results/model_gate/SOLO_V19_VS_V18.md",
+                   "results/model_gate/SOLO_V19_VS_V18.json", "docs/SOLO_PREREGISTRATION.md", "tools/solo_study.py", "scripts/kind_bench.sh",
+                   "fleet/capture/kube_capture.sh", "tools/confirm_abc.py", "tools/live_reps.py", "tools/run_realms_v5.py"],
     "engine_v18": ["OMNI_V18.json", "tools/omni_version.py", "docs/OMNI_V18.md"],   # extend with the files omni-v18 changed
     "engine_v17": ["OMNI_V17.json", "tools/omni_version.py", "docs/OMNI_V17.md", "omni_controller/controller.py",
                    "tests/test_pace_clocks.py", "tests/test_time_correct.py", "tools/beat_ladder.py", "tests/test_beat_ladder.py",
@@ -247,7 +268,7 @@ def main(argv=None):
          "files": {g: {p: sha(p) for p in fs} for g, fs in GROUPS.items()},
          "live_evidence": LIVE,
          "physical_meter_results": ("NVIDIA A100 SXM4 40 GB on Lambda, 2026-10-24, omni-v18's card governor (commit e3b05dc), one run of "
-                                    "10 paired repetitions (results/gpu/run-20261024T091235Z/GPU_REPS.md): every service gauge EVEN "
+                                    "10 paired repetitions (results/gpu/run-20261024T091235Z/GPU_REPS.md): every service gauge STEADY "
                                     "(work per energy up 0.2%, the 95th percentile up 0.2%, requests served the same), the temperature "
                                     "up 1.4% to 1.5% (power given); the governor wrote nothing, both knobs at their top on native (at its "
                                     "limit on native). The NVIDIA A10 run of 2026-10-02 (results/gpu/run-20261002T082232Z, the "

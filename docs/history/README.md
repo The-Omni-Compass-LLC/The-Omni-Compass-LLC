@@ -41,6 +41,7 @@ Each page here is kept as written on its date. None is current: where one differ
 | [`OMNI_COMPASS_TECHNICAL_MANUAL.pdf`](OMNI_COMPASS_TECHNICAL_MANUAL.pdf) | The earlier technical manual |
 | `../../results/scale/receipts/v3-1x_set1.md`, `v3-10x_set1.md`, `v3-100x_set1.md` | The grid receipts of the first v3 runs at 1, 10 and 100 copies (7 to 8 October 2026), kept beside the receipts of 10 October |
 | [`xpass/`](xpass) | The earlier XPASS package indexes |
+| [`SCENARIOS_30_2026-10-24.md`](SCENARIOS_30_2026-10-24.md), [`SCENARIOS_30_2026-10-24.json`](SCENARIOS_30_2026-10-24.json) | The thirty scenarios of 24 October 2026: ten organisms each native, Omni-Compass on native and Omni-Compass by itself (named direct there), with its 32 LOSS rows, every one Omni-Compass by itself; the third way was taken out by the founder's order of 25 October (Omni-Compass is never by itself), and the record of the two ways that stand is `results/scenarios/SCENARIOS_20.md` |
 
 ---
 

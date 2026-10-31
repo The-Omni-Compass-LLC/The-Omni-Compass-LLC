@@ -14,7 +14,8 @@ and past it. The operator's fixed pool is the native controller here.
   native  MySQL at the operator's pool (512 MB) for the whole run
   omni    the same MySQL, with the compass law (omnicompass/compass_law.py) on one knob, the buffer pool size, through the
           server's own console (SET GLOBAL innodb_buffer_pool_size), inside the cover [128 MB, 2,048 MB]: the compass reads the
-          server's own mean statement latency over the last second (performance_schema) on a band from 0 to the statement
+          workload's own mean statement latency over the last second (performance_schema, sysbench's account only, its prepared
+          statements counted; store fix of 25 October) on a band from 0 to the statement
           line and holds it at 40% of the line; slow statements with the pool full push the pool up a chunk or more (slow
           statements with room to spare are not the pool's to mend), calm with the pool's misses under one percent of its read requests gives a chunk back
           (amendment 2: the pool grows only while it is missing, one percent or more, the same line the other way; a second
@@ -54,10 +55,20 @@ sys.path.insert(0, str(ROOT))
 from omnicompass.compass_law import Band, CompassLaw  # noqa: E402
 from tools.run_ycsb import cpu_times, engine, fmt, paired  # noqa: E402  (the same paired reading and host clock as the other stores)
 from tools.knob_verdict import KnobVerdict, sample_cost, OBJECTIVES, RESOURCE as DEFAULT_OBJECTIVE  # noqa: E402  (amendment 3: the brain's own verdict)
+from tools.store_brain import MemoryMax, read_meminfo  # noqa: E402  (omni-v22: the max on the pool)
 
 HOST = os.environ.get("MYSQL_HOST", "127.0.0.1")
 USER = os.environ.get("MYSQL_USER", "omni")
 PASSWORD = os.environ.get("MYSQL_PWD", "omni-bench")       # a local benchmark user on a throwaway runner, created by --setup
+LOAD_USER = os.environ.get("SYSBENCH_USER", "omni_load")   # the account sysbench connects as, apart from the harness's (store fix of 25 October):
+                                                           # the brain reads the statements of this account only, never its own monitoring queries
+# The statements the brain reads (store fix of 25 October): sysbench 1.0.20 runs its OLTP scripts as server-side prepared
+# statements, which the performance schema counts as statement/com/Execute (the binary protocol's execute) or
+# statement/sql/execute_sql (an SQL-level EXECUTE), not as statement/sql/select and the other three. The omni-v16 runs read
+# only those four, so the brain counted 4.1 statements a second in every arm (its own and the sampler's monitoring SELECTs)
+# while sysbench sent 994 to 4,839 queries a second: its force and the verdict's work sample never saw the workload.
+WORKLOAD_EVENTS = ("statement/sql/select", "statement/sql/update", "statement/sql/insert", "statement/sql/delete",
+                   "statement/com/Execute", "statement/sql/execute", "statement/sql/execute_sql")
 DB = "sbtest"
 MB = 1024 * 1024
 PAGE = 16 * 1024          # InnoDB's page
@@ -78,6 +89,7 @@ COVER_MB = (128, 2048)    # never under one chunk, never over 2 GB
 STEP_MB = CHUNK_MB        # one notch of the knob is one chunk
 FAILUP_MB = 512           # past the wall: four chunks at once (about a quarter of the cover), and again the next second if still past it
 DWELL_S = 10.0            # after growing, no taking back within ten seconds (a shrink evicts pages and the resize itself takes seconds)
+DIAL = os.environ.get("OMNI_DIAL", "max")   # omni-v22: max, the factory tune (the Brain); save, the tune-down (omni-v21's loop)
 FULL = 0.9                # the pool counts as full when the pages holding data are 90% of its pages or more
 THREADS = 32              # sysbench's client threads
 TABLES = 6                # tables prepared; notch n uses the first n
@@ -136,10 +148,32 @@ def status(conn):
                        "'Innodb_buffer_pool_pages_free', 'Innodb_buffer_pool_reads', 'Innodb_buffer_pool_read_requests', 'Innodb_buffer_pool_resize_status')")
     st = {k: v for k, v in rows}
     st["pool_bytes"] = int(query(conn, "SELECT @@innodb_buffer_pool_size")[0][0])
-    t = query(conn, "SELECT COALESCE(SUM(SUM_TIMER_WAIT), 0), COALESCE(SUM(COUNT_STAR), 0) FROM performance_schema.events_statements_summary_global_by_event_name "
-                    "WHERE EVENT_NAME IN ('statement/sql/select', 'statement/sql/update', 'statement/sql/insert', 'statement/sql/delete')")[0]
+    t = query(conn, workload_statements_sql())[0]
     st["stmt_timer_ps"], st["stmt_count"] = int(t[0]), int(t[1])
+    f = query(conn, FILE_READS_SQL)[0]
+    st["file_reads"], st["file_read_ps"] = int(f[0]), int(f[1])
     return st
+
+
+# omni-v22: the server's own account of what a pool miss costs: the performance schema's timer on the data files' reads (every
+# page the pool did not hold and had to read, read-ahead included), in picoseconds, beside the workload's own statement timer.
+# The instrument wait/io/file/innodb/innodb_data_file is enabled and timed as MySQL 8.0 ships (checked on 8.0.46).
+FILE_READS_SQL = ("SELECT COALESCE(SUM(COUNT_READ), 0), COALESCE(SUM(SUM_TIMER_READ), 0) FROM performance_schema.file_summary_by_event_name "
+                  "WHERE EVENT_NAME = 'wait/io/file/innodb/innodb_data_file'")
+
+
+def file_reads(st):
+    """(data file reads, their time in picoseconds) from one status read."""
+    return st["file_reads"], st["file_read_ps"]
+
+
+def workload_statements_sql(user=None):
+    """The workload's statement timer and count: sysbench's own account only (the harness's monitoring queries run as another
+    account and are never read), its plain and prepared statements alike (WORKLOAD_EVENTS)."""
+    user = LOAD_USER if user is None else user
+    events = ", ".join(f"'{e}'" for e in WORKLOAD_EVENTS)
+    return ("SELECT COALESCE(SUM(SUM_TIMER_WAIT), 0), COALESCE(SUM(COUNT_STAR), 0) FROM performance_schema.events_statements_summary_by_user_by_event_name "
+            f"WHERE USER = '{user}' AND EVENT_NAME IN ({events})")
 
 
 def pool_stats(st):
@@ -271,6 +305,44 @@ def decide(p, force, misses_last_s, cur_mb, last_change_age, full, wall=0.95, re
     return cur_mb, "hold"
 
 
+# omni-v22: the max on the buffer pool (docs/MYSQL_PREREGISTRATION.md, amendment 6; docs/STORE_ROOT_CAUSES_2026-10-30.md): the
+# wire's own rule (decide) with the spend never clamped by an allowance where the server's own account says the misses cost the
+# statements (the performance schema's timer on the data files' reads against the workload's statement timer: tools/store_brain.py),
+# held where they cost nothing (on a runner whose page cache holds the data files a pool miss is a read from memory: 9% to 12% of
+# page reads missing with the latency unmoved), held while the host has no chunk to spare, and no give-back below the working set's
+# floor nor below the operator's pool. `--dial save` keeps omni-v21's loop, the verdict under the resource objective, where giving
+# memory back is the aim.
+METER = "the performance schema's timer on the data files' reads against the workload's statement timer"
+
+
+class Brain:
+    """The knob's decision, one a second: obs holds reading_s (the mean statement latency), statements, miss_share, pool_mb,
+    used_mb, full, reads (any read request this second), resizing, cpu_share, miss_time_s (the data files' read time this second),
+    service_time_s (the statements' own time this second), host_avail_mb and host_total_mb (the host's memory, None unread)."""
+
+    def __init__(self, native, objective=DEFAULT_OBJECTIVE, line_ms=LINE_STMT_MS):
+        self.native, self.objective = native, objective
+        self.law = CompassLaw(Band(0.0, line_ms / 1000.0, center=CENTER), dt=DT, tau=TAU, smooth=SMOOTH)
+        self.max = MemoryMax(native, STEP_MB, COVER_MB, FULL, METER)
+        self.last_change = -1e9
+
+    @property
+    def failups(self):
+        return self.max.failups
+
+    def record(self):
+        return self.max.record(self.objective)
+
+    def step(self, t, obs):
+        reading, cur = obs["reading_s"], obs["pool_mb"]
+        f = self.law.force(reading)
+        want, why = decide(self.law.p, f, obs["miss_share"], cur, t - self.last_change, obs["full"], wall=self.law.band.wall_high, reads=obs.get("reads", True))
+        target, why, info = self.max.step(t, want, why, cur, obs["used_mb"], obs.get("miss_time_s"), obs.get("service_time_s"),
+                                          obs.get("host_avail_mb"), obs.get("host_total_mb"), fail_up=why.startswith("fail up"))
+        info.update({"p": round(self.law.p, 4), "force": round(f, 4)})
+        return target, why, info
+
+
 class Omni(threading.Thread):
     """The brain, one decision a second, reading the server's own statement latency, writing the audit; the knob is handed back
     at the end and read back. Amendment 3 (the brain's own verdict, 2026-10-09): the pool starts in watch and is written only
@@ -278,28 +350,38 @@ class Omni(threading.Thread):
     around the engine's own Verdict), one chunk a trial; a trial holds the pool, and no sample is taken while the server is
     still resizing; a fail-up never spends beyond the allowance."""
 
-    def __init__(self, plug: BufferPool, audit_path: Path, line_ms=LINE_STMT_MS, objective=DEFAULT_OBJECTIVE):
+    def __init__(self, plug: BufferPool, audit_path: Path, line_ms=LINE_STMT_MS, objective=DEFAULT_OBJECTIVE, dial=DIAL):
         super().__init__(daemon=True)
-        self.plug, self.audit, self.objective = plug, audit_path, objective
+        self.plug, self.audit, self.objective, self.dial, self.line_ms = plug, audit_path, objective, dial, line_ms
         self.law = CompassLaw(Band(0.0, line_ms / 1000.0, center=CENTER), dt=DT, tau=TAU, smooth=SMOOTH)
         self.stop_flag = threading.Event(); self.last_change = -1e9; self.writes = 0; self.failups = 0
-        self.foreign = False; self.handed_back = False; self.error = None; self.verdict = None
+        self.foreign = False; self.handed_back = False; self.error = None; self.verdict = None; self.brain = None
+
+    def govern_record(self):
+        """The record of what governed the knob: the max's counts (omni-v22) or the verdict's allowance (the tune-down)."""
+        if self.brain is not None:
+            return self.brain.record()
+        return self.verdict.record() if self.verdict else None
 
     def run(self):
         try:
             native = self.plug.attach(); st = self.plug._status(); lat0, n0 = stmt_latency(st); _, _, rd0, _ = pool_stats(st); rq0 = read_requests(st)
+            fr0, frt0 = file_reads(st)
         except Exception as e:                                      # the brain never ran: say so in the audit and the record, never silently
             self.error = repr(e)
             self.audit.write_text(json.dumps({"t": 0.0, "error": self.error, "note": "the brain could not attach; no decision was made"}) + "\n")
             return
         t0 = time.monotonic(); cpu_prev = cpu_times()
         self.verdict = KnobVerdict(native, STEP_MB, COVER_MB, objective=self.objective, settle_s=TAU, max_trial=120)   # a resize takes seconds
+        if self.dial == "max":
+            self.brain = Brain(native, self.objective, self.line_ms); self.verdict = None
         with open(self.audit, "w") as fh:
             while not self.stop_flag.is_set():
                 tick = time.monotonic()
                 try:
                     st = self.plug._status()
                     lat, n = stmt_latency(st); dl, dn = lat - lat0, n - n0; lat0, n0 = lat, n
+                    fr, frt = file_reads(st); fr_last, frt_last = fr - fr0, frt - frt0; fr0, frt0 = fr, frt
                     reading = (dl / dn / 1e12) if dn > 0 else 0.0        # the mean statement latency of the last second, in seconds; none reads calm
                     f = self.law.force(reading)
                     cur, used, rd, rs = pool_stats(st); rd_last = rd - rd0; rd0 = rd
@@ -309,17 +391,27 @@ class Omni(threading.Thread):
                     cpu_now = cpu_times(); d_total = cpu_now[0] - cpu_prev[0]; d_idle = cpu_now[1] - cpu_prev[1]; cpu_prev = cpu_now
                     cpu_share = (1.0 - d_idle / d_total) if d_total > 0 else None
                     cost = sample_cost(self.objective, dn, reading if dn > 0 else None, cur, cpu_share)
-                    self.verdict.observe(cost, tick - t0, settled=not resizing(rs))      # measured under the pool of the last second, once resized
-                    target, why = decide(self.law.p, f, share, cur, tick - self.last_change, full, wall=self.law.band.wall_high, reads=rq_last > 0)
-                    target, why, vinfo = self.verdict.decide(
-                        target, spend_ok=(f > 0.05 and full and share >= GROW_MISS_SHARE),
-                        give_ok=(f < -0.05 and rq_last > 0 and share < GIVEBACK_MISS_SHARE),
-                        t=tick - t0, why=why, stress=f > 0.05, calm=f < -0.05, fail_up=why.startswith("fail up"))
+                    if self.brain is not None:                                           # the max (omni-v22)
+                        h_avail, h_total = read_meminfo()
+                        obs = {"reading_s": reading, "statements": dn, "miss_share": share, "pool_mb": cur, "used_mb": used, "full": full,
+                               "reads": rq_last > 0, "resizing": resizing(rs), "cpu_share": cpu_share,
+                               "miss_time_s": frt_last / 1e12, "service_time_s": dl / 1e12, "host_avail_mb": h_avail, "host_total_mb": h_total}
+                        self.brain.last_change = self.last_change - t0
+                        target, why, vinfo = self.brain.step(tick - t0, obs)
+                        vinfo["file_reads_last_s"] = fr_last
+                        self.failups = self.brain.failups
+                    else:                                                                # the tune-down: omni-v21's loop
+                        self.verdict.observe(cost, tick - t0, settled=not resizing(rs))  # measured under the pool of the last second, once resized
+                        target, why = decide(self.law.p, f, share, cur, tick - self.last_change, full, wall=self.law.band.wall_high, reads=rq_last > 0)
+                        target, why, vinfo = self.verdict.decide(
+                            target, spend_ok=(f > 0.05 and full and share >= GROW_MISS_SHARE),
+                            give_ok=(f < -0.05 and rq_last > 0 and share < GIVEBACK_MISS_SHARE),
+                            t=tick - t0, why=why, stress=f > 0.05, calm=f < -0.05, fail_up=why.startswith("fail up"))
                     wrote = None
                     if target != cur and not resizing(rs):
                         wrote = self.plug.write(target); self.writes += 1
                         self.last_change = tick                            # a shrink and a grow both start the dwell: the resize takes seconds
-                        if why.startswith("fail up"):
+                        if why.startswith("fail up") and self.brain is None:
                             self.failups += 1
                     fh.write(json.dumps({"t": round(tick - t0, 2), "reading_ms": round(reading * 1000, 3), "statements": dn, "p": round(self.law.p, 4), "force": round(f, 4),
                                          "disk_reads_last_s": rd_last, "read_requests_last_s": rq_last, "miss_share": round(share, 4), "pool_mb": cur, "used_mb": round(used, 1),
@@ -389,7 +481,7 @@ def quantile(hist, q):
 
 
 def sysbench(script, cmd, tables, rate, seconds, out_file: Path | None, extra=()):
-    args = ["sysbench", str(LUA / f"{script}.lua"), f"--mysql-host={HOST}", f"--mysql-user={USER}", f"--mysql-password={PASSWORD}", f"--mysql-db={DB}",
+    args = ["sysbench", str(LUA / f"{script}.lua"), f"--mysql-host={HOST}", f"--mysql-user={LOAD_USER}", f"--mysql-password={PASSWORD}", f"--mysql-db={DB}",
             f"--tables={tables}", f"--table-size={TABLE_ROWS}", f"--threads={THREADS}", *extra]
     if cmd == "run":
         args += [f"--rate={rate}", f"--time={int(seconds)}", f"--rand-type={RAND_TYPE}", "--histogram=on", "--report-interval=0", "--percentile=95"]
@@ -476,7 +568,7 @@ def run_arm(arm, wl_dir: Path, rep, script, stmts, rate, steps, step_s, line_stm
          "handed_back": (omni.handed_back if omni else True), "foreign_writer": (omni.foreign if omni else False), "failups": (omni.failups if omni else 0),
          "controller_error": (omni.error if omni else None),
          "restore": (omni.plug.restore_info if omni else {}),
-         "verdict": (omni.verdict.record() if omni and omni.verdict else None)}
+         "verdict": (omni.govern_record() if omni else None)}
     (d / "arm.json").write_text(json.dumps(g, indent=1))
     print(f"   {arm} rep {rep}: {tx} transactions, inside the line {g['work_inside_line_tps']:.0f}/s, p95 {g['p95_ms']:.2f} ms, pool {g['pool_mb_mean']:.0f} MB, "
           f"data pages {g['pool_used_mb_mean']:.0f} MB, disk reads {g['disk_reads']:,}, CPU {cpu_s:.1f} s, handed back {g['handed_back']}"
@@ -509,7 +601,7 @@ def run_workload(name, out: Path, reps, step_s, line_stmt_ms, objective=DEFAULT_
     rec = {"workload": name, "tuning": tuning, "script": script, "statements": stmts, "rate_tps": rate, "steps": steps, "step_s": step_s,
            "line_stmt_ms": line_stmt_ms, "line_ms": line_stmt_ms * stmts, "threads": THREADS, "tables": TABLES, "table_rows": TABLE_ROWS, "rand_type": RAND_TYPE,
            "native_mb": NATIVE_MB, "chunk_mb": CHUNK_MB, "cover_mb": list(COVER_MB), "mysql_version": ver, "sysbench_version": sysbench_version(),
-           "objective": objective, "native": NATIVE, "engine": engine(), "reps": []}
+           "objective": objective, "dial": DIAL, "native": NATIVE, "engine": engine(), "reps": []}
     for rep in range(1, reps + 1):
         order = ("native", "omni") if rep % 2 else ("omni", "native")
         r = {}
@@ -556,7 +648,8 @@ def setup():
     """The benchmark user on the local server, the operator's pool and chunk in the server's own configuration file, the
     performance schema on; the server restarted. MySQL and sysbench themselves are installed by the workflow from Ubuntu's own
     packages."""
-    sql = (f"CREATE USER IF NOT EXISTS '{USER}'@'%' IDENTIFIED BY '{PASSWORD}'; GRANT ALL PRIVILEGES ON *.* TO '{USER}'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;")
+    sql = (f"CREATE USER IF NOT EXISTS '{USER}'@'%' IDENTIFIED BY '{PASSWORD}'; GRANT ALL PRIVILEGES ON *.* TO '{USER}'@'%' WITH GRANT OPTION; "
+           f"CREATE USER IF NOT EXISTS '{LOAD_USER}'@'%' IDENTIFIED BY '{PASSWORD}'; GRANT ALL PRIVILEGES ON {DB}.* TO '{LOAD_USER}'@'%'; FLUSH PRIVILEGES;")
     ok = False
     for cmd in (["sudo", "mysql", "-e", sql], ["mysql", "-uroot", "-proot", "-h", HOST, "-e", sql]):
         r = subprocess.run(cmd, capture_output=True, text=True)
@@ -570,7 +663,7 @@ def setup():
     subprocess.run(["sudo", "tee", str(conf)], input=txt, text=True, check=True, capture_output=True)
     subprocess.run(["sudo", "systemctl", "restart", "mysql"], check=True)
     c = fresh_server(NATIVE_MB)
-    print(f"MySQL {server_version()} at native's {NATIVE_MB} MB pool ({NATIVE}) (chunk {CHUNK_MB} MB); {sysbench_version()}; user {USER}; pool reads {status(c)['pool_bytes'] // MB} MB")
+    print(f"MySQL {server_version()} at native's {NATIVE_MB} MB pool ({NATIVE}) (chunk {CHUNK_MB} MB); {sysbench_version()}; user {USER}, load user {LOAD_USER}; pool reads {status(c)['pool_bytes'] // MB} MB")
     return 0
 
 
