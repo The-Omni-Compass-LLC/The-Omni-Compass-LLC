@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# One job of the batch stream (scripts/kind_batch_queue.sh, PHASE=submit fills every name and number): 10
+# pods, 5 at a time, each hashing a fixed amount of data (real CPU work, the same in every arm), sent to
+# the queueing system under test: Kueue's LocalQueue by the job's label, Volcano by its scheduler's name, or the KAI
+# scheduler by its scheduler's name and its queue's label on the job and on every pod. Placed on the measured workers,
+# never the control plane.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: omni-batch-024
+  namespace: default
+  labels: {app: omni-batch-stream, kai.scheduler/queue: default-queue}
+spec:
+  completions: 10
+  parallelism: 5
+  backoffLimit: 20
+  template:
+    metadata: {labels: {app: omni-batch-stream, kai.scheduler/queue: default-queue}}
+    spec:
+      schedulerName: kai-scheduler
+      restartPolicy: Never
+      containers:
+        - name: work
+          image: busybox:1.36
+          resources: {requests: {cpu: 500m, memory: 64Mi}, limits: {cpu: "1", memory: 64Mi}}
+          command: ["/bin/sh", "-c", "dd if=/dev/zero bs=1M count=3000 2>/dev/null | sha256sum"]
+# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
