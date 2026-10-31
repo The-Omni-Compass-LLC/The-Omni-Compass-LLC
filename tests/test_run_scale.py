@@ -259,9 +259,9 @@ class Conductor(unittest.TestCase):
         # every set started: nothing more, ever
         self.assertEqual(g.azure_to_start(q, {steady: 3, x: 3, y: 3}, set()), [])
         self.assertEqual(g.azure_title({"dial": "max", "replica_ceiling": "0"}), "aks-metered steady replica room 0 dial max eastus Standard_D2s_v4")
-        own = g.azure_queue(g.AZURE_QUEUE)                                 # the repository's own queue reads: the four sets at the
-        self.assertEqual(len(own), 12)                                     # max (the founder's order of 31 October), A, B, C of each
-        self.assertEqual([n for r, n, _, _ in own if r == "A"], ["steady", "burst 1 4 1 6 1 9", "burst 1 6 1 8 1 6", "the real day on 1 to 9"])
+        own = g.azure_queue(g.AZURE_QUEUE)                                 # the repository's own queue reads: the work meter's tuning
+        self.assertEqual([(r, n) for r, n, _, _ in own], [("A", "work meter tuning case")])   # case first, run once (31 October,
+        # night: the cloud judged by its work per dollar); the four sets of the open load wait behind the meter's, commented
         for _, _, title, kv in own:
             self.assertTrue(title.startswith("aks-metered ") and " dial max " in title, title)
             # the replica room read live, as on kind: the operator's cap no longer pinned by the struck rule of 14 October
