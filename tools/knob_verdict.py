@@ -196,11 +196,16 @@ class KnobVerdict:
 
 
 def summarize(records):
-    """One line for a table from the omni arms' verdict records of one workload: the state of each arm and the allowance."""
+    """One line for a table from the omni arms' records of one workload: under the tune-down the verdict's state and allowance in
+    each arm; under the max (omni-v22, records with dial "max") the max's own counts (tools/store_brain.py)."""
     if not records:
         return "no verdict record"
     parts = []
     for r in records:
+        if r.get("dial") == "max":
+            from tools.store_brain import summarize_max
+            parts.append(summarize_max([r]))
+            continue
         c = r.get("counts", {})
         parts.append(f"{r.get('state', '?')} ({c.get('trials', 0)} trials, {c.get('allowed', 0)} allowed, {c.get('refused', 0)} refused)")
     return "; ".join(parts)

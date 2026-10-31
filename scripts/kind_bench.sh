@@ -35,9 +35,10 @@
 # and made no write is valid: it stayed native, and the table counts such windows); SHA256SUMS.txt fingerprints every
 # output file.
 set -euo pipefail
-ARM="${ARM:?set ARM=native, ARM=watch (Omni watches, writes nothing), ARM=omni (B: Omni on top), ARM=compass (B with the compass law) or ARM=strict (C: Omni decides replicas and nodes)}"
+ARM="${ARM:?set ARM=native, ARM=watch (Omni watches, writes nothing), ARM=omni (B: Omni on top), ARM=compass (B with the compass law), ARM=strict (C: Omni decides replicas and nodes) or ARM=solo (Omni-Compass by itself: the pod autoscaler removed, the pod muscle of Omni-Compass on the workload)}"
 STRICT=""; [ "$ARM" = "strict" ] && STRICT="--strict-replicas"
-LAW=""; [ "$ARM" = "compass" ] && LAW="--law compass"
+LAW=""; { [ "$ARM" = "compass" ] || [ "$ARM" = "solo" ]; } && LAW="--law compass"
+OWN=""   # ARM=solo: the workload Omni-Compass scales itself (omni-v19's pod muscle of its own; docs/SOLO_PREREGISTRATION.md)
 DRY=""; [ "$ARM" = "watch" ] && DRY="--dry-run"
 # native tuned harder (the cost-to-match test): ARM=native40, native30, native20 is Kubernetes alone with its HPA target
 # lowered to that value by the operator, no Omni-Compass; it shows what native needs to reach Omni-Compass's response times
@@ -54,6 +55,22 @@ IDLE_W="${IDLE_W:-100}"; DYN_W="${DYN_W:-150}"
 PARK_FRAC="${PARK_FRAC:-0.25}"
 STANDBY_W="${STANDBY_W:-$(python -c "print($IDLE_W * $PARK_FRAC)")}"; export IDLE_W DYN_W STANDBY_W
 mkdir -p "$OUT_DIR"
+# Preserve every failed arm and its diagnostics, including failures before the final checks.
+finish_evidence() {
+  local code=$?
+  trap - EXIT
+  if [ -n "${watch_pid:-}" ]; then
+    touch "$OUT_DIR/pod_watch.stop"
+    wait "$watch_pid" || { [ "$code" -ne 0 ] || code=1; }
+  fi
+  if [ "$code" -ne 0 ] && declare -F stop_governors >/dev/null; then
+    stop_governors || true
+  fi
+  [ "$code" -eq 0 ] || echo "arm failed with exit $code; measurements not admitted" >> "$OUT_DIR/INVALID"
+  (cd "$OUT_DIR" && find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt) || code=1
+  exit "$code"
+}
+trap finish_evidence EXIT
 if [ "${OMNI_MACHINES_ONLY:-0}" = "1" ]; then   # the receipt names this arm as it ran (tools/live_reps.py)
   echo "machines alone: no pod autoscaler moved, no processor conveyed, no power capped" > "$OUT_DIR/machines_only.txt"
 fi
@@ -419,6 +436,19 @@ fi
 hpa_count=$(kubectl get hpa -A -o json | jq '.items | length')
 want_hpa=1; [ -z "${TWO_APP:-}" ] || want_hpa=2
 [ "$hpa_count" = "$want_hpa" ] || { echo "expected exactly $want_hpa HPA, found $hpa_count"; exit 1; }
+SOLO_RANGE=""
+if [ "$ARM" = "solo" ]; then
+  # Omni-Compass by itself (docs/SOLO_PREREGISTRATION.md): the plain serving rig only; the pod autoscaler is removed after the
+  # deploy, its own target and range written on the workload as the operator's (they are the operator's settings, not Omni's
+  # records), the workload at the range's floor, the count its manifest ships; Kubernetes' own scheduler and kubelet stay
+  [ -z "$KEDA$CRANE$CRUISEKUBE${TWO_APP:-}${BATCH_QUEUE:-}" ] || { echo "ARM=solo runs on the plain serving rig only"; exit 1; }
+  SOLO_TARGET=$(hpa_cpu_target "$HPA_NAME"); SOLO_RANGE=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.spec.minReplicas},{.spec.maxReplicas}')
+  kubectl delete hpa "$HPA_NAME" >/dev/null
+  kubectl annotate deployment php-apache --overwrite "omnicompass.io/target-utilization=$SOLO_TARGET" "omnicompass.io/replica-range=$SOLO_RANGE" >/dev/null
+  kubectl scale deployment php-apache --replicas="${SOLO_RANGE%%,*}" >/dev/null
+  OWN="--own-replicas default/php-apache"; export OWN_WORKLOADS="default/php-apache"
+  echo "solo: the pod autoscaler removed; the operator's target ${SOLO_TARGET}% and range $SOLO_RANGE written on the workload, $((${SOLO_RANGE%%,*})) replica(s) to start" | tee -a "$OUT_DIR/preflight.txt"
+fi
 if [ -n "$KEDA" ]; then   # the add-on's own pods, all on the control plane (scripts/kind_addons.sh checks where); with
   # CruiseKube beside it, CruiseKube's, its PostgreSQL's and its metrics' too (scripts/kind_addons_cruisekube.sh checks where)
   ck=false; [ -z "$CRUISEKUBE" ] || ck=true
@@ -443,12 +473,14 @@ if [ -z "$NATIVE" ]; then
   {
     echo "== can (each muscle's push)"
     echo "patch hpa/$HPA_NAME (hpa): $(can patch "hpa/$HPA_NAME" -n default)"
+    echo "create hpa (omni-v23: the hand-back of a knob Omni-Compass cannot move to native's own autoscaler): $(can create hpa -n default)"
     echo "patch nodes (node pool: idle mark): $(can patch nodes)"
     echo "create pods/eviction (node pool: drain): $(can create pods --subresource=eviction -n default)"
     echo "patch pods/resize (power cap, in place): $(can patch pods --subresource=resize -n default)"
     echo "patch pods (make before break: which pods leave first): $(can patch pods -n default)"
     echo "get pods/resize (power cap reads before it writes): $(can get pods --subresource=resize -n default)"
     echo "patch deployment/php-apache (rollout guard, cap record): $(can patch deployment/php-apache -n default)"
+    echo "patch deployment/php-apache --subresource=scale (pod muscle of its own, --own-replicas: what kubectl scale writes): $(can patch deployment/php-apache --subresource=scale -n default)"
     echo "get configmap/omni-security (security afferent): $(can get configmap/omni-security -n default)"
     [ -z "$KEDA" ] || echo "patch scaledobject/php-apache (the add-on's knob: KEDA rebuilds the HPA from it): $(can patch scaledobjects.keda.sh/php-apache -n default)"
     [ -z "$CRANE" ] || echo "patch ehpa/php-apache (Crane's knob: Crane rebuilds the HPA from it): $(can patch effectivehorizontalpodautoscalers.autoscaling.crane.io/php-apache -n default)"
@@ -458,6 +490,7 @@ if [ -z "$NATIVE" ]; then
     echo "delete pods: $(can delete pods -n default)"
     echo "delete deployments: $(can delete deployments -n default)"
     echo "patch deployment/load-generator: $(can patch deployment/load-generator -n default)"
+    echo "patch deployment/load-generator --subresource=scale (the pod muscle of its own writes the named workload alone): $(can patch deployment/load-generator --subresource=scale -n default)"
     echo "patch deployments in kube-system: $(can patch deployments -n kube-system)"
     echo "patch hpa in kube-system: $(can patch hpa -n kube-system)"
     echo "get secrets (any namespace): $(can get secrets -A)"
@@ -517,6 +550,17 @@ if [ -n "${ORGANISM:-}" ]; then
   kil_pid=$!
 fi
 echo "== warm-up ${WARMUP}s (both arms)"; sleep "$WARMUP"
+# LIST first, then continue from its resourceVersion across bounded API watches.
+# Start before the workload and measured window; never infer missing events from a final snapshot.
+rm -f "$OUT_DIR/pod_watch.stop" "$OUT_DIR/pod_watch.ready"
+python3 tools/bench_integrity.py collect "$OUT_DIR" > "$OUT_DIR/pod_collector.log" 2>&1 &
+watch_pid=$!
+for i in $(seq 1 60); do
+  [ -f "$OUT_DIR/pod_watch.ready" ] && break
+  kill -0 "$watch_pid" 2>/dev/null || { echo "pod collector failed before the window"; exit 1; }
+  sleep 1
+done
+[ -f "$OUT_DIR/pod_watch.ready" ] || { echo "pod collector did not become ready"; exit 1; }
 if [ -n "${GROUP_BARRIER:-}" ]; then
   # a member of a group of clusters (scripts/kind_group.sh): every member opens its window together, so the group's stream,
   # sent when the last member is ready, falls inside every member's window; a member not ready in 30 minutes fails the arm
@@ -630,8 +674,6 @@ if [ "$PLATFORM" != aks ]; then
       echo "$(date -u +%s),$(awk -v dt=$((t-pt)) -v di=$((i-pi)) 'BEGIN{printf "%.4f", (dt > 0 ? 1 - di / dt : 0)}'),$(nproc),$(awk '/^MemAvailable:/ {printf "%d", $2 / 1024}' /proc/meminfo)"; pt=$t; pi=$i; done ) > "$OUT_DIR/host_cpu.csv" &
   host_pid=$!
 fi
-kubectl get pods -n default -l run=php-apache -w --output-watch-events -o json > "$OUT_DIR/pod_watch.json" 2>"$OUT_DIR/pod_watch.err" &
-watch_pid=$!
 omni_pid=""
 # the governor's full decision every OMNI_INTERVAL seconds and its fast checks (the scheduling floor, the pod reflex, and
 # the conveyance every 15 s) every OMNI_FLOOR_INTERVAL seconds: 60 and 5 by default (omni-v17, the founder's word of 22
@@ -649,7 +691,7 @@ start_controller() {   # $1 decisions to make, $2 log file
     ${OMNI_POWER_CMD:+--power-cmd "$OMNI_POWER_CMD"} --site-limit-w "$SITE_LIMIT_W" \
     $CAP_ARGS --thermal-model --security-configmap default/omni-security \
     --rollout-guard default/php-apache --sensed "$OMNI_SENSED" --latency-file "$OUT_DIR/latency.csv" --slo-ms "${SLO_MS:-500}" \
-    --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" $GIVE_BACK_ONLY $STRICT $LAW ${CLOSURE:+--closure "$CLOSURE"} ${REPLICA_CEILING:+--replica-ceiling "$REPLICA_CEILING"} ${OMNI_DIAL:+--dial "$OMNI_DIAL"} > "$2" 2>&1 &
+    --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" $GIVE_BACK_ONLY $STRICT $LAW $OWN ${CLOSURE:+--closure "$CLOSURE"} ${REPLICA_CEILING:+--replica-ceiling "$REPLICA_CEILING"} ${OMNI_DIAL:+--dial "$OMNI_DIAL"} > "$2" 2>&1 &
   echo $!
 }
 # the window's governor is not a child of this shell (start_controller runs in a subshell), so `wait` cannot see it (12
@@ -695,8 +737,9 @@ if [ -n "${ROBUST:-}" ]; then
     export -f start_controller
     # (17 Oct: GIVE_BACK_ONLY, added on 15 October, was missing here, so the second governor stopped on an unbound variable
     # before it began and every kill run of omni-v7 was marked invalid; tests/test_robust_restart.py now checks the list,
-    # and caught GOV_PIN, the governor's own core, on 20 October before any run)
-    export CAP_ARGS DRY KUBECTL WORKERS SITE_LIMIT_W OUT_DIR STRICT LAW CLOSURE REPLICA_CEILING OMNI_DIAL MIN_NODES NODE_CUSHION SLO_MS OMNI_NICE OMNI_SENSED OMNI_POWER_CMD GIVE_BACK_ONLY GOV_PIN
+    # and caught GOV_PIN, the governor's own core, on 20 October before any run, and OWN, omni-v19's pod muscle of its own, on
+    # 24 October before any run of ARM=solo)
+    export CAP_ARGS DRY KUBECTL WORKERS SITE_LIMIT_W OUT_DIR STRICT LAW CLOSURE REPLICA_CEILING OMNI_DIAL MIN_NODES NODE_CUSHION SLO_MS OMNI_NICE OMNI_SENSED OMNI_POWER_CMD GIVE_BACK_ONLY GOV_PIN OWN
   fi
   OUT_DIR="$OUT_DIR" DURATION="$DURATION" ROBUST="$ROBUST" OMNI_PID="$omni_pid" WORKERS="$WORKERS" HPA_RANGE="$HPA_RANGE" \
     WORKER_SEL="$WORKER_SEL" NATIVE="$NATIVE" bash scripts/kind_robust.sh > "$OUT_DIR/robust.out" 2>&1 &
@@ -722,11 +765,14 @@ if [ -n "$rapl_pid" ]; then
 fi
 [ -n "$meter_pid" ] && { kill "$meter_pid" 2>/dev/null || true; }
 [ -n "$host_pid" ] && { kill "$host_pid" 2>/dev/null || true; }
-kill "$watch_pid" 2>/dev/null || true; wait "$watch_pid" 2>/dev/null || true
 # the end-of-window record: a read the API server does not answer is tried again, never the end of the run
 end_read() { local f="$1"; shift; for t in 1 2 3 4 5 6; do kubectl "$@" --request-timeout=20s > "$f" 2>>"$OUT_DIR/end_reads.err" && return 0; sleep 10; done
-  echo "the API server did not answer: kubectl $*" >> "$OUT_DIR/end_reads.err"; }
+  echo "the API server did not answer: kubectl $*" >> "$OUT_DIR/end_reads.err"; return 1; }
 end_read "$OUT_DIR/pods_end.json" get pods -n default -l run=php-apache -o json
+touch "$OUT_DIR/pod_watch.stop"
+wait "$watch_pid"
+watch_pid=""
+python3 tools/bench_integrity.py validate "$OUT_DIR" > "$OUT_DIR/pod_watch_validation.json"
 if [ -n "$robust_pid" ]; then
   wait "$robust_pid" || { echo "INVALID RUN: robustness helper failed; see robust.out"; exit 1; }
   # the second governor of the kill scenario was started by the robustness script: wait for it to finish its decisions
@@ -744,7 +790,10 @@ if [ "$LOADGEN" = meter ]; then
   echo "work meter: $(jq -c .total "$OUT_DIR/work_meter.json")" | tee -a "$OUT_DIR/preflight.txt"
 fi
 end_read "$OUT_DIR/nodes_end.txt" get nodes -o wide
-end_read "$OUT_DIR/hpa_end.json" get hpa "$HPA_NAME" -o json
+# by itself the pod autoscaler is removed by design, so its read is the workload's own (this read of the autoscaler, added
+# 29 October, ended every solo arm of the omni-v22 campaign's first two runs with exit 1: docs/SOLO_PREREGISTRATION.md, amendment 1)
+if [ "$ARM" = "solo" ]; then end_read "$OUT_DIR/workload_end.json" get deployment php-apache -o json
+else end_read "$OUT_DIR/hpa_end.json" get hpa "$HPA_NAME" -o json; fi
 if [ -n "$KEDA" ]; then   # the add-on's own record of the window: its ScaledObject and the last words of each part
   end_read "$OUT_DIR/scaledobject_end.json" get scaledobject php-apache -o json
   for d in keda-operator keda-add-ons-http-scaler keda-add-ons-http-interceptor; do
@@ -805,8 +854,10 @@ elif [ -z "$NATIVE" ]; then
     echo "Omni-Compass stayed native: $decisions decisions recorded, no write" | tee "$OUT_DIR/omni_stayed_native.txt"
   fi
   stop_governors        # no write of the window's governor can land after the reset is checked
+  # Reconcile the benchmark-owned pause atomically even when another writer already resumed it.
+  python3 tools/bench_integrity.py restore-rollout default/php-apache --kubectl "$KUBECTL" > "$OUT_DIR/rollout_reset.json"
   python -m omni_controller.controller --kubectl "$KUBECTL" --mode nodepool --active-nodes-only --iterations 1 \
-    $CAP_ARGS --rollout-guard default/php-apache \
+    $CAP_ARGS --rollout-guard default/php-apache $OWN \
     --node-restore-cmd "bash scripts/kind_nodepool.sh $WORKERS" --audit "$OUT_DIR/audit_kill.jsonl" --kill-file "$OUT_DIR/kill"
   cpu_limit=$(limits_now)
   if [ -n "$CAP_ARGS" ]; then echo "pod CPU limits after kill: $cpu_limit" | tee -a "$OUT_DIR/kill_switch.txt"
@@ -819,13 +870,28 @@ elif [ -z "$NATIVE" ]; then
       sleep 2
     done
   fi
+  if [ "$ARM" = "solo" ]; then
+    # by itself: no autoscaler; the workload back at the count it started at and no record of Omni's left on it (the
+    # operator's own target and range stay, written before the window)
+    restored="$EXPECT_TARGET"; range_now="$HPA_RANGE"
+    rep_now=$(kubectl get deployment php-apache -o jsonpath='{.spec.replicas}')
+    echo "the workload's replicas after kill: $rep_now (the count it started at: ${SOLO_RANGE%%,*})" | tee -a "$OUT_DIR/kill_switch.txt"
+    test "$rep_now" = "${SOLO_RANGE%%,*}"
+    hpa_left=$(kubectl get hpa -n default --no-headers 2>/dev/null | wc -l)
+    [ "$hpa_left" -eq 0 ] || { echo "INVALID RUN: by itself, an autoscaler stands on the workload at the end ($hpa_left): the knob was handed back to native's own autoscaler (omni-v23), so Omni-Compass did not run the arm by itself"; exit 1; }
+  else
   restored=$(hpa_cpu_target "$HPA_NAME")
   range_now=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.spec.minReplicas},{.spec.maxReplicas}')
   echo "HPA replica range after kill: $range_now" | tee -a "$OUT_DIR/kill_switch.txt"
   test "$range_now" = "$HPA_RANGE"
+  fi
   back=$(kubectl get nodes -l "$WORKER_SEL" -o json | jq '[.items[] | select(.spec.unschedulable != true and (any(.spec.taints[]?; .key == "omnicompass.io/idle") | not))] | length')
   { echo "restored target: $restored"; echo "workers in service: $back of $WORKERS"; } | tee "$OUT_DIR/kill_switch.txt"
+  if [ "$ARM" = "solo" ]; then   # no autoscaler to read; the operator's own target and range on the workload are not Omni's records
+    leftover=$(kubectl get deployment php-apache -o json | jq -r '.metadata.annotations // {} | keys[] | select(startswith("omnicompass.io/")) | select(. != "omnicompass.io/target-utilization" and . != "omnicompass.io/replica-range")')
+  else
   leftover=$(kubectl get hpa "$HPA_NAME" -o json | jq -r '.metadata.annotations // {} | keys[] | select(startswith("omnicompass.io/"))'; kubectl get deployment php-apache -o json | jq -r '.metadata.annotations // {} | keys[] | select(startswith("omnicompass.io/"))')
+  fi
   if [ -n "$KEDA" ]; then   # the add-on's ScaledObject: the operator's own settings back, and no record left on it either
     leftover="$leftover$(kubectl get scaledobject php-apache -o json | jq -r '.metadata.annotations // {} | keys[] | select(startswith("omnicompass.io/"))')"
     so_now=$(kubectl get scaledobject php-apache -o json | jq -c '{min: .spec.minReplicaCount, max: .spec.maxReplicaCount, cpu: ([.spec.triggers[] | select(.type == "cpu") | .metadata.value][0] // "")}')
@@ -902,6 +968,16 @@ for line in open(sys.argv[1]):
 PY
   [ $(( decisions * 10 )) -ge $(( expected * 8 )) ] || { echo "INVALID RUN: the controller made $decisions of its $expected decisions inside the window (under 80%)"; exit 1; }
   ! grep -q '"failsafe"' "$OUT_DIR/audit.jsonl" || { echo "INVALID RUN: the fail-safe handed control back to native"; exit 1; }
+  if [ "$ARM" = "solo" ]; then
+    # by itself, a knob Omni-Compass owns has no other controller (the founder's order of 31 October: every muscle Omni-Compass
+    # cannot be stays; a knob left with no working controller fails the whole system): a decision that failed left that knob
+    # unmoved, so the window is refused (docs/SOLO_PREREGISTRATION.md, amendment 2). omni-v23: a knob whose writes the cluster
+    # refused three times in a row was handed back to native's own autoscaler, so the organism kept a controller, but
+    # Omni-Compass did not run this arm by itself: refused as a result of the arm, with the words
+    ! grep -q '"handed_back"' "$OUT_DIR/audit.jsonl" || { echo "INVALID RUN: by itself, the knob was handed back to native's own autoscaler (omni-v23; the cluster refused the muscle's writes): the organism kept a controller, and Omni-Compass did not run the arm by itself ($(grep '"handed_back"' "$OUT_DIR/audit.jsonl" | tail -1 | cut -c1-300))"; exit 1; }
+    refused=$(grep -c '"consecutive_failures"' "$OUT_DIR/audit.jsonl" || true)
+    [ "$refused" -eq 0 ] || { echo "INVALID RUN: by itself, $refused decisions of Omni-Compass failed and left a knob it owns with no controller (the last: $(grep '"consecutive_failures"' "$OUT_DIR/audit.jsonl" | tail -1 | cut -c1-300))"; exit 1; }
+  fi
   if [ -n "$KEDA" ]; then
     # the add-on test counts only if every move Omni-Compass made on the autoscaler reached KEDA whole
     pl="$OUT_DIR/plug_keda.jsonl"

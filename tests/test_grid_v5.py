@@ -49,9 +49,9 @@ class Grid(unittest.TestCase):
             self.assertIn("10 copies: run 222", text)
             self.assertIn("GAIN (fewer misses): misses -0.100 pp, work +0.000%, power given +0.050% (10 of 10 runs)", text)
             self.assertIn("not in the receipt", text)                            # the tower at 100 runs
-            self.assertIn("| 10 repetitions: GAIN on 1 (response time (ms), 95th percentile), LOSS on 0, power given on 0, EVEN (inside the noise) on 1 |", text)
+            self.assertIn("| 10 repetitions: GAIN on 1 (response time (ms), 95th percentile), LOSS on 0, power given on 0, STEADY (inside the noise) on 1 |", text)
             self.assertIn("10 repetitions: GAIN on 1 (response time (ms), 95th percentile), LOSS on 0, power given on 1 (organism energy (J)), "
-                          "EVEN (inside the noise) on 0; OFF THE CLOCK in 2 of 10 repetitions (late) |", text)
+                          "STEADY (inside the noise) on 0; OFF THE CLOCK in 2 of 10 repetitions (late) |", text)
             self.assertIn("not in the report", text)
             # the one line the front page reads, counted from the squares (27 modelled with the spine: 20 of 10, 100 and 500 runs, 7 single)
             self.assertIn("**Across the grid: modelled, 20 of 20 squares of 10 or more runs GAIN (fewer misses); the 7 single runs: "

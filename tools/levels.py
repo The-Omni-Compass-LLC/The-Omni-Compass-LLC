@@ -12,7 +12,7 @@ to talk to me").
 
 Built from the result files as they stand (the realms result for the muscles and organisms, the three-run tables for
 everything real), never typed in. For each level: the engine its tables ran on, the evidence class, how many judged gauges
-read GAIN, EVEN, power given and LOSS, how many the runs disagree on, and every gauge that points the other way, named with
+read GAIN, STEADY, power given and LOSS, how many the runs disagree on, and every gauge that points the other way, named with
 its table, so nothing that goes against the rest is hidden in a total. A level with no run yet says so.
 
   python3 tools/levels.py            write docs/LEVELS.md
@@ -51,7 +51,7 @@ TABLE_LEVELS = [
      ["CITYLEARN", "PANDAPOWER", "MUJOCO", "SWARM"],
      "the simulator's own controller, unchanged"),
 ]
-KIND = {"GAIN": "GAIN", "LOSS": "LOSS", "power given": "power given", "EVEN": "EVEN", "disagree": "the runs disagree"}
+KIND = {"GAIN": "GAIN", "LOSS": "LOSS", "power given": "power given", "STEADY": "STEADY", "disagree": "the runs disagree"}
 
 
 def kind_of(reading: str) -> str | None:
@@ -66,8 +66,8 @@ def kind_of(reading: str) -> str | None:
         return "LOSS"
     if r.startswith("power given") or "agree: power given" in r:
         return "power given"
-    if r.startswith("even"):
-        return "EVEN"
+    if r.startswith(("steady", "even")):
+        return "STEADY"
     return None
 
 
@@ -109,7 +109,7 @@ def realms_levels():
     run = json.loads((REALMS / "REALMS_V5.json").read_text())
     eng = run["run"]["engine"]
     labels = [r["label_all_loads"] for r in csv.DictReader(open(REALMS / "MUSCLES_V5.csv")) if r["load"] == "normal"]
-    c = Counter("EVEN" if lab in ("SAME AS NATIVE", "AT ITS LIMIT ON NATIVE") else
+    c = Counter("STEADY" if lab in ("SAME AS NATIVE", "AT ITS LIMIT ON NATIVE") else
                 "LOSS" if lab.startswith(("LESS WORK", "SLOWER", "MORE MISSES")) else
                 "disagree" if "AND" in lab and "LOSS" in lab else "GAIN" for lab in labels)
     against = [f"{r['family']} / {r['muscle']} ({r['label_all_loads']})" for r in csv.DictReader(open(REALMS / "MUSCLES_V5.csv"))
@@ -118,12 +118,12 @@ def realms_levels():
     muscle = {"level": "The muscle, alone (1,107 muscles, each on its own native controller, under its own load)", "engine": eng,
               "evidence": "S (our model)", "tables": ["results/realms_v5/MUSCLES_V5.csv"], "native": "each muscle's native controller",
               "count": c, "against": against,
-              "note": f"{labels.count('AT ITS LIMIT ON NATIVE')} of the EVEN are at their limit on native (nothing to push)"}
+              "note": f"{labels.count('AT ITS LIMIT ON NATIVE')} of the STEADY are at their limit on native (nothing to push)"}
     oc, flagged = Counter(), []
     for load, orgs in run["organisms"].items():
         for name, o in orgs.items():
             lab = o["label"]
-            oc["EVEN" if lab in ("SAME AS NATIVE", "AT ITS LIMIT ON NATIVE") else
+            oc["STEADY" if lab in ("SAME AS NATIVE", "AT ITS LIMIT ON NATIVE") else
                "LOSS" if lab.startswith(("LESS WORK", "SLOWER", "MORE MISSES")) else "GAIN"] += 1
             for p in o.get("plants_flagged") or []:
                 flagged.append(f"{name}, {load} load: {p if isinstance(p, str) else p.get('plant', p)}")
@@ -168,7 +168,7 @@ def build():
     levels.append({"level": "The cluster in a cloud: Azure Kubernetes Service, the bill", "engine": "single runs, omni-v5 to omni-v7",
                    "evidence": "L, the bill metered", "tables": ["results/live/AKS_BILL.md", "results/live/raw/run-38981149348/"],
                    "native": "Azure's own cluster autoscaler and the HPA", "count": None, "against": [],
-                   "note": "no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one EVEN; "
+                   "note": "no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; "
                            "the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back"})
     levels.append({"level": "A group of clusters", "engine": "not run", "evidence": "none yet", "tables": [],
                    "native": "each cluster's own autoscaler", "count": None, "against": [],
@@ -195,7 +195,7 @@ def render(levels):
          "under its own table's rule (the three runs, or the realms result's ten seeds); **power given** is a resource put in, "
          "shown and never called a loss. Every row names the engine its tables ran on, and no reading is carried from one engine "
          "to another.", "",
-         "| Level | Engine | Evidence | GAIN | EVEN | power given | LOSS | runs disagree | Goes the other way? |",
+         "| Level | Engine | Evidence | GAIN | STEADY | power given | LOSS | runs disagree | Goes the other way? |",
          "|---|---|---|---:|---:|---:|---:|---:|---|"]
     for lv in levels:
         c = lv["count"]
@@ -203,9 +203,9 @@ def render(levels):
             L.append(f"| {lv['level']} | {lv['engine']} | {lv['evidence']} | – | – | – | – | – | {lv.get('note', '')} |")
             continue
         other = len(lv["against"]) + len(lv.get("inside") or [])
-        word = "no: every judged gauge GAIN or EVEN" if not other and not c.get("power given") else \
+        word = "no: every judged gauge GAIN or STEADY" if not other and not c.get("power given") else \
                ("no LOSS; resources put in shown as power given" if not other else f"**yes: {other}, listed below**")
-        L.append(f"| {lv['level']} | {lv['engine']} | {lv['evidence']} | {c.get('GAIN', 0)} | {c.get('EVEN', 0)} | "
+        L.append(f"| {lv['level']} | {lv['engine']} | {lv['evidence']} | {c.get('GAIN', 0)} | {c.get('STEADY', 0)} | "
                  f"{c.get('power given', 0)} | {c.get('LOSS', 0)} | {c.get('disagree', 0)} | {word} |")
     L += ["", "## Each level", ""]
     for lv in levels:

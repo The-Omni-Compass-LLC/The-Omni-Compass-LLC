@@ -7,7 +7,7 @@
 """How steadily the governor steered: its decisions, the settings commands it wrote, how often each recommendation moved
 and turned back, and the time each decision took, read from the omni arm's audit in every run of the engine's real
 Kubernetes tables (results/live/RECIPES.json). Shown, not judged: native has no governor to compare with, so no row here
-reads GAIN, EVEN or LOSS; a page a referee or an operator reads to see whether the governor hammers.
+reads GAIN, STEADY or LOSS; a page a referee or an operator reads to see whether the governor hammers.
 
   python3 tools/steering.py [--raw results/live/raw] [--out results/STEERING.md]
 

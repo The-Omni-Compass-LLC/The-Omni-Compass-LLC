@@ -46,7 +46,7 @@ except ImportError:
 
 from tools.readings import GAIN, LOSS, GAIN_AND_LOSS, labelled, receipt_key  # noqa: E402  (the words every table uses)
 from realms.harness import (catalog, run_muscle_arm, run_bodies, Body, paired, paired_organism, interval, scale_load,
-                            TOWER, STACK, KILL_AT, WALK, LINE)
+                            TOWER, STACK, KILL_AT, WALK, LINE, SOLO, native_off_pool)
 from realms.compass_arm_v5 import native_at_limit
 from realms.presets import PRESETS
 
@@ -64,7 +64,7 @@ NAMES = {SPINE: "The spine, the muscles every stack runs on",
          TOWER: "The whole tower, every muscle once"}
 GAINS = ["MORE WORK", "FASTER", "FEWER MISSES"]
 # The kinds, by the muscle's three aims (more work, faster, fewer misses), in the words every table uses (tools/readings.py):
-# GAIN (some aim toward and none away), EVEN (the same as native, or at its limit on native), GAIN AND LOSS, LOSS
+# GAIN (some aim toward and none away), STEADY (the same as native, or at its limit on native), GAIN AND LOSS, LOSS
 TOWARD, BOTH, AWAY = GAIN, GAIN_AND_LOSS, LOSS
 SAME, AT_LIMIT = "SAME AS NATIVE", "AT ITS LIMIT ON NATIVE"
 KINDS = [TOWARD, SAME, AT_LIMIT, BOTH, AWAY, "INVALID"]
@@ -112,9 +112,9 @@ def label_max(per_seed, valid=True, at_limit=False):
     """The max's label by rule, against the muscle's three aims (more work, its line cleared sooner, fewer misses):
       the gains, joined (MORE WORK + FASTER + FEWER MISSES, or any of them)   at least one toward its aim and none away:
                                kind GAIN
-      SAME AS NATIVE           no difference beyond the noise: EVEN
+      SAME AS NATIVE           no difference beyond the noise: STEADY
       AT ITS LIMIT ON NATIVE   no difference, and native already runs the knob at the top of its range (the max wrote
-                               nothing: there is nothing above native to give it): EVEN
+                               nothing: there is nothing above native to give it): STEADY
       GAIN AND LOSS            one toward its aim and one away (less work, slower or more misses)
       LOSS                     one away and none toward
       INVALID                  a knob not handed back to native by the lease"""
@@ -162,11 +162,47 @@ def muscle_load(row, seeds, load):
                 sum(n["line_left"] for n in nat) / len(nat), sum(a["line_left"] for a in mx) / len(mx)]
     writes = sum(r["writes"] for r in mx) / len(mx)
     at_limit = writes == 0 and native_at_limit(row["template"], row["knob"])
-    return {"valid": valid, "label": label_max(per, valid, at_limit), "summary": summarize(per), "per_seed": per,
+    solo = solo_load(row, seeds, arg, nat, mx) if native_off_pool(row["template"], row["knob"]) else None
+    return {"valid": valid, "label": label_max(per, valid, at_limit), "summary": summarize(per), "per_seed": per, "solo": solo,
             "writes": writes, "native_viol_share": sum(n["viol"] / n["steps"] for n in nat) / len(nat),
             "viol_native": sum(n["viol"] for n in nat), "viol_max": sum(m["viol"] for m in mx),
             "steps": sum(n["steps"] for n in nat), "line": line,
             "wear": sum(wear) / len(wear) if wear else 0.0}
+
+
+def solo_load(row, seeds, arg, nat, mx):
+    """Omni-Compass by itself on one muscle under one load (the founder's order of 23 October, docs/SOLO_PREREGISTRATION.md):
+    the pool's own autoscaler switched off, the brain the only controller of its count, against native and against
+    Omni-Compass and native on the same seeds."""
+    so = [run_muscle_arm(row, s, SOLO, arg) for s in seeds]
+    per = [paired(a, n) for a, n in zip(so, nat)]
+    per_m = [paired(a, m) for a, m in zip(so, mx)]
+    if all("line_k" in n for n in nat):
+        for c, a, n in zip(per, so, nat):
+            c["speed"] = (a["line_k"] + 1) / (n["line_k"] + 1) - 1.0
+        for c, a, m in zip(per_m, so, mx):
+            c["speed"] = (a["line_k"] + 1) / (m["line_k"] + 1) - 1.0
+    valid = all(r["restore_ok"] for r in so)
+    return {"valid": valid, "label": label_max(per, valid), "summary": summarize(per), "per_seed": per,
+            "vs_omni": {"label": label_max(per_m, valid), "summary": summarize(per_m), "per_seed": per_m},
+            "viol_solo": sum(r["viol"] for r in so), "writes": sum(r["writes"] for r in so) / len(so)}
+
+
+def label_over_loads(by, key=None):
+    """One muscle's word over all its loads: toward its aims under some load and away under none is GAIN."""
+    pick = (lambda o: o) if key is None else key
+    os_ = [pick(o) for o in by.values()]
+    if not all(o["valid"] for o in os_):
+        return "INVALID"
+    gains, losses = set(), set()
+    for o in os_:
+        g, l = gains_losses(o["per_seed"])
+        gains.update(g); losses.update(l)
+    if losses:
+        return BOTH if gains else AWAY
+    if gains:
+        return " + ".join(g for g in GAINS if g in gains)
+    return AT_LIMIT if all(o["label"] == AT_LIMIT for o in os_) else SAME
 
 
 def muscle_job(args):
@@ -187,7 +223,11 @@ def muscle_job(args):
         label = " + ".join(g for g in GAINS if g in gains)
     else:
         label = AT_LIMIT if all(o["label"] == AT_LIMIT for o in by.values()) else SAME
-    return {"row": row, "valid": valid, "label": label, "loads": by,
+    solo = None
+    if all(o.get("solo") for o in by.values()):
+        solo = {"label": label_over_loads(by, lambda o: o["solo"]),
+                "vs_omni": label_over_loads(by, lambda o: dict(o["solo"]["vs_omni"], valid=o["solo"]["valid"]))}
+    return {"row": row, "valid": valid, "label": label, "loads": by, "solo": solo,
             "writes": max(o["writes"] for o in by.values())}
 
 
@@ -222,12 +262,18 @@ def organism_job(args):
            else [r["muscle_id"] for r in rows])
     nat = organism_run(name, rows, seed, "native", load)
     mx = organism_run(name, rows, seed, "v5", load)
+    so = organism_run(name, rows, seed, SOLO, load)      # Omni-Compass by itself: every pool's own autoscaler off
     vn = sum(p["viol"] for p in nat["plants"]); vm = sum(p["viol"] for p in mx["plants"])
     wear = [a["wear"] / n["wear"] - 1.0 for a, n in zip(mx["plants"], nat["plants"]) if n["wear"] > 0]
+    wear_s = [a["wear"] / n["wear"] - 1.0 for a, n in zip(so["plants"], nat["plants"]) if n["wear"] > 0]
     return name, seed, load, {"max": paired_organism(mx, nat), "restore_ok": mx["restore_ok"],
                               "harms": plant_harms(mx, nat, ids), "viol_native": vn, "viol_max": vm,
                               "steps": sum(p["steps"] for p in nat["plants"]),
-                              "wear": sum(wear) / len(wear) if wear else 0.0}
+                              "wear": sum(wear) / len(wear) if wear else 0.0,
+                              "solo": {"vs_native": paired_organism(so, nat), "vs_omni": paired_organism(so, mx),
+                                       "restore_ok": so["restore_ok"], "harms": plant_harms(so, nat, ids),
+                                       "viol_solo": sum(p["viol"] for p in so["plants"]),
+                                       "wear": sum(wear_s) / len(wear_s) if wear_s else 0.0}}
 
 
 def fmt(m, scale=100.0, unit="%"):
@@ -243,7 +289,8 @@ def misses_line(o):
 def write_md(out, res, orgs, run):
     L = []
     w = L.append
-    w(f"# The realms on {run['engine']} at the max: {len(res)} muscles and seven organisms, native against Omni on top")
+    w(f"# The realms on {run['engine']} at the max: {len(res)} muscles and seven organisms, three ways: native, Omni-Compass "
+      "and native, and Omni-Compass by itself")
     w("")
     for ln in receipt_key():
         w(ln)
@@ -294,12 +341,12 @@ def write_md(out, res, orgs, run):
         w(f"## The seven organisms: {LOADS[load]}")
         w("")
         w("Work: the mean over the organism's plants of each plant's work against native's. Misses: the share of plant "
-          "decisions over their line, native → omni (the change in misses). Power given: the organism's energy against "
+          "decisions over their line, native → Omni-Compass and native (the change in misses). Power given: the organism's energy against "
           "native's. Wear: the mean over its plants of each plant's wear against native's (machine-hours, cooling "
           "unit-hours, battery throughput, motor heat, actuator duty), shown beside the work, never judged. 95% intervals "
           "over seeds.")
         w("")
-        w("| Organism | Muscles | Reading | Work | Misses, native → omni | Misses (pp) | Power given | Wear | Work per energy | Valid |")
+        w("| Organism | Muscles | Reading | Work | Misses, native → Omni-Compass and native | Misses (pp) | Power given | Wear | Work per energy | Valid |")
         w("|---|---:|---|---:|---|---:|---:|---:|---:|---|")
         for name in [n for n in ORGANISMS if n in orgs[load]]:
             o = orgs[load][name]; s = o["summary"]
@@ -307,6 +354,25 @@ def write_md(out, res, orgs, run):
               f"{fmt(s['viol_pp'], 1.0, '')} | {fmt(s['energy'])} | {o['wear'] * 100:+.2f}% | {fmt(s['primary'])} | "
               f"{'yes' if o['valid'] else 'NO'} |")
         w("")
+        if any(orgs[load][n].get("solo") for n in ORGANISMS if n in orgs[load]):
+            w(f"**Omni-Compass by itself**, {LOADS[load]} (the founder's order of 23 October, `docs/SOLO_PREREGISTRATION.md`): "
+              "every pool's own autoscaler switched off and the brain the only controller of its count; every other muscle "
+              "as in Omni-Compass and native, because its native is a setting native holds still or its own actuator. Read "
+              "against native and against Omni-Compass and native, on the same seeds.")
+            w("")
+            w("| Organism | Against native | Work | Misses, native → by itself | Misses (pp) | Power given | Wear | "
+              "Against Omni-Compass and native | Valid |")
+            w("|---|---|---:|---|---:|---:|---:|---|---|")
+            for name in [n for n in ORGANISMS if n in orgs[load]]:
+                so = orgs[load][name].get("solo")
+                if not so:
+                    continue
+                s_, t_ = so["summary"], so["totals"]
+                ml = misses_line({"viol_native": t_["viol_native"], "viol_max": t_["viol_solo"], "steps": t_["steps"]})
+                w(f"| {NAMES[name]} | **{labelled(so['label'])}** | {fmt(s_['work'], 100.0)} | {ml} | "
+                  f"{fmt(s_['viol_pp'], 1.0, '')} | {fmt(s_['energy'])} | {so['wear'] * 100:+.2f}% | "
+                  f"{labelled(so['vs_omni']['label'])} | {'yes' if so['valid'] else 'NO'} |")
+            w("")
     w("## Inside the organisms: every plant that did less work than native or missed its line more often")
     w("")
     w("A stricter look than an organism's total: every plant inside each organism, over all seeds, that did less work "
@@ -326,14 +392,14 @@ def write_md(out, res, orgs, run):
       + ". Each muscle's word is judged by its three aims, never by the sign of a number (the key: "
       "`docs/HOW_TO_READ_THE_RESULTS.md`). **GAIN**: at least one of its three aims moved beyond the noise under some load "
       "(more work, faster: the line cleared sooner, fewer misses) and none the other way under any. **GAIN AND LOSS**: one "
-      "toward its aim and one away (less work, slower or more misses). **LOSS**: one away and none toward. **EVEN, at its "
+      "toward its aim and one away (less work, slower or more misses). **LOSS**: one away and none toward. **STEADY, at its "
       "limit on native**: native already runs the knob at the top of its range (full clock, full speed, full torque, full "
       "battery power, nothing paced or turned away), so the max has nothing above native to give it and writes nothing. "
-      "**EVEN, the same as native**: the max acted or could, and the result is no different beyond the noise (native "
+      "**STEADY, the same as native**: the max acted or could, and the result is no different beyond the noise (native "
       "already did all the work that came and was almost never over its line). The energy the max takes is power given, "
       "shown beside the work, never judged.")
     w("")
-    w("| Realm | Muscles | GAIN | of them: more work | faster | fewer misses | EVEN, the same as native | EVEN, at its limit on native | GAIN AND LOSS | LOSS | Invalid |")
+    w("| Realm | Muscles | GAIN | of them: more work | faster | fewer misses | STEADY, the same as native | STEADY, at its limit on native | GAIN AND LOSS | LOSS | Invalid |")
     w("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
 
     def count_row(rs):
@@ -345,14 +411,35 @@ def write_md(out, res, orgs, run):
         w(f"| {NAMES[realm]} | " + " | ".join(str(x) for x in count_row([r for r in res if r["row"]["realm"] == realm])) + " |")
     w("| **All** | " + " | ".join(f"**{x}**" for x in count_row(res)) + " |")
     w("")
+    if any(r.get("solo") for r in res):
+        w("**Omni-Compass by itself, every muscle alone.** By itself differs from Omni-Compass and native only where the "
+          "muscle's own native controller can be switched off: a pool whose knob is its count, its autoscaler off and the "
+          "brain the only controller. Every other muscle's native is a setting native holds still or its own actuator, so "
+          "by itself is the same arm there, and is counted so.")
+        w("")
+        w("| Realm | Muscles | The same arm | By itself | GAIN | STEADY, the same as native | GAIN AND LOSS | LOSS | Invalid | "
+          "Against Omni-Compass and native: GAIN | STEADY | GAIN AND LOSS or LOSS |")
+        w("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+
+        def solo_row(rs):
+            so = [r for r in rs if r.get("solo")]
+            c = Counter(kind_of(r["solo"]["label"]) for r in so)
+            cm = Counter(kind_of(r["solo"]["vs_omni"]) for r in so)
+            return [len(rs), len(rs) - len(so), len(so), c.get(TOWARD, 0), c.get(SAME, 0) + c.get(AT_LIMIT, 0), c.get(BOTH, 0),
+                    c.get(AWAY, 0), c.get("INVALID", 0), cm.get(TOWARD, 0), cm.get(SAME, 0) + cm.get(AT_LIMIT, 0),
+                    cm.get(BOTH, 0) + cm.get(AWAY, 0)]
+        for realm in REALMS:
+            w(f"| {NAMES[realm]} | " + " | ".join(str(x) for x in solo_row([r for r in res if r["row"]["realm"] == realm])) + " |")
+        w("| **All** | " + " | ".join(f"**{x}**" for x in solo_row(res)) + " |")
+        w("")
     for load, what in MUSCLE_LOADS.items():
         w(f"## Every muscle alone under {what}, by kind of plant and knob")
         w("")
-        w("Misses: the share of decisions over the line, native → omni. Line: minutes to clear the work waiting at the "
-          "start, native → omni (and the share still waiting at the end, where it did not clear). Power given: energy "
+        w("Misses: the share of decisions over the line, native → Omni-Compass and native. Line: minutes to clear the work waiting at the "
+          "start, native → Omni-Compass and native (and the share still waiting at the end, where it did not clear). Power given: energy "
           "against native's.")
         w("")
-        w("| Plant | Knob | Muscles | Omni acts on | GAIN | EVEN, at its limit on native | Misses, native → omni | Work | Line, native → omni | Power given | Wear |")
+        w("| Plant | Knob | Muscles | Omni-Compass acts on | GAIN | STEADY, at its limit on native | Misses, native → Omni-Compass and native | Work | Line, native → Omni-Compass and native | Power given | Wear |")
         w("|---|---|---:|---:|---:|---:|---|---:|---|---:|---:|")
         groups = defaultdict(list)
         for r in res:
@@ -382,9 +469,15 @@ def write_md(out, res, orgs, run):
     acted = sum(1 for r in res if r["writes"] > 0)
     lim = sum(1 for r in res if r["label"] == AT_LIMIT)
     w(f"- Omni acts on **{acted}** of {len(res)} muscles alone. **{lim}** are at their limit on native (the knob is "
-      "already at the top of its range: EVEN); the rest it could act on show nothing beyond the noise to gain.")
+      "already at the top of its range: STEADY); the rest it could act on show nothing beyond the noise to gain.")
     w(f"- Muscles alone that read **LOSS** or **GAIN AND LOSS** under any load: **{len(away)}**"
       + ("." if not away else ": " + ", ".join(f"{r['row']['muscle']} ({r['row']['knob']}, {kind_of(r['label'])})" for r in away) + "."))
+    s_away = [r for r in res if r.get("solo") and kind_of(r["solo"]["label"]) in (AWAY, BOTH)]
+    if any(r.get("solo") for r in res):
+        w(f"- Muscles alone by themselves (Omni-Compass with the pool's own autoscaler off) that read **LOSS** or **GAIN AND "
+          f"LOSS** against native under any load: **{len(s_away)}**"
+          + ("." if not s_away else ": " + ", ".join(f"{r['row']['muscle']} ({r['row']['knob']}, {kind_of(r['solo']['label'])})"
+                                                    for r in s_away[:40]) + ("; and more in `MUSCLES_V5.csv`." if len(s_away) > 40 else ".")))
     w("- The lease hands every knob back to native before each run ends: "
       f"{sum(1 for r in res if r['valid'])} of {len(res)} muscles under every load; "
       + ", ".join(f"{sum(1 for o in orgs[load].values() if o['valid'])} of {len(orgs[load])} organisms under {load}"
@@ -464,7 +557,22 @@ def main(argv=None):
                     agg[mid][1] += dv
                     agg[mid][2] += 1
             harms = {mid: v for mid, v in agg.items() if v[0] < -1e-9 or v[1] > 0}
-            orgs[load][name] = {"n": sum(len(g) for g in groups[name]) if name == STACK else len(groups[name]),
+            sruns = [o["solo"] for o in runs]
+            s_valid = all(o["restore_ok"] for o in sruns)
+            s_agg = defaultdict(lambda: [0.0, 0, 0])
+            for o in sruns:
+                for mid, dw, dv in o["harms"]:
+                    s_agg[mid][0] += dw / len(sruns)
+                    s_agg[mid][1] += dv
+                    s_agg[mid][2] += 1
+            s_per, s_per_m = [o["vs_native"] for o in sruns], [o["vs_omni"] for o in sruns]
+            solo = {"valid": s_valid, "label": label_max(s_per, s_valid), "summary": summarize(s_per), "per_seed": s_per,
+                    "vs_omni": {"label": label_max(s_per_m, s_valid), "summary": summarize(s_per_m), "per_seed": s_per_m},
+                    "plants_flagged": {mid: v for mid, v in s_agg.items() if v[0] < -1e-9 or v[1] > 0},
+                    "wear": sum(o["wear"] for o in sruns) / len(sruns),
+                    "totals": {"viol_native": sum(o["viol_native"] for o in runs), "viol_solo": sum(o["viol_solo"] for o in sruns),
+                               "steps": sum(o["steps"] for o in runs)}}
+            orgs[load][name] = {"n": sum(len(g) for g in groups[name]) if name == STACK else len(groups[name]), "solo": solo,
                                 "valid": valid, "label": label_max(per, valid), "summary": summarize(per),
                                 "per_seed": per, "plants_flagged": harms,
                                 "wear": sum(o["wear"] for o in runs) / len(runs),
@@ -475,7 +583,8 @@ def main(argv=None):
     with (out / "MUSCLES_V5.csv").open("w", newline="") as f:
         cols = ["muscle_id", "family", "muscle", "realm", "template", "preset", "knob", "label_all_loads", "load", "label",
                 "work", "work_lo", "work_hi", "viol_pp", "viol_pp_lo", "viol_pp_hi", "line_native_min", "line_omni_min",
-                "power_given", "wear", "work_per_energy", "writes_per_run", "native_viol_share", "valid"]
+                "power_given", "wear", "work_per_energy", "writes_per_run", "native_viol_share", "valid",
+                "solo_label_all_loads", "solo_label", "solo_work", "solo_viol_pp", "solo_power_given", "solo_vs_omni_label"]
         wr = csv.writer(f); wr.writerow(cols)
         for r in res:
             row = r["row"]
@@ -485,7 +594,11 @@ def main(argv=None):
                              row["knob"], r["label"], load, o["label"], *(f"{x:.5f}" for x in s["work"]),
                              *(f"{x:.3f}" for x in s["viol_pp"]), *((f"{ln[0]:.2f}", f"{ln[1]:.2f}") if ln else ("", "")),
                              f"{s['energy'][0]:.5f}", f"{o['wear']:.5f}", f"{s['primary'][0]:.5f}", f"{o['writes']:.1f}",
-                             f"{o['native_viol_share']:.4f}", o["valid"]])
+                             f"{o['native_viol_share']:.4f}", o["valid"],
+                             *((r["solo"]["label"], o["solo"]["label"], f"{o['solo']['summary']['work'][0]:.5f}",
+                                f"{o['solo']['summary']['viol_pp'][0]:.3f}", f"{o['solo']['summary']['energy'][0]:.5f}",
+                                o["solo"]["vs_omni"]["label"]) if r.get("solo") and o.get("solo")
+                               else ("the same arm", "", "", "", "", ""))])
     (out / "REALMS_V5.json").write_text(json.dumps({"run": run, "organisms": orgs, "muscles": res}, indent=1) + "\n")
     (out / "RUN.json").write_text(json.dumps(run, indent=1) + "\n")
     write_md(out, res, orgs, run)

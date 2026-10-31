@@ -4,21 +4,26 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 name: engine-runs
-# The founder's order of 21 October: the live engine and the Python run the same runs, and every set the jump generator runs on
-# GitHub is linked to the live engine. A push that changes the live engine's page or the Python's runs, and a dispatch, run
+# The founder's order of 21 October: the live benchmark engine and the Python run the same runs, and every set the jump generator runs on
+# GitHub is linked to the live benchmark engine. A push that changes the live benchmark engine's page or the Python's runs, and a dispatch, run
 # another set (500 by default) from a new base seed (this run's own number, unless a dispatch gives one): tools/engine_runs.py
 # writes every receipt and one SHA-256 digest; the C++ harness (cpp/tools/engine_runs.cpp on the engine's C++ twins) reads the
-# Python's draws as its input, puts the mechanism on and must give the same receipts and the same digest; the live engine page's
+# Python's draws as its input, puts the mechanism on and must give the same receipts and the same digest; the live benchmark engine page's
 # own code (its ported engine and its loop, run in node) computes the same set and must give the same again; the record, with the
 # digest of the draws, the Python's, the C++'s and their run-by-run differences, is committed to
 # results/engine_runs/ with this run's id, address and commit, and the page shows the newest record with the GitHub run that
-# made it (docs/engine/build_live_engine.py). No two runs share a record (each is named by its base), so none waits on or
+# made it (docs/engine/build_live_engine.py). The same base runs the core's Monte Carlo too (the founder's words of 24 October:
+# tools/core_runs.py, omnicompass/core.simulate on 500 runs, RK4, 20 macro steps of 10 micro steps, native beside Omni-Compass), and
+# the page's own port of the core must give the same digest; its record goes to results/core_runs/. No two runs share a record (each is named by its base), so none waits on or
 # replaces another. Nothing is billed: GitHub's own machine.
 on:
   workflow_dispatch:
     inputs:
       runs: {description: "Runs from the jump generator", default: "500"}
       base: {description: "The jump generator's base seed (empty: this run's own number, so every dispatch is another set)", default: ""}
+  schedule:
+    # every night a new set from a new base (this run's own number), and the injection grid follows it on main (injection-grid.yml)
+    - cron: "41 2 * * *"
   push:
     # the page a push carries is checked on GitHub against a set it has never seen, on a working branch before it reaches main
     # (GitHub starts a dispatch only from the workflow on main) as on main; the version branches are kept level with main, so
@@ -27,6 +32,8 @@ on:
     paths:
       - "docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"
       - "tools/engine_runs.py"
+      - "tools/core_runs.py"
+      - "omnicompass/core.py"
       - "cpp/**"
       - ".github/workflows/engine-runs.yml"
 permissions:
@@ -54,7 +61,7 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -q -r requirements.txt
       - name: The C++ harness built (the engine's C++ twins and the runs' driver)
-        run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release && cmake --build cpp/build -j2 --target oc_engine_runs
+        run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release && cmake --build cpp/build -j2 --target oc_engine_runs oc_core_runs
       - name: The Python's runs from the jump generator, and the same runs through the C++ harness
         run: |
           set -euo pipefail
@@ -62,25 +69,30 @@ jobs:
           echo "BASE=$base" >> "$GITHUB_ENV"
           python3 tools/omni_version.py | head -1 | tee -a "$GITHUB_STEP_SUMMARY"
           python3 tools/engine_runs.py --runs "${{ github.event.inputs.runs || '500' }}" --base "$base" --cpp cpp/build/oc_engine_runs | tee -a "$GITHUB_STEP_SUMMARY"
-      - name: The live engine's own code runs the same set, every run of it
+      - name: The live benchmark engine's own code runs the same set, every run of it
         run: |
           set -euo pipefail
           python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all --runs "${{ github.event.inputs.runs || '500' }}" --base "$BASE" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: The core's Monte Carlo from the same base, and the live benchmark engine's own port of the core on the same set
+        run: |
+          set -euo pipefail
+          python3 tools/core_runs.py --runs "${{ github.event.inputs.runs || '500' }}" --base "$BASE" --cpp cpp/build/oc_core_runs | tee -a "$GITHUB_STEP_SUMMARY"
+          python3 tools/core_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --runs "${{ github.event.inputs.runs || '500' }}" --base "$BASE" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The record committed, with this run's link
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
-          git add results/engine_runs/
-          git commit -q -m "The Python's runs from the jump generator: base $BASE, checked in the live engine's own code (engine-runs run $GITHUB_RUN_ID)"
+          git add results/engine_runs/ results/core_runs/
+          git commit -q -m "The Python's runs and the core's Monte Carlo from the jump generator: base $BASE, checked in the live benchmark engine's own code (engine-runs run $GITHUB_RUN_ID)"
           for attempt in 1 2 3 4 5 6; do
             git pull -q --rebase && git push && exit 0
             git rebase --abort 2>/dev/null || true
             echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
           done
           echo "::error::the record could not be pushed after six attempts"; exit 1
-      - name: On main, the live engine rebuilt with this set and its run
+      - name: On main, the live benchmark engine rebuilt with this set and its run
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -93,7 +93,7 @@ numbers at the same moment, whatever it decides.
 | machine-hours; energy | a resource spent: a fall is a cut (GAIN), a rise is power given |
 
 Every comparison is paired by repetition and read by the one key (`tools/readings.py`): the mean change, its 95% interval over the
-eight repetitions (Student's t), the word by the gauge's aim, and under 0.5% EVEN. Three comparisons on every organism: each
+eight repetitions (Student's t), the word by the gauge's aim, and under 0.5% STEADY. Three comparisons on every organism: each
 orchestrator against native; Omni-Compass on top of each orchestrator against that orchestrator alone; and Omni-Compass on top of
 each against native. Every row is shown, LOSS included; a run that fails is listed with its error.
 

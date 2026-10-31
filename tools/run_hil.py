@@ -59,7 +59,7 @@ from realms.compass_arm_v5 import apply_v5  # noqa: E402  (the engine's law, omn
 from realms.harness import omni_bones, omni_step  # noqa: E402  (the max with its bone, the lease's walk back)
 from realms.harness import STACK, TOWER, organism_name  # noqa: E402
 from realms.presets import ORGANISM_STEPS  # noqa: E402
-from tools.readings import labelled, GAIN, EVEN, LOSS, GIVEN  # noqa: E402  (the words every table uses)
+from tools.readings import labelled, GAIN, STEADY, LOSS, GIVEN  # noqa: E402  (the words every table uses)
 from tools.run_realms_v5 import SPINE, spine_rows  # noqa: E402  (the spine, the seventh organism)
 
 REALMS = ("compute_ai_cloud", "physics_robotics_autonomous", "energy_facility_industrial", "distribution_specialized")
@@ -262,9 +262,9 @@ def away_word(k):
 
 
 def reading(k, v, eps=1e-9):
-    """A measure's change against native, read in words: its word (GAIN, LOSS, power given) and what it means, or EVEN."""
+    """A measure's change against native, read in words: its word (GAIN, LOSS, power given) and what it means, or STEADY."""
     if abs(v) <= eps:
-        return f"({EVEN})"
+        return f"({STEADY})"
     toward = v > 0 if k in AIM_UP else v < 0
     return f"({GAIN}: {AIM_UP.get(k) or AIM_DOWN.get(k)})" if toward else f"({away_word(k)}: {AWAY[k]})"
 
@@ -421,7 +421,7 @@ def main(argv=None):
          "first; beside it, every measure that read LOSS or power given, by any amount, is named, so what Omni takes is read "
          "beside what it gives.", "",
          "How to read a row: each change is Omni against native on the same organism, seed and requests, and carries its word, "
-         "GAIN, EVEN or LOSS, by what the measure is for, never by its sign (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). Work "
+         "GAIN, STEADY or LOSS, by what the measure is for, never by its sign (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). Work "
          "per energy and work aim higher. Energy is a resource spent: a cut is a GAIN (a lower power bill, or longer on the same "
          "supply), a rise is power given. Time over the line and p95 aim lower (faster answers). So a minus is a GAIN on energy, "
          "lateness and p95, and a LOSS on work.", "",

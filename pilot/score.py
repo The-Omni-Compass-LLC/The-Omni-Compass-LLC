@@ -19,7 +19,7 @@ pools, efficiency is normalised by the work actually done (CPU core-hours used):
 Each capture is cut into blocks (default 60 minutes). Differences between the Omni-Compass and baseline block means are
 given with a bootstrap 95% interval over blocks; a verdict is stated only when the interval excludes zero, in the words
 every table uses (tools/readings.py): GAIN toward the metric's aim; LOSS away from it; power given where a resource spent
-(machine-hours, energy) rose; EVEN, no significant difference, otherwise.
+(machine-hours, energy) rose; STEADY, no significant difference, otherwise.
 
 python pilot/score.py --baseline baseline.csv --omni omni.csv [--idle-w 200 --dyn-w 350] [--block-minutes 60] [--out score.json]
 """
@@ -87,7 +87,7 @@ def compare(base, omni, seed=12345, n=4000):
         diffs = c[rng.integers(0, len(c), (n, len(c)))].mean(1) - a[rng.integers(0, len(a), (n, len(a)))].mean(1)
         lo, hi = np.percentile(diffs, [2.5, 97.5]); d = float(c.mean() - a.mean())
         verdict = (("GAIN" if (hi < 0) == lower else ("power given" if m in HELD else "LOSS")) if (hi < 0 or lo > 0)
-                   else "EVEN, no significant difference")
+                   else "STEADY, no significant difference")
         out[m] = {"baseline": float(a.mean()), "omni": float(c.mean()), "difference": d,
                   "relative": d / a.mean() if a.mean() else float("nan"), "ci95": [float(lo), float(hi)], "verdict": verdict}
     return out

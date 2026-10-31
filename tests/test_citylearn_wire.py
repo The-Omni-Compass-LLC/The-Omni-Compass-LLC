@@ -83,7 +83,7 @@ class OneKey(unittest.TestCase):
         self.assertEqual(reading("discomfort_proportion", 0.70, 0.71), "LOSS")
 
     def test_identical_is_even_and_missing_is_not_scored(self):
-        self.assertEqual(reading("cost_total", 1.0, 1.0), "EVEN")
+        self.assertEqual(reading("cost_total", 1.0, 1.0), "STEADY")
         self.assertEqual(reading("cost_total", None, 1.0), "not scored")
 
 

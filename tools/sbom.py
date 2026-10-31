@@ -32,7 +32,7 @@ LOCK = ROOT / "requirements-lock.txt"
 CDX = ROOT / "sbom" / "omni-compass.cdx.json"
 SPDX = ROOT / "sbom" / "omni-compass.spdx.json"
 PAGE = ROOT / "docs" / "DEPENDENCY_LICENSES.md"
-REPO = "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass"
+from tools.repo import URL as REPO  # noqa: E402  (the repository's name, written once)
 OWN = "LicenseRef-OmniCompass-Evaluation-1.0"
 # each package's own declaration, as an SPDX expression (a LicenseRef where SPDX has no identifier); its use in Omni-Compass
 LICENSES = {

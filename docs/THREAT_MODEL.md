@@ -14,7 +14,7 @@ analysis: **no outside security review or penetration test has been made**, and 
 | The settings the governor writes (replicas, the autoscaler's target, a node's idle mark, a CPU limit, a power cap, a database pool) | Whoever controls them controls the service's capacity |
 | The governor's identity on the system (on Kubernetes its service account and token) | It carries every right the governor has |
 | The hand-back: the snapshot of native's settings, the registry of restore commands, the switch file | They put the system back when the governor stops; whoever can write them chooses what "back" means |
-| The engine's code (the 62 fingerprinted files of omni-v19, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
+| The engine's code (the 65 fingerprinted files of omni-v23, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
 | The audit lines and the raw receipts | They are the evidence for every result and every decision |
 | The cloud and GPU credentials (GitHub secrets) | They spend money and create machines |
 

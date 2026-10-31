@@ -4,7 +4,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 name: lambda-gpu
-run-name: lambda-gpu ${{ github.event.inputs.test || '' }} ${{ github.event.inputs.mode || '' }} ${{ github.event.inputs.tag || '' }}
+run-name: lambda-gpu ${{ github.event.inputs.test || '' }} ${{ github.event.inputs.mode || '' }}${{ github.event.inputs.dial == 'save' && ' save' || '' }} ${{ github.event.inputs.tag || '' }}
 # The GPU benchmark on a rented Lambda Cloud machine, one button (Actions -> lambda-gpu -> Run workflow): the 8-GPU result
 # (scripts/gpu_8card.sh) or the one-card test (scripts/gpu_rented_run.sh), at the exact commit the button is pressed on.
 # It shows the price first and rents nothing on a dry run (the default). Otherwise it rents one machine, ships the
@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
     inputs:
       test: {description: "8card (the 8-GPU result), 1card (the one-card test), or giveback (give back a stuck run's machine: no test, nothing rented)", default: "8card"}
-      mode: {description: "pooled, fast or full (8card: about 10, 3.5 or 18 hours; 1card: fast about 7, full about 30), or stacks (1card: the whole stacks with the card inside at 1, 10 and 100 copies, about 22 hours)", default: "pooled"}
+      mode: {description: "pooled, fast or full (8card: about 10, 3.5 or 18 hours; 1card: fast about 7, full about 30), or stacks (1card: the whole stacks with the card inside at 1, 10 and 100 copies; 1x and 10x about 23 hours on one A10, 100x after them up to the 33-hour budget), or cap (1card: an operator's power cap underneath, the cap alone against the cap with Omni-Compass on top, usual load and fully loaded, about 4 hours)", default: "pooled"}
       tag: {description: "A, B or C: which of the three runs this is (each its own machine, side by side; empty for one run)", default: ""}
       instance_type: {description: "Lambda machine type (empty: gpu_8x_a100_80gb_sxm4 for 8card, gpu_1x_a10 for 1card)", default: ""}
       region: {description: "Lambda region (empty: the first with a machine free)", default: ""}
@@ -28,13 +28,12 @@ on:
       dry_run: {description: "Show the price and the plan, rent nothing (yes/no)", default: "yes"}
       hil_profile: {description: "Prepared organism scales: standard or 1-10-100", default: "1-10-100"}
       give_back: {description: "giveback only: the name, or the start of the name, of the machines to give back (omni-1card-, omni-8card-, or a whole name)", default: ""}
-  push:          # registers this workflow on the branch it is pushed to; a push runs nothing (every job asks for a dispatch)
-    branches-ignore: [main, raw, "v[0-9]*", "gpu-omni-*", "archive/**"]   # a push to main or a level branch never starts it (20 October: every bot commit started 25 skipped runs and a cascade of cancelled page rebuilds)
+      dial: {description: "max (the factory tune: the clock ceiling held at the top while the card serves) or save (the tune-down: the verdict's steps below the top where the card's time on a request allows)", default: "max"}
 permissions:
   contents: read
 # one run at a time per test: the one-card and the eight-card tests may rent at once (the same money, half the wait), a
 # second dispatch of the same test waits for the first; a push (which runs nothing) never takes a dispatch's place
-concurrency: {group: "lambda-gpu-${{ github.event_name }}-${{ github.event.inputs.test || 'none' }}${{ github.event.inputs.tag || '' }}", cancel-in-progress: false}
+concurrency: {group: "lambda-gpu-${{ github.event_name }}-${{ github.event.inputs.test || 'none' }}-${{ github.event.inputs.mode || '' }}-${{ github.event.inputs.dial || 'max' }}${{ github.event.inputs.tag || '' }}", cancel-in-progress: false}
 env:
   OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
   LAMBDA_API_KEY: ${{ secrets.LAMBDA_API_KEY }}
@@ -58,6 +57,8 @@ jobs:
         run: |
           [ -n "$LAMBDA_API_KEY" ] || { echo "::error::LAMBDA_API_KEY is not in this repository's secrets."; exit 2; }
           case "$WHICH" in omni-?*) ;; *) echo "::error::give_back must start with omni- (omni-1card-, omni-8card-, or a whole name)."; exit 2;; esac
+          python3 scripts/lambda_gpu.py list --prefix "" | sed 's/^/  on the account (every machine, by hand or by a run): /' || true   # read only: what bills now
+          python3 -c "import sys; sys.path.insert(0, 'scripts'); import lambda_gpu as L; [print('  machine:', d.get('id'), '|', d.get('name') or '(no name: launched by hand on Lambda)', '|', d.get('status'), '|', (d.get('instance_type') or {}).get('name'), '|', (d.get('instance_type') or {}).get('price_cents_per_hour'), 'cents an hour |', (d.get('region') or {}).get('name')) for d in L.call('GET', '/instances').get('data', [])]" || true   # read only: type and price of each
           python3 scripts/lambda_gpu.py list | sed 's/^/  listed before: /' || true
           python3 scripts/lambda_gpu.py terminate --prefix "$WHICH" | tee -a "$GITHUB_STEP_SUMMARY"
           python3 scripts/lambda_gpu.py list | sed 's/^/  still listed: /' || true
@@ -105,9 +106,11 @@ jobs:
           MAX_COST: ${{ github.event.inputs.max_cost }}
           DRY: ${{ github.event.inputs.dry_run }}
           HIL_PROFILE: ${{ github.event.inputs.hil_profile || '1-10-100' }}
+          DIAL: ${{ github.event.inputs.dial || 'max' }}
         run: |
           set -euo pipefail
           echo "launched=false" >> "$GITHUB_OUTPUT"
+          case "$DIAL" in max|save) ;; *) echo "::error::dial must be max or save, not $DIAL"; exit 2;; esac
           case "$TEST:$MODE" in
             8card:pooled) SCRIPT=scripts/gpu_8card.sh; ENVS="POOLED=1"; BUDGET=10.5;;
             8card:fast)   SCRIPT=scripts/gpu_8card.sh; ENVS="FAST=1";   BUDGET=4;;
@@ -116,7 +119,14 @@ jobs:
             1card:full)   SCRIPT=scripts/gpu_rented_run.sh; ENVS="";    BUDGET=32;;
             # the whole stacks with the card inside, nothing else: the wire check and the smoke on the real card first, then the
             # seven organisms at 1, 10 and 100 copies (tools/run_hil.py, the preregistered repetitions 5, 3 and 2 by size)
-            1card:stacks) SCRIPT=scripts/gpu_rented_run.sh; ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_CAP=1 SKIP_DRILL=1 SKIP_LLM=1"; BUDGET=24;;
+            # (24 to 26 October, one A10: 1x and 10x took about 23 hours, so the budget is the six watches' 33 hours, and every
+            # finished arm is fetched however far the run got: scripts/lambda_gpu_watch.sh)
+            1card:stacks) SCRIPT=scripts/gpu_rented_run.sh; ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_CAP=1 SKIP_DRILL=1 SKIP_LLM=1"; BUDGET=32;;
+            # an operator's power cap underneath, nothing else (27 October: the A100's counted run of 24 October read STEADY with no
+            # write, its limit already at the top on native, so the factory tune had nothing to raise): the cap alone against the
+            # cap with Omni-Compass on top at the usual load and fully loaded, 5 paired repetitions of 300 s each (the cap at the
+            # envelope's lowest watts, 70% of the default limit, set by the operator in both arms: scripts/gpu_rented_run.sh)
+            1card:cap)    SCRIPT=scripts/gpu_rented_run.sh; ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_DRILL=1 SKIP_HIL=1 SKIP_LLM=1"; BUDGET=5;;
             *) echo "unknown test/mode $TEST/$MODE" | tee -a "$GITHUB_STEP_SUMMARY"; exit 1;;
           esac
           case "$HIL_PROFILE" in
@@ -127,9 +137,10 @@ jobs:
               ;;
             *) echo "unsupported HIL profile: $HIL_PROFILE (use standard or 1-10-100)"; exit 1;;
           esac
+          ENVS="$ENVS OMNI_DIAL=$DIAL"    # the card governor's dial (omni_controller/gpu_compass.py --dial), recorded with the run
           TYPE="${TYPE_IN:-$([ "$TEST" = 8card ] && echo gpu_8x_a100_80gb_sxm4 || echo gpu_1x_a10)}"
           HOURS=$(python3 -c "print(float('$BUDGET') + 1)")
-          { echo "## The GPU benchmark on Lambda: $TEST, $MODE, commit \`${GITHUB_SHA::12}\`"; echo
+          { echo "## The GPU benchmark on Lambda: $TEST, $MODE, dial $DIAL, commit \`${GITHUB_SHA::12}\`"; echo
             echo "Script \`$SCRIPT\` ${ENVS:+with \`$ENVS\`}; hour budget $BUDGET, given back at $HOURS hours at the latest."; echo; } >> "$GITHUB_STEP_SUMMARY"
           missing=""
           [ "$HAVE_API" = true ] || missing="$missing LAMBDA_API_KEY"

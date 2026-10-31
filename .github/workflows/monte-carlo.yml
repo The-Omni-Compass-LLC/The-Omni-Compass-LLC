@@ -1,0 +1,105 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+name: monte-carlo
+# The founder's words of 24 October: "Monte Carlo 500 Runge-Kutta, my C++ and Python linked together, ran through as a button, and then
+# if somebody wanted to theoretically hook up their own system and hook this to their stack and run their own system through it, is
+# wired into that other button, which is the simulation that's done within the GitHub." The core's Monte Carlo on GitHub's own
+# machine: tools/core_runs.py draws the runs from the jump generator (500 by default) over the engine's own ranges or a system of your
+# own (a JSON block pasted into "system", or a file under systems/, systems/README.md), runs each through omnicompass/core.simulate in
+# four ways, and writes one digest; the C++ twin of the core (cpp/tools/core_runs.cpp on cpp/src/core.cpp) reads the Python's draws and
+# must give the same digest; the live benchmark engine page's own port of the core, run in node, must give it again; the record, with this
+# run's link, is committed to results/core_runs/ and the page shows it. A push that changes the core, the harness or a system file
+# runs the engine's own ranges and every file under systems/. The block is read as numbers only, never run as code; it reaches the
+# shell only through an environment variable. Nothing is billed: GitHub's own machine.
+on:
+  workflow_dispatch:
+    inputs:
+      runs: {description: "Runs from the jump generator (1 to 10,000)", default: "500"}
+      base: {description: "The jump generator's base seed (empty: this run's own number)", default: ""}
+      system: {description: "Your own system: the JSON block from the live benchmark engine's own-system panel, or a path under systems/ (empty: the engine's own ranges)", default: ""}
+  push:
+    branches: [main, "claude/**"]
+    paths:
+      - "tools/core_runs.py"
+      - "omnicompass/core.py"
+      - "cpp/src/core.cpp"
+      - "cpp/include/omnicompass/core.hpp"
+      - "cpp/tools/core_runs.cpp"
+      - "systems/**"
+      - ".github/workflows/monte-carlo.yml"
+permissions:
+  contents: write
+concurrency:
+  group: monte-carlo-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+jobs:
+  runs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4: the code, not the archive of raw runs
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - name: The C++ twin of the core and its harness built
+        run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release && cmake --build cpp/build -j2 --target oc_core_runs
+      - name: The Monte Carlo, the Python and the C++ linked, and the live benchmark engine's own port on the same draws
+        env:
+          RUNS: "${{ github.event.inputs.runs || '500' }}"
+          BASE_IN: "${{ github.event.inputs.base }}"
+          SYSTEM_IN: "${{ github.event.inputs.system }}"
+        run: |
+          set -euo pipefail
+          case "$RUNS" in ''|*[!0-9]*) echo "::error::runs is a whole number from 1 to 10,000"; exit 1;; esac
+          base="$BASE_IN"; [ -n "$base" ] || base=$(( GITHUB_RUN_ID % 4294967296 ))
+          case "$base" in *[!0-9]*) echo "::error::base is a whole number"; exit 1;; esac
+          python3 tools/omni_version.py | head -1 | tee -a "$GITHUB_STEP_SUMMARY"
+          systems=()
+          if [ -n "$SYSTEM_IN" ]; then
+            case "$SYSTEM_IN" in
+              "{"*) printf '%s' "$SYSTEM_IN" > "$RUNNER_TEMP/system.json"; systems+=("$RUNNER_TEMP/system.json");;
+              systems/*.json) [ -f "$SYSTEM_IN" ] || { echo "::error::$SYSTEM_IN is not in the repository"; exit 1; }; systems+=("$SYSTEM_IN");;
+              *) echo "::error::system is a JSON block that starts with { or a path under systems/"; exit 1;;
+            esac
+          else
+            systems+=("")
+            if [ "$GITHUB_EVENT_NAME" = "push" ]; then for f in systems/*.json; do [ -f "$f" ] && systems+=("$f"); done; fi
+          fi
+          for sysf in "${systems[@]}"; do
+            python3 tools/core_runs.py --runs "$RUNS" --base "$base" --system "$sysf" --cpp cpp/build/oc_core_runs | tee -a "$GITHUB_STEP_SUMMARY"
+            python3 tools/core_runs.py --verify-cpp cpp/build/oc_core_runs --runs "$RUNS" --base "$base" --system "$sysf" | tee -a "$GITHUB_STEP_SUMMARY"
+            python3 tools/core_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --runs "$RUNS" --base "$base" --system "$sysf" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - name: The records committed, with this run's link
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
+          git add results/core_runs/
+          git diff --cached --quiet && { echo "nothing new to record"; exit 0; }
+          git commit -q -m "The core's Monte Carlo from the jump generator, the Python and the C++ linked, checked in the live benchmark engine's own code (monte-carlo run $GITHUB_RUN_ID)"
+          for attempt in 1 2 3 4 5 6; do
+            git pull -q --rebase && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
+          done
+          echo "::error::the record could not be pushed after six attempts"; exit 1
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"

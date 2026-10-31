@@ -20,7 +20,7 @@ from pilot.bench_report import gauges, latency, pod_starts
 from tools.readings import word as gel_word, aim as gel_aim, receipt_key  # noqa: E402  (the words every table uses)
 from tools.readings import by_word, interval_by_word  # noqa: E402  (a number beside a word carries the word's sign)
 
-SAME_REL = 1e-6   # a change under one part in a million of the value reads "same" (amendment 11)
+SAME_REL = 1e-9          # "the same" only to nine decimal places of the value (tools/readings.py EXACT_REL; the referee's work order of 25 October)
 from omnicompass.student_t import T95  # noqa: E402  (the two-sided 95% point of Student's t, any degrees of freedom)
 KEYS = ["worker nodes in service, mean", "node-hours", "energy, parked workers still on at idle power (Wh)", "energy (Wh)", "response time (ms), mean", "response time (ms), 95th percentile",
         "response time (ms), 99th percentile", "time over the response line (% of samples)", "failed requests (%)", "pods with no machine to take them (unschedulable)", "time pods had no machine to take them, pod-minutes",
@@ -767,9 +767,10 @@ def main(root):
     own = sorted(beats.get("compass", set()))
     beat = f"{own[0] if len(own) == 1 else engine_default_s():g}"
     cols = ([a for a in ("nativebare", "native") if a in runs] + tuned
-            + [a for a in ("watch", "omni", "compassbare", "compass") if a in runs] + paces + [a for a in ("strict",) if a in runs])
+            + [a for a in ("watch", "omni", "compassbare", "compass") if a in runs] + paces + [a for a in ("strict", "solo") if a in runs])
     names = {"native": "native", "watch": "omni, watching (writes nothing)", "omni": "omni (allocation law)", "compass": "omni", "strict": "omni alone (not on top: earlier sets only)",
              "nativebare": "the organism alone (no orchestrator)", "compassbare": "omni on the organism alone",
+             "solo": "Omni-Compass by itself (no pod autoscaler; its own pod muscle)",
              **{a: f"Native tuned, HPA target {a[6:]}" for a in tuned},
              **{a: f"omni, a decision every {a[7:]} s" for a in paces}}
     L += ["## All columns, mean over repetitions", "", "| Gauge | " + " | ".join(names[a] for a in cols) + " |",
@@ -794,6 +795,9 @@ def main(root):
     # each pace against native, and against the compass arm at its default beat, paired in the repetition
     pairs += [(a, "native", a, f"omni deciding every {a[7:]} s vs native") for a in paces]
     pairs += [(a, "compass", f"{a}|compass", f"omni deciding every {a[7:]} s vs omni at its default, every {beat} s") for a in paces]
+    # Omni-Compass by itself (omni-v19, docs/SOLO_PREREGISTRATION.md): against native, and against Omni-Compass and native
+    pairs += [("solo", "native", "solo", "Omni-Compass by itself (the pod autoscaler removed, its own pod muscle) vs native"),
+              ("solo", "compass", "solo|compass", "Omni-Compass by itself vs Omni-Compass and native")]
     for a, base, key, four in pairs:
         if a not in runs or base not in runs:
             continue
@@ -821,12 +825,12 @@ def main(root):
             nb = float(np.nanmean([runs[base][r].get(k, np.nan) for r in reps])); ob = nb + float(d.mean())
             half = T95.get(len(d) - 1, 1.96) * (d.std(ddof=1) / math.sqrt(len(d))) if len(d) > 1 else float("nan")
             sig = len(d) > 1 and (d.mean() - half > 0 or d.mean() + half < 0)
-            # a change under one part in a million of the value is rounding, not a difference: read "same" (SAME_REL)
+            # a change under one part in a billion of the value (nine decimal places) is rounding, not a difference: read "same" (SAME_REL)
             same = abs(d.mean()) <= SAME_REL * max(abs(nb), 1e-12)
             sig = sig and not same
             ch = (ob - nb) / abs(nb) * 100 if abs(nb) > 1e-12 else None
             out["paired"][key][k] = {"native": nb, "omni": ob, "diff": float(d.mean()), "ci95": [float(d.mean() - half), float(d.mean() + half)], "significant": bool(sig)}
-            wd = 'EVEN, the same (under one part in a million)' if same and d.mean() != 0 else sig_word(k, d.mean()) if sig else 'no'
+            wd = 'STEADY, the same (to nine decimal places)' if same and d.mean() != 0 else sig_word(k, d.mean()) if sig else 'no'
             ch_s = by_word(ch, wd) if ch is not None else f"{by_word(ob - nb, wd, unit='', digits=3)} (native is 0)"
             L.append(f"| {LABEL.get(k, k)} | {nb:.4g} | {ob:.4g} | {ch_s} | {interval_by_word(d.mean() - half, d.mean() + half, wd, unit='', digits=4)} | "
                      f"{wd} |")

@@ -10,13 +10,13 @@ every benchmark then runs again on it, A, B and C. Nothing here is a result.
 
 The v6 capacity repair and non-GPU rerun campaign are now implemented in `docs/OMNI_V6.md`. The repair does not declare every proposal in this historical plan complete. Google, Amazon and physical GPU launches remain deferred.
 
-## 1. GAIN, EVEN and LOSS as the code that steers the brain
+## 1. GAIN, STEADY and LOSS as the code that steers the brain
 
 Today the words are in every report (`tools/readings.py`) and the engine already acts on the same aims: the verdict
 (`omnicompass/verdict.py`) keeps a step only where the muscle's own cost per piece of work is no higher, and the body's
 guard refuses a step that pushes another part past its cushion. The next version makes the three words the brain's own
 vocabulary: every gauge a muscle reports carries its declared aim (lower, higher, spent), and every trial is judged in the
-words the reports use, GAIN, EVEN, LOSS or power given, for the muscle and for the body. A trial that reads LOSS anywhere is
+words the reports use, GAIN, STEADY, LOSS or power given, for the muscle and for the body. A trial that reads LOSS anywhere is
 undone; power given is kept only beside the work or speed it bought. One table of aims serves the brain and the reports, so
 they can never disagree.
 
@@ -45,9 +45,9 @@ The long-window rerun on GitHub's four-core machine read the tower's 95th-percen
 
 | At 100 copies | 95th percentile | 99th percentile | Time over the line | Failed requests | HPA replicas | Host CPU busy |
 |---|---|---|---|---|---|---|
-| The whole tower | +47.7%, LOSS | EVEN | -3.2%, GAIN | EVEN | +54% (power given) | 80.4% to 88.6% (+10.1%) |
-| The four stacked | +87.2%, LOSS | +32.1%, LOSS | EVEN | EVEN | +47% (power given) | +12.9% |
-| The four realms, each | EVEN | EVEN | GAIN in Physics (-3.1%), EVEN in three | EVEN | +40% to +54% | +6.6% to +11.7% |
+| The whole tower | +47.7%, LOSS | STEADY | -3.2%, GAIN | STEADY | +54% (power given) | 80.4% to 88.6% (+10.1%) |
+| The four stacked | +87.2%, LOSS | +32.1%, LOSS | STEADY | STEADY | +47% (power given) | +12.9% |
+| The four realms, each | STEADY | STEADY | GAIN in Physics (-3.1%), STEADY in three | STEADY | +40% to +54% | +6.6% to +11.7% |
 
 **The cause.** In both arms the four-core machine was already about 80% busy and the cluster was failing about half of
 its requests: the load at 100 copies is beyond what six kind nodes on four cores can serve. The max read the replica
@@ -97,7 +97,7 @@ running now):
 
 | Where | The LOSS | What it shows | In this version |
 |---|---|---|---|
-| The grid with the cluster inside (`results/grid_v5/GRID.md`) | the organism's work per energy, in 21 of 36 squares of 10 and 100 repetitions | the max gave the organism power (its energy reads power given) and the work waiting in line was done either way, so each unit of work took more energy; the power bought fewer misses (time over the line reads GAIN in all 36) | the decision code counts the body's work per energy as a gauge of its own: a power step that buys no work and no fewer misses is undone; where it buys fewer misses, the step stays only while the body's work per energy stays EVEN, so the row reads EVEN or GAIN |
+| The grid with the cluster inside (`results/grid_v5/GRID.md`) | the organism's work per energy, in 21 of 36 squares of 10 and 100 repetitions | the max gave the organism power (its energy reads power given) and the work waiting in line was done either way, so each unit of work took more energy; the power bought fewer misses (time over the line reads GAIN in all 36) | the decision code counts the body's work per energy as a gauge of its own: a power step that buys no work and no fewer misses is undone; where it buys fewer misses, the step stays only while the body's work per energy stays STEADY, so the row reads STEADY or GAIN |
 | The four stacked at 100 copies, 100 repetitions | 95th and 99th percentile response time | the organism ran past its window in 49 of 100 repetitions (up to 635 s): GitHub's four-core machine could not step that many muscles in time | section 3: the cause found (replicas added on a saturated host); the fix is the replica muscle's live headroom |
 | The whole tower at 100 copies, 100 repetitions | 95th and 99th percentile response time | the same machine; the long-window rerun read +45.9% at the 95th percentile | section 3: the same cause and fix |
 | CityLearn (`results/live/V1_CITYLEARN.md`, `V3_CITYLEARN.md`) | energy not served and time uncomfortable in several districts | older engines' tables; not yet run on omni-v5 | run on this version, A, B and C; a district that still reads LOSS has its cause found before the table goes up |

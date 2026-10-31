@@ -805,7 +805,7 @@ def _job(args):
 
 def read(pairs, aim, resource):
     """The one key on paired differences (tools/readings.py): the mean change in percent of the reference, its 95% interval
-    (Student's t), and the word by the gauge's aim; under 0.5% EVEN."""
+    (Student's t), and the word by the gauge's aim; under 0.5% STEADY."""
     from omnicompass.student_t import T95
     base = [a for a, _ in pairs]
     d = [(b - a) for a, b in pairs]
@@ -821,7 +821,7 @@ def read(pairs, aim, resource):
     else:
         pct, lo, hi = 100.0 * mean / abs(ref), 100.0 * (mean - half) / abs(ref), 100.0 * (mean + half) / abs(ref)
     if abs(pct) < 0.5:
-        word = "EVEN"
+        word = "STEADY"
     else:
         good = pct < 0 if aim == "lower" else pct > 0
         word = "GAIN" if good else ("power given" if resource else "LOSS")

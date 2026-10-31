@@ -5,7 +5,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The seven organisms and every muscle of the catalog read again by the one key that stands (the founder's order of 24
-October 2026: a change of 0.5% or more either way is a change, EVEN only under it).
+October 2026: a change of 0.5% or more either way is a change, STEADY only under it).
 
 The realms runner (tools/run_realms_v5.py, frozen with the results it made) labels a muscle by its 95% intervals over the
 seeds alone: a change of a thousandth of a percent clear of the noise was a GAIN, and a change of several percent inside it
@@ -35,7 +35,7 @@ from tools.readings import SIZE_FLOOR         # noqa: E402  (the one floor, writ
 
 OUT = ROOT / "results" / "realms_v5"
 NOTE = ("Read again on 24 October 2026 by the one key (tools/realms_reread.py, the founder's order: a change of 0.5% or more "
-        "either way is a change, EVEN only under it): each label counts the mean change over the seeds from 0.5% up, whether "
+        "either way is a change, STEADY only under it): each label counts the mean change over the seeds from 0.5% up, whether "
         "or not it stands clear of the seeds' noise; the numbers are the runs' own.")
 
 

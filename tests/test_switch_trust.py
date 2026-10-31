@@ -8,7 +8,8 @@ commands it finds there and stops a hung governor's process, so a record another
 or a process stopped, with the watchdog's rights; and a pid the system gave to another process after the governor died
 would be stopped in the governor's place. Each case is set up in a registry of its own, with a restore command that only
 leaves a mark."""
-import json, os, stat, subprocess, sys, tempfile, time
+import contextlib, errno, json, os, stat, subprocess, sys, tempfile, time
+from unittest.mock import patch
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 import tools.omni_switch as SW
@@ -66,16 +67,31 @@ def test_a_record_reached_through_a_link_is_refused():
 
 
 def test_a_record_of_another_user_is_refused():
-    if os.geteuid() != 0:
-        return                                                       # only root can give a file to another user
     d, reg = registry()
     p = record(reg, "theirs", 2 ** 22 + 7, d / "mark")
-    os.chown(p, 54321, 54321)
-    done = SW.reclaim(None)
-    assert [x["watchdog"] for x in done] == ["refused"] and "owned by uid 54321" in done[0]["refused"], done
-    assert not (d / "mark").exists()
-    done = SW.reclaim(None, SW.owners([54321]))                       # a watchdog told to trust that user acts on it
-    assert [x["watchdog"] for x in done] == ["handed back"] and (d / "mark").exists()
+    ownership = contextlib.nullcontext()
+    try:
+        os.chown(p, 54321, 54321)
+    except OSError as error:
+        if error.errno not in (errno.EINVAL, errno.EPERM):
+            raise
+        # A non-root user or a single-UID user namespace cannot represent uid
+        # 54321. Exercise the same descriptor-owner checks with that metadata;
+        # keep both refusal and explicit-trust assertions, never skip the test.
+        identity = p.stat(); actual_fstat = os.fstat
+        def foreign_owner(fd):
+            observed = actual_fstat(fd)
+            if (observed.st_dev, observed.st_ino) == (identity.st_dev, identity.st_ino):
+                fields = list(observed); fields[4] = 54321
+                return os.stat_result(fields)
+            return observed
+        ownership = patch.object(SW.os, 'fstat', side_effect=foreign_owner)
+    with ownership:
+        done = SW.reclaim(None)
+        assert [x["watchdog"] for x in done] == ["refused"] and "owned by uid 54321" in done[0]["refused"], done
+        assert not (d / "mark").exists()
+        done = SW.reclaim(None, SW.owners([54321]))                       # a watchdog told to trust that user acts on it
+        assert [x["watchdog"] for x in done] == ["handed back"] and (d / "mark").exists()
 
 
 def test_a_pid_given_to_another_process_is_never_stopped():

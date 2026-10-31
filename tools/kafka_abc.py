@@ -7,7 +7,7 @@
 """The A/B/C table for the Kafka benchmark (docs/OMNI_V1.md's readings, docs/KAFKA_PREREGISTRATION.md): the untouched
 workloads run three times as separate GitHub runs on the same frozen engine (tools/run_kafka.py), each run holding three
 paired repetitions of native and omni. Within a run the paired difference (omni minus native) over its repetitions gives a
-95% interval; across the three runs a gauge reads by the one key (tools/readings.py, the founder's order of 24 October 2026): a change of 0.5% or more, the mean of the three runs, reads GAIN, LOSS or power given by the gauge's aim, in all three of our runs when every run is clear of zero the same way and otherwise by the mean of our three runs with the count beyond the noise; under 0.5% EVEN, under the floor; runs that moved 0.5% or more in opposite ways disagree. Lost messages: any rise in any run reads **LOSS in at least one of our runs**. The knob's moves are shown, never judged. The tuning workload is shown and not counted. Every row is reported,
+95% interval; across the three runs a gauge reads by the one key (tools/readings.py, the founder's order of 24 October 2026): a change of 0.5% or more, the mean of the three runs, reads GAIN, LOSS or power given by the gauge's aim, in all three of our runs when every run is clear of zero the same way and otherwise by the mean of our three runs with the count beyond the noise; under 0.5% STEADY, under the floor; runs that moved 0.5% or more in opposite ways disagree. Lost messages: any rise in any run reads **LOSS in at least one of our runs**. The knob's moves are shown, never judged. The tuning workload is shown and not counted. Every row is reported,
 LOSS included; no energy is claimed beyond the host's CPU seconds.
 Usage: python tools/kafka_abc.py A_DIR B_DIR C_DIR --out results/live/V3_KAFKA.md
   each DIR is an archived run (results/live/raw/run-<id>/) holding kafka-<workload>/.../<workload>.json"""
@@ -53,18 +53,17 @@ def engine(run_dir):
 
 def verdict(rs, direction, key=None):
     """The three-run reading of one gauge, by rule, from its three within-run paired results: GAIN, LOSS, power given,
-    EVEN or the runs disagree, by what the gauge is for (tools/readings.py)."""
+    STEADY or the runs disagree, by what the gauge is for (tools/readings.py)."""
     return stack_reading(rs, direction, SAME_REL, key)
 
 
 def cell(r, key):
+    """One run in separate fields (the referee's work order of 25 October): native's value → Omni-Compass's, the raw change with its
+    true sign and its 95% interval (tools/confirm_abc.py cell, one format for every table)."""
     if r is None:
         return "n/a"
-    nat, d, lo, hi = r["native"], r["diff"], r["ci95"][0], r["ci95"][1]
-    if key == "lost" or not nat:
-        return f"{d:+.3g} ({lo:+.3g} to {hi:+.3g})"
-    return f"{100 * d / abs(nat):+.1f}% ({100 * lo / abs(nat):+.1f} to {100 * hi / abs(nat):+.1f})"
-
+    from tools.confirm_abc import cell as fields
+    return fields(r)
 
 def fmt(v):
     return f"{v:.3g}" if abs(v) < 10 else f"{v:,.1f}" if abs(v) < 1000 else f"{v:,.0f}"
@@ -125,7 +124,7 @@ def main(argv=None):
             objs = sorted({v["objective"] for vs in vr.values() for v in vs})
             L += ["", "The brain's own verdict on the knob in the omni arms, one trial at a time on the stack itself (the objective: " + ", ".join(objs) + "): "
                   + "; ".join(f"run {t}: {summarize(vs)}" for t, vs in vr.items() if vs) + "."]
-            out.setdefault("verdicts", {})[wl] = {t: [{k: v.get(k) for k in ("objective", "state", "spend_allowed_steps", "give_back_allowed_steps", "allowed_low", "allowed_high", "counts")} for v in vs] for t, vs in vr.items()}
+            out.setdefault("verdicts", {})[wl] = {t: [{k: v.get(k) for k in ("objective", "state", "dial", "spend_allowed_steps", "give_back_allowed_steps", "allowed_low", "allowed_high", "counts")} for v in vs] for t, vs in vr.items()}
     missing = {t: [w for w in wls if w not in r] for t, (_, r) in zip("ABC", runs)}
     if any(missing.values()):                           # 21 October: a table written from runs that failed said nothing at its foot
         L += ["", "> **Warning:** a run lacks a workload: " + "; ".join(f"run {t} lacks {', '.join(ws)}" for t, ws in missing.items() if ws)

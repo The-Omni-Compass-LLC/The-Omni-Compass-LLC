@@ -88,13 +88,21 @@ class PlantFiles(unittest.TestCase):
 
 class PairedRun(unittest.TestCase):
     def test_short_paired_run(self):
+        from tools import cpu_power_model as M
+        from tools.cpu_power_model import ModelClock, ModelOmni, ModelSampler, ModelService   # the modelled machine's service as the model's own queue, on the model's own clock (30 October 2026)
         R.VERDICT_KW = dict(min_samples=3, probe_every=4, recheck=10, max_trial=12, settle_s=1.0)   # short trials for the test
         R.Service.JITTER = (0.9, 1.1)
+        real = (R.Service, R.Omni, R.Sampler, R.time, R.cpu_times)
+        R.Service, R.Omni, R.Sampler = ModelService, ModelOmni, ModelSampler   # the harness's threads, joined on the model's clock
+        clock = ModelClock()
+        R.time = M.time = clock; M.CURRENT["clock"] = clock      # the service, the governor, the sampler and the arms' own thread keep modelled time: the same run on a loaded machine as on a quiet one
+        R.cpu_times = M.model_cpu_times                            # and the machine's busy share is the model's, never the runner's /proc/stat
         try:
             sim = tempfile.mkdtemp(); out = Path(tempfile.mkdtemp()) / "out"
             rc = R.main(["--plant", "sim", "--sim-dir", sim, "--workloads", "tuning", "--reps", "1", "--step-s", "4", "--out", str(out)])
         finally:
-            R.VERDICT_KW = {}; R.Service.JITTER = (0.5, 1.5)
+            R.VERDICT_KW = {}; R.Service, R.Omni, R.Sampler, R.time, R.cpu_times = real; R.Service.JITTER = (0.5, 1.5); M.time = R.time
+            M.CURRENT["clock"] = M.CURRENT["service"] = None
         self.assertEqual(rc, 0)
         rec = json.loads((out / "cpu-power-tuning" / "tuning.json").read_text())
         self.assertTrue(rec["machine"]["modelled"])

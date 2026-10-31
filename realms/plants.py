@@ -269,6 +269,9 @@ class Plant:
 # ---------------------------------------------------------------------------------------------------------------
 class ComputePool(Plant):
     template = "compute_pool"
+    # Omni-Compass by itself (omni-v19, docs/SOLO_PREREGISTRATION.md): the pool's own autoscaler switched off, so the count
+    # holds where it stands unless the brain's floor or ceiling moves it; set on a plant (and on its twin) by the arm solo only
+    native_off = False
 
     def __init__(self, P, seed, steps):
         super().__init__(P, seed, steps)
@@ -415,7 +418,10 @@ class ComputePool(Plant):
         self.th = min(1.35, max(0.0, 0.86 * self.th + 0.14 * (0.34 + 0.62 * min(1.35, p / self.budget_w))))
         self.drift = abs(self.lam[k] - self.lam[k - 1]) / P["lam0"] if k else 0.0
         total = self.n + len(self.pending)
-        want = self.cluster_autoscaler(util, mu) if P.get("ca") else self.hpa(util)
+        if self.native_off:
+            want = total                                           # by itself: no autoscaler; the count holds
+        else:
+            want = self.cluster_autoscaler(util, mu) if P.get("ca") else self.hpa(util)
         if self.override.get("release"):
             want = min(want, total - 1)                            # one machine per decision
         if "floor" in self.override:                               # a floor under the autoscaler: machines started

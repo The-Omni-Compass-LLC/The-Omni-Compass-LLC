@@ -42,8 +42,14 @@ class StandinCursor:
                          ("Innodb_buffer_pool_read_requests", "1000"), ("Innodb_buffer_pool_resize_status", s.resize_status)]
         elif q.startswith("SELECT @@innodb_buffer_pool_size"):
             self.rows = [(s.mb * S.MB,)]
-        elif "events_statements_summary_global_by_event_name" in q:
-            self.rows = [(s.timer_ps, s.count)]
+        elif "events_statements_summary_global_by_event_name" in q:   # every account's statements (the old reading)
+            ev = [e for e in s.events if f"'{e[1]}'" in q]
+            self.rows = [(s.timer_ps + sum(e[3] for e in ev), s.count + sum(e[2] for e in ev))]
+        elif "events_statements_summary_by_user_by_event_name" in q:  # one account's statements (the store fix of 25 October)
+            ev = [e for e in s.events if f"USER = '{e[0]}'" in q and f"'{e[1]}'" in q]
+            self.rows = [(s.timer_ps + sum(e[3] for e in ev), s.count + sum(e[2] for e in ev))]
+        elif "file_summary_by_event_name" in q:                       # the data files' reads and their time (omni-v22's account of a miss)
+            self.rows = [(s.file_reads, s.file_ps)]
         elif q.startswith("SET GLOBAL innodb_buffer_pool_size"):
             want = int(q.split("=")[1]) // S.MB
             if s.ignore_set_while_resizing and S.resizing(s.resize_status):
@@ -67,6 +73,8 @@ class StandinCursor:
 class StandinServer:
     def __init__(self, mb, fill=0.5, ignore_set_while_resizing=False):
         self.mb, self.fill, self.disk_reads, self.timer_ps, self.count = mb, fill, 0, 0, 0
+        self.file_reads, self.file_ps = 0, 0                        # the data files' reads and their time (picoseconds), omni-v22's account
+        self.events = []                                            # (user, event name, count, timer ps) rows of the performance schema
         self.resize_status, self.pending, self.ticks = "", None, 0
         self.ignore_set_while_resizing, self.stall_until = ignore_set_while_resizing, None
 
@@ -153,7 +161,7 @@ def main():
             {"native": {"tps": 2890.0, "pool_mb_mean": 512.0, "failed": 0}, "omni": {"tps": 2945.0, "pool_mb_mean": 920.0, "failed": 0}}]
     assert S.paired(reps, "tps", "higher")["reading"] == "GAIN"
     assert S.paired(reps, "pool_mb_mean", "spent")["reading"] == "power given", "more pool held is power given"
-    assert S.paired(reps, "failed", "never more")["reading"] == "EVEN, the same"
+    assert S.paired(reps, "failed", "never more")["reading"] == "STEADY, the same"
     assert S.COVER_MB == (128, 2048) and S.NATIVE_MB == 512 and lo <= S.NATIVE_MB <= hi and S.STEP_MB == S.CHUNK_MB == 128 and S.NATIVE_MB % S.CHUNK_MB == 0
     assert all(s_ >= 1 and r_ > 0 for _, s_, r_, _, _ in S.WORKLOADS.values()) and sum(1 for w in S.WORKLOADS.values() if w[4]) == 1, "one tuning workload"
     print("PASS  sysbench runner: slow statements with the pool full and missing grow the pool by chunks, calm with misses under 1% of reads gives one back after the dwell, "

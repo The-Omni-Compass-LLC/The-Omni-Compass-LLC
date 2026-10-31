@@ -74,6 +74,9 @@ def pod_starts(d):
     d = _P(d); f = d / "pod_watch.json"
     if not f.exists():
         return {}
+    if (d / 'pod_watch_receipt.json').exists():
+        from tools.bench_integrity import validate
+        validate(d)
     ts = lambda s: _dt.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=_dt.timezone.utc).timestamp()
     t0 = float((d / "window_start.txt").read_text().split()[0]); t1 = float((d / "window_end.txt").read_text().split()[0])
     text = f.read_text(); dec = _j.JSONDecoder(); i = 0; pods = {}
@@ -84,8 +87,10 @@ def pod_starts(d):
             break
         try:
             ev, i = dec.raw_decode(text, i)
-        except ValueError:
-            break
+        except ValueError as error:
+            raise ValueError(f'incomplete pod watch JSON in {f}') from error
+        if ev.get('type') == 'ERROR':
+            raise ValueError(f'pod watch API error in {f}: {ev.get("object")}')
         o = ev.get("object", ev); m = o.get("metadata", {}); uid = m.get("uid")
         if not uid or not m.get("creationTimestamp"):
             continue
@@ -99,7 +104,7 @@ def pod_starts(d):
                 rec["unsched"] = ts(c["lastTransitionTime"]) if c.get("lastTransitionTime") else rec["created"]
             if c.get("type") == "PodScheduled" and c.get("status") == "True" and c.get("lastTransitionTime") and rec["sched"] is None:
                 rec["sched"] = ts(c["lastTransitionTime"])
-    waits = [((r["ready"] if r["ready"] is not None else t1) - r["created"]) for r in pods.values() if t0 <= r["created"] <= t1]
+    waits = [(min(r["ready"] if r["ready"] is not None else t1, t1) - r["created"]) for r in pods.values() if t0 <= r["created"] <= t1]
     waits = [max(0.0, w) for w in waits]
     stuck = [max(0.0, min(r["sched"] if r["sched"] is not None and r["sched"] >= r["unsched"] else t1, t1) - max(r["unsched"], t0))
              for r in pods.values() if r["unsched"] is not None and r["unsched"] <= t1]

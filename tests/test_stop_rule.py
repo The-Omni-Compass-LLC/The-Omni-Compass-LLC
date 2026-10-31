@@ -47,7 +47,7 @@ class StopRule(unittest.TestCase):
         nat, omni = arms(30, cut=0.0, sd=0.001)
         go, why = S.decide(nat, omni, 11)
         self.assertFalse(go)
-        self.assertIn("EVEN", why)
+        self.assertIn("STEADY", why)
 
     def test_a_loss_never_stops_the_set(self):
         nat, omni = arms(30, cut=0.10, harm=50.0)

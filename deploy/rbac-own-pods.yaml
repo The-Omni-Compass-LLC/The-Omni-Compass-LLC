@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# Additional write access for --own-replicas namespace/name (the pod muscle of its own, omni-v19): the named workload's
+# scale subresource only, which `kubectl scale` patches. Under RBAC `deployments/scale` is a resource of its own: a grant
+# on `deployments` does not carry it (every solo arm from 24 to 31 October had its pod writes refused for want of it).
+# Apply only where the operator names a workload no autoscaler governs, in that workload's namespace, one name per
+# workload; never in the cloud mode (no cloud runs by itself without the owner's word). The Operator's Manual, chapter 14.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: omni-compass-own-pods, namespace: default}
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    resourceNames: ["php-apache"]       # the workload --own-replicas names
+    verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: omni-compass-own-pods, namespace: default}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: omni-compass-own-pods}
+subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]

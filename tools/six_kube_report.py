@@ -16,7 +16,7 @@ Two kinds of rows, kept apart:
   the organism the simulated stacks around it (evidence S, models): work, energy, time over the line
 
 Each organism's line names which gauges read GAIN, LOSS or power given against native, by any amount, and which read
-EVEN because they are inside the noise (the interval crosses zero). The word is decided by what the gauge is for, never by
+STEADY because they are inside the noise (the interval crosses zero). The word is decided by what the gauge is for, never by
 the sign of its number (tools/readings.py, the founder's order of 13 October): the organism's work and work per energy are
 work done; response times, time over the line and failed requests are time waited, missed or failed; replicas, pods,
 machines, energy and the bill are resources spent, so a rise reads power given. CPU and host load are shown, not judged.
@@ -147,7 +147,7 @@ def paired(runs_o, a, k):
     same = abs(m) <= SAME_REL * max(abs(nb), 1e-12)   # under one part in a million of the value is rounding: the same
     w = gel_word(m < 0, aim_of(k))                     # GAIN, LOSS or power given, by what the gauge is for
     # gain: the gauge moved toward its declared aim, for the tools that score the headline (the wiring verdicts, the benefit
-    # sheet); word: the row's word whatever the noise (the page marks a change inside the noise EVEN)
+    # sheet); word: the row's word whatever the noise (the page marks a change inside the noise STEADY)
     return {"n": len(d), "native": nb, "omni": nb + m, "diff": m, "lo": m - h, "hi": m + h, "pct": pct,
             "gain": w == "GAIN", "word": w, "lower": bool(m < 0), "neutral": k in NEUTRAL, "same": bool(same)}
 
@@ -170,11 +170,11 @@ def main(root, *more, out=None, reps=None):
          *([f"Each square here is its first {reps} repetition{'s' if reps > 1 else ''} (repetitions 1 to {reps}; the grid's "
             "1-, 10- and 100-repetition squares are nested).", ""] if reps else []),
          "How to read it: every change is omni against native (omni is Omni-Compass on top of native), and the Reading column "
-         "gives its word, GAIN, EVEN or LOSS, by what the gauge is for and never by its sign (the key: "
+         "gives its word, GAIN, STEADY or LOSS, by what the gauge is for and never by its sign (the key: "
          "`docs/HOW_TO_READ_THE_RESULTS.md`): response times, time over the line and failed requests are time waited, missed or "
          "failed, so a fall is GAIN; the organism's work and work per energy are work done, so a rise is GAIN; pods started, "
          "replicas, machines, energy and the bill are resources spent, so a fall is a cut, a GAIN, and a rise is **power given**, "
-         "never a loss. A change whose interval crosses zero reads EVEN, inside the noise. The organism must keep the window's clock: "
+         "never a loss. A change whose interval crosses zero reads STEADY, inside the noise. The organism must keep the window's clock: "
          "the row \"organism behind its window\" says how long after the window its last step ended (0 is on the clock), and a "
          "repetition where either arm ended more than 5% of the window late is marked OFF THE CLOCK in the organism's line, "
          "because its last steps saw a cluster whose load schedule had already ended.", "",
@@ -213,7 +213,7 @@ def main(root, *more, out=None, reps=None):
         by = {w: [LABEL.get(k, k) for k, v in judged.items() if sure(v) and v["word"] == w] for w in ("GAIN", "LOSS", "power given")}
         noise = [LABEL.get(k, k) for k, v in judged.items() if not sure(v)]
         verdict = (", ".join(f"{w} on {len(xs)}" + (f" ({'; '.join(xs)})" if xs else "") for w, xs in by.items())
-                   + f", EVEN (inside the noise) on {len(noise)}") if n >= 2 else "ONE REPETITION"
+                   + f", STEADY (inside the noise) on {len(noise)}") if n >= 2 else "ONE REPETITION"
         if not restored:
             verdict += "; INVALID: a simulated knob was not handed back"
         if off:
@@ -231,10 +231,10 @@ def main(root, *more, out=None, reps=None):
             elif v["neutral"] or k in SHOWN:
                 rd = "shown, not judged"
             elif v["same"]:
-                rd = "EVEN, the same" if v["diff"] == 0.0 else "EVEN, the same (under one part in a million)"
+                rd = "STEADY, the same" if v["diff"] == 0.0 else "STEADY, the same (under one part in a million)"
             else:
                 sure = v["n"] > 1 and (v["lo"] > 0 or v["hi"] < 0)
-                rd = v["word"] if sure else f"EVEN, inside the noise ({'cut' if v['diff'] < 0 else 'up'})"
+                rd = v["word"] if sure else f"STEADY, inside the noise ({'cut' if v['diff'] < 0 else 'up'})"
             L.append(f"| {LABEL.get(k, k)} | {v['native']:.4g} | {v['omni']:.4g} | {ch} | {ci} | {rd} |")
         L.append("")
     missing = [o for o in ORDER if not any(organism_name(k.split("@")[0]) == o for k in runs)]

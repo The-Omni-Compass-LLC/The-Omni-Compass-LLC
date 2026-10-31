@@ -4,7 +4,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The Redis A/B/C rule (tools/redis_abc.py): GAIN or LOSS in all three of our runs (by what the gauge is for) only with the same sign and every interval clear of zero in all three
-runs; a change of 0.5% or more reads by its aim, in all three of our runs or by their mean with the count of runs beyond the noise; EVEN only under 0.5%; clear runs pointing different ways read
+runs; a change of 0.5% or more reads by its aim, in all three of our runs or by their mean with the count of runs beyond the noise; STEADY only under 0.5%; clear runs pointing different ways read
 the runs disagree; any failed request is marked; the knob's moves are shown; the tuning workload is shown and not counted."""
 import json
 import sys
@@ -42,7 +42,7 @@ def main():
     assert M.verdict([pr(+3, +1, +5)] * 3, "higher") == "**GAIN in all three of our runs**", "more work is a GAIN"
     assert M.verdict([pr(-20, -30, -10), pr(-20, -30, -10), pr(-2, -10, +6)], "lower") == "**GAIN by the mean of our three runs, beyond the noise in 2 of 3**"
     assert M.verdict([pr(-20, -30, -10), pr(+20, +10, +30), pr(-20, -30, -10)], "lower") == "**the runs disagree**"
-    assert M.verdict([pr(0, -1, 1, native=0)] * 3, "never more") == "EVEN, the same"
+    assert M.verdict([pr(0, -1, 1, native=0)] * 3, "never more") == "STEADY, the same"
     assert M.verdict([pr(0, -1, 1, native=0), pr(1, 0, 2, native=0), pr(0, -1, 1, native=0)], "never more") == "**LOSS in at least one of our runs**", "a failed request in any run is marked"
     assert M.verdict([pr(1, 0, 2)] * 3, "shown") == "shown, not judged"
     with tempfile.TemporaryDirectory() as t:
@@ -60,7 +60,7 @@ def main():
         assert "| memory ceiling held, mean (MB; the knob, the resource) | 64.0 | 150.0 |" in txt and "power given in all three of our runs" in txt
         assert json.loads(out.with_suffix(".json").read_text())["workloads"]["small"]["p95_ms"]["reading"] == "GAIN in all three of our runs"
     print("PASS  Redis A/B/C rule: GAIN or LOSS in all three of our runs (by what the gauge is for) only with the same sign and every interval clear of zero in all three runs; a change of 0.5% or more "
-          "reads by its aim, in all three of our runs or by their mean; EVEN only under 0.5%; any failed request is marked; more memory held reads power given; the tuning workload is not counted")
+          "reads by its aim, in all three of our runs or by their mean; STEADY only under 0.5%; any failed request is marked; more memory held reads power given; the tuning workload is not counted")
 
 
 if __name__ == "__main__":

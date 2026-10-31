@@ -74,7 +74,7 @@ reads a LOSS anywhere: every rise below is power given, and the bill keeps falli
 | phase 2 | net-zero shortfall | -7.53% GAIN | -4.77% GAIN | -3.38% GAIN | -2.54% GAIN | -1.99% GAIN |
 | phase 2 | the bill | -14.12% GAIN | -17.22% GAIN | -18.75% GAIN | -19.17% GAIN | -19.03% GAIN |
 | phase 3 | the ramping | -5.05% GAIN | -1.91% GAIN | +2.32% power given | +6.18% power given | +9.59% power given |
-| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% EVEN | +0.25% power given | +0.41% power given |
+| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% STEADY | +0.25% power given | +0.41% power given |
 | phase 3 | the bill | -6.60% GAIN | -7.32% GAIN | -8.10% GAIN | -8.43% GAIN | -8.32% GAIN |
 
 At 0.05 the 2022 phase 2's daily unevenness rises; from 0.075 the 2022 phase 3's ramping does, and from 0.0875 its net-zero
@@ -167,35 +167,35 @@ score is CityLearn's own (each over no battery at all), and every row is read by
 
 | CityLearn score | native | omni-v8 against native | omni-v9 against native |
 |---|---:|---:|---:|
-| the bill | 1.0000 | not run | +0.00% EVEN |
+| the bill | 1.0000 | not run | +0.00% STEADY |
 | electricity bought | 2.0205 | not run | -6.95% GAIN |
-| carbon | 1.0000 | not run | +0.00% EVEN |
+| carbon | 1.0000 | not run | +0.00% STEADY |
 | the daily peak | 2.4165 | not run | -8.92% GAIN |
 | the highest peak | 1.2582 | not run | -4.40% GAIN |
 | the ramping | 1.3828 | not run | -10.40% GAIN |
 | daily unevenness | 0.7972 | not run | -2.75% GAIN |
 | monthly unevenness | 0.8053 | not run | -1.79% GAIN |
 | net-zero shortfall | 9.8346 | not run | -0.08% GAIN |
-| energy not served | 0.0000 | not run | +0.00% EVEN |
-| time uncomfortable | 0.7607 | not run | +0.00% EVEN |
+| energy not served | 0.0000 | not run | +0.00% STEADY |
+| time uncomfortable | 0.7607 | not run | +0.00% STEADY |
 
 **Travis County, 100 buildings**
 
 | CityLearn score | native | omni-v8 against native | omni-v9 against native |
 |---|---:|---:|---:|
-| the bill | 1.0000 | not run | +0.00% EVEN |
+| the bill | 1.0000 | not run | +0.00% STEADY |
 | electricity bought | 3.8416 | not run | -3.96% GAIN |
-| carbon | 1.0000 | not run | +0.00% EVEN |
+| carbon | 1.0000 | not run | +0.00% STEADY |
 | the daily peak | 3.1689 | not run | -5.92% GAIN |
-| the highest peak | 1.3727 | not run | +0.00% EVEN |
+| the highest peak | 1.3727 | not run | +0.00% STEADY |
 | the ramping | 1.1329 | not run | -7.58% GAIN |
 | daily unevenness | 0.5655 | not run | -2.71% GAIN |
 | monthly unevenness | 0.6057 | not run | -1.96% GAIN |
 | net-zero shortfall | -4.6732 | not run | -0.18% GAIN |
-| energy not served | 0.0000 | not run | +0.00% EVEN |
-| time uncomfortable | 0.8454 | not run | +0.00% EVEN |
+| energy not served | 0.0000 | not run | +0.00% STEADY |
+| time uncomfortable | 0.8454 | not run | +0.00% STEADY |
 
-Across the districts above: omni-v8 29 GAIN, 0 EVEN, 7 power given, 0 LOSS (where it was run); omni-v9 58 GAIN, 9 EVEN, 0 power given, 0 LOSS.
+Across the districts above: omni-v8 29 GAIN, 0 STEADY, 7 power given, 0 LOSS (where it was run); omni-v9 58 GAIN, 9 STEADY, 0 power given, 0 LOSS.
 
 The districts: the robustness district, where the omni-v8 row stood and where the cause was found; the tuning district
 (`citylearn_challenge_2022_phase_1`); the 2022 phases 2, 3 and all (shipped in CityLearn's source repository, not in its package,

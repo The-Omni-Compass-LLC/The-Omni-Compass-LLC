@@ -3,9 +3,9 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The page word for word: the last appendix of the Live Engine Manual, written from the live engine page itself.
+"""The page word for word: the last appendix of the Live Benchmark Engine Manual, written from the live benchmark engine page itself.
 
-The founder's order of 20 October: three manuals in the end, the third reading the live engine top to bottom, so that the book
+The founder's order of 20 October: three manuals in the end, the third reading the live benchmark engine top to bottom, so that the book
 and the page read each other both ways. The book is docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md, built with the other two by
 docs/book/build_book.py --live; its last appendix (Appendix L) is this file's output, docs/engine/PAGE_WORD_FOR_WORD.md: every
 section of docs/engine/OMNI_COMPASS_LIVE_ENGINE.html in the page's own order with its number, title, summary and controls line,
@@ -15,7 +15,7 @@ it, read from the page's embedded records. Nothing in it is typed twice. Rebuild
 
   python3 docs/book/build_live_manual.py            docs/engine/PAGE_WORD_FOR_WORD.md
   python3 docs/book/build_live_manual.py --check    exit 1 if it differs from what the page gives
-  python3 docs/book/build_book.py --live            the Live Engine Manual, with the appendix bound in
+  python3 docs/book/build_book.py --live            the Live Benchmark Engine Manual, with the appendix bound in
 """
 from __future__ import annotations
 
@@ -33,7 +33,7 @@ from tools.legal import NOTICE, TOP, PLAIN, normalize_markdown  # noqa: E402
 PAGE = ROOT / "docs" / "engine" / "OMNI_COMPASS_LIVE_ENGINE.html"
 REG = ROOT / "docs" / "engine" / "monitors.json"
 OUT_MD = ROOT / "docs" / "engine" / "PAGE_WORD_FOR_WORD.md"
-BOOK = "The Live Engine Manual"
+BOOK = "The Live Benchmark Engine Manual"
 
 CONTACT = ("The Omni-Compass LLC, main office infrastructure. Toll-free direct: 1-888-339-9551. System route asset: 1-888-DEX-YLL-1. "
            "Landline, registered in Florida: 321-746-4411. www.omni-compass.com")
@@ -60,13 +60,19 @@ def model(page: str) -> dict:
     canv = [c for c in canv if c != "wallCv"]
     number = {c: i + 1 for i, c in enumerate(canv)}
     items = []
-    tp = re.search(r'<header class="head" id="title-page">(.*?)</header>', body, re.S)
-    if tp:
-        words = [("p", text(x)) for x in re.findall(r'<p class="lede"[^>]*>(.*?)</p>|<div class="realDisclose"[^>]*>(.*?)</div>', tp.group(1), re.S) for x in x if x]
-        items.append({"kind": "section", "id": "title-page", "n": "ii", "title": "Title page and build", "summary": "", "controls": "", "words": [w for w in words if w[1]], "panels": [], "monitors": []})
-    for m in re.finditer(r'<div class="partHead" id="([^"]+)"><span class="pn">([^<]*)</span><span class="pt">([^<]*)</span></div>|<section class="[^"]*" id="([^"]+)"', body):
+    # the title page is a section of the page in its own place (appendix A on the page built in the page's order of
+    # 31 October), numbered and titled by its own heading
+    for m in re.finditer(r'<div class="partHead[^"]*" id="([^"]+)"><span class="pn">([^<]*)</span><span class="pt">([^<]*)</span></div>|<section class="[^"]*" id="([^"]+)"|<header class="head" id="title-page">(.*?)</header>', body, re.S):
         if m.group(1):
             items.append({"kind": "part", "id": m.group(1), "n": m.group(2), "title": html.unescape(m.group(3))})
+            continue
+        if m.group(5) is not None:
+            tp = m.group(5)
+            h2 = re.search(r'<h2[^>]*>(?:<span class="sn">([^<]*)</span>)?(.*?)</h2>', tp, re.S)
+            words = [("p", text(x)) for x in re.findall(r'<p class="lede"[^>]*>(.*?)</p>|<div class="realDisclose"[^>]*>(.*?)</div>', tp, re.S) for x in x if x]
+            items.append({"kind": "section", "id": "title-page", "n": (h2.group(1) or "") if h2 else "",
+                          "title": text(h2.group(2)) if h2 else "Title page and build", "summary": "", "controls": "",
+                          "words": [w for w in words if w[1]], "panels": [], "monitors": []})
             continue
         sid = m.group(4)
         i, depth, j = m.start(), 0, None
@@ -108,14 +114,14 @@ def model(page: str) -> dict:
 READ = {   # how to read a monitor of each layer, and what the engineer in charge does with it
     "switch": ("The wiring from the top down: the master switch above the brain, the brain above the organism, the organism above every muscle, and native's own controllers under every muscle, never switched. The switch's state is the word on it: ON in green while Omni-Compass governs; engaged, the switch red and OFF in white.",
                "Press the kill switch only for security: it is instant, every setting goes back to native and is read back. Watch the governors' table beside it: every governor on the page says OFF and what it handed back."),
-    "whole": ("Bars and tiles in the traffic light of the one key: GAIN green to one side, LOSS red to the other, EVEN yellow on zero, power given blue. A figure is a composition or a table's own word, never a single run's number.",
-              "Read the word before the size, and the interval before the word: an interval across zero is EVEN whatever its centre. A LOSS on the board is answered on the status board, with its cause and its knob."),
-    "service": ("The four golden signals of a service, one point a decision of the live engine: native in amber, Omni-Compass in blue, the same demand on both. A red band is a kill-switch window.",
+    "whole": ("Bars and tiles in the traffic light of the one key: GAIN green to one side, LOSS red to the other, STEADY yellow on zero, power given blue. A figure is a composition or a table's own word, never a single run's number.",
+              "Read the word before the size, and the interval before the word: an interval across zero is STEADY whatever its centre. A LOSS on the board is answered on the status board, with its cause and its knob."),
+    "service": ("The four golden signals of a service, one point a decision of the live benchmark engine: native in orange, Omni-Compass in blue, the same demand on both. A red band is a kill-switch window.",
                 "Watch latency and errors first: a rise there is the only thing that can read LOSS. Saturation and throughput are the work and the capacity held: capacity is power given when it rises."),
     "cluster": ("A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.",
                 "Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries {engine}; an older engine's run is its own record."),
     "cloud": ("The bill the cloud meters: machine-hours and the bill at list price, native's bar beside Omni-Compass's, each finished set with its word; the running set's repetitions measured so far; each provider's hourly gate with the reason its own job wrote.",
-              "The bill aims lower: a fall is a GAIN, inside the noise EVEN, a rise power given. A provider whose gate holds runs nothing and bills nothing; its frame stays empty until its first set lands."),
+              "The bill aims lower: a fall is a GAIN, inside the noise STEADY, a rise power given. A provider whose gate holds runs nothing and bills nothing; its frame stays empty until its first set lands."),
     "orchestrators": ("Each scheduler, queue and multi-cluster governor four ways: the organism alone, the orchestrator as shipped, Omni-Compass on the organism alone, Omni-Compass on the orchestrator.",
                       "Only two of the four comparisons are Omni-Compass against its native (on top of the orchestrator; on the organism alone); the others are the orchestrator's own cost and are never counted as Omni-Compass's."),
     "chip": ("The card's own meter, second by second: its draw, the power limit Omni-Compass wrote (dashed), its clock, the 95th percentile against the response line, its temperature; every write of the governor a red tick.",
@@ -124,9 +130,9 @@ READ = {   # how to read a monitor of each layer, and what the engineer in charg
              "Until a machine with its energy counter runs it, the monitor plays the harness's own modelled machine: read the mechanism, never the numbers."),
     "organism": ("The organism the brain governs, muscle by muscle: positions in the compass band, the brain's grants and pushes, the immune system's heat debt; native's own controllers under every muscle.",
                  "Turn the console's knobs (demand, noise, sensor delay, faults) and watch both arms take the same input; the difference between the lanes is what Omni-Compass did."),
-    "organisms": ("Each organism or grid square read by the one key: green GAIN, yellow EVEN, red LOSS, grey a single run, dashed not yet run.",
+    "organisms": ("Each organism or grid square read by the one key: green GAIN, yellow STEADY, red LOSS, grey a single run, dashed not yet run.",
                   "A dashed square is pending runner capacity, never rented. A LOSS square names its organism, its size and its runs."),
-    "muscles": ("Every muscle of the catalog one cell, its word against native on its own load: green GAIN, yellow EVEN (pale: at its limit on native), red LOSS.",
+    "muscles": ("Every muscle of the catalog one cell, its word against native on its own load: green GAIN, yellow STEADY (pale: at its limit on native), red LOSS.",
                 "Click a cell to read the muscle: its family, realm, template, knob and its word under each load."),
     "analytics": ("The organism's telemetry as a tensor (muscle by gauge by time), its difference between the arms, its principal modes, the service level against its objective and the error budget burned, native beside Omni-Compass.",
                   "The service level and the budget are what an on-call engineer is paged on: watch the burn rate on both arms under the same knobs."),
@@ -134,7 +140,7 @@ READ = {   # how to read a monitor of each layer, and what the engineer in charg
               "The brain never forces: it reacts to what the body shows. A grant to expand is not a write; a write happens only where the muscle's own trial allows it."),
     "verdict": ("A give-back trial judged against native: its reference, its step, its interval, the word; then the keep ratio at every true cost.",
                 "A step is kept only when its interval stays inside the allowance; a refused step leaves the muscle where native had it."),
-    "console": ("The live engine's response to every knob, native beside Omni-Compass, and the page's own frame budget.",
+    "console": ("The live benchmark engine's response to every knob, native beside Omni-Compass, and the page's own frame budget.",
                 "Every knob acts on both arms alike; the difference between them is Omni-Compass's doing alone."),
     "proof": ("The Python's seeded runs beside this page's: one cell a run (green agrees to 1e-9, red differs, blue a new set), the two digests under them; and the Python's 500 scenarios a seed replayed with every trace hash.",
               "Press the button to run the Python's set here; run a new base to make a new set and run the printed command in the Python to compare digests. Print or download the receipts for the file."),
@@ -158,11 +164,11 @@ def md_lines() -> list[str]:
     standing = f"omni-{next(iter(VERSIONS))}"    # the engine that stands: the version list's newest
     out = []
     # ---------------------------------------------------------------- Part II
-    out += ["## Part II. The live engine, section by section", "",
+    out += ["## Part II. The live benchmark engine, section by section", "",
             "Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.", ""]
     for it in M["items"]:
         if it["kind"] == "part":
-            out += [f"### Part {it['n']} of the page: {it['title']}", ""]
+            out += [f"### Part {it['n']} of the page: {it['title']}" if it["n"] else f"### The page's {it['title']}", ""]
             continue
         title = f"{it['n']} {it['title']}".strip()
         out += [f"### {title}", ""]
@@ -185,7 +191,7 @@ def md_lines() -> list[str]:
                 "**Its monitors.** This section draws no canvas: its views are tables and text the page builds from its records.", ""]
         for cid in it["monitors"]:
             m = by.get(cid, {"name": cid, "what": "", "cls": "", "status": "", "feed": {"exporter": "", "metrics": [], "promql": []}, "knobs": [], "layer": "page"})
-            n = M["number"].get(cid, "?")
+            n = m.get("n") or M["number"].get(cid, "?")       # the number its badge carries: its place on the wall (monitors.json)
             out += [f"#### Monitor {n}: {m['name']}", ""]
             if m.get("what"):
                 out += [m["what"], ""]
@@ -220,9 +226,9 @@ def md_lines() -> list[str]:
         if it["kind"] == "section":
             for c in it["monitors"]:
                 sec_of[c] = f"{it['n']} {it['title'].split(':')[0]}"
-    for c in M["canvases"]:
+    for c in sorted(M["canvases"], key=lambda c: (by.get(c, {}).get("n") or 10 ** 6, M["number"][c])):   # in the wall's order
         m = by.get(c, {"name": c, "cls": "", "status": ""})
-        out.append(f"| {M['number'][c]} | {m['name']} | {sec_of.get(c, '')} | {m.get('cls', '')} | {'awaiting its run' if m.get('awaiting') else m.get('status', '')} |")
+        out.append(f"| {m.get('n') or M['number'][c]} | {m['name']} | {sec_of.get(c, '')} | {m.get('cls', '')} | {'awaiting its run' if m.get('awaiting') else m.get('status', '')} |")
     out += ["", "### Appendix B. Every knob", "", "| Knob | What it does | Where it is |", "|---|---|---|"]
     for k, v in K.items():
         out.append(f"| {v['label']} | {v['what']} | {v['where']} |")
@@ -245,7 +251,7 @@ def md_lines() -> list[str]:
         elif re.search(r"pod start wait|start wait", g):
             knob = "the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms"
         elif re.search(r"response time|turnaround|time over the response line|wait", g):
-            knob = "the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row EVEN in the model gate, the muscle stays native on this stack"
+            knob = "the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack"
         elif re.search(r"fail|lost|not served|unschedulable|no machine", g):
             knob = "the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS"
         else:
@@ -278,8 +284,8 @@ def appendix_lines() -> list[str]:
     up = lambda ls: [ln[1:] if ln.startswith("###") else ln for ln in ls]
     page = PAGE.read_text(encoding="utf-8")
     build = embedded(page, "build") or {}
-    out = ["# The Live Engine Page, Word for Word", "",
-           "This appendix is the live engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of "
+    out = ["# The Live Benchmark Engine Page, Word for Word", "",
+           "This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of "
            "this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and "
            "controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source "
            "feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause "
@@ -300,14 +306,26 @@ def appendix_lines() -> list[str]:
     return out
 
 
+MD_PATH = re.compile(r"(?<![\w/.`-])((?:[\w.-]+/)*[\w-]+\.md)(?![\w`])")
+
+
+def code_paths(line: str) -> str:
+    """A document's name set as code (`DISCLOSURES.md`), outside code already set, so the book reads "section 3" after it as
+    that document's own numbering, never as one of its own sections."""
+    if line.startswith("#"):
+        return line
+    parts = line.split("`")
+    return "`".join(MD_PATH.sub(r"`\1`", seg) if i % 2 == 0 else seg for i, seg in enumerate(parts))
+
+
 def main() -> int:
-    text_md, _ = normalize_markdown("\n".join(appendix_lines()))
+    text_md, _ = normalize_markdown("\n".join(code_paths(ln) for ln in appendix_lines()))
     if "--check" in sys.argv:
         same = OUT_MD.exists() and OUT_MD.read_text(encoding="utf-8") == text_md
         print("the page word for word matches the page" if same else "the page word for word differs from the page: python3 docs/book/build_live_manual.py")
         return 0 if same else 1
     OUT_MD.write_text(text_md, encoding="utf-8")
-    print(f"{OUT_MD.relative_to(ROOT)} ({len(text_md.splitlines())} lines): the Live Engine Manual's Appendix L; "
+    print(f"{OUT_MD.relative_to(ROOT)} ({len(text_md.splitlines())} lines): the Live Benchmark Engine Manual's Appendix L; "
           "now python3 docs/book/build_book.py --live")
     return 0
 

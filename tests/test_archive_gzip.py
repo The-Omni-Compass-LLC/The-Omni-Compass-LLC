@@ -16,6 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/archive-run.yml"
 # the runners write these files and read them back inside the same run, before the archive exists
 WRITERS = {"run_ycsb.py", "run_redis.py", "run_kafka.py", "run_cpu_power.py", "run_sysbench.py"}
+# a reader that reads a gzipped file in its stored form too (it names the .gz form and opens it with gzip)
+GZ_AWARE = {"store_gate.py", "store_causes.py"}
+GZ_READS = ("gzip.decompress", "gzip.open")
 
 
 def gzipped_names():
@@ -28,9 +31,9 @@ class ArchiveGzip(unittest.TestCase):
         self.assertEqual(sorted(gzipped_names()), ["*.raw", "consumer-*.log", "requests.log"])
 
     def test_no_archive_reader_names_a_gzipped_file(self):
-        pats = {"*.raw": r"\.raw\b|notch-", "requests.log": r"requests\.log", "consumer-*.log": r"consumer-"}
+        pats = {"*.raw": r"\.raw\b|notch-(\d|\*|\{|%)", "requests.log": r"requests\.log", "consumer-*.log": r"consumer-"}   # notch-<n>.raw, never a flag like --notch-s
         readers = [p for p in sorted((ROOT / "tools").glob("*.py")) + sorted((ROOT / "scripts").glob("*.py"))
-                   if p.name not in WRITERS]
+                   if p.name not in WRITERS and not (p.name in GZ_AWARE and any(g in p.read_text() for g in GZ_READS))]
         readers += [ROOT / ".github/workflows/reaggregate.yml"]
         for name in gzipped_names():
             for p in readers:

@@ -372,14 +372,14 @@ machine. Each is fixed where it was found, the same in every arm, before the cou
 - **Two LOSS rows, reported as they stand, their mechanism named, nothing re-aimed after the fact.** (1) Crane, Omni-Compass
   on top of it against it as shipped (`results/live/V12_CRANE_4W_TOP.md`): the total pod start wait rose 54% to 104% in all
   three runs, LOSS, while the pods started rose 50% to 67% (power given), the replicas 14% to 18% (power given) and the wait per
-  pod read EVEN (+0.9% to +21%, intervals across zero in two runs): the total is the per-pod wait, unchanged, summed over the
+  pod read STEADY (+0.9% to +21%, intervals across zero in two runs): the total is the per-pod wait, unchanged, summed over the
   pods Omni-Compass chose to start; the same gauge read the same way in the KEDA runs of 18 October (`docs/POD_START_WAIT.md`).
   Whether a sum of a resource (pods started) and a wait (the wait per pod) is a wait or a resource is for the metric-aims audit
   to decide in writing before any run is read by it; this table is read by the key as it stands, and the row stays LOSS. (2)
   KubeRay's rig, Omni-Compass on the organism alone against the organism alone (`results/live/V12_KUBERAY_4W_BARE.md`): the
   queue finished 0.6% to 0.8% later and the 99th percentile rose 4% to 13% in all three runs, LOSS, while the machines in
   service fell 14% to 19%, the machines left after the queue 25% to 33% and the mean response 7% to 10% (GAIN), the 95th
-  percentile, the time over the line, the failures and the jobs unfinished EVEN. The governor gave machines back during the
+  percentile, the time over the line, the failures and the jobs unfinished STEADY. The governor gave machines back during the
   queue on its trial's own gauges, and the queue's last jobs and the tail paid for it. On the engine that stands no muscle may
   fall below native, so this is the engine's to fix, not the table's: the give-back trial on a batch queue must count the
   queue's finish and the tail among the gauges it judges before a machine is parked, in the next version, through the model gate

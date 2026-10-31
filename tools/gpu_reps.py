@@ -14,7 +14,7 @@ served requests, response time (mean, 95th, 99th percentile), power-limit writes
 against native, the paired mean difference with a t-based 95% interval. A difference is clear of the noise when that
 interval excludes zero (the words of the GPU preregistration's amendment of 17 October; before it, "proven" and "not
 proven", the same rule). Its word is set by its size (the founder's order of 24 October 2026): a change of 0.5% or more of the
-base reads by the gauge's aim, clear of the noise or not beyond it; under 0.5% it reads EVEN, under the floor.
+base reads by the gauge's aim, clear of the noise or not beyond it; under 0.5% it reads STEADY, under the floor.
 
 Three contrasts, each paired by repetition: observation = watch − native (does Omni's presence alone move the plant),
 authority = omni − watch (what granting Omni the write adds), total = omni − native (the preregistered comparison).
@@ -37,7 +37,7 @@ try:                                                       # the legal notice ev
     from tools.legal import stamp as _legal_stamp
 except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
-from tools.readings import word as gel_word, labelled, GAIN, EVEN, LOSS, GIVEN, WORK_PER, SIZE_FLOOR  # noqa: E402  (the words every table uses)
+from tools.readings import word as gel_word, labelled, GAIN, STEADY, LOSS, GIVEN, WORK_PER, SIZE_FLOOR  # noqa: E402  (the words every table uses)
 CLEAR = "clear of the noise"   # the 95% interval excludes zero (the GPU preregistration, amendment of 17 October)
 NOT_CLEAR = "not beyond the noise"   # a change of 0.5% or more whose interval holds zero (the founder's order of 24 October 2026)
 from pathlib import Path
@@ -52,7 +52,11 @@ from omnicompass.student_t import T95  # noqa: E402  (the two-sided 95% point of
 LOWER = {"energy, whole machine at the wall (J)", "energy, GPU (J)", "energy per served request (J)", "power, GPU mean (W)", "temperature, peak (C)",
          "temperature, mean (C)", "requests not served", "response time, mean (ms)", "response time, 95th percentile (ms)",
          "response time, 99th percentile (ms)", "energy, CPU package (J)", "energy, rest of the machine (J)",
-         "energy, DRAM (J)", "energy, platform psys (J)", "energy, GPU device counter (J)"}
+         "energy, DRAM (J)", "energy, platform psys (J)", "energy, GPU device counter (J)",
+         # the share of the card's samples held at its power limit: power held, never work (30 October 2026: unlisted, it
+         # fell through to work, so a card pinned less often at its limit for the same requests read LOSS on omni-v21's
+         # tune-down, runs 40485597269, 40485602065 and 40485605739)
+         "power-capped share of samples"}
 # the resources a card spends (energy, power and the heat they make): a fall is a cut, a GAIN; a rise is power given, never
 # a loss (tools/readings.py). Time waited and requests not served are LOSS when they rise; work aims higher; work per energy that falls is power
 # given (it falls when more power is given for the work).
@@ -373,21 +377,21 @@ def label(prim, g_served, g_p95, g_lost, valid, observation=None):
 def verdict(k, mean, half, n, base=None):
     """A gauge's word against the base, by what it is for (GAIN, LOSS, or power given for a resource spent that rose). The
     founder's order of 24 October 2026: a change of 0.5% or more of the base is a change, read by its aim, "clear of the noise"
-    when its 95% interval clears zero and "not beyond the noise" when it does not; under 0.5% it is EVEN, under the floor;
-    EVEN, the same, when it did not move. Without a base (no relative size to read) the interval alone decides, as before."""
+    when its 95% interval clears zero and "not beyond the noise" when it does not; under 0.5% it is STEADY, under the floor;
+    STEADY, the same, when it did not move. Without a base (no relative size to read) the interval alone decides, as before."""
     if n < 2 or math.isnan(half):
         return "no interval (too few repetitions)"
     if abs(mean) < 1e-12 and half < 1e-12:
-        return f"{EVEN}, the same"
+        return f"{STEADY}, the same"
     aim = "spent" if k in SPENT else "lower" if k in LOWER else WORK_PER if k in (PRIMARY, WALL) else "higher"
     clear = mean - half > 0 or mean + half < 0
     if base is not None and abs(base) > 1e-12:
         if abs(mean / base) < SIZE_FLOOR:
-            return f"{EVEN}, under the floor"
+            return f"{STEADY}, under the floor"
         return f"{gel_word(mean < 0, aim)}, {CLEAR if clear else NOT_CLEAR}"
     if clear:
         return f"{gel_word(mean < 0, aim)}, {CLEAR}"
-    return f"{EVEN}, no difference beyond the noise"
+    return f"{STEADY}, no difference beyond the noise"
 
 
 def main(root):

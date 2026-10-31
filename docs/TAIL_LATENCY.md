@@ -13,7 +13,7 @@ By the preregistered rule (a gauge reads LOSS only when it moves away from its a
 interval clear of zero), **no 95th- or 99th-percentile row reads LOSS in any omni-v11 table** (23 tables), and none read
 LOSS in the omni-v10 tables before them. The one omni-v10 LOSS, the pod start wait under KEDA's HTTP add-on, was the test
 machine (an empty node unpacking the image inside the window); since the kind rig pulls the served image onto every worker
-before each arm, it reads EVEN on omni-v11 (`docs/POD_START_WAIT.md`, `results/live/V11_KEDA_REQUESTS.md`).
+before each arm, it reads STEADY on omni-v11 (`docs/POD_START_WAIT.md`, `results/live/V11_KEDA_REQUESTS.md`).
 
 ## 2. Real Kubernetes: Omni-Compass's tail was below native's in every repetition
 
@@ -29,7 +29,7 @@ ten pairs in each of runs A, B and C), each scored from its own raw files by `to
 ## 3. Where a single run's tail rose: the data stores and the kill test
 
 Six tail rows on omni-v11 have one or two runs whose interval lies wholly above zero. None holds in all three runs, so each
-reads EVEN; a page that colours each run's cell on its own shows them red.
+reads STEADY; a page that colours each run's cell on its own shows them red.
 
 | Table, workload | Gauge | A | B | C | What it is |
 |---|---|---|---|---|---|
@@ -101,7 +101,7 @@ measured, so it lands with the next engine version and its reruns, never inside 
 The live page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, rebuilt by its own workflow) reads each benchmark's newest
 table. Until the omni-v11 tables reached main it read omni-v10's, where the KEDA pod start wait read LOSS. It also shows
 each run's own interval beside the three-run reading, so a single run's rise, like those in section 3, can show as that
-run's own excursion even where the three-run reading is EVEN. With the omni-v11 tables on main (19 October), the page's
+run's own excursion even where the three-run reading is STEADY. With the omni-v11 tables on main (19 October), the page's
 only LOSS is gone, and its next rebuild reads them.
 
 ---

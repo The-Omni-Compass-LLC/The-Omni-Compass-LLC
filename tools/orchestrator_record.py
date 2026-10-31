@@ -4,7 +4,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""One showing of Omni direct's three arms, as a record the live engine page replays (docs/engine/build_live_engine.py).
+"""One showing of Omni direct's three arms, as a record the live benchmark engine page replays (docs/engine/build_live_engine.py).
 
   python3 tools/orchestrator_record.py <showing folder> results/orchestrator/<NAME>.json --commit <sha> [--where <words>]
 
