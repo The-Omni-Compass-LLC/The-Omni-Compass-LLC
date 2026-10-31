@@ -377,8 +377,12 @@ kubectl create configmap omni-security --from-literal=hold=false --dry-run=clien
 # answer (within the line, late, failed, not sent: deploy/kind/loadgen-meter.yaml)
 LOADGEN="${LOADGEN:-closed}"
 if [ "$LOADGEN" = meter ]; then
-  { [ -z "$ADDONS" ] && [ "$PLATFORM" = kind ] && [ -z "${ORGANISM:-}" ] && [ "${WORKLOAD:-web}" = web ]; } \
-    || { echo "LOADGEN=meter runs on kind, alone (no add-on, organism or batch)"; exit 1; }
+  # on kind, and from 31 October in a cloud (PLATFORM=aks, which Google, Amazon and the other clouds run as): the cloud's
+  # judged number is the work per dollar, the meter's answers inside the line over the cloud's own bill, both from one run
+  # (docs/K8S_COMPASS_PREREGISTRATION.md, the amendment of 31 October); the generator runs where every load generator runs
+  # there, on the system pool's machine, off the measured workers
+  { [ -z "$ADDONS" ] && { [ "$PLATFORM" = kind ] || [ "$PLATFORM" = aks ]; } && [ -z "${ORGANISM:-}" ] && [ "${WORKLOAD:-web}" = web ]; } \
+    || { echo "LOADGEN=meter runs alone (no add-on, organism or batch), on kind or a cloud"; exit 1; }
   RATE_STEPS="${RATE_STEPS:?set RATE_STEPS (requests per second per step) for LOADGEN=meter}"
   sed -e "s#RATE_STEPS_VALUE#$RATE_STEPS#" -e "s#DURATION_VALUE#$DURATION#" -e "s#SLO_MS_VALUE#${SLO_MS:-500}#" \
     deploy/kind/loadgen-meter.yaml > "$OUT_DIR/loadgen-meter.yaml"

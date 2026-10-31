@@ -2011,8 +2011,9 @@ autoscaler's cover, conveys the processor, and parks a machine the cloud already
 breach; it asks the cloud for no machine itself. Every gauge is read against native by the one key, and the cloud's judged
 number is the work per dollar: the bill may rise where the work rises more (the founder's words of 31 October: "anybody will pay
 1% more for 10% more product"), a rise shown beside the work it bought, and a tune whose work per dollar falls against native is
-the tune falling out wrong, fixed in our models. Azure's queue holds its sets at the max until they carry the load whose work
-grows with the speed (the work meter), so each receipt can read the work per dollar. Azure runs first and is the measure of the other two (Google Cloud, Amazon
+the tune falling out wrong, fixed in our models. From 31 October, night, every cloud set carries the load whose work grows with the
+speed (the work meter), so each receipt reads the work per dollar; Azure's queue runs a tuning case first, once, to freeze the
+counted rates. Azure runs first and is the measure of the other two (Google Cloud, Amazon
 Web Services): the same tuning, mechanism and harness. Google's and Amazon's sets are not yet run: their queues are switched off
 (24 October), kept ready as Azure's sets run, and the page reads each of their rows "not yet run" until each queue is switched on.
 

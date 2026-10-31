@@ -3271,7 +3271,7 @@ at once.
 | H8 | It writes outside what the operator allows | A capability contract (minimum, maximum, resolution, step and rate limits) and a safety contract (hard bounds, forbidden contexts, fail closed) on every muscle (`omnicompass/muscle_sdk.py`: `CapabilityContract`, `SafetyContract`) | `tests/test_muscle_sdk.py` |
 | H9 | It uses more privilege than its job needs | Least-privilege service account (`deploy/kind/rbac-omni.yaml`), and every arm records what it can and cannot do (`kubectl auth can-i`, `rbac_omni.txt` in each run's folder) | The receipts in every run folder on the branch `raw` |
 | H10 | It expands while a security hold is on | The shield: no expansion during a security hold (invariant I1), with a C++ twin checked against the Python (`omnicompass/shield.py`, `cpp/`) | `tests/test_shield_properties.py`, `tests/test_cpp_shield_parity.py`, `tests/test_cpp_shield_adversarial.py` |
-| H11 | In the cloud, it raises the bill for the same work | The bill is judged, never ruled (the founder's order of 31 October struck the machines-alone rule of 14 October): every cloud set reads the bill beside the work it bought by the one key, the cloud's judged number the work per dollar: a factory tune whose work per dollar falls against native (a bigger bill for the same work) is not admissible (`docs/THE_TUNE.md`) and is a fault of the tune, root-caused in the model first; the machine lever asks the cloud for no machine (`scripts/kind_nodepool.sh`); paid sets capped at 100 repetitions and 1, 10 and 100 copies | Azure: no difference in the bill on the engine of 13 October, at the tune-down on the machines alone (`results/live/AKS_BILL.md`); the sets at the max wait, held, for the load whose work grows with the speed (the work meter), so each reads the work per dollar. Google and Amazon: **undetermined**, not yet run. |
+| H11 | In the cloud, it raises the bill for the same work | The bill is judged, never ruled (the founder's order of 31 October struck the machines-alone rule of 14 October): every cloud set reads the bill beside the work it bought by the one key, the cloud's judged number the work per dollar: a factory tune whose work per dollar falls against native (a bigger bill for the same work) is not admissible (`docs/THE_TUNE.md`) and is a fault of the tune, root-caused in the model first; the machine lever asks the cloud for no machine (`scripts/kind_nodepool.sh`); paid sets capped at 100 repetitions and 1, 10 and 100 copies | Azure: no difference in the bill on the engine of 13 October, at the tune-down on the machines alone (`results/live/AKS_BILL.md`); the sets at the max carry the work meter from 31 October, night, a tuning case first, so each reads the work per dollar. Google and Amazon: **undetermined**, not yet run. |
 | H12 | A test machine's limit is reported as the governor's effect | Paired arms on the same runner, rotated order, the refusal rules for an unhealthy window, and the kind rig's image pre-puller (`docs/POD_START_WAIT.md`). `tools/confirm_abc.py` marks any table whose runs differ in engine or rig | `tests/test_confirm_abc.py`, `tests/test_pod_phases.py`, `tests/test_release_campaign.py` |
 | H13 | The hand-back itself is turned against the system: a record another local user planted makes the watchdog run a command or stop a process, or a governor's pid given to another process gets that process stopped | The watchdog acts only on records of its own user that no other user can write, read without following a link; a pid counts as the governor's only while its process started before the governor registered (`tools/omni_switch.py`, 18 October). Every threat of misuse is set out in `docs/THREAT_MODEL.md` | `tests/test_switch_trust.py` (each fault reproduced on the tool as it stood, gone on the fix) |
 
@@ -12368,6 +12368,33 @@ until its sets carry the load whose work grows with the speed (the work meter, `
 completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
 here, on the engine that stands then.
 
+### 66.56 Amendment (31 October 2026, night, written before any set with the work meter runs): the cloud's sets read the work per dollar
+
+The founder's words of 31 October, evening: "We're pushing 1% more bill, but we're getting ~12% more work ... anybody will pay 1%
+more for 10% more product". The cloud is judged by its work per dollar: the work answered within the line for each dollar of
+the bill, both from the same run.
+
+- **The load.** Every cloud set runs the work meter (`LOADGEN=meter`, `deploy/kind/loadgen-meter.yaml`): one open-loop generator
+  on the system pool's machine, off the measured workers, stepping through rising rates and counting every answer (inside the
+  line, late, failed, not sent), the same rates in both arms; its warm-up requests are not counted. The meter was kind's
+  (`docs/CAPACITY_PREREGISTRATION.md`); `scripts/kind_bench.sh` now runs it in a cloud as well, and every cloud workflow takes
+  the load (`loadgen`) and the meter's rates (`rate_steps`) as inputs and names a meter set by its rates.
+- **The readings.** Beside the bill (machine-hours at list price), the receipt reads the work inside the line a second and the
+  work per dollar of the bill (`tools/live_reps.py`), each run's paired difference and its interval, and over A, B and C the
+  three readings of `tools/confirm_abc.py`: the work aims higher (a rise GAIN, a fall LOSS); the work per dollar is work bought
+  with a resource (a rise GAIN, a fall power given); the bill a resource spent (a rise power given, never a LOSS by itself).
+  Every other gauge is read as in every set, losses included.
+- **The rates, frozen on one tuning case** (as the capacity test's, its amendment 1): before the counted set, one tuning case at
+  the max on the steady set's machines, one paired repetition, the rates 10 20 40 60 80 100 120 140 a second over 1,200 s, never
+  counted, shows where native and Omni-Compass saturate on Azure's machines (`scripts/azure_queue.txt`, its first line, run
+  once: `runs=A`). The counted rates are then written here as an amendment, from below what native serves inside the line to
+  above what Omni-Compass serves, before the counted set's run A.
+- **The counted set.** A, B and C, each up to 100 paired repetitions under the stopping rule of 19 October, at the max, on the
+  engine that stands when each run starts; its looks read the work per dollar.
+- **Order.** Azure's queue is switched on again with this amendment, the tuning case first; it starts once the queue's machine
+  family is free (the omni-v21 steady set already running finishes first). The four sets of the open load wait behind the
+  meter's, each on the founder's word. Google's and Amazon's queues carry the same change behind their switches.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 67. The Pod Start Wait on One Shared Host
@@ -14485,7 +14512,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`; `tools/deviations.py --check`, run by `verify.py`, fails a push where this register is not what they give. Each amendment's reason, and what it changed, is written in the preregistration it amends; this register is the index to all of them, newest first. The timing is the amendment's own statement in its heading. Earlier windows, runs and tables keep the rule they ran under, and a three-run table never pools runs from either side of an amendment that changes what it reads.
 
-93 amendments in 18 preregistrations: 75 before the runs it governs; 11 not stated in its heading; 7 after runs began.
+94 amendments in 18 preregistrations: 76 before the runs it governs; 11 not stated in its heading; 7 after runs began.
 
 | Date | Preregistration | Amendment | Timing |
 |---|---|---|---|
@@ -14494,6 +14521,7 @@ Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`;
 | 2026-10-31 | `docs/PACE_PREREGISTRATION.md` | Amendment 5 (31 October, written before the ladder's cloud half runs on it): the cloud setting at the max | before the runs it governs |
 | 2026-10-31 | `docs/PACE_PREREGISTRATION.md` | Amendment 4 (31 October, written before any reading of the ladder was seen): the factory beat read again on the engine that stands | before the runs it governs |
 | 2026-10-31 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (31 October 2026, written before any set at the max starts): every cloud set runs the whole engine at the max; the machines alone of 14 October struck | before the runs it governs |
+| 2026-10-31 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (31 October 2026, night, written before any set with the work meter runs): the cloud's sets read the work per dollar | before the runs it governs |
 | 2026-10-30 | `docs/YCSB_PREREGISTRATION.md` | Amendment 6 (2026-10-30, declared before any run on it): the max on the cache, through the server's own account of a miss (the next engine's candidate) | before the runs it governs |
 | 2026-10-30 | `docs/REDIS_PREREGISTRATION.md` | Amendment 5 (2026-10-30, declared before any run on it): the max on the cache's ceiling, with the working set's floor (the next engine's candidate) | before the runs it governs |
 | 2026-10-30 | `docs/POSTGRES_PREREGISTRATION.md` | Amendment 4 (2026-10-30, declared before any run on it): the max on the pooler's pool (the next engine's candidate) | before the runs it governs |

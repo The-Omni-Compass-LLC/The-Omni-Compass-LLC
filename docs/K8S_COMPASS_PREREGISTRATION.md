@@ -1406,6 +1406,33 @@ until its sets carry the load whose work grows with the speed (the work meter, `
 completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
 here, on the engine that stands then.
 
+## Amendment (31 October 2026, night, written before any set with the work meter runs): the cloud's sets read the work per dollar
+
+The founder's words of 31 October, evening: "We're pushing 1% more bill, but we're getting ~12% more work ... anybody will pay 1%
+more for 10% more product". The cloud is judged by its work per dollar: the work answered within the line for each dollar of
+the bill, both from the same run.
+
+- **The load.** Every cloud set runs the work meter (`LOADGEN=meter`, `deploy/kind/loadgen-meter.yaml`): one open-loop generator
+  on the system pool's machine, off the measured workers, stepping through rising rates and counting every answer (inside the
+  line, late, failed, not sent), the same rates in both arms; its warm-up requests are not counted. The meter was kind's
+  (`docs/CAPACITY_PREREGISTRATION.md`); `scripts/kind_bench.sh` now runs it in a cloud as well, and every cloud workflow takes
+  the load (`loadgen`) and the meter's rates (`rate_steps`) as inputs and names a meter set by its rates.
+- **The readings.** Beside the bill (machine-hours at list price), the receipt reads the work inside the line a second and the
+  work per dollar of the bill (`tools/live_reps.py`), each run's paired difference and its interval, and over A, B and C the
+  three readings of `tools/confirm_abc.py`: the work aims higher (a rise GAIN, a fall LOSS); the work per dollar is work bought
+  with a resource (a rise GAIN, a fall power given); the bill a resource spent (a rise power given, never a LOSS by itself).
+  Every other gauge is read as in every set, losses included.
+- **The rates, frozen on one tuning case** (as the capacity test's, its amendment 1): before the counted set, one tuning case at
+  the max on the steady set's machines, one paired repetition, the rates 10 20 40 60 80 100 120 140 a second over 1,200 s, never
+  counted, shows where native and Omni-Compass saturate on Azure's machines (`scripts/azure_queue.txt`, its first line, run
+  once: `runs=A`). The counted rates are then written here as an amendment, from below what native serves inside the line to
+  above what Omni-Compass serves, before the counted set's run A.
+- **The counted set.** A, B and C, each up to 100 paired repetitions under the stopping rule of 19 October, at the max, on the
+  engine that stands when each run starts; its looks read the work per dollar.
+- **Order.** Azure's queue is switched on again with this amendment, the tuning case first; it starts once the queue's machine
+  family is free (the omni-v21 steady set already running finishes first). The four sets of the open load wait behind the
+  meter's, each on the founder's word. Google's and Amazon's queues carry the same change behind their switches.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
