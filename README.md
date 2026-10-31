@@ -515,8 +515,8 @@ proof and its wiring: [`docs/MECHANISM_OF_ACTION.md`](docs/MECHANISM_OF_ACTION.m
 line) the max takes the benefit as more work from the same machines; in a chip the aim is more work at native's own
 heat, never hotter. In a
 public cloud the whole engine runs at the max as well, every muscle, on top of the cloud's own autoscaler, and the bill is
-judged beside the work by the one key, never ruled (the founder's order of 31 October: no hard rule; a tune that raises the
-bill is not admissible, `docs/THE_TUNE.md`). Either way it runs on autopilot, self-running, self-steering and self-auditing like a
+judged beside the work by the one key, never ruled (the founder's order of 31 October: no hard rule; in the cloud the judged
+number is the work per dollar, and a tune whose work per dollar falls against native is not admissible, `docs/THE_TUNE.md`). Either way it runs on autopilot, self-running, self-steering and self-auditing like a
 self-driving car: nobody turns a knob, nobody checks its work and nobody has to react; every change is the governor's own, logged with its reason, made as the
 reading approaches the line rather than after it is crossed; every Kubernetes and cloud receipt
 counts the babysitting tax in both arms (the alert minutes an on-call page would be open, and the commands the governor

@@ -3259,9 +3259,9 @@ autoscaler, native's machine controller, stays in every arm and alone adds machi
 asks for (its machine lever, `scripts/kind_nodepool.sh`, never asks for more machines than the cluster has). **The bill is
 judged, never ruled.** It falls where native holds machines the service does not need: the quiet stretches between
 bursts, the hours of a day's trough, the weekend. It may rise where the target asks for pods ahead of the load and the
-autoscaler adds a machine for them; a rise reads power given beside the work and the speed it bought, and a tune under
-which the bill rises against native is not admissible as the factory tune (`docs/THE_TUNE.md`): it is a fault of the
-tune, root-caused in the model first. Where native is already short of machines the governor has nothing to give back,
+autoscaler adds a machine for them; a rise reads power given beside the work and the speed it bought, and the cloud's
+judged number is the work per dollar: a tune whose work per dollar falls against native is not admissible as the factory
+tune (`docs/THE_TUNE.md`): it is a fault of the tune, root-caused in the model first. Where native is already short of machines the governor has nothing to give back,
 and the receipt reads STEADY on the bill.
 
 **What a cloud receipt can show, and what it cannot.** The cloud is a wire (Part VI's opening): it makes no benefit of its
@@ -3892,7 +3892,7 @@ turn the governor OFF, and every setting it ever wrote is back at the operator's
 | Risk | Control | Evidence |
 |---|---|---|
 | The governor makes a decision that harms the service | it gives back a machine only after its own trial shows the response time holds; a breach wakes it at the next decision; nothing is given back while a sense is blind | the `verdict` and `decision` records; the paired receipt |
-| The governor raises the bill | in a cloud the bill is judged by the one key: a tune under which it rises against native is not admissible as the factory tune (chapter 19, `docs/THE_TUNE.md`); the governor asks the cloud for no machine itself | the receipt's bill row; the machine lever's grant (patch nodes, patch pods; no cloud credential) |
+| The governor raises the bill | in a cloud the bill is judged by the one key beside the work it bought: a tune whose work per dollar falls against native is not admissible as the factory tune (chapter 19, `docs/THE_TUNE.md`); the governor asks the cloud for no machine itself | the receipt's bill row; the machine lever's grant (patch nodes, patch pods; no cloud credential) |
 | The governor dies holding machines parked | the lease and the watchdog hand everything back from the records on the objects (section 20.2); a parked machine never blocks a pod | the watchdog drill |
 | Someone else moves the same setting | the one-writer rule; the drift is visible in every decision | the `proprioception` field of each `authority` record |
 | A compromised governor is used against the cluster | least privilege: read, patch nodes and patch pods; no delete, no eviction, no secrets, no cloud credential (chapter 14) | the role and its proof |
@@ -5103,8 +5103,8 @@ its own schedule; the governor parks and wakes machines between them (chapter 19
 **Can it make our bill bigger?** It can, and the receipt shows it. At the max the governor may move a service's target
 ahead of the load, and the cloud's autoscaler may add a machine for the pods it asks for; the bill row shows that spend as
 power given beside the work and the speed it bought, and the cloud's own number is the work per dollar (section 19.6). A
-smaller bill is never the aim: the factory tune aims at more work for the same money, and a tune whose bill rises against
-native for the same work is not admissible as the factory tune (`docs/THE_TUNE.md`). A company that wants a cut instead
+smaller bill is never the aim: the factory tune aims at more work for each dollar, and a tune whose work per dollar falls
+against native is not admissible as the factory tune (`docs/THE_TUNE.md`). A company that wants a cut instead
 turns the dial down (`--dial save`); how it spends the gain is its own choice.
 
 **Can it wake our on-call engineer?** It is built so that it should not: it acts on the reading as it climbs toward the

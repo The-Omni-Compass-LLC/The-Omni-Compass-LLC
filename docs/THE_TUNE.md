@@ -98,8 +98,9 @@ LOSS on none.
 `tools/tune_study.py` runs every tune of a declared grid on the model's plant that moves every 5 s (`tools/model_gate.py`, whose
 worker passes any of the governor's own arguments through `--ctl`), keeps every job's reading so a stopped search resumes,
 and applies the rule of section 2 in `judge()`: `admissible`, `dominates_main`, the rank by F, and `stands`. Its tests hold the
-rule on readings built for the purpose: a tune with any LOSS against native is not admissible; in a cloud a bigger bill is
-not admissible; a tune with a service GAIN and no LOSS dominates, power given beside it; the main tune stands when nothing
+rule on readings built for the purpose: a tune with any LOSS against native is not admissible; in a cloud a bigger bill for
+the same work is not admissible (the cloud's judged number is the work per dollar, and on the model's plant the work is fixed by
+its own load, so a bigger bill is a smaller work per dollar); a tune with a service GAIN and no LOSS dominates, power given beside it; the main tune stands when nothing
 dominates it.
 
 The same rule already chose the part of the factory tune that is set muscle by muscle. `tools/tune_cards.py` searched each

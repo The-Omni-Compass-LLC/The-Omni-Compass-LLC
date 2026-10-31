@@ -1384,21 +1384,27 @@ engine version, and nothing passes it). Every cloud set runs Omni-Compass on top
 its pod target moved inside the autoscaler's cover, the processor conveyed, the declared power model read, the replica room read
 live as on kind (`replica_ceiling` empty), and the machine lever parking and waking machines the cloud's own autoscaler made; the
 autoscaler, native's machine controller, stays in every arm and alone adds machines (`scripts/kind_nodepool.sh` asks the cloud
-for none). The bill (machine-hours at list price) is read as a service gauge with its aim lower, by the one key, beside work,
-response time, failures and alert minutes; a tune that raises it is not admissible (`docs/THE_TUNE.md`), so the founder's order
-of 18 October, never raise its bill, holds by judging the bill, not by tying the engine's hands, and a bill that rose is a fault of
-the tune, root-caused in the model first (`tools/model_gate.py`, whose cloud setting is the max from this amendment). Every set at
+for none). The bill (machine-hours at list price) is read by the one key beside work, response time, failures and alert
+minutes, and the cloud's judged number is the work per dollar: the work answered within the line for each dollar of the bill.
+The bill may rise where the work rises more, a rise read as power given beside the work it bought; a tune whose work per dollar
+falls against native is not admissible (`docs/THE_TUNE.md`), a fault of the tune, root-caused in the model first
+(`tools/model_gate.py`, whose cloud setting is the max from this amendment); the founder's order of 18 October, never raise its
+bill, is read the same way, by judging, never by tying the engine's hands. Every set at
 the max is its own A, B and C under the stopping rule of 19 October and the cap of 12 October (100 paired repetitions; 1, 10 and
 100 copies); the sets started before this amendment (omni-v18's steady set; omni-v21's steady set, 25 of 100 repetitions when
 this was written) finish as the tune-down's record and are read in no table with a set at the max. Google's and Amazon's queues
 carry the same change behind their switches.
 
-The same evening, before any set at the max started: in the cloud the aim is more work for the same bill (the founder's words of
-31 October: "We never make the bill smaller ... they're looking to do more work with the money they're spending"), and the
-factory beat's ladder on omni-v23 (`results/model_gate/V23_LADDER.md`, our own models, class S) reads the cloud setting at the
-max with the machine-hours, and so the bill, up 9% to 35% across the beats, 14% at the factory's 60 s. That tune is not
-admissible in the cloud, so no set at the max starts on it: Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`) until
-the version whose cloud tune reads the bill held in the model gate lands; then its sets start as written here, on that engine.
+The same evening, before any set at the max started (the founder's words: "We never make the bill smaller ... they're looking to
+do more work with the money they're spending"; and then, "We're pushing 1% more bill, but we're getting ~12% more work ... anybody
+will pay 1% more for 10% more product"): the cloud is judged by its work per dollar, and these sets cannot read it as built. Each
+sends a fixed rate of requests (`LOADGEN=open`), so its work is the same in both arms by design and a set at the max could show
+only the bill beside a faster answer; the factory beat's ladder on omni-v23 reads the cloud setting at the max with the
+machine-hours up 9% to 35% across the beats, 14% at 60 s, on a plant whose work is fixed the same way
+(`results/model_gate/V23_LADDER.md`, our own models, class S). Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`)
+until its sets carry the load whose work grows with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, the
+completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
+here, on the engine that stands then.
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 

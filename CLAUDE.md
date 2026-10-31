@@ -474,21 +474,24 @@ the founder overrides one in the conversation.
   tweak both scenarios"). The cloud's rule of 14 October (the tune-down on the machines alone: `OMNI_MACHINES_ONLY=1`, `dial save`,
   the governor's `--give-back-only`, "nothing in a cloud adds a machine") is struck. Every cloud set runs the whole engine at the
   max, every muscle, on top of the cloud's own autoscaler (native's machine controller, which stays in every arm and alone adds
-  machines; the lever parks and wakes what exists and asks the cloud for none, `scripts/kind_nodepool.sh`); the bill is judged
-  beside the work by the one key, a service gauge with its aim lower: a tune that raises it is not admissible (`docs/THE_TUNE.md`),
-  so "never raise its bill" (18 October) holds by judging, not by tying the engine's hands, and a bill that rose is a fault of the
-  tune, root-caused in the model first. The two scenarios, on site and in the cloud, are the factory profile's declared operating
+  machines; the lever parks and wakes what exists and asks the cloud for none, `scripts/kind_nodepool.sh`); in the cloud the
+  judged number is the work per dollar, the work answered within the line for each dollar of the bill (the founder's words of 31
+  October, evening: "We're pushing 1% more bill, but we're getting ~12% more work ... anybody will pay 1% more for 10% more
+  product"): the bill may rise where the work rises more, a rise read as power given beside the work it bought and never a LOSS by
+  itself, and a tune whose work per dollar falls against native is not admissible (`docs/THE_TUNE.md`), a fault of the tune,
+  root-caused in the model first; "never raise its bill" (18 October) is read the same way, by judging, never by tying the
+  engine's hands. The two scenarios, on site and in the cloud, are the factory profile's declared operating
   conditions, each tuned through the tune study. In code: every cloud workflow's dial defaults to `max` and sets no machines-only
   switch, every `scripts/*_queue.txt` entry reads `dial=max` with the replica room read live as on kind, the rig wires the same
   muscles on every platform (`scripts/kind_bench.sh`), the model gate's cloud setting is the max (`tools/model_gate.py`), and
   `tests/test_cloud_at_the_max.py` holds it; the governor's own `--give-back-only` flag, an engine file, leaves with the next
   version. The Azure sets started before this order (omni-v18's steady set; omni-v21's, 25 of 100 repetitions on 31 October) finish
   as the tune-down's record; the sets at the max start as their own A, B and C (`docs/K8S_COMPASS_PREREGISTRATION.md`, the
-  amendment of 31 October) once the cloud's tune is admissible in our models. In the cloud the aim is more work for the same
-  bill (the founder's words of 31 October: "We never make the bill smaller ... they're looking to do more work with the money
-  they're spending"), and on omni-v23 at the max the model reads the machine-hours, and so the bill, up 9% to 35% across the
-  beats (14% at 60 s; `results/model_gate/V23_LADDER.md`, class S): Azure's queue is held (`switch=off`) until the version whose
-  cloud tune holds the bill lands, and nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
+  amendment of 31 October) once they can read the work per dollar: the Azure sets as built send a fixed rate of requests, so their
+  work cannot grow and a set at the max could show only the bill beside a faster answer (on omni-v23 at the max our model reads the
+  machine-hours up 9% to 35% across the beats, 14% at 60 s, with the work fixed by the model's own load,
+  `results/model_gate/V23_LADDER.md`, class S). Azure's queue is held (`switch=off`) until its sets carry the load whose work grows
+  with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, built for kind), and nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
   100 repetitions.
 - **The factory setting is found, then locked; the knobs are for seeing it move** (the founder's words of 31 October: "We'll have
   all these buttons that allow people to ... change it to see what happens when things move ... nothing breaks, it'll just change
@@ -505,10 +508,10 @@ the founder overrides one in the conversation.
   the cloud's setting and the kind setting at once): on the service 10 s reads best (against native pods waiting down 16%,
   the 95th percentile down 30%, the minutes over the line down 58%, all GAIN; 20 s waits more pods than 60 s, LOSS), but every
   beat buys machine-hours (up 9% to 35% against native, 14% at 60 s): the governor asks for pods ahead of the load and the
-  cloud's autoscaler adds machines for them. In a cloud that is a bigger bill, a benefit with a cost (the founder's words of 31
-  October: the chip and the cloud are the cost proof), so by the rule written before the run no beat qualifies there and 60 s
-  stays until the tune itself holds the bill (the next version, through the model gate); the on-site beat is read on the kind
-  rig's own fixed machines, a plant of its own, before it is picked.
+  cloud's autoscaler adds machines for them. With the model's work fixed by its own load that is a bigger bill for the same work,
+  the work per dollar down, so by the rule no beat qualifies in the cloud's setting on this plant and 60 s stays until the second
+  search reads it (`docs/THE_TUNE.md`, section 4b); the on-site beat is read on the kind rig's own fixed machines, a plant of its
+  own, before it is picked.
 
 ## Orders of 24 October
 

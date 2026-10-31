@@ -476,7 +476,7 @@ TERMS = [
       "alone); the work and the speed are made on the software end and the bare-metal end.",
       [("tools/whole_system.py", "the cloud is the wire between the chip at one end and the software at the other"),
        (DIS, "The cloud's back end is not ours to meter."),
-       (CL, "a bill that rose is a fault of the")], aka=["the cloud", "the bill"]),
+       (CL, "judged number is the work per dollar")], aka=["the cloud", "the bill"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
       "Omni-Compass rose). The law is omnicompass/compass_law.py (CompassLaw): a band with 5% cushions, two antagonist forces, "
