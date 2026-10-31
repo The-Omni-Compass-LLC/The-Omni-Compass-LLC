@@ -422,6 +422,14 @@ class Controller:
         self.dem_seen = {}             # (ns, hpa) -> the service's demand at the last decisions, newest last (omni-v19)
         self.immune = {}               # (ns, hpa) -> its knob's self-knowledge (omnicompass/immune.py, omni-v21)
         self.dem_rise = {}             # (ns, hpa) -> the largest rise in its demand inside two decisions, as a ratio (omni-v19)
+        # the room counted once (omni-v24): each decision first counts the CPU native's own growth takes (every service's pods
+        # asked at the operator's own target past those running), then every push of Omni-Compass's for more pods takes its
+        # place in what is left before the next service's push is weighed. A push never takes the room another service's
+        # own growth needs, and two pushes never count the same room
+        self.room_native_m = 0.0
+        self.room_claimed_m = 0.0
+        self._native_ask = {}
+        self._place_last = None
         self.hold_n = {}               # (ns, hpa) -> hand-backs in a row: each doubles the hold, up to two hours
         from omnicompass.compass import Compass
         gp = self.g.p                  # the compass reads the engine in the engine's own parameters
@@ -595,10 +603,18 @@ class Controller:
         demand seen inside two decisions: the pods asked for leave room for that rise times themselves, so the next rise of
         that size finds a place, as native's fewer pods do."""
         dem, req = self._app_demand(h), self._pod_request_m(h)
+        self._place_last = None
         if dem is None or not req or dem <= 0:
             return lo_t
         cur = int((h.get("status") or {}).get("currentReplicas", 0) or 0)
-        place = int((cur + max(0, int((s["alloc_m"] - s["req_m"]) // req))) / max(1.0, rise))
+        key = (h["metadata"]["namespace"], h["metadata"]["name"])
+        # native's own ask for this service (placed, or waiting as it would without Omni-Compass), then the room left once
+        # every service's native growth and the pushes weighed before this one have taken theirs (omni-v24): five services
+        # pushed together each saw the whole free room and together asked for more pods than it held
+        base = max(cur, self._native_ask.get(key, cur))
+        self._place_last = {"hpa": key, "dem": dem, "req": req, "base": base}
+        free = s["alloc_m"] - s["req_m"] - self.room_native_m - self.room_claimed_m
+        place = int((base + max(0, int(free // req))) / max(1.0, rise))
         if place <= 0:
             return hi_t
         fit = 100.0 * dem / place
@@ -607,14 +623,46 @@ class Controller:
         short = int(math.ceil(100.0 * dem / lo_t - 1e-9)) - place
         if short > 0 and self.a.mode == "nodepool" and self.a.node_scale_cmd and "machines" not in getattr(self.a, "native_muscles", ()):
             n = max(1, s["open"]); per_node = s["alloc_m"] / max(1, s["nodes"])
-            need = min(self._max_nodes(s), int(math.ceil((s["req_m"] + short * req) * (1.0 + self.a.headroom) / per_node)))
+            need = min(self._max_nodes(s), int(math.ceil((s["req_m"] + self.room_native_m + self.room_claimed_m + short * req)
+                                                         * (1.0 + self.a.headroom) / per_node)))
             if need > n and need > (self.rec_n or 0) and self._pool_command(need, n, "machines first: room for the pods the fail-up asks (omni-v19)",
                                                                             pods_short=short):
                 self.rec_n = need
         self.audit({"placeable": {"hpa": f"{h['metadata']['namespace']}/{h['metadata']['name']}", "target": round(min(hi_t, fit), 1),
                                   "asked": round(lo_t, 1), "pods_placeable": place, "pods_short": max(0, short),
-                                  "largest_rise": round(rise, 3)}})
+                                  "largest_rise": round(rise, 3), "room_native_m": int(self.room_native_m),
+                                  "room_claimed_m": int(self.room_claimed_m)}})
         return min(hi_t, fit)
+
+    def _claim_room(self, key, x):
+        """The room a push for more pods takes (omni-v24): the pods the service's target x asks for past native's own ask, in
+        its pods' CPU request, counted before the next service's push is weighed in the same decision."""
+        p = self._place_last
+        if not p or p["hpa"] != key or x <= 0:
+            return
+        asked = int(math.ceil(100.0 * p["dem"] / x - 1e-9))
+        self.room_claimed_m += max(0, asked - p["base"]) * p["req"]
+
+    def _count_native_room(self, hpas):
+        """The room native's own growth takes this decision (omni-v24), counted before any push of Omni-Compass's: for every
+        service the probe senses, its autoscaler's ask at the operator's own target, ceil(100 dem / target), past the pods
+        running, in its pods' CPU request (read only for a service that grows). Native's ask is kept for the room rule."""
+        self.room_native_m, self.room_claimed_m, self._native_ask = 0.0, 0.0, {}
+        for h in hpas or []:
+            _idx, cur_t = cpu_target(h)
+            if cur_t is None or not self._sensed(h):
+                continue
+            orig = int(h["metadata"].get("annotations", {}).get(ANNOTATION, cur_t))
+            dem = self._app_demand(h)
+            if dem is None or dem <= 0 or orig <= 0:
+                continue
+            cur = int((h.get("status") or {}).get("currentReplicas", 0) or 0)
+            ask = int(math.ceil(100.0 * dem / orig - 1e-9))
+            self._native_ask[(h["metadata"]["namespace"], h["metadata"]["name"])] = ask
+            if ask > cur:
+                req = self._pod_request_m(h)
+                if req:
+                    self.room_native_m += (ask - cur) * req
 
     def _live_ceiling(self, h):
         """The most replicas the machines can hold, one pod under it, read live: the allocatable CPU of every ready worker
@@ -1437,6 +1485,7 @@ class Controller:
             self.strict_step(s, obs)
             self.m.push(d, obs)
         elif self.a.mode in ("target", "nodepool"):
+            self._count_native_room(s["hpas"])           # each decision counts the room afresh, native's growth first (omni-v24)
             for h in s["hpas"]:
                 idx, cur = cpu_target(h)
                 if cur is None:
@@ -1507,6 +1556,7 @@ class Controller:
                         # rule: a unit never waits for a machine; a pod with no machine serves nothing, it only waits), and
                         # the pods follow as the room appears
                         x = max(x, self._placeable_target(h, s, x, hi_t, self.dem_rise.get((ns, name), 1.0)))
+                        self._claim_room((ns, name), x)
                     self.compass_law_x[(ns, name)] = x
                     self._replica_room(h, ns, name, win, obs, s)
                     want = int(round(x))
