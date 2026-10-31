@@ -17,7 +17,7 @@ from pathlib import Path
 import numpy as np
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from pilot.bench_report import gauges, latency, pod_starts
-from tools.readings import word as gel_word, aim as gel_aim, receipt_key  # noqa: E402  (the words every table uses)
+from tools.readings import word as gel_word, aim as gel_aim, receipt_key, WORK_PER  # noqa: E402  (the words every table uses)
 from tools.readings import by_word, interval_by_word  # noqa: E402  (a number beside a word carries the word's sign)
 
 SAME_REL = 1e-9          # "the same" only to nine decimal places of the value (tools/readings.py EXACT_REL; the referee's work order of 25 October)
@@ -31,6 +31,8 @@ KEYS = ["worker nodes in service, mean", "node-hours", "energy, parked workers s
         "host CPU busy, the real machine under kind (%)", "host cores (the real machine under kind)",
         "batch: queue finished (s)", "batch: worker machines in service after the queue finished, mean",
         "machines billed, machine-hours", "compute bill at list price ($)",
+        "work inside the response line (requests a second; the capacity test's own gauge)",
+        "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)",
         "second app: response time (ms), 95th percentile", "second app: response time (ms), 99th percentile",
         "second app: time over the response line (% of samples)", "second app: failed requests (%)"]
 # the babysitting tax (the founder's order of 14 October): what a person on call would have had to do in each arm
@@ -39,6 +41,11 @@ COMMANDS = "settings commands the governor wrote on its own (no person touched e
 AHEAD = "governor's additions decided while the service was still inside its line (% of its additions)"
 KEYS[KEYS.index("failed requests (%)") + 1:KEYS.index("failed requests (%)") + 1] = [ALERT, COMMANDS, AHEAD]
 BILL = {"machines billed, machine-hours", "compute bill at list price ($)"}   # a real cloud only (PLATFORM=aks)
+# the work meter (LOADGEN=meter): the answers inside the line it counted, a second, and in a cloud for each dollar of the bill,
+# the cloud's judged number (31 October: the bill may rise where the work rises more); both from the same run's files
+WORK = "work inside the response line (requests a second; the capacity test's own gauge)"
+WORK_DOLLAR = "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"
+METERED_WORK = {WORK, WORK_DOLLAR}
 SECOND = {k for k in KEYS if k.startswith("second app: ")}                     # the fairness test only (TWO_APP=1)
 HOST = {"host CPU busy, the real machine under kind (%)", "host cores (the real machine under kind)"}   # kind only
 BATCH = {"batch: queue finished (s)", "batch: worker machines in service after the queue finished, mean"}   # the batch test only
@@ -91,6 +98,10 @@ def sig_word(k, mean_diff):
     and never judged says only which way it went."""
     if k in NEUTRAL:
         return f"yes, {'up' if mean_diff > 0 else 'down'} (shown, not judged)"
+    if k == WORK:
+        return f"yes: {gel_word(mean_diff < 0, gel_aim('higher', k))}"
+    if k == WORK_DOLLAR:
+        return f"yes: {gel_word(mean_diff < 0, WORK_PER)}"
     return f"yes: {gel_word(mean_diff < 0, gel_aim('lower', k))}"
 
 
@@ -137,7 +148,30 @@ def bill(d):
             else:
                 cost += dt * x[1] * default_price
         g["compute bill at list price ($)"] = cost
+        work = meter_work(d)
+        if work is not None and cost > 0:
+            g[WORK_DOLLAR] = work / cost
+    work = meter_work(d)
+    if work is not None:
+        try:
+            span = (float((d / "window_end.txt").read_text().split()[0]) - t0)
+            if span > 0:
+                g[WORK] = work / span
+        except (OSError, ValueError, IndexError):
+            pass
     return g
+
+
+def meter_work(d):
+    """The answers inside the line the work meter counted over the window (its final count, work_meter.json; LOADGEN=meter),
+    or None where the arm ran no meter."""
+    f = d / "work_meter.json"
+    if not f.exists():
+        return None
+    try:
+        return float(json.loads(f.read_text().strip().splitlines()[-1])["total"]["in_time"])
+    except (ValueError, KeyError, IndexError, TypeError):
+        return None
 
 
 def babysitting(d, slo):

@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from tools.readings import OWN_RUNS, receipt_key, in_all_three, word, aim, EVEN_SAME, even_noise, SHOWN, three_run_reading, run_word, LOWER as AIMS_LOWER, HIGHER as AIMS_HIGHER  # noqa: E402
 from tools.repo import NAME as REPO_NAME  # noqa: E402  (the repository's name, written once)
 from tools.live_reps import KEYS, LABEL, NEUTRAL, SAME_REL
-from tools.readings import by_word, interval_by_word, word_sign, reading_kind
+from tools.readings import by_word, interval_by_word, word_sign, reading_kind, WORK_PER
 
 ARMS = ("compass", "bowl")        # the Omni arm's name in the run files (bench-bowl-N folders predate the rename)
 # --pair: one comparison of the four ways (docs/BATCH_QUEUE_PREREGISTRATION.md, amendment 6), "first|second" as
@@ -44,6 +44,8 @@ BEATS = {}   # run id -> {arm: [the beats it ran at]}, from each run's LIVE_REPS
 CAPACITY = "work inside the response line (requests a second; the capacity test's own gauge)"
 from tools.omni_index import CAPACITY as CAPACITY_RECORDED  # noqa: E402  (the same row's name in the tables written before 13 October)
 AIM_HIGHER = {CAPACITY, CAPACITY_RECORDED}
+# work bought with each dollar of a cloud's bill (31 October): a rise is GAIN, a fall power given, as work per energy
+AIM_WORK_PER = {"work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"}
 
 
 def robust_rows(runs):
@@ -167,6 +169,8 @@ def cell(r, word=None):
 def aim_of_row(k):
     """What the row's gauge is for: work aims higher; time waited, missed or failed aims lower; a resource spent or held is
     spent (tools/readings.py)."""
+    if k in AIM_WORK_PER:
+        return WORK_PER
     return aim(AIMS_HIGHER if k in AIM_HIGHER else AIMS_LOWER, k)
 
 
