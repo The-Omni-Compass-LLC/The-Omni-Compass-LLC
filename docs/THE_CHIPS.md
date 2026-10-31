@@ -118,7 +118,8 @@ before the result exists.
 
 ## 6. The clouds, read the same day
 
-- **Azure** (`aks-metered`, the machines alone at the tune-down, native's cap, `OMNI_MACHINES_ONLY=1`): the omni-v18 set of
+- **Azure** (`aks-metered`; until 31 October the machines alone at the tune-down, native's cap, the rule the founder struck that
+  day, so the sets at the max are their own A, B and C): the omni-v18 set of
   100 paired repetitions ran from 24 to 29 October: 97 passed, 3 failed (repetitions 82, 90 and 93); it stands as omni-v18's
   record, read in no omni-v21 or omni-v22 table. The omni-v21 steady set (run 40940616527, 100 paired repetitions under the
   stopping rule) started 29 October at 19:29 UTC: 16 of 100 done by 16:27 UTC on 30 October, 14 passed, 2 failed

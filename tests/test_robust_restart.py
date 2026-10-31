@@ -31,7 +31,7 @@ class RobustRestart(unittest.TestCase):
             settings = dict(DRY='', KUBECTL='kubectl', WORKERS='4', SITE_LIMIT_W='200', OUT_DIR=tmp,
                             STRICT='', LAW='', CLOSURE='', REPLICA_CEILING='', OMNI_DIAL='save', MIN_NODES='2',
                             NODE_CUSHION='0', SLO_MS='500', OMNI_NICE='0', OMNI_SENSED='default/php-apache',
-                            OMNI_POWER_CMD='', OMNI_INTERVAL='60', OMNI_FLOOR_INTERVAL='5', GIVE_BACK_ONLY='', GOV_PIN='', OWN='')
+                            OMNI_POWER_CMD='', OMNI_INTERVAL='60', OMNI_FLOOR_INTERVAL='5', GOV_PIN='', OWN='')
             env.update(settings)
             script = function + '\nCAP_ARGS="--cap-deployments default/php-apache"\nexport -f start_controller\n' + export
             script += '\nbash -uc \'start_controller 1 "$OUT_DIR/child.log" >/dev/null\'\n'

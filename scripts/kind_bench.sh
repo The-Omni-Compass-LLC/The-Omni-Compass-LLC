@@ -71,9 +71,6 @@ finish_evidence() {
   exit "$code"
 }
 trap finish_evidence EXIT
-if [ "${OMNI_MACHINES_ONLY:-0}" = "1" ]; then   # the receipt names this arm as it ran (tools/live_reps.py)
-  echo "machines alone: no pod autoscaler moved, no processor conveyed, no power capped" > "$OUT_DIR/machines_only.txt"
-fi
 # PLATFORM=kind (default): the kind cluster on one runner. PLATFORM=aks: a real Azure Kubernetes Service cluster
 # (.github/workflows/aks-metered.yml): workers are the user pool (agentpool=work) under Azure's own cluster autoscaler,
 # which deletes a machine once it is empty, so a machine given back is a machine no longer billed; the system pool
@@ -126,16 +123,12 @@ case "$METER" in ""|rapl) ;; *) echo "METER must be empty or rapl (got $METER)";
 # the power cap writes the service's CPU limit; with CruiseKube the limit is CruiseKube's own (it resizes the running
 # pods in place), so the cap is left out of that set and its reset checks read the operator's limit on the Deployment
 CAP_ARGS="--cap-deployments default/php-apache"; [ -z "$CRUISEKUBE" ] || CAP_ARGS=""
-# In the cloud (OMNI_MACHINES_ONLY=1, aks-metered.yml; the founder's orders of 14 October, night: the same work for a bill
-# never bigger) the governor moves the machines alone. It moves no pod autoscaler (--sensed names no service, so every HPA
-# keeps the operator's own target), conveys no processor and caps no power: the pods are exactly native's, and Azure's own
-# autoscaler alone makes machines, for them. The governor only parks a machine Azure already made, after its own trial
-# shows the response time holds, and wakes it at once on a breach; a parked, empty machine Azure deletes. So the bill can
-# only fall or stay, never rise
+# The same wiring on every platform, the whole engine at the max (the founder's order of 31 October: no hard rule; the
+# cloud's tune-down on the machines alone of 14 October, its machines-only switch and the governor's give-back-only flag, is
+# struck): the service sensed, the processor conveyed, the declared power model read, and the machine lever on top of the
+# cloud's own autoscaler, which makes and deletes machines in every arm; the lever parks a machine that exists and wakes
+# it, and asks the cloud for none (scripts/kind_nodepool.sh). The bill is judged beside the work by the one key, never ruled
 OMNI_SENSED="default/php-apache"; OMNI_POWER_CMD="bash scripts/kind_power.sh"
-# Only 1 enables machines-only mode; 0, empty and unset retain the full wiring.
-GIVE_BACK_ONLY=""
-if [ "${OMNI_MACHINES_ONLY:-0}" = "1" ]; then OMNI_SENSED="none/none"; OMNI_POWER_CMD=""; CAP_ARGS=""; GIVE_BACK_ONLY="--give-back-only"; fi
 limits_now() {   # the CPU limit the operator's record holds: the pods' own, or with CruiseKube the Deployment's template
   if [ -n "$CRUISEKUBE" ]; then
     kubectl get deployment php-apache -o jsonpath='{.spec.template.spec.containers[0].resources.limits.cpu}'
@@ -691,7 +684,7 @@ start_controller() {   # $1 decisions to make, $2 log file
     ${OMNI_POWER_CMD:+--power-cmd "$OMNI_POWER_CMD"} --site-limit-w "$SITE_LIMIT_W" \
     $CAP_ARGS --thermal-model --security-configmap default/omni-security \
     --rollout-guard default/php-apache --sensed "$OMNI_SENSED" --latency-file "$OUT_DIR/latency.csv" --slo-ms "${SLO_MS:-500}" \
-    --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" $GIVE_BACK_ONLY $STRICT $LAW $OWN ${CLOSURE:+--closure "$CLOSURE"} ${REPLICA_CEILING:+--replica-ceiling "$REPLICA_CEILING"} ${OMNI_DIAL:+--dial "$OMNI_DIAL"} > "$2" 2>&1 &
+    --audit "$OUT_DIR/audit.jsonl" --kill-file "$OUT_DIR/kill" $STRICT $LAW $OWN ${CLOSURE:+--closure "$CLOSURE"} ${REPLICA_CEILING:+--replica-ceiling "$REPLICA_CEILING"} ${OMNI_DIAL:+--dial "$OMNI_DIAL"} > "$2" 2>&1 &
   echo $!
 }
 # the window's governor is not a child of this shell (start_controller runs in a subshell), so `wait` cannot see it (12
@@ -735,11 +728,11 @@ if [ -n "${ROBUST:-}" ]; then
     # the second governor is started by the robustness script when its moment comes, with the same command line: the
     # function and what it reads are exported before the script starts
     export -f start_controller
-    # (17 Oct: GIVE_BACK_ONLY, added on 15 October, was missing here, so the second governor stopped on an unbound variable
-    # before it began and every kill run of omni-v7 was marked invalid; tests/test_robust_restart.py now checks the list,
-    # and caught GOV_PIN, the governor's own core, on 20 October before any run, and OWN, omni-v19's pod muscle of its own, on
-    # 24 October before any run of ARM=solo)
-    export CAP_ARGS DRY KUBECTL WORKERS SITE_LIMIT_W OUT_DIR STRICT LAW CLOSURE REPLICA_CEILING OMNI_DIAL MIN_NODES NODE_CUSHION SLO_MS OMNI_NICE OMNI_SENSED OMNI_POWER_CMD GIVE_BACK_ONLY GOV_PIN OWN
+    # (17 Oct: a variable added on 15 October, the cloud's GIVE_BACK_ONLY, struck on 31 October, was missing here, so the second
+    # governor stopped on an unbound variable before it began and every kill run of omni-v7 was marked invalid;
+    # tests/test_robust_restart.py now checks the list, and caught GOV_PIN, the governor's own core, on 20 October before any
+    # run, and OWN, omni-v19's pod muscle of its own, on 24 October before any run of ARM=solo)
+    export CAP_ARGS DRY KUBECTL WORKERS SITE_LIMIT_W OUT_DIR STRICT LAW CLOSURE REPLICA_CEILING OMNI_DIAL MIN_NODES NODE_CUSHION SLO_MS OMNI_NICE OMNI_SENSED OMNI_POWER_CMD GOV_PIN OWN
   fi
   OUT_DIR="$OUT_DIR" DURATION="$DURATION" ROBUST="$ROBUST" OMNI_PID="$omni_pid" WORKERS="$WORKERS" HPA_RANGE="$HPA_RANGE" \
     WORKER_SEL="$WORKER_SEL" NATIVE="$NATIVE" bash scripts/kind_robust.sh > "$OUT_DIR/robust.out" 2>&1 &

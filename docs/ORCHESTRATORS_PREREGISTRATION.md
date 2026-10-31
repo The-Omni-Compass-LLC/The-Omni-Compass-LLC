@@ -23,7 +23,7 @@ numbers, so a difference between two arms is a difference between what they deci
 |---|---|
 | native | Kubernetes alone: its default scheduler places every pod, the service's HPA, and in the cloud the Cluster Autoscaler |
 | the orchestrator | the same organism and the same work, every pod sent to the orchestrator the way its project documents it for that work, its shipped rule deciding what is admitted and where it goes |
-| Omni-Compass on top | the orchestrator's arm with the shipped Kubernetes governor of the engine that stands (`omni_controller/`) on top, at the factory flags the kind rig runs it with (on-site: the compass law at the max, the service sensed and its processor limit conveyed; in the cloud: the tune-down, the machines alone, give-back only); it writes only what it writes on a real cluster and never an orchestrator's own objects |
+| Omni-Compass on top | the orchestrator's arm with the shipped Kubernetes governor of the engine that stands (`omni_controller/`) on top, at the factory flags the kind rig runs it with (on-site: the compass law at the max, the service sensed and its processor limit conveyed; in the cloud: the tune-down, the machines alone, give-back only, until 31 October, and the max with every muscle from then, the founder's order of that day, read only in runs started after it); it writes only what it writes on a real cluster and never an orchestrator's own objects |
 
 ## 3. The orchestrators and their rules
 

@@ -205,11 +205,14 @@ measurement of the provider's machines.
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on-site or off-site). Omni-Compass can live in all three places. On the wire alone, as every cloud run
-in this repository is set (the tune-down on the machines only, the pods exactly native's), it can only park machines the
-cloud's own autoscaler already made, after its own trial; so a cloud run alone can show at most a small cut in the bill of the
-wire. It cannot show the work and the speed gained at the software end, nor the energy and the throughput gained at the bare
-metal, because neither end is under it; those are measured where Omni-Compass sits on them (the cluster and the services; the
+racks, the data center, on-site or off-site). Omni-Compass can live in all three places. The wire makes no benefit of its
+own. Until 31 October every cloud run in this repository was set on the wire alone (the tune-down on the machines only, the
+pods exactly native's), so it could only park machines the cloud's own autoscaler already made, after its own trial, and show
+at most a small cut in the bill of the wire. From 31 October (the founder's order of that day: no hard rule) every cloud set
+runs the whole engine at the max on the cloud's cluster, the software end, so its receipt shows that the engine holds there
+as on site and how much of that end's gain comes through the wire, read as work per dollar beside the bill: more work for
+the same money, never a smaller bill as the aim. The energy and the throughput gained at the bare metal are not under a
+tenant; those are measured where Omni-Compass sits on them (the cluster and the services; the
 card and the machine), and composed with the wire into one organism and one bill by the law above. A cloud provider that ran
 Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter it, so it is never
 claimed here as a measurement. The company's expected ranges for the three places (the founder's figures of 24 October: about

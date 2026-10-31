@@ -15,8 +15,9 @@ No outside party has reviewed or approved these results.
 
 **The main engine** is the engine that stands (omni-v23, `OMNI_V23.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
-every 60 s with the fast checks every 5 s; the compass law at the max on a cluster of one's own (its balance point 0.3) and at
-the tune-down in a cloud (0.4, the machines alone, a bill never bigger than native's); the verdict's 2% allowance on a
+every 60 s with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
+a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds
+ran until then; in a cloud the bill is judged beside the work, a tune whose bill rises for the same work not admissible); the verdict's 2% allowance on a
 give-back trial of 20 minutes; the cruise wait of 120 s, never under two readings; every muscle on its own card where one was
 found (`realms/muscle_cards_v5.csv`) and the engine's setting for the rest. **Every published benchmark result is this one
 engine at this one tune**, on the systems, loads and harness that benchmark names, native against Omni-Compass on top of native.

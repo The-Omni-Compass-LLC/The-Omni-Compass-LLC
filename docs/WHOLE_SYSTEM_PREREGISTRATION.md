@@ -30,11 +30,12 @@ repetitions a run, three runs A, B and C (`tools/confirm_abc.py`).
    stepping one at a time) and each service's `burst` workload at once. Gauges: work inside the line (requests a second),
    the 95th percentile response, worker nodes in service, the declared-model energy, and each service's work inside the
    line, its 95th percentile and the resource it holds. This stack tests the composition of layers 3 and 4.
-2. **The cloud, Azure, at the tune-down on the machines alone** (class L, the bill metered; the founder's order of
-   14 October: in a cloud Omni-Compass shows one thing, the same work for a smaller bill). The AKS steady set's cluster with
-   the services of stack 1 on it; the governor parks machines only (`OMNI_MACHINES_ONLY=1`, `dial save`), the services'
-   knobs wired at the tune-down. Gauges: the bill at list price, machines billed, the 95th percentile, failed requests,
-   and each service's rows. This stack tests the composition of layers 4 and 5, at the dial the cloud order sets. Cost:
+2. **The cloud, Azure, the whole engine at the max** (class L, the bill metered; the founder's order of 31 October struck the
+   tune-down on the machines alone of 14 October: no hard rule, the bill judged beside the work; a run of this stack started
+   before 31 October would have run the struck rule, and none had). The AKS steady set's cluster with the services of stack 1
+   on it; the governor on top of Azure's own autoscaler with every muscle (`dial max`), the services' knobs wired at the max.
+   Gauges: the bill at list price, machines billed, the 95th percentile, failed requests,
+   and each service's rows. This stack tests the composition of layers 4 and 5, at the factory tune. Cost:
    about USD 2 a paired repetition at the steady set's size; 100 repetitions a run at most (the paid cap of 12 October).
 3. **The card beside the cluster, on Lambda** (class P for the card, L for the rest; money). One GPU machine running the
    card bench (`scripts/gpu_paired.sh`) while the same machine hosts a kind cluster of stack 1; the card's governor and the

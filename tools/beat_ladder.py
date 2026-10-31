@@ -38,7 +38,9 @@ def same(a, b) -> bool:
     if isinstance(a, float) or isinstance(b, float):
         return isinstance(b, (int, float)) and isinstance(a, (int, float)) and math.isclose(a, b, rel_tol=1e-12, abs_tol=1e-12)
     return a == b
-SETTINGS = (("pace_cloud", "cloud", "the cloud's setting: the compass law at the tune-down, the machines alone"),
+SETTINGS = (("pace_cloud", "cloud", "the cloud's setting: the compass law on top of the cloud's own autoscaler (the ladder of 22 and "
+                                    "23 October read it at the tune-down on the machines alone, the cloud's rule of 14 October; from "
+                                    "31 October, the founder's order of that day, the max with every muscle, the bill judged)"),
             ("pace_kind", "kind", "the kind benchmark's setting: the compass law at the max, every autoscaler sensed"))
 NAMES = {"machine_hours": "Machine hours (a day)", "kwh_per_core_hour": "Energy per core-hour (kWh)",
          "pending_pod_minutes_per_hour": "Pods waiting for a place (minutes an hour)",

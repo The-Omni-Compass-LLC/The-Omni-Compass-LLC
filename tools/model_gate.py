@@ -14,8 +14,10 @@ fixed in the model, never carried into a real run. A reading here is a model's, 
 Each checkout is a working tree: one on the engine that stands, one on the candidate. Each runs in its own process with
 its own code, so the two never share a module.
 
-  cluster    the shipped Kubernetes controller in the cloud's setting (node-pool mode, the compass law, the tune-down,
-             nothing sensed but the machines; --give-back-only where the checkout has it) on the model cluster of
+  cluster    the shipped Kubernetes controller in the cloud's setting (node-pool mode, the compass law at the max, every
+             muscle: the service sensed and its pod target moved, the pool parked and woken on top of the cloud's own
+             autoscaler, which makes and deletes machines in every arm; the founder's order of 31 October, no hard rule,
+             struck the tune-down on the machines alone of 14 October) on the model cluster of
              pilot/selfpilot.py: the fleet harness's web workload, the HPA at its target, a node's boot delay, power;
              a decision every 60 s and the fast check every 15 s. Response times come from a queue on the running pods
              (an M/M/1 delay on each pod's share, log-normal spread, the backlog's wait added). Native is the HPA with
@@ -118,10 +120,13 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
     IDLE = "omnicompass.io/idle"
 
     class CloudSim(SimCluster):
-        """The cloud as the governor meets it (scripts/kind_bench.sh, the cloud setting): the cloud's own autoscaler
-        makes machines and deletes an unneeded one, in every arm; the governor only parks a machine that exists (marked
-        idle and drained), which the cloud deletes once it has stood empty for its scale-down time, and wakes a parked
-        machine at once while it still exists. It never adds one."""
+        """The cloud as the governor meets it (scripts/kind_bench.sh, the cloud setting): the cloud's own autoscaler,
+        native's machine controller, makes machines and deletes an unneeded one, in every arm. Omni-Compass on top runs at
+        the max with every muscle (the founder's order of 31 October: no hard rule; the tune-down on the machines alone of
+        14 October is struck); its machine lever parks a machine that exists (marked idle and drained), which the cloud
+        deletes once it has stood empty for its scale-down time, and wakes a parked machine at once while it still exists.
+        It asks the cloud for no machine itself: a pool the cloud's autoscaler owns refuses a count set by hand, so a
+        machine is added by that autoscaler, for the pods the governor's target asks for (scripts/kind_nodepool.sh)."""
         PARK_TICKS = 40                                        # ten minutes: the autoscaler's scale-down-unneeded time
 
         def __init__(self, *a, **k):
@@ -289,10 +294,11 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
 
     if arm != "native":
         from omni_controller.controller import Controller, parser
-        # the cloud's setting (the compass law at the tune-down, machines alone), or the kind benchmark's (omni-v16's pace
-        # models: the compass law at the max, every HPA sensed, as ARM=compass runs it in benchmark-reps.yml)
-        law = ["--law", "compass", "--dial", "save", "--sensed", "none/none"] if setting == "cloud" else \
-            ["--law", "compass", "--dial", "max"]
+        # the compass law at the max, every HPA sensed, in both settings: the kind benchmark's (omni-v16's pace models, as
+        # ARM=compass runs it in benchmark-reps.yml) and the cloud's (the founder's order of 31 October: no hard rule; the
+        # cloud's tune-down on the machines alone of 14 October, --dial save --sensed none/none --give-back-only, is struck).
+        # The plants differ (CloudSim, StaticSim); the law does not
+        law = ["--law", "compass", "--dial", "max"]
         p0 = parser()
         # a period of 0 is the checkout's own default (the shipped model); the fast checks come once a plant step, as
         # every model has run them (15 s on the cluster's plant, 5 s on the fine one)
@@ -302,8 +308,6 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
                 "--min-nodes", str(sim.c.pool.min_nodes), "--max-nodes", str(sim.c.pool.nodes if static else sim.c.pool.max_nodes), "--headroom", "0.5",
                 "--active-nodes-only", "--max-node-step", "1", *shlex.split(ctl)]
         p = parser()
-        if setting == "cloud" and any("--give-back-only" in getattr(x, "option_strings", []) for x in p._actions):
-            argv.append("--give-back-only")
         a = p.parse_args(argv)
         period = period if period > 0 else float(a.interval)
         k = Kube(sim, None)
@@ -979,7 +983,7 @@ def main(argv=None):
     ap.add_argument("--dir", help=argparse.SUPPRESS)
     ap.add_argument("--blink", action="store_true", help=argparse.SUPPRESS)  # the cluster model with its machines out of service a while
     ap.add_argument("--fine", action="store_true", help=argparse.SUPPRESS)   # the cluster model on the 5 s plant (omni-v16)
-    ap.add_argument("--setting", default="cloud", help=argparse.SUPPRESS)   # cloud (the tune-down, machines alone) or kind (ARM=omni)
+    ap.add_argument("--setting", default="cloud", help=argparse.SUPPRESS)   # cloud (the cloud's plant) or kind (the kind rig's, ARM=omni); the max on both
     ap.add_argument("--pace-periods", default="60,15,10,5", help="the pace study's decision periods, seconds (omni-v16)")
     ap.add_argument("--quota", default="none", help=argparse.SUPPRESS)      # the convey model's quota: none (readable, empty), unreadable, or refused (unreadable, every raise refused)
     ap.add_argument("--batch", action="store_true", help=argparse.SUPPRESS)  # the convey model with the batch muscle beside the serving one
