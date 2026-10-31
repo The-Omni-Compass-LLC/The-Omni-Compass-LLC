@@ -37,7 +37,7 @@ The buttons (each a POST carrying a bearer token; JSON body):
         governor hands every setting back and starts again with the new list
   POST /v1/beat   {"seconds": 5 to 120, "reason": ...}                  role operator
         the heartbeat, a dial (omni-v17): the governor's full decision every so many seconds (the main engine 60 s; the
-        dial's stops 10, 15, 30, 60, 90 and 120 s, and any value from 5 to 120 s), its fast checks every 5 s at every beat; like
+        dial's stops 10, 15, 20, 30, 60, 90 and 120 s, and any value from 5 to 120 s), its fast checks every 5 s at every beat; like
         a dial press it passes through native, and the governor starts again with --interval set to the beat
 The reads (role viewer): GET /v1/status (the switch, the desired and the actual state, the governor's process, the
 registry and its leases, the age of the last decision), GET /v1/presses (the last presses), GET /metrics. The console
@@ -75,7 +75,7 @@ BUTTONS = {"mode": "operator", "dial": "operator", "reset": "operator", "kill": 
            "beat": "operator", "factory": "operator"}
 MODES, DIALS = ("autopilot", "watch", "off"), ("max", "save")
 MAIN_BEAT, BEAT_RANGE = 60.0, (5.0, 120.0)            # the heartbeat dial (omni-v17): the main engine's beat and the dial's span
-BEAT_STOPS = (10, 15, 30, 60, 90, 120)                 # the stops the console offers (the founder's order of 24 October); any value in the span can be pressed
+BEAT_STOPS = (10, 15, 20, 30, 60, 90, 120)                 # the stops the console offers (the founder's order of 24 October); any value in the span can be pressed
 ARM_WINDOW_S = 600.0              # the two-person rule: two different holders of the security role within ten minutes
 MAX_BODY = 4096
 

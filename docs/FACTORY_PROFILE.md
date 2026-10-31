@@ -71,7 +71,7 @@ shows.
 Let x be the governed system's state, z the governor's internal state, y its observations, θ the complete configuration profile,
 and Δ the full governing decision interval. The public interval choices on the bench are
 
-  Δ ∈ {10, 15, 30, 60, 90, 120} s
+  Δ ∈ {10, 15, 20, 30, 60, 90, 120} s
 
 (the controller itself takes any value from 5 to 120 s, `--interval`). At decision k, with tₖ₊₁ = tₖ + Δ, the general contract is
 
@@ -144,7 +144,7 @@ identified implementation demonstrated.
 - **Architecture:** native, or Omni-Compass on native; Omni-Compass is never by itself (the founder's order of 25 October).
 - **Deployment route:** on-site hardware, or through the cloud.
 - **Engine and profile identity:** factory, candidate or custom, with the profile's fingerprint.
-- **Cadence:** the six buttons, 10, 15, 30, 60, 90 and 120 s.
+- **Cadence:** the seven buttons, 10, 15, 20, 30, 60, 90 and 120 s.
 - **Muscle controls:** each adjustment with its bounds and its governing authority.
 - **Actuation feedback:** each decision's requested settings, those that landed as asked, those held at a muscle's limit, and those
   still moving toward their setting.

@@ -307,7 +307,7 @@ native's colour. "Return to native" in the control panel is the reset, a separat
 **The profile** (chapter 2). The active profile reads FACTORY, CANDIDATE or CUSTOM, with its fingerprint. The factory profile is
 the released one, omni-v22's, the heartbeat 60 s; nothing is held when the page opens. *Restore factory profile* puts the
 mechanism and the heartbeat back; *Hold the active profile* holds every knob as set; *Try the candidate* applies the sweep's best
-beat as a candidate, never a release. The heartbeat has six buttons, 10, 15, 30, 60, 90 and 120 s; the fuse box's tabs add
+beat as a candidate, never a release. The heartbeat has seven buttons, 10, 15, 20, 30, 60, 90 and 120 s; the fuse box's tabs add
 the live model as Prometheus metrics and every press as the request a running governor takes.
 
 **The status board** (chapter 8). Every reading that went against native, worst first, each with its source record and its
@@ -508,7 +508,7 @@ harness plays moves the live benchmark engine to the model, and the control even
 
 ### 2.5 The heartbeat period: six buttons
 
-The third row, **heartbeat period**, is the heartbeat, the governor's full decision: six buttons, **10, 15, 30, 60, 90 and 120 s**, and nothing else
+The third row, **heartbeat period**, is the heartbeat, the governor's full decision: seven buttons, **10, 15, 20, 30, 60, 90 and 120 s**, and nothing else
 (`BEATS`). The factory profile's beat is 60 s; 15 s is the standard of native's own pod autoscaler, which checks every 15 s; the
 10 s button shows a beat below that standard. Pressed, a button sets the beat of Omni-Compass on the live stress-test model
 (moving the live benchmark engine to the model if the harness plays), moves the heartbeat sweep monitor (the page's section 4a) to the same
@@ -530,7 +530,7 @@ is held the buttons are disabled. A beat other than 60 s makes the active profil
 ### 2.6 Every beat, three model days each, and the candidate
 
 Beside the heartbeat stands the sweep, the group the page labels **beat sweep · class S** (our own model). **Run every
-beat (10 to 120 s), three days each** runs the live stress-test model for a whole model day at each of the six beats on three
+beat (10 to 120 s), three days each** runs the live stress-test model for a whole model day at each of the seven beats on three
 days, the page's own opening seed and the two after it, the same three at every sweep, with the same demand on both arms; when it
 ends, the model starts the day in hand again from its seed. Nothing runs until the button is pressed: until then the note reads
 "not run yet in this view".
@@ -913,7 +913,7 @@ view.
 | The body | the live model or the harness record | which body the live monitors draw | the knobs act on the live model only |
 | Time | the live model's clock | 1× to 60×, pause, one decision | none on the records |
 | Demand, noise, sense delay, faults | the live model's plant | both sides alike, the same draw | demand ×0.25 to ×2; σ 0 to 0.6; +0 to +6 decisions; a fault lasts 40 decisions |
-| Heartbeat | Omni-Compass on the live model | how often the full decision lands (section 2.5) | six beats; disabled while held |
+| Heartbeat | Omni-Compass on the live model | how often the full decision lands (section 2.5) | seven beats; disabled while held |
 | Run every beat, Try the candidate | the live model, three model days a beat | the sweep's table, the best beat; a candidate profile | class S; a candidate is never released |
 | Restore factory profile, Hold the active profile | the mechanism's knobs and the heartbeat | the released configuration back; every knob held | the plant's conditions are the factory tune's button |
 | Deployment route | the whole organism's composition and the recorded prices | the route's bill as a sum of costs | a component with no price stays unresolved |
@@ -990,7 +990,7 @@ under it names the monitors that moved, or says that no monitor carries the vari
   to that many runs × organisms stacked (chapter 27), and the scale grid's square is marked where GitHub's grid carries that
   tier (it runs 1, 10, 100 and 1,000). The organism row sets the injection grid's organism too.
 - **Run**: A, B or C on every replay that holds three runs and on the live organism's record.
-- **Beat**: 10, 15, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
+- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
   sweep record's nearest one and says which, and, unless the active profile is held, the live model's heartbeat is set to it.
 
 A monitor that does not carry a variation is left as it is.
@@ -1531,7 +1531,7 @@ This chapter reads the page's section 3d, **Heartbeat Dial** (`#s-dial`).
 ### 12.1 The dial
 
 The governor's heartbeat, its full decision, is a dial from omni-v17 on (the page's section 3d, `#s-dial`): the main engine, the
-factory profile, decides every 60 s, and on the page any of six beats can be set, 10, 15, 30, 60, 90 or 120 s, with the fast
+factory profile, decides every 60 s, and on the page any of seven beats can be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
 checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor
 counts seconds (omni-v16), so turning the dial changes only how often it looks. Each beat stands beside native with what it buys
 (the reads of the cluster a day) and what it costs (the governor's own processor, and every service row read against native and
@@ -3353,7 +3353,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |
 | The body | the control panel; the page's section 3e | which body the live monitors draw | the records |
-| Heartbeat: 10, 15, 30, 60, 90, 120 s | the control panel | the live model's full decision period | the dial's tables (the page's section 3d), which are records |
+| Heartbeat: 10, 15, 20, 30, 60, 90, 120 s | the control panel | the live model's full decision period | the dial's tables (the page's section 3d), which are records |
 | Run every beat (10 to 120 s), three days each | the control panel | three model days at each beat on the live model; the sweep's table | the live day in hand, restored after |
 | Try the candidate | the control panel | the heartbeat set to the sweep's best beat, a candidate profile | every other knob |
 | Restore factory profile | the control panel | the mechanism's knobs and the heartbeat back to the factory's; a hold released; the candidate cleared | the master switch; the plant's conditions |
@@ -4127,7 +4127,7 @@ The time between frames of this page against its line under the frame load knob.
 
 **The page, in its own words.**
 
-The governor's heartbeat, its full decision, is a dial from omni-v17 on: the main engine decides every 60 s, and any of six beats can be set on this page, 10, 15, 30, 60, 90 or 120 s, with the fast checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor counts seconds (omni-v16), so turning the dial changes only how often it looks. The governor's own screen counts the time since its last decision in beats of the setting it runs at and alerts after three (omni_heartbeat_seconds, deploy/grafana/omni-compass.json, deploy/prometheus/omni-compass-rules.yaml).
+The governor's heartbeat, its full decision, is a dial from omni-v17 on: the main engine decides every 60 s, and any of seven beats can be set on this page, 10, 15, 20, 30, 60, 90 or 120 s, with the fast checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor counts seconds (omni-v16), so turning the dial changes only how often it looks. The governor's own screen counts the time since its last decision in beats of the setting it runs at and alerts after three (omni_heartbeat_seconds, deploy/grafana/omni-compass.json, deploy/prometheus/omni-compass-rules.yaml).
 
 **Beat Ladder · Class S**
 
@@ -5230,7 +5230,7 @@ A live monitor of the Omni-Compass engine and of every benchmark GitHub has run 
 
 **Monitor Wall Legend**
 
-Each monitor carries its signal and its word (green GAINING, low in its band with room to climb; yellow STEADY, inside its band; red REDLINING, at the top of its band, blinking red and black; red OVER THE LINE, past its band, blinking red and white). The control panel (section L.2) holds every switch and knob: the kill switch, the heartbeat (10, 15, 30, 60, 90 or 120 s), the sweep over every beat, the active profile with Restore factory profile and Return to native, the actuation and each route's bill, the mechanism's own knobs, the plant's conditions and faults, the twenty scenarios, and one breaker per monitor. The engine runs itself: its own mathematics decides every beat; the knobs show the mechanism, they never have to drive it.
+Each monitor carries its signal and its word (green GAINING, low in its band with room to climb; yellow STEADY, inside its band; red REDLINING, at the top of its band, blinking red and black; red OVER THE LINE, past its band, blinking red and white). The control panel (section L.2) holds every switch and knob: the kill switch, the heartbeat (10, 15, 20, 30, 60, 90 or 120 s), the sweep over every beat, the active profile with Restore factory profile and Return to native, the actuation and each route's bill, the mechanism's own knobs, the plant's conditions and faults, the twenty scenarios, and one breaker per monitor. The engine runs itself: its own mathematics decides every beat; the knobs show the mechanism, they never have to drive it.
 
 Five blocks: 1, benefit and organism (twelve monitors, three rows of four on a laptop); 2, real runs on GitHub; 3, brain and mechanism; 4, clouds, chips, orchestrators and scale; 5, proof and telemetry. Each block reads left to right, then the next row. A click on a tile goes to its monitor. The monitor list (appendix E) gives each monitor's source and feed.
 
@@ -5511,7 +5511,7 @@ What every word on this page means, written from the repository's own pages (eac
 
 **The page, in its own words.**
 
-THIS PAGE IS A LIVE TUNING ENGINE. THE BENCHMARKS ARE ONE TUNED ENGINE. Every knob, button and monitor on this page can be turned in real time: the heartbeat at 10, 15, 30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native, up or down, in or out, minus or plus, to see and produce the variations of the mechanism of action with native alone, with Omni-Compass on top of native, or both side by side. Like any engine, where turning the mixture, the intake, the exhaust, the firing or the pistons changes what it delivers, turning any knob can change every metric, either way, in any direction a tuner chooses: that range is the engine's versatility, one engine for many vessels, tuned many ways, for many outputs. What the page shows at any setting other than the factory tune demonstrates that range and is never a benchmark result. Every benchmark result is one engine at its one factory tune: the engine its table names, every benchmark run again on the engine that stands (section L.26). From omni-v17 the factory tune is chosen by a declared rule: of the tunes that harm no gauge against native, the one against which no other tried tune reads GAIN on one service gauge and LOSS on none, searched on development seeds and read again on untouched ones (`docs/THE_TUNE.md`; `DISCLOSURES.md`, section 3). A tune other than the factory tune is the tuner's own, and its results are its own. The factory profile is locked as the main engine: the page opens on it, every link opens on it, and only a person pressing a knob moves it off. A turned knob never breaks the engine; it changes its mechanism of action, how its muscles and the organism share the work, toward the purpose the new setting asks for. Reading every knob against the factory profile, one at a time, is the standing work of the sweeps, and a better profile they find lands as the next engine version (`docs/FACTORY_PROFILE.md`).
+THIS PAGE IS A LIVE TUNING ENGINE. THE BENCHMARKS ARE ONE TUNED ENGINE. Every knob, button and monitor on this page can be turned in real time: the heartbeat at 10, 15, 20, 30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native, up or down, in or out, minus or plus, to see and produce the variations of the mechanism of action with native alone, with Omni-Compass on top of native, or both side by side. Like any engine, where turning the mixture, the intake, the exhaust, the firing or the pistons changes what it delivers, turning any knob can change every metric, either way, in any direction a tuner chooses: that range is the engine's versatility, one engine for many vessels, tuned many ways, for many outputs. What the page shows at any setting other than the factory tune demonstrates that range and is never a benchmark result. Every benchmark result is one engine at its one factory tune: the engine its table names, every benchmark run again on the engine that stands (section L.26). From omni-v17 the factory tune is chosen by a declared rule: of the tunes that harm no gauge against native, the one against which no other tried tune reads GAIN on one service gauge and LOSS on none, searched on development seeds and read again on untouched ones (`docs/THE_TUNE.md`; `DISCLOSURES.md`, section 3). A tune other than the factory tune is the tuner's own, and its results are its own. The factory profile is locked as the main engine: the page opens on it, every link opens on it, and only a person pressing a knob moves it off. A turned knob never breaks the engine; it changes its mechanism of action, how its muscles and the organism share the work, toward the purpose the new setting asks for. Reading every knob against the factory profile, one at a time, is the standing work of the sweeps, and a better profile they find lands as the next engine version (`docs/FACTORY_PROFILE.md`).
 
 DISCLOSURE: REAL RUNS, A REAL ENGINE, NOTHING HARDWIRED. Every run played back on this page (sections L.20 and L.21) is read from the raw files of benchmark runs executed on GitHub's own machines, each file checked against its run's SHA-256 list before a single number is drawn; every three-run table is read as the repository holds it, each naming its runs, and the raw branch holds their folders as they are archived (the status board, section L.8, marks each run whose raw files are archived). Every model view runs the engine's own code (the compass law, the brain, the verdict) live in this page, linked through software to the repository's Python and C++ and checked against them on every build. GitHub rebuilds the page from the repository whenever the engine, a model or a result changes, and every three hours: no number on it is typed in by hand, and when the repository changes, the page changes with it.
 

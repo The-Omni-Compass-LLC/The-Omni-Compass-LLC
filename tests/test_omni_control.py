@@ -151,7 +151,7 @@ class Panel(unittest.TestCase):
         self.assertEqual(self.call("/v1/status", "vera")[1]["beat_s"], 120.0)
         self.assertIn("omni_control_beat_seconds 120", self.call("/metrics", "vera")[1])
         page = self.call("/")[1]
-        for b in (10, 15, 30, 60, 90, 120):                 # the six stops (the founder's order of 24 October)
+        for b in (10, 15, 20, 30, 60, 90, 120):                 # the seven stops (the founder's orders of 24 and 31 October)
             self.assertIn(f"go('beat',{{seconds:{b}}})", page)
         for b in (5, 75):
             self.assertNotIn(f"go('beat',{{seconds:{b}}})", page)

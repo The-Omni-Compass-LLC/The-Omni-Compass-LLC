@@ -458,8 +458,8 @@ is orange everywhere, Omni-Compass on native blue; red is never a side, only the
 monitor carries its light and its word: green and round, **GAINING** (working inside its lines with room to give, or a
 GAIN); yellow, a yield diamond, **STEADY** (STEADY, inside 0.5%, or heading for its line and watched); red, a stop-sign octagon,
 blinking, **REDLINING** (over its line, or a LOSS: the alarm); dark, **AWAITING** (the run that fills it has not landed; never
-green). The main control panel holds the kill switch, the heartbeat's six buttons,
-**10, 15, 30, 60, 90 and 120 s**, a sweep that runs every beat on the page's own model for three model days each, **Try the
+green). The main control panel holds the kill switch, the heartbeat's seven buttons,
+**10, 15, 20, 30, 60, 90 and 120 s**, a sweep that runs every beat on the page's own model for three model days each, **Try the
 candidate** (the sweep's best beat as a candidate profile), the active profile with its fingerprint (factory, candidate or
 custom), **Restore factory profile**, **Hold the active profile** and **Return to native**. A model's best beat is a candidate
 for the real runs, never a result, and no profile is locked as the baseline: the factory's beat stays 60 s until the eight
