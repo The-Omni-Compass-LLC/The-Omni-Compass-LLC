@@ -58,6 +58,9 @@ while :; do
   used=$( { kubectl top nodes --no-headers --request-timeout=20s 2>>"$OUT.errors" || true; } | awk -v names="$names" 'BEGIN{n=split(names,a," "); for(i=1;i<=n;i++) on[a[i]]=1} ($1 in on){print $2}' | to_m | awk '{s+=$1} END {printf "%.0f", s}')
   hpa=$(kubectl get hpa -A -o json --request-timeout=20s 2>>"$OUT.errors") || hpa='{"items":[]}' 
   hc=$(echo "$hpa" | jq '.items | length'); hcur=$(echo "$hpa" | jq '[.items[].status.currentReplicas // 0] | add // 0'); hdes=$(echo "$hpa" | jq '[.items[].status.desiredReplicas // 0] | add // 0')
+  if [ "$hc" = 0 ] && [ -n "${OWN_WORKLOADS:-}" ]; then   # by itself (ARM=solo): no autoscaler; the workloads' own counts
+    hcur=0; for w in ${OWN_WORKLOADS//,/ }; do n=$(kubectl get deployment "${w#*/}" -n "${w%%/*}" -o jsonpath='{.spec.replicas}' --request-timeout=20s 2>>"$OUT.errors" || echo 0); hcur=$(( hcur + ${n:-0} )); done; hdes=$hcur
+  fi
   pw=""; if [ -n "${POWER_CMD:-}" ]; then pw=$(eval "$POWER_CMD" 2>/dev/null || echo ""); fi
   echo "$(date -u +%Y-%m-%dT%H:%M:%SZ),$el,$ready,$total,$alloc,$req,$used,$pending,$hc,$hcur,$hdes,$pw" >> "$OUT"
   n=$((n + 1))

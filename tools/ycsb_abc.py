@@ -7,7 +7,9 @@
 """The A/B/C table for the YCSB on MongoDB benchmark (docs/OMNI_V1.md's readings, docs/YCSB_PREREGISTRATION.md): the untouched
 workloads run three times as separate GitHub runs on the same frozen engine (tools/run_ycsb.py), each run holding three paired
 repetitions of native and omni. Within a run the paired difference (omni minus native) over its repetitions gives a 95%
-interval; across the three runs a gauge reads by the one key (tools/readings.py, the founder's order of 24 October 2026): a change of 0.5% or more, the mean of the three runs, reads GAIN, LOSS or power given by the gauge's aim, in all three of our runs when every run is clear of zero the same way and otherwise by the mean of our three runs with the count beyond the noise; under 0.5% EVEN, under the floor; runs that moved 0.5% or more in opposite ways disagree. Failed operations: any rise in any run reads **LOSS in at least one of our runs**. The
+interval; across the three runs a gauge reads GAIN or LOSS in all three of our runs (by what it is for, never by its sign; a resource spent that rose reads power given) when all three move the same way with every
+interval clear of zero, no difference beyond the noise when a run's interval includes zero (with the count of such runs), and
+the runs disagree when runs clear of the noise point different ways. Failed operations: any rise in any run reads **LOSS in at least one of our runs**. The
 knob's moves are shown, never judged. The tuning workload is shown and not counted. Every row is reported, LOSS included; no
 energy is claimed beyond the host's CPU seconds.
 Usage: python tools/ycsb_abc.py A_DIR B_DIR C_DIR --out results/live/V3_YCSB.md
@@ -22,8 +24,8 @@ try:                                                       # the legal notice ev
 except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
-from tools.readings import with_own_runs, stack_reading, aim_of, Tally, STACK_RULE  # noqa: E402  (every table says whose runs these are)
-from tools.run_ycsb import GAUGES, SAME_REL, paired  # noqa: E402
+from tools.readings import with_own_runs, stack_reading, aim_of, Tally  # noqa: E402  (every table says whose runs these are)
+from tools.run_ycsb import GAUGES, OPTIONAL_GAUGES, SAME_REL, paired  # noqa: E402
 from tools.knob_verdict import summarize  # noqa: E402
 
 
@@ -54,18 +56,17 @@ def engine(run_dir):
 
 def verdict(rs, direction, key=None):
     """The three-run reading of one gauge, by rule, from its three within-run paired results: GAIN, LOSS, power given,
-    EVEN or the runs disagree, by what the gauge is for (tools/readings.py)."""
+    STEADY or the runs disagree, by what the gauge is for (tools/readings.py)."""
     return stack_reading(rs, direction, SAME_REL, key)
 
 
 def cell(r, key):
+    """One run in separate fields (the referee's work order of 25 October): native's value → Omni-Compass's, the raw change with its
+    true sign and its 95% interval (tools/confirm_abc.py cell, one format for every table)."""
     if r is None:
         return "n/a"
-    nat, d, lo, hi = r["native"], r["diff"], r["ci95"][0], r["ci95"][1]
-    if key == "failed" or not nat:
-        return f"{d:+.3g} ({lo:+.3g} to {hi:+.3g})"
-    return f"{100 * d / abs(nat):+.1f}% ({100 * lo / abs(nat):+.1f} to {100 * hi / abs(nat):+.1f})"
-
+    from tools.confirm_abc import cell as fields
+    return fields(r)
 
 def fmt(v):
     return f"{v:.3g}" if abs(v) < 10 else f"{v:,.1f}" if abs(v) < 1000 else f"{v:,.0f}"
@@ -82,7 +83,10 @@ def main(argv=None):
          (("MongoDB exactly as shipped, its WiredTiger cache at the server's own default, is native: above the cover the knob is at its limit on native, and omni reads and writes nothing (`docs/YCSB_PREREGISTRATION.md`, amendment 4); otherwise omni is the compass law on the cache size through the ") if all(rec.get("native") == "shipped" for _, recs in runs for rec in recs.values()) else "MongoDB as shipped with the operator's WiredTiger cache (512 MB) is native; omni is the compass law on the cache size through the ") + 
          "server's own console inside [256, 2,048] MB, holding the server's own mean read latency at 40% of the 1 ms line"
          "(`docs/YCSB_PREREGISTRATION.md`). YCSB's published core workloads ask for records from a key space that steps through the cache "
-         "and past it, the same operations in both arms. " + STACK_RULE + " Failed operations: any rise in any run reads **LOSS in at least one of our runs**. Memory held is "
+         "and past it, the same operations in both arms. Each run holds three paired repetitions; the paired difference's 95% interval "
+         "within a run, and the same sign with every interval clear of zero across the three runs, make a reading **GAIN** or **LOSS in all three of our runs** (judged by what the gauge is for, never by its sign; a resource spent that rose reads **power given**) "
+         "a run whose interval includes zero reads **STEADY, no difference beyond the noise** (with the count of such runs); "
+         "clear runs pointing different ways read **the runs disagree**. Failed operations: any rise in any run reads **LOSS in at least one of our runs**. Memory held is "
          "the resource; the host's CPU-seconds, the compass's own cost included, are measured on GitHub's shared runner, and no energy is "
          "claimed beyond them. The tuning workload is shown and not counted. Every row is shown, LOSS included.", "",
          "| Run | GitHub run | Commit | Engine | Workloads |", "|---|---|---|---|---:|"]
@@ -114,6 +118,8 @@ def main(argv=None):
         out["workloads"][wl] = {}
         for k, label, dr in GAUGES:
             rs = [r["paired"].get(k) for r in recs]
+            if k in OPTIONAL_GAUGES and all(r is None for r in rs):
+                continue                                       # a gauge the runs before 25 October did not record: no row, as before
             v = verdict(rs, dr, k)
             if not tuning:
                 tally.add(v, dr, k)
@@ -127,7 +133,7 @@ def main(argv=None):
             objs = sorted({v["objective"] for vs in vr.values() for v in vs})
             L += ["", "The brain's own verdict on the knob in the omni arms, one trial at a time on the stack itself (the objective: " + ", ".join(objs) + "): "
                   + "; ".join(f"run {t}: {summarize(vs)}" for t, vs in vr.items() if vs) + "."]
-            out.setdefault("verdicts", {})[wl] = {t: [{k: v.get(k) for k in ("objective", "state", "spend_allowed_steps", "give_back_allowed_steps", "allowed_low", "allowed_high", "counts")} for v in vs] for t, vs in vr.items()}
+            out.setdefault("verdicts", {})[wl] = {t: [{k: v.get(k) for k in ("objective", "state", "dial", "spend_allowed_steps", "give_back_allowed_steps", "allowed_low", "allowed_high", "counts")} for v in vs] for t, vs in vr.items()}
     missing = {t: [w for w in wls if w not in r] for t, (_, r) in zip("ABC", runs)}
     if any(missing.values()):                           # 21 October: a table written from runs that failed said nothing at its foot
         L += ["", "> **Warning:** a run lacks a workload: " + "; ".join(f"run {t} lacks {', '.join(ws)}" for t, ws in missing.items() if ws)

@@ -138,7 +138,7 @@ def table(gamma, nat, om):
     base95 = statistics.mean(x[p95] for x in nat); _, _, hi95 = paired(nat, om, p95)
     guard = hi95 <= 0.10 * base95
     word = ("more requests per kJ, clear of the noise" if lo > 0 else "fewer requests per kJ, clear of the noise" if hi < 0
-            else "EVEN, no difference beyond the noise")
+            else "STEADY, no difference beyond the noise")
     if lo > 0 and not guard:
         word = "more requests per kJ, fails the service guardrail"
     out += ["", f"Guardrail (preregistered): 95th-percentile response time not above +10%: "

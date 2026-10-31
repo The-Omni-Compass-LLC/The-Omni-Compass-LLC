@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""Every monitor of the live engine is registered, on the wall, knobbed and in the Grafana dashboard (the founder's order of 20
+"""Every monitor of the live benchmark engine is registered, on the wall, knobbed and in the Grafana dashboard (the founder's order of 20
 October: every monitor numbered, on the wall, with its own knobs and its open-source feed)."""
 import json
 import re
@@ -15,18 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "engine" / "OMNI_COMPASS_LIVE_ENGINE.html"
 REG = ROOT / "docs" / "engine" / "monitors.json"
 
-
-
-def monitor_panels(d):
-    """The wall's panels that stand for the page's monitors: every row and panel after the signals row, which reads the
-    governor's own alarms in the road's words and stands for no monitor of the page (docs/engine/export_grafana.py, signals_row)."""
-    out, skip = [], False
-    for p in d["panels"]:
-        if p["type"] == "row":
-            skip = p["title"].startswith("The signals")
-        if not skip:
-            out.append(p)
-    return out
 
 class LiveMonitors(unittest.TestCase):
     @classmethod
@@ -55,30 +43,40 @@ class LiveMonitors(unittest.TestCase):
 
     def test_the_grafana_wall_has_a_panel_a_monitor(self):
         d = json.loads((ROOT / "deploy" / "grafana" / "omni-compass-wall.json").read_text(encoding="utf-8"))
-        mons = [p for p in monitor_panels(d) if p["type"] != "row"]
+        # 9000 and 9001: the legal notice at the wall's top and end; 899 to 904: the signals row (export_grafana.signals_row)
+        mons = [p for p in d["panels"] if p["type"] != "row" and p.get("id", 0) < 9000 and not 899 <= p.get("id", 0) <= 904]
         self.assertEqual(len(mons), len(self.reg["monitors"]))
+        notes = [p for p in d["panels"] if p.get("id", 0) >= 9000]
+        self.assertEqual([p["id"] for p in notes], [9000, 9001])
+        self.assertTrue(all("www.omni-compass.com" in p["options"]["content"] for p in notes))
         for p in mons:
             if p["type"] != "text":
                 self.assertTrue(p["targets"] and all(t["expr"] for t in p["targets"]), p["title"])
 
     def test_every_grafana_panel_sits_under_its_section(self):
-        """The founder's order of 21 October: every dashboard wired to its section. Each panel lies under the row of the page's
-        section that holds its monitor, numbered as the page numbers it."""
+        """The founder's orders of 21 and 30 October: every panel numbered as the wall numbers its monitor, by importance, under the
+        row of its block of the wall; its section named in its description."""
         sys.path.insert(0, str(ROOT / "docs" / "engine"))
         import export_grafana as XGF
         sec = XGF.page_sections()
         d = json.loads((ROOT / "deploy" / "grafana" / "omni-compass-wall.json").read_text(encoding="utf-8"))
-        order = {c: i for i, c in enumerate(XGF.page_order())}
+        order = {c: i for i, c in enumerate(XGF.wall_order())}
         ids = [m["id"] for m in sorted(self.reg["monitors"], key=lambda m: order.get(m["id"], len(order)))]
+        blocks = {i: (k, b["title"]) for k, b in enumerate(self.reg.get("blocks", []), 1) for i in b["ids"]}
         row, n = None, 0
-        for p in monitor_panels(d):
+        for p in d["panels"]:
             if p["type"] == "row":
                 row = p["title"]
+                continue
+            if 899 <= p.get("id", 0) <= 904:  # the signals row, the governor's own state, under its own row before the sections
+                continue
+            if p.get("id", 0) >= 9000:      # the legal notice's two panels, at the wall's top and end
                 continue
             n += 1
             cid = ids[n - 1]
             self.assertTrue(p["title"].startswith(f"{n} · "), p["title"])
-            self.assertEqual(row, f"{sec[cid][0]} · {sec[cid][1]}", (cid, row))
+            want = f"Block {blocks[cid][0]} · {blocks[cid][1]}" if cid in blocks else f"{sec[cid][0]} · {sec[cid][1]}"
+            self.assertEqual(row, want, (cid, row))   # each panel under its block of the wall (the founder's order of 30 October)
 
     def test_every_monitor_is_in_a_numbered_section(self):
         sys.path.insert(0, str(ROOT / "docs" / "engine"))
@@ -120,7 +118,7 @@ class LiveMonitors(unittest.TestCase):
     def test_the_kill_switch_words(self):
         self.assertIn('class="onword">ON</span>', self.body)
         self.assertIn('class="offword">OFF</span>', self.body)
-        self.assertIn("Engine table of contents", self.body)
+        self.assertIn('<h2 class="tocH">Contents</h2>', self.body)
 
 
 if __name__ == "__main__":

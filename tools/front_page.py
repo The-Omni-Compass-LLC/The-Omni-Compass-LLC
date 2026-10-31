@@ -53,7 +53,8 @@ PRODUCTS = {
     "sysbench": ("SYSBENCH", "tools/sysbench_abc.py"),
     "ycsb": ("YCSB", "tools/ycsb_abc.py"),
 }
-AFTER = ["tools/omni_index.py", "tools/wiring_verdicts.py", "tools/benefit_sheet.py", "tools/dossier.py"]
+AFTER = ["tools/omni_index.py", "tools/wiring_verdicts.py", "tools/benefit_sheet.py", "tools/whole_system.py", "tools/dossier.py",
+         "tools/headline.py"]   # the composition and the answer at the top follow the tables too (27 October 2026)
 
 
 def _run_id(d: Path):
@@ -349,7 +350,7 @@ def table_lines(root: Path = ROOT, n: int = 10) -> list[str]:
 def run_lines(n: int = 10, pages: int = 4) -> list[str] | None:
     """The newest finished run of each benchmark workflow on GitHub, newest first (None when GitHub cannot be asked from
     here). Housekeeping workflows and GitHub's own dynamic runs are left out; a skipped run is not a run."""
-    repo = os.environ.get("GITHUB_REPOSITORY") or "The-Omni-Compass-LLC/The-Omni-Compass"
+    from tools.repo import NAME as repo   # the repository's name, written once
     out = ["| Finished (UTC) | Benchmark | Outcome | Run |", "|---|---|---|---|"]
     seen, asked, rows = set(), False, []
     for page in range(1, pages + 1):

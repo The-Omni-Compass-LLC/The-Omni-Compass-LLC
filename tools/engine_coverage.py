@@ -18,8 +18,7 @@ says; the record names the commit it was measured on.
 """
 from __future__ import annotations
 
-import argparse
-import re, json, os, subprocess, sys, tempfile
+import argparse, json, os, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,9 +88,12 @@ def page(d: dict) -> str:
     miss = sum(v["missed"] for v in d["files"].values())
     rows = sorted(((f, v) for f, v in d["files"].items() if v["statements"]),        # an empty __init__.py has nothing to run
                   key=lambda kv: (kv[1]["statements"] - kv[1]["missed"]) / kv[1]["statements"])
-    stands = "omni-v" + re.search(r'VERSIONS = \{"v(\d+)"', (ROOT / "tools" / "omni_version.py").read_text()).group(1)
-    which = (f"the engine that stands ({d['engine']})" if d["engine"] == stands else
-             f"{d['engine']} (the engine that stands is {stands}; this page is measured again on it)")
+    from tools.omni_version import VERSIONS                     # newest first: the engine that stands
+    newest = f"omni-{next(iter(VERSIONS))}"
+    # the record names the engine it was measured on; after a landing it is the engine before the one that stands until the
+    # next --measure, and the page says so rather than calling the measured engine the one that stands (24 October, omni-v19)
+    which = (f"the engine that stands ({d['engine']})" if d["engine"] == newest else
+             f"the engine it was measured on ({d['engine']}; {newest}, the engine that stands since, is measured at the next `--measure`)")
     L = ["# How much of the engine the tests run", "",
          f"Line coverage of every Python file in {which}, under the whole test suite: the "
          "unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 "

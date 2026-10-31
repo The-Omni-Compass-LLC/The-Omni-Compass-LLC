@@ -54,6 +54,11 @@ Authority authority(const NervousInputs& i) {
   a.batch_admit = (!sec) && seeing && calm >= 0.5 && i.power_stress < 0.9;
   a.batch_pause = a.scalars.sigma > 1.0 || i.power_stress >= 0.95 || hot;
   a.rollback_authorized = i.rollback || sec;
+  // the immune system's hand-back propagated: an organ handed to native has none of Omni-Compass's authority until returned
+  for (const auto& o : i.native_hold) {
+    auto it = a.organs.find(o);
+    if (it != a.organs.end()) { it->second.expand = false; it->second.contract = false; it->second.step = 0.0; it->second.native = true; }
+  }
   a.execute = i.autopilot; a.killed = false; a.security_hold = sec;
   return a;
 }

@@ -16,7 +16,7 @@
 # Started by hand: cloud = google, amazon, azure, both (Google and Amazon), all (those three), or one of the five above.
 name: cloud-check
 # the title the conductor reads a check back by: cloud-check google | cloud-check amazon | cloud-check azure | cloud-check oracle ...
-run-name: cloud-check ${{ github.event.inputs.cloud || 'both' }}
+run-name: cloud-check ${{ github.event.inputs.cloud || 'azure' }}
 on:
   push:
     branches: [main]
@@ -30,7 +30,7 @@ env:
   OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
 jobs:
   google:
-    if: contains(fromJSON('["google", "both", "all"]'), (github.event.inputs.cloud || 'both'))
+    if: contains(fromJSON('["google", "both", "all"]'), (github.event.inputs.cloud || 'azure'))
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
@@ -73,7 +73,7 @@ jobs:
         if: always()
         run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
   amazon:
-    if: contains(fromJSON('["amazon", "both", "all"]'), (github.event.inputs.cloud || 'both'))
+    if: contains(fromJSON('["amazon", "both", "all"]'), (github.event.inputs.cloud || 'azure'))
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
@@ -111,7 +111,7 @@ jobs:
         if: always()
         run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
   azure:
-    if: contains(fromJSON('["azure", "all"]'), (github.event.inputs.cloud || 'both'))
+    if: contains(fromJSON('["azure", "all"]'), (github.event.inputs.cloud || 'azure'))
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
@@ -157,7 +157,7 @@ jobs:
   byoc:
     # a cluster built in a provider's own console and handed over by its kubeconfig (docs/BYOC_SETUP.md): never in "all", since
     # no such secret stands until a tester stores one
-    if: contains(fromJSON('["oracle", "digitalocean", "alibaba", "linode", "ibm", "other"]'), github.event.inputs.cloud || 'both')
+    if: contains(fromJSON('["oracle", "digitalocean", "alibaba", "linode", "ibm", "other"]'), github.event.inputs.cloud || 'azure')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:

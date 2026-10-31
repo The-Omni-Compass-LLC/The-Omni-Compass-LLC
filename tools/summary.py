@@ -5,7 +5,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The whole summary, right out of the gate (the founder's order of 13 October 2026): what Omni-Compass is, the key to its
-words (GAIN, EVEN, LOSS), and every headline result with its word and its evidence class, read from the result files in
+words (GAIN, STEADY, LOSS), and every headline result with its word and its evidence class, read from the result files in
 this repository. Nothing here is typed in by hand: every number comes from the file named beside it. Standard library only,
 so it runs on any Python 3.8 or later straight after a pull.
 
@@ -27,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import NOTICE                                       # noqa: E402  (the notice, written once)
-from tools.readings import (OWN_RUNS, GAIN, EVEN, LOSS, GIVEN, key_lines, key_text, gel_of_label, labelled, by_word)  # noqa: E402
+from tools.readings import (OWN_RUNS, GAIN, STEADY, LOSS, GIVEN, key_lines, key_text, gel_of_label, labelled, by_word)  # noqa: E402
 
 WHAT = ("Omni-Compass is a supervisory governor. It always sits on top of a system's own native controller (the Kubernetes "
         "autoscaler, a database's pool, a GPU's firmware, a building's battery controller, a robot's servo) and is never "
@@ -45,13 +45,13 @@ CLASSES = ("Evidence classes: P is a physical meter; L is live software, the rea
 
 INTERPRETATION_RULE = ("Interpret each muscle against its declared objective: report the actual native/Omni quantities and "
                        "classify each gauge by its own aim. The same work for less energy or fewer billed node-hours is a "
-                       "resource GAIN even when throughput is EVEN. Any extra work calculated from that saving at a fixed "
+                       "resource GAIN even when throughput is STEADY. Any extra work calculated from that saving at a fixed "
                        "budget is a conditional capacity estimate, not work observed; see docs/OMNI_COMPASS_MANUAL.md and "
                        "tools/benefit_interpretation.py.")
 
 READ_MORE = [("README.md", "the front page, newest result first"),
              ("docs/HOW_TO_READ_THE_RESULTS.md", "how to read every table, the key at its top"),
-             ("tools/benefit_interpretation.py", "objective-specific GAIN/EVEN/LOSS and conditional capacity arithmetic"),
+             ("tools/benefit_interpretation.py", "objective-specific GAIN/STEADY/LOSS and conditional capacity arithmetic"),
              ("docs/OMNI_COMPASS_MANUAL.pdf", "the manual, the key in its front matter"),
              ("results/OMNI_INDEX.md", "the one combined number, test by test"),
              ("docs/BENEFIT_SHEET.md", "one number and one word per benchmark"),
@@ -76,7 +76,7 @@ def word_of_pct(x, loss=False):
     if x is None:
         return ""
     if abs(x) < 0.05:
-        return EVEN
+        return STEADY
     return GAIN if x > 0 else (LOSS if loss else GIVEN)
 
 
@@ -94,7 +94,7 @@ def energy_moved(e, nd=3):
 
 
 def num(x, loss=False, nd=1):
-    """The one number wearing its own word's sign (the founder's sign rule, tools/readings.py): GAIN '+', LOSS '−', EVEN '=',
+    """The one number wearing its own word's sign (the founder's sign rule, tools/readings.py): GAIN '+', LOSS '−', STEADY '=',
     power given '+'; the raw value stays in the result files."""
     return "no number" if x is None else by_word(x, word_of_pct(x, loss), digits=nd)
 

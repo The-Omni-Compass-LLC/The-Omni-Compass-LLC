@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The official runs, as recorded, for the live engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html): every three-run
+"""The official runs, as recorded, for the live benchmark engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html): every three-run
 table's runs A, B and C read back from their own raw files in results/live/raw, every file's SHA-256 computed and matched
 against the run's own SHA256SUMS_ALL.txt, so what the page plays is the run itself and anyone can check it.
 

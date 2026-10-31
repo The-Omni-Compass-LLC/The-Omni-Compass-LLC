@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The live engine page's C++ twin panel: the Python's own runs fed through the C++ engine, every number compared.
+"""The live benchmark engine page's C++ twin panel: the Python's own runs fed through the C++ engine, every number compared.
 
 The engine is written twice, in Python (omnicompass/, omni_controller/, realms/) and in C++ (cpp/), line for line where a
 C++ twin exists (tools/seal.py lists them, and every mechanism that runs in Python only). This record is made on every
@@ -237,7 +237,7 @@ def organisms():
                 if law is not None and getattr(law, "_twin", None) is not None:
                     law._twin["organism"] = name
                     law._twin["muscle"] = r["muscle_id"] + (f"@{REALMS[bi]}" if name == STACK else "")
-        out[name] = {"title": NAMES[name], "muscles": sum(len(rs) for rs in groups[name]), "laws": rec.laws}
+        out[name] = {"title": {SPINE: "Spine", STACK: "Four Stacked", TOWER: "Whole Tower"}.get(name, NAMES[name]), "muscles": sum(len(rs) for rs in groups[name]), "laws": rec.laws}
     return out
 
 

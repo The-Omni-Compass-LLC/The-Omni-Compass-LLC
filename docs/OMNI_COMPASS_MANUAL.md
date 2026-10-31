@@ -46,7 +46,23 @@ work for a smaller bill.
 **Where the proof is.** This book shows how to wire, tune, run and check Omni-Compass. The mechanism, the mathematics and
 every result, each a paired comparison of native and Omni-Compass on top of native run three times, every row kept, LOSS
 included, are in the Owner's Manual and in `results/`. The only number that applies to your system is the one your own paired
-runs produce.
+runs produce. The first thing the Owner's Manual, the README and the live benchmark engine page show is the bottom line: one light (green
+and round GAINING, yellow and diamond STEADY, red and octagonal REDLINING) and one number against native for each way to run
+Omni-Compass (native alone, Omni-Compass on native, Omni-Compass direct) and for each route a whole workload is bought by (on
+site, through the cloud). This book carries none of those numbers.
+
+**What you install, and what it starts on.** Omni-Compass consists of a governing engine, its muscle adapters, a complete
+configuration profile and a validation harness. An installation starts on the **factory profile**, the complete, versioned set
+of Omni-Compass default settings shipped together, and every change from it makes a **custom profile** that is the
+installation's own (section 3.8). The words are written once, with their exact meanings and their mathematics, in
+`docs/FACTORY_PROFILE.md`; this book uses them as written there and carries the procedure only.
+
+**The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
+orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
+racks, the data center, on site or off site), and Omni-Compass can live in all three places. Installed on the wire alone, as
+the cloud mode of Part VI installs it, it can only park machines the cloud's own autoscaler already made, so a cloud receipt
+alone can show at most a small cut in the bill of the wire; what Omni-Compass does at the software end and at the bare metal is
+measured where it sits on them (Part VI, chapter 13; `DISCLOSURES.md`, section 9).
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
 run on. It does not make a system immune to failure, delay or drift: it keeps each muscle inside its own limits and shows, row
@@ -59,15 +75,15 @@ Simulation use only (`LICENSE`); any commercial use, monetization or production 
 Enterprise License (`ENTERPRISE_LICENSE.md`). What a licensee acquires is the working whole: the engine, the wiring and the
 factory card of every muscle, the harness that measures it against native, and the receipts.
 
-<!-- the key: GAIN, EVEN and LOSS (tools/readings.py) -->
-## The key: GAIN, EVEN and LOSS
+<!-- the key: GAIN, STEADY and LOSS (tools/readings.py) -->
+## The key: GAIN, STEADY and LOSS
 
-Every judged reading in Omni-Compass is one of three words: **GAIN**, **EVEN** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
+Every judged reading in Omni-Compass is one of three words: **GAIN**, **STEADY** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
 
 | Word | What each letter stands for | Its sense in underwriting | What it means in a table |
 |---|---|---|---|
 | **GAIN** | **G** Growth (asset appreciation); **A** Advantage (risk reduction); **I** Improvement (margin expansion); **N** Net-positive (profitable outcome) | surplus and positive variance | the gauge moved toward its declared aim against native: more work done, a shorter wait, fewer misses or failures, or a resource cut |
-| **EVEN** | **E** Equalized (zero variance); **V** Verified baseline (expected norm); **E** Equilibrium (balanced risk); **N** Neutral (no net change) | the break-even baseline: equilibrium | native and Omni could not be told apart: the same, or no difference beyond the noise; a knob native already runs at the top of its range is EVEN, at its limit on native |
+| **STEADY** | **S** Stable (zero variance); **T** True to baseline (expected norm); **E** Equilibrium (balanced risk); **A** At par (no net change); **D** Drift-free (within the 0.5% floor); **Y** Yield held (nothing lost) | the par baseline: equilibrium | native and Omni-Compass within 0.5% of each other: the mean of the three runs' changes under the 0.5% floor, or no change at all; a knob native already runs at the top of its range is STEADY, at its limit on native |
 | **LOSS** | **L** Leakage (capital drain); **O** Off-track (adverse selection); **S** Setback (claim liability); **S** Subpar (negative variance) | actuarial deficit and exposure | the gauge moved away from its declared aim: less work done, a longer wait, more misses or failures |
 
 How the sign of a number becomes a word:
@@ -77,16 +93,16 @@ How the sign of a number becomes a word:
 - **A resource spent or held** (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear on a part): a fall is a **cut**, and a cut is GAIN. A rise is **power given**: what Omni put in to buy the work and the speed shown beside it. Power given is always shown and never hidden, and it is never called a loss (the founder's order of 12 October 2026: the max rides every muscle's edge; it never shaves). A peak is power held, so a peak that rose is power given, in a data centre and in a building alike (17 October).
 - **Work bought with each unit of a resource** (work per energy): a rise is a cut in what each unit of work took, a GAIN; a fall is power given, because it falls when more power is given for the same work.
 - So a minus can read GAIN (a response time cut 65%, a bill cut 30%) and a plus can read LOSS (failed requests up).
-- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; EVEN is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **EVEN, under the floor**, with its size.
-- **The sign beside a word** (the same order): the number next to a word carries the word's sign, never the gauge's raw direction, so that no one mistakes which way a number went: GAIN **+**, LOSS **−**, EVEN **=**. A bill cut 3% reads GAIN +3%, failed requests up 2% read LOSS −2%, and a change inside the noise reads EVEN =0.3%.
+- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; STEADY is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **STEADY, under the floor**, with its size.
+- **Two numbers, never mixed** (the referee's work order of 25 October): every row shows native's value and Omni-Compass's, the **raw change** (Omni-Compass − native) / native with its true sign, + for a rise and − for a fall whatever the gauge is for, labelled raw, and apart from it the word with its size and no sign. A bill cut 3% reads raw −3.0%, GAIN 3.0%; failed requests up 2% read raw +2.0%, LOSS 2.0%; a pod start wait from 0.22 s to 0.83 s reads raw +275.0%, LOSS 275.0%; a change under the 0.5% floor reads STEADY 0.3%. No raw sign is ever turned to match a word.
 
-Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads EVEN (the same as native); AT ITS LIMIT ON NATIVE reads EVEN (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads EVEN (inside the noise, within the guardrails); NOT ESTABLISHED reads EVEN (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
+Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads STEADY (the same as native); AT ITS LIMIT ON NATIVE reads STEADY (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads STEADY (inside the noise, within the guardrails); NOT ESTABLISHED reads STEADY (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
 
-Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **EVEN, under the floor**: the mean moved less than 0.5%. **EVEN, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
+Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **STEADY, under the floor**: the mean moved less than 0.5%. **STEADY, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
 
-Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, break-even or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (EVEN). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
+Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, EVEN and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ## What You Are Looking At: Omni-Compass, Hooked Up, and How to Read Its Report
@@ -99,9 +115,13 @@ out (what it writes). Everything the native controller does, it still does. Pull
 where the operator left it (the lease); the kill switch returns them at once.
 
 **What "native" means.** Native is the same stack, the same muscles, the same machines and the same work, run the way
-everybody runs it today: the shipped controllers at their shipped or operator settings. Every paired run has exactly two
-arms, native and omni, where omni is that same native stack with Omni-Compass on top. Nothing else differs between the
-arms, so whatever differs in the result is what Omni-Compass did.
+everybody runs it today: the shipped controllers at their shipped or operator settings. Every paired run sets omni beside
+native, where omni (Omni-Compass on native) is that same native stack with Omni-Compass on top. Since the founder's order of
+23 October a third arm is run beside them wherever a muscle's native is a controller that can be switched off: **Omni-Compass
+direct**, the same stack with that controller off and Omni-Compass the only controller moving the knob (on Kubernetes no pod
+autoscaler and no cluster autoscaler; the scheduler and the kubelet stay). The three are always shown together and each pair
+is read on its own (section 1.1). Nothing else differs between the arms, so whatever differs in the result is what
+Omni-Compass did.
 
 **What a muscle and an organism are.** A muscle is one setting a native controller exposes (a pool's size, a power cap, a
 clock ceiling, a replica count, a battery's charge rate) together with the gauges that show what it does. An organism is a
@@ -113,9 +133,9 @@ is tapped, where the setting is written, how it is restored, and whether that wi
 
 **What you see when it is hooked up.** Every paired run ends in a receipt with the same shape: the two arms side by side,
 every gauge of the system (the work done, the response times, the misses and failures, the machines and energy spent),
-the paired change with its 95% interval, and one word per gauge, GAIN, EVEN or LOSS (the key, above). A three-run table
-repeats the paired run three times, A, B and C, on the same engine version, and a word counts only when all three runs
-agree (chapter 12).
+the paired change with its 95% interval, and one word per gauge, GAIN, STEADY or LOSS (the key, above). A three-run table
+repeats the paired run three times, A, B and C, on the same engine version and profile, and reads each row by one rule:
+the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree** (chapter 12).
 
 **How to read a receipt, in order.**
 
@@ -127,7 +147,9 @@ agree (chapter 12).
 3. **Then the resource rows**: machines, energy, memory, connections. A cut is a GAIN. A rise is **power given**: what
    Omni-Compass put in to buy the work and speed above it. Read the two together: power given that bought nothing is a
    cost to find and fix, starting with the wiring.
-4. **Then the noise.** EVEN, no difference beyond the noise, is a result, not a failure. The runs disagree means the test is
+4. **Then the floor and the noise.** STEADY, a mean change under 0.5% (under the floor) or none at all, is a result, not a
+   failure. A change of 0.5% or more is a change and shows its word, with the count of runs beyond the noise beside it
+   whenever not all three are. The runs disagree means runs that moved 0.5% or more pointed different ways: the test is
    unstable there and is looked into.
 5. **Then the clock and the machine.** Where the test machine itself is the limit (its processor saturated, native alone
    failing a large share of requests), the receipt says so; a test machine's limit is never read as the governor's result,
@@ -139,7 +161,7 @@ moves anything, every gauge it reads is declared with its aim, and the aim decid
 failed a fall is GAIN; for work done a rise is GAIN; for a resource spent or held a fall is a cut, and a cut is GAIN, while
 a rise is power given, kept only while it buys the work or the speed shown beside it. A slow knob moves only as far as a
 paired trial on that muscle has shown costs its own work nothing (section 1.2); a step that costs more is undone, and
-where no step passes the muscle stays native, which is EVEN. Inside a body, a step that would push another part past its
+where no step passes the muscle stays native, which is STEADY. Inside a body, a step that would push another part past its
 cushion is refused, so no GAIN in one muscle is bought with a LOSS in another (chapter 5).
 
 **Wiring it: who, what, when, where, why and how.** Read this before the wiring chapters; a governor wired without it may
@@ -167,7 +189,7 @@ run and still not be the mechanism.
 
 **What the end result is.** A system fully hooked up runs native exactly as before, with one governor reading every gauge
 of every muscle once a second and moving, muscle by muscle, only where a paired trial has shown a GAIN with no LOSS
-anywhere in the body; where it cannot help, the muscle stays native, which is EVEN, not a failure. The intended outcome,
+anywhere in the body; where it cannot help, the muscle stays native, which is STEADY, not a failure. The intended outcome,
 stated as the claim the receipts test: more work, faster, with fewer misses, on the same or fewer machines, with every
 unit of power given shown beside what it bought. Whether a given system gets there is answered only by its own receipts.
 
@@ -198,7 +220,7 @@ then add on, retune, upgrade or tune down any muscle or any combination of muscl
 service lines are all exposed); a changed tune is the licensee's own configuration, and its results are its own, not the
 published ones.
 
-**The live engine's knobs.** The live engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; its own book, the Live
+**The live benchmark engine's knobs.** The live benchmark engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; its own book, the Live
 Engine Manual) is a live tuning engine beside this one tuned engine: its knobs (the dial, the demand, the noise, the
 sense delay, the faults, the speed, the master switch, each muscle's own switch, the heartbeat, every monitor's own
 buttons) turn the engine in real time, so the mechanism of action can be watched under other settings, native alone,
@@ -256,9 +278,10 @@ tune it, how the plug and the wires work, how to wire it onto each kind of stack
 to switch it off, and how to check on your own system, with your own paired runs, what it does there. It is the book you
 keep in the glove box. When the software changes, this manual changes in the same commit.
 
-**How I want it judged.** On your own receipts. Every paired run has exactly two arms: native, and Omni-Compass on top of
-native. Run it three separate times under rules you wrote down first, show every row, losses included, and read each row
-as one word, **GAIN**, **EVEN** or **LOSS**, by what the gauge is for. Where a receipt reads LOSS, look at the wiring
+**How I want it judged.** On your own receipts. Every paired run sets native beside Omni-Compass on top of native, and,
+where native's own controller can be switched off, Omni-Compass direct beside them ("there's native, there's Omni and native,
+and then there's Omni by itself", 23 October). Run it three separate times under rules you wrote down first, show every row, losses included, and read each row
+as one word, **GAIN**, **STEADY** or **LOSS**, by what the gauge is for. Where a receipt reads LOSS, look at the wiring
 first; this book tells you where.
 
 **Where to begin.** Read the front matter first. It tells you what you are looking at before it asks you to touch
@@ -267,7 +290,7 @@ anything. Then wire it one level at a time, watch it before you let it write, an
 **AJ Dubra**
 Founder, The Omni-Compass LLC
 
-## The Three Manuals: the Owner's, the Operator's and the Live Engine's
+## The Three Manuals: the Owner's, the Operator's and the Live Benchmark Engine's
 
 Omni-Compass is documented in three books written to one plan, in the same words, with the same structure, and read as one
 work; each stands on its own for its own reader.
@@ -284,12 +307,15 @@ what it may never do, how it is switched off, what its audit says and how its re
 the engine is built; where its reader needs what is inside, the text says so and names the place in the Owner's Manual where
 it lives, and never repeats it.
 
-**The Live Engine Manual** is the third book (the founder's order of 20 October: "There shall be three in the end"), for the
-operator at the dashboard: nothing more than the interpretation of the live engine page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`,
+**The Live Benchmark Engine Manual** is the third book (the founder's order of 20 October: "There shall be three in the end"), for the
+operator at the dashboard: nothing more than the interpretation of the live benchmark engine page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`,
 the monitor of the engine and of the runs GitHub ran. It says how to follow the wall and the switch, how to read every gauge and
 turn every knob, where every number comes from, and how the mechanism of action of Omni-Compass against native shows on the
 monitors, section by section in the page's own order. It explains neither how the engine is built nor how it is wired; for the
-first it names the Owner's Manual, for the second this one.
+first it names the Owner's Manual, for the second this one. Where to look on the page: it opens on the bottom line, then the
+monitor wall and the main control panel (the kill switch, the arm, the heartbeat's six buttons, the sweep, the active profile
+with Restore factory profile and Return to native); its glossary and index stand at its back. How to read each is the Live
+Engine Manual's; what the readings say is the Owner's Manual's.
 
 The three books share their front matter (the key, the notice, the foreword, the prefaces, the quick reference), their
 vocabulary (one glossary), their structure (parts, chapters, numbered sections, appendices, a table of contents rebuilt
@@ -329,8 +355,11 @@ guess.
 | Procurement, counsel and attorneys | `LICENSE`, `NOTICE`, `PATENTS.md`, `TRADEMARKS.md`, `DISCLOSURES.md`, `LICENSING_FAQ.md`, `ENTERPRISE_LICENSE.md`, `SECURITY.md`, every one bound into this book in full (the front matter's Disclosures, Declarations and Disclaimers; Appendices O to T); chapter 31 |
 
 **Conventions.** `code` is a command, file or switch exactly as typed. "Native" means your system as it runs today,
-without Omni-Compass. "Omni" (the second arm of every paired run) means that same native system with Omni-Compass on top
-of it; there is no third arm and no other name. "Muscle" means any machine, service or controller Omni-Compass can read
+without Omni-Compass. "Omni", or Omni-Compass on native (the second arm of every paired run), means that same native system
+with Omni-Compass on top of it. "Omni-Compass direct" (the third arm, Omni-Compass by itself) means the same system with the
+native controller of each knob switched off and Omni-Compass the only controller moving it; there is no other arm and no
+other name. "Factory profile", "custom profile", "active profile" and "candidate profile" are used exactly as
+`docs/FACTORY_PROFILE.md` defines them (section 3.8). "Muscle" means any machine, service or controller Omni-Compass can read
 and set. "Knob" or "lever" means one setting on a muscle. "The band" is a service reading's safe range, from calm to the
 line; "the cover" is a knob's hard range, which nothing Omni-Compass computes can leave. Every step that writes to a
 system is marked **WRITES**. Every number in a receipt carries its evidence class (chapter 11): **P** for a physical
@@ -340,16 +369,17 @@ came from hardware.
 **The standards every page of this manual keeps.** An installation wired by this manual should meet, and its receipts
 should show, the following discipline throughout:
 
-1. **Two arms, always.** Every paired run compares native against omni, the same system with Omni-Compass on top, on the
-   same machines, with the same work at the same moments. Omni-Compass is never run standalone and never compared as a
-   competitor to the controller it sits on.
+1. **Native beside it, always.** Every paired run is read against native, on the same machines, with the same work at the
+   same moments: omni (Omni-Compass on native) against native, and, where it is run, Omni-Compass direct against native and
+   against omni. Omni-Compass on native is never compared as a competitor to the controller it sits on; the direct arm
+   switches that controller off to show what Omni-Compass does as the only controller, and is never read in place of the
+   arm on native.
 2. **Written down, then run.** The arms, the knob, its cover, the gauges, their aims and the readings are written down
    before the first counted run. Rules are fixed on one tuning case that is shown and never counted, then applied
    unchanged to the cases that are counted. A change made after a result has been seen is written down with its time and
    reason, and the receipt that carries the result says so.
-3. **Three separate runs, one rule.** A result is run three times (A, B and C) on the same engine version, and every judged
-   row reads exactly one of: GAIN in all three runs, LOSS in all three runs, no difference beyond the noise, or the runs
-   disagree (chapter 12). Nobody outside The Omni-Compass LLC has reviewed or approved the published results, and every
+3. **Three separate runs, one rule.** A result is run three times (A, B and C) on the same engine version and profile, and
+   every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree** (chapter 12). Nobody outside The Omni-Compass LLC has reviewed or approved the published results, and every
    three-run table says so.
 4. **Every row, losses included.** A row that went against Omni-Compass is in the receipt beside the rows that went for
    it. When Omni-Compass loses, the first suspect is the wiring, then native's setup, then the scoring; when that is fixed,
@@ -443,8 +473,8 @@ stopped. When the governor comes back, it starts from what it reads, not from wh
 
 **7:00 a.m. The morning report.** On a live system, the proof does not come from a feeling that the night went well.
 It comes from paired runs: the same work, run once on native and once with Omni-Compass on top, and compared gauge by
-gauge. Every gauge gets one word. Time waited that fell reads **GAIN**. Work done that rose reads **GAIN**. A difference
-inside the noise reads **EVEN**, and the report says so plainly. A gauge that moved the wrong way reads **LOSS**, and it
+gauge. Every gauge gets one word. Time waited that fell reads **GAIN**. Work done that rose reads **GAIN**. A change under
+half of one percent reads **STEADY**, and the report says so plainly; a change of 0.5% or more shows its word. A gauge that moved the wrong way reads **LOSS**, and it
 stays in the report until its cause is found and fixed. The energy spent on extra work reads **power given**, never a
 loss.
 
@@ -521,7 +551,7 @@ installer to.
    the governor crashes, its lease runs out and the settings walk home on their own. A separate kill switch stops
    everything at once.
 3. **Every claim is checked.** Each paired run compares two arms, native and Omni-Compass on top of native, on the same
-   machines with the same work, three separate times. Each reading is one word, GAIN, EVEN or LOSS, decided by what the
+   machines with the same work, three separate times. Each reading is one word, GAIN, STEADY or LOSS, decided by what the
    gauge is for, and each carries its evidence class: **P** for a physical meter, **L** for live software, **S** for our
    own models. A model is never shown as proof of hardware.
 
@@ -561,8 +591,15 @@ line is explained in the section named beside it; nothing on this page replaces 
 **What it is.** A supervisory governor on top of the controllers you already run. It never replaces them: it moves only
 settings they already accept, inside a band you set, and hands every setting back when it stops (sections 1.1 and 4.1).
 
-**The two names.** *Native* is your system as it runs on its own. *Omni* is the same system with Omni-Compass on top.
-There is no third arm and no other name (section 1.1).
+**The three arms.** *Native* is your system as it runs on its own. *Omni*, Omni-Compass on native, is the same system with
+Omni-Compass on top. *Omni-Compass direct* is the same system with each knob's native controller switched off and
+Omni-Compass the only controller moving it; never in a cloud without the owner's word. There is no other arm and no other
+name (section 1.1).
+
+**The profile and the two restoring controls** (section 3.8). Start on the factory profile; every change makes a custom
+profile, your own. **Restore factory profile** reapplies the released configuration. **Return to native** is the reset: every
+setting handed back to the snapshot, read back, the governor stopped. The kill switch is separate, for security only, and
+instant.
 
 **The modes** (section 1.3).
 
@@ -624,14 +661,14 @@ Read as one sentence: Omni-Compass takes the system in through a Data Exchange (
 
 ## Table of Contents
 
-**Front Matter** - The Problem and the Answer; The key: GAIN, EVEN and LOSS; What You Are Looking At; Notice and Disclaimer; Foreword; Preface;
+**Front Matter** - The Problem and the Answer; The key: GAIN, STEADY and LOSS; What You Are Looking At; Notice and Disclaimer; Foreword; Preface;
 Prelude: A Night on the Cluster; Introduction: The Idea and What This Manual Covers; Quick Reference: The
 Card for the Glove Box
 
 **Part I - The Governor, from the Outside**
 1. What Omni-Compass Is
 2. Your Stack as One Body: Muscles and Organisms
-3. Tuning: The Factory Tune, the Dial and the Settings You Write
+3. Tuning: The Factory Tune, the Dial and the Settings You Write (3.8 the factory profile, a custom profile, and the two restoring controls)
 
 **Part II - The Harness: Plugs, Wires and the Rules They Obey**
 4. The Plug, the Adapters and the Wire Check
@@ -725,11 +762,26 @@ Omni-Compass sets its pool size through the pooler's own console. Kafka's consum
 its own; Omni-Compass changes how many consumers are in the group, which is what an operator does. Redis keeps evicting by
 its own rule; Omni-Compass sets the ceiling that rule works under.
 
-This fixes how an installation is judged: every paired run has exactly two arms, **native** (the system with its own
-controller, as shipped and as the operator set it) and **omni** (the same system with Omni-Compass on top). There is no
-third arm in which Omni-Compass replaces the controller, and no comparison in which Omni-Compass is a rival to it. A gain
-is therefore always "what the governor added on top of what the native controller already did", and a loss is always
-"what the governor cost on top of it".
+This fixes how an installation is judged: every paired run sets **omni** (Omni-Compass on native: the same system with
+Omni-Compass on top) against **native** (the system with its own controller, as shipped and as the operator set it), and there
+is no comparison in which Omni-Compass on native is a rival to that controller. A gain is therefore always "what the governor
+added on top of what the native controller already did", and a loss is always "what the governor cost on top of it".
+
+Since the founder's order of 23 October one more arm is run beside these two, **Omni-Compass direct** (Omni-Compass by
+itself), so that a reader can see what Omni-Compass does as the only controller of a knob. The three are always shown
+together, and each pair is read on its own: omni against native, direct against native, direct against omni.
+
+| Arm | What moves each knob | How an installation runs it |
+|---|---|---|
+| Native | the native controllers alone, as shipped and as the operator set them | the governor not installed, or OFF (chapter 8) |
+| Omni-Compass on native (omni) | the native controllers, with Omni-Compass moving the settings they expose | the governor at the level granted (chapter 6) |
+| The arm by itself (called Omni-Compass direct on 23 October) | On Kubernetes, Omni-Compass's own pod rule in place of the autoscaler's arithmetic, and nothing else: Omni-Compass is a brain with no organs there, so every organ of Kubernetes (the API server, the scheduler, the kubelet) and every muscle Omni-Compass cannot be stay, native, under it; a knob's native controller is switched off only where Omni-Compass carries that muscle and has proven it can move the knob. The word direct overstates it on Kubernetes (the founder's analysis of 31 October): Omni-Compass can be direct to a knob there, never to a muscle. A mechanism test kept in the record, not a product arm (`docs/SOLO_PREREGISTRATION.md` amendment 2) | `--own-replicas namespace/name` on a workload no autoscaler governs (Appendix K); on the kind rig `ARM=solo` (`scripts/kind_bench.sh`); chapter 10 |
+
+Where native is a setting and not a controller (a cache's ceiling, a buffer pool, a pooler's pool size, a consumer group's
+size), or where native's own loop is the actuator and cannot be switched off (the card's firmware, a servo, an autopilot, a
+tap changer), the two Omni-Compass arms are one arm, and a receipt says so in one line. No cloud runs direct: in a cloud
+Omni-Compass never adds a machine (chapter 19), and the direct arm there waits for the owner's word
+(`docs/SOLO_PREREGISTRATION.md`).
 
 ### 1.2 Do no harm: the paired trial on the muscle
 
@@ -751,7 +803,7 @@ abandoned and the knob goes back, the step neither allowed nor refused. Where no
 the knob is never moved, and the receipt for that muscle says "nothing for Omni to move". Gains are not capped; the 2%
 allowance caps only what may be spent in the trial to look for them.
 
-![Block diagram: the verdict's paired trial around a slow knob, read GAIN, EVEN or LOSS. The reference r is the cost of n requests at the deepest step already allowed (on a card, at native; n = 200 on Kubernetes, 30 on a card); the trial t is the cost of n more one step past it under the same traffic. The reading is the 95% interval of d = mean ln c[t] − mean ln c[r], stepwise also against the costs first measured at native: an interval wholly above zero is a LOSS and the step is refused; an interval wider than τ = ln(1 + a) measures on, up to 3n; otherwise the step is allowed only if median t ≤ min(r, c[native])·(1 + a) and d ≤ τ, with a = 0.02. A refused step is not tried again for R (7,200 s on Kubernetes, 480 decisions at the 15 s heartbeat; 900 decisions on a card, 30 min). Steps cannot add up beyond the allowance, because every step is judged against the native cost too.](book/figures/c_verdict.svg)
+![Block diagram: the verdict's paired trial around a slow knob, read GAIN, STEADY or LOSS. The reference r is the cost of n requests at the deepest step already allowed (on a card, at native; n = 200 on Kubernetes, 30 on a card); the trial t is the cost of n more one step past it under the same traffic. The reading is the 95% interval of d = mean ln c[t] − mean ln c[r], stepwise also against the costs first measured at native: an interval wholly above zero is a LOSS and the step is refused; an interval wider than τ = ln(1 + a) measures on, up to 3n; otherwise the step is allowed only if median t ≤ min(r, c[native])·(1 + a) and d ≤ τ, with a = 0.02. A refused step is not tried again for R (7,200 s on Kubernetes, 480 decisions at the 15 s heartbeat; 900 decisions on a card, 30 min). Steps cannot add up beyond the allowance, because every step is judged against the native cost too.](book/figures/c_verdict.svg)
 
 For an installation this has two consequences. A knob the operator grants is not a knob Omni-Compass will move: it is a
 knob Omni-Compass may move once the muscle itself has shown the step costs it nothing. And a muscle that never passes a
@@ -897,6 +949,17 @@ stand on it:
 
 ![The seven organisms. The spine, the 267 muscles that sit in all four realms, is the base every stack runs on and an organism in its own right, listed first. The four realms stand on it; the four stacked count the spine once in each realm's body (1,908 muscles); the whole tower counts every distinct muscle once (1,107 in 70 families). Each organism runs native and with Omni-Compass on top of native.](book/figures/organisms.svg)
 
+**Ten organisms, three arms each.** Beside the seven organisms of the catalog the repository reads three more, each a
+grouping of catalog rows or of real tables and none a product: the **orchestra**, the muscles that stand for the knobs of the
+governors and orchestrators (the Kubernetes scheduler, Kueue, Volcano, the KAI scheduler, Koordinator, CruiseKube, Crane,
+KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio; `tools/run_orchestra.py`); the **live benchmark engine's own
+organism** of sixty muscles, the one the live benchmark engine page draws (`docs/engine/export_harness_trace.py`); and the **whole
+organism** in its three places, the software end, the cloud's wire and the bare metal, composed from the real tables
+(`tools/whole_system.py`). Each of the ten is read two ways, native and Omni-Compass on native (Omni-Compass is never by
+itself, the founder's order of 25 October): twenty scenarios, written by `python3 tools/scenarios_20.py` into
+`results/scenarios/SCENARIOS_20.md` (our own models, class S). Their readings are in the Owner's Manual; your own
+organism is the one this chapter builds.
+
 **Building your own organism.** A real installation is rarely a whole realm. It is the muscles one company runs, wired in
 the order of chapter 6: the cluster first (its pods, then its machines), then the cards and the processors under it, then
 the databases, brokers and caches beside it, then the site under all of them. Three rules make the result one body
@@ -927,13 +990,18 @@ in the catalog is wired and runs on the setting found for it: its own card where
 the engine's own setting for every other muscle. The whole tune is fixed and fingerprinted by version
 (`python3 tools/omni_version.py`), so an installation can always tell whether it is running the factory tune or a tune of
 its own. Every published result is the factory tune of the engine its table names (`python3 tools/omni_version.py`), and is run again on each engine that stands.
+In the words of `docs/FACTORY_PROFILE.md`, the factory tune is the **factory profile**: the complete, versioned set of
+Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v23's. The best validated
+factory profile for the declared operating conditions has not yet been established: it is chosen only after every mechanism
+is verified and the settings are tuned and validated together (`docs/FACTORY_PROFILE.md`, section 5), and until then the
+released profile stands and no other is locked as the baseline.
 
 No setting is universal. Muscles differ, and no single setting is right for every muscle, family, sector, domain or
 realm; none is presented as such. What the factory tune fixes is the starting point an installation can trust: each
 muscle on the setting that was found for it, every muscle wired, nothing switched off.
 
 **One tuned engine, and a tuning bench.** Every benchmark result is one engine at one tune: the engine that stands at its factory
-tune. The live engine page (the Live Engine Manual) and the control panel's buttons (section 9) are a tuning bench. On the bench
+tune. The live benchmark engine page (the Live Benchmark Engine Manual) and the control panel's buttons (section 9) are a tuning bench. On the bench
 every knob can be turned in real time: the beat, the dial, the pedal, each muscle driven or left native, up or down, in or out,
 minus or plus. It shows the mechanism of action with native alone, with Omni-Compass on top, or both side by side. Treat
 Omni-Compass as you would any engine. Turning the mixture, the intake, the exhaust, the firing or the pistons changes what a car's
@@ -995,7 +1063,7 @@ written down before the first counted run:
 | **The floor** | the least a pool may run on | two machines by default; never below 1 for any muscle |
 | **The allowance** (`--allow`) | the most a step on trial may cost the muscle's own work | 2%, the same on every muscle |
 | **The site's limits** (`--site-limit-w`, `--cooling-min-c`, `--cooling-max-c`, `--cooling-restore-c`) | the facility's power limit and the setpoint band | the facility engineer, inside the equipment's ratings |
-| **The heartbeat** (`--interval`) | how often the governor takes its full decision: the main engine every 60 s, a dial from 5 to 120 s; the fast checks stay every 5 s | the factory's 60 s, or the operator's own beat; the live engine page shows every beat beside native, with what it buys and what it costs (the page's section 2d) |
+| **The heartbeat** (`--interval`) | how often the governor takes its full decision: the main engine every 60 s, a dial from 5 to 120 s; the fast checks stay every 5 s | the factory's 60 s, or the operator's own beat; the live benchmark engine page shows every beat beside native, with what it buys and what it costs (the page's section 1j) |
 
 ![The compass band and the smoothing of the force. (a) The service reading placed in its band as a position p from 0, calm, to 1, the operator's line; the walls at 0.05 and 0.95 leave a cushion of 5% at each edge, and the centre c is where the needle comes to rest (0.5 by default; on a service 0.3 at the max and 0.4 at the tune-down). (b) The force F = A·tanh(r/A) against the raw force r = K[P]·(p − c) + K[D]·v, the pull toward the centre plus the push against the reading's motion: near the centre a spring, far out a curve that flattens into the authority A and never passes it. Past the upper wall the up side goes to A at once, and the down side may not act until the reading is back inside the band.](book/figures/band.svg)
 
@@ -1005,7 +1073,7 @@ receipt that needed them changed is a receipt to read as wiring first (section 4
 omni-v17: every rule the governor keeps counts seconds, so the beat changes only how often it looks, and an operator may set
 any beat, a fast one for its reads of the cluster at the cost of the governor's own processor, or a slow one. Each beat may
 want its own combination of the other settings; a beat other than 60 s is the operator's own configuration and its results
-are its own (section 3.7).
+are its own (section 3.6).
 
 ### 3.5 Profiles: service and batch
 
@@ -1015,38 +1083,7 @@ while work waits for a place, and idle takes them straight to the floor when the
 installation running a queue of jobs chooses batch for that service and service for everything else, and writes the
 choice down beside the dial's position.
 
-### 3.6 Profiles: factory, candidate, active and custom; the two restoring controls
-
-Omni-Compass consists of a governing engine, its muscle adapters, a complete configuration profile and a validation harness. Four
-words name the profile, and they are kept apart in every log, page and report:
-
-| Profile | What it is |
-|---|---|
-| Factory profile | The complete, versioned set of Omni-Compass default settings shipped together: the factory tune of section 3.1. |
-| Candidate profile | A proposed combination of settings undergoing evaluation; never published as a result. |
-| Active profile | The settings actually governing the current run, as the governor's own audit records them. |
-| Custom profile | An identifiable configuration differing from the released factory profile: yours, with its own receipts. |
-
-"One setting" means one complete profile: the beat, the dial, the band, the waits, the cards and which muscles are driven, read
-together, since turning one can move what another does. Freezing the factory profile fixes the released rules and default tuning;
-the engine's internal state, its commands and the resources it moves keep answering the system as it changes.
-
-**Start from the factory profile.** Install, wire and run with no setting of your own (sections 4 to 9): that is the factory profile,
-and `python3 tools/omni_version.py` names the engine it belongs to. **Make a custom profile** by writing the settings you change on
-the governor's command line or through the control panel (section 9), each with its reason; the governor records its active
-profile in its audit at every start, so a run always says which profile governed it.
-
-**Read the command's acknowledgement.** Every setting lives in three states, kept apart in the audit and on the control panel: the
-setting requested, the setting the panel accepted (pending until the governor reads it applied at its next decision), and the
-setting the system acknowledged when it was read back. A refused request changes nothing and says why (a missing role, a value out
-of range, a muscle's own limit).
-
-**Two controls restore, and they mean different things.** **Restore factory profile** reapplies the released Omni-Compass
-configuration: every knob back, Omni-Compass still governing. **Return to native** hands governance back and restores native's own
-recorded settings as the adapter supports (the kill switch, section 9): Omni-Compass stops governing. Use the first to leave a custom
-profile; use the second to take Omni-Compass out of the loop.
-
-### 3.7 A changed tune is your own configuration
+### 3.6 A changed tune is your own configuration
 
 As with any engine, a licensee may add on, retune, upgrade or tune down any muscle or any combination of muscles: the
 dial, the cards, the bands and the service lines are all exposed. A changed tune is the licensee's own configuration, and
@@ -1055,7 +1092,7 @@ tune: write the change down before the paired runs, run native and omni three ti
 receipts against the tune that ran. Where a changed tune reads differently from the factory tune, the change is the first
 thing to look at, and then the wiring.
 
-### 3.8 The output follows the input
+### 3.7 The output follows the input
 
 Every number Omni-Compass produces is the result of three inputs, and a reader who changes any one of them has changed the
 result: **the tune** (the factory tune as shipped, or the dial turned down, or a card changed), **the wiring** (which muscles
@@ -1070,6 +1107,47 @@ rule); a muscle held at a limit of the team's own choosing (its card, or its cov
 written). Each of those is a legitimate setting of the inputs, and each has its own result. What no reader may do is read one
 tune's receipt as another's, or read a receipt without its inputs. The factory tune (section 3.1) is the one setting whose receipts this book publishes; the dial (section 3.2) and the cards (section 3.3) are the inputs a licensee may change, and section 3.6 says what a changed tune's results are. Where a result read elsewhere differs from the
 published one, the first presumption is an input: the wiring, the settings or the reading (`DISCLOSURES.md`, section 4).
+
+### 3.8 The factory profile, a custom profile, and the two restoring controls
+
+The words of this section are written once, with their exact meanings, in `docs/FACTORY_PROFILE.md`; the mathematics behind
+them is there and in the Owner's Manual, never here. (The service and batch profiles of section 3.5 are two settings inside a
+configuration profile, not profiles in this sense.)
+
+**Start from the factory profile.** An installation starts on the released factory profile: the governor started with no
+setting beyond the ones of section 3.4 that come from your own system (the line, the feed, the floor, the cover), every muscle
+on its card or on the engine's setting (section 3.3), the dial at the max, the heartbeat at the factory's 60 s, no muscle left
+native. Write down, before the first counted run, the engine's fingerprint (`python3 tools/omni_version.py`) and the full
+command line. A frozen profile fixes the rules and the default tuning, not the knobs: the governor's own state, the settings it
+commands and the resources it allocates still follow the system as it changes.
+
+**Make a custom profile.** Any setting changed from the factory profile, by a command-line flag (Appendix K), an environment
+variable, a press on the control panel (section 22.5) or a knob on the live tuning bench, makes a **custom profile**: an
+identifiable configuration that differs from the released factory profile. Make one as you would make any change to a
+running system:
+
+1. Write the change down: which setting, from what to what, and why, beside the engine's fingerprint.
+2. Run the governor in watch (section 1.3) on the custom profile and read its decisions before it writes.
+3. Run the paired runs of chapter 10 three times on it, native against it, every row shown.
+4. Read its receipts as its own (section 3.6): a custom profile's results are never the published ones, and a published
+   result is never read as a custom profile's.
+5. Keep the command line and the control panel's log with the receipts, so the profile that produced them can be named.
+
+On the live tuning bench (the live benchmark engine page; how to read it is the Live Benchmark Engine Manual's) every turned knob makes the
+**active profile**, the settings governing the run in front of you, a custom one, named by its fingerprint; the sweep's best
+beat can be tried as a **candidate profile**, a proposed combination under evaluation. Neither becomes a factory
+configuration without validation and a new release declaration, and no profile is locked as the baseline today.
+
+**The two restoring controls, and the switch that is neither.**
+
+| Control | What it does | On a running installation |
+|---|---|---|
+| Restore factory profile | reapplies the released Omni-Compass configuration | start the governor again on the factory profile's command line (no setting but your system's own, section 3.4); on the control panel, the dial at max, the heartbeat at 60 s and every muscle on, each press passing through native and starting the governor again (section 22.5) |
+| Return to native | hands governance back and restores the recorded native settings, as the adapter supports | the reset: `POST /v1/reset` (role operator) or the governor's reset file; every setting handed back to the snapshot taken before the first write, read back, and the governor stopped until the next mode press (chapter 8) |
+| The kill switch (security only) | turns every Omni-Compass governor on the machine off at once | `python3 tools/omni_switch.py off` or `POST /v1/kill` (role security): each governor restores and exits, none starts while the switch is off, and two holders of the security role arm it again (chapter 8) |
+
+Return to native is an operator's control and leaves the master switch on; the kill switch is separate, for security only,
+and instant. On the live benchmark engine page, which runs no real system, both act on what runs in the page.
 
 ---
 
@@ -1389,8 +1467,8 @@ respect a limit the wires do not carry.
 
 ### 5.5 The rules of the engine that stands, as an operator meets them
 
-The engine that stands in this edition is **omni-v19** (`python3 tools/omni_version.py` prints it; chapter 12); the receipts
-quoted here ran on omni-v7, whose rules omni-v18 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
+The engine that stands in this edition is **omni-v23** (`python3 tools/omni_version.py` prints it; chapter 12); the receipts
+quoted here ran on omni-v7, whose rules omni-v23 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
 and the interval table; omni-v11 added one guard to the Kubernetes governor; omni-v12 holds a raise the cluster's admission
 refused until something changes, and the swarm's wire acts on a neighbour at once; omni-v13 hands the CPU limits it gave back to
 the operator's on a shared host at its top while another workload there has room of its own, and counts every other pod by its
@@ -1401,10 +1479,21 @@ it; omni-v15 asks for the power cap's trim only while the response line has been
 omni-v16 keeps every time the governor counts in seconds, so `--interval` changes only how often it decides, and omni-v17
 makes the beat a dial, the full decision every 60 s by default (the main engine) and any beat from 5 to 120 s on the command
 line; omni-v18 carries Omni direct, Omni-Compass run on the muscles with no Kubernetes beneath it (`omni_orchestrator/`), as
-part of the engine, so its three arms (native, Omni on native, Omni direct) run from one fingerprint: the conveyance
-runs every `--convey-every-s` (15 s) whichever check falls due, a quiet deployment is scaled to zero after
+part of the engine, so its three arms (native, Omni on native, Omni direct) run from one fingerprint; omni-v19 takes
+`--own-replicas namespace/name,...` (or `OMNI_OWN_REPLICAS`), Omni-Compass by itself on Kubernetes: for a workload no autoscaler
+governs, the governor sets its replica count itself through the workload's own scale (the grant: `get`, `patch` and `update` on
+`deployments/scale` by name, `deploy/rbac-own-pods.yaml`, chapter 14), every `--own-every-s` (15 s), its target and
+range read from the workload's `omnicompass.io/target-utilization` and `omnicompass.io/replica-range` annotations (else
+`--own-target`), never below the workload's own count at the max (the tune-down may go to the range's floor), the count recorded on the workload
+and handed back by the reset; a workload an autoscaler governs is left to it, and `--native replicas` leaves the muscle native; and the
+conveyance runs every `--convey-every-s` (15 s) whichever check falls due, a quiet deployment is scaled to zero after
 `--coldstart-idle-s` (180 s), and a step that runs past its slot is skipped, never run in a burst, with `behind_s` in the
-audit). The hand-back shows in the audit as `"convey": "handed back"`, with the host's busy share on each write; a muscle left native shows as `"native_muscles"` at the start and `"held"` on each write
+audit); omni-v20 fixes the five data stores' wires at their causes; omni-v22 brings the five data stores' wires to the max, each
+spend gated on the store's own account of what a miss costs and the host's room, never below native (`tools/store_brain.py`,
+`docs/OMNI_V22.md`); and omni-v21 hands a service's
+autoscaler target back to native while its response time stays over its line under Omni-Compass's target and native's own
+rule would hold it lower, keeping it where native is not stronger (each change in the audit as `"immune"`, with the replicas
+native's rule would ask for beside the replicas running). The hand-back shows in the audit as `"convey": "handed back"`, with the host's busy share on each write; a muscle left native shows as `"native_muscles"` at the start and `"held"` on each write
 it withholds. The guard shows in the audit: when the cluster's
 reading shows no machine in service (every worker cordoned, tainted NoSchedule or unreachable at once), the decision is recorded
 as `held: the cluster's reading shows no machine in service; nothing decided, nothing written`, and the governor takes up again
@@ -1446,9 +1535,9 @@ check untouched.
 **The verdict reads a trial in the words of a receipt.** Before a knob moves one step further from native, the step runs as
 a trial and its cost per piece of work is compared with the cost at the reference, on the logarithm of each piece's cost,
 with a 95% interval. The interval wholly above zero is a **LOSS** and the step is undone whatever the allowance says; wholly
-below is a **GAIN**; across zero is **EVEN**; a GAIN or EVEN step is kept only if both the median and the mean of the
+below is a **GAIN**; across zero is **STEADY**; a GAIN or STEADY step is kept only if both the median and the mean of the
 logarithms are inside the allowance (`--allow`, 2%); while the interval is wider than the allowance the trial measures on,
-up to three times its sample count, before it decides. Every judgement is in the audit as `reading` (`GAIN`, `EVEN`, `LOSS`
+up to three times its sample count, before it decides. Every judgement is in the audit as `reading` (`GAIN`, `STEADY`, `LOSS`
 or `past the allowance`) and `interval_ln`, so an operator can see why a machine stayed given back or came back (Appendix
 L, `verdict`).
 
@@ -1492,8 +1581,8 @@ to lock clocks (the wire check's step 3 is where that shows).
 ### 6.2 Get the software and check it
 
 ```
-git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass.git
-cd The-Omni-Compass
+git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC.git
+cd The-Omni-Compass-LLC
 pip install -r requirements.txt
 python3 verify.py                       # every check; ends with VERIFICATION: PASS
 ```
@@ -1555,7 +1644,7 @@ python3 tools/run_gpu_card.py results/sim/gpu_two_wire/eval                  # t
 ```
 
 Pass: `VERIFICATION: PASS`. Nothing in your systems is touched.
-What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v19 (digest 9a72693d49b18b9b, 62 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 32.
+What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v23 (digest c96ea4105d8747db, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 32.
 
 **Level 1 - Watch (read-only).**
 
@@ -1587,7 +1676,7 @@ What you should see: an audit with a `decision` record every 60 s (the main engi
 
 Your HPAs keep scaling as before; Omni-Compass sets their targets and raises floors ahead of bursts.
 Pass: p95, p99 and failed requests never behind native, over paired runs (chapter 10).
-What you should see: in the paired receipt (chapter 10), response time at the 95th percentile and time over the line reading GAIN or EVEN, failed requests EVEN, the autoscaler's replicas EVEN or power given. On our own services of this kind, rightsized with Goldilocks or scaled by KEDA, the 95th percentile read −52% to −75% and alert minutes −93% to −100% in all three of our runs on this engine (chapter 10, the reference bands). A LOSS on any service gauge at this level is read as a wiring fault first: the feed's freshness and its line (chapter 18), the sensed autoscaler's name, the window's length against the interval widths of chapter 10.
+What you should see: in the paired receipt (chapter 10), response time at the 95th percentile and time over the line reading GAIN or STEADY, failed requests STEADY, the autoscaler's replicas STEADY or power given. On our own services of this kind, rightsized with Goldilocks or scaled by KEDA, the 95th percentile read −52% to −75% and alert minutes −93% to −100% in all three of our runs on this engine (chapter 10, the reference bands). A LOSS on any service gauge at this level is read as a wiring fault first: the feed's freshness and its line (chapter 18), the sensed autoscaler's name, the window's length against the interval widths of chapter 10.
 
 **Level 3 - The machines. WRITES.**
 1. Grant `patch nodes` and `patch pods` (`deploy/kind/rbac-omni.yaml`).
@@ -1608,7 +1697,7 @@ What you should see: in the paired receipt (chapter 10), response time at the 95
 A machine is given back only when every sense is live, the last order landed, pods are not scaling up, nothing waits
 for a place, and the remaining machines stay inside the band.
 Pass: fewer machines in service, with no LOSS on any service gauge.
-What you should see: `verdict` records reading `trial`, then `step allowed` or `step refused`, each with its `reading`; machines in service and node-hours EVEN or GAIN, the bill EVEN or GAIN; no `refused` record from the scale command; after an OFF, the lease walking every machine back. A machine count that never falls is not a fault: it is the governor finding no machine it can give back without a LOSS, and the audit says which gate held (`node_gate.reason`).
+What you should see: `verdict` records reading `trial`, then `step allowed` or `step refused`, each with its `reading`; machines in service and node-hours STEADY or GAIN, the bill STEADY or GAIN; no `refused` record from the scale command; after an OFF, the lease walking every machine back. A machine count that never falls is not a fault: it is the governor finding no machine it can give back without a LOSS, and the audit says which gate held (`node_gate.reason`).
 
 **Level 4 - Omni-Compass decides; Kubernetes is the muscle. WRITES.** Add `--strict-replicas`: Omni-Compass decides
 each service's replica floor and when to shrink; the HPA stays as the fast reflex upward.
@@ -1648,13 +1737,13 @@ The settings are the card's own (its busy clock and busy draw as learned), the l
 `tools/gpu_workload.py` does; without it no step is ever allowed and the card stays native.
 Pass: work per energy up or equal; requests served equal; no request more than 2% slower at the median, p95 and p99
 at native or within 2%; every row of section 4.5 reads "wired right".
-What you should see: `tools/gpu_wire_check.py` ending WIRED RIGHT; a `snapshot` record, then a `decision` every 2 s; at the max no `clock_write` below the top while the card serves; at the tune-down a `verdict` for every step and `verdict_state: left native` where no step passed; `restored` with `ok: true` after the kill file (Appendix L.5). The receipt: work per energy GAIN or EVEN, requests served EVEN, the 95th percentile EVEN or inside the allowance.
+What you should see: `tools/gpu_wire_check.py` ending WIRED RIGHT; a `snapshot` record, then a `decision` every 2 s; at the max no `clock_write` below the top while the card serves; at the tune-down a `verdict` for every step and `verdict_state: left native` where no step passed; `restored` with `ok: true` after the kill file (Appendix L.5). The receipt: work per energy GAIN or STEADY, requests served STEADY, the 95th percentile STEADY or inside the allowance.
 
 **Level 6 - CPU clock and power. WRITES.** On bare metal, add to the controller:
 `--cpufreq-policy-root /sys/devices/system/cpu/cpufreq --cpufreq-require-schedutil --rapl-cmd "<prints CPU package watts>"`.
 The OFF switch writes every policy's recorded maximum back exactly.
 Pass: energy per unit of work down, no LOSS on any service gauge.
-What you should see: one `cpu_pstate_snapshot`, then `cpu_pstate_write` records naming the cap and the envelope; energy per unit of work GAIN; every service gauge EVEN or GAIN; at OFF, `cpu_pstate_restore` putting every policy's ceiling back exactly (Appendix L.4).
+What you should see: one `cpu_pstate_snapshot`, then `cpu_pstate_write` records naming the cap and the envelope; energy per unit of work GAIN; every service gauge STEADY or GAIN; at OFF, `cpu_pstate_restore` putting every policy's ceiling back exactly (Appendix L.4).
 
 **Level 7 - Site power and cooling. WRITES.**
 `--power-cmd "<prints site watts>" --site-limit-w <limit>` brings site power stress into the engine;
@@ -1743,8 +1832,7 @@ every work machine that exists, every 15 seconds, priced at Azure's list price f
 
 **Sizing the fleet to the lever.** The smallest saving a fleet can show is one machine. On 4 workers one machine is
 25% of the fleet, so only a saving of about 30% or more can clear the noise; on 15 workers about 10%; on 96 about 3%.
-A few percent of a 4-worker fleet is less than one machine, so a 4-worker receipt reading no difference beyond the noise
-on the machine rows is the honest reading of a fleet too small for the lever, not a result against it. A new subscription allows 200 vCPUs in a region but 10 per machine family, so
+A few percent of a 4-worker fleet is less than one machine, so a 4-worker receipt whose machine rows stand inside the noise is the honest reading of a fleet too small for the lever, not a result against it. A new subscription allows 200 vCPUs in a region but 10 per machine family, so
 one family gives five 2-vCPU workers; the way past it is **several families at once**: eight pools of four to five
 workers each make a fleet of 39 (`worker_pools` input, `size:max,size:max,...`; `pool_prices` names each family's
 price). The app's replica ceiling is raised with the fleet (`hpa_max`: nine 200-millicore pods fit one 2-vCPU worker,
@@ -2101,6 +2189,25 @@ target set), every write with the command that made it and the value read back, 
 record. The paired-run harness prints a decision trail from the audit at the end of every omni arm, one line a decision,
 so a reviewer reading a run's log sees what the governor saw and did at each minute.
 
+**Reading the command acknowledgements: requested, commanded, acknowledged.** The governor keeps three settings apart for
+every muscle at every decision, and the audit records each (Appendix L):
+
+- **Requested**: what the decision asked for (`decision`: `nodes_recommended`, and outside the cloud mode
+  `hpa_target_recommended`).
+- **Commanded**: what was sent once every limit was applied, the cover, the muscle's own limits and, at the max, never below
+  native (`write`: the command as it ran, and why; `shield_interventions` counts how often a request was clipped).
+- **Acknowledged**: what actually landed, read back by the adapter (the value read back after each write;
+  `authority`: `proprioception`, the drift between the count last commanded and the count now in service, 0 when the command
+  landed).
+
+The system moves with the command that landed, not with the one requested, so read the three together. A request clipped
+to a limit is **held at the muscle's limit**. A command not yet acknowledged is **still moving** toward its setting, and no
+new order goes on top of it (rule 6 above). A command the system refused is recorded (`refused`, with its exit code and why)
+and **held**: it is not written again at every check (a processor raise the cluster's admission refused is held until the
+pod's limit changes, the raise shrinks or its wait passes). A request that never lands, or a drift that never closes, is a
+wiring question before it is anything else (section 4.5). The live benchmark engine page shows the same states for each decision on its
+own model: the settings requested, those that landed as asked, those held at a muscle's limit, and those still moving.
+
 ## 9. Maintenance, Upgrades and Security
 
 - Run `python3 verify.py` after every upgrade; it must end `VERIFICATION: PASS`.
@@ -2190,8 +2297,8 @@ less work was done. The steps below are the whole method.
 2. **The switch drill** after every run: turn Omni-Compass OFF; check every setting is back at its recorded
    original; turn it ON.
 3. **The receipt.** Each gauge: native, Omni-Compass, the change, the 95% interval of the difference, and whether the
-   interval excludes zero. A change reads GAIN, LOSS or power given, clear of the noise, only when it does; otherwise it
-   reads EVEN, no difference beyond the noise.
+   interval excludes zero. A change under 0.5% reads STEADY; a change of 0.5% or more reads its word by the gauge's aim, GAIN,
+   LOSS or power given, and the receipt says whether its interval clears zero (beyond the noise) or not.
 4. **The label, by rule written before the run:** SUPERIOR WITHIN GUARDRAILS / ENERGY IMPROVEMENT WITH SERVICE
    TRADEOFF / NONINFERIOR / INCONCLUSIVE / NOT ESTABLISHED / AWAY FROM ITS AIM / NOT ATTRIBUTABLE / INVALID. Guardrails: work not lower by more than 1%; the share of
    time outside the service line not higher by more than 1 percentage point. The band-first rule is stricter: no win
@@ -2206,6 +2313,19 @@ less work was done. The steps below are the whole method.
 7. **Keep the raw files.** Every run's files (capture, response times, audit log, controller log, one SHA-256 manifest
    per repetition) are kept with the receipt, and every receipt names the runs and the commit it was made from, so that
    anyone holding the files can rebuild it.
+
+**The three arms on your own system.** Each arm is run on the same machines with the same work, and each pair is read by the
+same key.
+
+| What you run | Native | Omni-Compass on native | Omni-Compass direct |
+|---|---|---|---|
+| Kubernetes on the kind rig (`scripts/kind_bench.sh`) | `ARM=native` | `ARM=omni`, or `ARM=compass` with the compass law | `ARM=solo`: the pod autoscaler removed after the deploy, the workload at its manifest's count, the governor's own pod muscle on it |
+| Paired repetitions on GitHub (`benchmark-reps`) | `native` among the arms | `compass` among the arms | `solo` among the arms; `tools/live_reps.py` reads Omni-Compass by itself against native and against Omni-Compass and native |
+| Omni-Compass's own orchestrator, the three arms in one showing (`python3 tools/orchestrator_show.py --out DIR [--quick]`, run as root; on GitHub `orchestrator.yml`) | Kubernetes' published autoscaling rule, written as the yardstick | Omni-Compass on top of that rule | Omni-Compass alone on the muscles |
+| Our own models, the ten organisms (`python3 tools/scenarios_20.py`) | every plant under its own native controller | the max on top of every native controller | not run: Omni-Compass is never by itself (the founder's order of 25 October) |
+
+A cloud has no direct arm without the owner's word (chapter 19), and a muscle whose native is a setting has one Omni-Compass
+arm, not two (section 1.1).
 
 **How many repetitions, and why.** The width of a paired interval shrinks with the square root of the number of pairs,
 w ∝ 1/√n, so going from five pairs to ten narrows it by about a third (1 − 1/√2 ≈ 0.29), and from
@@ -2240,7 +2360,7 @@ installer reads their own receipt against: not their numbers, which belong to ou
 the Owner's Manual (chapter 16) and `results/live/`, but the words each kind of service has read in all three of our runs on
 real Kubernetes:
 
-| The service | Reads GAIN | Reads EVEN | Power given |
+| The service | Reads GAIN | Reads STEADY | Power given |
 |---|---|---|---|
 | Rightsized with Goldilocks and the VPA's recommender | response time (mean, 95th and 99th percentile); time over the line | machines, failed requests, replicas, pods started, pod start wait, alert minutes | parked-worker energy |
 | Scaled by KEDA's HTTP add-on | response time (mean and 95th percentile); alert minutes; replicas; pods started | machines, failed requests, pod start wait | parked-worker energy |
@@ -2249,19 +2369,19 @@ real Kubernetes:
 | Held at a fixed CPU cap, four caps | nothing: the cap blocks the one lever | completed work and work inside the line at every cap | none |
 
 Read your receipt against this table in three steps. **First the words.** A service gauge that reads LOSS on your receipt, where
-the table reads GAIN or EVEN for the same kind of service, is read as a wiring fault before anything else (`DISCLOSURES.md`,
-section 4): the feed's freshness and its line (chapter 18), the sensed autoscaler's name, the identity's permissions (chapter 14), the window's length against the widths of your receipt's own intervals. **Second the direction.** Where the table reads GAIN, your receipt should read GAIN or EVEN; a smaller gain
+the table reads GAIN or STEADY for the same kind of service, is read as a wiring fault before anything else (`DISCLOSURES.md`,
+section 4): the feed's freshness and its line (chapter 18), the sensed autoscaler's name, the identity's permissions (chapter 14), the window's length against the widths of your receipt's own intervals. **Second the direction.** Where the table reads GAIN, your receipt should read GAIN or STEADY; a smaller gain
 is your stack's, not a fault, because the gain is bounded by how far native stood from its own best. **Third the power given.** A
 resource that rose on your receipt is read beside the work and the speed it bought; a rise with nothing bought is a question for
-Appendix L: what did the governor write, and why. Two readings are not faults: EVEN on every gauge where native already runs at the
+Appendix L: what did the governor write, and why. Two readings are not faults: STEADY on every gauge where native already runs at the
 top of its range (the knob is at its limit on native, and the governor leaves it there by design, section 5.5), and a machine count
 that does not fall where no machine can be given back without a LOSS (the audit's `node_gate.reason` names the gate that held).
-What the table cannot give is your number: the same engine on another stack is another result, and it is yours (section 3.8).
+What the table cannot give is your number: the same engine on another stack is another result, and it is yours (section 3.7).
 
 ## 11. Evidence Classes and How to Read a Receipt
 
 **One number, one word.** In every receipt a change keeps its raw sign: a response time that fell reads "-65%", a cache
-that grew reads "+300%", and the Reading column beside it gives its word, GAIN, EVEN or LOSS, decided by what the gauge is
+that grew reads "+300%", and the Reading column beside it gives its word, GAIN, STEADY or LOSS, decided by what the gauge is
 for and never by its sign (the key at the front of this manual): a response time cut 65% is GAIN, a cache grown 300% is
 **power given**, a fall in work is LOSS. Wherever a change is written in a sentence, it is written in words, never as a
 bare sign: "p95 cut 65% (GAIN)", so it cannot be misread against a receipt that shows the same change as "-65%". Read the
@@ -2274,7 +2394,7 @@ Reading column, never the sign alone.
 | L | E3 | real software, no hardware meter | real decisions on real software; energy there is a declared model |
 | P | E4 | a physical meter (a card's own power reading, the processor's energy counters, a site meter) | the hardware's own answer |
 
-![Flowchart: from the audit to the receipt, the table and the one number. The audit (one record a decision) is read by tools/live_reps.py into the paired receipt of one run; runs A, B and C go through tools/confirm_abc.py into the three-run table, each run's engine checked against the fingerprint; tools/readings.py sets GAIN, EVEN or LOSS by the gauge's aim and puts the reading key on top of every table; the benefit sheet and the Omni index carry one number per benchmark. Every table is made by a tool, never by hand.](book/figures/g_pipeline.svg)
+![Flowchart: from the audit to the receipt, the table and the one number. The audit (one record a decision) is read by tools/live_reps.py into the paired receipt of one run; runs A, B and C go through tools/confirm_abc.py into the three-run table, each run's engine checked against the fingerprint; tools/readings.py sets GAIN, STEADY or LOSS by the gauge's aim and puts the reading key on top of every table; the benefit sheet and the Omni index carry one number per benchmark. Every table is made by a tool, never by hand.](book/figures/g_pipeline.svg)
 
 Read every number with its class beside it. A modelled number is never quoted as a hardware result. When a
 receipt's energy line is modelled, the receipt says so.
@@ -2292,9 +2412,10 @@ result says what a physical meter read, and only a P result speaks for hardware 
 **How to read a row.** Every row in every three-run table has the same shape: the gauge and its direction; native's
 value in run A and omni's value in run A, so the size of the numbers is visible; the paired change in each of the three
 runs as a percentage of native with its 95% interval; and the reading. Read the reading first, then the intervals, then
-the sizes. A reading of "GAIN in all three of our runs" with intervals of −0.5% to −0.1% is a small, real effect; a reading of "no
-difference beyond the noise (3 of 3 runs)" with intervals of −30% to +25% is a test that could not see an effect of that
-size either way, which is a statement about the test's power, and the receipt should say so (a 4-worker fleet cannot show
+the sizes. A reading of "GAIN in all three of our runs" with narrow intervals, each clear of zero, is a small, real effect; a
+reading of "GAIN by the mean of our three runs, beyond the noise in 0 of 3" with intervals of −30% to +25% is a change the
+runs point to that the test could not tell from its noise, which is a statement about the test's power, and the receipt
+should say so (a 4-worker fleet cannot show
 a saving smaller than one machine, section 7.1). A "LOSS in all three runs" row stands in the receipt.
 
 **Three questions to ask of any class L result.** First, what was native, exactly: which controller, at which published
@@ -2316,25 +2437,27 @@ python3 tools/omni_version.py                   # this checkout: its engine vers
 python3 tools/omni_version.py --commit <sha>    # the engine at the commit any receipt ran on
 ```
 
-![Flowchart: the three-run reading rule, as a procedure (the founder's order of 24 October 2026). For one judged row: if two runs each moved 0.5% or more in opposite directions, the runs disagree; if the mean of the three changes is under 0.5%, EVEN, under the floor; otherwise the word follows the gauge's aim, GAIN, LOSS or, for a resource spent that rose, power given, in all three of our runs when every run's interval excludes zero the same way, by the mean of our three runs otherwise.](book/figures/f_reading.svg)
+![Flowchart: the three-run reading rule, as a procedure, as drawn before the rule of 24 October. For one judged row: if any of the three intervals includes zero the row reads STEADY, with the count of runs it holds in; if the three clear intervals do not point the same way the runs disagree and the test is unstable there; if they point the gauge's way the row reads GAIN in all three of our runs, and the other way LOSS, except for a resource spent that rose, which is power given. Since 24 October the 0.5% floor on the mean of the three runs comes first, and an interval across zero no longer makes a row STEADY: it reads its word by the mean of our three runs, with the count beyond the noise (the text below).](book/figures/f_reading.svg)
 
 A receipt names the commit it ran on, and every table made by rule checks each run's commit against the fingerprint and
 heads itself with a warning if any run is not the engine it claims or if the three are not separate runs. An operator's
-own tune (section 3.7) does not change the engine's fingerprint, and must therefore be written down beside the receipt.
+own tune (section 3.6) does not change the engine's fingerprint, and must therefore be written down beside the receipt.
 
-**The three-run rule.** A result is run as **A, B and C**, three separate runs on the same engine version. Every judged
-row gets one of these readings, and all three runs are shown beside it:
+**The three-run rule** (the founder's order of 24 October 2026: any change of 0.5% or more is a change; `tools/readings.py`,
+`three_run_reading`). A result is run as **A, B and C**, three separate runs on the same engine version and profile. The change
+is the mean of the three runs' changes, each in percent of native, and all three runs are shown beside the reading:
 
-- **GAIN** or **LOSS in all three runs** (a resource spent that rose reads **power given**, never a loss): a change of
-  0.5% or more, the mean of the three runs, the same sign in all three runs, each with its 95% interval clear of zero.
-- **GAIN** or **LOSS by the mean of the three runs**: a change of 0.5% or more, the mean of the three runs, where one run's
-  interval or more includes zero; the count of runs beyond the noise stands beside it (the founder's order of 24 October
-  2026: a change of 0.5% or more either way is a change, never EVEN).
-- **EVEN, under the floor**: the mean of the three runs' changes is under 0.5% either way.
-- **The runs disagree**: runs that each moved 0.5% or more point different ways. The test itself is then unstable on that
-  measure, and it is looked into before anything is claimed.
+- **GAIN**, **LOSS** or **power given in all three of our runs**: the mean moved 0.5% or more, and every run moved the same
+  way with its 95% interval clear of zero. The word comes from what the gauge is for, never from the sign; a resource spent
+  that rose reads power given, never a loss.
+- **GAIN**, **LOSS** or **power given by the mean of our three runs**: the mean moved 0.5% or more, but not every run cleared
+  zero the same way; the count of runs beyond the noise stands beside the word ("beyond the noise in 1 of 3").
+- **STEADY, under the floor**: the mean moved less than 0.5%. **STEADY, the same**: nothing moved.
+- **The runs disagree**: runs that moved 0.5% or more pointed in opposite directions. The test itself is then unstable on
+  that measure, and it is looked into before anything is claimed.
+- A count that must never rise (failed requests, lost messages) has no floor: any rise in any run reads LOSS.
 
-![The three-run rule, read from the intervals (the founder's order of 24 October 2026). Each row is one gauge; each bar is one run's paired change of Omni-Compass against native with its 95% interval; the shaded band is 0.5% either way of no change. A change of 0.5% or more, the mean of the three runs, is a change: GAIN or LOSS in all three of our runs when every interval is clear of zero on the same side, GAIN or LOSS by the mean of our three runs, with the count beyond the noise, when one or more intervals hold zero. EVEN, under the floor: the mean under 0.5%. The runs disagree: runs that moved 0.5% or more in opposite directions, an unstable test to be looked into. Which side reads GAIN is set by what the gauge is for: for time waited, misses and failures a fall; for work done a rise; for a resource spent a fall is a cut and a rise is power given, never a loss.](book/figures/readings.svg)
+![The three-run rule, read from the intervals, as drawn before the rule of 24 October (since then a mean change under 0.5% is STEADY and a change of 0.5% or more whose intervals do not all clear zero reads its word by the mean of our three runs). Each row is one gauge; each bar is one run's paired change of Omni-Compass against native with its 95% interval. GAIN or LOSS in all three of our runs: the same side in all three, every interval clear of zero. STEADY, as drawn: at least one interval includes zero. The runs disagree: clear intervals on both sides, an unstable test to be looked into. Which side reads GAIN is set by what the gauge is for: for time waited, misses and failures a fall; for work done a rise; for a resource spent a fall is a cut and a rise is power given, never a loss.](book/figures/readings.svg)
 
 The three-run table is made by a tool, never by hand: `tools/confirm_abc.py` for the paired
 Kubernetes and cloud runs, with one sibling tool per kind of raw record for the other stacks (`pgbench_abc.py`,
@@ -2346,7 +2469,12 @@ simulator is not bit-reproducible across machines.
 and an interval from one run can be narrow by luck: the machine was quiet that hour, the order of arms happened to favour
 one side. A second run on another day and another machine is a replication; a third makes a coincidence expensive. The
 three runs are separate runs, on separate machines, at separate hours, with separate installations of every dependency,
-so what agrees across them is not an artefact of one machine. The readings are designed so that no reading can be mistaken for something it is not: a change of 0.5% or more, the mean of the three runs, is always named by its word and its direction, and the words say how firm it is (in all three runs, every interval clear of zero; or by the mean, with the count of runs beyond the noise); a change under 0.5% is EVEN; and two runs that each moved 0.5% or more in opposite directions are reported as a disagreement, which is an instability in the test to be found and fixed, not averaged away.
+so what agrees across them is not an artefact of one machine. The readings are designed so that no reading can be
+mistaken for a weaker form of "yes": a row reads "in all three of our runs" only when every run moved the same way with its
+interval clear of zero; a change of 0.5% or more that some run could not tell from the noise keeps its word, "by the mean of
+our three runs", with the count of runs beyond the noise beside it; a mean under 0.5% is STEADY; and runs of 0.5% or more that
+point in opposite directions are reported as a disagreement, which is an instability in the test to be found and fixed, not
+averaged away.
 
 ---
 
@@ -2362,6 +2490,18 @@ names the object it creates, the permission it needs, the evidence it leaves and
 next step begins. Where the three clouds differ, the step is written once per cloud (chapters 15 to 17); where they do
 not, it is written once here or in chapters 14, 18, 19 and 20.
 
+**The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
+orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
+racks, the data center, on site or off site). Omni-Compass can live in all three places: on the software end (the cluster and
+its services, chapters 6 and 7), on the bare metal (the card and the machine, chapter 21 and section 7.9) and on the wire
+itself, the cloud mode of this part. On the wire alone it moves the machines alone (chapter 19): it can only park machines the
+cloud's own autoscaler already made, after its own trial, so a cloud receipt alone can show at most a small cut in the bill of
+the wire. It cannot show the work and the speed gained at the software end, nor the energy and the throughput gained at the
+bare metal, because neither end is under it. An installation that wants the whole benefit installs Omni-Compass at each place
+it owns, receipts each one where it sits, and composes them into one organism and one bill (`DISCLOSURES.md`, section 9; the
+bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far,
+and the company's expectation for each place, are in the Owner's Manual; neither is your receipt.
+
 ### 13.1 What the implementer delivers
 
 At the end of this part an implementer has delivered five things, each with its own evidence:
@@ -2371,7 +2511,7 @@ At the end of this part an implementer has delivered five things, each with its 
 | A verified copy of the software, at a known engine version | `python3 verify.py` ends `VERIFICATION: PASS`; `python3 tools/omni_version.py` names the version (chapter 32) |
 | The governor installed in watch mode, writing nothing | its audit shows a `decision` record every period (the machines and the target it recommends) and no `write` record; every object it reads is listed in chapter 14 |
 | A response-time feed for the service, and the service's line written down | the feed file advancing at least every 5 seconds; the line taken from the service's own objective (chapter 18) |
-| A paired receipt on the company's own cluster: native against native with Omni-Compass on top | the receipt's rows, each read GAIN, EVEN or LOSS, and the run's commit and engine version (chapters 10 to 12) |
+| A paired receipt on the company's own cluster: native against native with Omni-Compass on top | the receipt's rows, each read GAIN, STEADY or LOSS, and the run's commit and engine version (chapters 10 to 12) |
 | The governor in service, with its OFF switch, its watchdog and its alarms wired | the switch tested, the watchdog's hand-back drilled, the alert route proven by a test page (chapter 20) |
 
 None of the five is skipped, and they are delivered in that order. The order is not bureaucracy: each one is the
@@ -2489,6 +2629,7 @@ The table is the complete list. A verb not in it is not needed at that level and
 | Machines | core | `pods` | `patch` | mark the pods on a parked machine first to go (the `pod-deletion-cost` annotation), so the autoscaler's own scale-down removes them first |
 | Pod target (not in the cloud mode) | `autoscaling` | `horizontalpodautoscalers` (each governed one, by name) | `patch`, `update` | move the autoscaler's CPU target inside its cover, and record the operator's own target on the object |
 | Processor conveyance (not in the cloud mode) | core | `pods/resize` | `get`, `patch` | resize a running pod's processor limit in place; no pod is restarted |
+| Pod muscle of its own (`--own-replicas`; not in the cloud mode) | `apps` | `deployments/scale` (each named workload) | `get`, `patch`, `update` | set the replica count of a workload no autoscaler governs through its own scale subresource, never below the operator's count (`deploy/rbac-own-pods.yaml`); under RBAC `deployments/scale` is a resource of its own, which a grant on `deployments` does not carry |
 | Batch admission (where wired) | `batch` | `jobs` | `patch` | admit held work |
 
 Two verbs are absent from every level and are refused by review if they appear: `delete` on anything, and `create` on
@@ -2531,15 +2672,18 @@ and keeps the output with the installation record:
 ```bash
 SA=system:serviceaccount:omni-compass:omni-compass
 for v in "get nodes" "list pods" "get horizontalpodautoscalers.autoscaling" "list deployments.apps" \
-         "patch nodes" "patch pods" "patch horizontalpodautoscalers.autoscaling" "patch pods/resize" \
+         "patch nodes" "patch pods" "patch horizontalpodautoscalers.autoscaling" "patch pods/resize" "patch deployments/scale" \
          "delete pods" "create pods/eviction" "delete nodes" "create pods"; do
   printf '%-48s %s\n' "$v" "$(kubectl auth can-i $v --as=$SA -A)"
 done
 ```
 
 In the cloud mode the answers are `yes` for the four reads and for `patch nodes` and `patch pods`, and `no` for
-everything else, including `patch horizontalpodautoscalers.autoscaling` and `patch pods/resize`. Any other answer is a
-grant to correct before the governor starts, not after.
+everything else, including `patch horizontalpodautoscalers.autoscaling`, `patch pods/resize` and `patch deployments/scale`.
+Any other answer is a grant to correct before the governor starts, not after. Where `--own-replicas` names a workload,
+prove its scale write by name (`kubectl auth can-i patch deployment/NAME --subresource=scale -n NAMESPACE --as=$SA`): a
+grant on `deployments` alone answers `yes` to `patch deployment/NAME` and `no` here, and the governor's every pod write
+would be refused.
 
 ### 14.5 No cloud credential
 
@@ -2965,8 +3109,8 @@ implementer's and never the governor's, and it is written down with its basis be
 - **Where it is measured.** At the edge the customer sees (the load balancer or ingress), or behind it; the line and the
   feed must be measured at the same place.
 
-A line set far above the service's real response times leaves the governor nothing to hold and reads as "no difference
-beyond the noise" on every row; a line set below what the service can meet on native reads as a breach in every
+A line set far above the service's real response times leaves the governor nothing to hold and reads STEADY, or a word not
+beyond the noise, on every row; a line set below what the service can meet on native reads as a breach in every
 decision and the governor holds every machine. Both are wiring faults, and Appendix D lists their symptoms.
 
 ### 18.2 The feed's format
@@ -3047,8 +3191,6 @@ holds, and a breach wakes it at the next decision.
 
 ## 19. Running in the Cloud: the Machines Alone, the Bill and the Alarm Minutes
 
-**THE CLOUD IS ONLY A WIRE BETWEEN THE SOFTWARE END AND THE HARDWARE END. OMNI-COMPASS ON THE CLOUD ALONE CAN GIVE ONLY A SMALL CUT IN THE BILL, FROM THE MACHINES THE CLOUD'S OWN AUTOSCALER MADE; THE BENEFIT LIVES AT THE TWO ENDS, IN THE SOFTWARE AND IN THE BARE METAL, AND THE CLOUD CARRIES IT.**
-
 ### 19.1 Why the governor moves the machines alone in a cloud
 
 In a public cloud every machine that exists is billed, whether it carries work or not, so the benefit a cloud can show
@@ -3075,7 +3217,13 @@ The governor never asks the cloud for a machine (its machine lever cannot ask fo
 and it can hold no more pods than native's autoscaler gives it. **The bill can only fall or stay.** It falls where native
 holds machines the service does not need: the quiet stretches between bursts, the hours of a day's trough, the weekend.
 It stays where native is already short of machines; there the governor has nothing to give back, and the receipt reads
-EVEN on the bill.
+STEADY on the bill.
+
+**What a cloud receipt can show, and what it cannot.** The cloud mode is Omni-Compass on the wire alone (Part VI's opening,
+"The cloud is a wire"): its receipt is the bill of the machines a cloud run can park, and nothing more. The software end's work
+and speed and the bare metal's energy are not under it and are not on its receipt; they are measured where Omni-Compass sits
+on them. The direct arm (section 1.1) is never run in a cloud: by itself Omni-Compass would have to make machines with the
+cloud's autoscaler off, and in a cloud it never adds a machine.
 
 ### 19.2 The dial in the cloud
 
@@ -3168,16 +3316,16 @@ Every paired receipt on a cloud carries these rows, and they are read by the rul
 
 | Row | Its aim | How to read it |
 |---|---|---|
-| compute bill at list price ($) | lower | a cut is GAIN; EVEN where native was already short of machines; a rise is power given, and in the cloud mode it is a fault to find, because the mode cannot hold more machines than native |
+| compute bill at list price ($) | lower | a cut is GAIN; STEADY where native was already short of machines; a rise is power given, and in the cloud mode it is a fault to find, because the mode cannot hold more machines than native |
 | machines billed, machine-hours | lower | as the bill |
-| response time, 95th and 99th percentile | lower | must read EVEN or GAIN; a LOSS is a wiring fault to find first (section 4.5) |
-| failed requests | lower | must read EVEN or GAIN |
+| response time, 95th and 99th percentile | lower | must read STEADY or GAIN; a LOSS is a wiring fault to find first (section 4.5) |
+| failed requests | lower | must read STEADY or GAIN |
 | alert minutes | lower | the whole minutes whose 95th percentile, failed requests counted over, was over the line: the minutes an on-call page would be open. The aim in a cloud is none at all; an alert minute on the omni side is found and fixed |
 | settings commands the governor wrote on its own | shown | the machines it parked and woke, each in its audit with its reason; no person touched either arm |
 | HPA replicas | shown | must match native's within the noise in the cloud mode; a difference is a wiring fault (an HPA moved) |
 
 **A run of one day of real traffic says more than any burst.** The bill's saving lives in the quiet hours; a paired run
-of a steady load at the service's peak can read EVEN on the bill, honestly, because at the peak there is nothing to give
+of a steady load at the service's peak can read STEADY on the bill, honestly, because at the peak there is nothing to give
 back. The day-shaped load of the repository's own cloud sets (the Google 2011 trace on one to nine load generators) is
 the test that shows the trough.
 
@@ -3188,20 +3336,6 @@ a machine; never deletes a machine (the cloud's autoscaler does, on its own sche
 evicts or deletes a pod; and never holds a cloud credential. Each of those is checked from outside the governor at the
 end of every paired arm: every HPA back at the operator's, every pod's limit at its shipped value, every machine back in
 service, no `omnicompass.io/` record left on any object.
-
-### 19.8 Any other cloud: a cluster built in the provider's own console
-
-Oracle (OKE), DigitalOcean (DOKS), Alibaba Cloud (ACK), Linode (LKE), IBM Cloud (IKS) or any conformant managed Kubernetes run the
-same paired sets as Azure, Google and Amazon, on the same harness, through one workflow, `byoc-metered`. You build the cluster in the
-provider's console to one shape: a system pool of exactly one machine labelled `omni-role=system` and tainted
-`CriticalAddonsOnly=true:NoSchedule`, and a work pool labelled `omni-role=work` and `agentpool=work0` under the provider's own
-cluster autoscaler (minimum 1). You store a kubeconfig whose user holds a service-account token in the repository secret named for
-the cloud (`KUBECONFIG_ORACLE`, `KUBECONFIG_DIGITALOCEAN`, `KUBECONFIG_ALIBABA`, `KUBECONFIG_LINODE`, `KUBECONFIG_IBM` or
-`KUBECONFIG_OTHER`); a kubeconfig that logs in only through the provider's own command line is refused by name before anything is
-measured. `cloud-check` with the cloud's name reads the kubeconfig's shape and the cluster's, at no cost, and stops. Each arm starts
-from the work pool's own minimum; the bill is the work machines counted every 15 s times the list price you give for one
-machine-hour. This repository builds and deletes nothing in your account, and you delete the cluster when the set ends. Every step,
-click by click, is in `docs/BYOC_SETUP.md`. These clouds are wired and not yet run.
 
 ## 20. Day Two: Running Omni-Compass in Production
 
@@ -3559,15 +3693,6 @@ dial is turned; the other rules count in minutes and hours, not in decisions. Th
 An installation in the cloud mode is judged first by whether that alert fires more often with the governor than without
 it, and the paired receipt's alert-minutes row (section 19.6) is the same measure taken under control.
 
-**The whole wall in one command** (`docs/MISSION_CONTROL.md`). `deploy/monitoring/` stands up Prometheus, Grafana, Node Exporter,
-Alertmanager, the governor's exporter and the alert bridge with `docker compose up -d`, every image pinned and no password written,
-both Omni-Compass boards loaded at start. The monitor wall carries knobs (route, provider, machine, rate window, the control panel's
-address), the signals' row (redlining, steady, accelerating, each at its alarm's own threshold) and the control panel's buttons as a
-link. Its alarms press the panel's operator buttons through the alert bridge (`tools/omni_alert_bridge.py`): Return to native when
-the governor goes stale, watch when its writes hammer or are refused. The bridge writes what it would press until it is told to
-press, and never touches the kill switch or its arming. List your machines and clouds in `deploy/monitoring/targets/`, each with its
-route and provider.
-
 ### 22.5 The control panel: the buttons, behind sign-in, every press logged
 
 `tools/omni_control.py` runs the governor as its child and serves its buttons over an authenticated HTTP API, with a console
@@ -3584,11 +3709,6 @@ python3 tools/omni_control.py serve --tokens /etc/omni/tokens.json --audit /var/
     --log /var/log/omni/control.jsonl --state /var/lib/omni/control.json \
     --governor "python3 -m omni_controller.controller --mode nodepool --audit /var/log/omni/audit.jsonl --interval 60"
 ```
-
-To drive the governor from the live engine page served at another address, name that address when the panel is started:
-`--allow-origin https://the-page-host` (repeat it for more, or `OMNI_CONTROL_ALLOW_ORIGIN` as a comma list). Only a named origin
-is answered across addresses (its browser's preflight and its calls); every call still carries its bearer token and its role,
-and a bind beyond the loopback still needs `--cert` and `--key`. None is named by default.
 
 | Button | Request | Role | What happens |
 |---|---|---|---|
@@ -3836,7 +3956,7 @@ N[gov] (t) = max(N[f], ⌈((1+h) Q′[c] (t))/(C′[c])⌉, ⌈(U[c] (t))/
 
 so the room the cloud mode can take is at most R[gov] = ∫₀ᵀ (N(t) − N[gov] (t))⁺ dt ≤ R. A pool whose pods'
 requests, with half again to spare, already fill the machines the cluster autoscaler keeps has R[gov] = 0: there is
-nothing to park, and a paired run on it reads EVEN on the bill, correctly.
+nothing to park, and a paired run on it reads STEADY on the bill, correctly.
 
 **An arithmetic illustration (not a measurement).** A pool holds 12 machines from 08:00 to 20:00 and 8 machines
 overnight; the pods' requests need 9 machines at the day's level and 3 overnight; the floor is 2 and there is no
@@ -3945,14 +4065,14 @@ machine-hours; finance converts the machine-hour row to the company's own price 
 
 | Shape of the company's load | Where the room lives | The paired run that can show it |
 |---|---|---|
-| Steady at a level the pool was sized for | nowhere: N ≈ N[req] | none; a steady run reads EVEN on the bill, honestly, and is still worth running for the response-time and alert rows |
+| Steady at a level the pool was sized for | nowhere: N ≈ N[req] | none; a steady run reads STEADY on the bill, honestly, and is still worth running for the response-time and alert rows |
 | A daily cycle (business hours, consumer evenings) | the trough and the descent after the peak | a replay of the company's own day, compressed only as far as the autoscaler's profile allows (a 10-minute unneeded time cannot be compressed below 10 minutes), or the repository's own day-shaped load (the Google 2011 trace on one to nine load generators) |
 | Bursts separated by quiet stretches | between bursts, as native's autoscaler holds machines through its scale-down delay | the burst steps of the service's own traffic; in the repository, the burst sets of section 19.6 |
 | A weekly cycle with a quiet weekend | the weekend | a run long enough to include a quiet stretch as long as the profile's scale-down time several times over |
 | Batch windows | after each window | the batch itself, with the service's line on the jobs' own completion time where that is the objective |
 
 **The run must be long enough for the autoscaler to act.** A quiet stretch shorter than the cluster autoscaler's
-unneeded time plus its scan interval gives neither arm a chance to delete a machine, and the bill reads EVEN for a reason
+unneeded time plus its scan interval gives neither arm a chance to delete a machine, and the bill reads STEADY for a reason
 that has nothing to do with the governor. Plan each quiet stretch of the paired run to last at least three times the
 unneeded time.
 
@@ -3966,8 +4086,8 @@ Before phase 5 starts, the implementer writes, and the service owner and finance
 4. the settings of section 24.4 as they stand, identical in both arms;
 5. the price used for the bill rows (list price) and the company's own price for the conversion afterwards.
 
-A receipt that then reads GAIN on the bill, with response time, failed requests and alert minutes reading EVEN or GAIN,
-has measured a share of a room that was known beforehand; a receipt that reads EVEN on the bill where the plan found
+A receipt that then reads GAIN on the bill, with response time, failed requests and alert minutes reading STEADY or GAIN,
+has measured a share of a room that was known beforehand; a receipt that reads STEADY on the bill where the plan found
 room is a wiring question to answer first (section 4.5): the feed, the line, the autoscaler's profile, a pod that pins
 its machine.
 
@@ -4122,8 +4242,8 @@ should be shipped off the site, because an edge site's disks are the first thing
 
 | Claim | What backs it |
 |---|---|
-| More work from the same machines | the paired receipt's work rows (requests served, jobs completed) reading GAIN, with response time and failures EVEN or GAIN, on the same machines in both arms |
-| The same work on fewer machines | the machine rows reading GAIN at the tune-down, with every service row EVEN or GAIN |
+| More work from the same machines | the paired receipt's work rows (requests served, jobs completed) reading GAIN, with response time and failures STEADY or GAIN, on the same machines in both arms |
+| The same work on fewer machines | the machine rows reading GAIN at the tune-down, with every service row STEADY or GAIN |
 | Power | a meter of class P named in the receipt; the power the max took shown as power given beside the work it bought, never called a loss |
 | A dollar figure | the company's own price per kilowatt-hour or per machine-hour, applied by finance to the measured rows, never by the governor's receipt |
 
@@ -4517,7 +4637,7 @@ rules follow:
    governed together: split the pool, or govern only by the stricter line.
 3. **Batch and stateful work.** Pods that the cluster autoscaler will not move (section 24.4) pin their machines; the
    governor may park such a machine, but it empties only when those pods end. A pool that carries long jobs and serving
-   pods together gives the governor little to give back, honestly; the receipt shows it as EVEN on the bill.
+   pods together gives the governor little to give back, honestly; the receipt shows it as STEADY on the bill.
 
 ### 27.6 Regions, zones and failover
 
@@ -4741,7 +4861,7 @@ traffic, compressed no further than the autoscaler's ten-minute profile allows.
 The paired run (phase 5, section 15.6) builds two identical clusters for each repetition, one native and one with
 Omni-Compass on top in the cloud mode, drives the same recorded day through both, and deletes both. Its receipt is read
 row by row (section 19.6), and before the installation proceeds it must show: the bill and the machine-hours reading
-GAIN or EVEN; response time, failed requests and alert minutes reading EVEN or GAIN; HPA replicas equal to native's
+GAIN or STEADY; response time, failed requests and alert minutes reading STEADY or GAIN; HPA replicas equal to native's
 within the noise. A LOSS row stops the installation until its cause is found in the wiring and the run is repeated
 (section 4.5). The receipt is signed by the service owner and by finance.
 
@@ -4875,10 +4995,10 @@ reasons (section 20.4). No request payload and no personal data, which it never 
 
 **Can we tune it?** The factory tune is the engine as shipped (section 3.1); an installation writes the settings of section
 3.4 (the line, the floor, the dial, the ceiling of a growing lever) from its own system. A changed tune is the
-installation's own configuration, and its receipts are its own (section 3.7).
+installation's own configuration, and its receipts are its own (section 3.6).
 
 **How do we know it is working?** The audit shows every decision and every write with its reason; the receipt of a paired
-run on the company's own cluster shows what it did against native, row by row, read GAIN, EVEN or LOSS (chapters 10 and
+run on the company's own cluster shows what it did against native, row by row, read GAIN, STEADY or LOSS (chapters 10 and
 11). An installation whose receipt it has not seen is not yet an installation.
 
 **What if our receipt shows a LOSS?** Suspect the wiring first (section 4.5): the feed, the line, the grant, the autoscaler
@@ -4952,9 +5072,10 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | Line | the limit the service must meet, from the operator's own objectives (`--slo-ms`) |
 | Engine version | the engine as fingerprinted file by file; a receipt belongs to the version its commit carries (chapter 12) |
 | Compass | the band seen as a position from 0 (calm) to 1 (the line), with a 5% cushion at each edge and the centre where the reading is held (section 3.4) |
-| EVEN | Equalized, Verified baseline, Equilibrium, Neutral: native and Omni could not be told apart (the same, or no difference beyond the noise); the key, front matter |
+| STEADY | Equalized, Verified baseline, Equilibrium, Neutral: the mean change under 0.5% (under the floor), or nothing moved (the same), or a knob at its limit on native; the key, front matter |
 | GAIN | Growth, Advantage, Improvement, Net-positive: a gauge moved the way its declared aim asks, against native; a resource cut is a GAIN; the key, front matter |
-| GAIN in all three of our runs | the same sign in all three runs (A, B, C), every 95% interval clear of zero, and that sign a GAIN for the gauge's aim |
+| GAIN in all three of our runs | the mean change 0.5% or more, every run (A, B, C) moved the same way with its 95% interval clear of zero, and that way a GAIN for the gauge's aim |
+| GAIN by the mean of our three runs | the mean change 0.5% or more toward the gauge's aim, not every run clear of zero; the count of runs beyond the noise stands beside it (chapter 12) |
 | LOSS | Leakage, Off-track, Setback, Subpar: a gauge moved against its declared aim (less work, a longer wait, more misses); it should never appear, and where it does it is shown, its cause found and fixed; the key, front matter |
 | Power given | a resource spent or held that rose: what Omni put in to buy the work and speed beside it; shown, never called a loss |
 | Cover | a knob's hard range; every write is clipped to it |
@@ -4963,11 +5084,20 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | Fail up | the return to full capacity the moment service crosses the wall or a sense goes blind |
 | Governor | the process that reads, decides and writes; Omni-Compass |
 | Muscle | any machine, service or controller Omni-Compass reads and sets |
-| Native | the system as it runs without Omni-Compass |
-| No difference beyond the noise | an interval over zero in at least one run: native and omni could not be told apart; the result, stated as such |
+| Native | the system as it runs without Omni-Compass: every muscle under its own native controller, as its vendor ships it (the native baseline) |
+| Omni-Compass on native | the second arm: the native system with Omni-Compass on top of it ("omni") |
+| Omni-Compass direct | the third arm, Omni-Compass by itself: each knob's native controller switched off and Omni-Compass the only controller moving it (section 1.1) |
+| Factory profile | the complete, versioned set of Omni-Compass default settings shipped together (section 3.8; `docs/FACTORY_PROFILE.md`) |
+| Custom profile | an identifiable configuration that differs from the released factory profile; its results are its own |
+| Active profile | the settings actually governing the current run |
+| Candidate profile | a proposed combination of settings under evaluation |
+| Restore factory profile | the control that reapplies the released configuration (section 3.8) |
+| Return to native | the control that hands governance back and restores the recorded native settings: the reset (section 3.8, chapter 8) |
+| Requested, commanded, acknowledged | what a decision asked for, what was sent once every limit was applied, and what landed and was read back (chapter 8) |
+| Beyond the noise | a run whose 95% interval excludes zero; a three-run reading carries the count of its runs beyond the noise (chapter 12) |
 | Plug | the two-way connection to one muscle: read, write, read back, restore |
 | Pool (Azure) | one machine family under Azure's autoscaler with its own ceiling; several pools make the fleet |
-| Profile | service (the default) or batch: what the pedals do with a pile of work (section 3.5) |
+| Profile (service or batch) | service (the default) or batch: what the pedals do with a pile of work, a setting inside a configuration profile (section 3.5) |
 | Race | full speed at once while work waits, so a burst is never served slowly |
 | Yield limit line | a muscle's own limit, read live: Omni-Compass takes it right up to the line and never past it, as an engineer loads a material up to its yield limit, the most it carries and still springs back unharmed |
 | Speed floor | the clock a card reaches on its own while busy, learned from its own meter; the governor never sets the ceiling under it |
@@ -5127,7 +5257,7 @@ pods it started), not to be counted for or against it.
 | A pooler's clock reads calm while users wait | the pooler cannot see a client waiting behind its own schedule | wire the queue share beside the service time and read the larger (section 7.2) |
 | Broker: consumers climb to the cover and stay | messages wait at every step (the producer is past the group's capacity) | check the offered rate against the group's measured capacity in the run's log |
 | Cache: the ceiling grows while little memory is used | cold misses read as pressure | the full-cache gate is the rule (used ≥ 90% of the ceiling); check `used_mb` beside `maxmemory_mb` in the run's log |
-| Cache: the ceiling never grows | the working set fits the operator's ceiling | expected: a cache that fits has nothing for the ceiling to mend, and the row reads inside the noise |
+| Cache: the ceiling never grows | the working set fits the operator's ceiling | expected: a cache that fits has nothing for the ceiling to mend, and the row reads STEADY |
 | Storage-engine cache: the cache never fills, whatever the load, and omni reads as a free memory saving | the requests concentrate on a few hot records, or the run asks for records the load did not write, so the reads are served from the index | a result that flatters the governor is the first thing to suspect: check the bytes in the cache against its size; draw requests over the whole key space and use the same key order in load and run; a knob with nothing to do is not a saving |
 | Storage-engine cache or buffer pool: the governor only ever reads calm | the line is set far above the stack's own latencies | set the line on the tuning case's own figures so that a hit is calm and a full-cache miss is slow, and write the figures down before any counted run |
 | Buffer pool: not handed back at the end of an arm | the server was still carrying out a shrink and ignored the restore | the plug waits for the resize and writes again (section 7.8); check the restore record in the arm's receipt |
@@ -5140,7 +5270,7 @@ pods it started), not to be counted for or against it.
 | Cloud: every decision shows the feed blind | the probe cannot reach the service (its URL, a network policy, the service's port), or the adapter's queries return nothing | `kubectl -n omni-compass logs deploy/omni-compass -c probe` (or `-c feed`); test the URL from the pod; check the network policy (section 26.5) and, for the adapter, run each query in the metrics system's own console |
 | Cloud: `trial abandoned (too little work)` in most `verdict` records | the feed is thinner than twenty rows a minute, or the service is idle | densify the feed (section 22.1); at an idle service, nothing is given back on trial, by design |
 | Cloud: `step refused: the muscle is slower there` in most `verdict` records | the service is slower without the machine | the governor is right to keep it; the pool has no room at this load (section 24.2) |
-| Cloud: the governor parks nothing for days and its trials are never begun | the pool already holds only what the pods' requests need with the governor's spare, or the floor is the pool | read N[gov] from the room sampler (section 24.3); EVEN on the bill is then the honest receipt |
+| Cloud: the governor parks nothing for days and its trials are never begun | the pool already holds only what the pods' requests need with the governor's spare, or the floor is the pool | read N[gov] from the room sampler (section 24.3); STEADY on the bill is then the honest receipt |
 | Cloud: `refused` records with code 1 on every park | the machines role is not bound, or an admission policy refuses the taint | `kubectl auth can-i patch nodes --as=system:serviceaccount:omni-compass:omni-compass`; the policy's message names the rule (section 26.4) |
 | Cloud: a parked machine is never deleted though its pods are gone | the cluster autoscaler's unneeded time is long, a DaemonSet or a pod it will not move remains, or a PodDisruptionBudget allows no disruption | read the autoscaler's own status (its config map or events, `kubectl -n kube-system describe configmap cluster-autoscaler-status`) for the machine's reason (section 24.4) |
 | Cloud: the audit is empty after a restart | the audit was on the pod's `emptyDir` | mount a persistent volume at `/var/log/omni` and ship the file (section 20.4) |
@@ -5211,9 +5341,9 @@ are kept with the installation record (section 14.7).
 - [ ] The run's design written before it starts: arms (native, and native with Omni-Compass on top), load, duration,
       repetitions, the line, the machine family, the autoscaler profile.
 - [ ] The run made on one engine version; its commit recorded.
-- [ ] The receipt read row by row: every row GAIN, EVEN or LOSS by the rules of chapter 11.
+- [ ] The receipt read row by row: every row GAIN, STEADY or LOSS by the rules of chapter 11.
 - [ ] Every LOSS explained as wiring and fixed, and the run repeated; none cut.
-- [ ] In the cloud mode: HPA replicas equal to native's within the noise; the bill EVEN or GAIN.
+- [ ] In the cloud mode: HPA replicas equal to native's within the noise; the bill STEADY or GAIN.
 - [ ] The receipt signed by the service owner and by finance (the bill rows).
 
 ### Phase 6: govern
@@ -5241,7 +5371,7 @@ are kept with the installation record (section 14.7).
 Every setting of the Kubernetes governor (`python -m omni_controller.controller`), grouped by who writes it. A setting
 not given on the command line takes its default. Settings in the last group are the factory tune (section 3.1): they are
 listed so that a command line can be read in full, and an installation leaves them as shipped; a command line that
-changes one runs a changed tune, whose receipts are its own (section 3.7).
+changes one runs a changed tune, whose receipts are its own (section 3.6).
 
 ### K.1 The settings an installation writes
 
@@ -5262,6 +5392,8 @@ changes one runs a changed tune, whose receipts are its own (section 3.7).
 | `--kill-file` | `/tmp/omni.kill` | `/tmp/omni.kill` | the file whose presence turns the governor OFF (section 20.3) |
 | `--dry-run` | off | on for the first day, then removed | decide and record every command, write none |
 | `--native` (and `OMNI_NATIVE`) | none | none, or the muscles the site keeps on its own controller | the muscles left where native runs them, never written: `machines`, `replicas`, `cpu`, `clock`, `gpu`, `rollout`, `batch`, `rightsize`, `coldstart`, `contain`, `cooling`; a name that is not one of them stops the start (omni-v14; the control panel's muscle button sets it) |
+| `--own-replicas` (and `OMNI_OWN_REPLICAS`) | none | absent (no cloud runs by itself without the owner's word) | omni-v18: the workloads (`namespace/name`, comma-separated) whose pods Omni-Compass runs by itself, with no autoscaler on them: their target from the workload's `omnicompass.io/target-utilization` annotation (else `--own-target`), their range from `omnicompass.io/replica-range` (`min,max`); a workload an autoscaler governs keeps its autoscaler and nothing is written; the count the workload shipped with is recorded on it and handed back by the reset |
+| `--own-every-s` | 15 | 15 | seconds between two reconciliations of those workloads' pods on the fast checks, the pod autoscaler's own sync |
 | `--kubectl` | `kubectl` | `kubectl` | the client the governor reads and writes through |
 | `--site-limit-w`, `--power-cmd` | none | absent | a site's power limit and the command that prints its watts (level 7; never in a cloud); the command runs without a shell unless it holds a pipe, a redirect or a variable |
 | `--cooling-cmd`, `--cooling-min-c`, `--cooling-max-c`, `--cooling-restore-c` | none; 18, 27, 22 °C | absent | the facility's cooling setpoint command and band (section 7.10) |
@@ -5380,7 +5512,7 @@ owner's analysis and not needed to operate the governor.
 
 | Record (its key) | When | Fields an implementer reads |
 |---|---|---|
-| `verdict` | when a give-back trial begins, ends or is abandoned | `verdict`: `trial`, `step allowed`, `step refused: the muscle is slower there`, `trial abandoned (service not calm)` or `trial abandoned (too little work)`; `step` (machines given back on trial); `machines_given_back_allowed` (how many may stay given back); `machines_native` (the machines the cluster held when the governor started); on `step allowed` and `step refused`, `reading` (`GAIN`, `EVEN`, `LOSS` or `past the allowance`, the trial's reading against the reference) and `interval_ln` (the 95% intervals behind it, in log units) |
+| `verdict` | when a give-back trial begins, ends or is abandoned | `verdict`: `trial`, `step allowed`, `step refused: the muscle is slower there`, `trial abandoned (service not calm)` or `trial abandoned (too little work)`; `step` (machines given back on trial); `machines_given_back_allowed` (how many may stay given back); `machines_native` (the machines the cluster held when the governor started); on `step allowed` and `step refused`, `reading` (`GAIN`, `STEADY`, `LOSS` or `past the allowance`, the trial's reading against the reference) and `interval_ln` (the 95% intervals behind it, in log units) |
 | `cruise` | when work has waited for a place for several decisions, and when it stops | `cruise`: `on` or `off`; `pending` (pods waiting); while cruise is on, every machine is in service and the governor stands back |
 | `authority` | every decision | `senses.blind` (each sense, `true` when it is blind), `senses.latency_age_s` (seconds since the feed's newest row), `proprioception` (for the machines, the drift between the count last commanded and the count now in service, as a share of the command: 0 means the command landed), `node_gate.ok` and `node_gate.reason` (whether the release gate would let a machine go, and why not) |
 | `decision` | every decision | `nodes_observed` (machines in service), `nodes_recommended` (machines the governor wants in service), `pending` (pods waiting for a place), `latency_p95_ms` (the feed's 95th percentile over its window), `slo_clean` (the line met over the last decisions), `mode`; outside the cloud mode, `hpa_target_recommended` |
@@ -5566,7 +5698,7 @@ repetitions of 600 seconds by default.
 
 ### N.4 Reading the run
 
-The run's summary carries the receipt, row by row, read by the rules of chapter 11 and section 19.6: GAIN, EVEN or LOSS
+The run's summary carries the receipt, row by row, read by the rules of chapter 11 and section 19.6: GAIN, STEADY or LOSS
 for each judged row, with its 95% interval, and the shown rows beside them. The artifact `live-reps-aks` (or the cloud's
 equivalent) holds the same table as Markdown and JSON, with the repository's notice, licence and disclosures attached. A
 receipt is read only against the engine version of the commit it ran on (`python3 tools/omni_version.py --commit <sha>`,

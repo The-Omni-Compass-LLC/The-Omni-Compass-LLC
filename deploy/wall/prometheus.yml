@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# What Prometheus collects for the wall. The governor's fast checks run every 5 s and its full decision every 60 s at the
+# factory beat (10 to 120 s on the dial), so a 5 s scrape sees everything that moves; a faster scrape only costs. Add your own
+# machines and services to the files in targets/ (Prometheus reads them again by itself, no restart).
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+rule_files:
+  - /etc/prometheus/rules/omni-compass-rules.yaml   # the governor's alert rules (tests/test_alert_rules.py)
+alerting:
+  alertmanagers:
+    - static_configs: [{targets: ["alertmanager:9093"]}]
+scrape_configs:
+  - job_name: omni-exporter        # the governor: decisions, heartbeat, writes, compass, verdict, master switch
+    static_configs: [{targets: ["omni-exporter:9464"]}]
+  - job_name: omni-control         # the control panel's counters (GET /metrics takes a viewer token)
+    authorization: {type: Bearer, credentials_file: /etc/prometheus/secrets/omni_viewer_token}
+    file_sd_configs: [{files: [/etc/prometheus/targets/omni-control.yml]}]
+  - job_name: node                 # every machine's own counters: this host, your bare metal on site, the cloud's machines
+    static_configs: [{targets: ["node-exporter:9100"], labels: {place: "this host"}}]
+    file_sd_configs: [{files: [/etc/prometheus/targets/nodes.yml]}]
+  - job_name: service              # your service's own: http_requests_total, http_request_duration_seconds (the golden signals)
+    file_sd_configs: [{files: [/etc/prometheus/targets/service.yml]}]
+  - job_name: kepler               # energy per node and pod: kepler_node_package_joules_total
+    file_sd_configs: [{files: [/etc/prometheus/targets/kepler.yml]}]
+  - job_name: opencost             # the machines' price an hour: node_total_hourly_cost
+    file_sd_configs: [{files: [/etc/prometheus/targets/opencost.yml]}]

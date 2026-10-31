@@ -11,7 +11,7 @@ At each look (after 10, 20, 40 and 70 paired repetitions by default), on the rep
   the bill  the paired change of the machine-hours billed, with its 99% interval (Student's t; four looks at 1% each keep
             the whole rule's error under 5%, Bonferroni);
   decided   the interval clears zero (a cut: GAIN; a rise: power given), or it holds zero and its half-width is within
-            the precision (2% of native's bill by default): EVEN, measured to that precision;
+            the precision (2% of native's bill by default): STEADY, measured to that precision;
   harm      a set never stops while its 95th percentile or its failed requests read a LOSS at that look (their 99% interval
             wholly above zero): it runs on, so a LOSS is measured to the end, never cut short.
 A look reads the first paired repetitions up to its count; one not reached (fewer paired repetitions finished than
@@ -86,7 +86,7 @@ def look(native: dict, omni: dict, n: int, precision: float = PRECISION) -> dict
     elif lo > 0 or hi < 0:
         out.update(decided=True, word="GAIN, a cut" if hi < 0 else "power given", why="the bill's 99% interval clears zero")
     elif (hi - lo) / 2 <= precision * base:
-        out.update(decided=True, word="EVEN", why=f"the bill's 99% interval holds zero within ±{precision * 100:g}% of native's bill")
+        out.update(decided=True, word="STEADY", why=f"the bill's 99% interval holds zero within ±{precision * 100:g}% of native's bill")
     else:
         out.update(decided=False, why="the bill's 99% interval is wider than the precision and holds zero: not yet read")
     return out

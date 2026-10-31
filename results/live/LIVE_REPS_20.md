@@ -17,7 +17,7 @@ A change is proven when its paired 95% interval excludes zero.
 | response time, mean (ms) | 126.1 | 79.4 | −37.1% | −59.6 to −34.0 | GAIN, proven |
 | response time, 95th percentile (ms) | 264 | 120 | −54.6% | −172.8 to −115.3 | GAIN, proven |
 | response time, 99th percentile (ms) | 374.9 | 154.4 | −58.8% | −256.9 to −184.2 | GAIN, proven |
-| failed requests (%) | 0 | 0 | 0 | 0 to 0 | EVEN |
+| failed requests (%) | 0 | 0 | 0 | 0 to 0 | STEADY |
 | pods the autoscaler had to start | 4.9 | 2.6 | −46.9% | −3.92 to −0.68 | GAIN, proven |
 | pod start wait, total (s) | 13.8 | 7.1 | −48.6% | −13.26 to −0.14 | GAIN, proven (narrowly) |
 | pod start wait, mean per pod (s) | 2.73 | 1.48 | −45.9% | −2.28 to −0.23 | GAIN, proven |

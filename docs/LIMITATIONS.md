@@ -2,7 +2,7 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-What the newest three-run tables (omni-v11's; omni-v19, the engine that stands from 25 October, runs every benchmark again)
+What the newest three-run tables (omni-v11's; omni-v23, the engine that stands since 31 October, runs every benchmark again)
 can and cannot support, written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
 and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
@@ -70,9 +70,9 @@ code. No outside party has reviewed or approved these results.
   rows of the omni-v11 tables the expected number of false readings is at most 0.03. Of those rows, 613 are in tests that
   carry noise; the other 241 are in deterministic simulators, which reproduce to the digit. Over the 613 the expectation is
   0.02. Runs share the harness, so they are not fully independent of it; the number is a guide, not a guarantee.
-- **EVEN is not zero.** A row reads EVEN when the test could not resolve a change; `docs/POWER.md` gives, for every judged
+- **STEADY is not zero.** A row reads STEADY when the test could not resolve a change; `docs/POWER.md` gives, for every judged
   row, the smallest change all three runs would detect. Many data-store rows (three pairs a run) cannot resolve a change
-  under 10% of native; EVEN there means "no change larger than that", and nothing finer is claimed.
+  under 10% of native; STEADY there means "no change larger than that", and nothing finer is claimed.
 - **Rows where the runs disagree** (omni-v11): MySQL's update throughput (above), CityLearn's comfort score in two districts
   (CityLearn's own drift; the paired change exactly zero), and the drone swarm's closest approach, tracking error and
   cruise override (PyBullet's reproduction; the first is the margin of section 3, the other two are shown, not judged).

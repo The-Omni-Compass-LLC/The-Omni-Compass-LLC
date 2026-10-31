@@ -7,7 +7,7 @@
 same frozen engine (tools/run_citylearn.py). CityLearn is a deterministic simulator, so the three runs must give the same
 numbers: a row reads GAIN or LOSS in all three of our runs when all three runs agree on the sign (judged by what the score
 is for, never by its sign: CITYLEARN_AIMS; the electricity bought, the bill and the carbon are resources spent, so a fall is a
-cut, a GAIN, and a rise is power given), EVEN when the change is under one part in a million, and "the runs differ" when they
+cut, a GAIN, and a rise is power given), STEADY when every run's change is under one part in a billion (nine decimal places), and "the runs differ" when they
 do not reproduce each other, which is a finding about the simulator or the harness and is said so. A district with no electric battery gets nothing from Omni (the runner moves
 only `electrical_storage` commands; a water tank stays native), so it is listed as "nothing for Omni to move", and any
 native/omni difference in it is CityLearn's own run-to-run variation, never an Omni result. A district CityLearn cannot
@@ -25,6 +25,7 @@ except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from tools.readings import with_own_runs, in_all_three, EVEN_SAME, ACROSS_HEAD, ACROSS_RULE, across_cells, across_counts, reproduced_reading  # noqa: E402  (every table says whose runs these are)
+from tools.repo import NAME as REPO_NAME  # noqa: E402  (the repository's name, written once)
 from tools.run_citylearn import KPIS, WORDS as KPI_NAMES
 
 # What each CityLearn score is for (tools/readings.py, one key for every gauge). CityLearn aims every score lower. The
@@ -41,7 +42,7 @@ CITYLEARN_AIMS = {"cost_total": "spent", "electricity_consumption_total": "spent
 def aim_of(k):
     return CITYLEARN_AIMS.get(k, "lower")
 
-SAME_REL = 1e-6          # a change under one part in a million of the value reads "same" (amendment 11)
+SAME_REL = 1e-9          # "the same" only to nine decimal places of the value (tools/readings.py EXACT_REL; the referee's work order of 25 October)
 REPRO_REL = 1e-9         # two runs of a deterministic simulator agree to this, or they did not reproduce
 
 
@@ -73,7 +74,7 @@ def reproduced(recs, k, arm):
 
 def verdict(recs, k):
     """The score's reading over the three runs, by rule: GAIN, LOSS or power given in all three of our runs by what the score
-    is for (CITYLEARN_AIMS), EVEN, or the runs differ."""
+    is for (CITYLEARN_AIMS), STEADY, or the runs differ."""
     if not (reproduced(recs, k, "native") and reproduced(recs, k, "omni")):
         return "**the runs differ**"
     ch = [change(r, k) for r in recs]
@@ -90,7 +91,7 @@ def verdict(recs, k):
 def engine(run):
     """The Omni version the run's commit carries, from the GitHub run record."""
     try:
-        sha = subprocess.run(["gh", "api", f"repos/the-omni-compass-llc/the-omni-compass/actions/runs/{run}", "--jq", ".head_sha"],
+        sha = subprocess.run(["gh", "api", f"repos/{REPO_NAME}/actions/runs/{run}", "--jq", ".head_sha"],
                              capture_output=True, text=True, timeout=60).stdout.strip()
         if len(sha) != 40 or any(c not in "0123456789abcdef" for c in sha):
             return "?", "unknown"                          # a run whose commit cannot be read is never called v1
@@ -119,7 +120,7 @@ def main(argv=None):
          "three runs give the same sign, judged by what the score is for and never by its sign: the electricity bought, the bill, "
          "the carbon, the peaks, the swings and the unevenness are the power the district draws and holds and the wear of moving it, "
          "so a fall is a cut, a GAIN, and a rise is **power given**; a rise in the energy not served or the time uncomfortable (the "
-         "occupants' misses) is a LOSS. **EVEN, the same** when the change is under one part "
+         "occupants' misses) is a LOSS. **STEADY, the same** when the change is under one part "
          "in a million, and **the runs differ** when they do not reproduce, which is a finding about the simulator or the harness and "
          "is said so. A district with no electric battery gets nothing from Omni (a water tank stays native), so any native/omni "
          "difference in it is CityLearn's own run-to-run variation, never an Omni result. Every row is shown, LOSS included.", "",

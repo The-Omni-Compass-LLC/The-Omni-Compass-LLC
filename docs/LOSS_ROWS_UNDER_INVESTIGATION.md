@@ -27,7 +27,7 @@ on the organism alone. Whether it is the cause here is not established: the Arma
 omni-v13 run of it has landed.
 
 **What decides it.** Armada's three runs on omni-v13 (`scripts/reruns.txt`, released by the conductor in the order A of every
-benchmark, then B, then C). If the row reads EVEN or GAIN there, the cause was the conveyance omni-v13 repaired and this entry
+benchmark, then B, then C). If the row reads STEADY or GAIN there, the cause was the conveyance omni-v13 repaired and this entry
 closes with that reading; if it reads LOSS again, the rig's own files are read repetition by repetition as KubeRay's were, and the
 cause written here.
 

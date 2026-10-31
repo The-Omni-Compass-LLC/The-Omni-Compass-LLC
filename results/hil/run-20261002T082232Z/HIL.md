@@ -14,7 +14,7 @@ The simulated stacks are models (evidence S). The card's energy and requests are
 | Compute / AI / Cloud | card (meter) | GAIN (within the guardrails) | +2.00% (+0.81 to +3.20) | +0.00% (+0.00 to +0.00) | -1.96% (-3.11 to -0.82) | +0.00 (+0.00 to +0.00) |
 | Compute / AI / Cloud | both | GAIN (within the guardrails) | +0.32% (+0.28 to +0.37) | -0.02% (-0.04 to +0.00) | -0.34% (-0.40 to -0.28) | +0.25 (+0.14 to +0.37) |
 | Physics / Robotics / Autonomous | stacks (model) | GAIN (within the guardrails) | +0.24% (+0.20 to +0.27) | -0.02% (-0.05 to +0.02) | -0.25% (-0.31 to -0.20) | +0.24 (+0.04 to +0.44) |
-| Physics / Robotics / Autonomous | card (meter) | EVEN (inside the noise, within the guardrails) | +2.68% (-1.28 to +6.64) | +0.00% (+0.00 to +0.00) | -2.59% (-6.33 to +1.14) | +0.00 (+0.00 to +0.00) |
+| Physics / Robotics / Autonomous | card (meter) | STEADY (inside the noise, within the guardrails) | +2.68% (-1.28 to +6.64) | +0.00% (+0.00 to +0.00) | -2.59% (-6.33 to +1.14) | +0.00 (+0.00 to +0.00) |
 | Physics / Robotics / Autonomous | both | GAIN (within the guardrails) | +0.24% (+0.20 to +0.27) | -0.02% (-0.05 to +0.02) | -0.25% (-0.31 to -0.20) | +0.24 (+0.04 to +0.44) |
 | Energy / Facility / Industrial | stacks (model) | GAIN (within the guardrails) | +0.21% (+0.18 to +0.23) | -0.02% (-0.05 to +0.02) | -0.22% (-0.24 to -0.21) | +0.22 (+0.06 to +0.38) |
 | Energy / Facility / Industrial | card (meter) | GAIN (within the guardrails) | +2.75% (+2.24 to +3.26) | +0.00% (+0.00 to +0.00) | -2.68% (-3.16 to -2.19) | +0.00 (+0.00 to +0.00) |

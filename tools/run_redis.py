@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+from collections import deque
 import os
 import random
 import subprocess
@@ -49,7 +50,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from omnicompass.compass_law import Band, CompassLaw  # noqa: E402
 from tools.knob_verdict import KnobVerdict, sample_cost, OBJECTIVES, RESOURCE as DEFAULT_OBJECTIVE  # noqa: E402  (amendment 2: the brain's own verdict)
+from tools.store_brain import MemoryMax, read_meminfo, HOLD_WINDOW_S, MISS_WORTH  # noqa: E402  (omni-v22: the max on the ceiling)
 from tools.readings import word as gel_word, aim as gel_aim, EVEN_SAME, EVEN_NOISE, SHOWN  # noqa: E402  (the words every table uses)
+from tools.run_ycsb import host_cpu_split, pid_of, proc_cpu_jiffies  # noqa: E402  (the CPU apart, the same reading as the other stores)
 
 HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("REDIS_PORT", "6390"))
@@ -66,6 +69,7 @@ COVER_MB = (16, 512)      # never under 16 MB, never over 512 MB
 STEP_MB = 8               # one notch of the knob
 FAILUP_MB = 128           # past the wall: a quarter of the cover at once, and again the next second if still past it
 DWELL_S = 5.0             # after growing, no taking back within five seconds (no hunting); giving back is a notch a second
+DIAL = os.environ.get("OMNI_DIAL", "max")   # omni-v22: max, the factory tune; save, the tune-down
 MISS_PENALTY_MS = 5.0     # the declared trip to the store behind the cache, on a miss
 WORKERS = 32              # the application's request threads
 RATE = 1500.0             # requests a second offered, the same in both arms
@@ -99,7 +103,17 @@ GAUGES = [  # key, label, direction
     ("cpu_seconds", "host CPU-seconds", "spent"),
     ("cpu_s_per_1k_inside", "host CPU-seconds per 1,000 requests inside the line", "spent"),
     ("writes", "ceiling changes written (the knob's moves)", "shown"),
+    # store fix of 25 October: the CPU apart, beside the host figure (old runs lack these rows; the readers prefer process_cpu_seconds)
+    ("process_cpu_seconds", "the stack's own CPU-seconds (redis-server, the application, the compass and its sampler; steal and the runner's other processes excluded)", "spent"),
+    ("server_cpu_seconds", "the server's own CPU-seconds (redis-server)", "shown"),
+    ("app_cpu_seconds", "the application's own CPU-seconds (its request threads)", "shown"),
+    ("brain_cpu_seconds", "the compass's own CPU-seconds (the brain's thread; none in the native arm)", "shown"),
+    ("sampler_cpu_seconds", "the sampler's own CPU-seconds (both arms)", "shown"),
+    ("host_cpu_seconds_no_steal", "host CPU-seconds without steal", "shown"),
+    ("steal_seconds", "CPU-seconds the hypervisor took (steal), host-wide", "shown"),
 ]
+OPTIONAL_GAUGES = ("process_cpu_seconds", "server_cpu_seconds", "app_cpu_seconds", "brain_cpu_seconds", "sampler_cpu_seconds",
+                   "host_cpu_seconds_no_steal", "steal_seconds")      # absent from runs before 25 October
 
 
 def zipf_sampler(rng, n, s=ZIPF_S):
@@ -177,6 +191,16 @@ class App(threading.Thread):
             lat = [l for _, l in self.recent]
         return (sum(lat) / len(lat) / 1000.0) if lat else 0.0
 
+    def split(self, since_s=1.0):
+        """The last second's hits and misses apart: (a hit's mean latency ms, a miss's, the miss share), or Nones."""
+        cut = time.time() - since_s
+        with self.lock:
+            recent = [(lat, hit) for t, lat, hit in self.records[-20000:] if t >= cut]
+        hits = [l for l, h in recent if h]; misses = [l for l, h in recent if not h]
+        if not recent:
+            return None, None, None
+        return (sum(hits) / len(hits) if hits else None, sum(misses) / len(misses) if misses else None, len(misses) / len(recent))
+
     def last_second(self, line_ms, since_s=1.0):
         """The brain's sample: (requests answered, of them inside the line, mean latency in s) over the last second."""
         now = time.time()
@@ -241,20 +265,90 @@ def decide(p, force, evicted_last_s, cur_mb, last_change_age, full, wall=0.95):
     return cur_mb, "hold"
 
 
+# omni-v22: the max on the cache's ceiling (docs/REDIS_PREREGISTRATION.md, amendment 5; docs/STORE_ROOT_CAUSES_2026-10-30.md).
+# On omni-v21 the verdict's allowance clamped every move, the wall's fail-up included, and the wall abandoned every spend trial,
+# so in 4,426 of the 4,581 seconds the service stood over its line the brain asked for memory and was refused; the cache stayed at
+# 64 to 80 MB while the working set needed more. Under the max (the factory tune, the founder's order of 12 October) memory the
+# cache takes inside the operator's cover is power given, shown beside the hits it bought; the verdict's allowance judges the
+# give-back below the operator's ceiling (the tune-down's ground), never a spend the service asks for.
+METER = "the application's own split of each request into hits and misses"
+
+
+def miss_time(obs):
+    """(the misses' time, the service's time) over the last second, in seconds, from the application's own split: the misses'
+    count times what a miss cost beyond a hit, and the requests times their mean. (None, None) where the second carries no hit and
+    miss latencies (the wire's older records): nothing known, and the max then takes nothing."""
+    hit, miss, share, mean, n = obs.get("hit_ms"), obs.get("miss_ms"), obs.get("miss_share"), obs.get("reading_s"), obs.get("n")
+    if hit is None or miss is None or share is None or not mean or not n:
+        return None, None
+    return n * share * max(0.0, miss - hit) / 1000.0, n * mean
+
+
+class Brain:
+    """The knob's decision, one a second: the code the real run (Omni) and the closed-loop model (tools/redis_model.py) drive.
+    obs: reading_s (the application's mean latency over the last second), n, inside, evicted_last_s, ceiling_mb, used_mb,
+    cpu_share (or None), hit_ms, miss_ms and miss_share (the application's split), host_avail_mb and host_total_mb (None unread).
+
+      the spend     misses with the cache full (the compass asking, by its own law: ceil(force / 0.1) notches a second; at the
+                    wall a quarter of the cover at once) go through unclamped, up to the cover's top, where the application's own
+                    split says the misses are MISS_WORTH of its time or more and the host has the notch to spare; the memory is
+                    power given (tools/store_brain.py, MemoryMax)
+      the hold      calm with nothing evicted for the dwell gives one notch back a second, never below the working set's floor
+                    (the most the working set occupied in HOLD_WINDOW_S) nor below the operator's ceiling
+      the audit     every decision with the max's reading beside it (the misses' share of the service's time, the floor, the host)"""
+
+    def __init__(self, native_mb, objective=DEFAULT_OBJECTIVE, line_ms=LINE_MS):
+        self.native_mb, self.objective = native_mb, objective
+        self.law = CompassLaw(Band(0.0, line_ms / 1000.0, center=CENTER), dt=DT, tau=TAU, smooth=SMOOTH)
+        self.max = MemoryMax(native_mb, STEP_MB, COVER_MB, FULL, METER)
+        self.last_change = -1e9
+
+    @property
+    def failups(self):
+        return self.max.failups
+
+    def record(self):
+        return self.max.record(self.objective)
+
+    def floor_mb(self, t):
+        return self.max.floor.value(t)
+
+    def step(self, t, obs):
+        reading = obs["reading_s"]; cur = obs["ceiling_mb"]; ev_last = obs["evicted_last_s"]
+        full = obs["used_mb"] >= FULL * cur
+        f = self.law.force(reading)
+        want, why = decide(self.law.p, f, ev_last, cur, t - self.last_change, full, wall=self.law.band.wall_high)
+        miss_s, service_s = miss_time(obs)
+        target, why, info = self.max.step(t, want, why, cur, obs["used_mb"], miss_s, service_s, obs.get("host_avail_mb"),
+                                          obs.get("host_total_mb"), fail_up=why.startswith("fail up"))
+        if target > cur:
+            self.last_change = t                                       # the dwell runs from the last growth
+        info.update({"p": round(self.law.p, 4), "force": round(f, 4)})
+        return target, why, info
+
+
 class Omni(threading.Thread):
     """The brain, one decision a second, writing the audit; the knob is handed back at the end and read back. Amendment 2 (the
     brain's own verdict, 2026-10-09): the ceiling starts in watch and is written only inside the allowance a paired trial on
     the cache itself has earned under the declared objective (tools/knob_verdict.py around the engine's own Verdict); a trial
     holds the ceiling; a fail-up never spends beyond the allowance."""
 
-    def __init__(self, plug: Ceiling, app: App, audit_path: Path, line_ms=LINE_MS, objective=DEFAULT_OBJECTIVE):
+    def __init__(self, plug: Ceiling, app: App, audit_path: Path, line_ms=LINE_MS, objective=DEFAULT_OBJECTIVE, dial=DIAL):
         super().__init__(daemon=True)
-        self.plug, self.app, self.audit, self.line_ms, self.objective = plug, app, audit_path, line_ms, objective
+        self.plug, self.app, self.audit, self.line_ms, self.objective, self.dial = plug, app, audit_path, line_ms, objective, dial
         self.law = CompassLaw(Band(0.0, line_ms / 1000.0, center=CENTER), dt=DT, tau=TAU, smooth=SMOOTH)
         self.stop_flag = threading.Event(); self.last_change = -1e9; self.writes = 0; self.failups = 0
-        self.foreign = False; self.handed_back = False; self.verdict = None
+        self.foreign = False; self.handed_back = False; self.verdict = None; self.brain = None
+        self.cpu_s = 0.0                                             # the brain thread's own CPU-seconds so far (store fix of 25 October)
+
+    def govern_record(self):
+        """The record of what governed the knob: the max's counts (omni-v22) or the verdict's allowance (the tune-down)."""
+        if self.brain is not None:
+            return self.brain.record()
+        return self.verdict.record() if self.verdict else None
 
     def run(self):
+        c0 = time.thread_time()
         native_mb = self.plug.attach() // MB; ev0 = self.plug.evicted(); t0 = time.monotonic(); cpu_prev = cpu_times()
         if native_mb == 0:
             # Redis as shipped holds every key it is given (no ceiling): the knob is at its limit on native, and any ceiling
@@ -265,6 +359,8 @@ class Omni(threading.Thread):
             self.handed_back = self.plug.restore()
             return
         self.verdict = KnobVerdict(native_mb, STEP_MB, COVER_MB, objective=self.objective, settle_s=TAU)
+        if self.dial == "max":
+            self.brain = Brain(native_mb, self.objective, self.line_ms); self.verdict = None
         with open(self.audit, "w") as fh:
             while not self.stop_flag.is_set():
                 tick = time.monotonic()
@@ -278,18 +374,30 @@ class Omni(threading.Thread):
                     cpu_now = cpu_times(); d_total = cpu_now[0] - cpu_prev[0]; d_idle = cpu_now[1] - cpu_prev[1]; cpu_prev = cpu_now
                     cpu_share = (1.0 - d_idle / d_total) if d_total > 0 else None
                     cost = sample_cost(self.objective, inside, mean_s, cur, cpu_share)
-                    self.verdict.observe(cost, tick - t0)                                # measured under the ceiling of the last second
-                    target, why = decide(self.law.p, f, ev_last, cur, tick - self.last_change, full, wall=self.law.band.wall_high)
-                    target, why, vinfo = self.verdict.decide(target, spend_ok=(f > 0.05 and full), give_ok=(f < -0.05 and ev_last == 0),
-                                                             t=tick - t0, why=why, stress=f > 0.05, calm=f < -0.05, fail_up=why.startswith("fail up"))
+                    hit_ms, miss_ms, miss_share = self.app.split(1.0)
+                    if self.brain is not None:                                           # the max (omni-v22)
+                        h_avail, h_total = read_meminfo()
+                        obs = {"reading_s": reading, "n": n_req, "inside": inside, "evicted_last_s": ev_last, "ceiling_mb": cur, "used_mb": used,
+                               "cpu_share": cpu_share, "hit_ms": hit_ms, "miss_ms": miss_ms, "miss_share": miss_share,
+                               "host_avail_mb": h_avail, "host_total_mb": h_total}
+                        target, why, vinfo = self.brain.step(tick - t0, obs)       # the Brain's decision (above)
+                        self.failups = self.brain.failups
+                    else:                                                                # the tune-down: omni-v21's loop
+                        self.verdict.observe(cost, tick - t0)                            # measured under the ceiling of the last second
+                        target, why = decide(self.law.p, f, ev_last, cur, tick - self.last_change, full, wall=self.law.band.wall_high)
+                        target, why, vinfo = self.verdict.decide(
+                            target, spend_ok=(f > 0.05 and full), give_ok=(f < -0.05 and ev_last == 0),
+                            t=tick - t0, why=why, stress=f > 0.05, calm=f < -0.05, fail_up=why.startswith("fail up"))
+                        if target > cur and why.startswith("fail up"):
+                            self.failups += 1
+                    vinfo.update({"hit_ms": None if hit_ms is None else round(hit_ms, 3), "miss_ms": None if miss_ms is None else round(miss_ms, 3),
+                                  "miss_share": None if miss_share is None else round(miss_share, 4)})
                     wrote = None
                     if target != cur:
                         wrote = self.plug.write(target); self.writes += 1
                         if target > cur:
-                            self.last_change = tick                  # the dwell runs from the last growth
-                        if why.startswith("fail up"):
-                            self.failups += 1
-                    fh.write(json.dumps({"t": round(tick - t0, 2), "reading_ms": round(reading * 1000, 3), "p": round(self.law.p, 4), "force": round(f, 4),
+                            self.last_change = tick
+                    fh.write(json.dumps({"t": round(tick - t0, 2), "reading_ms": round(reading * 1000, 3),
                                          "evicted_last_s": ev_last, "maxmemory_mb": cur, "used_mb": round(used, 1), "full": full, "target_mb": target, "wrote_mb": wrote,
                                          "requests_last_s": n_req, "inside_last_s": inside, "cpu_share": None if cpu_share is None else round(cpu_share, 4),
                                          "cost": None if cost is None else round(cost, 9), **vinfo, "why": why}) + "\n")
@@ -297,6 +405,7 @@ class Omni(threading.Thread):
                     fh.write(json.dumps({"t": round(tick - t0, 2), "error": repr(e)}) + "\n")
                     self.foreign = True
                     break
+                self.cpu_s = time.thread_time() - c0
                 time.sleep(max(0.0, DT - (time.monotonic() - tick)))
         self.handed_back = self.plug.restore()
 
@@ -307,15 +416,29 @@ class Sampler(threading.Thread):
     def __init__(self, r):
         super().__init__(daemon=True)
         self.r, self.stop_flag, self.rows = r, threading.Event(), []
+        self.cpu_s = 0.0                                             # the sampler thread's own CPU-seconds so far
 
     def run(self):
+        c0 = time.thread_time()
         while not self.stop_flag.is_set():
             try:
                 m = self.r.info("memory"); s = self.r.info("stats")
                 self.rows.append((int(m["maxmemory"]) / MB, int(m["used_memory"]) / MB, int(s.get("evicted_keys", 0))))
             except Exception:
                 pass
+            self.cpu_s = time.thread_time() - c0
             time.sleep(DT)
+
+
+def cpu_apart(server_s, process_s, brain_s, sampler_s, busy_s, steal_s):
+    """The arm's CPU apart (store fix of 25 October), all in seconds over the arm: the server's from its /proc/<pid>/stat, the
+    harness process's from getrusage, the brain's and the sampler's from their own threads' clocks; the application is the
+    harness process less the two threads. process_cpu_seconds, the stack's own (server, application, compass, sampler), is
+    what the readers prefer to the host figure, which also counts steal and every other process on the runner."""
+    app = max(0.0, process_s - brain_s - sampler_s)
+    return {"server_cpu_seconds": server_s, "app_cpu_seconds": app, "brain_cpu_seconds": brain_s, "sampler_cpu_seconds": sampler_s,
+            "process_cpu_seconds": (server_s + process_s) if server_s is not None else None,
+            "host_cpu_seconds_no_steal": busy_s, "steal_seconds": steal_s}
 
 
 def cpu_times():
@@ -343,9 +466,17 @@ def run_arm(arm, wl_dir: Path, rep, value_bytes, base_keys, steps, step_s, line_
     omni = None
     if arm == "omni":
         omni = Omni(Ceiling(redis.Redis(host=HOST, port=PORT, socket_timeout=5)), app, d / "audit.jsonl", line_ms, objective); omni.start()
+    import resource
+    tck = os.sysconf("SC_CLK_TCK"); pid = pid_of("redis-server")
+    srv0 = proc_cpu_jiffies(pid) if pid else None; own0 = resource.getrusage(resource.RUSAGE_SELF); busy0, steal0 = host_cpu_split()
+    brain0 = omni.cpu_s if omni else 0.0; samp0 = sampler.cpu_s
     cpu0 = cpu_times(); t0 = time.time()
     app.start(); app.join()
     t1 = time.time(); cpu1 = cpu_times()
+    srv1 = proc_cpu_jiffies(pid) if pid else None; own1 = resource.getrusage(resource.RUSAGE_SELF); busy1, steal1 = host_cpu_split()
+    apart = cpu_apart(None if srv0 is None or srv1 is None else (srv1 - srv0) / tck,
+                      (own1.ru_utime + own1.ru_stime) - (own0.ru_utime + own0.ru_stime),
+                      (omni.cpu_s - brain0) if omni else 0.0, sampler.cpu_s - samp0, (busy1 - busy0) / tck, (steal1 - steal0) / tck)
     if omni:
         omni.stop_flag.set(); omni.join(timeout=30)
     sampler.stop_flag.set(); sampler.join(timeout=5)
@@ -364,9 +495,9 @@ def run_arm(arm, wl_dir: Path, rep, value_bytes, base_keys, steps, step_s, line_
          "p95_ms": q(0.95), "p99_ms": q(0.99), "mean_ms": (sum(lat_sorted) / n) if n else float("nan"), "failed": app.failed,
          "maxmemory_mb_mean": sum(x[0] for x in rows) / len(rows), "used_mb_mean": sum(x[1] for x in rows) / len(rows),
          "evictions": rows[-1][2], "cpu_busy_share": (total - idle) / max(1, total), "cpu_seconds": cpu_s,
-         "cpu_s_per_1k_inside": 1000.0 * cpu_s / max(1, inside), "writes": (omni.writes if omni else 0),
+         "cpu_s_per_1k_inside": 1000.0 * cpu_s / max(1, inside), "writes": (omni.writes if omni else 0), **apart,
          "handed_back": (omni.handed_back if omni else True), "foreign_writer": (omni.foreign if omni else False), "failups": (omni.failups if omni else 0),
-         "verdict": (omni.verdict.record() if omni and omni.verdict else None)}
+         "verdict": (omni.govern_record() if omni else None)}
     (d / "arm.json").write_text(json.dumps(g, indent=1))
     print(f"   {arm} rep {rep}: {n} requests, hit rate {g['hit_rate']:.1%}, inside the line {g['work_inside_line_rps']:.0f}/s, p95 {g['p95_ms']:.2f} ms, "
           f"ceiling {g['maxmemory_mb_mean']:.0f} MB, used {g['used_mb_mean']:.0f} MB, CPU {cpu_s:.1f} s, handed back {g['handed_back']}"
@@ -425,7 +556,7 @@ def run_workload(name, out: Path, reps, step_s, line_ms, objective=DEFAULT_OBJEC
     print(f"== {name}: {value_bytes} B values, working set {base_keys:,} keys x notch, steps {steps}, {step_s} s a notch, Redis {ver}, the verdict's objective {objective}", flush=True)
     rec = {"workload": name, "tuning": tuning, "value_bytes": value_bytes, "base_keys": base_keys, "steps": steps, "step_s": step_s,
            "line_ms": line_ms, "rate_rps": RATE, "miss_penalty_ms": MISS_PENALTY_MS, "native_mb": NATIVE_MB, "cover_mb": list(COVER_MB),
-           "objective": objective, "native": NATIVE, "redis_version": ver, "engine": engine(), "reps": []}
+           "objective": objective, "dial": DIAL, "native": NATIVE, "redis_version": ver, "engine": engine(), "reps": []}
     for rep in range(1, reps + 1):
         order = ("native", "omni") if rep % 2 else ("omni", "native")
         r = {}

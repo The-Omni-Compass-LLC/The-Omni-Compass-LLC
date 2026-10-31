@@ -15,7 +15,7 @@ system's own published default; **M**, to be read on the machine itself when it 
 
 `realms/compass_arm_v5.py` `native_at_limit` leaves a muscle native when its knob is a power limit or an admission gate,
 or the capacity of a motion axis or a process loop: the harness's native already sits at the top of the knob's range.
-Twenty-four of the live engine page's sixty muscles meet that rule.
+Twenty-four of the live benchmark engine page's sixty muscles meet that rule.
 
 | Knob | Native in the harness | Native in the real thing | Source | The rule against the real thing |
 |---|---|---|---|---|

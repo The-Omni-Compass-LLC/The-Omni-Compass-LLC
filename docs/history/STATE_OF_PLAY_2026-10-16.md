@@ -24,22 +24,22 @@ land. Results are never read across engines. The standing block at the top of th
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top** (`V7_GOLDILOCKS.md`): response time
   **−45% to −47% mean, −60% to −62% at the 95th percentile, −67% to −69% at the 99th**, time over the response line −100%,
-  GAIN in all three of our runs; machines (node-hours) and failed requests EVEN; replicas, pods started, pod start wait and
-  alert minutes EVEN (each clear of the noise in one run only, and there on the GAIN side except replicas +3.4%, power given);
+  GAIN in all three of our runs; machines (node-hours) and failed requests STEADY; replicas, pods started, pod start wait and
+  alert minutes STEADY (each clear of the noise in one run only, and there on the GAIN side except replicas +3.4%, power given);
   parked-worker energy +1.6% to +2.3%, power given; 14 to 18 settings commands a run. One number: **+18% GAIN, power given**.
 - **KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top** (`V7_KEDA_REQUESTS.md`): response time **−57% to
   −58% mean, −71% to −75% at the 95th percentile**, time over the line −94% to −95%, alert minutes **−93% to −96%**, HPA
   replicas **−15% to −19%**, pods started **−17% to −23%**, all GAIN in all three of our runs; machines and failed requests
-  EVEN; parked-worker energy +2.2% to +2.3%, power given; 4 to 5 settings commands a run. One number: **+78% GAIN, power given**.
+  STEADY; parked-worker energy +2.2% to +2.3%, power given; 4 to 5 settings commands a run. One number: **+78% GAIN, power given**.
 - **KEDA on the CPU target and the live requests in flight, Omni-Compass on top** (`V7_KEDA_CPU_REQUESTS.md`): response time
   **−36% to −38% mean, −52% to −54% at the 95th percentile, −57% to −59% at the 99th**, time over the line −98% to −100%,
-  GAIN in all three of our runs; machines, failed requests, replicas and alert minutes EVEN; parked-worker energy +1.1% to
+  GAIN in all three of our runs; machines, failed requests, replicas and alert minutes STEADY; parked-worker energy +1.1% to
   +1.7%, power given; 17 to 20 settings commands a run. One number: **+45% GAIN, power given**.
 - **A service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top** (`V7_CRUISEKUBE.md`): every
-  gauge EVEN; CruiseKube's own rightsizing leaves Omni-Compass nothing to move and it wrote no setting. Run A alone read the
-  99th percentile +3.1% and run B the node-hours +1.0%, each inside the noise in the other two runs. One number: **0%, EVEN**.
+  gauge STEADY; CruiseKube's own rightsizing leaves Omni-Compass nothing to move and it wrote no setting. Run A alone read the
+  99th percentile +3.1% and run B the node-hours +1.0%, each inside the noise in the other two runs. One number: **0%, STEADY**.
 - **Fixed capacity, four CPU caps, Omni-Compass on top at native's cap** (`V7_CAPACITY.md`): completed work and work inside the
-  response line EVEN at every cap (run A alone read +3.8% completed work at 1 core, inside the noise in B and C): the cap is a
+  response line STEADY at every cap (run A alone read +3.8% completed work at 1 core, inside the noise in B and C): the cap is a
   quota on the service's CPU and blocks the one lever Omni-Compass has there.
 
 **On omni-v6, the engine of 15 October, real Kubernetes (evidence class L), ten pairs × three runs each** (`results/live/V6_*.md`;
@@ -47,19 +47,19 @@ that engine's own record, run again on v7 above):
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top** (`V6_GOLDILOCKS.md`): response
   time **-45% to -47% mean, -58% to -61% at the 95th percentile, -65% to -69% at the 99th**, time over the response line
-  -99% to -100%, GAIN in all three of our runs; machines, node-hours, failed requests and the alert minutes EVEN; the
-  parked-worker energy +1.8% to +2.7%, power given; HPA replicas EVEN. One number: **+54% GAIN, power given**.
+  -99% to -100%, GAIN in all three of our runs; machines, node-hours, failed requests and the alert minutes STEADY; the
+  parked-worker energy +1.8% to +2.7%, power given; HPA replicas STEADY. One number: **+54% GAIN, power given**.
 - **KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top** (`V6_KEDA_REQUESTS.md`): response time
   **-59% mean, -73% to -75% at the 95th percentile**, time over the line -97% to -99%, alert minutes -98% to -100%, HPA
   replicas **-11% to -18%**, all GAIN in all three of our runs; parked-worker energy +1.6% to +2.1%, power given. One
   number: **+105% GAIN, power given**.
 - **KEDA on the CPU target and the live requests in flight, Omni-Compass on top** (`V6_KEDA_CPU_REQUESTS.md`): response
   time **-37% to -41% mean, -55% to -57% at the 95th percentile, -59% to -63% at the 99th**, GAIN in all three of our
-  runs; machines, failed requests, alert minutes and replicas EVEN; parked-worker energy +1.2% to +1.6%, power given. One
+  runs; machines, failed requests, alert minutes and replicas STEADY; parked-worker energy +1.2% to +1.6%, power given. One
   number: **+15% GAIN, power given**.
 - **A service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top** (`V6_CRUISEKUBE.md`):
-  every gauge EVEN, no difference beyond the noise: CruiseKube's own rightsizing leaves Omni-Compass nothing to move on
-  this service. One number: **0%, EVEN**.
+  every gauge STEADY, no difference beyond the noise: CruiseKube's own rightsizing leaves Omni-Compass nothing to move on
+  this service. One number: **0%, STEADY**.
 
 In every one of these the governor ran on autopilot: no person touched a setting in either arm; the settings commands it
 wrote on its own (15 to 17 a run on Goldilocks and on KEDA with the CPU target, 4 to 5 on KEDA's HTTP add-on) are in each
@@ -68,9 +68,9 @@ are judged in every table.
 
 **Still on omni-v3, each named as that engine's result and queued to run again on v6** (`docs/BENEFIT_SHEET.md`): the
 seven real-Kubernetes demands (steady +31%, faults +37%, wandering +37%, all four at once +42%, a queue of jobs +16%, the
-Google day of 2011 +46%, all GAIN; a noisy neighbour EVEN), the five live stacks (PostgreSQL +0.9% GAIN with power given,
-MongoDB +1.7% GAIN, Kafka +0.1% GAIN, MySQL EVEN, Redis EVEN), robustness (the governor killed mid-run +8.6% GAIN; the
-two-hour run EVEN), the six organisms with the real cluster inside at 10 and 100 copies (+5.3% GAIN, power given), the
+Google day of 2011 +46%, all GAIN; a noisy neighbour STEADY), the five live stacks (PostgreSQL +0.9% GAIN with power given,
+MongoDB +1.7% GAIN, Kafka +0.1% GAIN, MySQL STEADY, Redis STEADY), robustness (the governor killed mid-run +8.6% GAIN; the
+two-hour run STEADY), the six organisms with the real cluster inside at 10 and 100 copies (+5.3% GAIN, power given), the
 big organisms at 1,000 copies on Azure (+155% GAIN), the modelled tower of that engine's 945 muscles (+0.3% GAIN), the robot
 arms (+3.8% GAIN), the power grids (+5.8% GAIN, power given), the drone swarms (+5.9% GAIN) and the buildings with batteries
 (+0.8%, GAIN AND LOSS: the bill in the 2023 districts read power given), and the Omni index over the real tests (+5.2% GAIN,
@@ -79,7 +79,7 @@ power given). None of these is shown in front of a v6 result, and none is read b
 **The muscles and the seven organisms, modelled (evidence class S, our own models, never counted in the headline)**, on
 the engine that stands, omni-v7, at the max (run again on 16 October, commit `1637d32cd26c`, with the spine as the seventh
 organism; every reading reproduces the 13 October table to the digit): 1,107 muscles in 70 families (`realms/catalog_v5.csv`),
-every muscle its own card (`realms/muscle_cards_v5.csv`), every muscle alone over its loads EVEN 580 and GAIN 527, LOSS 0; every
+every muscle its own card (`realms/muscle_cards_v5.csv`), every muscle alone over its loads STEADY 580 and GAIN 527, LOSS 0; every
 one of the seven organisms (the spine 267, the muscles every stack runs on; Compute / AI / Cloud 540, Physics / Robotics /
 Autonomous 404, Energy / Facility / Industrial 480, Distribution / Specialized 484, the four stacked 1,908, the whole tower
 1,107) GAIN (fewer misses, and under the climb more work) under the normal, climb and line loads, not one plant with less work
@@ -97,7 +97,7 @@ thing, the same work as native for a smaller bill, at the tune-down on the machi
 14 October (steady, the bursts `1 4 1 6 1 9` and `1 6 1 8 1 6`, the real day on 1 to 9; `aks-metered`, every run's title
 carrying `dial save`), and a full-wiring burst (`aks-metered-full`, the pod autoscaler moved too) ran on 15 October; their
 receipts are archived by this push and their tables follow, each on the engine it ran on. The only Azure tables up so far
-are v1's 4-worker fleet (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): every gauge EVEN, a fleet too small to show
+are v1's 4-worker fleet (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): every gauge STEADY, a fleet too small to show
 one machine. Google (GKE) and Amazon (EKS) are built (`gke-metered`, `eks-metered`; the Operator's Manual's appendices G
 and H, click by click) and run only when the founder opens the accounts and says so.
 

@@ -6,8 +6,8 @@
 """The A/B/C table for the robot arms (docs/OMNI_V1.md, docs/ROBOTICS_PREREGISTRATION.md): each robot run three times as
 separate GitHub runs on the same frozen engine (tools/run_mujoco.py). MuJoCo is deterministic, so the runs must give the
 same numbers: a gauge reads GAIN or LOSS in all three of our runs when all three runs agree on the sign (judged by what the
-gauge is for, never by its sign; energy, force and copper heating are resources spent, so a rise reads power given), EVEN
-when the change is under one part in a million, and "the runs differ" when they do not reproduce. A robot whose paired
+gauge is for, never by its sign; energy, force and copper heating are resources spent, so a rise reads power given), STEADY
+when the change is under one part in a billion (nine decimal places), and "the runs differ" when they do not reproduce. A robot whose paired
 physics trial left the override native is listed as "nothing for Omni to move"; a robot whose own servo cannot do the task
 is listed with the runner's reason. Every row is reported, LOSS included.
 Usage: python tools/mujoco_abc.py A_DIR B_DIR C_DIR --out results/live/V1_MUJOCO.md
@@ -23,9 +23,10 @@ except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from tools.readings import with_own_runs, in_all_three, aim, EVEN_SAME, SHOWN, DETERMINISTIC_RULE, ACROSS_HEAD, ACROSS_RULE, across_cells, across_counts, reproduced_reading  # noqa: E402  (every table says whose runs these are)
+from tools.repo import NAME as REPO_NAME  # noqa: E402  (the repository's name, written once)
 from tools.run_mujoco import GAUGES
 
-SAME_REL = 1e-6
+SAME_REL = 1e-9          # "the same" only to nine decimal places of the value (tools/readings.py EXACT_REL; the referee's work order of 25 October)
 REPRO_REL = 1e-9
 
 
@@ -73,7 +74,7 @@ def verdict(recs, k, direction):
 
 def engine(run):
     try:
-        sha = subprocess.run(["gh", "api", f"repos/the-omni-compass-llc/the-omni-compass/actions/runs/{run}", "--jq", ".head_sha"],
+        sha = subprocess.run(["gh", "api", f"repos/{REPO_NAME}/actions/runs/{run}", "--jq", ".head_sha"],
                              capture_output=True, text=True, timeout=60).stdout.strip()
         if len(sha) != 40 or any(c not in "0123456789abcdef" for c in sha):
             return "?", "unknown"
@@ -100,7 +101,7 @@ def main(argv=None):
          "position servos it ships with as native. Omni sits on top of that servo on one knob, the speed override, inside the "
          "task's takt (`docs/ROBOTICS_PREREGISTRATION.md`). Energy is a declared model from MuJoCo's own torques and velocities, "
          "the same in both arms, with the standing draw charged for the whole takt. Three separate GitHub runs on the same frozen "
-         "engine: MuJoCo is deterministic, so " + DETERMINISTIC_RULE + ", **EVEN, the same** under one part in a million, and **the runs differ** when they do not reproduce. A robot whose "
+         "engine: MuJoCo is deterministic, so " + DETERMINISTIC_RULE + ", **STEADY, the same** under one part in a billion (nine decimal places), and **the runs differ** when they do not reproduce. A robot whose "
          "paired physics trial found a slower cycle no cheaper is listed as nothing for Omni to move. Every row is shown, LOSS "
          "included.", "",
          "| Run | GitHub run | Commit | Engine | Robots in the run |", "|---|---|---|---|---:|"]

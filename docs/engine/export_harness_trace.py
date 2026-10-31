@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""Records the realms harness, decision by decision, as an organism and muscle by muscle alone, for the live engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html).
+"""Records the realms harness, decision by decision, as an organism and muscle by muscle alone, for the live benchmark engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html).
 
 The sixty muscles the page draws (twelve from the spine, twelve from each realm, named in MUSCLES below) are put in one
 organism of the realms harness (realms/harness.py Body: the plants of realms/plants.py, coupled through their heat and
@@ -25,9 +25,9 @@ stand warmer than their twins (inflamed), the body's heat debt (the signal that 
 whether the body gave back (no room on the bone's lines, or a heat debt), and the machines held over the pools' twins.
 
 The three-run readings: for each gauge, the paired change per decision, averaged over blocks of ten decisions, with its
-95% interval (Student's t over the blocks), in each run; GAIN or LOSS when all three runs point the same way with every
-interval clear of zero (the word by the gauge's aim), EVEN when an interval includes zero, "the runs disagree" when clear
-runs point different ways (tools/readings.py). Evidence class S. Usage: python3 docs/engine/export_harness_trace.py OUT.json
+95% interval (Student's t over the blocks), in each run; read by the one rule (tools/readings.py three_run_reading, the
+founder's order of 24 October 2026): the mean of the three runs' changes, under 0.5% STEADY, from 0.5% up the word by the gauge's
+aim; "the runs disagree" when runs that moved 0.5% or more point different ways. Evidence class S. Usage: python3 docs/engine/export_harness_trace.py OUT.json
 """
 from __future__ import annotations
 
@@ -258,21 +258,19 @@ def gauges(nat, omn):
 
 
 def reading(per_run, aim):
-    """The three-run rule on the per-run intervals [(mean, lo, hi)]."""
+    """The one three-run rule (tools/readings.py three_run_reading, the founder's order of 24 October 2026) on the per-run
+    changes [(change, lo, hi)], each relative to native: the mean of the three changes; under 0.5% STEADY; from 0.5% up the word
+    by the gauge's aim; runs that moved 0.5% or more in opposite directions disagree."""
+    from tools.readings import SIZE_FLOOR, HIGHER, LOWER, SPENT, word
     if aim == "shown":
         return "shown"          # a gauge no rule of the engine aims at: its change is shown, never judged
-    clear = [(lo > 0) or (hi < 0) for _, lo, hi in per_run]
-    if not all(clear):
-        return "EVEN"
-    signs = {m > 0 for m, _, _ in per_run}
-    if len(signs) > 1:
+    ch = [m for m, _, _ in per_run]
+    if len({m > 0 for m in ch if abs(m) >= SIZE_FLOOR}) > 1:
         return "the runs disagree"
-    rose = signs.pop()
-    if aim == "shown":
-        return "shown"
-    if aim == "spent":
-        return "power given" if rose else "GAIN"
-    return "GAIN" if (rose if aim == "up" else not rose) else "LOSS"
+    mean = sum(ch) / len(ch)
+    if abs(mean) < SIZE_FLOOR:
+        return "STEADY"
+    return word(mean < 0, {"up": HIGHER, "down": LOWER, "spent": SPENT}.get(aim, LOWER))
 
 
 def pack(rec, n):

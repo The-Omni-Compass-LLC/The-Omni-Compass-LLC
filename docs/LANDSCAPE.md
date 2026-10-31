@@ -112,16 +112,16 @@ Each grade reads public material against the measures above. "np" is not publish
 - **Where I am behind.** Every product above runs on customers' production systems; I have none. My real-software evidence is on
   GitHub's small machines and kind clusters, my clouds are one set in progress on Azure, my GPU result is not in, and my widest
   results are my own models (class S). Evidence scale is my D, and only production runs raise it.
-- **The operator's surface.** My live engine shows native and Omni-Compass on the same monitor, reads every gauge in the gauge's
-  own aim (GAIN, EVEN, LOSS), and carries knobs, buttons and lights on every monitor. I found no compute governor whose console
+- **The operator's surface.** My live benchmark engine shows native and Omni-Compass on the same monitor, reads every gauge in the gauge's
+  own aim (GAIN, STEADY, LOSS), and carries knobs, buttons and lights on every monitor. I found no compute governor whose console
   shows the governed system beside native on the same monitor; SCADA screens carry live knobs on live plants, and that is the
-  bar. My live engine replays my recorded runs and my models in the page; my control API (`tools/omni_control.py`) drives a live
+  bar. My live benchmark engine replays my recorded runs and my models in the page; my control API (`tools/omni_control.py`) drives a live
   governor, and the page's grade rises to A when every monitor reads and drives a live system through it.
 
-## The live engine beside the operator's surfaces that exist
+## The live benchmark engine beside the operator's surfaces that exist
 
-The founder asked what in the world is close to my live engine's layout. These are the surfaces I found, read from their public
-material, on the four things my live engine is built to do: show the system live, show native and the governed system side by
+The founder asked what in the world is close to my live benchmark engine's layout. These are the surfaces I found, read from their public
+material, on the four things my live benchmark engine is built to do: show the system live, show native and the governed system side by
 side on the same monitor, carry knobs and buttons that act on the running mechanism, and order the screen by what the person
 watching must see first.
 
@@ -133,11 +133,11 @@ watching must see first.
 | IBM Turbonomic | yes: a supply chain from application to hardware | no | yes: every action with its reason, run by hand or automatically | by the actions pending |
 | SCADA and HMI (Ignition, AVEVA) | yes: the plant | no: the plant, not the plant beside a governed copy of itself | yes: setpoints and buttons bound to the controllers' own tags | yes: ANSI/ISA-101.01 (the high-performance HMI: colour only for the abnormal) and ANSI/ISA-18.2 (alarms in priority order) |
 | Digital twins (Siemens, AVEVA, NVIDIA Omniverse) | yes: a model of the plant beside the plant | a model beside the real thing, not a governor beside native | what-if runs on the model | by the plant's layout |
-| **My live engine** | my recorded runs and my models, replayed in the page; a live governor through my control API (`tools/omni_control.py`), not yet driven from the page | **yes: native, Omni-Compass on native and Omni-Compass direct on the same monitor, each gauge read in its own aim** | knobs, buttons and a light on every monitor; the one button that puts every knob back to the factory tune; native alone stays the kill switch | the order the founder set on 24 October: what the person watching must see first, down to what they need least |
+| **My live benchmark engine** | my recorded runs and my models, replayed in the page; a live governor through my control API (`tools/omni_control.py`), not yet driven from the page | **yes: native, Omni-Compass on native and Omni-Compass direct on the same monitor, each gauge read in its own aim** | knobs, buttons and a light on every monitor; the one button that puts every knob back to the factory tune; native alone stays the kill switch | the order the founder set on 24 October: what the person watching must see first, down to what they need least |
 
 What the table says: the industrial HMI is the one surface with live knobs bound to a live mechanism and a written order of
-importance, and it is the bar my live engine is held to. No surface I found shows a governed system beside its own native
-controller on the same monitor, gauge by gauge. My live engine does that today on recorded runs; it reaches the HMI's bar when
+importance, and it is the bar my live benchmark engine is held to. No surface I found shows a governed system beside its own native
+controller on the same monitor, gauge by gauge. My live benchmark engine does that today on recorded runs; it reaches the HMI's bar when
 every monitor reads and drives a live system through the control API.
 
 Run and scored by The Omni-Compass LLC's own reading of public material. No outside party has reviewed or approved these grades.

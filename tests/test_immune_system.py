@@ -99,6 +99,25 @@ class ImmuneSystem(unittest.TestCase):
                 first = v.t
         self.assertGreaterEqual(first, self.c.n_verdict_recheck)   # the immune memory has watched the organism first
 
+    def test_a_redline_omni_cannot_lift_goes_to_native_when_native_is_stronger(self):
+        """omni-v21 (omnicompass/immune.py): the service over its line, Omni-Compass's pods fewer than native's own rule would ask
+        and its push at its limit, native's twin (more pods, a shorter M/M/1 wait) reads lower: the target goes to native."""
+        self.c.a.slo_ms = 500
+        h = hpa(70, replicas=4, util=100)
+        h["metadata"]["annotations"] = {"omnicompass.io/original-target-utilization": "50"}
+        self.c._app_demand = lambda h_: 4.0                     # four pods' worth: native's 50% asks for eight
+        answers = [self.c._immune_native(h, "default", "web", 30.0, 50.0, 30.0, 900.0) for _ in range(3)]
+        self.assertEqual(answers, [False, False, True])
+        self.assertTrue(any(r.get("immune", {}).get("immune") == "handed to native" for r in self.records()))
+
+    def test_a_redline_native_cannot_beat_stays(self):
+        """More pods than native would ask: native's twin waits longer, so Omni-Compass keeps the target and says so."""
+        self.c.a.slo_ms = 500
+        h = hpa(30, replicas=10, util=40)
+        h["metadata"]["annotations"] = {"omnicompass.io/original-target-utilization": "50"}
+        self.c._app_demand = lambda h_: 4.0                     # native's 50% asks for eight; Omni-Compass runs ten
+        self.assertEqual([self.c._immune_native(h, "default", "web", 30.0, 50.0, 30.0, 900.0) for _ in range(4)], [False] * 4)
+
 
 if __name__ == "__main__":
     unittest.main()

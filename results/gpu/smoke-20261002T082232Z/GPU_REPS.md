@@ -108,7 +108,7 @@ Phase: **smoke**. Omni frozen at commit c908054053e9; file hashes in FREEZE.json
 Work per energy under Omni against native: 50.9 -> 51.38 served requests per kJ, difference +0.4749 (95% interval -0.6565 to +1.606).
 Guardrails: requests served held (not below -1%), 95th-percentile response time FAILED (not above +10%), requests not served held (not above +1% of native served).
 Observation (watch against native) on the same outcome: LOSS, not proven. Authority (omni against watch): GAIN, not proven.
-**Result, by rule: EVEN (not established: inside the noise, a guardrail crossed on the mean).**
+**Result, by rule: STEADY (not established: inside the noise, a guardrail crossed on the mean).**
 
 ## Actuator fidelity (receipt B: requested against read back from the device)
 

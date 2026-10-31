@@ -105,10 +105,41 @@ def trusted_records(trust):
     return out, refused
 
 
+def process_directory(pid):
+    """Procfs directory for a PID in the caller's own PID namespace, or None."""
+    try:
+        proc = Path('/proc')
+        target = proc / str(int(pid))
+        # A host-mounted procfs names host PIDs; signals still take this namespace's
+        # PIDs. Resolve only processes in our own PID namespace, never a matching
+        # numeric ID in another namespace.
+        if int((proc / 'self/stat').read_text().split()[0]) != os.getpid():
+            namespace = (proc / 'self/ns/pid').stat().st_ino
+            target = None
+            for status in proc.glob('[0-9]*/status'):
+                try:
+                    if (status.parent / 'ns/pid').stat().st_ino != namespace:
+                        continue
+                    ids = next(line.split()[1:] for line in status.read_text().splitlines() if line.startswith('NSpid:'))
+                    if ids and int(ids[-1]) == int(pid):
+                        target = status.parent
+                        break
+                except (OSError, ValueError, StopIteration):
+                    continue
+            if target is None:
+                return None
+        return target
+    except (OSError, ValueError, IndexError):
+        return None
+
+
 def started_at(pid):
     """When the process now holding pid started (epoch seconds), or None where the system does not say (no /proc)."""
     try:
-        fields = open(f"/proc/{int(pid)}/stat").read().rsplit(")", 1)[1].split()
+        target = process_directory(pid)
+        if target is None:
+            return None
+        fields = (target / 'stat').read_text().rsplit(")", 1)[1].split()
         boot = next(float(ln.split()[1]) for ln in open("/proc/stat") if ln.startswith("btime "))
         return boot + float(fields[19]) / os.sysconf("SC_CLK_TCK")
     except (OSError, ValueError, IndexError, StopIteration):

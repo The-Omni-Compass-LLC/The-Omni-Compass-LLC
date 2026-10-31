@@ -30,9 +30,9 @@ class TheRule(unittest.TestCase):
         self.assertEqual(wv.classify("LOSS in all three of our runs"), "loss")
         self.assertEqual(wv.classify("**power given in all three of our runs**"), "given")
         self.assertEqual(wv.classify("**LOSS in at least one of our runs**"), "loss")
-        self.assertEqual(wv.classify("**GAIN or EVEN in all three of our runs**"), "gain")
-        self.assertEqual(wv.classify("EVEN, no difference beyond the noise (2 of 3 runs)"), "noise")
-        self.assertEqual(wv.classify("EVEN, the same"), "same")
+        self.assertEqual(wv.classify("**GAIN or STEADY in all three of our runs**"), "gain")
+        self.assertEqual(wv.classify("STEADY, no difference beyond the noise (2 of 3 runs)"), "noise")
+        self.assertEqual(wv.classify("STEADY, the same"), "same")
         # the direction words of 13 October: the gauge's aim gives the word (a resource spent that rose is power given)
         self.assertEqual(wv.classify("**lower in all three of our runs**", "lower"), "gain")
         self.assertEqual(wv.classify("higher in all three of our runs", "lower"), "loss")
@@ -79,7 +79,7 @@ class TheRule(unittest.TestCase):
                 ["energy (J)", "482.3", "478.3", "-0.82%", "-0.82%", "-0.82%", "**lower in all three of our runs**"],
                 ["cycle time (s)", "8.01", "10.21", "+27.47%", "+27.47%", "+27.47%", "shown, not judged"],
                 ["line heating (MWh)", "730", "736", "+0.76%", "+0.76%", "+0.80%", "**power given in all three of our runs**"],
-                ["bus-steps", "0", "0", "+0.0e+00", "+0.0e+00", "+0.0e+00", "EVEN, the same"]]
+                ["bus-steps", "0", "0", "+0.0e+00", "+0.0e+00", "+0.0e+00", "STEADY, the same"]]
         j = wv.sim_rows_judged(rows, {"energy (J)": "spent", "line heating (MWh)": "spent", "bus-steps": "never more"})
         self.assertEqual([x[1] for x in j["gain"]], ["energy"])
         self.assertEqual(j["gain"][0][2], "-0.8%")

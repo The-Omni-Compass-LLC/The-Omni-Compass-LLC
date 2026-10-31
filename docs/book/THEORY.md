@@ -363,7 +363,7 @@ with their own results in `docs/history/`.
 Every organism runs under three loads: its own load; the climb, the demand stepping by one, up and down (1 2 3 2 3 4 …),
 past what native can carry, so that the most each arm can do shows; and work waiting in line when the run starts. Every
 receipt shows work, the time over the service line (misses), the energy the max took as power given beside the work it
-bought, wear, and whether every knob was handed back; the reading is GAIN, EVEN or LOSS by the key at the front of this
+bought, wear, and whether every knob was handed back; the reading is GAIN, STEADY or LOSS by the key at the front of this
 manual, judged by what each gauge is for and never by the sign of its number. The spine read beside a realm shows what that
 realm's trade adds to the base it stands on; the spine read alone shows whether the governor helps the machines every
 stack runs on before any trade is put on them.

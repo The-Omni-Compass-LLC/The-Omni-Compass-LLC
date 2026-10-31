@@ -10,12 +10,12 @@ Intel(R) Xeon(R) Processor, 4 CPUs, governor schedutil (modelled), kernel 6.18.4
 
 | Gauge | native | omni | change | 95% interval of the difference | reading |
 |---|---:|---:|---:|---:|---|
-| work inside the response line (requests a second answered within the line) | 270 | 270 | -0.0% | -0.325 to 0.2 | EVEN, no difference beyond the noise |
-| throughput (requests a second) | 270 | 270 | -0.0% | -0.0359 to 0.0219 | EVEN, no difference beyond the noise |
+| work inside the response line (requests a second answered within the line) | 270 | 270 | -0.0% | -0.325 to 0.2 | STEADY, no difference beyond the noise |
+| throughput (requests a second) | 270 | 270 | -0.0% | -0.0359 to 0.0219 | STEADY, no difference beyond the noise |
 | latency, 95th percentile (ms) | 5.93 | 6.23 | +5.2% | 0.078 to 0.537 | LOSS |
-| latency, 99th percentile (ms) | 6.14 | 6.47 | +5.4% | -0.0303 to 0.693 | EVEN, no difference beyond the noise |
+| latency, 99th percentile (ms) | 6.14 | 6.47 | +5.4% | -0.0303 to 0.693 | STEADY, no difference beyond the noise |
 | latency, mean (ms) | 5.53 | 5.72 | +3.4% | 0.074 to 0.305 | LOSS |
-| failed requests (not answered by the end of the arm) | 0 | 0 |  | 0 to 0 | EVEN, the same |
+| failed requests (not answered by the end of the arm) | 0 | 0 |  | 0 to 0 | STEADY, the same |
 | energy, CPU package (J; the processor's own meter, the resource) | 1,922 | 1,841 | -4.2% | -117 to -45.2 | GAIN |
 | power, CPU package mean (W) | 32 | 30.6 | -4.2% | -1.95 to -0.755 | GAIN |
 | energy per 1,000 requests inside the line (J) | 119 | 114 | -4.2% | -7.15 to -2.83 | GAIN |

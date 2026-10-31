@@ -46,7 +46,7 @@ def where(f):
     return f.relative_to(ROOT).as_posix() if f.is_relative_to(ROOT) else f.name
 
 
-RAW_BRANCH = "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass/blob/raw/"   # the raw receipts' own branch
+from tools.repo import RAW as RAW_BRANCH  # noqa: E402  (the raw receipts' own branch, on the repository's name written once)
 
 
 def link(md, out_dir):
@@ -114,13 +114,13 @@ def directions(o):
 
 
 def kube_verdict(o):
-    """The square's line in GAIN, EVEN and LOSS, with the report's own facts kept (off the clock, invalid)."""
+    """The square's line in GAIN, STEADY and LOSS, with the report's own facts kept (off the clock, invalid)."""
     if o["repetitions"] < 2:
         return "ONE REPETITION"
     by, noise = directions(o)
     facts = "".join("; " + f for f in re.findall(r"; ((?:OFF THE CLOCK|INVALID)[^;]*)", o["verdict"]))   # kept as recorded
     return (", ".join(f"{w} on {len(xs)}" + (f" ({'; '.join(xs)})" if xs else "") for w, xs in by.items())
-            + f", EVEN (inside the noise) on {noise}" + facts)
+            + f", STEADY (inside the noise) on {noise}" + facts)
 
 
 def kube_cell(o):
@@ -224,7 +224,7 @@ def main(argv=None):
          "Native against Omni-Compass on top of native, engine omni-v5 (digest 5648f290, every muscle its own card), work "
          "waiting in line in every organism. Each square is the pooled receipt's own reading; the 1-, 10- and 100-run "
          "squares of a size are nested (the first N runs). Every square is shown.", "",
-         "How to read a modelled square: its reading, GAIN, EVEN or LOSS (one run carries no label; at 10, 100 and 500 runs the "
+         "How to read a modelled square: its reading, GAIN, STEADY or LOSS (one run carries no label; at 10, 100 and 500 runs the "
          "receipt's own label, its word first), then the change Omni-Compass made against native, averaged over the runs: "
          "misses, the share of time the plants were over their own line, in percentage points (a minus is fewer misses, a "
          "GAIN); work done, in percent; power given, the energy the max took for it, in percent (shown, never called a loss). "
@@ -251,7 +251,7 @@ def main(argv=None):
               + ". Every gauge of every square, with its interval: " + ", ".join(link(kub[k][2], od) for k in sorted(kub, key=lambda k: (k[0], int(k[1]))))
               + ".", "",
               "How to read a square with the cluster inside: which gauges read GAIN, LOSS or power given against native, each "
-              "only when its 95% interval is clear of zero (the rest are EVEN, inside the noise), read from the report's own "
+              "only when its 95% interval is clear of zero (the rest are STEADY, inside the noise), read from the report's own "
               "rows (`tools/six_kube_report.py`) and judged by what each gauge is for, never by its sign: the cluster's response "
               "times, time over the response line and failed requests are time waited, missed or failed; the organism's work is "
               "work done; pods started, replicas, machines, declared energy and the organism's energy are resources spent, so a "

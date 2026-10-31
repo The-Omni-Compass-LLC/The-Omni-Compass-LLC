@@ -190,7 +190,7 @@ def cmd_confirm(a):
     with ProcessPoolExecutor(a.workers) as ex:
         res = list(ex.map(_confirm_job, jobs, chunksize=2))
     json.dump({"seeds": seeds, "search": a.search, "muscles": res}, open(a.out, "w"), indent=1)
-    t = collections.Counter("won again" if r["won"] else ("LOSS against the global setting" if r["away"] else "EVEN with the global setting")
+    t = collections.Counter("won again" if r["won"] else ("LOSS against the global setting" if r["away"] else "STEADY with the global setting")
                             for r in res)
     print(dict(t))
 

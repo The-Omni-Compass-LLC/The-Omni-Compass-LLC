@@ -42,6 +42,15 @@ from .presets import STEPS_SINGLE, ORGANISM_STEPS, CAL_SEED, params_for
 ROOT = Path(__file__).resolve().parents[1]
 LAWS = {"compass": compass_apply, "v5": lambda p, k: max_apply(p, k, V5CFG), "v5save": apply_v5_save}
 ARMS = ("native", "watch", "compass")   # native; Omni watching (writes nothing); the compass law on top (amendment, 2026-10-05)
+SOLO = "solo"     # Omni-Compass by itself (omni-v19, docs/SOLO_PREREGISTRATION.md): the max, with every pool whose own count is
+                  # the muscle's knob run with its autoscaler switched off (and its twin, the brain's sense of native, too)
+
+
+def native_off_pool(template: str, knob: str) -> bool:
+    """Whether by itself switches off this muscle's own native controller: a pool whose knob is its count (capacity, or the
+    autoscaler's target), where native is the autoscaler. A power cap, an admission limit and every other plant's knob are
+    a setting native already holds still, or run through native's own loop as their actuator: by itself is the same arm."""
+    return template == "compute_pool" and knob not in ("power", "admission")
 # for a setpoint muscle, a fourth arm: the native controller with the setpoint simply fixed at the band's calm end.
 # It shows how much of any Omni result on that muscle the band alone would give, with no governor.
 FIXED = "fixed_calm"
@@ -278,19 +287,21 @@ def run_muscle_arm(row, seed, arm, load=None):
             plant.step()
         plant.finalize()
         return dict(plant.m, writes=0, after_kill_writes=0, restore_ok=True)
-    g = None if arm in ("native", FIXED, "compass", "v5", "v5save") else Governor()
+    g = None if arm in ("native", FIXED, "compass", "v5", "v5save", SOLO) else Governor()
     if arm == "watch":
         g.set_mode(OBSERVE)
     kill_at = int(KILL_AT * plant.steps)
     writes = after_kill_writes = 0
     last = None
     restore_ok = True
-    twin = make_plant(row, seed) if arm == "v5" else None            # the brain's model of native (the max's floor)
+    twin = make_plant(row, seed) if arm in ("v5", SOLO) else None    # the brain's model of native (the max's floor)
     if twin is not None and load is not None:
         scale_load_plant(twin, load)
+    if arm == SOLO and native_off_pool(row["template"], knob):
+        plant.native_off = twin.native_off = True                    # by itself: the pool's own autoscaler off, in both
     for k in range(plant.steps):
-        if arm in ("compass", "v5", "v5save"):
-            apply = LAWS[arm]
+        if arm in ("compass", "v5", "v5save", SOLO):
+            apply = LAWS["v5" if arm == SOLO else arm]
             if k < kill_at:
                 if twin is not None:
                     twin.step()
@@ -429,7 +440,7 @@ def run_bodies(bodies, arm, groups):
     """Run bodies on one 15 s clock. groups: lists of body indices, one governor per group (one group of all bodies is
     one governor over the whole stack; one group per body is a separate governor per body). arm native: no governor."""
     govs = []
-    if arm not in ("native", "compass", "v5", "v5save"):
+    if arm not in ("native", "compass", "v5", "v5save", SOLO):
         for grp in groups:
             g = Governor()
             if arm == "watch":
@@ -440,13 +451,20 @@ def run_bodies(bodies, arm, groups):
     restore_ok = True
     last = {}
     bones, twins = [], []
-    if arm == "v5":
+    if arm in ("v5", SOLO):
         bones = [Bone(b, V5CFG) for b in bodies]                       # each body's skeleton, with its pools' twins
+    if arm == SOLO:                                                    # by itself: every pool whose count is its knob runs with
+        for b, bone in zip(bodies, bones):                             # its autoscaler off, and so does its twin
+            for i, (p, r) in enumerate(zip(b.plants, b.rows)):
+                if native_off_pool(p.template, r["knob"]):
+                    p.native_off = True
+                    if i in bone.twins:
+                        bone.twins[i].native_off = True
     for k in range(ORGANISM_STEPS):
         for b in bodies:
             b.couple()
-        if arm in ("compass", "v5", "v5save"):
-            apply = LAWS[arm]
+        if arm in ("compass", "v5", "v5save", SOLO):
+            apply = LAWS["v5" if arm == SOLO else arm]
             for bi, b in enumerate(bodies):
                 if k >= kill_at:
                     for p in b.plants:
@@ -454,7 +472,7 @@ def run_bodies(bodies, arm, groups):
                         if k >= kill_at + WALK - 1:
                             restore_ok = restore_ok and _restored(p, None)
                     continue
-                if arm == "v5":
+                if arm in ("v5", SOLO):
                     bones[bi].advance_twin()
                     max_body_step(b, V5CFG, bones[bi])                 # the max: one body, its bone, its spare shared
                     for p in b.plants:

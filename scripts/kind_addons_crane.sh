@@ -36,11 +36,32 @@ fetch "https://raw.githubusercontent.com/gocrane/helm-charts/main/integration/pr
 fetch "https://github.com/gocrane/helm-charts/releases/download/crane-${CRANE_VERSION}/crane-${CRANE_VERSION}.tgz" \
   "$DL/crane.tgz" "$CRANE_SHA256"
 
+load_images() {   # a chart's own images, pulled once onto the runner and loaded into every node (kind load), as busybox is
+                  # (scripts/kind_bench.sh): a node's own pull of the Prometheus server image never finished in crane B, run
+                  # 40359500118, repetition 2 (ImagePullBackOff; the install's ten minutes ran out and the arm was marked invalid).
+                  # The same in every arm that carries Crane; where the load cannot be made, the nodes pull it themselves, as before
+  local kname img t
+  kname="${KIND_CLUSTER:-$(kubectl config current-context 2>/dev/null | sed -n 's/^kind-//p')}"
+  for img in $(helm template "$@" | sed -n 's/^[[:space:]-]*image:[[:space:]]*"\{0,1\}\([^"[:space:]]*\)"\{0,1\}.*/\1/p' | sort -u); do
+    for t in 1 2 3; do
+      if docker image inspect "$img" >/dev/null 2>&1 || docker pull -q "$img" >/dev/null 2>&1; then break; fi
+      echo "$img not pulled onto the runner (try $t)"; sleep 20
+    done
+    if [ -n "$kname" ] && kind load docker-image "$img" --name "$kname" >/dev/null 2>&1; then
+      echo "$img: loaded into every node from the runner's own copy (kind load)" | tee -a "$OUT_DIR/preflight.txt"
+    else
+      echo "$img: not loaded from the runner; the nodes pull it themselves" | tee -a "$OUT_DIR/preflight.txt"
+    fi
+  done
+}
+
 echo "== Prometheus ${PROM_VERSION}, as Crane's installation guide installs it"
+load_images prometheus "$DL/prometheus.tgz" --namespace "$NS" -f "$DL/prom-override.yaml" -f deploy/kind/crane-prometheus-values.yaml
 helm install prometheus "$DL/prometheus.tgz" --namespace "$NS" --create-namespace -f "$DL/prom-override.yaml" \
   -f deploy/kind/crane-prometheus-values.yaml --wait --timeout 10m > "$OUT_DIR/crane_prometheus_helm.log" 2>&1 \
   || { tail -40 "$OUT_DIR/crane_prometheus_helm.log"; kubectl get pods -n "$NS" -o wide; exit 1; }
 echo "== Crane ${CRANE_VERSION}"
+load_images crane "$DL/crane.tgz" --namespace "$NS" -f deploy/kind/crane-values.yaml
 helm install crane "$DL/crane.tgz" --namespace "$NS" -f deploy/kind/crane-values.yaml --wait --timeout 10m \
   > "$OUT_DIR/crane_helm.log" 2>&1 || { tail -40 "$OUT_DIR/crane_helm.log"; kubectl get pods -n "$NS" -o wide; exit 1; }
 kubectl wait -n "$NS" --for=condition=Available deploy --all --timeout=600s >/dev/null

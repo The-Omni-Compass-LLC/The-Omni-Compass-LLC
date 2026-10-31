@@ -7,7 +7,7 @@
 frozen engine, A the result, B and C the replications. Every judged row gets one of three readings, all three runs shown:
 GAIN or LOSS in all three of our runs (judged by what the gauge is for, never by the sign of its number; a resource spent
 that rose reads power given, never a loss: tools/readings.py, the founder's order of 13 October) when all three runs move
-the same way and each run's 95% interval of the paired difference (omni minus native) is clear of zero; EVEN, no
+the same way and each run's 95% interval of the paired difference (omni minus native) is clear of zero; STEADY, no
 difference beyond the noise, when a run's interval includes zero (native and omni could not be told apart on that measure,
 which is itself the result, with the count of such runs); the runs disagree when runs clear of the noise point different
 ways (the test itself is then unstable, and is looked into).
@@ -26,6 +26,7 @@ except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from tools.readings import OWN_RUNS, receipt_key, in_all_three, word, aim, EVEN_SAME, even_noise, SHOWN, three_run_reading, run_word, LOWER as AIMS_LOWER, HIGHER as AIMS_HIGHER  # noqa: E402
+from tools.repo import NAME as REPO_NAME  # noqa: E402  (the repository's name, written once)
 from tools.live_reps import KEYS, LABEL, NEUTRAL, SAME_REL
 from tools.readings import by_word, interval_by_word, word_sign, reading_kind
 
@@ -134,15 +135,33 @@ def load(d):
     return run, paired, n, j.get("robust")
 
 
+def raw_pct(x, digits=1):
+    """A raw change with its true sign: + for a rise, − for a fall, whatever the gauge is for (the referee's work order of
+    25 October: a raw change is never turned to wear the verdict's sign)."""
+    v = round(x, digits)   # the sign of the number as printed: a change that rounds to zero prints ±0.0, never −0.0
+    return f"{'+' if v > 0 else '−' if v < 0 else '±'}{abs(x):.{digits}f}"
+
+
+def num(x):
+    """A measured value as it stands, four significant figures."""
+    return f"{x:.4g}"
+
+
 def cell(r, word=None):
-    """One run's change, in percent of native where native is not zero, with its 95% interval; the number carries the row's
-    word's sign (tools/readings.py by_word: GAIN +, LOSS −, EVEN =), never the gauge's raw direction."""
-    nat, diff, lo, hi = r["native"], r["diff"], r["ci95"][0], r["ci95"][1]
-    if word_sign(word) in ("+", "−") and diff and (word_sign(word) == "+") != (diff > 0):
-        lo, hi = -hi, -lo                    # the word turned the number's sign: its interval turns with it, so the two agree
+    """One run, in separate fields: native's value → Omni-Compass's, the raw change (Omni − native) / native with its true sign
+    and its 95% interval, and the run's own word. A native under one unit or at zero is shown with the change in the gauge's own
+    unit beside the percent, because a percent of a near-zero base reads as nothing."""
+    nat, omni, diff, lo, hi = r["native"], r.get("omni"), r["diff"], r["ci95"][0], r["ci95"][1]
+    if omni is None:
+        omni = nat + diff
+    w = f"; {word}" if word else ""
+    none = not all(isinstance(x, (int, float)) and x == x for x in (lo, hi))      # one pair: no interval
     if nat:
-        return f"{by_word(100 * diff / abs(nat), word)} ({interval_by_word(100 * lo / abs(nat), 100 * hi / abs(nat), word, unit='')})"
-    return f"{by_word(diff, word, unit='', digits=4)} ({interval_by_word(lo, hi, word, unit='', digits=4)})"
+        iv = "no interval, one pair" if none else f"{raw_pct(100 * lo / abs(nat))}% to {raw_pct(100 * hi / abs(nat))}%"
+        unit = f", {raw_pct(diff, 4)} in the gauge's unit" if abs(nat) < 1 else ""
+        return f"{num(nat)} → {num(omni)}; raw {raw_pct(100 * diff / abs(nat))}% (95%: {iv}){unit}{w}"
+    iv = "no interval, one pair" if none else f"{raw_pct(lo, 4)} to {raw_pct(hi, 4)}"
+    return f"{num(nat)} → {num(omni)}; raw {raw_pct(diff, 4)} in the gauge's unit (95%: {iv}){w}"
 
 
 def aim_of_row(k):
@@ -153,7 +172,7 @@ def aim_of_row(k):
 
 def verdict(k, rs):
     """The row's reading over the three runs, by rule: GAIN, LOSS or power given in all three of our runs (by what the gauge
-    is for), EVEN (no difference the test can measure, or the same), or a disagreement between runs. Every judged row gets
+    is for), STEADY (no difference the test can measure, or the same), or a disagreement between runs. Every judged row gets
     exactly one."""
     if k in NEUTRAL:
         return SHOWN
@@ -187,7 +206,7 @@ def rig(d):
 def engine(run):
     """The Omni version the run's commit carries (tools/omni_version.py), from the GitHub run record."""
     try:
-        sha = subprocess.run(["gh", "api", f"repos/the-omni-compass-llc/the-omni-compass/actions/runs/{run}", "--jq", ".head_sha"],
+        sha = subprocess.run(["gh", "api", f"repos/{REPO_NAME}/actions/runs/{run}", "--jq", ".head_sha"],
                              capture_output=True, text=True, timeout=60).stdout.strip()
         if len(sha) != 40 or any(c not in "0123456789abcdef" for c in sha):
             return "?", "unknown"                          # a run whose commit cannot be read is never called v1
@@ -215,7 +234,7 @@ def main(argv=None):
          "interval. Every judged row gets one of three readings. **GAIN** or **LOSS in all three of our runs**: all three "
          "runs move the same way and every interval is clear of zero, and the word says what that means for the gauge's "
          "declared aim, never the sign of its number (a response time that fell is GAIN; a resource spent that fell is a cut, "
-         "a GAIN, and one that rose is **power given**, never a loss: the key, `docs/HOW_TO_READ_THE_RESULTS.md`). **EVEN, no "
+         "a GAIN, and one that rose is **power given**, never a loss: the key, `docs/HOW_TO_READ_THE_RESULTS.md`). **STEADY, no "
          "difference beyond the noise**: in the runs counted, the interval includes zero, so native and omni could not be told "
          "apart on that measure; that is the result. **The runs disagree**: runs clear of the noise point different ways, so "
          "the test itself is unstable there. Every row is shown, LOSS included.", "", OWN_RUNS, ""]

@@ -411,7 +411,7 @@ for note in PRE.get("post_registration_notes", []):
 P(f"Development seeds: {', '.join(str(x) for x in PRE['development_seeds'])}. The allocation law, shield, baselines and benchmark code were "
   "frozen and their SHA-256 and program fingerprints recorded in results/PREREGISTRATION.json before the held-out seeds "
   f"{S1} and {S2} (500 scenarios each) were run. Paired 95% intervals are bootstrap intervals over scenarios (4,000 resamples). "
-  "A result is called GAIN or LOSS only when the interval excludes zero; otherwise it is EVEN.")
+  "A result is called GAIN or LOSS only when the interval excludes zero; otherwise it is STEADY.")
 
 # ------------------------------------------------------------------ 8
 P("8. Results", H1)
@@ -436,7 +436,7 @@ def verdict(sd, comp, mm, lower):
     r = pr(sd, comp, mm); lo, hi = r["ci95"]
     if hi < 0: return "GAIN" if lower else "LOSS"
     if lo > 0: return "LOSS" if lower else "GAIN"
-    return "EVEN"
+    return "STEADY"
 
 for idx, sd in enumerate((S1, S2)):
     P(f"8.{idx + 1} Held-out seed {sd} (500 scenarios)", H2)

@@ -139,13 +139,13 @@ capacity (5,626 transactions a second, peak notch 90% of it). Not counted; the u
 | Gauge | native | omni | reading |
 |---|---:|---:|---|
 | server connections alive, mean (the machines) | 20.0 | 9.3 | GAIN, cut (−53%, interval −57% to −50%) |
-| work inside the 50 ms line (tps) | 2,137 | 2,152 | EVEN, no difference beyond the noise |
-| throughput (tps) | 2,437 | 2,474 | EVEN, no difference beyond the noise |
-| latency p95 (ms) | 1,361 | 433 | EVEN, no difference beyond the noise (native's own p95 swung from 86 to 3,331 ms between repetitions) |
-| latency p99 / median (ms) | 2,888 / 0.98 | 862 / 1.09 | EVEN, no difference beyond the noise |
-| failed transactions | 0 | 0 | EVEN, the same |
+| work inside the 50 ms line (tps) | 2,137 | 2,152 | STEADY, no difference beyond the noise |
+| throughput (tps) | 2,437 | 2,474 | STEADY, no difference beyond the noise |
+| latency p95 (ms) | 1,361 | 433 | STEADY, no difference beyond the noise (native's own p95 swung from 86 to 3,331 ms between repetitions) |
+| latency p99 / median (ms) | 2,888 / 0.98 | 862 / 1.09 | STEADY, no difference beyond the noise |
+| failed transactions | 0 | 0 | STEADY, the same |
 | host CPU-seconds | 433 | 480 | **power given** (+11%, interval +8% to +14%) |
-| CPU-seconds per 1,000 transactions inside the line | 0.68 | 0.74 | EVEN, no difference beyond the noise |
+| CPU-seconds per 1,000 transactions inside the line | 0.68 | 0.74 | STEADY, no difference beyond the noise |
 | pool size, mean (the knob) | 20 | 9.5 | shown |
 
 The knob was handed back and read back at the end of every omni arm; Omni wrote 161 to 175 times an arm and failed up
@@ -163,8 +163,8 @@ kept here as it came, and it is a LOSS:
 | Workload | Work inside the line | Throughput | p95 (ms) | Servers alive | Host CPU-seconds |
 |---|---|---|---|---|---|
 | `select` (read-only) | 11,423 → 5,995 tps, **LOSS** | 11,428 → 10,373, **LOSS** | 4 → 3,886, **LOSS** | 19.2 → 2.5, GAIN | −1%, GAIN |
-| `simple_update` | EVEN, no difference beyond the noise | EVEN, no difference beyond the noise | 65 → 554, EVEN, no difference beyond the noise | 20 → 8.1, GAIN | +10%, **power given** |
-| `tpcb_hot` (two branches) | EVEN, no difference beyond the noise | EVEN, no difference beyond the noise | 8 → 54, EVEN, no difference beyond the noise | 19 → 5.3, GAIN | +18%, **power given** |
+| `simple_update` | STEADY, no difference beyond the noise | STEADY, no difference beyond the noise | 65 → 554, STEADY, no difference beyond the noise | 20 → 8.1, GAIN | +10%, **power given** |
+| `tpcb_hot` (two branches) | STEADY, no difference beyond the noise | STEADY, no difference beyond the noise | 8 → 54, STEADY, no difference beyond the noise | 19 → 5.3, GAIN | +18%, **power given** |
 
 **What happened on `select`.** The compass read the pooler's service time per transaction, 0.11 ms against a 50 ms
 line, and gave back one idle connection a second until the pool stood at its floor of two (18 writes an arm, no fail-up).
@@ -424,6 +424,47 @@ dispatched with `workloads=untouched`, `reps=3`, `step_s=30`, the resource objec
 `docs/RERUN_2026-10-10.md`. The expectation above stands as written before the runs; when they land the table is read from them
 (`tools/pgbench_abc.py`), the index, the wiring page and the benefit sheet are read again, and the set this one supersedes goes whole to
 `docs/history`.
+
+
+## Proposed amendment (25 October 2026, not yet in force): a fourth paired repetition
+
+Proposed with omni-v20, to be declared before the next counted set and not applied to any run until then: each pgbench workload
+runs four paired repetitions a run instead of three, in the order native/omni, omni/native, native/omni, omni/native. With three,
+Omni-Compass always takes arm positions 2, 3 and 6 and native 1, 4 and 5, so a drift of the runner across the arm sequence is not
+balanced; the omni-v16 `tpcb_hot` runs showed write stalls of 1 to 6 s landing in either arm by position
+(`docs/STORE_LOSS_ROOT_CAUSES_2026-10-25.md`). A fourth pair balances the order and narrows the interval of a stall-driven gauge.
+Each run takes about a third longer per workload (eight arms of about 7.5 minutes instead of six). The rules, the gauges, the line,
+the notches and the three-run reading are unchanged.
+
+## Amendment 4 (2026-10-30, declared before any run on it): the max on the pooler's pool (the next engine's candidate)
+
+**The cause, from the omni-v21 runs' own files** (`docs/STORE_ROOT_CAUSES_2026-10-30.md`). The pooler stood over its line in 28
+seconds of the omni-v21 resource set and amendment 3's allowance refused none of the brain's own rule there; what the allowance
+did do, in every arm, was let the calm give-back take the pool below the pooler's own 20 servers (seconds below native, 223 an arm
+on average), where a rising load found fewer servers than the operator had set and the queue line (amendment 2) added them back.
+The store wires were written on 9 and 10 October, before the founder's order of 12 October that the max is the default brain, and
+never brought to it; this brings the pool's wire to it.
+
+**From this amendment** (`tools/run_pgbench.py` `Brain`):
+
+- the spend: clients waiting for a server (amendment 2's rule, ceil(force / 0.1) servers a second) is never clamped by an
+  allowance, up to the cover (90 servers; the fail-up to the pooler's own setting as before); the servers held are power given,
+  shown beside the waiting they cut;
+- the hand-back: the calm give-back and the slow-inside-the-server shrink take a server back only down to the pooler's own
+  setting, never below it (the max never goes below native); above it the queue line of amendment 2 and the dwell stand as written;
+- the record: the arm's record carries the max's counts (servers added, hand-backs, holds at the pooler's setting) where it carried
+  the verdict's allowance; every workload record carries its `dial`; `OMNI_DIAL=save` keeps omni-v21's loop, the verdict under the
+  resource objective, where giving servers back is the aim; `tools/knob_verdict.py` joins the fingerprint with this version.
+
+**The model gate** (`tools/store_gate.py`, class S, the omni-v21 arms' recorded seconds replayed open-loop through the candidate,
+26 arms): seconds below the pooler's setting 223.5 → 0 an arm (shown), seconds below it while clients waited 7.5 → 0 (GAIN +100.0%),
+the pool held 19.3 → 24.7 servers (+28.2%, power given), the knob's moves 18.4 → 23.7 (+28.8%, power given, inside the arms' noise);
+no LOSS. The replay cannot show what the servers buy; the first runs on the next engine read it.
+
+**Expected before the runs**, three paired repetitions a run (the proposed fourth repetition stays proposed): the server connections
+alive power given; the time clients waited for a server and the latency GAIN or EVEN; the work inside the line GAIN or EVEN; no
+second below the pooler's own setting. A LOSS row is a fault to fix, never a number to accept. The counted runs on this amendment run
+on the next engine version, which lands only when the model gate reads no LOSS for every store wire it changes.
 
 ---
 

@@ -46,7 +46,7 @@ fi
 if [ "${FAULTS:-1}" = "2" ]; then
   cp="${CLUSTER}-control-plane"
   # every kube-apiserver process in the control-plane node, found by its name in /proc (no tool the node image may lack)
-  apiserver_signal() { echo 'n=0; for p in /proc/[0-9]*; do [ "$(cat $p/comm 2>/dev/null)" = kube-apiserver ] && kill -'"$1"' "${p#/proc/}" && n=$((n+1)); done; [ "$n" -gt 0 ]'; }
+  apiserver_signal() { echo 'n=0; for p in /proc/[0-9]*; do [ "$p/ns/pid" -ef /proc/self/ns/pid ] || continue; [ "$(cat $p/comm 2>/dev/null)" = kube-apiserver ] || continue; q=; while read -r k ids; do [ "$k" = NSpid: ] || continue; for q in $ids; do :; done; break; done < "$p/status"; [ -n "$q" ] && kill -'"$1"' "$q" && n=$((n+1)); done; [ "$n" -gt 0 ]'; }
   wait_until 82
   if docker exec "$cp" sh -c "$(apiserver_signal STOP)" >/dev/null 2>&1; then
     say "api frozen"; sleep 30

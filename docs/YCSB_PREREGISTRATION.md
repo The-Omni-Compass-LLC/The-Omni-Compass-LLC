@@ -321,7 +321,7 @@ preregistered one with every rule unchanged but native's cache: MongoDB exactly 
 own default (half of the machine's memory less 1 GB, at least 256 MB: about 7.5 GB on GitHub's 16 GB machines;
 `tools/run_ycsb.py --native shipped`, workflow input `native: shipped`). That is above the cover's top (2,048 MB): the knob is at
 its limit on native, and any size Omni-Compass wrote would sit below native, which the max never does. So in the shipped set
-omni reads the server, writes nothing and says so in its audit, and every row reads EVEN; that is the result, said before the
+omni reads the server, writes nothing and says so in its audit, and every row reads STEADY; that is the result, said before the
 run. The record carries native's size as the server reported it. The preregistered set keeps its name; the shipped set's tables
 are named for it (`…_YCSB_SHIPPED.md`).
 
@@ -349,6 +349,52 @@ engine, the rule, the gauges, the workloads, the steps, native's setting.
 table (`results/live/V11_YCSB.md`) stands as MongoDB's result, named as omni-v11's, until three runs on a newer engine land whole
 (`tools/readings.py`, `landed`). The shipped and the service sets' omni-v12 tables, whose runs all ran on the earlier image,
 stand as they are.
+
+## Amendment 6 (2026-10-30, declared before any run on it): the max on the cache, through the server's own account of a miss (the next engine's candidate)
+
+**The cause, from the omni-v21 runs' own files** (`docs/STORE_ROOT_CAUSES_2026-10-30.md`, `tools/store_causes.py`). MongoDB stood
+over its line in 32 seconds of the omni-v21 resource set and amendment 2's allowance refused the brain's own rule in 21 of them;
+the cache stood at the operator's 512 MB or one notch above it. The runs across cache sizes (15.8% of pages missing at 512 MB in
+workload b; 12.6%, 12.1% and 11.7% at 512, 576 and 640 MB in the tuning workload, the read 0.073 to 0.082 ms) were first read as
+misses that cost the read nothing; that reading is withdrawn, as on MySQL (a notch moves the miss share half a point, nothing the
+arms' spread could show). The server's own meter is used instead.
+
+**From this amendment** (`tools/run_ycsb.py` `Brain`, `tools/store_brain.py`):
+
+- the account of a miss: WiredTiger counts and times the pages its application threads read from disk
+  (`serverStatus().wiredTiger.cache`, `application threads page read from disk to cache time (usecs)` and its count), the reads
+  that stood in a request's way, beside the server's own read latency (`opLatencies.reads`, microseconds); their ratio over the
+  last 10 s is the share of the reads' own time spent on pages the cache did not hold. The runner's attach check stops a run on a
+  server that lacks either key, as it already stops one that lacks the cache's own sizes: no run ever runs native in Omni's name;
+- the spend: slow reads with the cache full (WiredTiger's own 80%, or evicting) and missing (1% or more of the pages requested)
+  grow the cache by the compass's own law (ceil(force / 0.1) notches of 64 MB a second; at the wall a quarter of the cover at
+  once), never clamped by an allowance, up to the cover's top (2,048 MB), where that account says the misses are at least the one
+  key's floor (a half of one percent, `tools/readings.py` `SIZE_FLOOR`) of the reads' time and the host keeps 5% of its memory
+  available after the notch (`/proc/meminfo`); the memory is power given, shown beside the misses it bought off;
+- the hold: where the misses are under the floor the cache holds and the audit says why; where the account or the host's memory
+  is unread this second, nothing is known and nothing is taken;
+- the hand-back: calm with the misses under 1% (amendment 1) gives one notch back after the dwell, never below the most the cache
+  held in the last 60 s (with the fullness margin, rounded up to a notch) and never below the operator's 512 MB; the operator's
+  cache handed back at the end as before; the notch added back below the operator's size while missing (omni-v20's rule) is moot
+  under the max, which never goes below it;
+- the record: every second's disk reads and their time, the misses' share of the reads' time, the floor and the host's room in the
+  audit; the arm's record carries the max's counts where it carried the verdict's allowance; every workload record carries its
+  `dial`; `OMNI_DIAL=save` keeps omni-v21's loop (the tune-down); `tools/store_brain.py` and `tools/knob_verdict.py` join the
+  fingerprint with this version.
+
+**The model gate** (`tools/store_gate.py`, class S, the omni-v21 arms' recorded seconds replayed open-loop through the candidate).
+omni-v21's audits carry neither WiredTiger's account nor the host's memory, so the candidate holds at the operator's cache in every
+replayed arm: seconds below native 12.5 → 0 an arm (shown), seconds below native while missing 2.1 → 0 (GAIN +100.0%), the knob's
+moves 5.6 → 0 (GAIN +100.0%), the cache held 520.6 → 512.0 MB (+1.7%, GAIN, a cut); no LOSS. MongoDB's own account could not be
+read on the machine this amendment was written on (its publisher's download hosts are not reachable from it), so what the misses
+cost on the rig is read for real on the first run of the next engine, and a closed-loop model of the cache, set from those files,
+follows before any further change to the rule.
+
+**Expected before the runs**, at the counted 30 s a notch, three paired repetitions a run: where the account reads the misses at the
+floor or above, the cache rising toward the working set (power given) and the misses falling with it, the read latency and the work
+inside the line GAIN or EVEN; where it reads them under the floor, the cache holding at the operator's size and every gauge EVEN; the
+knob's moves shown; no second below the operator's cache. A LOSS row is a fault to fix, never a number to accept. The counted runs
+on this amendment run on the next engine version, which lands only when the model gate reads no LOSS for every store wire it changes.
 
 ---
 

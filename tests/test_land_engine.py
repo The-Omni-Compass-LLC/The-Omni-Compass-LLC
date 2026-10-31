@@ -59,7 +59,8 @@ class LandEngine(unittest.TestCase):
         left = land_engine.check(self.root)
         # what is left is the person's: the version's page, its fingerprint, and the standing pages' words
         self.assertTrue(left)
-        self.assertTrue(all(any(w in b for w in ("README.md", "CLAUDE.md", "MANUAL", "LIVE_ENGINE", f"OMNI_V{m}"))
+        self.assertTrue(all(any(w in b for w in ("README.md", "CLAUDE.md", "MANUAL", "LIVE_ENGINE", f"OMNI_V{m}",
+                                                 "FACTORY_PROFILE", "STATE_OF_PLAY", "APPRAISAL"))
                             for b in left), left)
 
     def test_the_check_names_a_page_left_on_an_older_engine(self):

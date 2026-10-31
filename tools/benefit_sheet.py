@@ -4,11 +4,11 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The benefit sheet: one number per benchmark, its word (GAIN, EVEN or LOSS), and every change said in words.
+"""The benefit sheet: one number per benchmark, its word (GAIN, STEADY or LOSS), and every change said in words.
 
 The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the
 system and by how much, in one number whose sign always means the same thing, whatever the gauge measures; and say it in
-GAIN, EVEN and LOSS, judged by what each gauge is for and never by the sign of its number (tools/readings.py, the key). So the
+GAIN, STEADY and LOSS, judged by what each gauge is for and never by the sign of its number (tools/readings.py, the key). So the
 sign here is the system's own declared aims, gauge by gauge: plus is a GAIN; a minus is a LOSS on work, speed, misses or
 failures, and power given on a resource spent (energy, machines, memory). The tables keep their raw signs (a response time
 that fell reads "-65%" there); this sheet turns every one the same way round, and says each change in words: which way it
@@ -18,14 +18,14 @@ How the number is made, the same rule as the Omni index (tools/omni_index.py):
 
   every judged gauge becomes a ratio oriented so that above 1 is a GAIN against the gauge's declared aim (native / omni for a
   gauge that aims lower or is a resource spent, omni / native for one that aims higher); a gauge counts only where its reading is
-  judged across our three runs, anything else (EVEN: inside the noise or the same; the runs disagree) counts as exactly 1; the number is the geometric mean of
+  judged across our three runs, anything else (STEADY: inside the noise or the same; the runs disagree) counts as exactly 1; the number is the geometric mean of
   those ratios, minus one, in percent. For the tests inside the index the number IS the index's own resource reading of
   that test; for a stack with several workloads the stack's number is its index category. For the simulators and the
   organisms, which the index does not score, the same arithmetic runs over every judged gauge of their tables.
 
   "Benefit?" reads GAIN (gauges GAIN across our three runs, none LOSS or power given), GAIN, power given (a GAIN bought with a
   resource put in), GAIN AND LOSS (both; the number says which way the trade nets by this scoring), LOSS (a LOSS, no GAIN), power
-  given (a resource put in, nothing gained), or EVEN (nothing moved 0.5% or more across our three runs).
+  given (a resource put in, nothing gained), or STEADY (nothing moved 0.5% or more across our three runs).
 
   python3 tools/benefit_sheet.py            ->  docs/BENEFIT_SHEET.md, results/BENEFIT_SHEET.json
   python3 tools/benefit_sheet.py --check    ->  exit 1 if the committed files differ from what the tables give
@@ -43,13 +43,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import stamp as legal_stamp                       # noqa: E402
-from tools.readings import with_own_runs, receipt_key, row_gain, landed, word as gel_word, aim as gel_aim, GAIN, EVEN, LOSS, GIVEN, GAIN_AND_LOSS, GAIN_GIVEN, word_sign  # noqa: E402
+from tools.readings import with_own_runs, receipt_key, row_gain, landed, word as gel_word, aim as gel_aim, GAIN, STEADY, LOSS, GIVEN, GAIN_AND_LOSS, GAIN_GIVEN, reading_kind  # noqa: E402
 from tools import omni_index                                       # noqa: E402
 from tools import wiring_verdicts as wv                            # noqa: E402
 
 LIVE = ROOT / "results" / "live"
 OUT_MD = ROOT / "docs" / "BENEFIT_SHEET.md"
 OUT_JSON = ROOT / "results" / "BENEFIT_SHEET.json"
+# the Owner's Manual's own evidence table (section 3.5) is these rows, written here on every push so the book never quotes an
+# engine's numbers after the next engine's tables land (27 October 2026: its hand-typed table still read omni-v10 and omni-v11)
+MANUAL = ROOT / "docs" / "OMNI_COMPASS_OWNERS_MANUAL.md"
+M_BEGIN, M_END = "<!-- the evidence, one row per benchmark (tools/benefit_sheet.py) -->", "<!-- end of the evidence -->"
 ENGINE_RE = re.compile(r"\bomni-v(\d+)\b")
 
 
@@ -72,6 +76,37 @@ def recorded_engine(rel):
     return next((r.get("engine") or "not named" for r in rows if r.get("file") == rel), "not named")
 
 
+def stated_engines(p: Path) -> set:
+    """The engines a table states for its own runs: its run table's Engine column, else its JSON's "engine" field; empty when
+    it states neither. Only these are read where they exist, so an engine a table names in passing (the drone swarms' table
+    names omni-v12 as the engine before whose runs its preregistration's amendment was written) is never filed as an engine
+    it ran on (27 October 2026: the sheet had filed that table under "omni-v12 and omni-v21")."""
+    found = set()
+    try:
+        lines = p.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        lines = []
+    for i, ln in enumerate(lines):
+        cells = [c.strip() for c in ln.strip().strip("|").split("|")] if ln.startswith("|") else []
+        if "Engine" not in cells:
+            continue
+        col = cells.index("Engine")
+        for row in lines[i + 1:]:
+            if not row.startswith("|"):
+                break
+            vals = [c.strip() for c in row.strip().strip("|").split("|")]
+            if col < len(vals) and not set(vals[col]) <= set("-: "):
+                found |= {int(m.group(1)) for m in ENGINE_RE.finditer(vals[col])}
+    if found:
+        return found
+    try:
+        d = json.loads(p.with_suffix(".json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return found
+    v = d.get("engine") if isinstance(d, dict) else None
+    return {int(m.group(1)) for m in ENGINE_RE.finditer(v if isinstance(v, str) else " ".join(map(str, v or [])))}
+
+
 def engine_of(rel):
     """The engines a row's table ran on, read from the table itself (its run table's Engine column, or the engine its JSON
     names), oldest first: "omni-v6", or "omni-v1 and omni-v3" for a table built from several; "not named" where the table
@@ -86,7 +121,7 @@ def engine_of(rel):
                 texts.append(q.read_text(encoding="utf-8"))
             except OSError:
                 pass
-        found = {int(m.group(1)) for t in texts for m in ENGINE_RE.finditer(t)}
+        found = stated_engines(p) or {int(m.group(1)) for t in texts for m in ENGINE_RE.finditer(t)}
         if not found:                                              # a table named for its engine (V3_...), or one that says "Omni v3"
             m = re.match(r"V(\d+)_", p.name)
             found = {int(m.group(1))} if m else {int(x) for t in texts for x in re.findall(r"\bOmni v(\d+)\b", t)}
@@ -136,15 +171,16 @@ def fmt_pct(x):
 
 
 def fmt_pct_words(x, loss=0):
-    """The one number with its word, the number wearing the word's sign (the founder's sign rule, tools/readings.py): '+31%
-    GAIN'; a fall is a LOSS where a gauge read LOSS ('−25% LOSS'), otherwise power given, the resources put in outweighing
-    what they bought by this scoring ('+25% power given'); '0%: EVEN'."""
+    """The one number with its word, its size alone beside the word, as tools/readings.py by_word prints it (the referee's work
+    order of 25 October: a number beside a word carries no sign, so it is never read as a raw direction): '31% GAIN'; a fall
+    is a LOSS where a gauge read LOSS ('25% LOSS'), otherwise power given, the resources put in outweighing what they bought by
+    this scoring ('25% power given'); '0%: STEADY'."""
     if x is None:
         return "no number"
     if abs(x) < 0.05:
-        return f"0%: {EVEN}"
+        return f"0%: {STEADY}"
     w = GAIN if x > 0 else LOSS if loss else GIVEN
-    return f"{word_sign(w)}{fmt_pct(abs(x))[1:]} {w}"
+    return f"{fmt_pct(abs(x))[1:]} {w}"
 
 
 def verb(fell, aim):
@@ -155,22 +191,42 @@ def verb(fell, aim):
     return "up"
 
 
+def fell_of(w, aim):
+    """Which way a gauge read GAIN, LOSS or power given went, from its word and its aim (tools/readings.py word, read backward):
+    True where it fell, False where it rose, None where the word does not settle it."""
+    a = str(aim or "")
+    if a not in ("higher", "lower", "spent", "never more", "never less", "work per resource"):
+        return None                               # no declared aim: the table's own cells carry the gauge's direction
+    if w == GAIN:
+        return a not in ("higher", "never less", "work per resource")
+    if w == LOSS:
+        return a in ("higher", "never less")
+    if w == GIVEN:
+        return a == "work per resource"
+    return None
+
+
 def in_words(items):
     """Every change judged across our three runs of a benchmark in words, grouped by gauge: (name, word, range, aim) ->
     'p95 cut 65% to 71% (GAIN)', 'memory ceiling held up 215% (power given)', 'work down 5% (LOSS)'."""
     groups = {}
     for name, w, rg, aim in items:
-        nums = re.findall(r"[-+]?\d+(?:\.\d+)?%", rg or "")
+        nums = re.findall(r"[-+\u2212]?\d+(?:\.\d+)?%", rg or "")
         if not nums:
             continue
-        groups.setdefault((name, w, nums[0].startswith("-"), aim), []).extend(abs(float(n.rstrip("%"))) for n in nums)
+        # which way the gauge went is read from its word and its aim, never from the first printed number's sign (the mathematics
+        # seat of 24 October: a range "-0% to +430%" on a 95th percentile read LOSS had printed "cut")
+        fell = fell_of(w, aim)
+        if fell is None:
+            fell = nums[0].startswith(("-", "\u2212"))
+        groups.setdefault((name, w, fell, aim), []).extend(abs(float(n.rstrip("%").replace("\u2212", "-"))) for n in nums)
     out = []
     for (name, w, fell, aim), mags in groups.items():
         mags = sorted(mags)
         f = (lambda x: f"{x:.0f}%") if mags[-1] >= 10 else (lambda x: f"{x:.1f}%")
         m = f(mags[0]) if f(mags[0]) == f(mags[-1]) else f"{f(mags[0])} to {f(mags[-1])}"
         out.append(f"{name} {verb(fell, aim)} {m} ({w})")
-    return "; ".join(out) if out else f"{EVEN}: nothing moved 0.5% or more across our three runs"
+    return "; ".join(out) if out else f"{STEADY}: nothing moved 0.5% or more across our three runs"
 
 
 def benefit_word(gain, loss, given=0):
@@ -185,7 +241,7 @@ def benefit_word(gain, loss, given=0):
         return LOSS
     if given:
         return GIVEN
-    return EVEN
+    return STEADY
 
 
 WORD_OF = {"gain": GAIN, "loss": LOSS, "given": GIVEN}
@@ -351,8 +407,8 @@ def from_sim(fname, name, moved_titles, what, left_native_title=None):
         if left_native_title and sec["title"].startswith(left_native_title):
             for r in sec["table"][1:]:                             # nothing moved: nothing gained, nothing lost
                 if r and r[0]:
-                    cases.append({"case": r[0] + " (left native by the engine's own trial)", "pct": 0.0, "benefit": EVEN, "gain": 0, "loss": 0, "given": 0,
-                                  "words": f"{EVEN}: nothing moved", "items": []})
+                    cases.append({"case": r[0] + " (left native by the engine's own trial)", "pct": 0.0, "benefit": STEADY, "gain": 0, "loss": 0, "given": 0,
+                                  "words": f"{STEADY}: nothing moved", "items": []})
             continue
         tag = next((t for t in moved_titles if sec["title"].startswith(t)), None)
         if tag is None:
@@ -424,7 +480,7 @@ def from_realms():
     return {"date": updated(ROOT / "results" / "realms" / "REALMS.md"), "benchmark": "The 945 modelled muscles as one tower, every muscle written at once",
             "benefit": benefit_word(g, l_), "pct": 100 * prim[0] if clear else 0.0, "gain": g, "loss": l_, "given": given,
             "words": (f"work per energy up {100 * prim[0]:.1f}% ({GAIN})" if clear and prim[0] > 0
-                      else f"work per energy down {abs(100 * prim[0]):.1f}% ({GIVEN})" if clear else f"{EVEN}: nothing moved 0.5% or more across our three runs"),
+                      else f"work per energy down {abs(100 * prim[0]):.1f}% ({GIVEN})" if clear else f"{STEADY}: nothing moved 0.5% or more across our three runs"),
             "what": "the tower's work per energy over ten paired seeds; a model, evidence class S", "file": "results/realms/REALMS.md"}
 
 
@@ -435,6 +491,53 @@ def newest_table(fname):
     base = re.sub(r"^V\d+_", "", fname)
     found = sorted((int(m.group(1)), f.name) for f in LIVE.glob("V*_" + base) if (m := re.fullmatch(r"V(\d+)_" + re.escape(base), f.name)))
     return next((n for _, n in reversed(found) if landed(LIVE / n)), found[-1][1]) if found else fname
+
+
+def card_line() -> str:
+    """The card's paragraph, from the newest engine's three-run card tables on disk (tools/gpu_abc.py), never written by hand.
+    The card is not on the sheet: at the factory dial (the max) native already runs both knobs at their top and the governor
+    writes nothing; the tune-down and the cap are other tunes, their results their own."""
+    def version(f):
+        m = re.match(r"V(\d+)_", f.name)
+        return int(m.group(1)) if m else -1
+    found = sorted((ROOT / "results" / "gpu").glob("V*_ABC.json"), key=lambda f: (version(f), f.name))
+    newest = [f for f in found if version(f) == version(found[-1])] if found else []
+    if not newest:
+        return ("- **The card (NVIDIA)**: no three-run card table on disk; every rental, its cost and what came back is in "
+                "`docs/RUN_LEDGER.md`.")
+    parts = []
+    for f in newest:
+        rec = json.loads(f.read_text())
+        rows = rec.get("rows", {})
+        if isinstance(rows, list):                     # the stacked box (tools/hil_abc.py): the card's work per energy, size by size
+            by_size = {}
+            for r in rows:
+                if r.get("part") == "card" and r.get("measure") == "primary":
+                    by_size.setdefault(r["copies"], []).append(reading_kind(r["reading"]))
+            sizes = []
+            for copies, kinds in sorted(by_size.items()):
+                counts = {}
+                for k in kinds:
+                    counts[k] = counts.get(k, 0) + 1
+                sizes.append(f"at {copies} {'copy' if copies == 1 else 'copies'} " + ", ".join(f"{n} {k}" for k, n in sorted(counts.items(), key=lambda kv: -kv[1])) + f" of {len(kinds)} organisms")
+            parts.append(f"{rec.get('title', f.stem)}: the card's work per energy " + "; ".join(sizes) + f" (`{f.with_suffix('.md').relative_to(ROOT)}`)")
+            continue
+        row = rows.get("work per energy (served requests per kJ)", {})
+        parts.append(f"{rec.get('title', f.stem)}: work per energy {row.get('reading', 'no value')} "
+                     f"(`{f.with_suffix('.md').relative_to(ROOT)}`)")
+    return ("- **The card (NVIDIA)**: at the factory dial (the max) native already runs both knobs at their top and the "
+            "governor writes nothing, so the card is not on the sheet; the other tunes, each its own result: "
+            + "; ".join(parts) + ". Every rental, its cost and what came back is in `docs/RUN_LEDGER.md`.")
+
+
+def manual_block(rows) -> str:
+    """The Owner's Manual's evidence table: every row of the sheet, each naming the engine its table ran on."""
+    L = [M_BEGIN, "", "| What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |",
+         "|---|---|---:|---|---|"]
+    for r in rows:
+        L.append(f"| {r['benchmark']} ({r['engine']}) | **{r['benefit']}** | {fmt_pct_words(r['pct'], r.get('loss', 0))} | "
+                 f"{r.get('words', '')} | `{r['file']}` |")
+    return "\n".join(L + ["", M_END])
 
 
 def main(check=False):
@@ -495,7 +598,7 @@ def main(check=False):
 
     L = ["# The benefit sheet: one number per benchmark, its word, and every change said in words", "", *receipt_key(), "",
          "The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the "
-         "system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **EVEN** and **LOSS**, "
+         "system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **STEADY** and **LOSS**, "
          "judged by what each gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). **On this sheet "
          "the sign is the system's own declared aims, gauge by gauge: a plus is a GAIN; a minus is a LOSS on work, speed, misses or "
          "failures, and power given on a resource spent (energy, machines, memory).** The number carries its word. Beside it every change "
@@ -512,7 +615,7 @@ def main(check=False):
          "**Benefit?** reads **GAIN** (gauges GAIN across our three runs, none LOSS or power given), **GAIN, power given** (a GAIN bought "
          "with a resource put in, named beside it), **GAIN AND LOSS** (both; the number says which way the trade nets by this scoring, and "
          "the wiring page `docs/WIRING_VERDICTS.md` says what pays for what), **LOSS** (a LOSS and no GAIN), **power given** (a resource put "
-         "in and nothing gained) or **EVEN** (nothing moved 0.5% or more across our three runs). LOSS should never appear: where it "
+         "in and nothing gained) or **STEADY** (nothing moved 0.5% or more across our three runs). LOSS should never appear: where it "
          "does, the row stands and its cause is found and fixed.", "",
          "Every row names the engine its table ran on (read from the table). Results are never read across engines: a row on an "
          "older engine stands as that engine's result until the same benchmark's three runs on the engine that stands replace "
@@ -527,20 +630,28 @@ def main(check=False):
         if r.get("parts"):
             L.append(f"- **{r['benchmark']}**: " + "; ".join(f"{p_['case']} {fmt_pct_words(p_['pct'], p_.get('loss', 0))} ({p_['benefit']}" + (f": {p_['words']}" if p_.get('words') else "") + ")" for p_ in r["parts"]) + ".")
     L += ["", "## Not on the sheet, and why", "",
-          "- **Azure's managed Kubernetes, the bill** (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): Omni v1, a 4-worker fleet, every gauge EVEN, inside the noise: 0%, and too small a fleet to show one machine.",
+          "- **Azure's managed Kubernetes, the bill** (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): Omni v1, a 4-worker fleet, every gauge STEADY, inside the noise: 0%, and too small a fleet to show one machine.",
           "- **The governor's own share of the machine** (`results/live/V3_OWN_COST.md`): 0.6% to 1.3% of one core at every size; shown, not a benchmark against native.",
-          "- **The card (NVIDIA)**: every earlier result is obsolete; the current governor has not run on a real card.",
+          card_line(),
           "- **The index's second reading** (service alone, `results/OMNI_INDEX.md`): a second true number for the same tests, not repeated here; this sheet carries the preregistered one.", ""]
     md = "\n".join(legal_stamp(with_own_runs(L))) + "\n"
     js = json.dumps({"rows": rows}, indent=1) + "\n"
+    book = MANUAL.read_text(encoding="utf-8") if MANUAL.exists() else ""
+    if M_BEGIN in book and M_END in book:
+        a, z = book.index(M_BEGIN), book.index(M_END) + len(M_END)
+        book = book[:a] + manual_block(rows) + book[z:]
     if check:
-        bad = [str(p.relative_to(ROOT)) for p, text in ((OUT_MD, md), (OUT_JSON, js)) if not p.exists() or p.read_text() != text]
+        bad = [str(p.relative_to(ROOT)) for p, text in ((OUT_MD, md), (OUT_JSON, js), (MANUAL, book)) if not p.exists() or p.read_text() != text]
+        if M_BEGIN not in book:
+            bad.append(f"{MANUAL.relative_to(ROOT)} (its evidence block is missing)")
         if bad:
             print("benefit sheet out of date (python3 tools/benefit_sheet.py): " + ", ".join(bad))
             return 1
         print("benefit sheet: in line with the tables")
         return 0
     OUT_MD.write_text(md); OUT_JSON.write_text(js)
+    if M_BEGIN in book:
+        MANUAL.write_text(book, encoding="utf-8")
     print(f"{OUT_MD.relative_to(ROOT)}: {len(rows)} rows; {OUT_JSON.relative_to(ROOT)}")
     return 0
 

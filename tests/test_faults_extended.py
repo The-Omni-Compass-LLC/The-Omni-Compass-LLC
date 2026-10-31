@@ -11,6 +11,7 @@ import os, re, signal, shutil, subprocess, sys, tempfile, time
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 import tools.live_reps as LR
+from tools.omni_switch import process_directory
 
 SCRIPT = (ROOT / "scripts/kind_faults.sh").read_text()
 
@@ -41,7 +42,9 @@ def test_the_api_server_is_found_by_name_and_frozen_and_continued():
             return subprocess.run(["bash", "-c", f"{fn}; sh -c \"$(apiserver_signal {sig})\""]).returncode
 
         def state():
-            return Path(f"/proc/{p.pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+            directory = process_directory(p.pid)
+            assert directory is not None, 'the child must be visible in this PID namespace'
+            return (directory / 'stat').read_text().rsplit(")", 1)[1].split()[0]
         assert run("STOP") == 0
         time.sleep(0.2)
         assert state() == "T", state()

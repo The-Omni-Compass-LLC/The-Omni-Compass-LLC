@@ -29,7 +29,7 @@ class BenefitInterpretationTests(unittest.TestCase):
 
 
     def test_equal_values_are_even(self):
-        self.assertEqual(interpret_pair("resource", 100, 100)["classification"], "EVEN")
+        self.assertEqual(interpret_pair("resource", 100, 100)["classification"], "STEADY")
 
 
 if __name__ == "__main__":

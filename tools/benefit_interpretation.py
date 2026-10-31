@@ -34,7 +34,7 @@ def interpret_pair(objective: str, native: float, omni: float) -> dict:
         raise ValueError("native must be greater than zero to compute a percentage")
     change_pct = (omni / native - 1.0) * 100.0
     if abs(change_pct) < 1e-12:
-        classification = "EVEN"
+        classification = "STEADY"
     elif objective == "work":
         classification = "GAIN" if change_pct > 0 else "LOSS"
     elif objective == "resource":
