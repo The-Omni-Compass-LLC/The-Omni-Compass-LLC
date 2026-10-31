@@ -193,6 +193,7 @@ def main(out):
     data = {"file": "results/WHOLE_SYSTEM.md", "json": "results/WHOLE_SYSTEM.json", "tool": "tools/whole_system.py", "gauges": list(GAUGES), "gauge_words": GAUGE_WORDS,
             "groups": groups, "scenarios": [{"key": k, "name": n, "groups": list(g), "two_piece": list(t) if t else None} for k, n, g, t in SCENARIOS],
             "results": results, "separability": {"pairs": sep, "n": len(sep), "agree": sum(1 for s in sep if s.get("agree"))}, "beside": d.get("beside") or {},
+            "cost": d.get("cost") or [], "held_why": d.get("held") or {}, "held_layers": d.get("held_layers") or {},
             "composed": list(COMPOSED), "held": list(HELD),
             "rule": "R(g) = ∏ℓ Rℓ(g), log R = Σℓ log Rℓ, the variances added; a scenario sums the layers it stacks; work, speed and machines are composed at the software end, "
                     "the energy and the bill held at native's (exactly 1) and the chip and the wire entered as exactly 1 (the founder's order of 31 October 2026); "

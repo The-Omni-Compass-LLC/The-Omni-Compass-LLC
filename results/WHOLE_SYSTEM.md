@@ -140,6 +140,76 @@ Read: the headline is the row **without the card, by the index's rule**: it coun
 
 The cloud is the wire. Its bill is kept exactly as native's and the layer enters as exactly 1 on every gauge: the benefit lives at the software end and the wire carries it. The cloud's own runs are the check that it holds: on Azure's own autoscaler the bill read STEADY (four paired repetitions on the compass law, one run; the v1 fleet's steady set and burst STEADY too), shown in section 2 and never composed. Read through the cloud, the same index is more work for the same bill: the cost of each unit of work falls by the work's own factor while the bill stays native's.
 
+## 3b. What the benefit cost: the chip, the energy and the wire against native
+
+The benefit above is the software end's. This section is the other half a buyer asks for: what it cost. Each hardware piece and the wire is read against native, every row of its own record, so it can be seen whether the software end's gain was bought by heating or wearing the chip, by drawing more power, by serving less, or by a bigger bill (do no harm, `DISCLOSURES.md` section 3). Nothing here is composed into the index; a LOSS row is shown and named, never cut.
+
+**the chip (an NVIDIA A100, the card's own meter, class P, omni-v21)** (`results/gpu/V21_A100_CAP_ABC.md`, `results/gpu/V21_A100_CAP_FULL_ABC.md`, `results/gpu/V21_A100_SAVE_ABC.md`)
+
+| Part | Gauge | Reading against native |
+|---|---|---|
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | work per energy (served requests per kJ) | STEADY, under the floor (the three runs' mean 0.11%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | energy, GPU (J) | STEADY, under the floor (the three runs' mean 0.12%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | energy per served request (J) | STEADY, under the floor (the three runs' mean 0.12%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | power, GPU mean (W) | STEADY, under the floor (the three runs' mean 0.15%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | requests served | STEADY, the same |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | requests not served | STEADY, the same |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | response time, mean (ms) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | response time, 95th percentile (ms) | the runs disagree |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | response time, 99th percentile (ms) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | temperature, peak (C) | STEADY, under the floor (the three runs' mean 0.25%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | temperature, mean (C) | STEADY, under the floor (the three runs' mean 0.21%) |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | energy, GPU device counter (J) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| the factory tune (the dial at the max), native's power cap at 70% of the card's top | power-capped share of samples | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| the factory tune, the same runs' full-load part | work per energy (served requests per kJ) | STEADY, under the floor (the three runs' mean 0.07%) |
+| the factory tune, the same runs' full-load part | energy, GPU (J) | STEADY, under the floor (the three runs' mean 0.23%) |
+| the factory tune, the same runs' full-load part | energy per served request (J) | STEADY, under the floor (the three runs' mean 0.07%) |
+| the factory tune, the same runs' full-load part | power, GPU mean (W) | STEADY, under the floor (the three runs' mean 0.26%) |
+| the factory tune, the same runs' full-load part | requests served | STEADY, under the floor (the three runs' mean 0.15%) |
+| the factory tune, the same runs' full-load part | requests not served | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| the factory tune, the same runs' full-load part | response time, mean (ms) | STEADY, under the floor (the three runs' mean 0.47%) |
+| the factory tune, the same runs' full-load part | response time, 95th percentile (ms) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| the factory tune, the same runs' full-load part | response time, 99th percentile (ms) | STEADY, under the floor (the three runs' mean 0.50%) |
+| the factory tune, the same runs' full-load part | temperature, peak (C) | STEADY, under the floor (the three runs' mean 0.23%) |
+| the factory tune, the same runs' full-load part | temperature, mean (C) | STEADY, under the floor (the three runs' mean 0.25%) |
+| the factory tune, the same runs' full-load part | energy, GPU device counter (J) | STEADY, under the floor (the three runs' mean 0.23%) |
+| the factory tune, the same runs' full-load part | power-capped share of samples | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| the tune-down (the dial at save), its own three runs | work per energy (served requests per kJ) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| the tune-down (the dial at save), its own three runs | energy, GPU (J) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| the tune-down (the dial at save), its own three runs | energy per served request (J) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| the tune-down (the dial at save), its own three runs | power, GPU mean (W) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| the tune-down (the dial at save), its own three runs | requests served | STEADY, the same |
+| the tune-down (the dial at save), its own three runs | requests not served | STEADY, the same |
+| the tune-down (the dial at save), its own three runs | response time, mean (ms) | STEADY, under the floor (the three runs' mean 0.19%) |
+| the tune-down (the dial at save), its own three runs | response time, 95th percentile (ms) | STEADY, under the floor (the three runs' mean 0.04%) |
+| the tune-down (the dial at save), its own three runs | response time, 99th percentile (ms) | STEADY, under the floor (the three runs' mean 0.02%) |
+| the tune-down (the dial at save), its own three runs | temperature, peak (C) | STEADY, under the floor (the three runs' mean 0.22%) |
+| the tune-down (the dial at save), its own three runs | temperature, mean (C) | the runs disagree |
+| the tune-down (the dial at save), its own three runs | energy, GPU device counter (J) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| the tune-down (the dial at save), its own three runs | power-capped share of samples | GAIN in all three of our runs |
+
+39 rows: 9 GAIN, 24 STEADY, 0 power given, 4 LOSS, 2 where the runs disagree. The LOSS rows: response time, mean (ms) (the factory tune (the dial at the max), native's power cap at 70% of the card's top): LOSS by the mean of our three runs, beyond the noise in 0 of 3; response time, 99th percentile (ms) (the factory tune (the dial at the max), native's power cap at 70% of the card's top): LOSS by the mean of our three runs, beyond the noise in 0 of 3; requests not served (the factory tune, the same runs' full-load part): LOSS by the mean of our three runs, beyond the noise in 0 of 3; response time, 95th percentile (ms) (the factory tune, the same runs' full-load part): LOSS by the mean of our three runs, beyond the noise in 0 of 3.
+
+**the energy the software end drew (class L inputs, no meter)** (`results/live (the cluster and service tables)`)
+
+| Part | Gauge | Reading against native |
+|---|---|---|
+| the cluster: a declared model of the machines row, never a meter | energy, parked workers at standby power (Wh) | GAIN: Omni-Compass 4.3% less than native (95%: 4.8% less to 3.9% less) |
+| the services: the host's own count of processor time, a stand-in for energy, never a meter | the host's processor seconds | GAIN: Omni-Compass 0.7% less than native (95%: 1.2% less to 0.2% less) |
+
+2 rows: 2 GAIN, 0 STEADY, 0 power given, 0 LOSS, 0 where the runs disagree. No LOSS row.
+
+**the wire (the cloud's metered bill, class L)** (`results/live/AKS_BILL.md`, `results/live/V1_AKS_STEADY.json`, `results/live/V1_AKS_BURST.json`)
+
+| Part | Gauge | Reading against native |
+|---|---|---|
+| Azure, one run of four paired repetitions, and the v1 fleet's one-run sets | the compute bill at list price | power given: Omni-Compass 0.8% more than native (95%: 17.5% less to 23.2% more); its 95% interval includes no change |
+| the same runs | machines billed | power given: Omni-Compass 2.5% more than native (95%: 5.5% less to 11.1% more); its 95% interval includes no change |
+
+2 rows: 0 GAIN, 0 STEADY, 2 power given, 0 LOSS, 0 where the runs disagree. No LOSS row.
+
+**the machine (the kernel, bare metal, Kepler and the machine's own meter)**: not yet run.
+
 ## 4. The assumption tested where the tables allow: separability, from the governors' four ways
 
 Omni-Compass on the organism alone (compassbare against nativebare) and on top of the orchestrator (compass against native), in the same repetitions, on omni-v12. If the layers did not interact the two ratios would agree; a difference clear of the noise says the orchestrator changes what Omni-Compass has to work with (a layer's factor is not a constant of the layer alone).

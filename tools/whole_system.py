@@ -364,6 +364,68 @@ def card_tests():
     return [t]
 
 
+# ----------------------------------------------------------------------------------------------------------------------- what it cost
+# The founder's words of 31 October 2026: the hardware is shown so a buyer sees the benefit and what it cost: that the software end's
+# gain was not bought by hurting the chip (its heat, its power, its service), by more energy, or by a bigger bill on the wire. Every
+# row of the chip's own meter is listed, every LOSS named; the energy and the bill as measured; the machine's layer as not yet run.
+COST_CARD = [("the factory tune (the dial at the max), native's power cap at 70% of the card's top", "V21_A100_CAP_ABC"),
+             ("the factory tune, the same runs' full-load part", "V21_A100_CAP_FULL_ABC"),
+             ("the tune-down (the dial at save), its own three runs", "V21_A100_SAVE_ABC")]
+
+
+def reading_word(r):
+    r = (r or "").strip("* ")
+    for w in (readings.GAIN, readings.LOSS, readings.STEADY, readings.GIVEN, "the runs disagree"):
+        if r.startswith(w):
+            return w
+    return r.split(",")[0]
+
+
+def cost_ledger(measured):
+    """Per hardware piece and the wire, every reading against native, its word, and the LOSS rows named."""
+    pieces = []
+    rows, srcs = [], []
+    for label, stem in COST_CARD:
+        p = ROOT / "results" / "gpu" / f"{stem}.json"
+        if not p.exists():
+            continue
+        d = json.loads(p.read_text())
+        srcs.append(f"results/gpu/{stem}.md")
+        for g, row in d["rows"].items():
+            ch = [100 * (r["omni"] - r["native"]) / r["native"] for r in row["runs"] if r.get("native")]
+            rows.append({"part": label, "gauge": g, "reading": row["reading"], "word": reading_word(row["reading"]), "changes": ch})
+    if rows:
+        pieces.append({"piece": "the chip (an NVIDIA A100, the card's own meter, class P, omni-v21)", "sources": srcs, "rows": rows})
+    lay = {n.split(".")[0]: v for n, v in measured.items()}
+    def mrow(layer, g, label, note):
+        e = (lay.get(layer) or {}).get(g)
+        if e is None:
+            return None
+        r, lo, hi = interval(e)                         # native over Omni-Compass for a resource; said here as Omni-Compass against native
+        o, olo, ohi = 1.0 / r - 1.0, 1.0 / hi - 1.0, 1.0 / lo - 1.0
+        def way(x):
+            return f"{abs(100 * x):.1f}% {'less' if x < 0 else 'more'}"
+        w = word_for(g, e)
+        noise = "; its 95% interval includes no change" if olo < 0 < ohi else ""
+        return {"part": note, "gauge": label, "word": w, "est": list(e),
+                "reading": f"{w}: Omni-Compass {way(o)} than native (95%: {way(olo)} to {way(ohi)}){noise}"}
+    sw = [r for r in (mrow("3", "energy", "energy, parked workers at standby power (Wh)", "the cluster: a declared model of the machines row, never a meter"),
+                      mrow("4", "energy", "the host's processor seconds", "the services: the host's own count of processor time, a stand-in for energy, never a meter")) if r]
+    if sw:
+        pieces.append({"piece": "the energy the software end drew (class L inputs, no meter)", "sources": ["results/live (the cluster and service tables)"], "rows": sw})
+    cl = [r for r in (mrow("5", "bill", "the compute bill at list price", "Azure, one run of four paired repetitions, and the v1 fleet's one-run sets"),
+                      mrow("5", "machines", "machines billed", "the same runs")) if r]
+    if cl:
+        pieces.append({"piece": "the wire (the cloud's metered bill, class L)", "sources": ["results/live/AKS_BILL.md", "results/live/V1_AKS_STEADY.json", "results/live/V1_AKS_BURST.json"], "rows": cl})
+    pieces.append({"piece": "the machine (the kernel, bare metal, Kepler and the machine's own meter)", "sources": ["register row 79"], "rows": [],
+                   "state": "not yet run"})
+    for pc in pieces:
+        pc["count"] = {w: sum(1 for r in pc["rows"] if r["word"] == w) for w in (readings.GAIN, readings.STEADY, readings.GIVEN, readings.LOSS, "the runs disagree")}
+        pc["loss"] = [f"{r['gauge']} ({r['part']}): {r['reading']}" for r in pc["rows"] if r["word"] == readings.LOSS]
+        pc["disagree"] = [f"{r['gauge']} ({r['part']})" for r in pc["rows"] if r["word"] == "the runs disagree"]
+    return pieces
+
+
 # ----------------------------------------------------------------------------------------------------------------------- the layers
 def layer_gauges(tests, rule):
     """Per gauge the layer's (μ, σ): the mean of its tests' log ratios. rule 'index': an unjudged gauge enters as exactly 1 with
@@ -648,6 +710,28 @@ def main(argv=None):
              "factor while the bill stays native's.")
     L.append("")
 
+    cost = cost_ledger(measured_all[(SCOPE_WITH, "carried")])
+    L.append("## 3b. What the benefit cost: the chip, the energy and the wire against native")
+    L.append("")
+    L.append("The benefit above is the software end's. This section is the other half a buyer asks for: what it cost. Each hardware piece and the "
+             "wire is read against native, every row of its own record, so it can be seen whether the software end's gain was bought by heating or "
+             "wearing the chip, by drawing more power, by serving less, or by a bigger bill (do no harm, `DISCLOSURES.md` section 3). Nothing here is "
+             "composed into the index; a LOSS row is shown and named, never cut.")
+    L.append("")
+    for pc in cost:
+        L.append(f"**{pc['piece']}**" + (f": {pc['state']}." if pc.get("state") else f" (`{'`, `'.join(pc['sources'])}`)"))
+        L.append("")
+        if not pc["rows"]:
+            continue
+        L.append("| Part | Gauge | Reading against native |")
+        L.append("|---|---|---|")
+        for r in pc["rows"]:
+            L.append(f"| {r['part']} | {r['gauge']} | {r['reading']} |")
+        L.append("")
+        c = pc["count"]
+        L.append(f"{len(pc['rows'])} rows: {c[readings.GAIN]} GAIN, {c[readings.STEADY]} STEADY, {c[readings.GIVEN]} power given, {c[readings.LOSS]} LOSS, "
+                 f"{c['the runs disagree']} where the runs disagree." + (f" The LOSS rows: {'; '.join(pc['loss'])}." if pc["loss"] else " No LOSS row."))
+        L.append("")
     L.append("## 4. The assumption tested where the tables allow: separability, from the governors' four ways")
     L.append("")
     L.append("Omni-Compass on the organism alone (compassbare against nativebare) and on top of the orchestrator (compass against native), in the same "
@@ -718,6 +802,7 @@ def main(argv=None):
                                             "index": {"mu": idx[0], "sigma_independent": idx[1], "sigma_correlated": idx[2]}}
                       for (scope, rule), (by_layer, total, idx) in results.items()},
            "separability": [{**s, "top": list(s["top"]), "bare": list(s["bare"])} for s in sep],
+           "cost": cost, "composed": list(COMPOSED), "held": HELD, "held_layers": HELD_LAYERS,
            "beside": side}
     js_text = json.dumps(jsonable(out), indent=1, ensure_ascii=False) + "\n"
     if "--check" in (argv if argv is not None else sys.argv[1:]):
