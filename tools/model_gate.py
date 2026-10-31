@@ -181,7 +181,8 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
                 for w in c.workloads:
                     w.metric = sum(w.mhist) / len(w.mhist)
                     hpa_step(w, w.target); w.desired = w.replicas
-                fleet_sim._cluster_autoscaler(c)
+                if self.autoscaler == "ca":                    # a plant with fixed machines has none (StaticFineSim)
+                    fleet_sim._cluster_autoscaler(c)
             self.rows.append(["", t * FINE_S, p.nodes, p.nodes + len(p.booting), int(alloc / ALLOC * 1000), int(reqs * 1000),
                               int(used * 1000), pending_pods, len(c.workloads), sum(w.current for w in c.workloads),
                               sum(w.desired for w in c.workloads), kw * 1000])
@@ -201,8 +202,27 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
             elif n > p.nodes:
                 k = min(n - p.nodes, len(self.parked)); p.nodes += k; self.parked = self.parked[k:]
 
+    class StaticFineSim(FineSim):
+        """On site, the kind rig's own machines on the 5 s plant (docs/PACE_PREREGISTRATION.md, amendment 5): every worker made at
+        the start and already paid for, no cluster autoscaler, the pool at its starting size in every arm. The governor may park a
+        machine (marked idle and kept, drawing its standby share of idle power, fleet/harness.py park_frac, as on the kind rig) and
+        wake it, never add one past the pool. The arms then differ in the software end alone: the pods and their processor."""
+
+        def resize(self, n):
+            p = self.c.pool; total = p.nodes + len(self.parked); n = max(p.min_nodes, min(total, int(n)))
+            if n < p.nodes:
+                k = p.nodes - n; p.nodes -= k; self.parked += [10 ** 9] * k      # parked and kept: never deleted
+            elif n > p.nodes:
+                k = min(n - p.nodes, len(self.parked)); p.nodes += k; self.parked = self.parked[k:]
+
+        def tick(self):
+            super().tick()
+            p = self.c.pool
+            self.rows[-1][-1] += len(self.parked) * p.idle_kw * p.park_frac * self.scn.pue * 1000   # a kept machine's standby draw
+
     static = setting == "static"
-    sim = (StaticSim if static else FineSim if fine else CloudSim)(seed, days, autoscaler="none" if static else "ca")
+    sim = (StaticFineSim if static and fine else StaticSim if static else FineSim if fine else CloudSim)(
+        seed, days, autoscaler="none" if static else "ca")
     billed = []
     lat_path = out / "latency.csv"
     lat_rows, minute_ms, p95s = [], {}, []
@@ -1086,7 +1106,8 @@ def main(argv=None):
     # the pace study (omni-v16): the candidate alone on the 5 s plant at each decision period, in the cloud's setting and in
     # the kind benchmark's, each pace read against the candidate at 60 s and against native, paired by seed
     periods = [float(x) for x in a.pace_periods.split(",")]
-    for model, setting in (("pace_cloud", "cloud"), ("pace_kind", "kind")):
+    # pace_onsite (31 October, amendment 5): on site, the kind rig's own fixed machines, no cluster autoscaler
+    for model, setting in (("pace_cloud", "cloud"), ("pace_kind", "kind"), ("pace_onsite", "static")):
         if model not in models:
             continue
         jobs = [("native", None, s_) for s_ in seeds] + [("omni", per, s_) for per in periods for s_ in seeds]

@@ -445,9 +445,9 @@ TERMS = [
     T("Omni-Compass", A, "A supervisory governor. It always sits on top of a native controller and never in its place: the "
       "Kubernetes pod autoscaler, GPU firmware, cooling, batteries, a grid's tap changer, a robot's servo. It treats each setting "
       "a native controller already exposes as a muscle and the whole stack as one body. Headline: more work, faster, on fewer "
-      "machines, with less energy.",
+      "machines, for the same energy and the same bill.",
       [(CL, "Omni-Compass is a **supervisory governor**."),
-       (CL, "Headline: more work, faster, on fewer machines, with less energy.")]),
+       (CL, "Headline: more work, faster, on fewer machines, for the same energy and the same bill")]),
     T("native", A, "The whole system by itself with everything it ships with: every muscle under its own native controller. Every "
       "benchmark's baseline, and the controller Omni-Compass always sits on top of. Amber on the page.",
       [(MAN, "The whole system by itself with everything it ships with"),
@@ -505,11 +505,16 @@ TERMS = [
       "rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS; "
       "the cloud's and the chip's benchmarks must show it.",
       [(DIS, "A place holds when its runs read no LOSS.")], aka=["holds"]),
-    T("where the benefit lives", A, "At the software end, where it is measured. The cloud's wire and the chip are where "
-      "Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own, and a resource the "
-      "chip's runs cut (its energy at the tune-down) is read beside the work, never claimed as the benefit. A benchmark that holds "
-      "is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.",
+    T("where the benefit lives", A, "At the software end, where it is made and measured; it shows through on two receipts, native "
+      "against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each "
+      "dollar). The chip and the wire add no gain of their own: they are where Omni-Compass must hold.",
       [(DIS, "A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.")]),
+    T("one mechanism, in one place", A, "Omni-Compass acts in one place, the software end, on top of the controllers a stack "
+      "already runs, and changes nothing in the chip or the network or the cloud. Its effect travels the whole path the work "
+      "travels (the software, the wire, the chip and back), so it is checked at every place: the software end shows the gain, the wire "
+      "and the chip show that it holds and carry the gain to their receipts.",
+      [(DIS, "Four places are tested because a buyer asks about all four; one mechanism makes the gain")],
+      aka=["felt along the whole path"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
       "Omni-Compass rose). The law is omnicompass/compass_law.py (CompassLaw): a band with 5% cushions, two antagonist forces, "
@@ -1041,7 +1046,7 @@ TERMS = [
       "under the native controller it names (every real native; Red Hat OpenShift Container Platform, IBM Turbonomic and VMware "
       "vSphere read on the reader's own licence, with no record of ours until we run them licensed), with Omni-Compass on top of it or not. A wired slot lights its own row on the "
       "Auxiliary Input Board under the wall, one press flips the wall's monitors that carry a Prometheus query to it, and it is set beside the repository's real "
-      "records only (live software, class L; the card's meter, class P), never a model. Its two windows, native alone and "
+      "records only (live software, class L; the card's meter, class P), never a model run (class S). Its two windows, native alone and "
       "Omni-Compass on top, are one run of the reader's own system each, read by the one key; the page writes nothing to that system.",
       [(PAGE_F, "ten slots, each waiting to be wired to an organism of your own"), (MAN, "The Auxiliary Input: ten slots for the reader's own organisms.")],
       aka=["AUX", "the auxiliary input", "Auxiliary Input Board", "AUX slots"]),

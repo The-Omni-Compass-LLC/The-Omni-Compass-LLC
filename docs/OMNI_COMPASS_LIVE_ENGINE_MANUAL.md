@@ -40,8 +40,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
-work for the same bill.
+faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
+every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
 
 **Where the page shows it.** The live benchmark engine page plays every benchmark back from its own SHA-256-checked files, native
 beside Omni-Compass on top of native, lane by lane, and runs the engine's own runs in the page: the Python's seeded runs, and
@@ -110,13 +110,14 @@ Omni-Compass is software. It always sits on top of a native controller, and it c
 - **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
 - **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
-- **Where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **Where the benefit lives.** At the software end, where it is made and measured. It shows through on two receipts, native against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their receipts. Four places are tested because a buyer asks about all four; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 | Place | Its benchmark | What it must show | Its readings |
 |---|---|---|---|
 | The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
-| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds; the work per dollar read beside the bill | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
-| The chip | a graphics card on Lambda, its own power meter, class P | that it holds; its energy read beside the work | `results/gpu/` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the software end's gain on the cloud's own bill: the work per dollar, native against Omni-Compass | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
+| The chip | a graphics card on Lambda, its own power meter, class P | that it holds, and the software end's gain on the card's own meter: the work per joule, native against Omni-Compass | `results/gpu/` |
 | On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
 | The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
 
@@ -1004,8 +1005,8 @@ while it answers with no series yet or a round had no answer in time, a red octa
 waits to be wired. A wired slot lights its own row on the **Auxiliary Input Board** under the monitor wall (`#auxBoard`): one
 tile a gauge, its value, its readings since it was wired and its reading. The slot files each reading under the arm the system
 ran in: where the system serves its control panel's own series (`omni_control_mode` at autopilot, `omni_control_governor_up`,
-`omni_control_master_switch_on`, `tools/omni_control.py`), from those; where only the exporter's master switch answers and reads
-0, native; otherwise the arm the slot declares, switched by the reader when the system is switched. Changing a wired slot's
+`omni_control_master_switch_on`, `tools/omni_control.py`), from those; otherwise the arm the slot declares, switched by the reader
+when the system is switched (never the exporter's `omni_master_switch`, which drops to 0 at the governor's first stop and stays there). Changing a wired slot's
 address, query or native unwires it, so no window holds two systems' readings. Once each window holds four readings, each gauge
 is read by the key on the two windows' means (the 0.5% floor; work up GAIN, time waited or failed down GAIN, a resource down a cut
 and GAIN, up power given; the requests for each dollar up GAIN, down power given): one run of the reader's own system, never a
@@ -1018,7 +1019,7 @@ its top, over the page's own drawing, each of their breakers shows it, and the o
 records. A banner over the board names the slot until *The wall back to this page's engine* is pressed, the fuse box's own
 *Disconnect* is pressed or the connection fails. *Beside a record* sets the slot beside one of the repository's real records
 only, a standing three-run table of live software (class L) or the GPU card's metered run (class P), the native's own records
-first; our own models (class S) are never offered, and a row a record itself marks a declared model says so in its gauge. Every
+first; no model run (class S) is ever offered, and a row a live record itself works out from a declared model says so in its gauge. Every
 row of the record is shown, LOSS rows included, with its counts by word and its engine; the record ran on its own engine and the
 governor installed today on the engine that stands, so the two are never read as one engine. The reader's system and the record
 are two systems set side by side, neither a result of the other. The page writes nothing to the reader's system: the

@@ -428,7 +428,7 @@ def place_readme(text: str, block: str) -> str:
     if BEGIN in text:
         a = text.index(BEGIN); z = text.index(END, a) + len(END)
         return text[:a] + block + text[z:]
-    tag = "**More work, faster, on fewer machines, with less energy, on top of the stack you already run.**"
+    tag = "**More work, faster, on fewer machines, for the same energy and the same bill, on top of the stack you already run.**"
     i = text.index(tag) + len(tag)
     return text[:i] + "\n\n" + block + text[i:]
 

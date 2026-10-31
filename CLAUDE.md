@@ -24,7 +24,10 @@ the founder overrides one in the conversation.
   bring a knob a GAIN, that knob stays native. The 2% verdict (`omnicompass/verdict.py`) is the engine's trigger, not a
   stamp on a report. The trade between muscles, judged on the organism, is the next version's work (the model gate first).
   Gains are uncapped.
-- Headline: more work, faster, on fewer machines, with less energy. One combined number: the Omni index.
+- Headline: more work, faster, on fewer machines, for the same energy and the same bill (the founder's words of 31 October: every
+  benefit made at the software end, the chip and the cloud's wire where Omni-Compass holds; until then the line read "with less
+  energy"). One combined number: the Omni index, the software end's reading (work, speed and machines; energy scored only where a
+  meter read it, a model's estimate shown and never scored).
 - **The max is the default brain** (12 October): every muscle runs at its own limit, never past it and never below
   native; it rides the edge, not the middle. "We're never looking to shave energy": the energy it takes is **power
   given**, shown beside the work, the speed and the wear it bought, never called a loss; on the engine that stands the
@@ -475,7 +478,12 @@ the founder overrides one in the conversation.
   chip run must show is that Omni-Compass holds there: no judged gauge LOSS against native (the work done, the response time, the
   minutes over the line, the pods waiting, the failures), the bill, the machine-hours and the energy read beside it as resources
   (a rise power given), the work per dollar beside the bill. The benefit is shown where it lives, at the software end, measured on
-  real software on real computers, and explained through the wire, never claimed for the wire. The words for the places (the
+  real software on real computers, and explained through the wire, never claimed for the wire. It shows through on two receipts,
+  native against Omni-Compass (the founder's words of the same night: "we can show it defensively as a difference from native to
+  omnicompass on its receipt of a GPU or bill of a cloud, because that's the only two things we're trying to show through"): the
+  card's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). One mechanism, in one
+  place, felt along the whole path: Omni-Compass acts at the software end alone, and four places are tested because a buyer asks
+  about all four. The words for the places (the
   software end, on site, through the cloud, the chip, hold, where the benefit lives) are written once in `tools/places.py` and
   stand word for word on the README, `DISCLOSURES.md` (section 10), `docs/HOW_TO_READ_THE_RESULTS.md` and the three manuals
   (`python3 tools/places.py --fix`; `--check`, run by `verify.py`, fails any page that differs), and in the live engine's glossary
