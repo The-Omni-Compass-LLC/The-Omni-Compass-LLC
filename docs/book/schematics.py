@@ -74,7 +74,7 @@ schemdraw.config(fontsize=PT, font="DejaVu Sans", lw=1.2, color=INK)
 FIGURES = {
     # wiring schematics
     "s_k8s_cluster": "Wiring schematic: Kubernetes in the cluster, levels 2 to 4",
-    "s_cloud_machines": "Wiring schematic: a managed cloud cluster, the machines alone",
+    "s_cloud_machines": "Wiring schematic: a managed cloud cluster, the whole engine at the max",
     "s_pgbouncer": "Wiring schematic: a database behind its connection pooler",
     "s_kafka": "Wiring schematic: a message broker's consumer group",
     "s_redis": "Wiring schematic: a cache's memory ceiling",
@@ -392,9 +392,10 @@ CAPTION_NOTES = {
     "s_k8s_cluster": "Level 2: the target and the floor; level 3: the machines through the release gate and the verdict; level 4 "
                      "(--strict-replicas): the replica decision itself. The HPA keeps its own 15-second check underneath. Nothing is ever "
                      "deleted or evicted; a parked machine is emptied by the autoscaler's own scale-down.",
-    "s_cloud_machines": "A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next "
-                        "decision (60 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: "
-                        "the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.",
+    "s_cloud_machines": "The target moves inside the autoscaler's cover, the processor is conveyed in place, and a machine is parked only after "
+                        "its own trial (the response time holds within 2%) and woken on a breach: at the next decision (60 s) for a response "
+                        "time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the cloud's own autoscaler "
+                        "alone adds machines.",
     "s_pgbouncer": "Up: a server for every percent of clients waiting; down: one idle server, only while clients waited under 1%; at 95% of "
                    "the line the pool goes back to the pooler's own setting at once. One writer; the restore read back at the end.",
     "s_kafka": "Slow with messages waiting: consumers added in proportion to the force; calm with nothing waiting: one idle consumer given "
@@ -438,18 +439,18 @@ def s_k8s_cluster():
 
 def s_cloud_machines():
     return wiring_schematic(
-        senses=["p95, the probe's feed", "pending pods", "nodes in service"],
-        motors=["park: taint PreferNoSchedule", "wake: remove the taint", "pod-deletion-cost"],
-        adapter_lines=["--mode nodepool --law compass --dial save --sensed none/none (no HPA moved) --give-back-only",
+        senses=["p95, the probe's feed", "pending pods", "nodes in service", "the HPA's target and replicas"],
+        motors=["the HPA's target, floor and cap", "pods/resize: processor conveyed", "park: taint PreferNoSchedule", "wake: remove the taint", "pod-deletion-cost"],
+        adapter_lines=["--mode nodepool --law compass --dial max --sensed ns/svc --cap-deployments ns/svc",
                        "--node-scale-cmd \"bash /app/scripts/kind_nodepool.sh {n}\"",
                        "--min-nodes 2 --max-node-step 1 --interval 60 --floor-interval 5"],
-        native="the cloud's cluster autoscaler and every HPA, untouched",
+        native="the cloud's cluster autoscaler, which alone adds machines, and the service's HPA, its range and cap the operator's",
         muscle="the work pool's machines (omni-role=work)", cover="cover: [2, the pools' autoscaler maxima]; one machine a decision; never asks the cloud for one",
         meters=["the probe: real requests every 5 s → latency.csv", "the API: pods pending (every 5 s)", "the bill: every machine that exists, every 15 s"],
-        notes_text=["A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach:",
-                    "at the next decision (60 s) for a response time over the line, at the next fast check (5 s) for a waiting pod.",
-                    "No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more."],
-        title="THE GOVERNOR, cloud mode", inside="the compass law · the verdict · the release gate · one decision a period")
+        notes_text=["The target moves inside the HPA's cover and the processor is conveyed in place; a machine is parked only after its",
+                    "own trial (the response time holds within 2%) and woken on a breach: at the next decision (60 s), or at the next fast check (5 s).",
+                    "No cloud credential: the governor's service account reads, taints, annotates, moves the target and resizes; the cloud adds machines."],
+        title="THE GOVERNOR, in a cloud at the max", inside="the compass law · the verdict · the release gate · one decision a period")
 
 
 def s_pgbouncer():
@@ -613,7 +614,7 @@ def s_feed():
     # omni_controller/muscles.py latency_window(): blind = the newest row older than twice the window, or no served
     # response in it; the controller then reads the position as past the wall (fail up) and gives nothing back
     blind = box(d, 0.4, y2 - h2, 3.2, h2, "BLIND: no row for twice the window, or no served response: read as past the wall; "
-                                           "nothing given back, capacity added (the cloud mode: every parked machine woken)", fill=ROSE, color=RED)
+                                           "nothing given back, capacity added (in a cloud: every parked machine woken)", fill=ROSE, color=RED)
     yb = y2 - h2 - 0.5
     line(d, gov.S, (gov.S.x, yb), RED); line(d, (gov.S.x, yb), (blind.S.x, yb), RED); arrow(d, (blind.S.x, yb), blind.S, color=RED)
     text_at(d, 4.65, yb - 0.1, wrapw("the safe direction: a broken feed costs savings, never service", 7.5), RED, valign="top")
@@ -631,7 +632,7 @@ def s_deploy():
     box(d, 0.7, -9.2, 8.4, 8.1, "", fill="white", color=GREY)
     text_at(d, 0.85, -9.15, wrapw("the pod: UID 10001, read-only root filesystem, no capabilities, on the system pool (omni-role=system)", 8.0),
             GREY, valign="bottom")
-    ctr = box(d, 0.9, -3.5, 4.0, 1.8, "controller\n--mode nodepool --law compass --dial save --give-back-only --dry-run (first)", fill=BLUE, color=NAVY)
+    ctr = box(d, 0.9, -3.5, 4.0, 1.8, "controller\n--mode nodepool --law compass --dial max --sensed --cap-deployments --dry-run (first)", fill=BLUE, color=NAVY)
     prb = box(d, 0.9, -5.6, 4.0, 1.8, "probe\nlatency_probe.py: real requests every 5 s to the service's URL", fill=PALE, color=GOLD)
     wdg = box(d, 0.9, -7.9, 4.0, 1.8, "watchdog\nomni_switch.py watchdog: the lease, the restore if the governor dies", fill=MIST, color=GREY)
     va = box(d, 5.3, -3.2, 3.4, 1.2, "volume audit\n/var/log/omni/\naudit.jsonl", fill=MIST, color=GREY)
@@ -641,8 +642,8 @@ def s_deploy():
     line(d, (4.9, prb.E.y + 0.4), (5.1, prb.E.y + 0.4), GREY); line(d, (5.1, prb.E.y + 0.4), (5.1, va.S.y), GREY)
     line(d, (4.9, wdg.E.y + 0.4), (5.1, wdg.E.y + 0.4), GREY); line(d, (5.1, wdg.E.y + 0.4), (5.1, vt.N.y), GREY)
     # outside: the API server, the service, the work pools
-    api = box(d, 9.8, -2.4, 3.0, 2.0, "THE API SERVER\nget, list; patch nodes, patch pods: nothing else", fill=MIST, color=NAVY)
-    svc = box(d, 9.8, -6.7, 3.0, 2.0, "THE SERVICE and its HPA, untouched in the cloud mode", fill=MIST, color=NAVY)
+    api = box(d, 9.8, -2.4, 3.0, 2.0, "THE API SERVER\nget, list; patch nodes, pods; the service's HPA, Deployment record, pods/resize", fill=MIST, color=NAVY)
+    svc = box(d, 9.8, -6.7, 3.0, 2.0, "THE SERVICE and its HPA: the target moved inside its cover, the processor conveyed", fill=MIST, color=NAVY)
     pools = box(d, 9.8, -9.5, 3.0, 2.3, "THE WORK POOLS, omni-role=work, under the cloud's own autoscaler: tainted, untainted, pods marked first to go", fill=PALE, color=GOLD)
     d += elm.Wire("|-", arrow="->").at(ctr.N).to(api.W).color(NAVY)
     text_at(d, 5.2, api.W.y - 0.08, "one kubectl proxy", NAVY, valign="top")
@@ -1018,7 +1019,7 @@ def f_reading():
 
 
 def f_park():
-    return chart([("start", "a full decision in the cloud mode (every 60 s)"),
+    return chart([("start", "a full decision in a cloud (every 60 s)"),
                   ("decision", "the 95th percentile over the line, or the feed blind?"),
                   ("decision", "a pod waiting for a place (checked every 5 s)?"),
                   ("decision", "the release gate open and the trial allowing one more machine parked?"),
