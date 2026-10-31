@@ -3231,6 +3231,14 @@ machines the governor parks: a machine is parked only while the line holds, and 
 
 ### 19.1 What the governor moves in a cloud, and how the bill is read
 
+**What each place's check must show.** A stack has three places Omni-Compass can sit. At the software end (Kubernetes, the
+orchestrators and governors, the services) it decides and works, and the check there is the benefit against native: work, speed
+and machines. At the chip (a processor or GPU card) it turns only the chip's own controls, and the check is that the chip holds:
+its heat, its power and its service no worse than native, read by the chip's own meter. In the cloud (the wire and the
+provider's own software) the check is that it holds: the bill not raised beyond the noise and the service not harmed, read as the
+work per dollar where the work can grow. Inside a chip's firmware or a provider's own controllers nothing is measured from
+outside. The results of each check are in the Owner's Manual and the repository's result pages, not here.
+
 In a public cloud every machine that exists is billed, whether it carries work or not, so the bill is a gauge of its own
 there: a service gauge, its aim lower, read by the one key beside the work, the response time, the failures and the alert
 minutes. The governor has four levers in a cloud: the pod autoscaler's target, the processor of running pods, their power
