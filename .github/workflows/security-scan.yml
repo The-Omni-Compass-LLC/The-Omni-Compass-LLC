@@ -36,7 +36,10 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -q bandit==1.9.4 pip-audit==2.9.0 PyYAML==6.0.3
       - name: Static scan, every finding of high or medium severity reviewed
-        run: python3 tools/security_scan.py --check | tee scan.txt
+        # pipefail (31 October): through tee the step read tee's exit, so an unreviewed finding never failed it
+        run: |
+          set -o pipefail
+          python3 tools/security_scan.py --check | tee scan.txt
       - name: Every pinned dependency against the known vulnerabilities
         run: |
           set -o pipefail
