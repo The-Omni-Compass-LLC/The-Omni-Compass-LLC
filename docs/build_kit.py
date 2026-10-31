@@ -34,7 +34,7 @@ def verdict(sd, comp, k, lower):
         return "GAIN" if lower else "LOSS"
     if lo > 0:
         return "LOSS" if lower else "GAIN"
-    return "EVEN, no difference beyond the noise"
+    return "STEADY, no difference beyond the noise"
 
 
 REFS = ("k8s_ref_50", "k8s_ref_60", "k8s_ref_70", "k8s_ref_80")
@@ -44,7 +44,7 @@ def across(arm, k, lower=True):
     vs = [verdict(sd, f"{arm}_vs_{b}", k, lower) for sd in (S1, S2) for b in REFS]
     n = sum(v == "GAIN" for v in vs)
     w = sum(v == "LOSS" for v in vs)
-    return f"GAIN in {n}, LOSS in {w}, EVEN (no difference beyond the noise) in {len(vs) - n - w} of {len(vs)} seed-target combinations"
+    return f"GAIN in {n}, LOSS in {w}, STEADY (no difference beyond the noise) in {len(vs) - n - w} of {len(vs)} seed-target combinations"
 
 
 def both(arm, k, fmt, base="k8s_ref_70", lower=True):
@@ -56,7 +56,7 @@ pct = lambda v: f"{100 * v:.1f}%"; f1 = lambda v: f"{v:.1f}"; f2 = lambda v: f"{
 rate_bound = 3.0 / SOAK["decisions"]
 
 PRIMARY_TXT = "; ".join("seed %s: %+.2f kWh, p = %.1e" % (sd, r["mean_delta"], r["p"]) for sd, r in MULT["primary"].items())
-SECONDARY_TXT = "GAIN on %d, LOSS on %d, EVEN (no difference beyond the noise) on %d" % tuple(sum(t["verdict"].startswith(v) for t in MULT["secondary"]) for v in ("GAIN", "LOSS", "EVEN"))
+SECONDARY_TXT = "GAIN on %d, LOSS on %d, STEADY (no difference beyond the noise) on %d" % tuple(sum(t["verdict"].startswith(v) for t in MULT["secondary"]) for v in ("GAIN", "LOSS", "STEADY"))
 
 FS = json.loads((R / "fleet" / "heldout" / "SUMMARY.json").read_text())
 def _fl(v):

@@ -9,7 +9,7 @@ Source: GitHub Actions workflow `big-organism`, run 37359820055 (the tower: one 
 
 Each organism runs on the measured window's clock with the cluster as one more muscle (`tools/run_kil.py`): its own compute demand drives the load generator, the cluster's watts are its heat and load. Native: the stacks' own controllers and Kubernetes alone. Omni: the compass law on every simulated muscle and the live controller on the cluster, handed back at 90% of the window. Cluster rows are measured on the real cluster (energy is the declared power model; the bill, where present, is Azure's own count of machines). Organism rows are models (evidence S).
 
-How to read it: every change is omni against native (omni is Omni-Compass on top of native), and the Reading column gives its word, GAIN, EVEN or LOSS, by what the gauge is for and never by its sign (a resource spent that rose reads **power given**, never a loss; the key: `docs/HOW_TO_READ_THE_RESULTS.md`). The aim is lower for response times, time over the line, failed requests, pods started, replicas, machines, energy and the bill (less spent). The aim is higher for the organism's work and work per energy. A change whose interval crosses zero is marked inside the noise. The organism must keep the window's clock: the row "organism behind its window" says how long after the window its last step ended (0 is on the clock), and a repetition where either arm ended more than 5% of the window late is marked OFF THE CLOCK in the organism's line, because its last steps saw a cluster whose load schedule had already ended.
+How to read it: every change is omni against native (omni is Omni-Compass on top of native), and the Reading column gives its word, GAIN, STEADY or LOSS, by what the gauge is for and never by its sign (a resource spent that rose reads **power given**, never a loss; the key: `docs/HOW_TO_READ_THE_RESULTS.md`). The aim is lower for response times, time over the line, failed requests, pods started, replicas, machines, energy and the bill (less spent). The aim is higher for the organism's work and work per energy. A change whose interval crosses zero is marked inside the noise. The organism must keep the window's clock: the row "organism behind its window" says how long after the window its last step ended (0 is on the clock), and a repetition where either arm ended more than 5% of the window late is marked OFF THE CLOCK in the organism's line, because its last steps saw a cluster whose load schedule had already ended.
 
 ## Twelve columns, mean over repetitions
 
@@ -43,12 +43,12 @@ How to read it: every change is omni against native (omni is Omni-Compass on top
 | response time (ms), 95th percentile | 4104 | 203.8 | -95.0% | -6804 to -996.3 | GAIN |
 | response time (ms), 99th percentile | 6372 | 257.8 | -96.0% | -8153 to -4075 | GAIN |
 | time over the response line (% of samples) | 64.02 | 0.1645 | -99.7% | -99.52 to -28.19 | GAIN |
-| failed requests (%) | 22.25 | 0 | -100.0% | -115.6 to +71.11 | EVEN, inside the noise (cut) |
-| HPA replicas, mean | 9.886 | 9.894 | +0.1% | -0.01703 to +0.0345 | EVEN, inside the noise (up) |
-| pods started | 5 | 4.667 | -6.7% | -1.768 to +1.101 | EVEN, inside the noise (cut) |
-| worker nodes in service, mean | 6 | 6 | +0.0% | -9.779e-16 to +1.57e-15 | EVEN, the same (under one part in a million) |
-| energy, parked workers still on at idle power (Wh, declared model) | 541.8 | 540.8 | -0.2% | -6.524 to +4.494 | EVEN, inside the noise (cut) |
-| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 541.8 | 540.8 | -0.2% | -6.524 to +4.494 | EVEN, inside the noise (cut) |
+| failed requests (%) | 22.25 | 0 | -100.0% | -115.6 to +71.11 | STEADY, inside the noise (cut) |
+| HPA replicas, mean | 9.886 | 9.894 | +0.1% | -0.01703 to +0.0345 | STEADY, inside the noise (up) |
+| pods started | 5 | 4.667 | -6.7% | -1.768 to +1.101 | STEADY, inside the noise (cut) |
+| worker nodes in service, mean | 6 | 6 | +0.0% | -9.779e-16 to +1.57e-15 | STEADY, the same (under one part in a million) |
+| energy, parked workers still on at idle power (Wh, declared model) | 541.8 | 540.8 | -0.2% | -6.524 to +4.494 | STEADY, inside the noise (cut) |
+| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 541.8 | 540.8 | -0.2% | -6.524 to +4.494 | STEADY, inside the noise (cut) |
 | CPU used with Omni's own (cores), mean | 4.263 | 4.188 | -1.8% | -0.6641 to +0.5131 | shown, not judged (more or less is neither GAIN nor LOSS by itself) |
 | host CPU busy, the real machine under kind (%) | 69.33 | 69.92 | +0.9% | -6.106 to +7.288 | shown, not judged (more or less is neither GAIN nor LOSS by itself) |
 | organism work | 5.629e+13 | 5.629e+13 | -0.0% | -9.426e+07 to -9.426e+07 | LOSS |
@@ -65,13 +65,13 @@ How to read it: every change is omni against native (omni is Omni-Compass on top
 |---|---:|---:|---:|---:|---|
 | response time (ms), 95th percentile | 273.7 | 70.23 | -74.3% | -252.9 to -154 | GAIN |
 | response time (ms), 99th percentile | 453.6 | 77.04 | -83.0% | -492.5 to -260.6 | GAIN |
-| time over the response line (% of samples) | 0.7166 | 0 | -100.0% | -1.702 to +0.269 | EVEN, inside the noise (cut) |
-| failed requests (%) | 0 | 0 | +0 | +0 to +0 | EVEN, the same |
-| HPA replicas, mean | 9.788 | 9.764 | -0.2% | -0.08812 to +0.03989 | EVEN, inside the noise (cut) |
-| pods started | 7 | 7 | +0.0% | +0 to +0 | EVEN, the same |
-| worker nodes in service, mean | 6 | 6 | +0.0% | -9.779e-16 to +1.57e-15 | EVEN, the same (under one part in a million) |
-| energy, parked workers still on at idle power (Wh, declared model) | 504 | 504.9 | +0.2% | -4.344 to +6.001 | EVEN, inside the noise (up) |
-| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 504 | 504.9 | +0.2% | -4.344 to +6.001 | EVEN, inside the noise (up) |
+| time over the response line (% of samples) | 0.7166 | 0 | -100.0% | -1.702 to +0.269 | STEADY, inside the noise (cut) |
+| failed requests (%) | 0 | 0 | +0 | +0 to +0 | STEADY, the same |
+| HPA replicas, mean | 9.788 | 9.764 | -0.2% | -0.08812 to +0.03989 | STEADY, inside the noise (cut) |
+| pods started | 7 | 7 | +0.0% | +0 to +0 | STEADY, the same |
+| worker nodes in service, mean | 6 | 6 | +0.0% | -9.779e-16 to +1.57e-15 | STEADY, the same (under one part in a million) |
+| energy, parked workers still on at idle power (Wh, declared model) | 504 | 504.9 | +0.2% | -4.344 to +6.001 | STEADY, inside the noise (up) |
+| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 504 | 504.9 | +0.2% | -4.344 to +6.001 | STEADY, inside the noise (up) |
 | CPU used with Omni's own (cores), mean | 1.775 | 1.802 | +1.5% | -0.4546 to +0.5072 | shown, not judged (more or less is neither GAIN nor LOSS by itself) |
 | host CPU busy, the real machine under kind (%) | 36.5 | 37.89 | +3.8% | -5.031 to +7.823 | shown, not judged (more or less is neither GAIN nor LOSS by itself) |
 | organism work | 1.067e+14 | 1.067e+14 | -0.0% | -5.684e+08 to -5.684e+08 | LOSS |

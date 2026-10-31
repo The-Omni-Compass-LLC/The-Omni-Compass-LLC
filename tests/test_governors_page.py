@@ -34,7 +34,7 @@ class GovernorsPage(unittest.TestCase):
             "queue: job wait, submitted to its first pod running, mean (s)": {"reading": "GAIN in all three of our runs"},
             "queue: jobs unfinished at the window's end": {"reading": "LOSS in all three of our runs"},
             "machines in service, mean": {"reading": "power given in all three of our runs"},
-            "energy (kWh)": {"reading": "EVEN, no difference beyond the noise (all three runs)"},
+            "energy (kWh)": {"reading": "STEADY, no difference beyond the noise (all three runs)"},
             "pods started": {"reading": "shown, not judged"}}}
         with tempfile.TemporaryDirectory() as t:
             live = Path(t) / "results" / "live"; live.mkdir(parents=True)
@@ -42,7 +42,7 @@ class GovernorsPage(unittest.TestCase):
             with mock.patch.object(G, "ROOT", Path(t)):
                 text = G.render(runs={"koordinator": {"A": "9"}})
         kai = next(l for l in text.splitlines() if l.startswith("| KAI scheduler"))
-        self.assertIn("1 GAIN, 1 LOSS, 1 power given, 1 EVEN, 0 where the runs disagree", kai)
+        self.assertIn("1 GAIN, 1 LOSS, 1 power given, 1 STEADY, 0 where the runs disagree", kai)
         koord = next(l for l in text.splitlines() if l.startswith("| Koordinator"))
         self.assertIn("runs not yet finished", koord)
         self.assertIn("LOSS in all three of our runs", text)                  # every row counted and shown, losses included

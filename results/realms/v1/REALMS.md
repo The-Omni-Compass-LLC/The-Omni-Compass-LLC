@@ -20,7 +20,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## Every muscle alone, by home realm
 
-| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
+| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Compute / AI / Cloud | 266 | 13 | 1 | 252 | 0 | 0 | 0 |
 | Physics / Robotics / Autonomous | 72 | 18 | 8 | 46 | 0 | 0 | 0 |
@@ -30,7 +30,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## By knob: what kind of authority Omni held
 
-| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
+| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | capacity | 344 | 18 | 4 | 322 | 0 | 0 | 0 | +0.0% |
 | setpoint | 55 | 25 | 0 | 26 | 0 | 0 | 0 | +0.0% |
@@ -110,12 +110,12 @@ For 54 of 55 setpoint muscles, a fixed setpoint at the calm end of the declared 
 | time_of_use_schedule | Energy Storage & Microgrid | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.2% (-0.2 to -0.2) | +0.0% (+0.0 to +0.0) | -1.4 (-1.5 to -1.3) |
 | microgrid_emergency_reserve | Energy Storage & Microgrid | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.2% (-0.2 to -0.2) | +0.0% (+0.0 to +0.0) | -1.4 (-1.5 to -1.3) |
 | pue_target | Facility & Grid Optimization | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.1% (-0.1 to -0.1) | +0.0% (+0.0 to +0.0) | -0.8 (-1.0 to -0.6) |
-| model_replicas | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_route_weight | AI Inference Serving | setpoint | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_load | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_unload | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_instance_count | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| continuous_batching | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_replicas | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_route_weight | AI Inference Serving | setpoint | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_load | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_unload | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_instance_count | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| continuous_batching | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
 
 ## Validity
 

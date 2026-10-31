@@ -162,6 +162,56 @@ The first counted set on the brain's verdict (runs 38021564790, 38013304929, 380
 
 **Dispatched (2026-10-10 13:11 to 13:12 UTC, commit `ca745467`).** Under the resource objective runs 38054742933, 38054746778, 38054750788 (A, B, C); under the service objective runs 38054804459, 38054808912, 38054812962 (A, B, C); the same inputs as the morning's; recorded run by run in `docs/RERUN_2026-10-10.md`.
 
+## Amendment 4 (2026-10-30, declared before any run on it): the group's twin and the immune reflex (the next engine's candidate)
+
+**The cause, from the omni-v21 runs' own files** (`docs/STORE_ROOT_CAUSES_2026-10-30.md`, `tools/store_causes.py`). In every one
+of the 1,428 seconds the service stood over its line in the omni-v21 resource set, and the 1,625 of the service set, the brain
+asked for consumers and amendment 2's allowance kept it from them: the wall (the fail-up) abandoned every spend trial before
+its samples were in, and the fail-up itself was clamped to the allowance those trials never earned. The hand-back of 25
+October gave back a consumer the load still needed: each change rebalances the whole group (a median 1.24 s of every message
+waiting for a consumer added, 2.58 s for one removed), and the brain re-added it within seconds. The harness's eight keys land
+on six partitions (Kafka's murmur2), so under the range assignor two consumers keep up with at most 792 messages a second at
+2 ms of work (offered 880 they serve 825), three with 990, four no more than three, and five to eight with 1,980; every
+workload's peak offers about 111% of what two consumers keep up with.
+
+**From this amendment** (`tools/run_kafka.py` `Brain`, the code the real run and the closed-loop model drive):
+
+- the twin reads each partition's arrivals from the topic's log-end offsets once a second (one wire in), places them on the
+  members by the range assignor, and learns one member's rate from each second the queue grew with no change settling (the
+  group consumed Σ min(load, μ), solved for μ; the median of the last 15) and a change's own stall from the seconds after it
+  (the median of the last 9; one heartbeat interval, the consumers' own 3 s, before one is seen);
+- the reflex: with the rate known, when the busiest member would run past nine tenths of its rate under the arrivals and the
+  backlog (what waits, and what one change's stall would add, drained within 6 s), the count goes at once to the smallest count
+  that carries them, up to the partitions; the reflex is never clamped by the allowance, which keeps judging the compass's own
+  moves; with no rate yet known the wall adds one consumer;
+- the hold: above the operator's count the count stays until a smaller one carries the last 60 s's arrival peak at seven tenths
+  of its rate, 30 s after the last change, calm, with nothing waiting beyond one poll round a consumer; then it is handed back in
+  one move (one rebalance); a change's own stall is never read as demand;
+- the floor: never below the operator's count (the max, the factory tune); no give-back trial below it;
+- the immune system (`omnicompass/immune.py`): Omni-Compass's count redlining past the line, stuck, and native's twin (the
+  operator's count on the same arrivals) reading lower, the knob goes to native for the immune hold.
+
+**The model gate** (`tools/kafka_model.py`, class S, every input set from the omni-v21 runs' own files; the standing wire is
+omni-v21's loop read from git): at the counted 30 s a notch, on the development seeds 101 to 108 and the untouched seeds 201 to
+208, no LOSS row in any workload against omni-v21; work inside the line GAIN (up 16% to 21%), the 95th percentile GAIN (down
+92% to 98%), the most messages waiting at once GAIN (down 19% to 43%), the consumers power given (up 42% to 71%). At 20 s a
+notch (run C's setting, not the counted one) one row reads LOSS: the burst's most messages waiting at once, up 30.6% inside the
+seeds' spread, because native's queue grows about 1,100 messages in a 20 s notch and one change's rebalance costs about the
+same; it is on the next version's list with that cause.
+
+**The dial and the fingerprint** (30 October, the same candidate): `OMNI_DIAL=save` keeps omni-v21's loop on this wire (the
+tune-down, where giving consumers back is the aim; the verdict's allowance and its trials as amendments 2 and 3 wrote them), the
+max (the Brain above) is the factory tune, and every workload record carries its `dial`; `tools/knob_verdict.py`, which every
+store wire's tune-down runs through, joins the fingerprint with this version (`tools/omni_version.py`, `STORE_WIRES`). In the
+open-loop replay of the omni-v21 arms' recorded seconds (`tools/store_gate.py`, class S) the twin reads no arrivals (the audits
+carry none) and the reflex adds consumers from the compass's own wanting: consumers held 2.1 → 4.9 (+130.6%, power given), no second
+below the operator's count in either wire; no LOSS.
+
+**Expected before the runs**, at the counted 30 s a notch, three paired repetitions a run: the work inside the line and every
+latency and lag gauge GAIN in every untouched workload; the consumers running power given; the consumer changes shown. The
+counted runs on this amendment run on the next engine version, which lands only when the model gate reads no LOSS for every
+store wire it changes.
+
 ---
 
 © 2026 The Omni-Compass LLC. Evaluation and Simulation use only; any other use requires a signed, paid Omni-Compass

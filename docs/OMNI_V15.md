@@ -102,11 +102,11 @@ batch queue and turnaround; requests served, the 95th and 99th percentiles, ener
 moves, reversals and travel on both card models (the card governor applied the same gate outside the brain, so the brain's gate
 inside changes nothing there: 17 writes, 16 moves and 15 reversals a run on the card whose voltage falls with its clock, 35, 34
 and 33 on the card near its floor, the same in both engines); and the verdict allows the same share of give-back steps at every
-cost. The request's own wear is the one place the two engines differ, and it reads EVEN: on the model cluster, where the response
+cost. The request's own wear is the one place the two engines differ, and it reads STEADY: on the model cluster, where the response
 line is breached in about 27 of a day's 1,440 minutes and the calm stretches between are long, the request moved 67.3 times a day
-against 64.9 (+3.7%, EVEN), turned back 66.1 times against 63.8 (+3.7%, EVEN) and travelled 20.4 against 19.6 (+3.9%, EVEN) at a
-decision every 60 s; at a decision every 15 s 98.8 moves against 100.1 (−1.4%, EVEN), 96.1 reversals against 97.5 (−1.4%, EVEN),
-29.3 travel against 29.7 (−1.4%, EVEN); with the blink, +3.0%, +2.9% and +3.0%, EVEN. The small rise at 60 s is the gate doing
+against 64.9 (+3.7%, STEADY), turned back 66.1 times against 63.8 (+3.7%, STEADY) and travelled 20.4 against 19.6 (+3.9%, STEADY) at a
+decision every 60 s; at a decision every 15 s 98.8 moves against 100.1 (−1.4%, STEADY), 96.1 reversals against 97.5 (−1.4%, STEADY),
+29.3 travel against 29.7 (−1.4%, STEADY); with the blink, +3.0%, +2.9% and +3.0%, STEADY. The small rise at 60 s is the gate doing
 what the governor declares: omni-v14 kept trimming while the line was breached by less than the queue guard's 5% (a pressure
 between 0 and 0.05), and omni-v15 releases there too, so in a regime of rare, light breaches it releases a little more often. The
 fault was found in the opposite regime, the long run's clustered breaches (126 switches in 350 decisions), where the same gate

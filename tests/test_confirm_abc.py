@@ -7,7 +7,7 @@
 three runs move the same way with every 95% interval clear of zero, the word given by what the gauge is for (a response time
 that fell is GAIN; a resource spent that fell is a cut, a GAIN, and one that rose is power given); a change of 0.5% or more,
 the runs' mean, reads by its aim by the mean of the three runs with the count of runs beyond the noise (the founder's order of
-24 October 2026); EVEN only under 0.5%; runs that moved 0.5% or more in opposite directions read as a disagreement; a rounding-level change reads EVEN, the same; unjudged rows stay unjudged."""
+24 October 2026); STEADY only under 0.5%; runs that moved 0.5% or more in opposite directions read as a disagreement; a rounding-level change reads STEADY, the same; unjudged rows stay unjudged."""
 import json
 import sys
 import tempfile
@@ -27,15 +27,15 @@ def main():
     fell = r(300, -150, -200, -100)
     assert C.verdict(P95, [fell] * 3) == "**GAIN in all three of our runs**", "a response time cut in all three is a GAIN (a minus that reads GAIN)"
     assert C.verdict(P95, [r(300, 30, 10, 50)] * 3) == "**LOSS in all three of our runs**", "a slower response in all three is a LOSS"
-    # the founder's order of 24 October 2026: a change of 0.5% or more (the runs' mean) is a change; EVEN only under 0.5%
+    # the founder's order of 24 October 2026: a change of 0.5% or more (the runs' mean) is a change; STEADY only under 0.5%
     assert C.verdict(P95, [fell, fell, r(300, -20, -60, 5)]) == "**GAIN by the mean of our three runs, beyond the noise in 2 of 3**", "one interval crosses zero: the mean still moved"
     assert C.verdict(P95, [r(300, -5, -40, 30), r(300, 8, -20, 36), r(300, -2, -30, 26)]) == "**the runs disagree**", "runs moved 0.5% or more both ways"
-    assert C.verdict(P95, [r(300, -1, -40, 30), r(300, 0.5, -20, 36), r(300, -0.4, -30, 26)]) == "EVEN, under the floor (the three runs' mean 0.10%)"
+    assert C.verdict(P95, [r(300, -1, -40, 30), r(300, 0.5, -20, 36), r(300, -0.4, -30, 26)]) == "STEADY, under the floor (the three runs' mean 0.10%)"
     assert C.verdict(P95, [fell, fell, r(300, 40, 10, 70)]) == "**the runs disagree**", "one run flips the sign, clear of the noise"
     assert C.verdict(P95, [fell, r(300, -20, -60, 5), r(300, 40, 10, 70)]) == "**the runs disagree**", "a disagreement outranks a noisy run"
     assert C.verdict(P95, [fell, fell, r(300, 20, -5, 45)]) == "**the runs disagree**", "a run that moved 0.5% or more the other way disagrees, inside the noise or not"
     assert C.verdict(P95, [fell, fell, r(300, 1, -5, 7)]) == "**GAIN by the mean of our three runs, beyond the noise in 2 of 3**", "a run the other way under the floor does not disagree"
-    assert C.verdict(P95, [r(300, 1e-7, 5e-8, 2e-7)] * 3) == "EVEN, the same", "a change under one part in a million"
+    assert C.verdict(P95, [r(300, 1e-7, 5e-8, 2e-7)] * 3) == "STEADY, the same", "a change under one part in a million"
     assert C.verdict("CPU used (cores), mean", [r(2.0, -0.5, -0.7, -0.3)] * 3) == "shown, not judged"
     # one pair a run (the 24-hour robustness run on rented machines): no interval, read by sign alone, never a confirmation
     nan = float("nan")
@@ -43,11 +43,13 @@ def main():
     assert C.verdict(P95, [single] * 3) == "three single pairs agree: GAIN (one pair a run, no interval, so the noise cannot be judged)"
     assert C.verdict(P95, [single, single, dict(single, diff=20.0, omni=320.0)]) == "single pairs point different ways (one pair a run, no interval)"
     assert C.verdict(C.CAPACITY, [single] * 3).startswith("three single pairs agree: LOSS"), "less work inside the line from three single pairs reads LOSS, and still not a reading of all three of our runs"
-    # the number beside a word carries the word's sign (tools/readings.py, 20 October); with no word, its own direction
-    assert C.cell(fell) == "−50.0% (−66.7 to −33.3)", C.cell(fell)
-    assert C.cell(fell, "GAIN") == "+50.0% (+33.3 to +66.7)", C.cell(fell, "GAIN")
-    assert C.cell(fell, "LOSS") == "−50.0% (−33.3 to −66.7)", C.cell(fell, "LOSS")
-    assert C.cell(r(300, -5, -40, 30), "EVEN, no difference beyond the noise") == "=1.7% (−13.3 to +10.0)", "EVEN: the size with =, the interval as it lies"
+    # the size beside a word carries no sign (tools/readings.py by_word, 25 October); with no word, its own direction
+    # every cell: native → Omni-Compass, the raw change with its true sign and its interval as it lies, then the word apart
+    # (the referee's work order of 25 October: a raw change is never turned to wear the verdict's sign)
+    assert C.cell(fell) == "300 → 150; raw −50.0% (95%: −66.7% to −33.3%)", C.cell(fell)
+    assert C.cell(fell, "GAIN") == "300 → 150; raw −50.0% (95%: −66.7% to −33.3%); GAIN", C.cell(fell, "GAIN")
+    assert C.cell(fell, "LOSS") == "300 → 150; raw −50.0% (95%: −66.7% to −33.3%); LOSS", C.cell(fell, "LOSS")
+    assert C.cell(r(300, -5, -40, 30), "STEADY, no difference beyond the noise") == "300 → 295; raw −1.7% (95%: −13.3% to +10.0%); STEADY, no difference beyond the noise", "STEADY: the raw change as it lies"
     with tempfile.TemporaryDirectory() as t:
         d = Path(t) / "run-123" / "live-reps"; d.mkdir(parents=True)
         (d / "LIVE_REPS.json").write_text(json.dumps({"repetitions": {"native": ["1", "2", "3"], "compass": ["1", "2"]},
@@ -79,7 +81,7 @@ def main():
         assert C.rig(new) == "pre-pulled on every worker before the arm (deploy/kind/prepull.yaml)", C.rig(new)
         assert C.rig(Path(t) / "none") == "not recorded"
     print("PASS  A/B/C three-run table rule: GAIN or LOSS in all three of our runs only with the same sign and every interval clear of zero in all three, "
-          "the word by what the gauge is for (a resource spent that rose: power given); a change of 0.5% or more reads by its aim, in all three runs or by their mean; EVEN only under 0.5%; clear runs pointing different ways read as a disagreement")
+          "the word by what the gauge is for (a resource spent that rose: power given); a change of 0.5% or more reads by its aim, in all three runs or by their mean; STEADY only under 0.5%; clear runs pointing different ways read as a disagreement")
 
 
 if __name__ == "__main__":

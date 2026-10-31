@@ -11,6 +11,28 @@ The printable book of this text, with its contents and appendices: `docs/OMNI_CO
 ## The Problem and the Answer
 
 
+**The bottom line, first: is Omni-Compass a benefit?** The founder's order of 24 October 2026: the first thing anyone sees
+says whether Omni-Compass is a benefit, for each way to run it, against native alone, in one light and one number. The light
+is the whole verdict: green and round, **GAINING**, Omni-Compass ahead of native; yellow, a yield diamond, **STEADY**, STEADY
+(a change under 0.5%); red, a stop-sign octagon, **REDLINING**, behind native, a LOSS; dark, **AWAITING**, no run yet. A slower
+service or a failed request turns the light red whatever the work. The number is how much more work was done for the same
+demand, the mean of our three runs (one real test on GitHub's own machines, class L; `results/orchestrator/V18_THREE_ARMS_ABC.md`,
+engine omni-v18, commit `0ca2bbdac97f`; section 60.3):
+
+| Way to run it | Light | Work against native | Everything else the record reads |
+|---|---|---|---|
+| Native alone (Kubernetes' published autoscaling rule on the muscles, written by us as the yardstick) | yellow, STEADY | 0%: the baseline | — |
+| Omni-Compass on native | green, GAINING | **GAIN 6.0%** in all three of our runs (A +5.2%, B +5.3%, C +7.4%) | the 95th percentile **GAIN 9.5%** in all three; machines **GAIN 3.1%** by the mean of our three runs, beyond the noise in 1 of 3; serving units **power given 10.2%** in all three; no request failed or answered wrong |
+| Omni-Compass direct (Omni-Compass alone on the muscles, no Kubernetes) | green, GAINING | **GAIN 7.5%** in all three of our runs (A +7.3%, B +5.7%, C +9.4%) | the 95th percentile **GAIN 12.1%** in all three; machines **GAIN 2.5%** by the mean of our three runs, beyond the noise in 0 of 3; serving units **power given 5.2%** by the mean, beyond the noise in 2 of 3; no request failed or answered wrong |
+
+The whole workload, by the two routes it is bought by (the composition of every measured layer, a model of measurements,
+class S of class L and P; section 60.6): **on site GAIN 18.5%** and **through the cloud GAIN 14.8%** over the gauges, each
+layer's intervals carried (+18.5% and +14.5% by the index's rule). Both are the composition's index, not a price: a bill is the
+sum of the costs inside a declared boundary, and today only the cloud's compute is metered in money, so neither route's bill is
+resolved yet (section 76.8). Every real test together, the Omni index of Omni-Compass on native reads **GAIN 3.4%**, its
+categories from real Kubernetes **GAIN 28.6%** to the database behind its pooler **LOSS 4.9%** (section 60.11). Run and scored
+by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
 **What the whole industry faces.** Every computing system in service, from one server to a cloud region, from a GPU to a
 building's chillers, a grid feeder or a robot cell, is run by a stack of native controllers: the Kubernetes autoscalers and
 scheduler, the cloud's node pools, the GPU's power and clock firmware, the database's cache and connection pools, the
@@ -39,12 +61,13 @@ organism: never less work or health than native (`DISCLOSURES.md`, section 3). T
 faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, the same
 work for a smaller bill.
 
-**What the record shows so far.** Every claim is a paired comparison of two arms, native and Omni-Compass on top of native,
-on the same machines with the same work, run three separate times (A, B and C) and read GAIN, EVEN or LOSS by what each gauge
-is for; every row is kept, LOSS included. On real machines (class L, live software), the combined Omni index read +4.3%, GAIN,
-and the service reading alone +11.9%, GAIN, the same in all three of our runs (`results/OMNI_INDEX.md`, 21 October; each test
-read from its own engine's newest three-run table, none pooled across engines). The rows that read LOSS stand in their tables
-with their causes, such as the pod start wait on the kind rig (`docs/POD_START_WAIT.md`). The 1,107 muscles of the catalog are
+**What the record shows so far.** Every claim is a paired comparison of native and Omni-Compass on top of native, and since
+23 October of Omni-Compass direct beside them, on the same machines with the same work, run three separate times (A, B and C)
+and read GAIN, STEADY or LOSS by what each gauge is for; every row is kept, LOSS included. On real machines (class L, live
+software), the combined Omni index reads +3.4%, GAIN, and the service reading alone +9.4%, GAIN, judged across our three runs
+by the rule of 24 October (`results/OMNI_INDEX.md`; each test read from its own engine's newest three-run table, none pooled
+across engines). The rows that read LOSS stand in their tables, two whole categories among them (the database behind its
+pooler, the storage-engine cache; section 60.11), as does the pod start wait on the kind rig (`docs/POD_START_WAIT.md`). The 1,107 muscles of the catalog are
 modelled (class S) and are never shown as proof of hardware. The engine is written twice, in Python and in C++, and the
 Python's 500 seeded runs through the C++ harness are identical to the last bit (`cpp/tools/engine_runs.cpp`; GitHub
 reruns the 500 on every change to the harness, the engine's C++ or the page, and every verify reruns 50 of them). Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
@@ -61,7 +84,16 @@ Simulation use only (`LICENSE`); any commercial use, monetization or production 
 Enterprise License (`ENTERPRISE_LICENSE.md`). What a licensee acquires is the working whole: the engine, the wiring and the
 factory card of every muscle, the harness that measures it against native, and the receipts.
 
-<!-- the key: GAIN, EVEN and LOSS (tools/readings.py) -->
+**The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
+orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
+racks, the data center, on site or off site). Omni-Compass can live in all three places. On the wire alone, as every cloud run
+in this repository is set, it can only park machines the cloud's own autoscaler already made, so a cloud run alone can show at
+most a small cut in the bill of the wire; the work and speed gained at the software end and the energy and throughput gained
+at the bare metal are measured where Omni-Compass sits on them, and composed with the wire into one organism and one bill
+(`DISCLOSURES.md`, section 9; section 60.6, with the company's expected ranges beside the measured readings, an expectation
+and never a result).
+
+<!-- the key: GAIN, STEADY and LOSS (tools/readings.py) -->
 
 ## Foreword
 
@@ -110,9 +142,10 @@ way and the settings drift back toward native. Reset hands everything back. If t
 out and the plug walks every setting home, step by step. The kill switch is separate and instant, and it exists for
 security, not for daily driving.
 
-**How I want it judged.** Every benchmark in this book has exactly two arms: native, and Omni-Compass on top of native.
-There is no third arm and no other name. Every result was run three separate times, under rules written down before
-the first run, and every row is shown, losses included. Each reading is one word, **GAIN**, **EVEN** or **LOSS**,
+**How I want it judged.** Every benchmark in this book sets native beside Omni-Compass on top of native, and, where native's
+own controller can be switched off, Omni-Compass direct beside them ("there's native, there's Omni and native, and then
+there's Omni by itself", 23 October); there is no other arm and no other name. Every result was run three separate times, under rules written down before
+the first run, and every row is shown, losses included. Each reading is one word, **GAIN**, **STEADY** or **LOSS**,
 decided by what the gauge is for. A result from our own model is labeled as a model; a result from live software is
 labeled as live software; only a meter speaks for hardware. Where we lost, the book says so, and we went to find out
 why. Nobody outside The Omni-Compass LLC has reviewed or approved these results, and every table says that too.
@@ -177,16 +210,17 @@ chapters give different figures for the same thing, the later run and the State 
 **The standards every page of this manual keeps.** A referee or an underwriter reading this manual should expect, and
 will find, the following discipline throughout, because it is the discipline the repository enforces on itself:
 
-1. **Two arms, always.** Every benchmark compares native against omni, the same system with Omni-Compass on top, on the
-   same machines, with the same work at the same moments. Omni-Compass is never run standalone and never compared as a
-   competitor to the controller it sits on.
+1. **Native beside it, always.** Every benchmark is read against native, on the same machines, with the same work at the
+   same moments: omni (Omni-Compass on native) against native, and, where it is run, Omni-Compass direct against native and
+   against omni. Omni-Compass on native is never compared as a competitor to the controller it sits on; the direct arm
+   switches that controller off to show what Omni-Compass does as the only controller, and is never read in place of the
+   arm on native.
 2. **Preregistered, then run.** The arms, the knob, its cover, the gauges, their directions and the readings are written
    down and committed before the first counted run (`docs/*_PREREGISTRATION.md`). Rules are frozen on one tuning case
    that is shown and never counted, then applied unchanged to untouched cases. Any amendment made after a result has been
    seen is written into the preregistration with its time and reason, and the table that carries the result says so.
 3. **Three separate runs, one rule.** Every result is run three times as separate GitHub runs (A, B and C) on the same
-   frozen engine, and every judged row reads exactly one of: GAIN in all three of our runs, LOSS in all three of our runs, no difference beyond the
-   noise (with the count of runs in which the interval crossed zero), or the runs disagree. Nobody outside The Omni-Compass LLC has
+   frozen engine and profile, and every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree**. Nobody outside The Omni-Compass LLC has
    reviewed or approved these results, and every three-run table says so.
 4. **Every row, losses included.** A row that went against Omni-Compass is in the table beside the rows that went for it.
    When Omni-Compass loses, the first suspect is our own wiring, native setup or scoring; when that is fixed, the test is
@@ -254,8 +288,8 @@ stopped. When the governor comes back, it starts from what it reads, not from wh
 
 **7:00 a.m. The morning report.** On a live system, the proof does not come from a feeling that the night went well.
 It comes from paired runs: the same work, run once on native and once with Omni-Compass on top, and compared gauge by
-gauge. Every gauge gets one word. Time waited that fell reads **GAIN**. Work done that rose reads **GAIN**. A difference
-inside the noise reads **EVEN**, and the report says so plainly. A gauge that moved the wrong way reads **LOSS**, and it
+gauge. Every gauge gets one word. Time waited that fell reads **GAIN**. Work done that rose reads **GAIN**. A change under
+half of one percent reads **STEADY**, and the report says so plainly; a change of 0.5% or more shows its word. A gauge that moved the wrong way reads **LOSS**, and it
 stays in the report until its cause is found and fixed. The energy spent on extra work reads **power given**, never a
 loss.
 
@@ -330,7 +364,7 @@ native telemetry stream as a measurement, and governs the whole body from above.
    the governor crashes, its lease runs out and the settings walk home on their own. A separate kill switch stops
    everything at once.
 3. **Every claim is checked.** Each benchmark compares two arms, native and Omni-Compass on top of native, on the same
-   machines with the same work. Each runs three separate times. Each reading is one word, GAIN, EVEN or LOSS, decided
+   machines with the same work. Each runs three separate times. Each reading is one word, GAIN, STEADY or LOSS, decided
    by what the gauge is for. Each result carries its evidence class: **P** for a physical meter, **L** for live
    software, **S** for our own models. A model is never shown as proof of hardware.
 
@@ -361,15 +395,15 @@ turns to the theory, the mathematics, the physics, the body, and only then to th
 Read in that order, nothing in the wiring chapters should surprise you.
 
 
-## The key: GAIN, EVEN and LOSS
+## The key: GAIN, STEADY and LOSS
 
 
-Every judged reading in Omni-Compass is one of three words: **GAIN**, **EVEN** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
+Every judged reading in Omni-Compass is one of three words: **GAIN**, **STEADY** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
 
 | Word | What each letter stands for | Its sense in underwriting | What it means in a table |
 |---|---|---|---|
 | **GAIN** | **G** Growth (asset appreciation); **A** Advantage (risk reduction); **I** Improvement (margin expansion); **N** Net-positive (profitable outcome) | surplus and positive variance | the gauge moved toward its declared aim against native: more work done, a shorter wait, fewer misses or failures, or a resource cut |
-| **EVEN** | **E** Equalized (zero variance); **V** Verified baseline (expected norm); **E** Equilibrium (balanced risk); **N** Neutral (no net change) | the break-even baseline: equilibrium | native and Omni could not be told apart: the same, or no difference beyond the noise; a knob native already runs at the top of its range is EVEN, at its limit on native |
+| **STEADY** | **S** Stable (zero variance); **T** True to baseline (expected norm); **E** Equilibrium (balanced risk); **A** At par (no net change); **D** Drift-free (within the 0.5% floor); **Y** Yield held (nothing lost) | the par baseline: equilibrium | native and Omni-Compass within 0.5% of each other: the mean of the three runs' changes under the 0.5% floor, or no change at all; a knob native already runs at the top of its range is STEADY, at its limit on native |
 | **LOSS** | **L** Leakage (capital drain); **O** Off-track (adverse selection); **S** Setback (claim liability); **S** Subpar (negative variance) | actuarial deficit and exposure | the gauge moved away from its declared aim: less work done, a longer wait, more misses or failures |
 
 How the sign of a number becomes a word:
@@ -379,16 +413,16 @@ How the sign of a number becomes a word:
 - **A resource spent or held** (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear on a part): a fall is a **cut**, and a cut is GAIN. A rise is **power given**: what Omni put in to buy the work and the speed shown beside it. Power given is always shown and never hidden, and it is never called a loss (the founder's order of 12 October 2026: the max rides every muscle's edge; it never shaves). A peak is power held, so a peak that rose is power given, in a data centre and in a building alike (17 October).
 - **Work bought with each unit of a resource** (work per energy): a rise is a cut in what each unit of work took, a GAIN; a fall is power given, because it falls when more power is given for the same work.
 - So a minus can read GAIN (a response time cut 65%, a bill cut 30%) and a plus can read LOSS (failed requests up).
-- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; EVEN is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **EVEN, under the floor**, with its size.
-- **The sign beside a word** (the same order): the number next to a word carries the word's sign, never the gauge's raw direction, so that no one mistakes which way a number went: GAIN **+**, LOSS **−**, EVEN **=**. A bill cut 3% reads GAIN +3%, failed requests up 2% read LOSS −2%, and a change inside the noise reads EVEN =0.3%.
+- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; STEADY is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **STEADY, under the floor**, with its size.
+- **Two numbers, never mixed** (the referee's work order of 25 October): every row shows native's value and Omni-Compass's, the **raw change** (Omni-Compass − native) / native with its true sign, + for a rise and − for a fall whatever the gauge is for, labelled raw, and apart from it the word with its size and no sign. A bill cut 3% reads raw −3.0%, GAIN 3.0%; failed requests up 2% read raw +2.0%, LOSS 2.0%; a pod start wait from 0.22 s to 0.83 s reads raw +275.0%, LOSS 275.0%; a change under the 0.5% floor reads STEADY 0.3%. No raw sign is ever turned to match a word.
 
-Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads EVEN (the same as native); AT ITS LIMIT ON NATIVE reads EVEN (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads EVEN (inside the noise, within the guardrails); NOT ESTABLISHED reads EVEN (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
+Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads STEADY (the same as native); AT ITS LIMIT ON NATIVE reads STEADY (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads STEADY (inside the noise, within the guardrails); NOT ESTABLISHED reads STEADY (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
 
-Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **EVEN, under the floor**: the mean moved less than 0.5%. **EVEN, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
+Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **STEADY, under the floor**: the mean moved less than 0.5%. **STEADY, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
 
-Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, break-even or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (EVEN). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
+Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, EVEN and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 
@@ -403,9 +437,12 @@ out (what it writes). Everything the native controller does, it still does. Pull
 where the operator left it (the lease); the kill switch returns them at once.
 
 **What "native" means.** Native is the same stack, the same muscles, the same machines and the same work, run the way
-everybody runs it today: the shipped controllers at their shipped or operator settings. Every benchmark has exactly two
-arms, native and omni, where omni is that same native stack with Omni-Compass on top. Nothing else differs between the
-arms, so whatever differs in the result is what Omni-Compass did.
+everybody runs it today: the shipped controllers at their shipped or operator settings. Every benchmark sets omni beside
+native, where omni (Omni-Compass on native) is that same native stack with Omni-Compass on top; since the founder's order of
+23 October a third arm runs beside them wherever a muscle's native is a controller that can be switched off, **Omni-Compass
+direct**, the same stack with that controller off and Omni-Compass the only controller moving the knob. The three are always
+shown together, each pair read on its own (section 1.1). Nothing else differs between the arms, so whatever differs in the
+result is what Omni-Compass did.
 
 **What a muscle and an organism are.** A muscle is one setting a native controller exposes (a pool's size, a power cap, a
 clock ceiling, a replica count, a battery's charge rate) together with the gauges that show what it does. Most companies
@@ -433,8 +470,9 @@ organism tests what happens when those muscles share one governor and interact.
 
 **What you see when it is hooked up.** Every result arrives as a receipt with the same shape: the two arms side by side,
 every gauge of the system (the work done, the response times, the misses and failures, the machines and energy spent),
-the paired change with its 95% interval, and one word per gauge, GAIN, EVEN or LOSS (the key, above). A three-run table
-repeats the test three times, A, B and C, on the same frozen engine, and a word counts only when all three runs agree.
+the paired change with its 95% interval, and one word per gauge, GAIN, STEADY or LOSS (the key, above). A three-run table
+repeats the test three times, A, B and C, on the same frozen engine and profile, and reads each row by one rule:
+the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree** (Chapter 59).
 Over a benchmark sit three summaries: the Omni index (one number for all real tests together), the benefit sheet (one
 number and one word per benchmark) and the wiring page (for each knob: write, watch, or the operator's choice).
 
@@ -447,7 +485,9 @@ number and one word per benchmark) and the wiring page (for each knob: write, wa
 3. **Then the resource rows**: machines, energy, memory, connections. A cut is a GAIN. A rise is **power given**: what
    Omni-Compass put in to buy the work and speed above it. Read the two together: power given that bought nothing is the
    cost to fix.
-4. **Then the noise.** EVEN, no difference beyond the noise, is a result, not a failure. The runs disagree means the test is
+4. **Then the floor and the noise.** STEADY, a mean change under 0.5% (under the floor) or none at all, is a result, not a
+   failure. A change of 0.5% or more is a change and shows its word, with the count of runs beyond the noise beside it
+   whenever not all three are. The runs disagree means runs that moved 0.5% or more pointed different ways: the test is
    unstable there and is looked into.
 5. **Then the clock and the machine.** Where the test machine itself is the limit (its processor saturated, native alone
    failing a large share of requests, a run behind its window's clock), the report says so; a test machine's limit is never
@@ -463,7 +503,7 @@ same work is GAIN; more speed for the same machines is GAIN; more work for the s
 done in two places. The verdict (`omnicompass/verdict.py`) lets a muscle's setting move only between native and the deepest
 step a paired trial on that muscle has shown costs its own work nothing (each piece of work no slower, within the
 measurement's resolution); a step that costs more is undone at once and not tried again for a while, and where no step
-passes the muscle stays native, which is EVEN. Inside an organism, the body's guard (the reflex rule, `docs/FORMAL_V5.md`)
+passes the muscle stays native, which is STEADY. Inside an organism, the body's guard (the reflex rule, `docs/FORMAL_V5.md`)
 then refuses any step that pushes another part of the body past its cushion, so no GAIN in one muscle is bought with a LOSS
 in another.
 
@@ -492,7 +532,7 @@ run and still not be the mechanism.
 
 **What the end result is.** A system fully hooked up runs native exactly as before, with one governor reading every gauge
 of every muscle once a second and moving, muscle by muscle, only where a paired trial has shown a GAIN with no LOSS
-anywhere in the body; where it cannot help, the muscle stays native, which is EVEN, not a failure. The intended outcome,
+anywhere in the body; where it cannot help, the muscle stays native, which is STEADY, not a failure. The intended outcome,
 stated as the claim the receipts test: more work, faster, with fewer misses, on the same or fewer machines, with every
 unit of power given shown beside what it bought. Whether a given system gets there is answered only by its own receipts.
 
@@ -506,8 +546,15 @@ line is explained in the section named beside it; nothing on this page replaces 
 **What it is.** A supervisory governor on top of the controllers you already run. It never replaces them: it moves only
 settings they already accept, inside a band you set, and hands every setting back when it stops (section 1.1 and chapter 42).
 
-**The two names.** *Native* is your system as it runs on its own. *Omni* is the same system with Omni-Compass on top.
-There is no third arm and no other name (section 1.1).
+**The three arms.** *Native* is your system as it runs on its own. *Omni*, Omni-Compass on native, is the same system with
+Omni-Compass on top. *Omni-Compass direct* is the same system with each knob's native controller switched off and
+Omni-Compass the only controller moving it; never in a cloud without the owner's word. There is no other arm and no other
+name (section 1.1).
+
+**The profile and the two restoring controls** (section 76.8). Start on the factory profile; every change makes a custom
+profile, its results its own. **Restore factory profile** reapplies the released configuration. **Return to native** is the
+reset: every setting handed back to the snapshot, read back, the governor stopped. The kill switch is separate, for security
+only, and instant.
 
 **The modes** (section 1.3).
 
@@ -592,51 +639,51 @@ installed is a quarter off the bill.
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v19, fingerprint 9a72693d49b18b9b (62 files).
+- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
-  - every muscle alone, over its loads: EVEN 577, GAIN 530
+  - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
-- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v10 and omni-v11 and omni-v16 and omni-v18, each named in its table): +3.1% GAIN on the resource reading (work, speed, machines, energy), +8.8% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
-  - Real Kubernetes (GitHub): +28.6% GAIN
-  - Real database buffer pool (MySQL under sysbench, GitHub): +1.6% GAIN
-  - Real cache (Redis, GitHub): +0.2% GAIN
-  - Real database cache (MongoDB under YCSB, GitHub): −1.4% LOSS
-  - Real messaging (Apache Kafka, GitHub): −1.9% LOSS
-  - Real database (PostgreSQL behind PgBouncer, GitHub): −4.9% LOSS
+- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
+  - Real Kubernetes (GitHub): 28.4% GAIN
+  - Real database (PostgreSQL behind PgBouncer, GitHub): 4.1% GAIN
+  - Real database buffer pool (MySQL under sysbench, GitHub): 3.2% GAIN
+  - Real cache (Redis, GitHub): 0.0% STEADY
+  - Real database cache (MongoDB under YCSB, GitHub): 0.6% LOSS
+  - Real messaging (Apache Kafka, GitHub): 1.0% power given
 
-**On the engine that stands (omni-v19): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
-| Every real test together: the Omni index | omni-v10 and omni-v11 and omni-v16 and omni-v18 | +3.1% | GAIN AND LOSS | L |
-| Robustness: the two-hour run | omni-v11 | −4.2% | GAIN AND LOSS | L |
-| Robustness: the governor killed outright mid-run | omni-v11 | +10.7% | GAIN, power given | L |
-| Redis, the cache's memory ceiling | omni-v18 | +0.2% | GAIN, power given | L |
-| Real Kubernetes, steady work | omni-v10 | +29.8% | GAIN | L |
-| Real Kubernetes, faults | omni-v10 | +33.6% | GAIN, power given | L |
-| Real Kubernetes, demand that wanders | omni-v10 | +36.5% | GAIN AND LOSS | L |
-| Real Kubernetes, all four at once | omni-v10 | +39.7% | GAIN, power given | L |
-| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v11 | +76.6% | GAIN, power given | L |
-| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v10 | −0.4% | LOSS | L |
-| Real Kubernetes, a queue of jobs | omni-v10 | +10.2% | GAIN AND LOSS | L |
-| Real Kubernetes, a public day of demand (Google 2011) | omni-v10 | +35.2% | GAIN AND LOSS | L |
-| Real Kubernetes, a noisy neighbour | omni-v10 | =0.0% | GAIN, power given | L |
-| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | +63.3% | GAIN, power given | L |
-| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | +41.0% | GAIN, power given | L |
-| Power grids (SimBench), both load models | omni-v11 | +5.8% | GAIN, power given | S |
-| PostgreSQL, the pooler's pool size | omni-v16 | −4.9% | GAIN AND LOSS | L |
-| MySQL, the buffer pool's size | omni-v16 | +1.6% | GAIN AND LOSS | L |
-| MongoDB, the storage engine's cache size | omni-v16 | −1.4% | GAIN AND LOSS | L |
-| Kafka, the consumer group's size | omni-v18 | −1.9% | GAIN AND LOSS | L |
-| Buildings and batteries (CityLearn), the districts with batteries | omni-v11 | +1.5% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | +5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | +155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | +0.3% | GAIN | S |
-| Robot arms (MuJoCo), the three untouched robots | omni-v11 | +3.8% | GAIN | S |
-| Drone swarms, the three untouched cells | omni-v11 | +5.9% | GAIN | S |
+| Every real test together: the Omni index | omni-v21 | 5.2% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
+| Robustness: the two-hour run | omni-v21 | 3.8% | GAIN AND LOSS | L |
+| Robustness: the governor killed outright mid-run | omni-v21 | 8.1% | GAIN AND LOSS | L |
+| Robot arms (MuJoCo), the three untouched robots | omni-v21 | 3.8% | GAIN | S |
+| Redis, the cache's memory ceiling | omni-v21 | 0.0% | GAIN AND LOSS | L |
+| Real Kubernetes, steady work | omni-v21 | 30.9% | GAIN | L |
+| Real Kubernetes, faults | omni-v21 | 30.2% | GAIN, power given | L |
+| Real Kubernetes, demand that wanders | omni-v21 | 33.6% | GAIN, power given | L |
+| Real Kubernetes, all four at once | omni-v21 | 33.5% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v21 | 34.7% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v21 | 0.4% | LOSS | L |
+| Real Kubernetes, a queue of jobs | omni-v21 | 13.7% | GAIN AND LOSS | L |
+| Real Kubernetes, a public day of demand (Google 2011) | omni-v21 | 37.6% | GAIN AND LOSS | L |
+| Real Kubernetes, a noisy neighbour | omni-v21 | 2.2% | GAIN AND LOSS | L |
+| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | 94.7% | GAIN, power given | L |
+| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | 29.8% | GAIN AND LOSS | L |
+| Power grids (SimBench), both load models | omni-v21 | 5.8% | GAIN, power given | S |
+| PostgreSQL, the pooler's pool size | omni-v21 | 4.1% | GAIN, power given | L |
+| MySQL, the buffer pool's size | omni-v21 | 3.2% | GAIN, power given | L |
+| MongoDB, the storage engine's cache size | omni-v21 | 0.6% | GAIN AND LOSS | L |
+| Kafka, the consumer group's size | omni-v21 | 1.0% | GAIN AND LOSS | L |
+| Drone swarms, the three untouched cells | omni-v21 | 3.0% | GAIN | S |
+| Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | 1.5% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -658,7 +705,8 @@ turns the whole harness off in one human hand.
 
 **How you know.** Every run produces receipts: native against omni on the same system, the same load and the same clock,
 each gauge with its 95% interval, the raw files archived beside the code and fingerprinted. Results are labelled by a rule
-written before the run, counted only when all three of our runs agree, and reported with every loss in the table.
+written before the run, read across all three of our runs by the one key (a change of 0.5% or more is a change), and reported
+with every loss in the table.
 
 
 
@@ -708,10 +756,19 @@ Omni-Compass sets its pool size through the pooler's own console. Kafka's consum
 its own; Omni-Compass changes how many consumers are in the group, which is what an operator does. Redis keeps evicting by
 its own rule; Omni-Compass sets the ceiling that rule works under.
 
-This matters to a referee for a precise reason: every benchmark in this manual has exactly two arms, **native** (the
-system with its own controller, as shipped and as the operator set it) and **omni** (the same system with Omni-Compass on
-top). There is no third arm in which Omni-Compass replaces the controller, and no comparison in which Omni-Compass is a
-rival to it. A gain is therefore always "what the governor added on top of what the native controller already did", and a
+This matters to a referee for a precise reason: every benchmark in this manual sets **omni** (Omni-Compass on native: the
+same system with Omni-Compass on top) against **native** (the system with its own controller, as shipped and as the operator
+set it), and there is no comparison in which Omni-Compass on native is a rival to that controller. Since the founder's order
+of 23 October a third arm, **the arm by itself** (called Omni-Compass direct that day), runs beside them as a mechanism test: a
+knob's native controller switched off only where Omni-Compass carries that muscle itself and has proven it can move the knob,
+Omni-Compass then the only controller moving it, and every muscle Omni-Compass cannot be kept, native, under it. On Kubernetes that
+is Omni-Compass's own pod rule in place of the autoscaler's arithmetic and nothing else, because Omni-Compass is a brain with no
+organs there: it can be direct to a knob, never to a muscle (the founder's analysis of 31 October, `docs/SOLO_PREREGISTRATION.md`
+amendment 2; on Kubernetes the pod autoscaler removed where Omni-Compass's own pod muscle
+takes the workload, no cluster autoscaler on kind, the API server, the scheduler and the kubelet kept; `--own-replicas`, omni-v19;
+in the models `realms/harness.py` SOLO; Omni-Compass's own orchestrator, `omni_orchestrator/`). Where native is a setting rather than a controller, or its own loop is the actuator, the two
+Omni-Compass arms are one arm; no cloud runs direct without the founder's word (`docs/SOLO_PREREGISTRATION.md`). The three
+are always shown together, each pair read on its own. A gain is therefore always "what the governor added on top of what the native controller already did", and a
 loss is always "what the governor cost on top of it". Nothing in the record is an argument against any native controller;
 every native controller in this manual is a good controller that the governor sits on.
 
@@ -732,7 +789,7 @@ ceiling, a robot axis's speed, a drone's cruise override), it runs a **paired tr
 logarithm of each piece of work's cost, the change d = mean ln c[trial] − mean ln c[ref] carries its 95% interval
 d ± 1.96 · √(s²[ref] / n[ref] + s²[trial] / n[trial]), and with τ = ln 1.02 the 2% allowance in the same units, an interval
 wholly above zero is a LOSS and the step is refused whatever the allowance says; while the interval's half-width exceeds
-τ the trial measures on, up to three times its minimum; and a GAIN or EVEN step is allowed only if its median cost and
+τ the trial measures on, up to three times its minimum; and a GAIN or STEADY step is allowed only if its median cost and
 its mean-log change are both no more than 2% above the reference and above the cost first measured at native. On
 modelled noisy costs (σ = 0.25) this allows a step that truly costs 3% more 28% of the time instead of the medians'
 40%, one that costs 5% more 14% instead of 26%, and a free step 60% instead of 63% (`docs/OMNI_V7.md`, section 3;
@@ -747,7 +804,7 @@ why, in the robot-arm benchmark, two of four arms were left entirely native and 
 real Kubernetes tests machines were kept whenever one machine fewer made the requests slower in the trial. Gains are not
 capped; the allowance caps only what may be spent to get them.
 
-![Block diagram: the verdict's paired trial around a slow knob, read GAIN, EVEN or LOSS. The reference r is the cost of n requests at the deepest step already allowed (on a card, at native; n = 200 on Kubernetes, 30 on a card); the trial t is the cost of n more one step past it under the same traffic. The reading is the 95% interval of d = mean ln c[t] − mean ln c[r], stepwise also against the costs first measured at native: an interval wholly above zero is a LOSS and the step is refused; an interval wider than τ = ln(1 + a) measures on, up to 3n; otherwise the step is allowed only if median t ≤ min(r, c[native])·(1 + a) and d ≤ τ, with a = 0.02. A refused step is not tried again for R (7,200 s on Kubernetes, 480 decisions at the 15 s heartbeat; 900 decisions on a card, 30 min). Steps cannot add up beyond the allowance, because every step is judged against the native cost too.](figures/c_verdict.svg)
+![Block diagram: the verdict's paired trial around a slow knob, read GAIN, STEADY or LOSS. The reference r is the cost of n requests at the deepest step already allowed (on a card, at native; n = 200 on Kubernetes, 30 on a card); the trial t is the cost of n more one step past it under the same traffic. The reading is the 95% interval of d = mean ln c[t] − mean ln c[r], stepwise also against the costs first measured at native: an interval wholly above zero is a LOSS and the step is refused; an interval wider than τ = ln(1 + a) measures on, up to 3n; otherwise the step is allowed only if median t ≤ min(r, c[native])·(1 + a) and d ≤ τ, with a = 0.02. A refused step is not tried again for R (7,200 s on Kubernetes, 480 decisions at the 15 s heartbeat; 900 decisions on a card, 30 min). Steps cannot add up beyond the allowance, because every step is judged against the native cost too.](figures/c_verdict.svg)
 
 The same principle, applied after the fact to every published result, is the page of wiring verdicts
 (`docs/WIRING_VERDICTS.md`, section 16.6b): every knob in every table is given one of three words from the table itself,
@@ -884,7 +941,7 @@ stated formally in *The Max, Formally* (`docs/FORMAL_V5.md`, Definition 2 and Pr
 
 Two pages for a CTO, an engineer, a CFO or an attorney who needs the standing of every claim before reading anything else.
 Every number names its engine and its evidence class: L is live software, the real thing; S is our own models, never
-proof; P is a physical meter, and there is none yet. Every reading is GAIN, EVEN or LOSS, decided by what the gauge is for,
+proof; P is a physical meter, and there is none yet. Every reading is GAIN, STEADY or LOSS, decided by what the gauge is for,
 and holds only when all three of our runs (A, B and C) agree with every 95% interval clear of zero
 (`docs/HOW_TO_READ_THE_RESULTS.md`). Beside every gain stands what it cost. Where no proof exists yet, the word is
 **undetermined**.
@@ -900,34 +957,34 @@ hands every setting back to native's value when it stops, dies or is switched of
 | Claim | Standing | Evidence |
 |---|---|---|
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
-| It does no harm: never a LOSS against native | **Shown on omni-v11's counted runs; two faults found since, each fixed in the next version, their runs under way; one row awaits a written ruling** | 0 LOSS rows in the 23 omni-v11 three-run tables (1,039 judged rows: Kubernetes, the robustness kill test and long run, the five data stores, four outside simulators); the omni-v10 LOSS, the pod start wait under KEDA's HTTP add-on, reads EVEN on omni-v11 now that the kind rig pre-pulls the served image (`docs/POD_START_WAIT.md`); on real Kubernetes Omni-Compass's 95th and 99th percentiles were below native's in all 90 paired repetitions (`docs/TAIL_LATENCY.md`). The fault: in the drone swarm (class S) the omni-v11 wire spent the closest-approach margin in the counted cells (no near miss, no collision) and, on a mission draw outside them, let drones collide where native did not; its proximity reflex slowed over a second instead of at once. The fix held every drone outside the keep-out on every draw tried and landed in omni-v12, whose swarm runs judge a collision as a LOSS and fly three draws never flown (`docs/OMNI_V12.md`; `docs/LIMITATIONS.md`, section 3; `results/model_gate/V12_SWARM_REFLEX.md`). The governors' first tables, on omni-v12, read two LOSS rows. KubeRay with the organism alone: the queue 0.6% to 0.8% later and the tail 4% to 13% higher, because CPU limits the conveyance gave stayed on a saturated shared host; fixed in omni-v13 (`docs/OMNI_V13.md`; `docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 11). Crane: the total pod start wait, a sum of the pods Omni-Compass chose to start and the wait per pod, which the metric-aims audit rules on in writing before any table is read by it |
+| It does no harm: never a LOSS against native | **Shown on omni-v11's counted runs; two faults found since, each fixed in the next version, their runs under way; one row awaits a written ruling** | 0 LOSS rows in the 23 omni-v11 three-run tables (1,039 judged rows: Kubernetes, the robustness kill test and long run, the five data stores, four outside simulators); the omni-v10 LOSS, the pod start wait under KEDA's HTTP add-on, reads STEADY on omni-v11 now that the kind rig pre-pulls the served image (`docs/POD_START_WAIT.md`); on real Kubernetes Omni-Compass's 95th and 99th percentiles were below native's in all 90 paired repetitions (`docs/TAIL_LATENCY.md`). The fault: in the drone swarm (class S) the omni-v11 wire spent the closest-approach margin in the counted cells (no near miss, no collision) and, on a mission draw outside them, let drones collide where native did not; its proximity reflex slowed over a second instead of at once. The fix held every drone outside the keep-out on every draw tried and landed in omni-v12, whose swarm runs judge a collision as a LOSS and fly three draws never flown (`docs/OMNI_V12.md`; `docs/LIMITATIONS.md`, section 3; `results/model_gate/V12_SWARM_REFLEX.md`). The governors' first tables, on omni-v12, read two LOSS rows. KubeRay with the organism alone: the queue 0.6% to 0.8% later and the tail 4% to 13% higher, because CPU limits the conveyance gave stayed on a saturated shared host; fixed in omni-v13 (`docs/OMNI_V13.md`; `docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 11). Crane: the total pod start wait, a sum of the pods Omni-Compass chose to start and the wait per pod, which the metric-aims audit rules on in writing before any table is read by it |
 | More work, faster, on real Kubernetes | **Shown** (L, omni-v10 and omni-v11, each test on its newest table) | See section 2.3 |
-| More work, faster, on databases and caches | **Small or EVEN** (L, omni-v11) | Redis at the operator's ceiling: 4 gauge-rows GAIN at the tune-down, 6 at the max (work inside the line and hit rate up about 1%, for about 2% memory); Kafka 1 GAIN at each objective; MongoDB 1; PostgreSQL and MySQL 0, with every other gauge EVEN; native exactly as shipped: 0 GAIN, 0 LOSS (the knob at its limit on native or untouched). MySQL's update workload reads "the runs disagree" on throughput (±0.4%, a run-level effect: `docs/LIMITATIONS.md`). The runs at the max for MySQL, MongoDB and PostgreSQL are archiving |
-| Fewer machines | **Shown in one test** (L, omni-v10) | A queue of jobs: machines in service and node-hours cut 6% to 14%, the machines after the queue finished 10% to 22%, the queue finished EVEN |
+| More work, faster, on databases and caches | **Small or STEADY** (L, omni-v11) | Redis at the operator's ceiling: 4 gauge-rows GAIN at the tune-down, 6 at the max (work inside the line and hit rate up about 1%, for about 2% memory); Kafka 1 GAIN at each objective; MongoDB 1; PostgreSQL and MySQL 0, with every other gauge STEADY; native exactly as shipped: 0 GAIN, 0 LOSS (the knob at its limit on native or untouched). MySQL's update workload reads "the runs disagree" on throughput (±0.4%, a run-level effect: `docs/LIMITATIONS.md`). The runs at the max for MySQL, MongoDB and PostgreSQL are archiving |
+| Fewer machines | **Shown in one test** (L, omni-v10) | A queue of jobs: machines in service and node-hours cut 6% to 14%, the machines after the queue finished 10% to 22%, the queue finished STEADY |
 | A smaller cloud bill | **Undetermined** | Azure, the engine of 13 October: no difference in the bill (`results/live/AKS_BILL.md`); the Azure sets run one at a time on the engine that stands; Google and Amazon have not run |
 | Less energy | **Undetermined** | No physical meter yet; every energy figure in a live test is a declared model, not a measurement |
 | More work per watt on a GPU | **Undetermined** | No run on the engine that stands |
-| One governor over every muscle and organism | **Modelled** (S) | 1,107 muscles in our own models: 527 GAIN, 580 EVEN, 0 LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real systems |
+| One governor over every muscle and organism | **Modelled** (S) | 1,107 muscles in our own models: 527 GAIN, 580 STEADY, 0 LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real systems |
 | Its mathematics | **Machine-checked where stated** | 24 of 24 theorems proved by SMT and interval arithmetic on the engine as it executes: the compass law, the plug's clip, the verdict, the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |
 
 ### 2.3 Real Kubernetes, each gain beside its cost (L, three runs of ten pairs, kind on one GitHub runner)
 
-The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v19, the engine that stands from 25 October, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
+The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v23, the engine that stands since 31 October, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
 
 | Test | Gain, the same in all three of our runs | What it cost |
 |---|---|---|
-| Steady work in steps | 95th percentile cut 64% to 65%; time over the line cut 98% to 100%; alert minutes cut 100% | Machines and node-hours EVEN; CPU used, the governor's own included, −4.3% to −5.2% |
-| Demand that wanders | 95th percentile cut 57% to 66%; time over the line cut 38% to 45%; energy cut 0.3% to 0.4% | Machines EVEN; CPU used, the governor's own included, −1.3% to −2.1% |
-| The load stepping up and down (all four at once) | Work inside the response line +47% to +79%; 95th percentile cut 56% to 61% | Machines and node-hours EVEN; CPU used, the governor's own included, −0.5% to −2.6% |
-| A public day of demand (Google 2011) | 95th percentile cut 56% to 62%; time over the line cut 74% to 77% | Machines EVEN; pods started +120% to +193% (power given); CPU used, the governor's own included, −3.1% to −3.3% |
+| Steady work in steps | 95th percentile cut 64% to 65%; time over the line cut 98% to 100%; alert minutes cut 100% | Machines and node-hours STEADY; CPU used, the governor's own included, −4.3% to −5.2% |
+| Demand that wanders | 95th percentile cut 57% to 66%; time over the line cut 38% to 45%; energy cut 0.3% to 0.4% | Machines STEADY; CPU used, the governor's own included, −1.3% to −2.1% |
+| The load stepping up and down (all four at once) | Work inside the response line +47% to +79%; 95th percentile cut 56% to 61% | Machines and node-hours STEADY; CPU used, the governor's own included, −0.5% to −2.6% |
+| A public day of demand (Google 2011) | 95th percentile cut 56% to 62%; time over the line cut 74% to 77% | Machines STEADY; pods started +120% to +193% (power given); CPU used, the governor's own included, −3.1% to −3.3% |
 | Faults injected | 95th percentile cut 54% to 63%; 99th cut 43% to 51% | Replicas +14% to +20% (power given) |
-| KEDA's HTTP add-on underneath (omni-v11) | 95th percentile cut 72% to 74%; time over the line cut 98% to 99%; alert minutes cut 100%; replicas cut 11% to 20% | CPU used, the governor's own included, +49% to +57% (shown, not judged: idle processor given to the service); the pod start wait EVEN |
+| KEDA's HTTP add-on underneath (omni-v11) | 95th percentile cut 72% to 74%; time over the line cut 98% to 99%; alert minutes cut 100%; replicas cut 11% to 20% | CPU used, the governor's own included, +49% to +57% (shown, not judged: idle processor given to the service); the pod start wait STEADY |
 | KEDA on CPU and requests underneath (omni-v11) | 95th percentile cut 52% to 53%; time over the line cut 97% to 100% | CPU used, the governor's own included, +29% to +31% (shown, not judged); replicas +2% to +3% (power given) |
 | Goldilocks and the VPA underneath (omni-v11) | 95th percentile cut 61% to 64%; time over the line cut 98% to 100%; alert minutes cut 100%; pods started cut 53% to 61% | CPU used, the governor's own included, +44% to +52% (shown, not judged); parked-worker energy +1.7% to +2.3% (power given) |
-| A queue of jobs | Machines cut 6% to 14%; machines after the queue finished cut 10% to 22% | Queue finish time EVEN |
-| Fixed capacity (omni-v11) | EVEN at every cap | — |
-| A noisy neighbour | Time over the line cut 11%; the neighbour's own rows EVEN | — |
-| CruiseKube underneath | EVEN | — |
+| A queue of jobs | Machines cut 6% to 14%; machines after the queue finished cut 10% to 22% | Queue finish time STEADY |
+| Fixed capacity (omni-v11) | STEADY at every cap | — |
+| A noisy neighbour | Time over the line cut 11%; the neighbour's own rows STEADY | — |
+| CruiseKube underneath | STEADY | — |
 
 The processor given in the add-on tests was idle on machines already running. Where machines are billed by the hour, idle
 processor put to work costs nothing more unless it raises the machine count, and in these tests the machine count did not
@@ -1002,7 +1059,7 @@ measurement exists.
 5. **Method.** The smallest change every judged row can see (`docs/POWER.md`); every change to every preregistration with
    its timing (`docs/DEVIATIONS.md`); the chance of a false three-run reading, 3.1 × 10⁻⁵ a row (`docs/LIMITATIONS.md`).
 6. **Real Kubernetes.** The omni-v11 tables for Goldilocks, both KEDA setups and fixed capacity: 0 LOSS; the omni-v10 LOSS
-   reads EVEN; Omni-Compass's 95th and 99th percentiles below native's in all 90 paired repetitions
+   reads STEADY; Omni-Compass's 95th and 99th percentiles below native's in all 90 paired repetitions
    (`docs/TAIL_LATENCY.md`).
 7. **Databases and caches.** Ten omni-v11 tables, 0 LOSS; native as shipped kept apart from the operator's setting (a fault
    in the front page's grouping found and fixed before any table mixed them).
@@ -1907,7 +1964,7 @@ every decision that wrote nothing is in the record with the reason the gate held
 
 Everything above is one engine. What it delivers on a given organism depends on how it is tuned, as a car's engine delivers
 differently as its mixture, intake, exhaust, firing and pistons are set. The benchmarks read one tune, the factory tune; the
-live engine page is a bench on which any tune can be turned and watched live. This section states what a tune is and how the
+live benchmark engine page is a bench on which any tune can be turned and watched live. This section states what a tune is and how the
 factory tune is chosen, so that the claim the benchmarks make is exact (`docs/THE_TUNE.md` carries the same with the first
 search's preregistration).
 
@@ -1916,9 +1973,8 @@ P ∈ [5, 120] s, the compass's balance point c ∈ (0, 1), the dial, the verdic
 muscle's card. The factory tune is one point, θ*, fingerprinted with the engine. On an organism S under a load L, each seed
 s ∈ Ω (Ω the set of seeds) gives native's gauges g⁰(s) ∈ ℝⁿ and Omni-Compass on top of native at tune θ gives g(θ, s). The one key reads each gauge j
 from the paired differences dⱼ(θ; s) = gⱼ(θ, s) − g⁰ⱼ(s): their mean d̄ⱼ, their 95% interval [ℓⱼ, uⱼ] by Student's t on
-|Ω| − 1 degrees of freedom, the size rⱼ(θ) = d̄ⱼ ⁄ ḡ⁰ⱼ, and the word Rⱼ(θ) by the founder's order of 24 October (EVEN when
-|rⱼ(θ)| < 0.005; else GAIN on the side the gauge's aim serves; else LOSS for a time waited, missed or failed and for work, power
-given for a resource), the interval printed beside it.
+|Ω| − 1 degrees of freedom, the word Rⱼ(θ) (STEADY when ℓⱼ ≤ 0 ≤ uⱼ; else GAIN on the side the gauge's aim serves; else LOSS for a
+time waited, missed or failed and for work, power given for a resource) and the size rⱼ(θ) = d̄ⱼ ⁄ ḡ⁰ⱼ.
 
 **Admissible tunes** harm no gauge against native: A = { θ ∈ Θ : Rⱼ(θ) ≠ LOSS for every j, every muscle within its own limit },
 and in a cloud R[bill] (θ) ≠ power given as well. This is do no harm in the strict form the engine that stands keeps.
@@ -1942,25 +1998,21 @@ times on every benchmark. The rule is code, `tools/tune_study.py`, held by `test
 from 15 to 120 s and the balance point, in the kind benchmark's setting and the cloud's, seeds 101 to 108) is read on its own page in
 `results/model_gate/` when it finishes.
 
-**The common language** (the founder's master specification of 24 October; `docs/THE_TUNE.md`, sections 5 to 8, in full). Omni-Compass
-consists of a governing engine, its muscle adapters, a complete configuration profile and a validation harness. The **factory
-profile** is the complete, versioned set of defaults shipped together, θ*; a **candidate profile** is a combination under
-evaluation; the **active profile** is the one governing the current run; a **custom profile** is any identifiable configuration
-that differs from θ*. With x the governed system's state, z the governor's internal state, y its observations and Δ ∈ {10, 15, 30, 60,
-90, 120} s the decision interval, `z[k+1] = F[θ](z[k], y[k])` and `u[req][k] = G[θ](z[k], y[k])`, the command `Π[C](u[req][k])` inside the
-operating limits C, and the system evolves on the command that actually landed, `x[k+1] = Φ(x[k], u[ack][k], w[k])`, w the workload
-and its disturbances. After release θ = θ* is fixed while x, z and y keep changing: one fixed factory tune governs a changing
-workload. "One setting" is the whole vector θ, evaluated jointly, against one of two explicit objectives: the most healthy
-production P(θ), or the least cost per production completed, B(θ) ⁄ P(θ). The factory baseline is established in eight steps:
-verify the mechanisms; exercise the six intervals and the knob combinations; tune on development workloads; validate on fresh
-workloads (bursts, sustained demand, declared failures); record every adverse result; freeze the profile with its engine identity
-and receipts; verify every implementation, the C++ harness included; release the identified package. That is the best validated
-factory profile for the declared operating conditions, and the final factory tune is not yet established. **Healthy production**
-is the useful output delivered while every health requirement holds (correctness, service limits, resource bounds, hardware
-limits); the **whole-workload benefit** is the bill of each deployment route, Bᵣ(a) = Σᵢ cᵣ,ᵢ(a) over the route's non-overlapping
-cost components, its saving Sᵣ(a) = 1 − Bᵣ(a) ⁄ Bᵣ(native), unresolved wherever a price or a component is missing; the **scope of
-validation** is what the receipts of the identified engine and profile demonstrated, on the systems, loads and boundaries they
-name, and nothing beyond them.
+**The live tuning bench, as the page carries it** (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; read monitor by monitor in the
+Live Benchmark Engine Manual). The page opens on the bottom line (one light and one number against native for each way to run it and for
+each route), then the monitor wall and the main control panel. Native is orange everywhere, Omni-Compass on native blue,
+Omni-Compass direct violet; red is never a side, only the alarm. Every monitor carries its light and its word: green and round,
+**GAINING** (low in its band with room to climb, or a GAIN); yellow, a yield diamond, **STEADY** (STEADY, inside 0.5%,
+or heading for its line and watched); red, a stop-sign octagon, blinking, **REDLINING** (over its line, or a LOSS: the alarm);
+dark, **AWAITING** (the run that fills it has not landed; never green). The main control panel holds the kill switch, the arm
+(Omni-Compass on native or direct), the heartbeat's six buttons, Δ ∈ {10, 15, 30, 60, 90, 120} s, a sweep that runs every beat
+on the page's own model for three model days each and reads each day against native by the key, **Try the candidate** (the
+sweep's best beat, the one with the most work for Omni-Compass on native and no LOSS, as a candidate profile), the active
+profile with its fingerprint (factory, candidate or custom) and its backend, **Restore factory profile**, **Hold the active
+profile** and **Return to native**. A model's best beat is a candidate for the real runs, never a result; no profile is locked
+as the baseline, and the factory's beat stays 60 s until the eight steps of section 76.8 choose the next. At the page's back
+stand the glossary and index (`tools/live_glossary.py`): every term in the words of the file it names, the ten organisms with
+their twenty scenarios, every one of the 1,107 muscles of the catalog by realm and family, and the sections where each is used.
 
 ![One decision of the governor. It wakes on its period, reads every sense, and holds if any sense is blind or stale: nothing is given back, and adding capacity is still allowed. The engine blends its state toward the observations and moves one macro step; the compass law turns the reading's position into a force. A positive force adds capacity at once, gated by nothing but the security hold. A negative force must pass the release gate (calm, the line clean for three decisions, nothing pending, every sense live) and, on a slow knob, the verdict's paired trial at the 2% line. What survives is one write through the plug, read back, and one line in the audit that records every sense, the state, the force, the gate's reason and the value sent and taken, whether or not anything was written.](figures/loop.svg)
 
@@ -3213,7 +3265,7 @@ at once.
 | H2 | Someone takes over the governor, or it behaves in a way nobody intended | The kill switch: one file, one command. Every governor sees it at its next decision, writes back every setting it changed, reads each one back and exits. A governor that cannot read the switch treats that as OFF (`omnicompass/master.py`, `tools/omni_switch.py off`) | `tests/test_master_switch.py` |
 | H3 | A write is refused or silently fails, so the governor's belief and the system differ | Every write goes through the plug, which reads the value back (`omnicompass/muscle_sdk.py`: `execute`, then `readback`, then a receipt). At the end of every run the reset is read back against the snapshot, and the run fails if any record is left (`scripts/kind_bench.sh`) | `tests/test_muscle_sdk.py`; every three-run table prints "handed back to native's and read back at the end of every omni arm in every run: yes" |
 | H4 | It gives back too much, so service breaks when load returns | Floors read live: never below one replica, a pool never below two machines. A machine is given back only after its own trial shows the response time holds, and it wakes at once on a breach (`omni_controller/controller.py`) | `tests/test_node_release_gate.py`; the fault test (`results/live/V7_FAULTS.md`) |
-| H5 | On a shared host, one tenant's raise starves the others | No CPU limit is raised while the host is 75% busy or its reading is missing; conveyance stays inside each namespace's CPU quota, and an unreadable quota means no known budget, so Kubernetes admission decides (`omni_controller/capacity.py`, `omni_controller/quota.py`) | `tests/test_capacity.py`, `tests/test_kind_capacity.py`, `tests/test_quota_convey.py`; the noisy-neighbour test (`results/live/V7_FAIRNESS.md`, EVEN) |
+| H5 | On a shared host, one tenant's raise starves the others | No CPU limit is raised while the host is 75% busy or its reading is missing; conveyance stays inside each namespace's CPU quota, and an unreadable quota means no known budget, so Kubernetes admission decides (`omni_controller/capacity.py`, `omni_controller/quota.py`) | `tests/test_capacity.py`, `tests/test_kind_capacity.py`, `tests/test_quota_convey.py`; the noisy-neighbour test (`results/live/V7_FAIRNESS.md`, STEADY) |
 | H6 | It acts on a reading it cannot trust | A reading with no machine in service is blind: the decision holds, says why, and writes nothing (omni-v11, `omni_controller/controller.py`). A muscle whose reading is stale reports BLIND, and no command is executed (`omnicompass/muscle_sdk.py`: `MuscleStatus`) | `tests/test_blind_reading.py` (the fault reproduced on omni-v10, gone on omni-v11); `results/model_gate/V11_VS_V10.md`; the extended fault test, the API server frozen and the metrics server gone (queued, A, B and C: `docs/K8S_COMPASS_PREREGISTRATION.md`) |
 | H7 | It keeps a step that hurts the system | One trial at a time, on the system itself: a reference phase at the deepest step already allowed, then one notch further. The step is refused if its median cost exceeds the reference's by more than 2%, or the cost first measured at the operator's setting. Refused steps wait 60 s; a trial is abandoned if the service swings (`tools/knob_verdict.py`) | `tests/test_knob_verdict.py`, `tests/test_verdict.py`, `tests/test_verdict_interval.py`; every database table prints each trial's count, allowance and refusal |
 | H8 | It writes outside what the operator allows | A capability contract (minimum, maximum, resolution, step and rate limits) and a safety contract (hard bounds, forbidden contexts, fail closed) on every muscle (`omnicompass/muscle_sdk.py`: `CapabilityContract`, `SafetyContract`) | `tests/test_muscle_sdk.py` |
@@ -3269,7 +3321,7 @@ analysis: **no outside security review or penetration test has been made**, and 
 | The settings the governor writes (replicas, the autoscaler's target, a node's idle mark, a CPU limit, a power cap, a database pool) | Whoever controls them controls the service's capacity |
 | The governor's identity on the system (on Kubernetes its service account and token) | It carries every right the governor has |
 | The hand-back: the snapshot of native's settings, the registry of restore commands, the switch file | They put the system back when the governor stops; whoever can write them chooses what "back" means |
-| The engine's code (the 62 fingerprinted files of omni-v19, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
+| The engine's code (the 65 fingerprinted files of omni-v23, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
 | The audit lines and the raw receipts | They are the evidence for every result and every decision |
 | The cloud and GPU credentials (GitHub secrets) | They spend money and create machines |
 
@@ -3369,7 +3421,7 @@ The low-severity kinds are the patterns of a harness that drives other programs:
 
 
 
-Generated by `python3 tools/sbom.py` from `requirements-lock.txt` (Omni-Compass 0.19.0); `tools/sbom.py --check`, run by `verify.py`, fails a push where this page or the bill of materials (`sbom/omni-compass.cdx.json`, CycloneDX 1.5; `sbom/omni-compass.spdx.json`, SPDX 2.3) is not what the lock gives, where a pinned package has no license read, or where a license is strong copyleft. Every package is pinned with the SHA-256 of every file PyPI publishes for its version, and `security-scan.yml` audits every pin against the public vulnerability databases each week.
+Generated by `python3 tools/sbom.py` from `requirements-lock.txt` (Omni-Compass 0.23.0); `tools/sbom.py --check`, run by `verify.py`, fails a push where this page or the bill of materials (`sbom/omni-compass.cdx.json`, CycloneDX 1.5; `sbom/omni-compass.spdx.json`, SPDX 2.3) is not what the lock gives, where a pinned package has no license read, or where a license is strong copyleft. Every package is pinned with the SHA-256 of every file PyPI publishes for its version, and `security-scan.yml` audits every pin against the public vulnerability databases each week.
 
 **29 packages; every license permissive except one weak, file-level copyleft (MPL-2.0, Hypothesis, used by the tests alone and never shipped with the engine); no GPL, LGPL or AGPL.** Each package keeps its own license; nothing in the Omni-Compass Evaluation License changes those terms (`THIRD_PARTY_NOTICES.md`).
 
@@ -3405,79 +3457,86 @@ Generated by `python3 tools/sbom.py` from `requirements-lock.txt` (Omni-Compass 
 | charset-normalizer | 3.5.2 | MIT | brought by reportlab |
 | websockets | 17.2 | BSD-3-Clause | brought by mujoco |
 
-## 26. The Engine That Stands: Omni v19
+## 26. The Engine That Stands: Omni v23
 
 
 
-Omni v19 (`OMNI_V19.json`) stands on main from 25 October. The founder's orders of 24 and 25 October: "There's no reason that I
-could have a loss if you were supposed to know that if OmniCompass can't beat the native, the native stays. Even in the cloud
-... erase the negative or bring positive or at least bring steady stableness in the cloud"; and "let the math do what it's coded
-to do and force and pull and push and physics inside the system". omni-v19 is omni-v18 with four rules added to the Kubernetes
-governor (`omni_controller/controller.py`), each one part of the engine's immune system, and the words of two engine files
-brought to the founder's order of 24 October (`omni_controller/muscles.py`, `omnicompass/nervous.py`: our models are models, a
-test's stand-in is a stand-in) and one runner's help text to the ladder of 25 October (`tools/run_kil.py`: 1, 10, 100 and 500
-copies). Every other file is omni-v18's bytes.
+Omni v23 (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files) is omni-v22 with one guard in the Kubernetes governor's pod muscle of its
+own (`omni_controller/controller.py`, `_own_pods` and `_own_refused`), on the founder's order of 31 October, given on reading that
+the arm by itself had read like native:
 
-### 26.1 The four rules, in plain words
+> "Omni direct is directly to muscles, but Omni direct still might need an autoscaler like Kubernetes ... we still might need a
+> muscle or two we're using. We're going straight into all the muscles as the brain and orchestrator, scheduler and all that, but
+> what Omni-Compass can't do and needs the muscle for has to be achieved even in direct, so that it can work and do everything else
+> ... Don't just embed some shit and fail the whole system because we don't have the muscle to do something ... any muscle that we
+> don't have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever."
 
-| Term | What it is | Where it acts |
-|---|---|---|
-| **A pod waiting** | A pod the cluster cannot place: it has no machine with room for it. Time waited is harm, a LOSS by the one key. | read by the fast check every 5 s |
-| **The immune hand-back** | The moment a pod waits while Omni-Compass holds a pod autoscaler's target below the operator's own (more pods than native would ask), that target goes back to native's at once, from the fast check, not the next decision, and is held there: 10 minutes the first time, doubled for each hand-back in a row up to two hours, halved again after a quiet hold. | the pod autoscaler's target |
-| **The immune memory** | Omni-Compass remembers the largest rise it has seen inside two decisions (about the time a new machine takes to boot): in the requests on the machines, and in each service's demand. It keeps room for that rise. A machine is given back only when the machines left hold the requests plus a reserve of the larger of one machine and that rise; extra pods are asked for only as far as the machines can still place that rise times themselves. | the machines given back; the pods asked for |
-| **Native's line** | A machine is given back only while the machines left stay at or under native's own autoscaler's line (the Cluster Autoscaler's scale-down utilization threshold, 0.5 by its documented default, `--native-release-util`), so Omni-Compass never leaves the machines thinner than native would; and every decision, while machines stand given back, a machine comes back the moment that line or the reserve is crossed. | the machines given back |
-| **Immune maturity** | No give-back trial before the governor has watched its organism for one recheck period (two hours at the factory tune), so the immune memory has seen the organism's own rises before the first machine is given back. | the verdict's first trial |
-| **The step back** | A pod that waited between two decisions counts as harm at the next decision: the service is not calm, and a give-back depth the verdict had allowed steps back by one, not tried again until the recheck has passed (Omni direct's own immune reaction, `omni_orchestrator/control.py`). | the verdict's allowed depth |
+64 of its 65 files are omni-v22's bytes. No gain, preset, card or law moves; do no harm keeps its strictest form.
 
-The mechanism is the engine's own: nothing is tuned to make a row read well. Each rule answers a fault found in the model's own
-files: pods waiting for a place while Omni-Compass held more pods than the machines could place; a machine given back while the
-rest were 84% booked, then a rise of 30% inside one reading; native's own autoscaler removing a machine while Omni-Compass
-still held one back.
+**What "direct" can and cannot mean** (the founder's analysis, the same day: "Omni-Compass would have to become the Kubernetes
+mechanism to be what's considered direct"). On a Kubernetes stack Omni-Compass is a brain with no organs: Kubernetes' scheduler
+places every pod and the kubelet runs every container, in every arm. The arm by itself there is Omni-Compass's own pod rule in place
+of the autoscaler's arithmetic and nothing else, so it is never called direct; it is a mechanism test kept in the record, not a
+product arm, and the product has two sides, native and Omni-Compass on native (the founder's order of 25 October). The one test
+where the word holds is the orchestrator showing without Kubernetes (`docs/OMNI_ORCHESTRATOR.md`), where Omni-Compass's own small
+orchestrator is the organs; its three arms read, run by run: Omni-Compass on native the strongest in all three (the most work, the
+fastest response in two, fewer machines in all), native the weakest, the arm by itself between them (level with Omni-Compass on
+native in run A, behind it in B and C). This guard serves every arm: wherever Omni-Compass's own rule cannot move a knob, the organ
+that can gets it back.
 
-### 26.2 What the model gate read (our own models, evidence class S)
+### 26.1 What was found
 
-The model gate against omni-v18 (`results/model_gate/V19_VS_V18.md`, eight seeds, every model): no LOSS against omni-v18 in
-any model. In the cloud's models (the machines alone) pods waiting fall by 13% against omni-v18, a GAIN, and the candidate is
-identical to native on every gauge; the conveyance and card models and the verdict read identical to omni-v18.
+Every arm by itself run on kind from omni-v19 (24 October) to omni-v22 had the governor's pod writes refused by the rig's own
+identity: `kubectl scale` patches the scale subresource, `deployments/scale`, a resource of its own under Kubernetes' RBAC, and the
+rig's role granted `patch` on `deployments` by name and never the subresource. Fifteen of fifteen decisions a window ended
+Forbidden, in every repetition; the workload stayed at the operator's count; the machine and conveyance muscles wrote as always, so
+the window's no-write check never fired. omni-v21's three runs of the entry were admitted and are read in no table; omni-v22's two
+were marked invalid by a second rig fault. Both rig faults are fixed (`docs/SOLO_PREREGISTRATION.md`, amendment 1). What the engine
+lacked is this version: when Omni-Compass cannot be a knob's muscle, the knob must go back to the muscle that can, so the organism
+never runs with a knob nobody moves (amendment 2, the founder's order above).
 
-The pace models (`results/model_gate/V19_PACE.md`, the plant that moves every 5 s, a decision every 60 s), against native:
+### 26.2 What changes in the engine
 
-| Setting | Gauge | omni-v18 against native | omni-v19 against native |
-|---|---|---|---|
-| on-site (the kind setting) | pods waiting for a place | up 127.8%, more waiting, LOSS | down 5.2%, fewer waiting, GAIN |
-| on-site | the 95th percentile | down 15.6%, faster, GAIN | down 6.9%, faster, GAIN |
-| on-site | alert minutes | down 57.4%, GAIN | down 27.3%, GAIN |
-| on-site | machine-hours | up 23.5%, power given | up 7.7%, power given |
-| cloud (the machines alone) | pods waiting for a place | up 6.2%, LOSS | the same as native, EVEN |
-| cloud | every other gauge | EVEN or GAIN | the same as native, EVEN |
+- A write of a workload's own scale that the cluster refuses (its permission, its admission, its API) is recorded in the audit
+  (`own_replicas`, `refused` n, the cluster's words) and the decision goes on; the cluster keeps the last count that landed. Before
+  omni-v23 the exception ended the decision (`decision failed (n in a row)`) and nothing else happened, decision after decision.
+- At `OWN_REFUSALS` (3) refusals in a row Omni-Compass cannot be that knob's muscle: it makes native's own pod autoscaler from the
+  operator's own target and range recorded on the workload (`kubectl autoscale deployment NAME --cpu-percent=T --min=lo --max=hi`;
+  with no range recorded, from one to ten times the operator's count), audits the hand-back (`handed_back`, `after_refusals`,
+  `target`, `range`), and leaves the workload to it for the rest of the run: the snapshot's governed set holds it from the next
+  decision on, and the reset leaves native's autoscaler standing. A hand-back the cluster refuses too is audited
+  (`hand_back_refused`) and tried at the next refusal.
+- A write that lands ends the run of refusals.
+- Every other arm is untouched: Omni-Compass on native never removes native's controller, so a refused write there leaves native's
+  own controller moving the knob as before; the machines, the conveyance, the power cap and the batch muscles are omni-v22's bytes.
 
-The trade, said plainly: against omni-v18 the on-site 95th percentile and alert minutes give back part of their GAIN (omni-v18
-bought them with pods that waited for a place); against native both still read GAIN, and the one LOSS against native in that
-setting, the pods waiting, is gone. The founder's order of 24 October (native stays wherever Omni-Compass cannot beat it) rules
-the trade.
+### 26.3 What changes in the rig, not the engine
 
-Still on the next version's list, LOSS against native in the models and the same in omni-v18 (not caused by this version): the
-pod start wait in the conveyance models (up 9%), the card's 95th and 99th percentiles (up 0.9% to 5.8%), the batch's requests
-served (down 2.1%).
+The kind identity (`deploy/kind/rbac-omni.yaml`) gains `create` on `horizontalpodautoscalers` in the default namespace, for the
+hand-back alone, and the preflight proves it; a window of the arm by itself in which the knob was handed back is refused as a
+result of that arm (the organism was kept whole, but Omni-Compass did not run the arm by itself): `INVALID RUN: by itself, the knob
+... was handed back to native's own autoscaler`. `tests/test_kind_rig_rbac.py` fails a rig without either.
 
-The self-pilot (`tests/test_selfpilot.py`: the shipped governor sizing the machines for a day against the HPA and the Cluster
-Autoscaler on the same traffic) reads the same trade: pods waiting down 100% (none waited, GAIN), the HPA's shortfall EVEN,
-machine-hours per core-hour up 18.3% and energy per core-hour up 11.4% (power given). Native's line here is read over the
-machines left as a whole, where the Cluster Autoscaler reads each machine's own share against its 0.5, so the governor holds
-more machines than native would: power given, never a LOSS by the one key. Reading the line machine by machine, as the
-Cluster Autoscaler does, is on the next version's list, through the model gate.
+### 26.4 The model gate
 
-The orchestrators on the same organisms (`results/orchestrators/ORCHESTRATORS.md`, our own models) read two more for that list,
-the same on top of every orchestrator but Koordinator: where the batch stream runs beside the service on the kind rig's one host,
-the service fails requests in every arm and the breach reflex lowers its autoscaler's target, so more serving pods take the
-processor from the batch (requests failed down 6.5%, GAIN; a job's turnaround up 9.3% and the stream's makespan up 2.0%, LOSS); and
-in the cloud, beside Volcano, a job's turnaround up 0.7% with a machine marked idle.
+`results/model_gate/V23_VS_V22.md` (class S, our own models; `tools/model_gate.py`, seeds 1 to 8, the engine that stood, omni-v22,
+the candidate omni-v23): every one of the 95 gauge rows of the 11 models reads identical on every seed, the counts identical, no LOSS. No model refuses a write of the cluster, so the guard never fires in the models and the
+candidate reads identical to omni-v22 on every gauge; its proof is the tests below and the arm's own files when the entry runs again.
 
-### 26.3 Every benchmark runs again
+### 26.5 The tests
 
-Every benchmark runs again on omni-v19 from the moment it reached main; nothing is read across engines.
+`tests/test_own_replicas.py`, `HandBack`: a cluster that refuses the scale write three times in a row gets native's own autoscaler
+at the operator's 50% target and 1 to 10 range, the muscle writes nothing more to that workload, the count the cluster kept stands
+(never a knob nobody moves); a write that lands after two refusals ends the run of refusals and no autoscaler is made; with no range
+recorded the autoscaler's ceiling is ten times the operator's count. The unit-test suite, the function tests and the release check
+pass on the tree; no C++ twin changes (the Kubernetes governor has none).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 26.6 What is run again
+
+Every benchmark runs again on omni-v23 from 20:00 UTC on 31 October 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the conductor's
+campaign, `scripts/dispatch_grid.py`). The omni-v22 runs started before that moment run to their end as omni-v22's record; nothing is
+cancelled. The entry `kubernetes by itself` runs on the rig as amended, three arms, its table kept in the record and not carried on
+the front page (the founder's order of 25 October).
 
 ## 27. The Engines and Their Audit
 
@@ -3597,6 +3656,12 @@ declared engine.
 | omni-v15 | 22 Oct 02:30 | `0a53cdd7a558f803` | 55 | the brain: the power cap's request trims only while the response line has been clean for the governor's own clear time (the omni-v11 long run's 126 switches in 350 decisions); every wire that holds a governor's rules in the fingerprint (eight taken in, their bytes as they stood) |
 | omni-v16 | 22 Oct 07:30 | `5c5502f12b1c0ce4` | 55 | the Kubernetes governor: every clock in seconds (the brain's minute and its C++ twin, the compass's damping and smoothing, the edge, the additions past the floor, a command's minute to land, the host's busy share, the heat law, one batch job a minute, the conveyance every 15 s, the loop's own schedule), so the decision period is a clean setting; the heartbeat, the full decision, every 15 s by default (the founder's word, "15 sec all over"), the fast checks every 5 s; at 60 s exactly omni-v15's decisions; the pace read by its own runs (`docs/PACE_PREREGISTRATION.md`) |
 | omni-v17 | 23 Oct 17:00 | `7c937d09e4031cc7` | 55 | the Kubernetes governor's heartbeat a dial, the main engine every 60 s (the parser's default; omni-v16's was 15 s), any beat from 5 to 120 s, every beat shown beside native (`results/model_gate/V17_LADDER.md`, the live engine page's 1j); the monitors scale with the beat (`omni_heartbeat_seconds`, the alert at three beats, the panel's `/v1/beat`); the cruise wait never under two readings (at 90 and 120 s it had rounded to one, found by the dial's own ladder before it landed); the founder's order of 22 October, afternoon |
+| omni-v18 | 24 Oct 02:51 | `1cb92edb64c4391d` | 62 | Omni direct taken into the engine: the seven rule files of Omni-Compass's own orchestrator fingerprinted, the three arms shown together (`docs/OMNI_V18.md`) |
+| omni-v19 | 24 Oct 16:54 | `36ee67284c035235` | 62 | the pod muscle of its own (`--own-replicas`) for a workload no autoscaler governs; the models' arm by itself (`docs/OMNI_V19.md`) |
+| omni-v20 | 25 Oct 13:24 | `1df07f8e36a97985` | 62 | the five data stores' wires fixed at their causes (sysbench's own statements, Kafka's hand-back within a poll round, YCSB's cache growing back while it misses) (`docs/OMNI_V20.md`) |
+| omni-v21 | 25 Oct 17:30 | `b658f05d43c1e602` | 63 | the immune system knows itself, knob by knob: a knob redlining past its line that Omni-Compass cannot bring back goes to native when native's twin reads it lower (`docs/OMNI_V21.md`) |
+| omni-v22 | 30 Oct 18:30 | `0e23a0bc561b900a` | 65 | the five data stores' wires at the max, through each store's own account of a miss; the governor's hand-back tried five times against a transient failure of the cluster's API (`docs/OMNI_V22.md`) |
+| omni-v23 | 31 Oct 20:00 | `c96ea4105d8747db` | 65 | Omni direct keeps every muscle Omni-Compass cannot be: a workload's own scale write the cluster refuses three times in a row hands the knob back to native's own pod autoscaler, made from the operator's target and range (the founder's order of 31 October; `docs/OMNI_V23.md`) |
 
 Each version through omni-v15 was a fault found in a real run and fixed, omni-v16 made the decision pace a clean setting
 and set the heartbeat at 15 s on the founder's word, and omni-v17 made the heartbeat a dial with the main engine at 60 s on his
@@ -3631,7 +3696,9 @@ stands is also a version that is re-proved, re-tested and re-built from its rece
 
 Each change below was found in a real run or in our own reading of the code, and each has its evidence written down. Each
 goes through the model gate against the engine that stands and, when it reads no LOSS there, lands at once as the next version
-with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v17, on the founder's word of 22 October, afternoon: the
+with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v23, on the founder's order of 31 October: a knob whose
+own-scale writes the cluster refuses handed back to native's own autoscaler, so the organism never runs with a knob nobody moves
+(`docs/OMNI_V23.md`); in omni-v17, on the founder's word of 22 October, afternoon: the
 heartbeat a dial, the main engine every 60 s, every beat shown beside native (`docs/OMNI_V17.md`); in omni-v16, on his word that morning: every clock of the
 Kubernetes governor in seconds, the decision pace a clean setting, the heartbeat every 15 s (`docs/OMNI_V16.md`); in omni-v15, from this list: the power cap's
 request through the line's own clear time, every wire in the fingerprint, and the kill test's 300 s reading declared
@@ -3649,11 +3716,11 @@ cluster.
 | The verdict keeps a step only when the upper end of every 95% interval of its change in cost is inside the allowance (`omnicompass/verdict.py`), its reference measured long enough, from its own spread, to show a free step within the allowance; a trial that could not be read in its time is never started | today a step is kept when its estimated cost is within the 2% allowance even if the interval reaches past it: at the noise measured on the omni-v10 tables (the spread of the log response time 0.43 to 0.46), a give-back that truly costs 3% is kept about 31% of the time, 5% about 15% (found by the live-engine session, 19 October) | 89 kept steps on the omni-v10 data-store tables had an interval reaching past 2%, none read LOSS in a table. The strict form was built and read in the model gate (branch `v12-verdict-study`): on work fast enough to read a step (200 pieces a decision) a free step was kept 98% of the time against omni-v11's 66%, a 3% step 0% against 26%; but on the model cluster set from a real run's regime (about 80 requests a decision, about 4,000 needed a phase) no give-back trial started and the governor read identical to native, the machine-hour cut gone, and on the data stores (one sample a second, 40 to 120 a phase; 432 to 23,430 needed, read from the omni-v11 audits) every knob would stay native. Refused as written; the row stays open until a trial design that reads a 2% step in a trial's time is shown in the model gate |
 | The Kubernetes governor counting a worker an add-on marks while it serves, and keeping its clock under load | the CruiseKube runs of 18 and 19 October | the recorder's fix of 19 October (`CHANGELOG.md`) |
 | The governor's other costs on a saturated shared host | one saturated KubeRay repetition with no raise during its queue still read +4.0% on the batch pods' hashing; the governor's decisions (every 60 s then and again from omni-v17, every 15 s on omni-v16) and their reads run on cores the kind nodes share through the control plane | one repetition is not a reading: the omni-v13 runs of the batch rig read it, pod by pod, before any change |
-| The pods that wait for a place, in the cloud's setting and in the kind benchmark's | in the model's cloud setting (the tune-down, machines alone) the pods wait for a woken machine longer than native's at every decision pace, the old 60 s default included: pending pod minutes an hour native 8.2, every 60 s 20.9, every 15, 10 and 5 s 18.4, 15.9 and 16.5, LOSS against native at 15 and 5 s and EVEN at 60 and 10 s only by the seeds' spread; the omni-v15 gate read the same row at 15 s (+111.7%); in the kind benchmark's setting (the compass law at the max) about four times native's at every pace (32.0 at 60 s, 33.5 at 15 s, 28.8 and 28.6 at 10 and 5 s) | `results/model_gate/V16_PACE.md`, `results/model_gate/V16_VS_V15.md` (cluster15); the real cloud sets' pod start waits to be read beside it when their tables land |
-| The cloud setting's small cost in response time and alert minutes | in the model's cloud setting (the tune-down, machines alone), against native: at 15 s the 95th percentile +0.47% on the 5 s plant and +0.36% on the gate's 15 s plant, and the alert minutes +2.31% on the 5 s plant (LOSS, every seed's interval clear of zero); at 60 s +0.49%, +0.63% and +1.85% (EVEN by the seeds' spread); against 60 s each reads EVEN, so the engine's, not the pace's; the blink model's alert minutes read +2.35% against native at 60 s (LOSS) in every gate since omni-v13 | `results/model_gate/V16_PACE.md`, `results/model_gate/V16_VS_V15.md` (cluster15, cluster_shipped, cluster_blink); the cloud sets' alert minutes are a judged row of every receipt |
+| The pods that wait for a place, in the cloud's setting and in the kind benchmark's | in the model's cloud setting (the tune-down, machines alone) the pods wait for a woken machine longer than native's at every decision pace, the old 60 s default included: pending pod minutes an hour native 8.2, every 60 s 20.9, every 15, 10 and 5 s 18.4, 15.9 and 16.5, LOSS against native at 15 and 5 s and STEADY at 60 and 10 s only by the seeds' spread; the omni-v15 gate read the same row at 15 s (+111.7%); in the kind benchmark's setting (the compass law at the max) about four times native's at every pace (32.0 at 60 s, 33.5 at 15 s, 28.8 and 28.6 at 10 and 5 s) | `results/model_gate/V16_PACE.md`, `results/model_gate/V16_VS_V15.md` (cluster15); the real cloud sets' pod start waits to be read beside it when their tables land |
+| The cloud setting's small cost in response time and alert minutes | in the model's cloud setting (the tune-down, machines alone), against native: at 15 s the 95th percentile +0.47% on the 5 s plant and +0.36% on the gate's 15 s plant, and the alert minutes +2.31% on the 5 s plant (LOSS, every seed's interval clear of zero); at 60 s +0.49%, +0.63% and +1.85% (STEADY by the seeds' spread); against 60 s each reads STEADY, so the engine's, not the pace's; the blink model's alert minutes read +2.35% against native at 60 s (LOSS) in every gate since omni-v13 | `results/model_gate/V16_PACE.md`, `results/model_gate/V16_VS_V15.md` (cluster15, cluster_shipped, cluster_blink); the cloud sets' alert minutes are a judged row of every receipt |
 | The model's web model brought to the batch rig's 3-core host from a real run's files | in `convey_batch` both engines read 2% to 3% fewer requests served than native, with no batch at all as well, while KubeRay's real runs read 4% more after the queue; the same model reads the alert minutes 9.8% and the job turnaround 0.05% above native's (LOSS) in every gate since omni-v13's | `results/model_gate/V13_VS_V12.md` to `V17_VS_V16.md`; the regime to be set from the KubeRay runs' own after-queue files before the model is read for that gauge |
 | The pod start wait in the convey models | against native the pods start 8.99% slower, 10.0% at the 95th percentile (LOSS), in every gate since omni-v8's, while the host serves 64% more requests at a 53% lower 95th percentile; omni-v7's page wrote it as the price of the busier host's work, but a wait that rose is a LOSS by the key | `results/model_gate/V8_VS_V7.md` to `V17_VS_V16.md` (convey, convey_unreadable_quota); the KEDA real runs' start wait, read with the rig's pre-puller (`docs/POD_START_WAIT.md`) |
-| The card models' 95th percentile | on the modelled card the 95th percentile reads 2.38% above native's where the voltage falls with the clock and 5.78% near the voltage floor (LOSS), in every gate since omni-v15's, where the models were added; the 99th percentile EVEN, the card's energy 4.7% and 1.3% lower (GAIN), the limit written 17 and 35 times a run | `results/model_gate/V15_VS_V14.md` to `V17_VS_V16.md` (card, card_floor); the GPU runs on Lambda read the real card |
+| The card models' 95th percentile | on the modelled card the 95th percentile reads 2.38% above native's where the voltage falls with the clock and 5.78% near the voltage floor (LOSS), in every gate since omni-v15's, where the models were added; the 99th percentile STEADY, the card's energy 4.7% and 1.3% lower (GAIN), the limit written 17 and 35 times a run | `results/model_gate/V15_VS_V14.md` to `V17_VS_V16.md` (card, card_floor); the GPU runs on Lambda read the real card |
 | The brain's dwell and its wait after an addition at the fast beats | omni-v16 restated both in seconds (at 15 s, 4 and 20 steps for the 1 and 5 a minute); the live-engine session (branch `main`, 22 October) reports on its own sweep, on-site at 5, 10 and 15 s, machine-hours +3.8%, +3.4% and +2.9% against native where a build counting them as readings that agree read −1.0% to +0.9%, the pods waiting the same; the main engine's 60 s is untouched by it | not yet reproduced here; a search of the dwell counted in readings at each beat, in the tune study's rule (`docs/THE_TUNE.md`, section 4) |
 | The cloud's floor check and a warm reserve | the same session reports two faults under `--give-back-only`: a floor that orders machines the cloud has already deleted is read as a command that did not land and holds every give-back, and give-backs made before the largest requests of the last hours are read leave too few machines; with both fixed its build read identical to native in the cloud setting at every beat, where the engine that stands reads the pods waiting, the 95th percentile and the alert minutes LOSS at some beats | not yet reproduced here; candidates for the cloud setting's LOSS rows (the rows above), through the model gate |
 
@@ -3661,64 +3728,67 @@ cluster.
 
 
 
-Line coverage of every Python file in omni-v18 (the engine that stands is omni-v19; this page is measured again on it), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `79e60a53bf27`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
+Line coverage of every Python file in the engine that stands (omni-v23), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `2b1390a7dc02`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
 
-**70% of the engine's 10,318 statements run under the tests** (7,241 run, 3,077 not). Coverage counts lines a test executes, not what it asserts: the properties the tests check are in `tests/test_engine_properties.py`, and the proofs of the core in `docs/ENGINE_PROOFS.md`.
+**71% of the engine's 11,424 statements run under the tests** (8,148 run, 3,276 not). Coverage counts lines a test executes, not what it asserts: the properties the tests check are in `tests/test_engine_properties.py`, and the proofs of the core in `docs/ENGINE_PROOFS.md`.
 
-The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's, MuJoCo's and the CPU power runner, `tools/run_*.py`) hold 3,106 of these statements, 49% of them run under the tests: each is run whole by its own benchmark on GitHub, A, B and C, rather than by a unit test. The other 42 Python files, the engine as it stood before them, hold 7,212, 79% run. The whole figure fell when those runners came in; no test was lost.
+The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's, MuJoCo's and the CPU power runner, `tools/run_*.py`) hold 3,623 of these statements, 51% of them run under the tests: each is run whole by its own benchmark on GitHub, A, B and C, rather than by a unit test. The other 45 Python files, the engine as it stood before them, hold 7,801, 81% run. The whole figure fell when those runners came in; no test was lost.
 
 | Engine file | Statements | Run by the tests | Coverage |
 |---|---:|---:|---:|
-| `tools/run_pgbench.py` | 581 | 96 | 17% |
+| `tools/run_pgbench.py` | 657 | 146 | 22% |
 | `tools/run_citylearn.py` | 166 | 41 | 25% |
 | `omnicompass/stack_sim.py` | 210 | 55 | 26% |
-| `tools/run_kafka.py` | 373 | 122 | 33% |
 | `omni_orchestrator/control.py` | 476 | 176 | 37% |
 | `omnicompass/closure.py` | 151 | 61 | 40% |
 | `omnicompass/speed.py` | 60 | 25 | 42% |
-| `tools/run_ycsb.py` | 394 | 173 | 44% |
 | `omnicompass/mathdrive.py` | 50 | 22 | 44% |
-| `tools/run_redis.py` | 356 | 165 | 46% |
-| `tools/run_sysbench.py` | 386 | 187 | 48% |
+| `tools/run_redis.py` | 427 | 210 | 49% |
+| `tools/run_kafka.py` | 579 | 285 | 49% |
 | `omnicompass/shield.py` | 79 | 41 | 52% |
 | `tools/run_swarm.py` | 257 | 134 | 52% |
+| `tools/run_sysbench.py` | 433 | 226 | 52% |
+| `tools/run_ycsb.py` | 511 | 267 | 52% |
 | `tools/run_kil.py` | 132 | 94 | 71% |
-| `realms/plants.py` | 642 | 458 | 71% |
+| `realms/plants.py` | 645 | 461 | 71% |
+| `omnicompass/master.py` | 77 | 58 | 75% |
 | `omnicompass/adapter.py` | 207 | 157 | 76% |
-| `omnicompass/core.py` | 159 | 121 | 76% |
 | `omni_controller/gpu_compass.py` | 295 | 227 | 77% |
+| `tools/run_cpu_power.py` | 554 | 427 | 77% |
 | `tools/run_mujoco.py` | 205 | 165 | 80% |
-| `omnicompass/master.py` | 77 | 63 | 82% |
-| `tools/run_cpu_power.py` | 554 | 474 | 86% |
-| `realms/harness.py` | 413 | 354 | 86% |
+| `realms/harness.py` | 425 | 359 | 84% |
 | `omni_controller/quota.py` | 86 | 75 | 87% |
 | `omnicompass/compass.py` | 82 | 75 | 91% |
-| `realms/compass_arm_v5.py` | 838 | 770 | 92% |
+| `omni_controller/controller.py` | 1,200 | 1,098 | 92% |
+| `realms/compass_arm_v5.py` | 838 | 771 | 92% |
 | `omnicompass/conveyance.py` | 52 | 48 | 92% |
 | `omnicompass/muscle_sdk.py` | 215 | 199 | 93% |
-| `omni_controller/controller.py` | 909 | 842 | 93% |
 | `omnicompass/edge.py` | 56 | 52 | 93% |
+| `tools/store_brain.py` | 102 | 95 | 93% |
 | `omnicompass/configurations.py` | 31 | 29 | 94% |
 | `omni_controller/capacity.py` | 63 | 59 | 94% |
 | `omnicompass/disruption_budget.py` | 16 | 15 | 94% |
 | `omnicompass/storage.py` | 32 | 30 | 94% |
 | `omni_controller/gpu_governor.py` | 354 | 332 | 94% |
 | `omnicompass/student_t.py` | 52 | 49 | 94% |
-| `omni_controller/muscles.py` | 608 | 573 | 94% |
+| `omni_controller/muscles.py` | 621 | 586 | 94% |
 | `omnicompass/compass_law.py` | 95 | 90 | 95% |
 | `realms/compass_arm.py` | 107 | 102 | 95% |
 | `omnicompass/authority_contract.py` | 26 | 25 | 96% |
 | `omni_orchestrator/brain.py` | 58 | 56 | 97% |
+| `omnicompass/core.py` | 159 | 154 | 97% |
 | `realms/gpu_card.py` | 172 | 167 | 97% |
+| `omnicompass/nervous_system.py` | 69 | 67 | 97% |
+| `tools/knob_verdict.py` | 117 | 114 | 97% |
+| `omnicompass/immune.py` | 47 | 46 | 98% |
 | `omnicompass/verdict.py` | 109 | 108 | 99% |
 | `omni_orchestrator/scheduler.py` | 21 | 21 | 100% |
 | `omnicompass/ce_score.py` | 7 | 7 | 100% |
-| `omnicompass/nervous_system.py` | 65 | 65 | 100% |
 | `realms/presets.py` | 41 | 41 | 100% |
 
 ### 29.1 Where the tests reach least
 
-Files under 60%: `tools/run_pgbench.py`, `tools/run_citylearn.py`, `omnicompass/stack_sim.py`, `tools/run_kafka.py`, `omni_orchestrator/control.py`, `omnicompass/closure.py`, `omnicompass/speed.py`, `tools/run_ycsb.py`, `omnicompass/mathdrive.py`, `tools/run_redis.py`, `tools/run_sysbench.py`, `omnicompass/shield.py`, `tools/run_swarm.py`. The CityLearn runner and the runners of the data stores and the swarm are exercised by their own benchmarks on GitHub (`citylearn.yml`, `redis.yml` and the rest, three runs on every engine) rather than by a unit test; the stack simulator, the shield and the speed and mathdrive modules hold paths the live governors do not call. Raising each to the level of the rest is the next tests' work: no engine file changes for a test.
+Files under 60%: `tools/run_pgbench.py`, `tools/run_citylearn.py`, `omnicompass/stack_sim.py`, `omni_orchestrator/control.py`, `omnicompass/closure.py`, `omnicompass/speed.py`, `omnicompass/mathdrive.py`, `tools/run_redis.py`, `tools/run_kafka.py`, `omnicompass/shield.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`. The CityLearn runner and the runners of the data stores and the swarm are exercised by their own benchmarks on GitHub (`citylearn.yml`, `redis.yml` and the rest, three runs on every engine) rather than by a unit test; the stack simulator, the shield and the speed and mathdrive modules hold paths the live governors do not call. Raising each to the level of the rest is the next tests' work: no engine file changes for a test.
 
 # Part Three. The Physics: the Compass and the Nervous System
 
@@ -4078,7 +4148,7 @@ why the modelled organisms are run whole, at up to 1.7 million muscles on one cl
 answer is whether one brain stays coherent at that size, and the reading at every size is the same to the digit.
 
 One brain also has to stay the same brain over time, and that is a measurable claim. The two-hour robustness run
-(section 60.12) measures the governor's own memory at the start and the end of each run and the time it takes to reach a
+(section 60.15) measures the governor's own memory at the start and the end of each run and the time it takes to reach a
 decision in the last hour against the first. Over three runs the memory ratio was 1.05 to 1.07 and the decision-time
 ratio 1.07 to 1.20, both inside the limits set before the run (a leak would show as steady growth; a brain that slows as
 its records accumulate would show a ratio climbing toward the 1.5 limit), and the cluster's service under the governed arm
@@ -4320,8 +4390,9 @@ part in a million (section 34.5). **Energy** second, and **work per energy** wit
 are built to show. **Time over the service line** third, the share of steps on which any muscle's service reading was past
 its line, which is the do-no-harm gauge for the body as a whole. Then **every knob's hand-back**, which must be complete
 in every run or the run fails. The reading given to an organism (`results/realms_v5/REALMS_V5.md`, one table per engine) is
-GAIN, EVEN or LOSS by the key at the front of this manual: GAIN when its misses fell or its work rose beyond the noise and
-nothing moved the other way, EVEN inside the noise, LOSS named where it stands; the energy the max took is power given,
+GAIN, STEADY or LOSS by the key at the front of this manual: GAIN when its misses fell or its work rose beyond the noise and
+nothing moved the other way, STEADY inside the noise (the realms table was written before the rule of 24 October and is not
+among the tables read again by it), LOSS named where it stands; the energy the max took is power given,
 shown beside the work. Earlier engines' readings, and the words they used, are history (`docs/history/`). What an organism
 run cannot show is also fixed: it is evidence class S, the
 plant models are our own, and nothing in it is presented as proof of a real stack. Its use is to show that one law holds
@@ -4333,15 +4404,15 @@ place on real software.
 Every organism runs at **1, 10 and 100 copies** (that many instances of the organism on one clock, so the four stacked
 at 100 copies is about 190,000 modelled muscles) and at **1, 10 and 100 paired runs** (that many native-and-omni pairs,
 each from its own seed): the seven organisms × three sizes × three run counts are 63 squares, run modelled and with the
-real cluster inside, both arms shown in every square. On GitHub's own machines the grid also runs the 500 tier, 500
-copies and nested 500 runs (the ladder of the Python's 500-run Monte Carlo, the founder's order of 25 October), a cell beyond a free runner's memory or time listed
+real cluster inside, both arms shown in every square. On GitHub's own machines the grid also runs the 1,000 tier, 1,000
+copies and nested 1,000 runs (the founder's distinction of 15 October), a cell beyond a free runner's memory or time listed
 as pending runner capacity and never rented; paid cloud and GPU runs stay at 1, 10 and 100 copies with at most 100
 repetitions (the founder's order of 12 October, kept for everything that costs money). Nothing is rented for the grid
 (`scripts/dispatch_grid.py`, `results/grid_v5/`).
 Earlier engines' grids, which went to 1,000 copies and 1,000 runs, stand as they were run in their own pages
 (`results/scale/`) and are never read across engines.
 
-![Grid chart: the seven organisms at every size and run count, modelled (class S), from results/grid_v5/GRID.md. Each cell is one square of the grid, copies × runs, with the change in misses against native and its reading: green GAIN, grey EVEN, red LOSS; a single run carries no label yet; the spine's squares are not yet in the receipt.](figures/r_grid.svg)
+![Grid chart: the seven organisms at every size and run count, modelled (class S), from results/grid_v5/GRID.md. Each cell is one square of the grid, copies × runs, with the change in misses against native and its reading: green GAIN, grey STEADY, red LOSS; a single run carries no label yet; the spine's squares are not yet in the receipt.](figures/r_grid.svg)
 
 The two axes answer two different questions, and a reader should keep them apart. **Copies** is the size of the body
 the one brain governs: at 100 copies of the four stacked, the law computes a force for about 190,000 muscles from one
@@ -4378,7 +4449,7 @@ Omni-Compass releases the cluster's knob at nine tenths of the window and the la
 arms, so that every repetition ends with the proof that the knob was given back and that native resumed where it would
 have been.
 
-**On the newest engine** (omni-v5), the grid with the cluster inside (`results/grid_v5/GRID.md`, the card version,
+**On omni-v5**, the engine of its runs, the grid with the cluster inside (`results/grid_v5/GRID.md`, the card version,
 digest `5648f290`) reads the cluster's time over the response line and the organism's time over the line GAIN in every
 square of 10 and 100 repetitions; the organism's work per energy fell in 21 of those 36 squares, power given (it falls when
 more power is given; it bought fewer misses, not more work), and the cluster's 95th and 99th percentiles read LOSS in two squares
@@ -4386,7 +4457,7 @@ at 100 copies, where the runner fell behind the organism's clock.
 Protocol 3 at 100 copies (digest `6093b2b8`, ten paired repetitions each; runs 38464343379, 38462289297, 38462280620)
 found the cause of those two: the tower's 95th percentile +47.7% and the four stacked's +87.2% (99th: +32.1%), on a
 four-core machine already about 80% busy and failing about half its requests in both arms, where the max added 40% to
-54% replicas that nodes unable to grow could not carry; the four realms read EVEN on every response time. The fix, the
+54% replicas that nodes unable to grow could not carry; the four realms read STEADY on every response time. The fix, the
 replica muscle's live headroom read from the machines under it, belongs to the next version
 (`docs/omni_v5/NEXT_VERSION_PLAN.md`, section 3), and the eight-core Azure runs show how much of the LOSS the small
 machine carries. Earlier engines' runs at 1,000 copies on rented machines stand as they were run, in their own tables
@@ -4416,6 +4487,20 @@ short at the front: one or two benchmarks are run at a time, each preregistered,
 next is opened, so that no result is ever waiting on a harness that was half built when the runs began. The queue is
 ordered by what each benchmark adds to the index that the ones before it did not: a new resource traded (memory after
 machines, a buffer pool after a cache), a new native controller, a new class of evidence.
+
+### 34.7 Ten organisms, two ways: the twenty scenarios
+
+Beside the seven organisms of the catalog the repository reads three more, each a grouping of catalog rows or of real tables
+and none a product (`DISCLOSURES.md`, section 9): **the orchestra**, the muscles that stand for the knobs of the governors and
+orchestrators the founder named (55 muscles, `tools/run_orchestra.py`, the mapping in `tools/governors_page.py`); **the live
+engine's own organism**, the sixty muscles the live benchmark engine page draws (`docs/engine/export_harness_trace.py`); and **the whole
+organism** in its three places, the software end, the cloud's wire and the bare metal, composed from the real tables by the
+product law (`tools/whole_system.py`, section 60.6). Each of the ten is read two ways on the same seeds: native (every plant
+under its own native controller) and Omni-Compass on native (the max, the factory tune, on top of every native controller).
+Omni-Compass is never by itself (the founder's order of 25 October): it always sits on top of a native controller. Ten
+organisms by two ways are the twenty scenarios, written by `python3 tools/scenarios_20.py` into
+`results/scenarios/SCENARIOS_20.md`, class S, three runs (seeds 3000 to 3002), under the climb for the full hour of 240
+decisions of 15 s; their readings are in section 60.10.
 
 
 ## 35. The Spine: the Base Every Stack Runs On
@@ -5088,7 +5173,7 @@ with their own results in `docs/history/`.
 Every organism runs under three loads: its own load; the climb, the demand stepping by one, up and down (1 2 3 2 3 4 …),
 past what native can carry, so that the most each arm can do shows; and work waiting in line when the run starts. Every
 receipt shows work, the time over the service line (misses), the energy the max took as power given beside the work it
-bought, wear, and whether every knob was handed back; the reading is GAIN, EVEN or LOSS by the key at the front of this
+bought, wear, and whether every knob was handed back; the reading is GAIN, STEADY or LOSS by the key at the front of this
 manual, judged by what each gauge is for and never by the sign of its number. The spine read beside a realm shows what that
 realm's trade adds to the base it stands on; the spine read alone shows whether the governor helps the machines every
 stack runs on before any trade is put on them.
@@ -5674,8 +5759,8 @@ to lock clocks (the wire check's step 3 is where that shows).
 ### 45.2 Get the software and check it
 
 ```
-git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass.git
-cd The-Omni-Compass
+git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC.git
+cd The-Omni-Compass-LLC
 pip install -r requirements.txt
 python3 verify.py                       # every check; ends with VERIFICATION: PASS
 ```
@@ -5913,8 +5998,6 @@ OFF. Native is always the stack's own controller left as shipped; omni is that c
 
 ### 46.1 Managed Kubernetes on Azure: the bill as the gauge
 
-**THE CLOUD IS ONLY A WIRE BETWEEN THE SOFTWARE END AND THE HARDWARE END. OMNI-COMPASS ON THE CLOUD ALONE CAN GIVE ONLY A SMALL CUT IN THE BILL, FROM THE MACHINES THE CLOUD'S OWN AUTOSCALER MADE; THE BENEFIT LIVES AT THE TWO ENDS, IN THE SOFTWARE AND IN THE BARE METAL, AND THE CLOUD CARRIES IT.**
-
 On Azure Kubernetes Service the muscle is the same as on kind (Chapter 45, levels 1 to 3) and one thing is new: the
 bill is real. The workflow `aks-metered` builds a fresh cluster for every arm the same way: a system pool of one
 machine, tainted so no workload lands on it (Azure's add-ons and the load generator live there; it is never measured
@@ -5929,7 +6012,7 @@ every work machine that exists, every 15 seconds, priced at Azure's list price f
 **Sizing the fleet to the lever.** The smallest saving a fleet can show is one machine. On 4 workers one machine is
 25% of the fleet, so only a saving of about 30% or more can clear the noise; on 15 workers about 10%; on 96 about 3%.
 The expected machine saving under Omni-Compass is a few percent, so the 4-worker runs (`results/live/V1_AKS_STEADY.md`,
-`V1_AKS_BURST.md`) read no difference beyond the noise on every gauge, which is the honest reading of a fleet too small
+`V1_AKS_BURST.md`) cleared the noise on no gauge, which is the honest reading of a fleet too small
 for the lever, not a result against it. A new subscription allows 200 vCPUs in a region but 10 per machine family, so
 one family gives five 2-vCPU workers; the way past it is **several families at once**: eight pools of four to five
 workers each make a fleet of 39 (`worker_pools` input, `size:max,size:max,...`; `pool_prices` names each family's
@@ -5980,7 +6063,7 @@ sec all over heart beat"), and the same afternoon, having read the reads of the 
 5 s against 39,700 at 60 s), made it a dial with the main engine at 60 s (omni-v17, `docs/OMNI_V17.md`): the default
 `--interval` is 60 s and `--floor-interval` 5 s in the governor, every rig and every install file; any beat may be set (5,
 15, 30, 60, 75, 90, 120 s and every value between), each shown beside native with what it buys and what it costs
-(`results/model_gate/V17_LADDER.md`; on the live engine page, the page's section 2d, `#s-dial`), and three runs read every beat against native and
+(`results/model_gate/V17_LADDER.md`; on the live engine page, the page's section 1j, `#s-dial`), and three runs read every beat against native and
 against 60 s (`docs/PACE_PREREGISTRATION.md`, amendment 3). The cushion each muscle keeps is set in
 seconds by its own climb, wobble and reaction time, so it is the same at any pace; a longer period would not widen it, only
 leave the governor blind for longer between looks. In the cloud v7 also makes the whole rule one flag, `--give-back-only`, enforced in the governor
@@ -6096,7 +6179,7 @@ three machines, ten repetitions in all; the stack follows on the same three mach
 The same workflow carries a second test. With the input `test=robust` the machine runs the robustness harness's long
 scenario instead of an organism (`scripts/kind_paired.sh` with `ROBUST=long`, exactly as the GitHub job runs it), with
 the window stretched to whatever `duration_s` asks and the wandering load schedule repeated to fill it; the 24-hour run of
-section 60.12 uses it, one paired repetition on each of three rented eight-core machines of three families (the start job
+section 60.15 uses it, one paired repetition on each of three rented eight-core machines of three families (the start job
 tries the size it is given and falls back through the eight-core sizes the subscription may rent when the allowance refuses
 it; the four-core size asked for was refused because the tower's machine held its family's allowance, and the
 preregistration records what was rented), collected and deleted at 60 hours at the
@@ -6146,7 +6229,7 @@ notch a second, after a five-second dwell since the last growth; at 95% of the l
 cover is added at once. One writer: a ceiling found at a value Omni-Compass did not write stops it. At the end of every
 omni arm the ceiling is handed back to the operator's 64 MB and read back. The memory the compass holds for a wide
 working set is the resource this benchmark trades and reads power given by rule; the gain is the hit rate and the work inside
-the line. The result (section 60.5) is exactly that shape: on all three untouched workloads the work inside the line and
+the line. The result (section 60.7) is exactly that shape: on all three untouched workloads the work inside the line and
 the hit rate rose 14% to 27% and the ceiling held rose from 64 MB to 200 to 270 MB, with the host's CPU inside the noise
 and every ceiling handed back.
 
@@ -6270,7 +6353,7 @@ snapshot, and writes once more if the server ignored the first write; the receip
 seconds waited, the writes, the final read-back) is in every omni arm's record and the table counts the arms. The rows of the
 first set stand as they are, hand-back NO included, in `docs/history/V3_SYSBENCH_set1.md`; the preregistration carries the
 finding and the amendment; and the second counted set, run on the amended plug the same afternoon with nothing else changed,
-handed the pool back on all 45 omni arms and is the result in section 60.5. The lesson is general and is the reason section 32.2 exists: a
+handed the pool back on all 45 omni arms and is the result in section 60.7. The lesson is general and is the reason section 32.2 exists: a
 knob the device applies on its own time has to be handed back on the device's time, and the proof of the hand-back is the
 read-back, not the write.
 
@@ -6732,7 +6815,7 @@ On the rented machine (the repository is public while the benchmarks run; if it 
 fine-grained token in the URL):
 
 ```bash
-git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass the-omni-compass
+git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC the-omni-compass
 cd the-omni-compass
 git log --oneline -1       # the commit you are about to test; write it down
 pip install -r requirements.txt
@@ -7084,7 +7167,7 @@ any engine file, a rule, a gain, a guard, a preset or a muscle, is by definition
 published result is run again on it before it is quoted beside the old ones; `tools/omni_version.py` says which version a
 checkout carries, and a checkout that matches none says which files differ. An upgrade that changes only the harness,
 the tools, the tables or this manual leaves the engine's fingerprint as it was and every result standing; the robustness
-harness of section 60.12 is an example, built without touching an engine file. An operator can therefore tell, from one
+harness of section 60.15 is an example, built without touching an engine file. An operator can therefore tell, from one
 command, whether a new checkout is the engine the results were made on or something that must prove itself again.
 - The container runs non-root, read-only, with no capabilities; the Kubernetes identity has only the permissions of
   the level you run.
@@ -7136,8 +7219,8 @@ which no one wants capacity added.
 **What has been reviewed, and what has not.** Reviewed and tested on every run: the governor's permissions against the
 list above, read from the cluster itself; the shield's refusal of every write past a cover, of every give-back while
 blind, and of every move under a hold, on two million generated cases; the lease and the watchdog's hand-back on a real
-cluster, thirty times (section 60.6); the checksums of every download. Not yet done, and said so: an independent
-security review of the code by a party outside the company, which is in the open program (section 60.12), and a
+cluster, thirty times (section 60.8); the checksums of every download. Not yet done, and said so: an independent
+security review of the code by a party outside the company, which is in the open program (section 60.15), and a
 penetration test of the deployed governor on a customer-like cluster. Until those are done, the operator's own review
 stands in for them, and this section tells the operator exactly what to look at.
 
@@ -7479,7 +7562,7 @@ A **receipt** here is a result file in this repository made by a paired run: the
 counted runs, the engine identified by its fingerprint (`tools/omni_version.py --commit`), every row reported, losses
 included. A receipt is read in the class of evidence it is: **P** a physical meter, **L** real software (a real
 Kubernetes cluster, a real database), **S** our own models, **V** a property of the code. S is never presented as
-proof of a physical saving. A result belongs to the engine it ran on and is never read across engines. Each test is read from its own newest three-run table, and every row names its engine: omni-v11's where its three runs have landed, omni-v10's where they have not. omni-v19, the engine that stands from 25 October, runs every benchmark again, and its tables replace these as they land (omni-v18 took Omni direct into the fingerprint and changed nothing the Kubernetes governor runs; omni-v17 changed the Kubernetes governor's default beat, from 15 to 60 s, the heartbeat a dial, and kept its cruise wait at two readings or more at a slow beat; omni-v16 changed only the Kubernetes governor's clocks, each now counted in seconds, identical to omni-v15 at a 60 s decision, and set its full decision every 15 s, omni-v15 only the brain's power-cap request and the fingerprint's scope, omni-v14 only the Kubernetes governor's knob and its commands, omni-v13 added only the Kubernetes governor's hand-back of the CPU limits it gave on a shared host at its top, omni-v12 only the governor's hold on a raise the cluster refused and the swarm's reflex at once, omni-v11 only the governor's hold on a reading with no machine in service, omni-v10 only the CityLearn battery's glide). The earlier engines' receipts are the road, in `docs/history`.
+proof of a physical saving. A result belongs to the engine it ran on and is never read across engines. Each test is read from its own newest three-run table, and every row names its engine: omni-v11's where its three runs have landed, omni-v10's where they have not. omni-v23, the engine that stands since 31 October, runs every benchmark again, and its tables replace these as they land (omni-v22 brought the five data stores' wires to the max, each spend gated on the store's own account of a miss, and changed nothing the Kubernetes governor runs; omni-v21 gave the immune system its self-knowledge, knob by knob; omni-v20 fixed the five data stores' wires at their causes; omni-v19 gave the Kubernetes governor a pod muscle of its own for a workload no autoscaler governs, which writes nothing unless a workload is named to it; omni-v18 took Omni direct into the fingerprint and changed nothing the Kubernetes governor runs; omni-v17 changed the Kubernetes governor's default beat, from 15 to 60 s, the heartbeat a dial, and kept its cruise wait at two readings or more at a slow beat; omni-v16 changed only the Kubernetes governor's clocks, each now counted in seconds, identical to omni-v15 at a 60 s decision, and set its full decision every 15 s, omni-v15 only the brain's power-cap request and the fingerprint's scope, omni-v14 only the Kubernetes governor's knob and its commands, omni-v13 added only the Kubernetes governor's hand-back of the CPU limits it gave on a shared host at its top, omni-v12 only the governor's hold on a raise the cluster refused and the swarm's reflex at once, omni-v11 only the governor's hold on a reading with no machine in service, omni-v10 only the CityLearn battery's glide). The earlier engines' receipts are the road, in `docs/history`.
 How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of every three-run row: `tools/readings.py`.
 
 ### 52.1 What the receipts say, read together
@@ -7495,7 +7578,7 @@ How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of ev
 2. **The same work on less, where less is enough (L).** A queue of batch jobs ran on 6% to 14% fewer machines with 4% to 10%
    less standby energy and a 10% to 12% faster mean response, and the queue finished no later (omni-v10). Kafka held 0.8%
    fewer consumers on `burst`, MongoDB's cache gave back 0.9% to 1.0% on `f`, and Redis's ceiling fell 2.3% to 2.6% on
-   `burst` (omni-v11). PostgreSQL read EVEN on every judged row but one (power given) and MySQL on every row but its
+   `burst` (omni-v11). PostgreSQL read STEADY on every judged row but one (power given) and MySQL on every row but its
    update throughput (the runs disagree): under the brain's verdict no give-back that would cost service was written.
 3. **What it cost, shown beside it.** The replicas the faster recovery took (faults +14% to +20%; the Google day: pods
    started +120% to +193%), the energy of workers left on at idle power on top of Goldilocks and KEDA (+1.1% to +2.3%, a
@@ -7503,10 +7586,10 @@ How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of ev
    pool from its factory size (+5% to +16%), each power given in all three runs, beside the service it bought.
 4. **Everything handed back (L, omni-v11).** The kill test: the governor killed outright in the middle of the window in 30
    repetitions over three runs, every setting back at the operator's 8 to 11 s later (the allowance is 60 s), a second
-   governor governing to the end in every one, and the 120 s after the kill EVEN against native. The long run, two hours an
+   governor governing to the end in every one, and the 120 s after the kill STEADY against native. The long run, two hours an
    arm: the governor's memory up 2.3% at most (no leak), 97.5% of the decisions its interval predicts, none failed, its
    decision time not growing, and every setting handed back at the end.
-5. **On our own models and the independent simulators (S).** The 1,107 muscles each alone: 527 GAIN, 580 EVEN, none LOSS;
+5. **On our own models and the independent simulators (S).** The 1,107 muscles each alone: 527 GAIN, 580 STEADY, none LOSS;
    every one of the seven organisms GAIN (fewer misses) under all three loads. The power grids: 67 gauge-rows GAIN, 14 power
    given, no LOSS. The robot arm the trial moved: torque −28.6%, tracking error −21.3%. The buildings with batteries: 27
    score-rows GAIN (the bill −16.1% in the one district with a price), 1 power given, no LOSS, the outage districts'
@@ -7518,46 +7601,46 @@ How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of ev
 6. **What is not yet shown.** No energy saving on a real chip: the physical receipt (P), the GPU's own meter on the current
    governor, is the decisive one still to be produced; every earlier card result is obsolete. No cloud-bill result on the
    engine that stands yet: the Azure sets run one at a time on it, up to 100 repetitions each under the preregistered
-   stopping rule. More completed work at one fixed resource cap: the capacity test reads EVEN at all four caps.
+   stopping rule. More completed work at one fixed resource cap: the capacity test reads STEADY at all four caps.
 
 ### 52.2 Receipt by receipt
 
 Newest engine first within each class. "In all three" means the same sign in runs A, B and C with every 95% interval clear
-of zero; EVEN means an interval includes zero. Run and scored by The Omni-Compass LLC's own code. No outside party has
+of zero; STEADY means an interval includes zero. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 #### 52.2.1 Real software (L)
 
 | Test | Engine | Native | What moved | Reading | It shows | It does not show | File |
 |---|---|---|---|---|---|---|---|
-| The governor killed outright mid-run | omni-v11 | HPA | handed back 8 to 11 s after the kill in 30 of 30 repetitions; p95 −39% to −58%; failed requests −7% to −12%; alert minutes −16% to −23%; replicas +3% to +6% | GAIN in all three; hand-back in every repetition; replicas power given | a governor that can die without leaving a setting behind | the 99th percentile (EVEN: +25% in run A, −25% to −27% in B and C) | `results/live/V11_ROBUST_KILL.md` |
-| The long run, two hours an arm | omni-v11 | HPA | no leak (memory +2.3% at most); decisions valid; none failed; every setting handed back; mean response −34% to −36%; replicas +49% to +52% | held in every repetition; GAIN in all three; replicas power given | it runs for hours unchanged | the tails (EVEN, three pairs a run) | `results/live/V11_ROBUST_LONG.md` |
+| The governor killed outright mid-run | omni-v11 | HPA | handed back 8 to 11 s after the kill in 30 of 30 repetitions; p95 −39% to −58%; failed requests −7% to −12%; alert minutes −16% to −23%; replicas +3% to +6% | GAIN in all three; hand-back in every repetition; replicas power given | a governor that can die without leaving a setting behind | the 99th percentile (STEADY: +25% in run A, −25% to −27% in B and C) | `results/live/V11_ROBUST_KILL.md` |
+| The long run, two hours an arm | omni-v11 | HPA | no leak (memory +2.3% at most); decisions valid; none failed; every setting handed back; mean response −34% to −36%; replicas +49% to +52% | held in every repetition; GAIN in all three; replicas power given | it runs for hours unchanged | the tails (STEADY, three pairs a run) | `results/live/V11_ROBUST_LONG.md` |
 | On top of Goldilocks and the VPA's recommender | omni-v11 | the service rightsized by Goldilocks, HPA | p95 −61% to −64%; time over the line −98% to −100%; alert minutes −100%; pods started −53% to −61%; energy +1.7% to +2.3% (model) | GAIN in all three; energy power given | a faster service on top of a rightsizer | a measured energy saving | `results/live/V11_GOLDILOCKS.md` |
-| On top of KEDA's HTTP add-on | omni-v11 | KEDA 2.21, HTTP add-on 0.16 | p95 −72% to −74%; alert minutes −100%; replicas −11% to −20%; energy +1.6% to +2.2% (model) | GAIN in all three; energy power given; the pod start wait EVEN | faster service on top of a second autoscaler | a measured energy saving | `results/live/V11_KEDA_REQUESTS.md` |
+| On top of KEDA's HTTP add-on | omni-v11 | KEDA 2.21, HTTP add-on 0.16 | p95 −72% to −74%; alert minutes −100%; replicas −11% to −20%; energy +1.6% to +2.2% (model) | GAIN in all three; energy power given; the pod start wait STEADY | faster service on top of a second autoscaler | a measured energy saving | `results/live/V11_KEDA_REQUESTS.md` |
 | On top of KEDA on CPU and requests | omni-v11 | KEDA 2.21 | p95 −52% to −53%; replicas +2% to +3%; energy +1.1% to +1.8% (model) | GAIN in all three; replicas and energy power given | as above | as above | `results/live/V11_KEDA_CPU_REQUESTS.md` |
-| Capacity at a fixed cap (four caps) | omni-v11 | HPA under a CPU quota | — | EVEN at every cap | no harm under a cap | more work under the cap | `results/live/V11_CAPACITY.md` |
-| Redis | omni-v11 | the operator's 64 MB ceiling; also as shipped | work inside the 2 ms line and hit rate +1.3% to +1.6%; mean latency −1.7% to −7.3%; ceiling −2.3% to −2.6% on `burst`; memory +1.7% to +1.9% on `small` | GAIN in all three; memory power given on `small`; as shipped EVEN (at its limit on native) | a faster cache, its price shown | a tail gain (the 99th percentile EVEN, `docs/TAIL_LATENCY.md`) | `results/live/V11_REDIS.md`, `V11_REDIS_SERVICE.md`, `V11_REDIS_SHIPPED.md` |
-| Kafka | omni-v11 | the operator's 2 consumers | consumers −0.8% on `burst` | GAIN in all three under both objectives; the rest EVEN | no harm, a fraction given back | a service gain | `results/live/V11_KAFKA.md`, `V11_KAFKA_SERVICE.md` |
-| PostgreSQL, MySQL, MongoDB | omni-v11 | the operators' pool, buffer pool and cache; MySQL and MongoDB also as shipped | MongoDB's cache −0.9% to −1.0% on `f`; PgBouncer's most connections open +8% to +10%; MySQL as shipped: the pool +5% to +16%; at the max, PgBouncer's connections held −10% to −22% and MongoDB's cache −0.4% to −0.8% | GAIN and power given as named; EVEN on every other judged row but MySQL's update throughput (the runs disagree) | no harm under the verdict | memory given back on the pool and the buffer pool | `results/live/V11_PGBENCH*.md`, `V11_SYSBENCH*.md`, `V11_YCSB*.md` |
-| On top of CruiseKube | omni-v10 | CruiseKube 0.3.4 | — | EVEN on every row; no command written | no harm on a rightsized service | a gain there | `results/live/V10_CRUISEKUBE.md` |
-| Steady work in steps | omni-v10 | HPA | p95 −64% to −65%; p99 −69% to −73%; time over the line −98% to −100%; alert minutes −100% | GAIN in all three; machines and energy EVEN | a faster service on the same machines | fewer machines | `results/live/V10_STEADY.md` |
+| Capacity at a fixed cap (four caps) | omni-v11 | HPA under a CPU quota | — | STEADY at every cap | no harm under a cap | more work under the cap | `results/live/V11_CAPACITY.md` |
+| Redis | omni-v11 | the operator's 64 MB ceiling; also as shipped | work inside the 2 ms line and hit rate +1.3% to +1.6%; mean latency −1.7% to −7.3%; ceiling −2.3% to −2.6% on `burst`; memory +1.7% to +1.9% on `small` | GAIN in all three; memory power given on `small`; as shipped STEADY (at its limit on native) | a faster cache, its price shown | a tail gain (the 99th percentile STEADY, `docs/TAIL_LATENCY.md`) | `results/live/V11_REDIS.md`, `V11_REDIS_SERVICE.md`, `V11_REDIS_SHIPPED.md` |
+| Kafka | omni-v11 | the operator's 2 consumers | consumers −0.8% on `burst` | GAIN in all three under both objectives; the rest STEADY | no harm, a fraction given back | a service gain | `results/live/V11_KAFKA.md`, `V11_KAFKA_SERVICE.md` |
+| PostgreSQL, MySQL, MongoDB | omni-v11 | the operators' pool, buffer pool and cache; MySQL and MongoDB also as shipped | MongoDB's cache −0.9% to −1.0% on `f`; PgBouncer's most connections open +8% to +10%; MySQL as shipped: the pool +5% to +16%; at the max, PgBouncer's connections held −10% to −22% and MongoDB's cache −0.4% to −0.8% | GAIN and power given as named; STEADY on every other judged row but MySQL's update throughput (the runs disagree) | no harm under the verdict | memory given back on the pool and the buffer pool | `results/live/V11_PGBENCH*.md`, `V11_SYSBENCH*.md`, `V11_YCSB*.md` |
+| On top of CruiseKube | omni-v10 | CruiseKube 0.3.4 | — | STEADY on every row; no command written | no harm on a rightsized service | a gain there | `results/live/V10_CRUISEKUBE.md` |
+| Steady work in steps | omni-v10 | HPA | p95 −64% to −65%; p99 −69% to −73%; time over the line −98% to −100%; alert minutes −100% | GAIN in all three; machines and energy STEADY | a faster service on the same machines | fewer machines | `results/live/V10_STEADY.md` |
 | Demand that wanders | omni-v10 | HPA | p95 −57% to −66%; time over the line −38% to −45%; alert minutes −21% to −32%; energy −0.3% to −0.4% | GAIN in all three | service held through wandering demand | a measured energy saving (model) | `results/live/V10_WANDERING.md` |
-| All four at once | omni-v10 | HPA | work inside the line +47% to +79%; p95 −56% to −61%; failed requests −9% to −14%; alert minutes −16% to −34% | GAIN in all three; machines the same | more work in time on the same machines | energy (EVEN, model) | `results/live/V10_ALL_FOUR.md` |
-| Faults: a machine down, a spike, a runaway pod, a blind probe | omni-v10 | HPA | p95 −54% to −63%; p99 −43% to −51%; replicas +14% to +20% | GAIN in all three; replicas power given | service held through faults | machines (EVEN) | `results/live/V10_FAULTS.md` |
+| All four at once | omni-v10 | HPA | work inside the line +47% to +79%; p95 −56% to −61%; failed requests −9% to −14%; alert minutes −16% to −34% | GAIN in all three; machines the same | more work in time on the same machines | energy (STEADY, model) | `results/live/V10_ALL_FOUR.md` |
+| Faults: a machine down, a spike, a runaway pod, a blind probe | omni-v10 | HPA | p95 −54% to −63%; p99 −43% to −51%; replicas +14% to +20% | GAIN in all three; replicas power given | service held through faults | machines (STEADY) | `results/live/V10_FAULTS.md` |
 | The Google cluster trace of 2011, replayed | omni-v10 | HPA | p95 −56% to −62%; time over the line −74% to −77%; failed requests −15% to −18%; alert minutes −61% to −66%; pods started +120% to +193% | GAIN in all three; pods power given | a public day of real demand served faster | machines (the same), a cloud bill | `results/live/V10_TRACE_GOOGLE2011.md` |
-| A queue of batch jobs | omni-v10 | Jobs and HPA | machines −6% to −14%; node-hours −6% to −14%; standby energy −4% to −10%; mean response −10% to −12%; queue finish EVEN | GAIN in all three | the same queue on fewer machines | a measured energy saving (model) | `results/live/V10_BATCH.md` |
-| A noisy neighbour | omni-v10 | HPA | time over the line −11% | GAIN in all three; every other row EVEN, the neighbour's own included | no harm beside a noisy neighbour | — | `results/live/V10_FAIRNESS.md` |
-| Azure's managed Kubernetes, its own bill | v1 | AKS with its cluster autoscaler | bill −4.7% steady, +5.0% burst | EVEN on every gauge | the method on a real cloud bill | a bill saving (the omni-v11 sets run now) | `results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md` |
+| A queue of batch jobs | omni-v10 | Jobs and HPA | machines −6% to −14%; node-hours −6% to −14%; standby energy −4% to −10%; mean response −10% to −12%; queue finish STEADY | GAIN in all three | the same queue on fewer machines | a measured energy saving (model) | `results/live/V10_BATCH.md` |
+| A noisy neighbour | omni-v10 | HPA | time over the line −11% | GAIN in all three; every other row STEADY, the neighbour's own included | no harm beside a noisy neighbour | — | `results/live/V10_FAIRNESS.md` |
+| Azure's managed Kubernetes, its own bill | v1 | AKS with its cluster autoscaler | bill −4.7% steady, +5.0% burst | STEADY on every gauge | the method on a real cloud bill | a bill saving (the omni-v11 sets run now) | `results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md` |
 
 #### 52.2.2 Our own models and the independent simulators (S)
 
 | Test | Engine | Reading | File |
 |---|---|---|---|
 | Power grids: 11 SimBench grids in pandapower | omni-v11 | 67 gauge-rows GAIN, 14 power given, no LOSS: energy drawn and net import lower in all 11 (ZIP loads); losses lower in 7, power given in 4; tap operations fewer in 10, more in 1 | `results/live/V11_PANDAPOWER.md` |
-| CityLearn districts | omni-v11 | 27 score-rows GAIN, 1 power given, no LOSS: in the four districts whose batteries moved, electricity bought −3.0% to −13.6%, the daily peak −3.2% to −16.9%, ramping −3.4% to −10.1%; the bill −16.1% in the one district with a price; the seven 2023 districts' batteries native (each charge is its building's reserve), every score there EVEN | `results/live/V11_CITYLEARN.md` |
+| CityLearn districts | omni-v11 | 27 score-rows GAIN, 1 power given, no LOSS: in the four districts whose batteries moved, electricity bought −3.0% to −13.6%, the daily peak −3.2% to −16.9%, ramping −3.4% to −10.1%; the bill −16.1% in the one district with a price; the seven 2023 districts' batteries native (each charge is its building's reserve), every score there STEADY | `results/live/V11_CITYLEARN.md` |
 | Robot arms, MuJoCo Menagerie | omni-v11 | Gen3 peak torque −28.6%, tracking error −21.3%, GAIN; UR5e and iiwa left native | `results/live/V11_MUJOCO.md` |
 | Drone swarms, 20 drones in three cells | omni-v11 | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN in all three; no late mission, reserve breach, near miss or collision in the counted cells; the closest approach spent to about 0.16 m (shown, not judged); collisions on a draw outside the cells, the wire's fault, fixed in omni-v12 (its three runs under way) | `results/live/V11_SWARM.md`, `results/model_gate/V12_SWARM_REFLEX.md` |
-| The 1,107 muscles and the seven organisms, preregistered seeds | omni-v8 (omni-v9's exact Student t moved no reading; omni-v10 to omni-v16 changed files it does not run, or, in omni-v16's edge, nothing at the organisms' own step) | 527 GAIN, 580 EVEN, none LOSS; every organism GAIN (fewer misses) under all three loads; reproduced exactly in three GitHub runs | `results/realms_v5/REALMS_V5.md` |
+| The 1,107 muscles and the seven organisms, preregistered seeds | omni-v8 (omni-v9's exact Student t moved no reading; omni-v10 to omni-v16 changed files it does not run, or, in omni-v16's edge, nothing at the organisms' own step) | 527 GAIN, 580 STEADY, none LOSS; every organism GAIN (fewer misses) under all three loads; reproduced exactly in three GitHub runs | `results/realms_v5/REALMS_V5.md` |
 
 #### 52.2.3 A physical meter (P)
 
@@ -7588,15 +7671,15 @@ outside body.
 
 
 
-<!-- the key: GAIN, EVEN and LOSS (tools/readings.py) -->
-### 53.1 The key: GAIN, EVEN and LOSS
+<!-- the key: GAIN, STEADY and LOSS (tools/readings.py) -->
+### 53.1 The key: GAIN, STEADY and LOSS
 
-Every judged reading in Omni-Compass is one of three words: **GAIN**, **EVEN** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
+Every judged reading in Omni-Compass is one of three words: **GAIN**, **STEADY** or **LOSS**. Better, same and worse are not used anywhere. The word is decided by what the gauge is for, never by the plus or minus sign of its number: who sets the aim differs from one system to the next, and each gauge's aim is written in its preregistration before the runs.
 
 | Word | What each letter stands for | Its sense in underwriting | What it means in a table |
 |---|---|---|---|
 | **GAIN** | **G** Growth (asset appreciation); **A** Advantage (risk reduction); **I** Improvement (margin expansion); **N** Net-positive (profitable outcome) | surplus and positive variance | the gauge moved toward its declared aim against native: more work done, a shorter wait, fewer misses or failures, or a resource cut |
-| **EVEN** | **E** Equalized (zero variance); **V** Verified baseline (expected norm); **E** Equilibrium (balanced risk); **N** Neutral (no net change) | the break-even baseline: equilibrium | native and Omni could not be told apart: the same, or no difference beyond the noise; a knob native already runs at the top of its range is EVEN, at its limit on native |
+| **STEADY** | **S** Stable (zero variance); **T** True to baseline (expected norm); **E** Equilibrium (balanced risk); **A** At par (no net change); **D** Drift-free (within the 0.5% floor); **Y** Yield held (nothing lost) | the par baseline: equilibrium | native and Omni-Compass within 0.5% of each other: the mean of the three runs' changes under the 0.5% floor, or no change at all; a knob native already runs at the top of its range is STEADY, at its limit on native |
 | **LOSS** | **L** Leakage (capital drain); **O** Off-track (adverse selection); **S** Setback (claim liability); **S** Subpar (negative variance) | actuarial deficit and exposure | the gauge moved away from its declared aim: less work done, a longer wait, more misses or failures |
 
 How the sign of a number becomes a word:
@@ -7606,39 +7689,30 @@ How the sign of a number becomes a word:
 - **A resource spent or held** (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear on a part): a fall is a **cut**, and a cut is GAIN. A rise is **power given**: what Omni put in to buy the work and the speed shown beside it. Power given is always shown and never hidden, and it is never called a loss (the founder's order of 12 October 2026: the max rides every muscle's edge; it never shaves). A peak is power held, so a peak that rose is power given, in a data centre and in a building alike (17 October).
 - **Work bought with each unit of a resource** (work per energy): a rise is a cut in what each unit of work took, a GAIN; a fall is power given, because it falls when more power is given for the same work.
 - So a minus can read GAIN (a response time cut 65%, a bill cut 30%) and a plus can read LOSS (failed requests up).
-- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; EVEN is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **EVEN, under the floor**, with its size.
-- **The sign beside a word** (the same order): the number next to a word carries the word's sign, never the gauge's raw direction, so that no one mistakes which way a number went: GAIN **+**, LOSS **−**, EVEN **=**. A bill cut 3% reads GAIN +3%, failed requests up 2% read LOSS −2%, and a change inside the noise reads EVEN =0.3%.
+- **The floor, and every change above it** (the founder's orders of 20 and 24 October 2026): a change of half of one percent (0.5%) or more either way is a change, and reads **GAIN** or **LOSS** (or **power given**) by what the gauge is for; STEADY is kept for a change under 0.5%. The change is the mean of the three runs' changes, each in percent of native. Where every run moved the same way with its 95% interval clear of zero, the word reads **in all three of our runs**; otherwise it reads **by the mean of our three runs** and says in how many of the three runs it stood beyond the noise, so a reader sees how firmly it stands. Where runs moved 0.5% or more in opposite directions, the reading is **the runs disagree**. A mean under 0.5% reads **STEADY, under the floor**, with its size.
+- **Two numbers, never mixed** (the referee's work order of 25 October): every row shows native's value and Omni-Compass's, the **raw change** (Omni-Compass − native) / native with its true sign, + for a rise and − for a fall whatever the gauge is for, labelled raw, and apart from it the word with its size and no sign. A bill cut 3% reads raw −3.0%, GAIN 3.0%; failed requests up 2% read raw +2.0%, LOSS 2.0%; a pod start wait from 0.22 s to 0.83 s reads raw +275.0%, LOSS 275.0%; a change under the 0.5% floor reads STEADY 0.3%. No raw sign is ever turned to match a word.
 
-Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads EVEN (the same as native); AT ITS LIMIT ON NATIVE reads EVEN (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads EVEN (inside the noise, within the guardrails); NOT ESTABLISHED reads EVEN (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
+Some preregistrations name their outcome with a label written before the runs (for example SUPERIOR WITHIN GUARDRAILS in the card protocol). The label stays as it was frozen, and every table shows it with its word first: TOWARD ITS AIMS reads GAIN; BOTH WAYS reads GAIN AND LOSS; AWAY FROM ITS AIMS reads LOSS; SAME AS NATIVE reads STEADY (the same as native); AT ITS LIMIT ON NATIVE reads STEADY (at its limit on native); SUPERIOR WITHIN GUARDRAILS reads GAIN (within the guardrails); ENERGY IMPROVEMENT WITH SERVICE TRADEOFF reads GAIN AND LOSS (energy cut, service traded for it); SERVICE IMPROVEMENT WITH ENERGY TRADEOFF reads GAIN, power given (service GAIN, energy given for it); NONINFERIOR / INCONCLUSIVE reads STEADY (inside the noise, within the guardrails); NOT ESTABLISHED reads STEADY (not established: inside the noise, a guardrail crossed on the mean). A run that breaks its own validity checks reads INVALID and carries no word.
 
-Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **EVEN, under the floor**: the mean moved less than 0.5%. **EVEN, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
+Every reading is one of these. **GAIN, LOSS or power given in all three of our runs**: A, B and C moved the same way, every 95% interval clear of zero. **GAIN, LOSS or power given by the mean of our three runs**: the runs' mean moved 0.5% or more, with the count of runs that stood beyond the noise beside it. **STEADY, under the floor**: the mean moved less than 0.5%. **STEADY, the same**: no change at all. **The runs disagree**: runs moved 0.5% or more in opposite directions, so the test is unstable there and is looked into. **Shown, not judged**: a gauge declared in advance as shown only, such as the knob's own setting.
 
-Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, break-even or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (EVEN). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
+Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, EVEN and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 This chapter teaches you to read every table Omni-Compass produces. You do not need to know Kubernetes or GPUs to
 follow it. Read the five ideas first, then go to the table you have in front of you.
 
-### 53.2 What every result names, and how a bill is read
+### 53.2 The five ideas behind every table
 
-Every result names five things, and a reading is never carried to another of any of them: **the engine** (its fingerprint,
-`python3 tools/omni_version.py`), **the profile** (the factory profile, or a custom or candidate profile and how it differs), **the
-hardware or model** (and its evidence class: P a physical meter, L live software, S our own models), **the workload** (its load, its
-service line, its seeds or runs), and **the measurement boundary** (what is counted inside it and what is not). It also names its
-**objective**: the most healthy production (work done while every health requirement holds), or the least cost per production
-completed. A **bill** is a total: each deployment route's native total cost, then Omni-Compass's, then the saving, 1 − (the
-Omni-Compass total ÷ the native total), each total the sum of its non-overlapping cost components inside the boundary, on a matched
-workload. A component's own percent (the machines, the energy) is a supporting measurement, never the bill, and a bill whose price or
-component is missing reads **unresolved** (`docs/THE_TUNE.md`, section 8; the answer at the top of the README, `tools/headline.py`).
-
-### 53.3 The five ideas behind every table
-
-1. **Native, and native with Omni-Compass on top.** Omni-Compass never runs a machine by itself. Every result compares
-   a system running alone ("native": Kubernetes alone, the card's own firmware alone, a building's own controller
-   alone) with the same system with Omni-Compass sitting on top of it. Same machine, same work, same moment: the only
-   difference is Omni-Compass.
+1. **Native, Omni-Compass on native, and Omni-Compass direct.** Every result compares a system running alone
+   ("native": Kubernetes alone, the card's own firmware alone, a building's own controller alone) with the same system
+   with Omni-Compass sitting on top of it (Omni-Compass on native, "omni" in the tables), and, since the founder's order
+   of 23 October, wherever native's own controller can be switched off, with the same system run by Omni-Compass alone
+   (Omni-Compass direct, "solo" or "Omni direct" in the records). Same machine, same work, same moment: the only
+   difference is Omni-Compass, and which controller moves the knob. The three arms are always shown together, and each
+   pair is read on its own.
 2. **Paired runs.** Each comparison is run many times ("repetitions" or "runs"), each time with both arms on the same
    seed (the same pattern of work). Each repetition gives one difference; the table reports the average difference.
 3. **The 95% interval.** Next to each average is a range, for example `+0.092% (+0.090 to +0.093)`: the paired mean
@@ -7647,14 +7721,13 @@ component is missing reads **unresolved** (`docs/THE_TUNE.md`, section 8; the an
    4.303 at 3 pairs, 2.262 at 10, 2.093 at 20). The method that draws it covers the true difference in 95 of 100
    repetitions of the whole experiment; it is not a 95% chance about this one range.
    - If the whole range is on one side of zero, the difference is **clear of the noise** (a table's "significant"
-     column says "yes").
-   - If the range includes zero, the test could not tell the arms apart within its noise; how small a difference it
-     could have seen is the interval's half-width, printed beside it.
-   - The word is set by the size (the founder's order of 24 October 2026): a change of 0.5% or more either way is a
-     change and reads GAIN, LOSS or power given by the gauge's aim, with how firm it is beside it (in all three of our
-     runs when every run is clear of the noise the same way; by the mean of our three runs, with the count beyond the
-     noise, otherwise); a change under 0.5% reads **EVEN, under the floor**.
-4. **The word, not the sign.** Every judged reading is GAIN, EVEN or LOSS (the key above). For response time,
+     column says "yes"); its word is GAIN, LOSS or power given, by the gauge's aim.
+   - If the range includes zero, that run is **not beyond the noise**: it could not tell the arms apart by itself. It
+     does not show that they are equal; how small a difference the run could have seen is the interval's half-width,
+     printed beside it. Since the founder's order of 24 October the word is decided by the size first: a change of 0.5%
+     or more reads its word even where a run's range includes zero ("by the mean of our three runs", with the count of
+     runs beyond the noise), and only a mean under 0.5% reads STEADY (the key above; section "The verdict rules" below).
+4. **The word, not the sign.** Every judged reading is GAIN, STEADY or LOSS (the key above). For response time,
    failures and time over the line a fall is GAIN; for work and work per energy a rise is GAIN; for energy, machines
    and every other resource spent or held a fall is a cut, a GAIN, and a rise is **power given**, never a loss.
    Every table gives the word beside the number.
@@ -7666,6 +7739,60 @@ component is missing reads **unresolved** (`docs/THE_TUNE.md`, section 8; the an
    - **P**: a physical meter (a real card's own power meter).
 
    Only **P** speaks for hardware energy.
+
+### 53.3 What every result names: the workload, the boundary, the profile, the costs, the requirements and the verdict
+
+The common language of these six is written once in `docs/FACTORY_PROFILE.md`; this section is how to read a result by it.
+Every result identifies the engine version, the configuration, the hardware or model, the workload and the measurement
+boundary that produced it, and says nothing beyond them.
+
+**The workload contract.** Both arms are offered the same work: the same demand at the same moments (an open-loop schedule,
+the same seeds in every arm), on the same machines, in the same window, against the same service line, all written down
+before the first counted run in the benchmark's preregistration (`docs/*_PREREGISTRATION.md`). A comparison is valid only for
+a matched workload; a run whose work was not matched, or a workload left incomplete, is shown as unresolved or invalid and
+carries no word. The load is a declared input, and a result belongs to the load it names (`DISCLOSURES.md`, section 4).
+
+**The measurement boundary.** What a result counts, and what it does not: the cluster's machines in service, the host's
+processor seconds, a card's own meter, the machines a cloud bills, the plant models' energy. Each receipt names its boundary,
+and nothing outside it is claimed. The energy on GitHub's Kubernetes is a declared formula over machines, not a meter; a
+model's energy is not a meter's; only class P speaks for hardware energy. The whole organism's composition
+(`results/WHOLE_SYSTEM.md`) names its three places, the software end, the cloud's wire and the bare metal, and enters a place
+with no measurement as exactly 1, named.
+
+**The profile's identity.** Every result names its engine and fingerprint (`python3 tools/omni_version.py`) and the profile
+that governed it: the **factory profile** (the complete, versioned set of Omni-Compass default settings shipped together; the
+released one is omni-v19's, the governor's full decision every 60 s with its fast checks every 5 s and every muscle on its card
+or the engine's setting), a **candidate profile** (a proposed combination under evaluation) or a **custom profile** (an
+identifiable configuration that differs from the released factory profile, whose results are its own). The **active profile**
+is the one governing the run in front of you; the live benchmark engine names it with its fingerprint. A matching fingerprint establishes
+identity; the validation receipts establish what that identified implementation demonstrated. A result is never read across
+engines, and never across profiles. The best validated factory profile for the declared operating conditions has not yet been
+established (`docs/FACTORY_PROFILE.md`, section 5): until it is, every published result is the released factory profile's.
+
+**The costs.** A resource spent or held that fell is a cut, a GAIN; one that rose is **power given**, never a loss. The bill
+of a deployment route r (on site; through the cloud) is the sum of its costs inside the declared boundary, each counted once,
+for each arm a (native, Omni-Compass on native, Omni-Compass direct): C(r, a) = Σₖ c(r, a, k), and its saving is
+S(r, a) = (C(r, native) − C(r, a)) ⁄ C(r, native), for a positive native cost and a matched workload. A component's percentage
+(fewer machine-hours, less energy) is a supporting measurement, never the bill. A missing price stays visibly unresolved: today
+only the cloud's compute is metered in money (Azure, machine-hours at the list price, `results/live/AKS_BILL.md`), so neither
+route's bill is resolved yet. A whole-workload index (the composition's one number over its gauges) is not a price.
+
+**The requirements.** Health is the explicit operating requirements: correctness, service limits (the response-time line),
+resource bounds and every applicable hardware limit; each reading Hⱼ has its limit Lⱼ. A result names which of the two
+objectives its tune served: the most healthy production, maximise E[P(θ)] subject to Hⱼ(θ) ≤ Lⱼ for every j (the max, the
+default brain), or the least cost per unit of completed production, minimise E[C(θ) ⁄ P(θ)] subject to the same requirements
+(the tune-down, a cloud's machines alone). P is the useful output, the work done inside the line. A requirement crossed is
+read on its own gauge (time over the line, failed requests, alert minutes) and never traded away.
+
+**The verdict rules.** Every judged gauge is read by the one key (`tools/readings.py`, the key at the top of this page): the
+word by what the gauge is for, never by its sign; over runs A, B and C the change is the mean of the three runs' changes in
+percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up GAIN, LOSS
+or power given **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise
+**by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions
+read **the runs disagree**; a count that must never rise (failed requests, lost messages) reads LOSS on any rise in any run.
+Each run's own number wears that run's own word by the same floor. A label written before the run is shown with its word
+first. A model (class S) is never read as proof of hardware, and a reading on the live tuning bench at any setting other than
+the factory profile is a variation of the mechanism, never a benchmark result.
 
 ### 53.4 The words in the tables
 
@@ -7696,7 +7823,7 @@ Read it in this order:
 1. **The verdict line** at the top, one of the labels chosen by rule (`docs/GPU_PREREGISTRATION.md`, amendment 1):
    SUPERIOR WITHIN GUARDRAILS, ENERGY IMPROVEMENT WITH SERVICE TRADEOFF, NONINFERIOR / INCONCLUSIVE, NOT ESTABLISHED,
    AWAY FROM ITS AIM, NOT ATTRIBUTABLE or INVALID; each gauge reads GAIN, LOSS or power given **clear of the noise**, or
-   **EVEN, no difference beyond the noise** (amendment 14; the first counted run of 2 October printed "proven" and "not
+   **STEADY, no difference beyond the noise** (amendment 14; the first counted run of 2 October printed "proven" and "not
    proven" for the same rule).
 2. **Work per energy** (requests per kilojoule): the headline. A plus sign with a range wholly above zero is a GAIN
    clear of the noise.
@@ -7712,7 +7839,7 @@ token generation (memory-bound work).
 ### 53.6 The card inside the seven organisms (`results/hil/run-<stamp>/HIL.md`)
 
 The real card is wired into each of the seven organisms (the spine, the four realms, the four stacked, the whole tower) at four
-sizes (1, 10, 100 and 500 copies; paid card runs stop at 100). Each row is one size, one organism and one part:
+sizes (1, 10, 100 and 1,000 copies). Each row is one size, one organism and one part:
 - **stacks (model)**: the modelled machines (evidence S);
 - **card (meter)**: the real card, its own meter (evidence P);
 - **both**: the two added together.
@@ -7736,9 +7863,12 @@ Energy on kind is a declared model, not a meter: kind keeps every machine powere
 ### 53.8 The three-run tables (`results/live/V<engine>_<TEST>.md`, for example `V7_GOLDILOCKS.md`, `V8_CITYLEARN.md`)
 
 Every benchmark since the engine was frozen runs three separate times, A, B and C, on the same bytes, and the table
-shows all three beside each gauge, each with its own 95% interval. Read the last column first: **GAIN** or **LOSS in all three of our runs** (the same sign
-in all three, every interval clear of zero; a resource spent that rose reads **power given**), **EVEN, no difference beyond the noise** (an interval over zero in at least one
-run: that is the result), or **the runs disagree** (the test is unstable there and is looked into). Nothing reads "confirmed" or "not
+shows all three beside each gauge, each with its own 95% interval. Read the last column first, by the verdict rules above:
+**GAIN**, **LOSS** or **power given in all three of our runs** (the mean moved 0.5% or more, every run the same way with its
+interval clear of zero), **by the mean of our three runs** (the mean moved 0.5% or more; the count of runs beyond the noise
+beside it), **STEADY, under the floor** or **STEADY, the same**, or **the runs disagree** (runs of 0.5% or more pointing opposite
+ways: the test is unstable there and is looked into). Every table was read again from its own data by that rule on 24
+October (`tools/reread.py`). Nothing reads "confirmed" or "not
 confirmed": nobody outside The Omni-Compass LLC has reviewed or approved these results. The `V<n>_` in a table's name (`V10_`, `V11_`, `V12_` and so on) is the engine the runs carried (`python3 tools/omni_version.py --commit <sha>`);
 a table never mixes engines, and a reading is never carried from one engine to another. Every LOSS and every power given is in the table beside
 the GAINs. On the omni-v11 tables there is no LOSS. Power given appears in the grid's dissipated energy in four grids, the tap
@@ -7746,16 +7876,18 @@ operations in one, PgBouncer's connections, MySQL's pool from its factory size, 
 zero in one district. An earlier engine's LOSS stays in its own table, for example CityLearn's energy not served on omni-v7.
 
 **How often the rule reads a difference that is not there.** Under no true difference, one run's 95% interval falls
-wholly above zero with probability 0.025 and wholly below with 0.025. A row reads GAIN or LOSS only when all three
-independent runs fall on the same side, so its chance of a false reading is 2 × 0.025³ ≈ 3.1 × 10⁻⁵. Over a table of 30
+wholly above zero with probability 0.025 and wholly below with 0.025. A row reads GAIN or LOSS **in all three of our runs**
+only when all three independent runs fall on the same side, so its chance of a false reading is 2 × 0.025³ ≈ 3.1 × 10⁻⁵. A
+word read **by the mean of our three runs** carries no such bound: it says the runs' mean moved 0.5% or more, and the count of
+runs beyond the noise beside it says how firmly; read it with that count. Over a table of 30
 judged rows the chance that any one is false is at most 30 × 3.1 × 10⁻⁵ ≈ 0.09% (a union bound, as Bonferroni's), and over
 the 798 judged rows of the omni-v11 tables that carry noise (1,039 judged rows in 23 tables, less the 241 of the deterministic
 simulators) the expected number of false readings is 798 × 3.1 × 10⁻⁵ ≈ 0.02. The
 bound assumes the three runs independent; runs on the same kind of machine can share a bias, which three runs cannot
-remove and the bound does not cover. The price of the rule is power: a small true difference must clear the noise three
-times, so many EVEN rows are differences too small for a run's pairs to resolve (with 3 pairs a run, t = 4.303 and the
-interval is wide). Every EVEN is printed with the three intervals that decided it. The deterministic simulators (CityLearn,
-pandapower, MuJoCo) reproduce to the digit, so there the three runs check the harness, not the noise; their EVEN means
+remove and the bound does not cover. The price of "in all three of our runs" is power: a small true difference must clear
+the noise three times, so many rows read by the mean of our three runs are differences too small for a run's pairs to resolve
+(with 3 pairs a run, t = 4.303 and the interval is wide). Every reading is printed with the three intervals behind it. The deterministic simulators (CityLearn,
+pandapower, MuJoCo) reproduce to the digit, so there the three runs check the harness, not the noise; their STEADY means
 the same to one part in a million.
 
 ### 53.9 The workload tables (`V<engine>_PGBENCH.md`, `_KAFKA.md`, `_REDIS.md`, `_YCSB.md`, `_SYSBENCH.md`) and the swarm table (`V<engine>_SWARM.md`)
@@ -7794,10 +7926,27 @@ pairing stands, the mark stays, and the remedy is a longer window for that size 
 
 Every measure is a ratio oriented so that above 1 is a GAIN for Omni-Compass on top of native: work, speed, machines,
 energy. A test's index is the geometric mean of its ratios, a category's of its tests, the headline of the real
-categories, each weighted the same. A measure enters only as its three-run reading allows; no difference beyond the
-noise enters as exactly 1. Modelled muscles are shown beside the index, never inside it.
+categories, each weighted the same. A measure enters only as its three-run reading allows: GAIN, LOSS or power given in
+all three of our runs enters as the geometric mean of the runs' ratios; anything else (STEADY, the runs disagree, a word read by
+the mean of our three runs) enters as exactly 1. Modelled muscles are shown beside the index, never inside it.
 
-### 53.13 The seven organisms grid (`results/grid_v5/GRID.md`; each engine's runs in `results/grid_v<engine>/`)
+### 53.13 The real test, the twenty scenarios and the whole organism
+
+- **The real test** (`results/orchestrator/V18_THREE_ARMS_ABC.md`): one row per pair and gauge, each run's own word beside its
+  number, the three-run reading in bold; below, each arm's totals in each run (requests answered, failed, wrong). The bottom line
+  on the README and the live benchmark engine page reads its pair Omni-Compass on native against native, takes the work row's mean of the
+  three runs as its number and turns its light red on any slower service or failed request. The record's third arm, Omni-Compass
+  alone on the muscles, is not carried there: Omni-Compass is never by itself (the founder's order of 25 October).
+- **The twenty scenarios** (`results/scenarios/SCENARIOS_20.md`, class S): ten organisms, each native and with Omni-Compass on
+  native. The first table gives native's own gauges and Omni-Compass on native's word and mean change against native; the
+  sections after it give every run's change with its interval and the reading, each arm's own gauges, the realms runner's
+  contrasts, and every LOSS row by name.
+- **The whole organism** (`results/WHOLE_SYSTEM.md`): each layer's ratio oriented so that above 1 is a GAIN, composed by the
+  product law R(g) = ∏ℓ Rℓ(g); read the scope (with or without the card's old run) and the reading (by the index's rule, or
+  every interval carried) before the number. It is a model of measurements, class S of class L and P, and its index is not a
+  price.
+
+### 53.14 The seven organisms grid (`results/grid_v5/GRID.md`; each engine's runs in `results/grid_v<engine>/`)
 
 Columns are **copies × runs**: 1, 10 and 100 clustered copies, each at 1, 10 and 100 paired runs, and on GitHub's own
 machines 1,000 of each as well (paid cloud and card runs stop at 100). Rows are the seven organisms: the spine, the four
@@ -7805,25 +7954,25 @@ realms, the four stacked and the whole tower. Each square shows the modelled val
 inside. Read a square as "with Omni-Compass on top, against native, at this many copies, over this many runs". A square
 still running says so, and one beyond a free runner's memory or time is listed as pending runner capacity, never rented.
 
-### 53.14 Kubernetes at scale (`KWOK.md`, from the `kwok-scale` workflow)
+### 53.15 Kubernetes at scale (`KWOK.md`, from the `kwok-scale` workflow)
 
 Real Kubernetes at 50, 500 and 1,000 nodes (KWOK nodes: real Kubernetes objects with no machines behind them):
 - **decision time** is how long Omni-Compass takes to decide, at that size;
 - **memory** is what it uses;
 - **master switch** must read "yes": everything handed back.
 
-### 53.15 One number, one word (`docs/BENEFIT_SHEET.md`)
+### 53.16 One number, one word (`docs/BENEFIT_SHEET.md`)
 
 In the tables a change keeps its raw sign: a response time that fell reads "-65%", a cache that grew reads "+300%", and
-the Reading column gives its word, GAIN, EVEN or LOSS, by what the gauge is for (the key above). The benefit sheet turns
+the Reading column gives its word, GAIN, STEADY or LOSS, by what the gauge is for (the key above). The benefit sheet turns
 every gauge the same way round against **its declared aim**: plus is a GAIN, minus a LOSS or power given, whatever the
-gauge measures, and 0% is EVEN, nothing beyond the noise. Beside it every change the same in all three of our runs is
+gauge measures, and 0% is STEADY. Beside it every change the same in all three of our runs is
 written out in words, never as a bare sign: "p95 cut 65% (GAIN)", "memory ceiling held up 215% (power given)", so
 neither can be misread against a table that shows the same changes as "-65%" and "+215%". One number per benchmark, by
 the index's own rule, with its word beside it. Read that sheet first; read the tables for
 the rows behind a number, and read their Reading column, never the sign alone. The wiring page uses the same words.
 
-### 53.16 Wire in, or watch (`docs/WIRING_VERDICTS.md`)
+### 53.17 Wire in, or watch (`docs/WIRING_VERDICTS.md`)
 
 One of three words per knob, by one rule from the tables above. **Write**: a gauge GAIN in all three of our runs
 and none LOSS or power given in all three of our runs; Omni holds the knob. **Watch**: nothing GAIN in all three of our runs; the knob stays native and Omni only
@@ -7831,14 +7980,14 @@ reads it (one wire out, no wire in), and a loss in all three of our runs is name
 muscle takes its word from its label: superior is write, a tradeoff label is the operator's choice, the rest is watch. The
 CSV beside the page (`results/WIRING_VERDICTS.csv`) has one row per knob and per muscle.
 
-### 53.17 Where to start
+### 53.18 Where to start
 
 1. `docs/STATE_OF_PLAY.md`: one page, every result and how strong it is.
 2. `docs/DOSSIER.md`: every result with its chart.
 3. This chapter, next to the table in front of you.
 4. `DISCLOSURES.md`: what a result is and is not.
 
-### 53.18 Reading the benefit: more work, or the same work for less
+### 53.19 Reading the benefit: more work, or the same work for less
 
 With the work held equal in both arms, the gain from Omni-Compass on top is *G = C[native] / C[omni] − 1*, where *C* is a
 resource (machine-hours, CPU core-hours, joules). The same work then needs *1 / (1 + G)* of the resources, a saving of
@@ -7853,69 +8002,69 @@ and where every number stands today are in the Owner's Manual, chapter 3, *Where
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **EVEN**: native and Omni-Compass could not be told apart (the 95% interval includes zero: no difference beyond the noise), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A reading counts when it holds the same way in all three of our runs, A, B and C, with every interval clear of zero; **the runs disagree** names a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
-The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **EVEN** and **LOSS**, judged by what each gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). **On this sheet the sign is the system's own declared aims, gauge by gauge: a plus is a GAIN; a minus is a LOSS on work, speed, misses or failures, and power given on a resource spent (energy, machines, memory).** The number carries its word. Beside it every change judged across our three runs is written out with which way it went and its word: "p95 cut 65% (GAIN)", "memory ceiling held up 215% (power given)". An operator whose aims differ reads the same numbers the other way.
+The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **STEADY** and **LOSS**, judged by what each gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). **On this sheet the sign is the system's own declared aims, gauge by gauge: a plus is a GAIN; a minus is a LOSS on work, speed, misses or failures, and power given on a resource spent (energy, machines, memory).** The number carries its word. Beside it every change judged across our three runs is written out with which way it went and its word: "p95 cut 65% (GAIN)", "memory ceiling held up 215% (power given)". An operator whose aims differ reads the same numbers the other way.
 
 The result tables (the files in the last column) keep every change with its raw sign: a response time that fell reads "-65%" there, and the Reading column beside it says GAIN.
 
 The number is the Omni index's rule (`results/OMNI_INDEX.md`): each judged gauge becomes a ratio oriented so that above one is a GAIN; it counts only where judged across our three runs, anything else counts as exactly one; the number is the geometric mean of the ratios, minus one, in percent. For the tests inside the index the number is the index's own resource reading of that test; for a stack with several workloads it is the stack's index category; for the simulators and the organisms the same arithmetic runs over every judged gauge of their tables. Built from the tables by `tools/benefit_sheet.py`, checked by `verify.py`.
 
-**Benefit?** reads **GAIN** (gauges GAIN across our three runs, none LOSS or power given), **GAIN, power given** (a GAIN bought with a resource put in, named beside it), **GAIN AND LOSS** (both; the number says which way the trade nets by this scoring, and the wiring page `docs/WIRING_VERDICTS.md` says what pays for what), **LOSS** (a LOSS and no GAIN), **power given** (a resource put in and nothing gained) or **EVEN** (nothing moved 0.5% or more across our three runs). LOSS should never appear: where it does, the row stands and its cause is found and fixed.
+**Benefit?** reads **GAIN** (gauges GAIN across our three runs, none LOSS or power given), **GAIN, power given** (a GAIN bought with a resource put in, named beside it), **GAIN AND LOSS** (both; the number says which way the trade nets by this scoring, and the wiring page `docs/WIRING_VERDICTS.md` says what pays for what), **LOSS** (a LOSS and no GAIN), **power given** (a resource put in and nothing gained) or **STEADY** (nothing moved 0.5% or more across our three runs). LOSS should never appear: where it does, the row stands and its cause is found and fixed.
 
 Every row names the engine its table ran on (read from the table). Results are never read across engines: a row on an older engine stands as that engine's result until the same benchmark's three runs on the engine that stands replace it here, and every benchmark is rerun on the engine that stands.
 
 | Date | Benchmark | Engine | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---|---|---:|---|---|
-| 2026-10-25 | Every real test together: the Omni index | omni-v10 and omni-v11 and omni-v16 and omni-v18 | **GAIN AND LOSS** | **+3.1% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
-| 2026-10-24 | Robustness: the two-hour run | omni-v11 | **GAIN AND LOSS** | **−4.2% LOSS** | mean response cut 34% to 36% (GAIN); p95 cut 24% to 40% (GAIN); p99 cut 5.4% to 8.3% (GAIN); time over the line cut 32% to 35% (GAIN); failed requests cut 12% to 14% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 14% to 19% (GAIN); replicas up 49% to 52% (power given); pods started up 80% to 231% (power given); pod start wait, total (s) up 136% to 268% (LOSS) | `results/live/V11_ROBUST_LONG.md` |
-| 2026-10-24 | Robustness: the governor killed outright mid-run | omni-v11 | **GAIN, power given** | **+11% GAIN** | mean response cut 29% to 44% (GAIN); p95 cut 39% to 58% (GAIN); time over the line cut 30% to 31% (GAIN); failed requests cut 7% to 12% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 23% (GAIN); replicas up 3.4% to 6.4% (power given) | `results/live/V11_ROBUST_KILL.md` |
-| 2026-10-24 | Redis, the cache's memory ceiling | omni-v18 | **GAIN, power given** | **+0.2% GAIN** | memory ceiling held cut 2.4% to 2.6% (GAIN); memory used cut 1.0% to 1.2% (GAIN); work inside the line up 1.2% to 1.5% (GAIN); hit rate up 1.2% to 1.5% (GAIN); mean cut 1.5% to 6.2% (GAIN); memory ceiling held up 0.4% to 2.3% (power given); memory used up 2.0% to 2.2% (power given) | `results/live/V18_REDIS.md` |
-| 2026-10-24 | Real Kubernetes, steady work | omni-v10 | **GAIN** | **+30% GAIN** | mean response cut 48% to 49% (GAIN); p95 cut 64% to 65% (GAIN); p99 cut 69% to 73% (GAIN); time over the line cut 98% to 100% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% (GAIN); replicas cut 2.5% to 6.7% (GAIN); pods started cut 17% to 28% (GAIN); pod start wait, total (s) cut 2% to 29% (GAIN) | `results/live/V10_STEADY.md` |
-| 2026-10-24 | Real Kubernetes, faults | omni-v10 | **GAIN, power given** | **+34% GAIN** | mean response cut 33% to 40% (GAIN); p95 cut 54% to 63% (GAIN); p99 cut 43% to 51% (GAIN); time over the line cut 26% to 31% (GAIN); failed requests cut 8% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 12% to 20% (GAIN); replicas up 14% to 20% (power given) | `results/live/V10_FAULTS.md` |
-| 2026-10-24 | Real Kubernetes, demand that wanders | omni-v10 | **GAIN AND LOSS** | **+37% GAIN** | mean response cut 45% to 50% (GAIN); p95 cut 57% to 65% (GAIN); p99 cut 34% to 46% (GAIN); time over the line cut 38% to 45% (GAIN); failed requests cut 12% to 21% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 32% (GAIN); pod start wait, total (s) up 5% to 33% (LOSS); pods started up 20% to 48% (power given) | `results/live/V10_WANDERING.md` |
-| 2026-10-24 | Real Kubernetes, all four at once | omni-v10 | **GAIN, power given** | **+40% GAIN** | work inside the line up 47% to 79% (GAIN); mean response cut 38% to 46% (GAIN); p95 cut 56% to 61% (GAIN); p99 cut 6% to 38% (GAIN); time over the line cut 35% to 46% (GAIN); failed requests cut 9% to 14% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 34% (GAIN); pod start wait, mean (s) cut 13% to 23% (GAIN); replicas up 0.5% to 1.9% (power given); pods started up 6% to 43% (power given) | `results/live/V10_ALL_FOUR.md` |
-| 2026-10-24 | Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v11 | **GAIN, power given** | **+77% GAIN** | parked-worker energy up 1.7% to 2.3% (power given); standby-model energy up 1.7% to 2.3% (power given); mean response cut 47% to 48% (GAIN); p95 cut 61% to 64% (GAIN); p99 cut 68% to 70% (GAIN); time over the line cut 98% to 100% (GAIN); replicas up 1.3% to 1.5% (power given); pods started cut 53% to 61% (GAIN); pod start wait, total (s) cut 48% to 63% (GAIN); pod start wait, mean (s) cut 20% to 43% (GAIN) | `results/live/V11_GOLDILOCKS.md` |
-| 2026-10-24 | Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v10 | **LOSS** | **−0.4% LOSS** | mean response up 0.9% to 1.4% (LOSS); p95 up 0.5% to 3.0% (LOSS); p99 up 1.3% to 3.1% (LOSS); replicas cut 0.2% to 4.3% (power given) | `results/live/V10_CRUISEKUBE.md` |
-| 2026-10-24 | Real Kubernetes, a queue of jobs | omni-v10 | **GAIN AND LOSS** | **+10% GAIN** | machines cut 6% to 14% (GAIN); machine-hours cut 6% to 14% (GAIN); standby-model energy cut 4.3% to 9.5% (GAIN); mean response cut 10% to 12% (GAIN); p95 cut 1.7% to 3.8% (GAIN); time over the line cut 3.2% to 3.7% (GAIN); failed requests cut 100% (GAIN); machines after the queue cut 10% to 22% (GAIN); queue finished up 0.5% to 0.9% (LOSS); replicas up 3% to 19% (power given) | `results/live/V10_BATCH.md` |
-| 2026-10-24 | Real Kubernetes, a public day of demand (Google 2011) | omni-v10 | **GAIN AND LOSS** | **+35% GAIN** | mean response cut 48% to 50% (GAIN); p95 cut 56% to 62% (GAIN); p99 cut 38% to 51% (GAIN); time over the line cut 74% to 77% (GAIN); failed requests cut 15% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 61% to 66% (GAIN); pod start wait, mean (s) cut 10% to 30% (GAIN); pod start wait, total (s) up 45% to 116% (LOSS); replicas up 8% to 15% (power given); pods started up 120% to 193% (power given) | `results/live/V10_TRACE_GOOGLE2011.md` |
-| 2026-10-24 | Real Kubernetes, a noisy neighbour | omni-v10 | **GAIN, power given** | **0%: EVEN** | mean response cut 10% to 15% (GAIN); p99 cut 2% to 12% (GAIN); time over the line cut 11% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 4.9% to 7.7% (GAIN); pods started cut 22% to 27% (GAIN); pod start wait, total (s) cut 21% to 32% (GAIN); replicas up 0.9% to 2.7% (power given) | `results/live/V10_FAIRNESS.md` |
-| 2026-10-24 | Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | **GAIN, power given** | **+63% GAIN** | parked-worker energy up 1.6% to 2.2% (power given); standby-model energy up 1.6% to 2.2% (power given); mean response cut 57% (GAIN); p95 cut 72% to 74% (GAIN); p99 cut 57% to 62% (GAIN); time over the line cut 98% to 99% (GAIN); replicas cut 11% to 20% (GAIN); pods started cut 4% to 28% (GAIN); pod start wait, total (s) cut 7% to 19% (GAIN) | `results/live/V11_KEDA_REQUESTS.md` |
-| 2026-10-24 | Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | **GAIN, power given** | **+41% GAIN** | parked-worker energy up 1.1% to 1.8% (power given); standby-model energy up 1.1% to 1.8% (power given); mean response cut 36% to 37% (GAIN); p95 cut 52% to 53% (GAIN); p99 cut 57% to 61% (GAIN); time over the line cut 97% to 100% (GAIN); replicas up 1.8% to 3.1% (power given) | `results/live/V11_KEDA_CPU_REQUESTS.md` |
-| 2026-10-24 | Power grids (SimBench), both load models | omni-v11 | **GAIN, power given** | **+5.8% GAIN** | energy the loads drew cut 1.3% to 1.5% (GAIN); energy dissipated in lines and transformers cut 0.5% to 2.4% (GAIN); net import from the upstream grid cut 1% to 15% (GAIN); tap operations cut 16% to 38% (GAIN); energy dissipated in lines and transformers up 0.6% to 1.5% (power given); tap operations up 100% (power given) | `results/live/V11_PANDAPOWER.md` |
-| 2026-10-24 | PostgreSQL, the pooler's pool size | omni-v16 | **GAIN AND LOSS** | **−4.9% LOSS** | connections held open cut 1% to 13% (GAIN); median up 0.0% to 1.2% (LOSS); connections most at once up 0% to 10% (power given); host CPU busy cut 0.1% to 2.2% (power given); host CPU-seconds cut 0.2% to 2.5% (power given); CPU per 1,000 inside the line cut 0.1% to 2.4% (power given); CPU per 1,000 inside the line up 0.1% to 8.9% (power given); work inside the line down 0.1% to 6.5% (LOSS); p95 cut 0% to 430% (LOSS) | `results/live/V16_PGBENCH.md` |
-| 2026-10-24 | MySQL, the buffer pool's size | omni-v16 | **GAIN AND LOSS** | **+1.6% GAIN** | pool held cut 1% to 28% (GAIN); pages holding data cut 2% to 28% (GAIN); host CPU busy up 0.5% to 1.6% (power given); host CPU-seconds up 0.5% to 1.9% (power given); CPU per 1,000 inside the line up 0.9% to 2.2% (power given); p95 cut 0.6% to 4.1% (GAIN); p99 cut 0.6% to 7.0% (GAIN); mean cut 0.2% to 2.1% (GAIN); work inside the line down 0.0% to 5.7% (LOSS); mean cut 0% to 29% (LOSS) | `results/live/V16_SYSBENCH.md` |
-| 2026-10-24 | MongoDB, the storage engine's cache size | omni-v16 | **GAIN AND LOSS** | **−1.4% LOSS** | cache size held cut 0.7% to 8.3% (GAIN); p95 up 2.6% to 5.5% (LOSS); p99 up 0.2% to 3.0% (LOSS); mean up 0.2% to 7.0% (LOSS); host CPU busy up 1% to 12% (power given); host CPU-seconds up 1% to 14% (power given); CPU per 1,000 inside the line up 1% to 14% (power given); cache in use cut 0.0% to 7.5% (GAIN); p99 cut 0.3% to 1.5% (LOSS); p95 cut 0% to 12% (LOSS); host CPU-seconds cut 0% to 27% (power given); CPU per 1,000 inside the line cut 0% to 27% (power given) | `results/live/V16_YCSB.md` |
-| 2026-10-24 | Kafka, the consumer group's size | omni-v18 | **GAIN AND LOSS** | **−1.9% LOSS** | median cut 0% to 30% (GAIN); consumers running cut 0.8% (GAIN); host CPU busy cut 0.1% to 2.4% (GAIN); host CPU-seconds cut 0.1% to 2.4% (GAIN); messages waiting, most up 0.4% to 1.1% (LOSS); CPU per 1,000 inside the line cut 0.4% to 2.1% (GAIN); work inside the line down 0.1% to 1.4% (LOSS); p95 up 1% to 71% (LOSS); consumers running cut 0% to 12% (power given); consumers most at once up 0% to 33% (power given) | `results/live/V18_KAFKA.md` |
-| 2026-10-24 | Buildings and batteries (CityLearn), the districts with batteries | omni-v11 | **GAIN** | **+1.5% GAIN** | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V11_CITYLEARN.md` |
-| 2026-10-20 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | **GAIN, power given** | **+5.3% GAIN** | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
-| 2026-10-20 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | **GAIN** | **+155% GAIN** | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
-| 2026-10-20 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | **GAIN** | **+0.3% GAIN** | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
-| 2026-10-20 | Robot arms (MuJoCo), the three untouched robots | omni-v11 | **GAIN** | **+3.8% GAIN** | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V11_MUJOCO.md` |
-| 2026-10-20 | Drone swarms, the three untouched cells | omni-v11 | **GAIN** | **+5.9% GAIN** | energy per mission cut 7% to 20% (GAIN); fleet energy over the window cut 7% to 20% (GAIN); missions per charge at the autopilot's reserve up 8% to 25% (GAIN) | `results/live/V11_SWARM.md` |
+| 2026-10-31 | Every real test together: the Omni index | omni-v21 | **GAIN AND LOSS** | **5.2% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| 2026-10-31 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | **GAIN, power given** | **5.3% GAIN** | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| 2026-10-31 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | **GAIN** | **155% GAIN** | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| 2026-10-31 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | **GAIN** | **0.3% GAIN** | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
+| 2026-10-31 | Robustness: the two-hour run | omni-v21 | **GAIN AND LOSS** | **3.8% LOSS** | mean response cut 29% to 43% (GAIN); p95 cut 25% to 57% (GAIN); time over the line cut 30% to 41% (GAIN); failed requests cut 9% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 28% (GAIN); replicas up 29% to 50% (power given); pods started up 68% to 226% (power given); pod start wait, total (s) up 90% to 324% (LOSS); pod start wait, mean (s) up 24% to 27% (LOSS) | `results/live/V21_ROBUST_LONG.md` |
+| 2026-10-31 | Robustness: the governor killed outright mid-run | omni-v21 | **GAIN AND LOSS** | **8.1% GAIN** | mean response cut 30% to 40% (GAIN); p95 cut 28% to 48% (GAIN); time over the line cut 33% to 35% (GAIN); failed requests cut 9% to 13% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 25% (GAIN); replicas up 2.3% to 7.3% (power given); pod start wait, total (s) up 10% to 79% (LOSS); robust: failed requests in the 300 s after the kill (%) cut 3.7% to 4.3% (GAIN); robust: time over the line in the 300 s after the kill (% of samples) cut 0.5% to 2.6% (GAIN) | `results/live/V21_ROBUST_KILL.md` |
+| 2026-10-31 | Robot arms (MuJoCo), the three untouched robots | omni-v21 | **GAIN** | **3.8% GAIN** | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V21_MUJOCO.md` |
+| 2026-10-31 | Redis, the cache's memory ceiling | omni-v21 | **GAIN AND LOSS** | **0%: STEADY** | memory ceiling held cut 1.3% to 2.4% (GAIN); memory used cut 0.1% to 1.0% (GAIN); host CPU busy cut 2% to 11% (GAIN); host CPU-seconds cut 2% to 12% (GAIN); CPU per 1,000 inside the line cut 2% to 12% (GAIN); work inside the line up 0.6% to 1.7% (GAIN); hit rate up 0.7% to 1.7% (GAIN); mean cut 0.6% to 7.8% (GAIN); memory ceiling held up 0.8% to 2.2% (power given); memory used up 0.5% to 1.9% (power given); p99 up 0.2% to 1.7% (LOSS); host CPU busy up 1% to 11% (power given); host CPU-seconds up 1% to 12% (power given); CPU per 1,000 inside the line up 0% to 11% (power given); process_cpu_seconds up 0.3% to 2.4% (power given) | `results/live/V21_REDIS.md` |
+| 2026-10-31 | Real Kubernetes, steady work | omni-v21 | **GAIN** | **31% GAIN** | mean response cut 48% to 49% (GAIN); p95 cut 66% (GAIN); p99 cut 72% to 74% (GAIN); time over the line cut 100% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% (GAIN); replicas cut 4.1% to 6.3% (GAIN); pods started cut 20% to 49% (GAIN); pod start wait, total (s) cut 20% to 54% (GAIN); pod start wait, mean (s) cut 0% to 21% (GAIN) | `results/live/V21_STEADY.md` |
+| 2026-10-31 | Real Kubernetes, faults | omni-v21 | **GAIN, power given** | **30% GAIN** | parked-worker energy cut 0.3% to 1.0% (GAIN); standby-model energy cut 0.3% to 1.0% (GAIN); mean response cut 38% to 48% (GAIN); p95 cut 51% to 58% (GAIN); p99 cut 21% to 60% (GAIN); time over the line cut 28% to 34% (GAIN); failed requests cut 11% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 14% to 22% (GAIN); replicas up 10% to 20% (power given); pods started up 12% to 22% (power given) | `results/live/V21_FAULTS.md` |
+| 2026-10-31 | Real Kubernetes, demand that wanders | omni-v21 | **GAIN, power given** | **34% GAIN** | mean response cut 40% to 45% (GAIN); p95 cut 56% to 59% (GAIN); p99 cut 11% to 35% (GAIN); time over the line cut 35% to 40% (GAIN); failed requests cut 12% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 22% to 29% (GAIN); pod start wait, mean (s) cut 0.5% to 9.9% (GAIN); replicas up 0.1% to 2.9% (power given) | `results/live/V21_WANDERING.md` |
+| 2026-10-31 | Real Kubernetes, all four at once | omni-v21 | **GAIN AND LOSS** | **34% GAIN** | work inside the line up 30% to 52% (GAIN); mean response cut 36% to 43% (GAIN); p95 cut 51% to 59% (GAIN); time over the line cut 32% to 37% (GAIN); failed requests cut 5.1% to 5.4% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 24% (GAIN); pod start wait, total (s) up 16% to 42% (LOSS); pods started up 8% to 37% (power given) | `results/live/V21_ALL_FOUR.md` |
+| 2026-10-31 | Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v21 | **GAIN AND LOSS** | **35% GAIN** | parked-worker energy up 1.5% to 1.8% (power given); standby-model energy up 1.5% to 1.8% (power given); mean response cut 45% to 47% (GAIN); p95 cut 59% to 61% (GAIN); p99 cut 62% to 65% (GAIN); time over the line cut 96% to 100% (GAIN); replicas up 20% to 29% (power given); pods started up 44% to 103% (power given); pod start wait, total (s) up 75% to 137% (LOSS); pod start wait, mean (s) up 11% to 32% (LOSS) | `results/live/V21_GOLDILOCKS.md` |
+| 2026-10-31 | Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v21 | **LOSS** | **0.4% LOSS** | mean response up 0.9% to 2.4% (LOSS); p95 up 0.0% to 1.8% (LOSS); time over the line up 4.3% (LOSS) | `results/live/V21_CRUISEKUBE.md` |
+| 2026-10-31 | Real Kubernetes, a queue of jobs | omni-v21 | **GAIN AND LOSS** | **14% GAIN** | machines cut 13% to 15% (GAIN); machine-hours cut 13% to 15% (GAIN); standby-model energy cut 9% to 10% (GAIN); mean response cut 12% to 13% (GAIN); p95 cut 0.4% to 5.7% (GAIN); time over the line cut 0.2% to 4.8% (GAIN); machines after the queue cut 19% to 22% (GAIN); replicas up 4% to 16% (power given) | `results/live/V21_BATCH.md` |
+| 2026-10-31 | Real Kubernetes, a public day of demand (Google 2011) | omni-v21 | **GAIN AND LOSS** | **38% GAIN** | mean response cut 50% (GAIN); p95 cut 59% to 64% (GAIN); p99 cut 48% to 56% (GAIN); time over the line cut 75% to 80% (GAIN); failed requests cut 10% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 61% to 72% (GAIN); pod start wait, total (s) up 88% to 279% (LOSS); replicas up 2% to 19% (power given); pods started up 79% to 235% (power given) | `results/live/V21_TRACE_GOOGLE2011.md` |
+| 2026-10-31 | Real Kubernetes, a noisy neighbour | omni-v21 | **GAIN AND LOSS** | **2.2% GAIN** | mean response cut 12% to 17% (GAIN); p95 cut 3% to 12% (GAIN); time over the line cut 9% to 11% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 1.2% to 6.2% (GAIN); pods started cut 9% to 28% (GAIN); second app: response time (ms), 99th percentile cut 1% to 16% (GAIN); pod start wait, mean (s) up 5% to 51% (LOSS); second app: failed requests (%) up 1.1% to 3.7% (LOSS); replicas up 0.1% to 2.9% (power given) | `results/live/V21_FAIRNESS.md` |
+| 2026-10-31 | Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | **GAIN, power given** | **95% GAIN** | parked-worker energy up 1.9% to 2.4% (power given); standby-model energy up 1.9% to 2.4% (power given); mean response cut 57% to 58% (GAIN); p95 cut 73% to 74% (GAIN); p99 cut 60% to 66% (GAIN); time over the line cut 95% to 97% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 94% to 100% (GAIN); replicas cut 15% to 21% (GAIN); pods started cut 21% to 25% (GAIN); pod start wait, total (s) cut 22% to 26% (GAIN); pod start wait, mean (s) cut 1.3% to 4.8% (GAIN) | `results/live/V21_KEDA_REQUESTS.md` |
+| 2026-10-31 | Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | **GAIN AND LOSS** | **30% GAIN** | parked-worker energy up 1.4% to 1.7% (power given); standby-model energy up 1.4% to 1.7% (power given); mean response cut 37% to 38% (GAIN); p95 cut 51% to 52% (GAIN); p99 cut 54% to 58% (GAIN); time over the line cut 91% to 100% (GAIN); replicas up 11% to 16% (power given); pods started up 31% to 49% (power given); pod start wait, total (s) up 27% to 84% (LOSS) | `results/live/V21_KEDA_CPU_REQUESTS.md` |
+| 2026-10-31 | Power grids (SimBench), both load models | omni-v21 | **GAIN, power given** | **5.8% GAIN** | energy the loads drew cut 1.3% to 1.5% (GAIN); energy dissipated in lines and transformers cut 0.5% to 2.4% (GAIN); net import from the upstream grid cut 1% to 15% (GAIN); tap operations cut 16% to 38% (GAIN); energy dissipated in lines and transformers up 0.6% to 1.5% (power given); tap operations up 100% (power given) | `results/live/V21_PANDAPOWER.md` |
+| 2026-10-31 | PostgreSQL, the pooler's pool size | omni-v21 | **GAIN, power given** | **4.1% GAIN** | connections held open cut 1.2% to 7.5% (GAIN); host CPU busy up 0.4% to 1.3% (power given); host CPU-seconds up 0.4% to 1.4% (power given); CPU per 1,000 inside the line up 0.5% to 1.3% (power given); connections most at once up 0.0% to 8.3% (power given); p95 cut 0% to 64% (GAIN); mean cut 0% to 43% (GAIN); CPU per 1,000 inside the line cut 0.3% to 1.6% (GAIN) | `results/live/V21_PGBENCH.md` |
+| 2026-10-31 | MySQL, the buffer pool's size | omni-v21 | **GAIN, power given** | **3.2% GAIN** | p95 cut 1.8% to 3.5% (GAIN); p99 cut 0.6% to 4.1% (GAIN); pool held cut 4% to 22% (GAIN); pages holding data cut 1% to 21% (GAIN); host CPU busy up 0.2% to 2.6% (power given); host CPU-seconds up 0.0% to 3.0% (power given); CPU per 1,000 inside the line up 0.3% to 3.7% (power given); pages holding data up 0.4% to 6.0% (power given); host CPU busy cut 2% to 38% (GAIN); host CPU-seconds cut 2% to 38% (GAIN) | `results/live/V21_SYSBENCH.md` |
+| 2026-10-31 | MongoDB, the storage engine's cache size | omni-v21 | **GAIN AND LOSS** | **0.6% LOSS** | host CPU busy cut 0.2% to 3.8% (GAIN); host CPU-seconds cut 0.2% to 4.7% (GAIN); CPU per 1,000 inside the line cut 0.2% to 4.7% (GAIN); process_cpu_seconds up 0.2% to 2.0% (power given); mean cut 0.4% to 4.0% (GAIN); p95 up 0.2% to 5.4% (LOSS); p99 up 0.4% to 2.5% (LOSS); cache size held up 0.4% to 7.5% (power given); cache in use up 0.3% to 7.2% (power given) | `results/live/V21_YCSB.md` |
+| 2026-10-31 | Kafka, the consumer group's size | omni-v21 | **GAIN AND LOSS** | **1.0% LOSS** | p99 cut 0.1% to 3.0% (GAIN); median cut 0.0% to 4.3% (GAIN); mean cut 0.1% to 5.1% (GAIN); messages waiting, mean cut 0.4% to 6.0% (GAIN); host CPU busy cut 1.2% to 2.3% (GAIN); host CPU-seconds cut 1.3% to 2.3% (GAIN); CPU per 1,000 inside the line cut 2.0% to 2.5% (GAIN); mean up 0% to 12% (LOSS); messages waiting, mean up 0% to 11% (LOSS); consumers running up 0% to 17% (power given); consumers most at once up 0% to 83% (power given); p99 up 0.6% to 9.1% (LOSS) | `results/live/V21_KAFKA.md` |
+| 2026-10-31 | Drone swarms, the three untouched cells | omni-v21 | **GAIN** | **3.0% GAIN** | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V21_SWARM.md` |
+| 2026-10-31 | Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | **GAIN** | **1.5% GAIN** | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V21_CITYLEARN.md` |
 
 ### 54.1 The parts behind a row
 
 Where a row sums several workloads, grids, districts, cells or robots, each part with its own number, the same way round:
 
-- **Redis, the cache's memory ceiling**: burst +0.6% GAIN (GAIN: memory ceiling held cut 2.4% to 2.6% (GAIN); memory used cut 1.0% to 1.2% (GAIN)); large +0.2% GAIN (GAIN, power given: work inside the line up 1.2% to 1.5% (GAIN); hit rate up 1.2% to 1.5% (GAIN); mean cut 4.7% to 6.2% (GAIN); memory ceiling held up 0.4% to 0.7% (power given)); small +0.3% power given (GAIN, power given: work inside the line up 1.2% to 1.3% (GAIN); hit rate up 1.2% to 1.3% (GAIN); mean cut 1.5% to 1.9% (GAIN); memory ceiling held up 2.2% to 2.3% (power given); memory used up 2.0% to 2.2% (power given)).
-- **Power grids (SimBench), both load models**: 1-MV-comm--0-sw (ZIP loads) +9.7% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 1.0% (GAIN); net import from the upstream grid cut 2.9% (GAIN); tap operations cut 34% (GAIN)); 1-MV-comm--1-sw (ZIP loads) +13% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); energy dissipated in lines and transformers cut 0.8% (GAIN); net import from the upstream grid cut 15% (GAIN); tap operations cut 36% (GAIN)); 1-MV-comm--2-sw (ZIP loads) +11% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 6.4% (GAIN); tap operations cut 36% (GAIN)); 1-MV-rural--1-sw (ZIP loads) +13% power given (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 1.4% (GAIN); energy dissipated in lines and transformers up 0.8% (power given); tap operations up 100% (power given)); 1-MV-rural--2-sw (ZIP loads) +6.8% GAIN (GAIN, power given: energy the loads drew cut 1.3% (GAIN); net import from the upstream grid cut 1.1% (GAIN); tap operations cut 27% (GAIN); energy dissipated in lines and transformers up 1.5% (power given)); 1-MV-semiurb--0-sw (ZIP loads) +12% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); energy dissipated in lines and transformers cut 1.0% (GAIN); net import from the upstream grid cut 7.0% (GAIN); tap operations cut 38% (GAIN)); 1-MV-semiurb--1-sw (ZIP loads) +9.0% GAIN (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 1.1% (GAIN); tap operations cut 34% (GAIN); energy dissipated in lines and transformers up 0.7% (power given)); 1-MV-semiurb--2-sw (ZIP loads) +5.8% GAIN (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 0.9% (GAIN); tap operations cut 24% (GAIN); energy dissipated in lines and transformers up 1.1% (power given)); 1-MV-urban--0-sw (ZIP loads) +8.9% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.4% (GAIN); net import from the upstream grid cut 2.0% (GAIN); tap operations cut 31% (GAIN)); 1-MV-urban--1-sw (ZIP loads) +8.6% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.4% (GAIN); net import from the upstream grid cut 2.2% (GAIN); tap operations cut 30% (GAIN)); 1-MV-urban--2-sw (ZIP loads) +6.8% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.2% (GAIN); net import from the upstream grid cut 3.1% (GAIN); tap operations cut 23% (GAIN)); 1-MV-comm--0-sw (constant-power loads) +7.8% GAIN (GAIN: energy dissipated in lines and transformers cut 0.5% (GAIN); tap operations cut 31% (GAIN)); 1-MV-comm--1-sw (constant-power loads) +7.7% GAIN (GAIN: tap operations cut 31% (GAIN)); 1-MV-comm--2-sw (constant-power loads) +7.8% GAIN (GAIN: tap operations cut 31% (GAIN)); 1-MV-rural--1-sw (constant-power loads) +13% power given (power given: energy dissipated in lines and transformers up 0.6% (power given); tap operations up 100% (power given)); 1-MV-rural--2-sw (constant-power loads) +3.3% GAIN (GAIN, power given: tap operations cut 16% (GAIN); energy dissipated in lines and transformers up 1.2% (power given)); 1-MV-semiurb--0-sw (constant-power loads) +7.3% GAIN (GAIN: energy dissipated in lines and transformers cut 0.9% (GAIN); tap operations cut 29% (GAIN)); 1-MV-semiurb--1-sw (constant-power loads) +7.6% GAIN (GAIN, power given: tap operations cut 31% (GAIN); energy dissipated in lines and transformers up 0.6% (power given)); 1-MV-semiurb--2-sw (constant-power loads) +4.7% GAIN (GAIN, power given: tap operations cut 21% (GAIN); energy dissipated in lines and transformers up 0.9% (power given)); 1-MV-urban--0-sw (constant-power loads) +7.7% GAIN (GAIN: energy dissipated in lines and transformers cut 1.9% (GAIN); tap operations cut 30% (GAIN)); 1-MV-urban--1-sw (constant-power loads) +6.8% GAIN (GAIN: energy dissipated in lines and transformers cut 1.9% (GAIN); tap operations cut 27% (GAIN)); 1-MV-urban--2-sw (constant-power loads) +5.4% GAIN (GAIN: energy dissipated in lines and transformers cut 1.8% (GAIN); tap operations cut 22% (GAIN)).
-- **PostgreSQL, the pooler's pool size**: select +2.8% GAIN (GAIN AND LOSS: connections held open cut 8% to 13% (GAIN); median up 0.0% to 1.2% (LOSS); connections most at once up 0.0% to 3.3% (power given); host CPU busy cut 0.1% to 2.2% (power given); host CPU-seconds cut 0.2% to 2.5% (power given); CPU per 1,000 inside the line cut 0.1% to 2.4% (power given)); simple_update +0.4% GAIN (GAIN, power given: connections held open cut 0.8% to 2.8% (GAIN); connections most at once up 8% to 10% (power given); CPU per 1,000 inside the line up 0.1% to 1.0% (power given)); tpcb_hot −17% LOSS (GAIN AND LOSS: connections held open cut 1.4% to 5.9% (GAIN); work inside the line down 0.1% to 6.5% (LOSS); p95 cut 0% to 430% (LOSS); connections most at once up 1.7% to 5.0% (power given); CPU per 1,000 inside the line up 0.5% to 8.9% (power given)).
-- **MySQL, the buffer pool's size**: burst +3.6% GAIN (GAIN, power given: pool held cut 1% to 28% (GAIN); pages holding data cut 2% to 28% (GAIN); host CPU busy up 0.5% to 1.6% (power given); host CPU-seconds up 0.5% to 1.9% (power given); CPU per 1,000 inside the line up 0.9% to 2.2% (power given)); read_only +2.6% GAIN (GAIN: p95 cut 0.6% to 4.1% (GAIN); p99 cut 0.6% to 7.0% (GAIN); mean cut 0.2% to 2.1% (GAIN); pool held cut 3% to 17% (GAIN); pages holding data cut 2% to 18% (GAIN)); read_write −0.5% LOSS (LOSS: work inside the line down 0.0% to 5.7% (LOSS); mean cut 0% to 29% (LOSS)); update_index +0.8% GAIN (GAIN: pool held cut 2.0% to 5.3% (GAIN); pages holding data cut 4.5% to 9.8% (GAIN)).
-- **MongoDB, the storage engine's cache size**: b −2.2% LOSS (GAIN AND LOSS: cache size held cut 0.7% to 1.1% (GAIN); p95 up 2.6% to 5.5% (LOSS); p99 up 0.2% to 3.0% (LOSS); mean up 0.2% to 2.1% (LOSS); host CPU busy up 1% to 12% (power given); host CPU-seconds up 1% to 14% (power given); CPU per 1,000 inside the line up 1% to 14% (power given)); burst +0.5% GAIN (GAIN AND LOSS: cache size held cut 1.7% to 2.2% (GAIN); cache in use cut 1.2% to 2.1% (GAIN); p99 cut 0.3% to 1.5% (LOSS)); c −3.2% LOSS (GAIN AND LOSS: cache size held cut 0.7% to 8.3% (GAIN); cache in use cut 0.0% to 7.5% (GAIN); p95 cut 0.4% to 8.1% (LOSS); p99 cut 0.4% to 1.5% (LOSS); mean up 1.1% to 7.0% (LOSS); host CPU-seconds cut 0% to 27% (power given); CPU per 1,000 inside the line cut 0% to 27% (power given)); f −0.7% LOSS (GAIN AND LOSS: cache size held cut 0.8% to 1.0% (GAIN); cache in use cut 0.4% to 0.9% (GAIN); p95 cut 0% to 12% (LOSS)).
-- **Kafka, the consumer group's size**: burst +0.3% GAIN (GAIN AND LOSS: median cut 0% to 27% (GAIN); consumers running cut 0.8% (GAIN); host CPU busy cut 0.3% to 0.8% (GAIN); host CPU-seconds cut 0.2% to 0.8% (GAIN); messages waiting, most up 0.4% to 1.1% (LOSS)); heavy +0.3% GAIN (GAIN: host CPU busy cut 0.7% to 2.4% (GAIN); host CPU-seconds cut 0.6% to 2.4% (GAIN); CPU per 1,000 inside the line cut 0.4% to 2.1% (GAIN)); light −6.3% LOSS (GAIN AND LOSS: median cut 1% to 30% (GAIN); host CPU busy cut 0.1% to 1.4% (GAIN); host CPU-seconds cut 0.1% to 1.1% (GAIN); work inside the line down 0.1% to 1.4% (LOSS); p95 up 1% to 71% (LOSS); consumers running cut 0% to 12% (power given); consumers most at once up 0% to 33% (power given)).
-- **Buildings and batteries (CityLearn), the districts with batteries**: ca_alameda_county_neighborhood +3.0% GAIN (GAIN: electricity bought cut 7.1% (GAIN); daily peak draw cut 6.6% (GAIN); highest peak cut 4.4% (GAIN); ramping cut 10% (GAIN); daily load unevenness cut 2.1% (GAIN); monthly load unevenness cut 1.3% (GAIN)); citylearn_challenge_2022_phase_all_robustness +9.9% GAIN (GAIN: electricity bill cut 16% (GAIN); electricity bought cut 14% (GAIN); carbon cut 12% (GAIN); daily peak draw cut 17% (GAIN); highest peak cut 2.7% (GAIN); ramping cut 9.4% (GAIN); daily load unevenness cut 6.0% (GAIN); monthly load unevenness cut 1.6% (GAIN); distance from zero net energy cut 1.0% (GAIN)); citylearn_challenge_2023_phase_2_local_evaluation 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_1 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_2 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_3 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_1 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_2 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_3 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); tx_travis_county_neighborhood +2.4% GAIN (GAIN: electricity bought cut 4.0% (GAIN); daily peak draw cut 7.1% (GAIN); ramping cut 8.7% (GAIN); daily load unevenness cut 3.3% (GAIN); monthly load unevenness cut 2.3% (GAIN)); vt_chittenden_county_neighborhood +1.0% GAIN (GAIN: electricity bought cut 3.0% (GAIN); daily peak draw cut 3.2% (GAIN); ramping cut 3.4% (GAIN); daily load unevenness cut 0.9% (GAIN); monthly load unevenness cut 0.8% (GAIN)).
-- **The six organisms with the real cluster inside, 10 and 100 copies**: compute_ai_cloud at 10 copies +14% GAIN (GAIN: p95 cut 50% (GAIN); time over the line cut 32% (GAIN)); physics_robotics_autonomous at 10 copies 0%: EVEN (EVEN: EVEN: nothing moved 0.5% or more across our three runs); energy_facility_industrial at 10 copies +5.0% GAIN (GAIN, power given: time over the line cut 33% (GAIN); replicas up 0.6% (power given)); distribution_specialized at 10 copies +16% GAIN (GAIN: p95 cut 52% (GAIN); time over the line cut 36% (GAIN)); tower at 10 copies +11% GAIN (GAIN: p95 cut 42% (GAIN); time over the line cut 20% (GAIN); failed requests cut 8.4% (GAIN)); stack at 10 copies +2.8% GAIN (GAIN: time over the line cut 12% (GAIN); failed requests cut 8.5% (GAIN)); compute_ai_cloud at 100 copies +1.3% GAIN (GAIN: time over the line cut 9.8% (GAIN)); physics_robotics_autonomous at 100 copies +1.1% GAIN (GAIN: time over the line cut 8.4% (GAIN)); energy_facility_industrial at 100 copies +2.1% GAIN (GAIN: time over the line cut 15% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN)); distribution_specialized at 100 copies +8.2% GAIN (GAIN: p95 cut 32% (GAIN); time over the line cut 22% (GAIN)); tower at 100 copies +1.3% GAIN (GAIN: time over the line cut 8.7% (GAIN)); stack at 100 copies +2.3% GAIN (GAIN: time over the line cut 15% (GAIN)).
-- **The big organisms with the real cluster inside, 1,000 copies on Azure**: tower at 1000 copies +159% GAIN (GAIN: p95 cut 98% (GAIN); p99 cut 98% (GAIN)); stack at 1000 copies +151% GAIN (GAIN: p95 cut 95% (GAIN); p99 cut 97% (GAIN)).
-- **Robot arms (MuJoCo), the three untouched robots**: kinova_gen3 +12% GAIN (GAIN: energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN)); kuka_iiwa_14 (left native by the engine's own trial) 0%: EVEN (EVEN: EVEN: nothing moved); universal_robots_ur5e (left native by the engine's own trial) 0%: EVEN (EVEN: EVEN: nothing moved).
-- **Drone swarms, the three untouched cells**: tuning +5.9% GAIN (GAIN: energy per mission cut 16% (GAIN); fleet energy over the window cut 16% (GAIN); missions per charge at the autopilot's reserve up 19% (GAIN)); long +7.6% GAIN (GAIN: energy per mission cut 20% (GAIN); fleet energy over the window cut 20% (GAIN); missions per charge at the autopilot's reserve up 25% (GAIN)); mixed +6.8% GAIN (GAIN: energy per mission cut 18% (GAIN); fleet energy over the window cut 18% (GAIN); missions per charge at the autopilot's reserve up 22% (GAIN)); short +3.4% GAIN (GAIN: energy per mission cut 7.4% (GAIN); fleet energy over the window cut 7.4% (GAIN); missions per charge at the autopilot's reserve up 8.0% (GAIN)).
+- **The six organisms with the real cluster inside, 10 and 100 copies**: compute_ai_cloud at 10 copies 14% GAIN (GAIN: p95 cut 50% (GAIN); time over the line cut 32% (GAIN)); physics_robotics_autonomous at 10 copies 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); energy_facility_industrial at 10 copies 5.0% GAIN (GAIN, power given: time over the line cut 33% (GAIN); replicas up 0.6% (power given)); distribution_specialized at 10 copies 16% GAIN (GAIN: p95 cut 52% (GAIN); time over the line cut 36% (GAIN)); tower at 10 copies 11% GAIN (GAIN: p95 cut 42% (GAIN); time over the line cut 20% (GAIN); failed requests cut 8.4% (GAIN)); stack at 10 copies 2.8% GAIN (GAIN: time over the line cut 12% (GAIN); failed requests cut 8.5% (GAIN)); compute_ai_cloud at 100 copies 1.3% GAIN (GAIN: time over the line cut 9.8% (GAIN)); physics_robotics_autonomous at 100 copies 1.1% GAIN (GAIN: time over the line cut 8.4% (GAIN)); energy_facility_industrial at 100 copies 2.1% GAIN (GAIN: time over the line cut 15% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN)); distribution_specialized at 100 copies 8.2% GAIN (GAIN: p95 cut 32% (GAIN); time over the line cut 22% (GAIN)); tower at 100 copies 1.3% GAIN (GAIN: time over the line cut 8.7% (GAIN)); stack at 100 copies 2.3% GAIN (GAIN: time over the line cut 15% (GAIN)).
+- **The big organisms with the real cluster inside, 1,000 copies on Azure**: tower at 1000 copies 159% GAIN (GAIN: p95 cut 98% (GAIN); p99 cut 98% (GAIN)); stack at 1000 copies 151% GAIN (GAIN: p95 cut 95% (GAIN); p99 cut 97% (GAIN)).
+- **Robot arms (MuJoCo), the three untouched robots**: kinova_gen3 12% GAIN (GAIN: energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN)); kuka_iiwa_14 (left native by the engine's own trial) 0%: STEADY (STEADY: STEADY: nothing moved); universal_robots_ur5e (left native by the engine's own trial) 0%: STEADY (STEADY: STEADY: nothing moved).
+- **Redis, the cache's memory ceiling**: burst 0.5% GAIN (GAIN: memory ceiling held cut 1.3% to 2.4% (GAIN); memory used cut 0.1% to 1.0% (GAIN); host CPU busy cut 2% to 11% (GAIN); host CPU-seconds cut 2% to 12% (GAIN); CPU per 1,000 inside the line cut 2% to 12% (GAIN)); large 0%: STEADY (GAIN, power given: work inside the line up 0.7% to 1.7% (GAIN); hit rate up 0.7% to 1.7% (GAIN); mean cut 2.7% to 7.8% (GAIN); memory ceiling held up 0.8% to 1.7% (power given); memory used up 0.5% to 1.0% (power given)); small 0.4% LOSS (GAIN AND LOSS: work inside the line up 0.6% to 1.3% (GAIN); hit rate up 0.7% to 1.3% (GAIN); mean cut 0.6% to 1.7% (GAIN); p99 up 0.2% to 1.7% (LOSS); memory ceiling held up 0.8% to 2.2% (power given); memory used up 1.1% to 1.9% (power given); host CPU busy up 1% to 11% (power given); host CPU-seconds up 1% to 12% (power given); CPU per 1,000 inside the line up 0% to 11% (power given); process_cpu_seconds up 0.3% to 2.4% (power given)).
+- **Power grids (SimBench), both load models**: 1-MV-comm--0-sw (ZIP loads) 9.7% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 1.0% (GAIN); net import from the upstream grid cut 2.9% (GAIN); tap operations cut 34% (GAIN)); 1-MV-comm--1-sw (ZIP loads) 13% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); energy dissipated in lines and transformers cut 0.8% (GAIN); net import from the upstream grid cut 15% (GAIN); tap operations cut 36% (GAIN)); 1-MV-comm--2-sw (ZIP loads) 11% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 6.4% (GAIN); tap operations cut 36% (GAIN)); 1-MV-rural--1-sw (ZIP loads) 13% power given (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 1.4% (GAIN); energy dissipated in lines and transformers up 0.8% (power given); tap operations up 100% (power given)); 1-MV-rural--2-sw (ZIP loads) 6.8% GAIN (GAIN, power given: energy the loads drew cut 1.3% (GAIN); net import from the upstream grid cut 1.1% (GAIN); tap operations cut 27% (GAIN); energy dissipated in lines and transformers up 1.5% (power given)); 1-MV-semiurb--0-sw (ZIP loads) 12% GAIN (GAIN: energy the loads drew cut 1.4% (GAIN); energy dissipated in lines and transformers cut 1.0% (GAIN); net import from the upstream grid cut 7.0% (GAIN); tap operations cut 38% (GAIN)); 1-MV-semiurb--1-sw (ZIP loads) 9.0% GAIN (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 1.1% (GAIN); tap operations cut 34% (GAIN); energy dissipated in lines and transformers up 0.7% (power given)); 1-MV-semiurb--2-sw (ZIP loads) 5.8% GAIN (GAIN, power given: energy the loads drew cut 1.4% (GAIN); net import from the upstream grid cut 0.9% (GAIN); tap operations cut 24% (GAIN); energy dissipated in lines and transformers up 1.1% (power given)); 1-MV-urban--0-sw (ZIP loads) 8.9% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.4% (GAIN); net import from the upstream grid cut 2.0% (GAIN); tap operations cut 31% (GAIN)); 1-MV-urban--1-sw (ZIP loads) 8.6% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.4% (GAIN); net import from the upstream grid cut 2.2% (GAIN); tap operations cut 30% (GAIN)); 1-MV-urban--2-sw (ZIP loads) 6.8% GAIN (GAIN: energy the loads drew cut 1.5% (GAIN); energy dissipated in lines and transformers cut 2.2% (GAIN); net import from the upstream grid cut 3.1% (GAIN); tap operations cut 23% (GAIN)); 1-MV-comm--0-sw (constant-power loads) 7.8% GAIN (GAIN: energy dissipated in lines and transformers cut 0.5% (GAIN); tap operations cut 31% (GAIN)); 1-MV-comm--1-sw (constant-power loads) 7.7% GAIN (GAIN: tap operations cut 31% (GAIN)); 1-MV-comm--2-sw (constant-power loads) 7.8% GAIN (GAIN: tap operations cut 31% (GAIN)); 1-MV-rural--1-sw (constant-power loads) 13% power given (power given: energy dissipated in lines and transformers up 0.6% (power given); tap operations up 100% (power given)); 1-MV-rural--2-sw (constant-power loads) 3.3% GAIN (GAIN, power given: tap operations cut 16% (GAIN); energy dissipated in lines and transformers up 1.2% (power given)); 1-MV-semiurb--0-sw (constant-power loads) 7.3% GAIN (GAIN: energy dissipated in lines and transformers cut 0.9% (GAIN); tap operations cut 29% (GAIN)); 1-MV-semiurb--1-sw (constant-power loads) 7.6% GAIN (GAIN, power given: tap operations cut 31% (GAIN); energy dissipated in lines and transformers up 0.6% (power given)); 1-MV-semiurb--2-sw (constant-power loads) 4.7% GAIN (GAIN, power given: tap operations cut 21% (GAIN); energy dissipated in lines and transformers up 0.9% (power given)); 1-MV-urban--0-sw (constant-power loads) 7.7% GAIN (GAIN: energy dissipated in lines and transformers cut 1.9% (GAIN); tap operations cut 30% (GAIN)); 1-MV-urban--1-sw (constant-power loads) 6.8% GAIN (GAIN: energy dissipated in lines and transformers cut 1.9% (GAIN); tap operations cut 27% (GAIN)); 1-MV-urban--2-sw (constant-power loads) 5.4% GAIN (GAIN: energy dissipated in lines and transformers cut 1.8% (GAIN); tap operations cut 22% (GAIN)).
+- **PostgreSQL, the pooler's pool size**: select 1.6% GAIN (GAIN, power given: connections held open cut 6.0% to 7.2% (GAIN); host CPU busy up 0.4% to 1.3% (power given); host CPU-seconds up 0.4% to 1.4% (power given); CPU per 1,000 inside the line up 0.5% to 1.3% (power given)); simple_update 0.5% GAIN (GAIN, power given: connections held open cut 1.2% to 3.2% (GAIN); connections most at once up 6.7% to 8.3% (power given)); tpcb_hot 11% GAIN (GAIN, power given: p95 cut 0% to 64% (GAIN); mean cut 0% to 43% (GAIN); connections held open cut 1.7% to 7.5% (GAIN); CPU per 1,000 inside the line cut 0.3% to 1.6% (GAIN); connections most at once up 0.0% to 6.7% (power given)).
+- **MySQL, the buffer pool's size**: burst 3.6% GAIN (GAIN, power given: p95 cut 1.8% to 3.5% (GAIN); p99 cut 2.4% to 4.1% (GAIN); pool held cut 4% to 17% (GAIN); pages holding data cut 2% to 14% (GAIN); host CPU busy up 0.2% to 2.6% (power given); host CPU-seconds up 0.0% to 3.0% (power given); CPU per 1,000 inside the line up 0.3% to 3.7% (power given)); read_only 4.6% GAIN (GAIN, power given: p99 cut 0.6% to 2.4% (GAIN); pool held cut 10% to 22% (GAIN); pages holding data cut 8% to 21% (GAIN); host CPU busy up 0.5% to 2.0% (power given); host CPU-seconds up 0.5% to 2.4% (power given); CPU per 1,000 inside the line up 0.8% to 2.4% (power given)); read_write 0%: STEADY (GAIN, power given: p99 cut 0.6% to 1.4% (GAIN); pages holding data up 0.4% to 6.0% (power given)); update_index 4.9% GAIN (GAIN: pages holding data cut 0.6% to 0.8% (GAIN); host CPU busy cut 2% to 38% (GAIN); host CPU-seconds cut 2% to 38% (GAIN)).
+- **MongoDB, the storage engine's cache size**: b 0.3% power given (GAIN, power given: host CPU busy cut 1.6% to 2.5% (GAIN); host CPU-seconds cut 1.7% to 3.2% (GAIN); CPU per 1,000 inside the line cut 1.8% to 3.2% (GAIN); process_cpu_seconds up 0.3% to 2.0% (power given)); burst 0.8% LOSS (GAIN AND LOSS: mean cut 0.4% to 4.0% (GAIN); p95 up 0.2% to 5.4% (LOSS); p99 up 0.4% to 2.5% (LOSS); cache size held up 0.4% to 2.9% (power given)); c 0.1% power given (GAIN, power given: host CPU busy cut 0.2% to 3.8% (GAIN); host CPU-seconds cut 0.2% to 4.7% (GAIN); CPU per 1,000 inside the line cut 0.2% to 4.7% (GAIN); cache in use up 0.3% to 3.4% (power given); process_cpu_seconds up 0.2% to 1.1% (power given)); f 1.3% power given (power given: cache size held up 2.6% to 7.5% (power given); cache in use up 2.8% to 7.2% (power given)).
+- **Kafka, the consumer group's size**: burst 0.5% GAIN (GAIN: p99 cut 0.1% to 3.0% (GAIN); median cut 0.0% to 4.3% (GAIN); mean cut 0.1% to 5.1% (GAIN); messages waiting, mean cut 0.4% to 6.0% (GAIN); host CPU busy cut 1.2% to 2.3% (GAIN); host CPU-seconds cut 1.3% to 2.3% (GAIN); CPU per 1,000 inside the line cut 2.0% to 2.5% (GAIN)); heavy 1.2% LOSS (LOSS: mean up 0.4% to 3.0% (LOSS); messages waiting, mean up 0.1% to 3.9% (LOSS); consumers running up 0% to 12% (power given); consumers most at once up 0% to 50% (power given)); light 2.4% LOSS (LOSS: p99 up 0.6% to 9.1% (LOSS); mean up 0% to 12% (LOSS); messages waiting, mean up 0% to 11% (LOSS); consumers running up 0% to 17% (power given); consumers most at once up 0% to 83% (power given)).
+- **Drone swarms, the three untouched cells**: tuning 3.5% GAIN (GAIN: energy per mission cut 13% (GAIN); fleet energy over the window cut 13% (GAIN); missions per charge at the autopilot's reserve up 14% to 15% (GAIN)); long 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); long-316 4.8% GAIN (GAIN: energy per mission cut 17% (GAIN); fleet energy over the window cut 17% (GAIN); missions per charge at the autopilot's reserve up 21% (GAIN)); mixed 7.9% GAIN (GAIN: energy per mission cut 16% (GAIN); fleet energy over the window cut 16% (GAIN); missions per charge at the autopilot's reserve up 19% (GAIN)); mixed-315 5.3% GAIN (GAIN: energy per mission cut 14% (GAIN); fleet energy over the window cut 14% (GAIN); missions per charge at the autopilot's reserve up 17% (GAIN)); short 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); short-314 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs).
+- **Buildings and batteries (CityLearn), the districts with batteries**: ca_alameda_county_neighborhood 3.0% GAIN (GAIN: electricity bought cut 7.1% (GAIN); daily peak draw cut 6.6% (GAIN); highest peak cut 4.4% (GAIN); ramping cut 10% (GAIN); daily load unevenness cut 2.1% (GAIN); monthly load unevenness cut 1.3% (GAIN)); citylearn_challenge_2022_phase_all_robustness 9.9% GAIN (GAIN: electricity bill cut 16% (GAIN); electricity bought cut 14% (GAIN); carbon cut 12% (GAIN); daily peak draw cut 17% (GAIN); highest peak cut 2.7% (GAIN); ramping cut 9.4% (GAIN); daily load unevenness cut 6.0% (GAIN); monthly load unevenness cut 1.6% (GAIN); distance from zero net energy cut 1.0% (GAIN)); citylearn_challenge_2023_phase_2_local_evaluation 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_1 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_2 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_2_online_evaluation_3 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_1 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_2 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); citylearn_challenge_2023_phase_3_3 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); tx_travis_county_neighborhood 2.4% GAIN (GAIN: electricity bought cut 4.0% (GAIN); daily peak draw cut 7.1% (GAIN); ramping cut 8.7% (GAIN); daily load unevenness cut 3.3% (GAIN); monthly load unevenness cut 2.3% (GAIN)); vt_chittenden_county_neighborhood 1.0% GAIN (GAIN: electricity bought cut 3.0% (GAIN); daily peak draw cut 3.2% (GAIN); ramping cut 3.4% (GAIN); daily load unevenness cut 0.9% (GAIN); monthly load unevenness cut 0.8% (GAIN)).
 
 ### 54.2 Not on the sheet, and why
 
-- **Azure's managed Kubernetes, the bill** (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): Omni v1, a 4-worker fleet, every gauge EVEN, inside the noise: 0%, and too small a fleet to show one machine.
+- **Azure's managed Kubernetes, the bill** (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): Omni v1, a 4-worker fleet, every gauge STEADY, inside the noise: 0%, and too small a fleet to show one machine.
 - **The governor's own share of the machine** (`results/live/V3_OWN_COST.md`): 0.6% to 1.3% of one core at every size; shown, not a benchmark against native.
-- **The card (NVIDIA)**: every earlier result is obsolete; the current governor has not run on a real card.
+- **The card (NVIDIA)**: at the factory dial (the max) native already runs both knobs at their top and the governor writes nothing, so the card is not on the sheet; the other tunes, each its own result: The card on omni-v21, the power cap at 70% of the card's top (cap): three runs on an A100: work per energy STEADY, under the floor (the three runs' mean 0.11%) (`results/gpu/V21_A100_CAP_ABC.md`); The card on omni-v21, the power cap at 70% of the card's top (cap-full): three runs on an A100: work per energy STEADY, under the floor (the three runs' mean 0.07%) (`results/gpu/V21_A100_CAP_FULL_ABC.md`); The card on omni-v21, the tune-down (dial save): three runs on an A100: work per energy GAIN by the mean of our three runs, beyond the noise in 1 of 3 (`results/gpu/V21_A100_SAVE_ABC.md`); The stacked box on omni-v21: the seven organisms with an A10 inside, three runs on rented cards: the card's work per energy at 1 copy 7 STEADY, under the floor of 7 organisms; at 10 copies 6 STEADY, under the floor, 1 power given by the mean of our three runs of 7 organisms; at 100 copies 6 one repetition in a run: shown, not judged of 6 organisms (`results/gpu/V21_STACKS_A10_ABC.md`). Every rental, its cost and what came back is in `docs/RUN_LEDGER.md`.
 - **The index's second reading** (service alone, `results/OMNI_INDEX.md`): a second true number for the same tests, not repeated here; this sheet carries the preregistered one.
 
 ## 55. Every Level on One Page
@@ -7925,21 +8074,21 @@ Where a row sums several workloads, grids, districts, cells or robots, each part
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **EVEN**: native and Omni-Compass could not be told apart (the 95% interval includes zero: no difference beyond the noise), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A reading counts when it holds the same way in all three of our runs, A, B and C, with every interval clear of zero; **the runs disagree** names a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 The founder's order of 17 October: Omni-Compass is shown on top at every level, on every gauge, and every level's gauges should go the same way; where one does not, it is named here and taken to the founder. Each row is built from its result files by `tools/levels.py`; nothing is typed in. A count is of judged gauges (a table's rows that read a word), each under its own table's rule (the three runs, or the realms result's ten seeds); **power given** is a resource put in, shown and never called a loss. Every row names the engine its tables ran on, and no reading is carried from one engine to another.
 
-| Level | Engine | Evidence | GAIN | EVEN | power given | LOSS | runs disagree | Goes the other way? |
+| Level | Engine | Evidence | GAIN | STEADY | power given | LOSS | runs disagree | Goes the other way? |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| The muscle, alone (1,107 muscles, each on its own native controller, under its own load) | omni-v8 | S (our model) | 530 | 577 | 0 | 0 | 0 | no: every judged gauge GAIN or EVEN |
-| The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or EVEN |
-| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v10, omni-v11 | L | 46 | 48 | 11 | 5 | 19 | **yes: 24, listed below** |
-| The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v10, omni-v11 | L | 24 | 20 | 9 | 4 | 7 | **yes: 11, listed below** |
-| A muscle inside a running service: database, broker, cache | omni-v16, omni-v18 | L | 68 | 124 | 41 | 27 | 99 | **yes: 126, listed below** |
-| A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v11 | independent simulator | 101 | 149 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
+| The muscle, alone (1,107 muscles, each on its own native controller, under its own load) | omni-v8 | S (our model) | 530 | 577 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
+| The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
+| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v21 | L | 45 | 40 | 11 | 11 | 22 | **yes: 33, listed below** |
+| The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v21 | L | 20 | 21 | 10 | 6 | 7 | **yes: 13, listed below** |
+| A muscle inside a running service: database, broker, cache | omni-v21 | L | 72 | 138 | 50 | 25 | 87 | **yes: 112, listed below** |
+| A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v21 | independent simulator | 101 | 165 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
 | The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs (results/grid_v8/) are going |
-| The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one EVEN; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back |
+| The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back |
 | A group of clusters | not run | none yet | – | – | – | – | – | no run at this level yet, real or modelled, on the engine that stands (`k8s_fleet/` holds a model of an earlier engine) |
 
 ### 55.1 Each level
@@ -7947,7 +8096,7 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 #### 55.1.1 The muscle, alone (1,107 muscles, each on its own native controller, under its own load)
 
 Native at this level: each muscle's native controller. Engine: omni-v8. Evidence: S (our model).
-421 of the EVEN are at their limit on native (nothing to push).
+421 of the STEADY are at their limit on native (nothing to push).
 Tables: `results/realms_v5/MUSCLES_V5.csv`.
 
 #### 55.1.2 The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line)
@@ -7958,193 +8107,190 @@ Tables: `results/realms_v5/REALMS_V5.md`.
 
 #### 55.1.3 The cluster: real Kubernetes, native its own HPA and scheduler
 
-Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v10, omni-v11. Evidence: L.
-Tables: `results/live/V10_ALL_FOUR.md`, `results/live/V10_BATCH.md`, `results/live/V11_CAPACITY.md`, `results/live/V10_FAIRNESS.md`, `results/live/V10_FAULTS.md`, `results/live/V10_TRACE_GOOGLE2011.md`, `results/live/V11_ROBUST_KILL.md`, `results/live/V11_ROBUST_LONG.md`.
+Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v21. Evidence: L.
+Tables: `results/live/V21_ALL_FOUR.md`, `results/live/V21_BATCH.md`, `results/live/V21_CAPACITY.md`, `results/live/V21_FAIRNESS.md`, `results/live/V21_FAULTS.md`, `results/live/V21_TRACE_GOOGLE2011.md`, `results/live/V21_ROBUST_KILL.md`, `results/live/V21_ROBUST_LONG.md`.
 
 Goes the other way:
 
-- V10_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v10): pod start wait, total (s) (the runs disagree)
-- V10_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v10): response time (ms), 99th percentile (the runs disagree)
-- V10_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v10): pod start wait, total (s) (LOSS)
-- V10_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v10): pod start wait, mean (s) (LOSS)
-- V10_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v10): batch: queue finished (s) (LOSS)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): response time (ms), 95th percentile (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): failed requests (%) (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): pod start wait, mean (s) (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): second app: response time (ms), 95th percentile (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): second app: response time (ms), 99th percentile (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): second app: time over the response line (% of samples) (the runs disagree)
-- V10_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v10): second app: failed requests (%) (the runs disagree)
-- V10_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v10): pods started (the runs disagree)
-- V10_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v10): pod start wait, total (s) (the runs disagree)
-- V10_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v10): pod start wait, mean (s) (the runs disagree)
-- V10_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v10): pod start wait, total (s) (LOSS)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): response time (ms), 99th percentile (the runs disagree)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): pods started (the runs disagree)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): pod start wait, total (s) (the runs disagree)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): pod start wait, mean (s) (the runs disagree)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): robust: failed requests in the 120 s after the kill (%) (the runs disagree)
-- V11_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v11): robust: time over the line in the 120 s after the kill (% of samples) (the runs disagree)
-- V11_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v11): pod start wait, total (s) (LOSS)
-- V11_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v11): pod start wait, mean (s) (the runs disagree)
+- V21_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v21): response time (ms), 99th percentile (the runs disagree)
+- V21_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v21): HPA replicas, mean (the runs disagree)
+- V21_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
+- V21_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v21): failed requests (%) (LOSS)
+- V21_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v21): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (the runs disagree)
+- V21_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (LOSS)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 1 (the runs disagree)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 1 (the runs disagree)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 1.5 (the runs disagree)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 1.5 (the runs disagree)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 2 (the runs disagree)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 3 (LOSS)
+- V21_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v21): 3 (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): response time (ms), 99th percentile (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): failed requests (%) (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): pod start wait, total (s) (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (LOSS)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): second app: response time (ms), 95th percentile (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): second app: time over the response line (% of samples) (the runs disagree)
+- V21_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v21): second app: failed requests (%) (LOSS)
+- V21_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v21): pod start wait, total (s) (the runs disagree)
+- V21_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
+- V21_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
+- V21_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v21): response time (ms), 99th percentile (the runs disagree)
+- V21_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v21): pods started (the runs disagree)
+- V21_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
+- V21_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v21): response time (ms), 99th percentile (the runs disagree)
+- V21_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (LOSS)
 
 #### 55.1.4 The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube
 
-Native at this level: Kubernetes with the add-on as shipped and as used, its own recommendations applied. Engine: omni-v10, omni-v11. Evidence: L.
-Tables: `results/live/V11_KEDA_REQUESTS.md`, `results/live/V11_KEDA_CPU_REQUESTS.md`, `results/live/V11_GOLDILOCKS.md`, `results/live/V10_CRUISEKUBE.md`.
+Native at this level: Kubernetes with the add-on as shipped and as used, its own recommendations applied. Engine: omni-v21. Evidence: L.
+Tables: `results/live/V21_KEDA_REQUESTS.md`, `results/live/V21_KEDA_CPU_REQUESTS.md`, `results/live/V21_GOLDILOCKS.md`, `results/live/V21_CRUISEKUBE.md`.
 
 Goes the other way:
 
-- V11_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v11): failed requests (%) (LOSS)
-- V11_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v11): pod start wait, mean (s) (the runs disagree)
-- V11_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v11): pods started (the runs disagree)
-- V11_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v11): pod start wait, total (s) (the runs disagree)
-- V11_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v11): pod start wait, mean (s) (the runs disagree)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): response time (ms), mean (LOSS)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): response time (ms), 95th percentile (LOSS)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): response time (ms), 99th percentile (LOSS)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): pods started (the runs disagree)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): pod start wait, total (s) (the runs disagree)
-- V10_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v10): pod start wait, mean (s) (the runs disagree)
+- V21_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v21): failed requests (%) (the runs disagree)
+- V21_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
+- V21_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v21): pod start wait, total (s) (LOSS)
+- V21_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (LOSS)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): response time (ms), mean (LOSS)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): response time (ms), 95th percentile (LOSS)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): response time (ms), 99th percentile (the runs disagree)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): time over the response line (% of samples) (LOSS)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): HPA replicas, mean (the runs disagree)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): pods started (the runs disagree)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): pod start wait, total (s) (the runs disagree)
+- V21_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v21): pod start wait, mean (s) (the runs disagree)
 
 #### 55.1.5 A muscle inside a running service: database, broker, cache
 
-Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v16, omni-v18. Evidence: L.
-Tables: `results/live/V18_REDIS.md`, `results/live/V18_REDIS_SERVICE.md`, `results/live/V18_KAFKA.md`, `results/live/V18_KAFKA_SERVICE.md`, `results/live/V16_PGBENCH.md`, `results/live/V16_SYSBENCH.md`, `results/live/V16_YCSB.md`.
+Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v21. Evidence: L.
+Tables: `results/live/V21_REDIS.md`, `results/live/V21_REDIS_SERVICE.md`, `results/live/V21_KAFKA.md`, `results/live/V21_KAFKA_SERVICE.md`, `results/live/V21_PGBENCH.md`, `results/live/V21_SYSBENCH.md`, `results/live/V21_YCSB.md`.
 
 Goes the other way:
 
-- V18_REDIS.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_REDIS.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_REDIS_SERVICE.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS_SERVICE.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS_SERVICE.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
-- V18_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, 99th percentile (ms) (LOSS)
-- V18_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, most messages waiting at once (the runs disagree)
-- V18_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 messages inside the line (the runs disagree)
-- V18_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
-- V18_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
-- V18_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (LOSS)
-- V18_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
-- V18_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
-- V18_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
-- V18_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: work inside the response line (messages a second handled within the line) (LOSS)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (LOSS)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
-- V18_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, 95th percentile (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, most messages waiting at once (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
-- V18_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 messages inside the line (the runs disagree)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, median (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
-- V18_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (the runs disagree)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (LOSS)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (LOSS)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, median (ms) (the runs disagree)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (LOSS)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V18_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
-- V16_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
-- V16_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, median (ms) (LOSS)
-- V16_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
-- V16_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (LOSS)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (LOSS)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: latency, median (ms) (the runs disagree)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, mean (ms) (LOSS)
-- V16_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: read_only: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_SYSBENCH.md: read_only: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_SYSBENCH.md: read_only: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (LOSS)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: buffer pool held, mean (MB; the knob, the resource) (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: pages holding data, mean (MB) (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
-- V16_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 95th percentile (ms) (LOSS)
-- V16_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 99th percentile (ms) (LOSS)
-- V16_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
-- V16_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
-- V16_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 operations inside the line (the runs disagree)
-- V16_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (LOSS)
-- V16_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
-- V16_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
-- V16_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (LOSS)
-- V16_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
-- V16_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
-- V16_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (LOSS)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V16_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
+- V21_REDIS.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
+- V21_REDIS.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
+- V21_REDIS.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V21_REDIS.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): the stack's own CPU-seconds (redis-server, the application, the compass and its sampler; steal and the runner's other processes excluded) (the runs disagree)
+- V21_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V21_REDIS.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
+- V21_REDIS_SERVICE.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
+- V21_REDIS_SERVICE.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
+- V21_REDIS_SERVICE.md: tuning: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V21_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_REDIS_SERVICE.md: burst: 8192 B values, working set 2,500 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V21_REDIS_SERVICE.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: memory ceiling held, mean (MB; the knob, the resource) (the runs disagree)
+- V21_REDIS_SERVICE.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: memory used, mean (MB) (the runs disagree)
+- V21_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
+- V21_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_REDIS_SERVICE.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, 95th percentile (ms) (LOSS)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, 99th percentile (ms) (the runs disagree)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, most messages waiting at once (LOSS)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
+- V21_KAFKA.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V21_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_KAFKA.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (LOSS)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, median (ms) (the runs disagree)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V21_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): end-to-end latency, mean (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: tuning: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): consumer lag, mean messages waiting (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, median (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (LOSS)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_KAFKA_SERVICE.md: burst: 2.0 ms of work a message, 256 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V21_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (LOSS)
+- V21_KAFKA_SERVICE.md: heavy: 5.0 ms of work a message, 1024 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: work inside the response line (messages a second handled within the line) (LOSS)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 95th percentile (ms) (LOSS)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, 99th percentile (ms) (the runs disagree)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: end-to-end latency, mean (ms) (LOSS)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, most messages waiting at once (the runs disagree)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: consumer lag, mean messages waiting (LOSS)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V21_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
+- V21_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
+- V21_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_PGBENCH.md: tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): buffer pool held, mean (MB; the knob, the resource) (the runs disagree)
+- V21_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): pages holding data, mean (MB) (the runs disagree)
+- V21_SYSBENCH.md: read_only: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: buffer pool held, mean (MB; the knob, the resource) (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_SYSBENCH.md: read_write: sysbench oltp_read_write, 18 statements a transaction, 200 a second offered; the transaction line 10.8 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
+- V21_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (the runs disagree)
+- V21_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V21_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
+- V21_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 95th percentile (ms) (LOSS)
+- V21_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 99th percentile (ms) (LOSS)
+- V21_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, mean (ms) (the runs disagree)
+- V21_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V21_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (LOSS)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: bytes in the cache, mean (MB) (the runs disagree)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
+- V21_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V21_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: cache size held, mean (MB; the knob, the resource) (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
+- V21_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
 
 #### 55.1.6 A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms
 
-Native at this level: the simulator's own controller, unchanged. Engine: omni-v11. Evidence: independent simulator.
-Tables: `results/live/V11_CITYLEARN.md`, `results/live/V11_PANDAPOWER.md`, `results/live/V11_MUJOCO.md`, `results/live/V11_SWARM.md`.
+Native at this level: the simulator's own controller, unchanged. Engine: omni-v21. Evidence: independent simulator.
+Tables: `results/live/V21_CITYLEARN.md`, `results/live/V21_PANDAPOWER.md`, `results/live/V21_MUJOCO.md`, `results/live/V21_SWARM.md`.
 
 #### 55.1.7 The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies)
 
@@ -8155,7 +8301,7 @@ Tables: `results/live/SIX_KUBE.md`, `results/live/V3_SIX_KUBE.md`, `results/live
 #### 55.1.8 The cluster in a cloud: Azure Kubernetes Service, the bill
 
 Native at this level: Azure's own cluster autoscaler and the HPA. Engine: single runs, omni-v5 to omni-v7. Evidence: L, the bill metered.
-No three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one EVEN; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back.
+No three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back.
 Tables: `results/live/AKS_BILL.md`, `results/live/raw/run-38981149348/`.
 
 #### 55.1.9 A group of clusters
@@ -8169,7 +8315,7 @@ No run at this level yet, real or modelled, on the engine that stands (`k8s_flee
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `0ce65f290`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so.
+Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `4c71e77d50`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so.
 
 ### 56.1 The mechanism, and proof that it is the one that ran
 
@@ -8177,7 +8323,7 @@ Every mechanism, harness, receipt and result, read from the files named beside i
 |---|---|---|
 | The whole repository re-runs and checks itself (`python3 verify.py`) | **PASS** | `results/VERIFY_RECEIPT.txt` |
 | The eight-line engine and its six states, fingerprinted (`omnicompass/core.py`) | sha256 `bd615f156169f679…` | `RELEASE_MANIFEST.json` |
-| Python and C++20 twins of every law, proven equal and sealed | seal intact: 15 Python/C++ twins | `results/SEAL.json` |
+| Python and C++20 twins of every law, proven equal and sealed | seal intact: 17 Python/C++ twins | `results/SEAL.json` |
 | The mechanism's identity against the code | mechanism identity matches the code | `results/MECHANISM_IDENTITY.json` |
 | The engine's convergence to its pole under the bounded command | proved | `docs/TRACKING_THEOREM.md` |
 | Safety shield: 2,000,000 adversarial cases | 0 violations | `tests/test_shield_properties.py` |
@@ -8188,17 +8334,17 @@ The engine is the founder's eight-line equation, integrated by RK4 with the boun
 
 ### 56.2 Real Kubernetes, Omni v3, every test three times (evidence class L)
 
-Seven tests, ten paired repetitions each, three separate GitHub runs on the frozen engine (A the result, B and C the replications): native Kubernetes (its HPA and scheduler) against the same Kubernetes with Omni-Compass on top, a fresh six-worker cluster per arm, order rotated, the same work sent to both arms. A row reads **GAIN** or **LOSS in all three of our runs** (by what the gauge is for, never by its sign: a response time cut is a GAIN; machines or energy up is **power given**) only when all three runs move the same way with every 95% interval clear of zero; otherwise it reads EVEN, no difference beyond the noise, which is the result. Every Omni arm ends with every setting handed back and read back. Steady runs: A 38013195851 (omni-v3); B 38013200499 (omni-v3); C 38013204648 (omni-v3); the other tests' runs are named in their tables.
+Seven tests, ten paired repetitions each, three separate GitHub runs on the frozen engine (A the result, B and C the replications): native Kubernetes (its HPA and scheduler) against the same Kubernetes with Omni-Compass on top, a fresh six-worker cluster per arm, order rotated, the same work sent to both arms. A row reads **GAIN** or **LOSS in all three of our runs** (by what the gauge is for, never by its sign: a response time cut is a GAIN; machines or energy up is **power given**) only when all three runs move the same way with every 95% interval clear of zero; otherwise it reads STEADY, no difference beyond the noise, which is the result. Every Omni arm ends with every setting handed back and read back. Steady runs: A 38013195851 (omni-v3); B 38013200499 (omni-v3); C 38013204648 (omni-v3); the other tests' runs are named in their tables.
 
 
 | Test | Work | Response time (p95; the batch queue's mean) | Machines in service | Energy (declared model) | Failed requests | Table |
 |---|---|---|---|---|---|---|
-| Steady work in steps | EVEN, equal by design | **-66% to -64%, GAIN in all three of our runs** | **-2% to -2%, GAIN in all three of our runs** | **-2% to -1%, GAIN in all three of our runs** | EVEN, the same | `results/live/V3_STEADY.md` |
-| Demand that wanders | not taken | **-64% to -56%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-13% to -12%, GAIN in all three of our runs** | `results/live/V3_WANDERING.md` |
-| All four in one run | **+54% to +68%, GAIN in all three of our runs** | **-62% to -57%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-14% to -11%, GAIN in all three of our runs** | `results/live/V3_ALL_FOUR.md` |
-| Fairness, a noisy neighbour | not taken | EVEN, inside the noise | EVEN, the same | EVEN, inside the noise | EVEN, inside the noise | `results/live/V3_FAIRNESS.md` |
-| Faults: machine down, spike, runaway pod, blind probe | not taken | **-63% to -58%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-18% to -14%, GAIN in all three of our runs** | `results/live/V3_FAULTS.md` |
-| A queue of batch jobs | not taken | **-13% to -11%, GAIN in all three of our runs** | **-20% to -16%, GAIN in all three of our runs** | **-14% to -11%, GAIN in all three of our runs** | EVEN, inside the noise | `results/live/V3_BATCH.md` |
+| Steady work in steps | STEADY, equal by design | **-66% to -64%, GAIN in all three of our runs** | **-2% to -2%, GAIN in all three of our runs** | **-2% to -1%, GAIN in all three of our runs** | STEADY, the same | `results/live/V3_STEADY.md` |
+| Demand that wanders | not taken | **-64% to -56%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-13% to -12%, GAIN in all three of our runs** | `results/live/V3_WANDERING.md` |
+| All four in one run | **+54% to +68%, GAIN in all three of our runs** | **-62% to -57%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-14% to -11%, GAIN in all three of our runs** | `results/live/V3_ALL_FOUR.md` |
+| Fairness, a noisy neighbour | not taken | STEADY, inside the noise | STEADY, the same | STEADY, inside the noise | STEADY, inside the noise | `results/live/V3_FAIRNESS.md` |
+| Faults: machine down, spike, runaway pod, blind probe | not taken | **-63% to -58%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-18% to -14%, GAIN in all three of our runs** | `results/live/V3_FAULTS.md` |
+| A queue of batch jobs | not taken | **-13% to -11%, GAIN in all three of our runs** | **-20% to -16%, GAIN in all three of our runs** | **-14% to -11%, GAIN in all three of our runs** | STEADY, inside the noise | `results/live/V3_BATCH.md` |
 | A public day of demand: the Google cluster trace of 2011, replayed one step at a time | not taken | **-66% to -64%, GAIN in all three of our runs** | **-9% to -7%, GAIN in all three of our runs** | **-7% to -5%, GAIN in all three of our runs** | **-18% to -11%, GAIN in all three of our runs** | `results/live/V3_TRACE_GOOGLE2011.md` |
 
 Energy on kind is a declared model: the machines are containers on one runner, so a machine out of service cuts modelled watts, not a metered bill. Omni-Compass gives a machine back only after a paired trial shows the service no slower without it (the verdict, `omnicompass/verdict.py`); on these clusters one machine fewer made requests 30-45% slower in most trials, so the machines stayed and were spent on speed and work. The v1 tables (`results/live/V1_*.md`, `docs/OMNI_V1.md`) read the same; the sets before v1 are in `docs/history/`.
@@ -8209,11 +8355,11 @@ PostgreSQL 16 as shipped behind PgBouncer's shipped pool of 20 is native; omni i
 
 | Workload | Work inside the 50 ms line | p95 | Connections held open | Host CPU-seconds (the compass's own cost) |
 |---|---|---|---|---|
-| `select` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `simple_update` | EVEN, inside the noise | EVEN, inside the noise | the runs disagree | EVEN, inside the noise |
-| `tpcb_hot` | EVEN, inside the noise | EVEN, inside the noise | **-13% to -7%, GAIN in all three of our runs** | EVEN, inside the noise |
+| `select` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `simple_update` | STEADY, inside the noise | STEADY, inside the noise | the runs disagree | STEADY, inside the noise |
+| `tpcb_hot` | STEADY, inside the noise | STEADY, inside the noise | **-13% to -7%, GAIN in all three of our runs** | STEADY, inside the noise |
 
-The compass takes connections back only while the pooler's clients wait for one under 1% of the time and gives them back the moment anyone waits (amendment 2 of `docs/POSTGRES_PREREGISTRATION.md`, 8 October: the first counted set's CPU cost was measured and traced to the harness's own psql launches, not to the pooler, and its first table is kept whole in `docs/history/V3_PGBENCH_set1.md`). Where it reads a cut it is connections held open for the same work, a GAIN, with the host's CPU EVEN (`tpcb_hot`: cut 7% to 13% in all three of our runs); where the add rule buys connections above the operator's setting on a slow write workload (`simple_update`: the most at once up 8% to 12%), that reads power given and counts below 1 in the index. The earlier counted sets are kept whole in `docs/history/V3_PGBENCH_set1.md` to `V3_PGBENCH_set3.md`. Table: `results/live/V3_PGBENCH.md`.
+The compass takes connections back only while the pooler's clients wait for one under 1% of the time and gives them back the moment anyone waits (amendment 2 of `docs/POSTGRES_PREREGISTRATION.md`, 8 October: the first counted set's CPU cost was measured and traced to the harness's own psql launches, not to the pooler, and its first table is kept whole in `docs/history/V3_PGBENCH_set1.md`). Where it reads a cut it is connections held open for the same work, a GAIN, with the host's CPU STEADY (`tpcb_hot`: cut 7% to 13% in all three of our runs); where the add rule buys connections above the operator's setting on a slow write workload (`simple_update`: the most at once up 8% to 12%), that reads power given and counts below 1 in the index. The earlier counted sets are kept whole in `docs/history/V3_PGBENCH_set1.md` to `V3_PGBENCH_set3.md`. Table: `results/live/V3_PGBENCH.md`.
 
 ### 56.4 Real messaging: Apache Kafka, a consumer group's operator-set size, Omni v3, three runs (evidence class L)
 
@@ -8221,12 +8367,12 @@ Apache Kafka as shipped (one broker, a topic of 8 partitions) with the consumer 
 
 | Workload | Work inside the 500 ms line | End-to-end p95 | Consumers running (the resource held) | Host CPU-seconds (the compass's own cost) |
 |---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | EVEN, inside the noise | **-0% to -0%, GAIN in all three of our runs** | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | **-1% to -1%, GAIN in all three of our runs** | EVEN, inside the noise |
-| `heavy` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `light` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | STEADY, inside the noise | **-0% to -0%, GAIN in all three of our runs** | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | **-1% to -1%, GAIN in all three of our runs** | STEADY, inside the noise |
+| `heavy` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `light` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 2, run on 10 October: `docs/RERUN_2026-10-10.md`), the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst` (0.3% on the tuning workload, shown and not counted), a GAIN in all three of our runs, with work, latency and CPU EVEN; `heavy` and `light` read EVEN on every gauge. No message went unconsumed in any arm; every count was handed back. The earlier counted sets are kept whole in `docs/history/V3_KAFKA_set1.md` and `V3_KAFKA_set2.md`. Table: `results/live/V3_KAFKA.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 2, run on 10 October: `docs/RERUN_2026-10-10.md`), the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst` (0.3% on the tuning workload, shown and not counted), a GAIN in all three of our runs, with work, latency and CPU STEADY; `heavy` and `light` read STEADY on every gauge. No message went unconsumed in any arm; every count was handed back. The earlier counted sets are kept whole in `docs/history/V3_KAFKA_set1.md` and `V3_KAFKA_set2.md`. Table: `results/live/V3_KAFKA.md`.
 
 ### 56.5 A real cache: Redis, the operator's memory ceiling, Omni v3, three runs (evidence class L)
 
@@ -8234,12 +8380,12 @@ Redis as Ubuntu ships it with the operator's 64 MB ceiling and allkeys-lru is na
 
 | Workload | Work inside the 2 ms line | Cache hit rate | p95 | Memory ceiling held, MB (the resource held) | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | **+4% to +5%, GAIN in all three of our runs** | **+4% to +5%, GAIN in all three of our runs** | EVEN, inside the noise | **+19% to +26%, power given in all three of our runs** | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `large` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `small` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | **+4% to +5%, GAIN in all three of our runs** | **+4% to +5%, GAIN in all three of our runs** | STEADY, inside the noise | **+19% to +26%, power given in all three of our runs** | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `large` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `small` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 2), every untouched workload reads EVEN on every gauge: under the resource objective the verdict left the ceiling where the operator set it, as the preregistration expected before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (+4% to +5%) and in the hit rate with memory given (+19% to +26%, power given). The earlier counted sets are kept whole in `docs/history/V3_REDIS_set1.md` and `V3_REDIS_set2.md`. Table: `results/live/V3_REDIS.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 2), every untouched workload reads STEADY on every gauge: under the resource objective the verdict left the ceiling where the operator set it, as the preregistration expected before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (+4% to +5%) and in the hit rate with memory given (+19% to +26%, power given). The earlier counted sets are kept whole in `docs/history/V3_REDIS_set1.md` and `V3_REDIS_set2.md`. Table: `results/live/V3_REDIS.md`.
 
 ### 56.6 A real database's storage-engine cache: MongoDB under YCSB, the operator's cache size, Omni v3, three runs (evidence class L)
 
@@ -8247,13 +8393,13 @@ MongoDB 8.0 as its publisher ships it with the operator's WiredTiger cache of 51
 
 | Workload | Work inside the 1 ms line | p95 | Cache size held, MB (the resource held) | Pages read into the cache | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | the runs disagree | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `b` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | **-13% to -10%, GAIN in all three of our runs** | shown, not judged | EVEN, inside the noise |
-| `c` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `f` | EVEN, inside the noise | EVEN, inside the noise | **-15% to -13%, GAIN in all three of our runs** | shown, not judged | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | the runs disagree | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `b` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | **-13% to -10%, GAIN in all three of our runs** | shown, not judged | STEADY, inside the noise |
+| `c` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `f` | STEADY, inside the noise | STEADY, inside the noise | **-15% to -13%, GAIN in all three of our runs** | shown, not judged | STEADY, inside the noise |
 
-On this machine the data files sit in the operating system's page cache as well, so a storage-engine miss is a read from memory, not a disk, as disclosed before the run. On the counted set that stands, the cache size held was cut 10% to 15% on `burst` and `f`, a GAIN in all three of our runs, with work inside the line, p95, mean latency and CPU EVEN; `b` and `c` read EVEN on every gauge; the cache was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_YCSB_set1.md` to `V3_YCSB_set3.md`. Table: `results/live/V3_YCSB.md`.
+On this machine the data files sit in the operating system's page cache as well, so a storage-engine miss is a read from memory, not a disk, as disclosed before the run. On the counted set that stands, the cache size held was cut 10% to 15% on `burst` and `f`, a GAIN in all three of our runs, with work inside the line, p95, mean latency and CPU STEADY; `b` and `c` read STEADY on every gauge; the cache was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_YCSB_set1.md` to `V3_YCSB_set3.md`. Table: `results/live/V3_YCSB.md`.
 
 ### 56.7 A real database's buffer pool: MySQL under sysbench, the operator's InnoDB pool size, Omni v3, three runs (evidence class L)
 
@@ -8261,13 +8407,13 @@ MySQL 8.0 as Ubuntu ships it with the operator's 512 MB InnoDB buffer pool is na
 
 | Workload | Work inside the line | p95 | Buffer pool held, MB (the resource held) | Pages read from disk | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `read_only` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `read_write` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `update_index` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `read_only` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `read_write` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `update_index` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 3), every untouched workload reads EVEN on every gauge, and the pool was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_SYSBENCH_set1.md` to `V3_SYSBENCH_set4.md` (the first: 15 of 45 arms not handed back because the plug's restore was issued while the server was still withdrawing the blocks of a shrink, which MySQL ignores; the plug fixed and the fix declared). The update_index work-inside-the-line row counts almost nothing in either arm (a single update's client round trip exceeds the server-side 0.6 ms line) and is disclosed. Table: `results/live/V3_SYSBENCH.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 3), every untouched workload reads STEADY on every gauge, and the pool was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_SYSBENCH_set1.md` to `V3_SYSBENCH_set4.md` (the first: 15 of 45 arms not handed back because the plug's restore was issued while the server was still withdrawing the blocks of a shrink, which MySQL ignores; the plug fixed and the fix declared). The update_index work-inside-the-line row counts almost nothing in either arm (a single update's client round trip exceeds the server-side 0.6 ms line) and is disclosed. Table: `results/live/V3_SYSBENCH.md`.
 
 ### 56.8 The bill on a real cloud: Azure Kubernetes Service, Omni v1 (evidence class L, a metered bill)
 
@@ -8275,8 +8421,8 @@ Azure's own cluster autoscaler is native; omni is the same autoscaler with Omni-
 
 | Test | Fleet | Bill | Response time | Reading | Receipt |
 |---|---|---|---|---|---|
-| Steady load, 5 pairs | 4 workers | −4.7%, interval across zero | inside the noise | EVEN, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |
-| A burst sized to the cluster, 5 pairs | 4 workers | +5.0%, interval across zero | p99 −34% clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill EVEN, inside the noise | `results/live/V1_AKS_BURST.md` |
+| Steady load, 5 pairs | 4 workers | −4.7%, interval across zero | inside the noise | STEADY, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |
+| A burst sized to the cluster, 5 pairs | 4 workers | +5.0%, interval across zero | p99 −34% clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill STEADY, inside the noise | `results/live/V1_AKS_BURST.md` |
 
 One machine is a quarter of a 4-worker fleet, so only a cut of about 30% or more can clear the noise there; the expected machine cut is a few percent. The fleet that can show one machine (40 workers in nine machine families, the subscription's per-family allowance being 10 vCPUs) is preregistered and dispatched on v3; its first dispatches were refused by the subscription's allowances and by Azure's own cluster capacity in eastus before any arm ran, each refusal recorded in the preregistration's amendments.
 
@@ -8304,14 +8450,14 @@ The full grid with every cell: `results/scale/GRID.md`; the receipts, one per si
 
 ### 56.11 The 945 muscles and the four realms, Omni v3 (evidence class S)
 
-The catalog (`realms/catalog.csv`): 945 muscles in 59 families, 430 in Compute / AI / Cloud, 376 in Physics / Robotics / Autonomous, 470 in Energy / Facility / Industrial and 440 in Distribution / Specialized (1,716 counting a muscle once per realm, a shared spine of 257). Every muscle alone and every organism whole ran as A, B and C on v3 and reproduced to the last digit (`results/realms/REALMS.md`): 0 muscles with a LOSS, every organism GAIN within the guardrails (work per energy +0.1% to +0.3%, work EVEN, time over the line not above native's). On v2 the Physics realm and the tower read GAIN AND LOSS (a service traded for energy); the cause was a missing do-no-harm gate on speed knobs, which made v3 (`docs/OMNI_V3.md`). Three independent simulators with their own native controllers are wired the same way and read by the same rule: the power grid (`results/live/V3_PANDAPOWER.md`: energy drawn and net import cut in all 11 SimBench grids with ZIP loads, a GAIN; the energy dissipated in the lines up in 4 and tap operations 4 → 8 a year in one, power given), robot arms (`results/live/V3_MUJOCO.md`: Gen3 peak torque cut 29%, tracking error cut 21%, energy per takt cut 0.8%, each a GAIN; the Panda's copper heating up 14%, power given; two arms left native, EVEN) and CityLearn (`results/live/V3_CITYLEARN.md`: electricity bought, peak and unevenness cut in all 11 battery districts, a GAIN; the bill up in 7, power given). Every row stands in every table, whichever way it went.
+The catalog (`realms/catalog.csv`): 945 muscles in 59 families, 430 in Compute / AI / Cloud, 376 in Physics / Robotics / Autonomous, 470 in Energy / Facility / Industrial and 440 in Distribution / Specialized (1,716 counting a muscle once per realm, a shared spine of 257). Every muscle alone and every organism whole ran as A, B and C on v3 and reproduced to the last digit (`results/realms/REALMS.md`): 0 muscles with a LOSS, every organism GAIN within the guardrails (work per energy +0.1% to +0.3%, work STEADY, time over the line not above native's). On v2 the Physics realm and the tower read GAIN AND LOSS (a service traded for energy); the cause was a missing do-no-harm gate on speed knobs, which made v3 (`docs/OMNI_V3.md`). Three independent simulators with their own native controllers are wired the same way and read by the same rule: the power grid (`results/live/V3_PANDAPOWER.md`: energy drawn and net import cut in all 11 SimBench grids with ZIP loads, a GAIN; the energy dissipated in the lines up in 4 and tap operations 4 → 8 a year in one, power given), robot arms (`results/live/V3_MUJOCO.md`: Gen3 peak torque cut 29%, tracking error cut 21%, energy per takt cut 0.8%, each a GAIN; the Panda's copper heating up 14%, power given; two arms left native, STEADY) and CityLearn (`results/live/V3_CITYLEARN.md`: electricity bought, peak and unevenness cut in all 11 battery districts, a GAIN; the bill up in 7, power given). Every row stands in every table, whichever way it went.
 
 ### 56.12 Harnesses and receipts
 
 | Harness | What it proves | Receipt |
 |---|---|---|
 | `scripts/kind_paired.sh`, `tools/live_reps.py`, workflow `benchmark-reps` | native against Omni on real Kubernetes, paired on one runner, the reset checked | `results/live/raw/run-*/live-reps/` |
-| `tools/confirm_abc.py` (and `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `swarm_abc.py`, `mujoco_abc.py`, `pandapower_abc.py`, `citylearn_abc.py`) | three separate runs read by one rule: GAIN or LOSS in all three of our runs (power given for a resource spent that rose), EVEN, the runs disagree; each run's engine checked against the fingerprint | `results/live/V3_*.md`, `V1_*.md` |
+| `tools/confirm_abc.py` (and `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `swarm_abc.py`, `mujoco_abc.py`, `pandapower_abc.py`, `citylearn_abc.py`) | three separate runs read by one rule: GAIN or LOSS in all three of our runs (power given for a resource spent that rose), STEADY, the runs disagree; each run's engine checked against the fingerprint | `results/live/V3_*.md`, `V1_*.md` |
 | `tools/omni_version.py` | which frozen engine a checkout or any result's commit carries | `OMNI_V1.json`, `OMNI_V2.json`, `OMNI_V3.json` |
 | `scripts/aks_paired.sh`, workflow `aks-metered` | the same on Azure's managed Kubernetes, Azure's own bill, a fresh cluster per arm, the fleet pre-flighted against the subscription's allowances | `results/live/V1_AKS_*.md` |
 | `tools/run_kil.py`, workflows `six-kube`, `big-organism`, `big-organism-detached`; `tools/six_kube_report.py` | the six organisms with a real cluster inside at 1 to 1,000 copies, on GitHub and on a rented machine; the clock rule | `results/live/V1_SIX_KUBE.md`, `V3_SIX_KUBE.md`, `V1_BIG_ORGANISM.md` |
@@ -8331,7 +8477,7 @@ The rules for each run were written and committed before it ran (`docs/*_PREREGI
 
 ### 56.13 What is not yet shown
 
-- A cloud bill or energy cut on real machines: the 4-worker Azure fleet reads EVEN, inside the noise, as a fleet too small to show one machine must; the 40-worker fleet runs are the test of that.
+- A cloud bill or energy cut on real machines: the 4-worker Azure fleet reads STEADY, inside the noise, as a fleet too small to show one machine must; the 40-worker fleet runs are the test of that.
 - The real card on the current governor: every earlier card result ran on a controller since replaced and is obsolete; the one-card, card-inside-the-organisms and eight-card runs are the founder's, on rented cards, at one named commit.
 - The grid stops at 100 copies and 100 runs (the founder's order of 12 October, to cut the time and the bill): no 1,000 copies and no 1,000 runs are run on any engine from that day; the v3 cells at 1,000 above stand as they were run.
 - The queue in `docs/REGISTER.md` section 4 (drone swarms on gym-pybullet-drones and Kafka done; Redis running): PX4 and ArduPilot swarms, YCSB and HammerDB, Spark, OpenSearch, fio, Open-RMF, the 24-hour robustness run, Basilisk, Orekit and GMAT, RocketPy, Cantera.
@@ -8359,15 +8505,15 @@ less work was done. The steps below are the whole method.
 2. **The switch drill** after every run: turn Omni-Compass OFF; check every setting is back at its recorded
    original; turn it ON.
 3. **The receipt.** Each gauge: native, Omni-Compass, the change, the 95% interval of the difference, and whether the
-   interval excludes zero. A change reads GAIN, LOSS or power given, clear of the noise, only when it does; otherwise it
-   reads EVEN, no difference beyond the noise.
+   interval excludes zero. A change under 0.5% reads STEADY; a change of 0.5% or more reads its word by the gauge's aim, GAIN,
+   LOSS or power given, and the receipt says whether its interval clears zero (beyond the noise) or not.
 4. **The label, by rule written before the run:** SUPERIOR WITHIN GUARDRAILS / ENERGY IMPROVEMENT WITH SERVICE
    TRADEOFF / NONINFERIOR / INCONCLUSIVE / NOT ESTABLISHED / AWAY FROM ITS AIM / NOT ATTRIBUTABLE / INVALID. Guardrails: work not lower by more than 1%; the share of
    time outside the service line not higher by more than 1 percentage point. The band-first rule is stricter: no win
    is claimed while the time outside the service line is above native's.
 
 **At scale (modelled).** The seven organisms run on GitHub's machines (Actions, workflow `six`) or on any machine
-(`bash scripts/scale_ladder.sh`) at 1, 10, 100 and 500 paired runs and at 1, 10, 100 and 500 copies of each
+(`bash scripts/scale_ladder.sh`) at 1, 10, 100 and 1,000 paired runs and at 1, 10, 100 and 1,000 copies of each
 organism on one clock. Real Kubernetes runs on GitHub's machines (workflow `benchmark-reps`); the seven organisms with
 a real cluster inside as one more muscle run in `six-kube` (1 to 100 copies on GitHub) and `big-organism` and
 `big-organism-detached` (1,000 copies on a rented machine).
@@ -8425,7 +8571,7 @@ laid out the same way so that a reader of this manual can read it without learni
 installer reads their own receipt against: not the numbers, which belong to our systems and our loads, but the signs and the
 words. On omni-v11's tables, the newest until omni-v12's three runs land, on real Kubernetes, ten pairs a run and three runs each (`results/live/V11_*.md`; the CruiseKube row is omni-v10's):
 
-| The service | Reads GAIN in all three of our runs | Reads EVEN | Power given |
+| The service | Reads GAIN in all three of our runs | Reads STEADY | Power given |
 |---|---|---|---|
 | Rightsized with Goldilocks and the VPA's recommender | response time −47% to −48% mean, −61% to −64% at the 95th percentile, −68% to −70% at the 99th; time over the line −98% to −100%; alert minutes −100%; pods started −53% to −61%; the total pod start wait −48% to −63% | machines, failed requests, replicas, the mean pod start wait | parked-worker energy +1.7% to +2.3% |
 | Scaled by KEDA's HTTP add-on | response time −57% mean, −72% to −74% at the 95th percentile, −58% to −62% at the 99th; time over the line −98% to −99%; alert minutes −100%; replicas −11% to −20% | machines, failed requests, pods started, pod start wait | parked-worker energy +1.6% to +2.2% |
@@ -8434,11 +8580,11 @@ words. On omni-v11's tables, the newest until omni-v12's three runs land, on rea
 | Held at a fixed CPU cap, four caps | nothing: the cap blocks the one lever | completed work and work inside the line at every cap | none |
 
 Read your receipt against this table in three steps. **First the words.** A service gauge that reads LOSS on your receipt, where
-the table reads GAIN or EVEN for the same kind of service, is read as a wiring fault before anything else (`DISCLOSURES.md`,
-section 4): the feed's freshness and its line, the sensed autoscaler's name, the identity's permissions (Chapter 50), the window's length against the interval widths above. **Second the direction.** Where the table reads GAIN, your receipt should read GAIN or EVEN; a smaller gain
+the table reads GAIN or STEADY for the same kind of service, is read as a wiring fault before anything else (`DISCLOSURES.md`,
+section 4): the feed's freshness and its line, the sensed autoscaler's name, the identity's permissions (Chapter 50), the window's length against the interval widths above. **Second the direction.** Where the table reads GAIN, your receipt should read GAIN or STEADY; a smaller gain
 is your stack's, not a fault, because the gain is bounded by how far native stood from its own best. **Third the power given.** A
 resource that rose on your receipt is read beside the work and the speed it bought; a rise with nothing bought is a question for
-the audit (the Operator's Manual, Appendix L): what did the governor write, and why. Two readings are not faults: EVEN on every gauge where native already runs at the
+the audit (the Operator's Manual, Appendix L): what did the governor write, and why. Two readings are not faults: STEADY on every gauge where native already runs at the
 top of its range (the knob is at its limit on native, and the governor leaves it there by design, Chapter 32), and a machine count
 that does not fall where no machine can be given back without a LOSS (the audit's `node_gate.reason` names the gate that held).
 What the table cannot give is your number: the same engine on another stack is another result, and it is yours (section 76.7).
@@ -8448,15 +8594,15 @@ What the table cannot give is your number: the same engine on another stack is a
 
 
 **One number, one word.** In every table a change keeps its raw sign: a response time that fell reads "-65%", a cache
-that grew reads "+300%", and the Reading column beside it gives its word, GAIN, EVEN or LOSS, decided by what the gauge is
+that grew reads "+300%", and the Reading column beside it gives its word, GAIN, STEADY or LOSS, decided by what the gauge is
 for and never by its sign (the key at the front of this manual): a response time cut 65% is GAIN, a cache grown 300% is
 **power given**, a fall in work is LOSS. The benefit sheet (`docs/BENEFIT_SHEET.md`, built from the tables by
 `tools/benefit_sheet.py` and checked by `verify.py`) turns every gauge the same way round against **each gauge's declared
-aim** (each preregistration's): plus is a GAIN, minus a LOSS or power given, whatever the gauge measures, and 0% is EVEN,
+aim** (each preregistration's): plus is a GAIN, minus a LOSS or power given, whatever the gauge measures, and 0% is STEADY,
 nothing beyond the noise. Beside it every change the same in all three of our runs is written in words, never as a bare
 sign: "p95 cut 65% (GAIN)", so it cannot be misread against a
 table that shows the same change as "-65%". One number per benchmark, by the index's own rule, with its word
-beside it (GAIN, GAIN with power given, GAIN AND LOSS, EVEN, power given or LOSS). The wiring page (section 60.9) uses the same words. A reader who wants one figure for a benchmark reads that
+beside it (GAIN, GAIN with power given, GAIN AND LOSS, STEADY, power given or LOSS). The wiring page (section 60.12) uses the same words. A reader who wants one figure for a benchmark reads that
 sheet; a reader who wants the rows behind it reads the table it names, and reads its Reading column, never the sign alone.
 
 | Class | Rung | What it is | What it can show |
@@ -8466,7 +8612,7 @@ sheet; a reader who wants the rows behind it reads the table it names, and reads
 | L | E3 | real software (Kubernetes on kind), no hardware meter | real decisions on real software; energy there is a declared model |
 | P | E4 | a physical meter (the GPU's own power reading) | the hardware's own answer |
 
-![Flowchart: from the audit to the receipt, the table and the one number. The audit (one record a decision) is read by tools/live_reps.py into the paired receipt of one run; runs A, B and C go through tools/confirm_abc.py into the three-run table, each run's engine checked against the fingerprint; tools/readings.py sets GAIN, EVEN or LOSS by the gauge's aim and puts the reading key on top of every table; the benefit sheet and the Omni index carry one number per benchmark. Every table is made by a tool, never by hand.](figures/g_pipeline.svg)
+![Flowchart: from the audit to the receipt, the table and the one number. The audit (one record a decision) is read by tools/live_reps.py into the paired receipt of one run; runs A, B and C go through tools/confirm_abc.py into the three-run table, each run's engine checked against the fingerprint; tools/readings.py sets GAIN, STEADY or LOSS by the gauge's aim and puts the reading key on top of every table; the benefit sheet and the Omni index carry one number per benchmark. Every table is made by a tool, never by hand.](figures/g_pipeline.svg)
 
 Read every number with its class beside it. A modelled number is never quoted as a hardware result. When a
 receipt's energy line is modelled, the receipt says so.
@@ -8513,7 +8659,7 @@ broker's native was set at its knee by design and says so.) Second, what did the
 connections, CPU, its own cost? (Every table has the resource rows; a result with a gain and no resource row is not in this
 program.) Third, who else could have produced the gain: the order of the arms, the warm-up, the runner's neighbour, the
 clock? (Rotation of the arm order, the warm-up before every window, the paired design on one machine and the clock rule
-are the answers, and section 60.11 names the residue they do not remove.)
+are the answers, and section 60.14 names the residue they do not remove.)
 
 
 ## 59. The Frozen Engines and the Three-Run Rule
@@ -8543,9 +8689,9 @@ product.
 | **v12** (`docs/OMNI_V12.md`), the engine of 19 to 20 October | v11 with a raise the cluster's admission refused held until the pod or the raise changes or a wait passes, where v11 wrote it again at every fast check; the swarm's proximity reflex at once | `d38b58fbe28939b8`, 47 files | the model gate (`results/model_gate/V12_VS_V11.md`): identical on every gauge but the refused writes, −97.5%; every benchmark runs again |
 | **v13** (`docs/OMNI_V13.md`), the engine of 20 to 21 October | v12 with the CPU limits the conveyance gave handed back on a shared host at its top beside another workload's room, every other pod counted by its own limit (found on KubeRay's rig) | `0088837333c6f0fc`, 47 files | the model gate with a batch model set from the KubeRay runs' files (`results/model_gate/V13_VS_V12.md`); every benchmark runs again |
 | **v14** (`docs/OMNI_V14.md`), the engine of 21 October | v13 with a knob that leaves any one muscle native and the operator's own commands run without a shell | `7afba44615fcff8f`, 47 files | the model gate (`results/model_gate/V14_VS_V13.md`): every gauge identical; every benchmark runs again |
-| **v15** (`docs/OMNI_V15.md`), the engine of 21 to 22 October | v14 with the brain's power-cap request trimming only while the response line has been clean for the governor's own clear time; every wire that holds a governor's rules in the fingerprint | `0a53cdd7a558f803`, 55 files | the model gate (`results/model_gate/V15_VS_V14.md`): every service gauge identical, the request's own moves EVEN; the long run's own decisions (`tests/test_cap_band.py`); every benchmark runs again |
-| **v17** (`docs/OMNI_V17.md`), **the engine that stands** (23 October, afternoon, on the founder's word of 22 October) | v16 with the heartbeat a dial: the main engine's full decision every 60 s (the parser's default), any beat from 5 to 120 s, every beat shown beside native with what it buys and what it costs; the monitors scaled to the beat (the exporter's measured beat, the alert at three beats, the panel's beat button); the cruise wait never under two readings, a fault the dial's ladder found at 90 and 120 s before it landed | `7c937d09e4031cc7`, 55 files | the model gate (`results/model_gate/V17_VS_V16.md`): every model that sets its own period identical to omni-v16, as shipped every gauge EVEN, no LOSS; every beat in our models (`results/model_gate/V17_LADDER.md`); every benchmark runs again on it |
-| **v16** (`docs/OMNI_V16.md`), the engine of 22 October (the founder's word) | v15 with every clock of the Kubernetes governor in seconds (the brain's minute and its C++ twin, the compass's damping and smoothing, the edge, the additions past the floor, a command's minute to land, the host's busy share, the heat law, one batch job a minute, the conveyance every 15 s, the loop's own schedule), so the decision period is a clean setting; the heartbeat, the full decision, every 15 s by default, the fast checks every 5 s | `5c5502f12b1c0ce4`, 55 files | the model gate (`results/model_gate/V16_VS_V15.md`): identical at 60 s (4,578 audit records, none different), EVEN on every gauge at 15 s; as shipped, omni-v16 at 15 s against omni-v15 at 60 s, every gauge EVEN; the pace study (`results/model_gate/V16_PACE.md`): against 60 s no LOSS at any pace, at 15 s alert minutes −14.7% (kind setting) and energy per core −2.6% (cloud setting); against native the pods waiting for a place LOSS at every pace and, in the cloud setting at 15 s, the 95th percentile (+0.36% to +0.47%) and the alert minutes (+2.31%), EVEN at 60 s only by the seeds' spread, the engine's rows, on the next version's list; three runs read the heartbeat (`docs/PACE_PREREGISTRATION.md`); every benchmark runs again |
+| **v15** (`docs/OMNI_V15.md`), the engine of 21 to 22 October | v14 with the brain's power-cap request trimming only while the response line has been clean for the governor's own clear time; every wire that holds a governor's rules in the fingerprint | `0a53cdd7a558f803`, 55 files | the model gate (`results/model_gate/V15_VS_V14.md`): every service gauge identical, the request's own moves STEADY; the long run's own decisions (`tests/test_cap_band.py`); every benchmark runs again |
+| **v17** (`docs/OMNI_V17.md`), **the engine that stands** (23 October, afternoon, on the founder's word of 22 October) | v16 with the heartbeat a dial: the main engine's full decision every 60 s (the parser's default), any beat from 5 to 120 s, every beat shown beside native with what it buys and what it costs; the monitors scaled to the beat (the exporter's measured beat, the alert at three beats, the panel's beat button); the cruise wait never under two readings, a fault the dial's ladder found at 90 and 120 s before it landed | `7c937d09e4031cc7`, 55 files | the model gate (`results/model_gate/V17_VS_V16.md`): every model that sets its own period identical to omni-v16, as shipped every gauge STEADY, no LOSS; every beat in our models (`results/model_gate/V17_LADDER.md`); every benchmark runs again on it |
+| **v16** (`docs/OMNI_V16.md`), the engine of 22 October (the founder's word) | v15 with every clock of the Kubernetes governor in seconds (the brain's minute and its C++ twin, the compass's damping and smoothing, the edge, the additions past the floor, a command's minute to land, the host's busy share, the heat law, one batch job a minute, the conveyance every 15 s, the loop's own schedule), so the decision period is a clean setting; the heartbeat, the full decision, every 15 s by default, the fast checks every 5 s | `5c5502f12b1c0ce4`, 55 files | the model gate (`results/model_gate/V16_VS_V15.md`): identical at 60 s (4,578 audit records, none different), STEADY on every gauge at 15 s; as shipped, omni-v16 at 15 s against omni-v15 at 60 s, every gauge STEADY; the pace study (`results/model_gate/V16_PACE.md`): against 60 s no LOSS at any pace, at 15 s alert minutes −14.7% (kind setting) and energy per core −2.6% (cloud setting); against native the pods waiting for a place LOSS at every pace and, in the cloud setting at 15 s, the 95th percentile (+0.36% to +0.47%) and the alert minutes (+2.31%), STEADY at 60 s only by the seeds' spread, the engine's rows, on the next version's list; three runs read the heartbeat (`docs/PACE_PREREGISTRATION.md`); every benchmark runs again |
 
 ```
 python3 tools/omni_version.py                   # this checkout: omni-v18, omni-v17, omni-v16, omni-v15, omni-v14, omni-v13, omni-v12, omni-v11, omni-v10, omni-v9, omni-v8, omni-v7, omni-v6, omni-v5, omni-v3, omni-v2, omni-v1, or every file that differs
@@ -8557,19 +8703,24 @@ of 38 files, all v1 bytes; not yet in this commit: tools/run_pandapower.py"): a 
 that runner serves, which could not have run there. Every table made by rule checks each run's commit against the
 fingerprint and heads itself with a warning if any run is not the engine it claims or if the three are not separate runs.
 
-**The three-run rule.** Every benchmark runs as **A, B and C**, three separate GitHub runs on the same frozen bytes.
-Every judged row gets one of these readings, and all three runs are shown beside it:
+**The three-run rule** (the founder's order of 24 October 2026: any change of 0.5% or more is a change; `tools/readings.py`,
+`three_run_reading`). Every benchmark runs as **A, B and C**, three separate GitHub runs on the same frozen bytes. With cᵢ the
+change of run i in percent of native, the change read is the mean c̄ = (c[A] + c[B] + c[C]) ⁄ 3, and all three runs are shown
+beside the reading:
 
-- **GAIN** or **LOSS in all three of our runs** (a resource spent that rose reads **power given**, never a loss): a change of
-  0.5% or more, the mean of the three runs, the same sign in all three of our runs, each with its 95% interval clear of zero.
-- **GAIN** or **LOSS by the mean of our three runs**: a change of 0.5% or more, the mean of the three runs, where one run's
-  interval or more includes zero; the count of runs beyond the noise stands beside it (the founder's order of 24 October
-  2026: a change of 0.5% or more either way is a change, never EVEN).
-- **EVEN, under the floor**: the mean of the three runs' changes is under 0.5% either way.
-- **The runs disagree**: runs that each moved 0.5% or more point different ways. The test itself is then unstable on that
+- **GAIN**, **LOSS** or **power given in all three of our runs**: |c̄| ≥ 0.5%, and every run moved the same way with its 95%
+  interval clear of zero. The word comes from what the gauge is for, never from the sign; a resource spent that rose reads
+  power given, never a loss.
+- **GAIN**, **LOSS** or **power given by the mean of our three runs**: |c̄| ≥ 0.5%, but not every run cleared zero the same way;
+  the count of runs beyond the noise stands beside the word ("beyond the noise in 1 of 3").
+- **STEADY, under the floor**: |c̄| < 0.5%. **STEADY, the same**: nothing moved.
+- **The runs disagree**: runs with |cᵢ| ≥ 0.5% pointed in opposite directions. The test itself is then unstable on that
   measure, and it is looked into before anything is claimed.
+- A count that must never rise (failed requests, lost messages) has no floor: any rise in any run reads LOSS. Each run's own
+  number wears that run's own word by the same floor; a deterministic simulator's three runs, which reproduce one another, read
+  in all three of our runs from 0.5% up.
 
-![The three-run rule, read from the intervals (the founder's order of 24 October 2026). Each row is one gauge; each bar is one run's paired change of Omni-Compass against native with its 95% interval; the shaded band is 0.5% either way of no change. A change of 0.5% or more, the mean of the three runs, is a change: GAIN or LOSS in all three of our runs when every interval is clear of zero on the same side, GAIN or LOSS by the mean of our three runs, with the count beyond the noise, when one or more intervals hold zero. EVEN, under the floor: the mean under 0.5%. The runs disagree: runs that moved 0.5% or more in opposite directions, an unstable test to be looked into. Which side reads GAIN is set by what the gauge is for: for time waited, misses and failures a fall; for work done a rise; for a resource spent a fall is a cut and a rise is power given, never a loss.](figures/readings.svg)
+![The three-run rule, read from the intervals, as drawn before the rule of 24 October (since then a mean change under 0.5% is STEADY and a change of 0.5% or more whose intervals do not all clear zero reads its word by the mean of our three runs). Each row is one gauge; each bar is one run's paired change of Omni-Compass against native with its 95% interval. GAIN or LOSS in all three of our runs: the same side in all three, every interval clear of zero. STEADY, as drawn: at least one interval includes zero. The runs disagree: clear intervals on both sides, an unstable test to be looked into. Which side reads GAIN is set by what the gauge is for: for time waited, misses and failures a fall; for work done a rise; for a resource spent a fall is a cut and a rise is power given, never a loss.](figures/readings.svg)
 
 The tables are made by rule, never by hand (`tools/confirm_abc.py` for the paired
 Kubernetes and Azure tests, `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `swarm_abc.py`, `mujoco_abc.py`,
@@ -8577,13 +8728,17 @@ Kubernetes and Azure tests, `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `s
 or to the declared tolerance where the simulator is not bit-reproducible across machines, and a score reads "the runs
 differ" when they do not), and `tests/test_confirm_abc.py`, run by `verify.py`, proves the rule on fixed cases.
 
-![Flowchart: the three-run reading rule, as a procedure (the founder's order of 24 October 2026). For one judged row: if two runs each moved 0.5% or more in opposite directions, the runs disagree; if the mean of the three changes is under 0.5%, EVEN, under the floor; otherwise the word follows the gauge's aim, GAIN, LOSS or, for a resource spent that rose, power given, in all three of our runs when every run's interval excludes zero the same way, by the mean of our three runs otherwise.](figures/f_reading.svg)
+![Flowchart: the three-run reading rule, as a procedure, as drawn before the rule of 24 October. For one judged row: if any of the three intervals includes zero the row reads STEADY, with the count of runs it holds in; if the three clear intervals do not point the same way the runs disagree and the test is unstable there; if they point the gauge's way the row reads GAIN in all three of our runs, and the other way LOSS, except for a resource spent that rose, which is power given. Since 24 October the 0.5% floor on the mean of the three runs comes first, and an interval across zero no longer makes a row STEADY: it reads its word by the mean of our three runs, with the count beyond the noise (the text above).](figures/f_reading.svg)
 
 **Why three separate runs, and why the readings are what they are.** One run of ten paired repetitions gives one
 interval, and an interval from one run can be narrow by luck: the runner was quiet that hour, the order of arms happened
 to favour one side. A second run on another day and another machine is a replication; a third makes a coincidence
 expensive. The three runs are separate GitHub runs, which means separate machines, separate hours and separate
-installations of every dependency, so what agrees across them is not an artefact of one machine. The readings are designed so that no reading can be mistaken for something it is not: a change of 0.5% or more, the mean of the three runs, is always named by its word and its direction, and the words say how firm it is (in all three runs, every interval clear of zero; or by the mean, with the count of runs beyond the noise); a change under 0.5% is EVEN; and two runs that each moved 0.5% or more in opposite directions are reported as a disagreement, which is an instability in the test to be found and fixed, not averaged away. The tables are
+installations of every dependency, so what agrees across them is not an artefact of one machine. The readings are
+designed so that there is no reading a reader could mistake for a weaker form of "yes": a row reads "in all three of our runs" only when every run moved the same way with its interval clear of zero; a change of 0.5% or more that some run could
+not tell from the noise keeps its word, "by the mean of our three runs", with the count of runs beyond the noise beside it; a
+mean under 0.5% is STEADY; and runs of 0.5% or more that point in opposite directions are reported as a disagreement, which is an
+instability in the test to be found and fixed, not averaged away. The tables are
 made by tools, not by hand, and the tools check each run's engine and refuse to mix engines.
 
 **The Omni index** (`tools/omni_index.py`, `results/OMNI_INDEX.md`) is the one combined number. Every measure of every
@@ -8591,7 +8746,8 @@ test is a ratio oriented so that above 1 is a GAIN for Omni-Compass on top of na
 response time), machines (fewer), energy (less). A test's index is the geometric mean of its ratios, a category's the
 geometric mean of its tests, the headline the geometric mean of the real categories, each weighted the same. A measure
 enters only as its three-run reading allows: GAIN, LOSS or power given in all three of our runs counts as the geometric mean of the runs'
-ratios; EVEN, no difference beyond the noise, counts as exactly 1. Modelled muscles are shown beside the index, never inside it.
+ratios; anything else counts as exactly 1 (STEADY, the runs disagree, and a word read by the mean of our three runs), so nothing
+that did not hold in every run is claimed either way. Modelled muscles are shown beside the index, never inside it.
 
 **Why geometric means, and three rules a referee should check.** A ratio of 2 and a ratio of 0.5 are the same size of
 effect in opposite directions; their arithmetic mean is 1.25, which would read as a gain, while their geometric mean is 1,
@@ -8626,9 +8782,10 @@ the result file in `results/live/` or `results/`, the three GitHub run numbers (
 collect runs) and the engine version those runs were on; a reader can open the file, find the runs under the repository's
 Actions tab, and check the commit with `tools/omni_version.py --commit`. The figures quoted in prose are the table's
 figures and no others; where a range is given ("−13% to −37%") it is the span of the three runs' point estimates, not an
-interval. Every row of every table has one of the readings of the three-run rule (Chapter 59): GAIN in all three of our runs, LOSS in all three of our runs, no
-difference beyond the noise with the count of runs, or the runs disagree; rows that are shown and not judged say so and
-why. A loss is written in the same sentence as the gain it came with, never in a footnote, and the index (section 60.8)
+interval. Every row of every table has one of the readings of the three-run rule (Chapter 59): GAIN, LOSS or power given in all
+three of our runs or by the mean of our three runs (with the count beyond the noise), STEADY under the floor or the same, or the
+runs disagree; rows that are shown and not judged say so and why. Every table was read again from its own data by the rule of
+24 October (`tools/reread.py`); where a figure quoted below was written before that, its table's own word now stands. A loss is written in the same sentence as the gain it came with, never in a footnote, and the index (section 60.11)
 counts every loss in all three of our runs against Omni at full weight.
 
 Two cautions a referee should hold while reading. The real-software results (evidence class L) were taken on GitHub's
@@ -8660,22 +8817,22 @@ results.
 - **Steady work in steps** (`V10_STEADY.md`; runs 39107180703, 39114207589, 39121472594) asks the simplest question: the same
   work at a fixed rate, stepping through a schedule. The response time fell at the mean 48% to 49%, at the 95th percentile 64%
   to 65% and at the 99th 69% to 73%; the time over the line fell 98% to 100% and the alert minutes 100%, all GAIN in all three of
-  our runs. Machines, node-hours, energy, HPA replicas, pods started and the pod start wait read EVEN; the service drew 5% to 6%
+  our runs. Machines, node-hours, energy, HPA replicas, pods started and the pod start wait read STEADY; the service drew 5% to 6%
   less CPU (shown).
 - **Demand that wanders** (`V10_WANDERING.md`; runs 39107183748, 39114211206, 39122521784): the load up and down one step at a
   time. The response time fell at the mean 45% to 50%, at the 95th percentile 57% to 66% and at the 99th 34% to 46%; the time
   over the line fell 38% to 45%, the alert minutes 21% to 32% and the energy 0.3% to 0.4%, all GAIN in all three of our runs.
-  Failed requests fell 12% to 21% with one interval including zero (EVEN); machines, node-hours, replicas and pods started read
-  EVEN.
+  Failed requests fell 12% to 21% with one interval including zero (STEADY); machines, node-hours, replicas and pods started read
+  STEADY.
 - **All four in one run** (`V10_ALL_FOUR.md`; runs 39107187219, 39114214725, 39122525181) asks the product question: more
   work, faster, on fewer machines, with less energy, in one run. Work inside the response line rose **47% to 79%**, the 95th
   percentile fell 56% to 61%, the mean 38% to 46%, time over the line 35% to 46%, failed requests 9% to 14% and the alert
-  minutes 16% to 34%, all GAIN in all three of our runs; the 99th percentile read EVEN (its intervals include zero), machines
+  minutes 16% to 34%, all GAIN in all three of our runs; the 99th percentile read STEADY (its intervals include zero), machines
   in service the same, node-hours and both energy models inside the noise.
 - **Faults** (`V10_FAULTS.md`; runs 39107193417, 39115232348, 39122532509) asks: when a machine dies, traffic triples, a pod
   runs away and the probe goes blind, at the same moments in both arms, does the governor slow recovery? The 95th percentile
   fell 54% to 63%, the 99th 43% to 51%, the mean 33% to 41% and time over the line 26% to 32%, all GAIN in all three of our
-  runs. Failed requests fell 8% to 15% and the alert minutes 13% to 20%, each with an interval including zero (EVEN). HPA
+  runs. Failed requests fell 8% to 15% and the alert minutes 13% to 20%, each with an interval including zero (STEADY). HPA
   replicas rose 14% to 20%, **power given in all three of our runs**: the pods the faster recovery took. Machines and energy
   inside the noise.
 - **A queue of batch jobs** (`V10_BATCH.md`; runs 39107196814, 39115235566, 39122536157) asks: when the work is a pile, do
@@ -8684,7 +8841,7 @@ results.
   12%, all GAIN in all three of our runs; the queue finished no differently beyond the noise in all three runs.
 - **Fairness** (`V10_FAIRNESS.md`; runs 39107190192, 39114217887, 39122528801) asks: does the governor help or hurt a noisy
   neighbour on the same workers? The governed service's time over the line fell 11%, GAIN in all three of our runs; every other
-  judged row reads EVEN, the neighbour's own 95th and 99th percentiles, failures and time over the line included.
+  judged row reads STEADY, the neighbour's own 95th and 99th percentiles, failures and time over the line included.
 - **A public day of demand** (`V10_TRACE_GOOGLE2011.md`, `docs/TRACES_PREREGISTRATION.md`; runs 39108177259, 39115239009,
   39122539586) asks: when the shape of the load is not ours, does the governor still read the same way? The first day of the
   Google cluster trace of 2011 (jobs submitted an hour, 18 public parts named with their SHA-256) was turned into a schedule by
@@ -8700,39 +8857,72 @@ results.
 
 omni-v11, the engine that stood until omni-v12 landed on 19 October (Chapter 59), has four of these three-run tables of its own, the newest until omni-v12's land: Goldilocks, KEDA's HTTP add-on, KEDA on the CPU target and the requests in flight, and the capacity test. Their runs were released by the conductor on 18 and 19 October, and `tools/omni_version.py --commit` reads omni-v11 on every run's commit. Each has ten pairs a run (five a cap in the capacity test), on the same kind cluster as section 60.1 with the add-on named as native, the served image pulled onto every worker before each arm. The CruiseKube receipt is still omni-v10's (18 October); its omni-v11 rerun, on the recorder corrected on 19 October, is running. They are read here gauge by gauge, native against Omni-Compass on top; the charts under each paragraph picture the table named and add nothing to it. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-**On top of Goldilocks and the VPA's recommender** (`V11_GOLDILOCKS.md`; runs 39171064099, 39175675418, 39177950720). Native is the service rightsized by Goldilocks from the VPA recommender's figures, with the HPA under it; omni is the same with Omni-Compass on top. The response time fell at the mean 47% to 48%, at the 95th percentile 61% to 64% and at the 99th 68% to 70%; the time over the line fell 98% to 100% and the alert minutes 100%; pods started fell 53% to 61% and the total pod start wait 48% to 63%: all GAIN in all three of our runs. Failed requests were zero in both arms. Machines in service, node-hours, HPA replicas and the mean pod start wait read EVEN. The energy counted with every parked worker at idle power rose 1.7% to 2.3%, power given in all three of our runs: the governor's own settings commands (16 to 18 a run, shown and not judged) conveyed processor time to the pods, the service drew 43% to 51% more CPU and answered faster for it, and the energy per core-hour fell 28% to 31% (shown).
+**On top of Goldilocks and the VPA's recommender** (`V11_GOLDILOCKS.md`; runs 39171064099, 39175675418, 39177950720). Native is the service rightsized by Goldilocks from the VPA recommender's figures, with the HPA under it; omni is the same with Omni-Compass on top. The response time fell at the mean 47% to 48%, at the 95th percentile 61% to 64% and at the 99th 68% to 70%; the time over the line fell 98% to 100% and the alert minutes 100%; pods started fell 53% to 61% and the total pod start wait 48% to 63%: all GAIN in all three of our runs. Failed requests were zero in both arms. Machines in service, node-hours, HPA replicas and the mean pod start wait read STEADY. The energy counted with every parked worker at idle power rose 1.7% to 2.3%, power given in all three of our runs: the governor's own settings commands (16 to 18 a run, shown and not judged) conveyed processor time to the pods, the service drew 43% to 51% more CPU and answered faster for it, and the energy per core-hour fell 28% to 31% (shown).
 
-![Receipt chart: Omni-Compass on top of Goldilocks and the VPA's recommender (omni-v11), the judged rows. Each row is one gauge; each line is one run's paired change against native with its 95% interval (runs A, B, C from top); green GAIN, blue power given, red LOSS, yellow EVEN, by the reading key. The chart pictures results/live/V11_GOLDILOCKS.md and adds nothing to it.](figures/r_goldilocks.svg)
+![Receipt chart: Omni-Compass on top of Goldilocks and the VPA's recommender (omni-v11), the judged rows. Each row is one gauge; each line is one run's paired change against native with its 95% interval (runs A, B, C from top); green GAIN, amber power given, red LOSS, grey STEADY, by the reading key. The chart pictures results/live/V11_GOLDILOCKS.md and adds nothing to it.](figures/r_goldilocks.svg)
 
 ![Receipt chart: on top of Goldilocks, the rows shown and not judged. The governor's own inputs and the mechanism's traces (the settings commands it wrote, the pods pending, the utilisation, the CPU used, its own CPU, the energy per core-hour, the host's busy share and cores), as the change in runs A, B and C. These rows explain how the judged rows came to be; they are not judged themselves.](figures/r_goldilocks_shown.svg)
 
-**On top of KEDA's HTTP add-on** (`V11_KEDA_REQUESTS.md`; runs 39173411511, 39176842679, 39180252225). Native is KEDA 2.21 with its HTTP add-on 0.16 scaling the service on the requests in flight; omni reaches KEDA's ScaledObject through the plug, as section 60.1 describes. The response time fell at the mean 57%, at the 95th percentile 72% to 74% and at the 99th 58% to 62%; the time over the line fell 98% to 99% and the alert minutes 100%; HPA replicas fell 11% to 20%: all GAIN in all three of our runs. Machines, node-hours, failed requests, pods started and the pod start wait read EVEN. The pod start wait was the one LOSS on omni-v10; with the served image pulled onto every worker before each arm it reads EVEN (`docs/POD_START_WAIT.md`). The energy at idle power rose 1.6% to 2.2%, power given in all three of our runs, the service drawing 47% to 56% more CPU for its faster answers while the energy per core-hour fell 30% to 34% (shown).
+**On top of KEDA's HTTP add-on** (`V11_KEDA_REQUESTS.md`; runs 39173411511, 39176842679, 39180252225). Native is KEDA 2.21 with its HTTP add-on 0.16 scaling the service on the requests in flight; omni reaches KEDA's ScaledObject through the plug, as section 60.1 describes. The response time fell at the mean 57%, at the 95th percentile 72% to 74% and at the 99th 58% to 62%; the time over the line fell 98% to 99% and the alert minutes 100%; HPA replicas fell 11% to 20%: all GAIN in all three of our runs. Machines, node-hours, failed requests, pods started and the pod start wait read STEADY. The pod start wait was the one LOSS on omni-v10; with the served image pulled onto every worker before each arm it reads STEADY (`docs/POD_START_WAIT.md`). The energy at idle power rose 1.6% to 2.2%, power given in all three of our runs, the service drawing 47% to 56% more CPU for its faster answers while the energy per core-hour fell 30% to 34% (shown).
 
 ![Receipt chart: Omni-Compass on top of KEDA's HTTP add-on (omni-v11), the judged rows, read as in the Goldilocks chart; it pictures results/live/V11_KEDA_REQUESTS.md.](figures/r_keda_http.svg)
 
 ![Receipt chart: on top of KEDA's HTTP add-on, the rows shown and not judged: the governor's inputs and the mechanism's traces, as the change in runs A, B and C.](figures/r_keda_http_shown.svg)
 
-**On top of KEDA on the CPU target and the requests in flight** (`V11_KEDA_CPU_REQUESTS.md`; the same three runs, the second setup in each). The response time fell at the mean 36% to 38%, at the 95th percentile 52% to 53% and at the 99th 57% to 61%, and the time over the line 97% to 100%, GAIN in all three of our runs. Failed requests, the alert minutes (native had none in run A), pods started and the pod start wait read EVEN; machines and node-hours EVEN. HPA replicas rose 2% to 3% and the energy at idle power 1.1% to 1.8%, power given in all three of our runs, for 28% to 30% more CPU drawn by the service and 19% to 21% less energy per core-hour (shown).
+**On top of KEDA on the CPU target and the requests in flight** (`V11_KEDA_CPU_REQUESTS.md`; the same three runs, the second setup in each). The response time fell at the mean 36% to 38%, at the 95th percentile 52% to 53% and at the 99th 57% to 61%, and the time over the line 97% to 100%, GAIN in all three of our runs. Failed requests, the alert minutes (native had none in run A), pods started and the pod start wait read STEADY; machines and node-hours STEADY. HPA replicas rose 2% to 3% and the energy at idle power 1.1% to 1.8%, power given in all three of our runs, for 28% to 30% more CPU drawn by the service and 19% to 21% less energy per core-hour (shown).
 
 ![Receipt chart: Omni-Compass on top of KEDA on the CPU target and requests in flight (omni-v11), the judged rows, read as in the Goldilocks chart; it pictures results/live/V11_KEDA_CPU_REQUESTS.md.](figures/r_keda_cpu.svg)
 
 ![Receipt chart: on top of KEDA on the CPU target and requests in flight, the rows shown and not judged: the governor's inputs and the mechanism's traces, as the change in runs A, B and C.](figures/r_keda_cpu_shown.svg)
 
-**On top of CruiseKube applying its own recommendations** (`V10_CRUISEKUBE.md`; runs 39102512170, 39113183694, 39120444653). Native is CruiseKube 0.3.4 rightsizing the service's requests from its own recommendations; omni is the same with Omni-Compass on top. Every judged row reads EVEN: the response time at its mean, 95th and 99th percentile within 3.1% of native with an interval including zero in at least one run; the time over the line, failed requests and alert minutes zero in both arms; machines, node-hours and energy inside the noise. The governor wrote no settings command of its own in any run (shown): on the service CruiseKube had rightsized, nothing passed its rules for a move, and it took nothing away. The rows are the do-no-harm reading, native's work, speed and failures with Omni-Compass on top, and the receipt is kept as such.
+**On top of CruiseKube applying its own recommendations** (`V10_CRUISEKUBE.md`; runs 39102512170, 39113183694, 39120444653). Native is CruiseKube 0.3.4 rightsizing the service's requests from its own recommendations; omni is the same with Omni-Compass on top. Every judged row reads STEADY: the response time at its mean, 95th and 99th percentile within 3.1% of native with an interval including zero in at least one run; the time over the line, failed requests and alert minutes zero in both arms; machines, node-hours and energy inside the noise. The governor wrote no settings command of its own in any run (shown): on the service CruiseKube had rightsized, nothing passed its rules for a move, and it took nothing away. The rows are the do-no-harm reading, native's work, speed and failures with Omni-Compass on top, and the receipt is kept as such.
 
 ![Receipt chart: Omni-Compass on top of CruiseKube applying its own recommendations (omni-v10), the judged rows, read as in the Goldilocks chart; it pictures results/live/V10_CRUISEKUBE.md.](figures/r_cruisekube.svg)
 
 ![Receipt chart: on top of CruiseKube, the rows shown and not judged: the governor's inputs and the mechanism's traces, as the change in runs A, B and C.](figures/r_cruisekube_shown.svg)
 
-**The capacity test at four caps** (`V11_CAPACITY.md`; runs 39171068872, 39175679247, 39179020367). Native and Omni-Compass on top run under the same CPU quota on the served app, 1, 1.5, 2 and 3 cores, enforced by the cluster, five pairs a cap, with work waiting in line. The completed work and the work inside the line read EVEN at every cap, all eight rows in all three runs: under a cap that holds both arms, the governor on top did no less than native, and at these caps neither arm answered more inside the line than the other beyond the noise. Where a cap holds native back and Omni-Compass answers more within it, the row reads GAIN; on this cluster at these caps it did not, and the table says so.
+**The capacity test at four caps** (`V11_CAPACITY.md`; runs 39171068872, 39175679247, 39179020367). Native and Omni-Compass on top run under the same CPU quota on the served app, 1, 1.5, 2 and 3 cores, enforced by the cluster, five pairs a cap, with work waiting in line. The completed work and the work inside the line read STEADY at every cap, all eight rows in all three runs: under a cap that holds both arms, the governor on top did no less than native, and at these caps neither arm answered more inside the line than the other beyond the noise. Where a cap holds native back and Omni-Compass answers more within it, the row reads GAIN; on this cluster at these caps it did not, and the table says so.
 
-![Receipt chart: the capacity test at four caps (omni-v11), native and Omni-Compass at the same resource cap of 1, 1.5, 2 and 3 cores, five pairs a cap, three runs. The completed work and the work inside the line, as the paired change with its 95% interval in runs A, B and C: every row EVEN, no difference beyond the noise, as results/live/V11_CAPACITY.md reads.](figures/r_capacity.svg)
+![Receipt chart: the capacity test at four caps (omni-v11), native and Omni-Compass at the same resource cap of 1, 1.5, 2 and 3 cores, five pairs a cap, three runs. The completed work and the work inside the line, as the paired change with its 95% interval in runs A, B and C: every row STEADY, no difference beyond the noise, as results/live/V11_CAPACITY.md reads.](figures/r_capacity.svg)
 
-**How a receipt comes to be.** Every one of these tables carries the governor's inputs beside the service's outputs, and a referee reads them together. The inputs are the settings commands the governor wrote on its own, the host's busy share and the utilisation and CPU it raised, and its own CPU (seven to twelve thousandths of a core, shown); the outputs are the response time at its mean, 95th and 99th percentile, the time over the line and the alert minutes, and the energy of the declared idle-power model. Where the outputs fell and the energy rose, the rise is the power the faster answers took, read as power given; where the governor wrote nothing, the outputs read EVEN. The Goldilocks table drawn that way is the mechanism in one picture.
+**How a receipt comes to be.** Every one of these tables carries the governor's inputs beside the service's outputs, and a referee reads them together. The inputs are the settings commands the governor wrote on its own, the host's busy share and the utilisation and CPU it raised, and its own CPU (seven to twelve thousandths of a core, shown); the outputs are the response time at its mean, 95th and 99th percentile, the time over the line and the alert minutes, and the energy of the declared idle-power model. Where the outputs fell and the energy rose, the rise is the power the faster answers took, read as power given; where the governor wrote nothing, the outputs read STEADY. The Goldilocks table drawn that way is the mechanism in one picture.
 
 ![How a receipt came to be: the governor's inputs beside the service's outputs, from the Goldilocks table (runs A, B, C). Left, what the governor put in: the settings commands it wrote on its own, the host's busy share, the utilisation and the CPU used it raised, and its own CPU. Right, what the service showed: the response time at its mean, 95th and 99th percentile, the time over the line and the alert minutes, all down, and the energy of the idle-power model, up and read as power given.](figures/r_mechanism.svg)
 
-### 60.3 The organisms with the real cluster inside, and the big organisms
+### 60.3 Omni-Compass direct: the three arms, three runs (omni-v18)
+
+The founder's order of 23 October: native, Omni-Compass on native and Omni-Compass direct, always shown together. The test is
+Omni-Compass's own orchestrator (`omni_orchestrator/`, `docs/OMNI_ORCHESTRATOR.md`): native is Kubernetes' published autoscaling
+rule on the muscles, written by us as the yardstick (brain `yardstick`); Omni-Compass on native is Omni-Compass on top of that
+rule (brain `omni_native`); Omni-Compass direct is Omni-Compass alone on the muscles, no Kubernetes (brain `omni`). Three runs on
+GitHub's own machines, A, B and C from one commit (`0ca2bbdac97f`, engine omni-v18, runs 40023524338, 40023529155 and
+40023534013), the full form: 18 steps of 25 s, the clients stepping 1 2 3 2 3 4 …, the busy room rule; each pair read by the one
+key, paired by step (`results/orchestrator/V18_THREE_ARMS_ABC.md`, class L):
+
+| Pair | Gauge | Three runs | A | B | C |
+|---|---|---|---|---|---|
+| Omni on native against native | Work (requests a step) | **GAIN in all three of our runs** | GAIN, up 5.2% | GAIN, up 5.3% | GAIN, up 7.4% |
+| Omni on native against native | The 95th percentile (ms) | **GAIN in all three of our runs** | GAIN, down 9.0% | GAIN, down 12.1% | GAIN, down 7.5% |
+| Omni on native against native | Machines | **GAIN by the mean of our three runs, beyond the noise in 1 of 3** | GAIN, down 2.2% | GAIN, down 4.6% | GAIN, down 2.4% |
+| Omni on native against native | Units | **power given in all three of our runs** | power given, up 11.0% | power given, up 8.9% | power given, up 10.8% |
+| Omni direct against native | Work (requests a step) | **GAIN in all three of our runs** | GAIN, up 7.3% | GAIN, up 5.7% | GAIN, up 9.4% |
+| Omni direct against native | The 95th percentile (ms) | **GAIN in all three of our runs** | GAIN, down 9.8% | GAIN, down 15.7% | GAIN, down 10.8% |
+| Omni direct against native | Machines | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** | GAIN, down 2.2% | GAIN, down 3.1% | GAIN, down 2.2% |
+| Omni direct against native | Units | **power given by the mean of our three runs, beyond the noise in 2 of 3** | power given, up 6.9% | STEADY, down 0.3% | power given, up 9.0% |
+| Omni direct against Omni on native | Work (requests a step) | **GAIN by the mean of our three runs, beyond the noise in 1 of 3** | GAIN, up 2.0% | STEADY, up 0.4% | GAIN, up 1.9% |
+| Omni direct against Omni on native | The 95th percentile (ms) | **GAIN by the mean of our three runs, beyond the noise in 0 of 3** | GAIN, down 0.9% | GAIN, down 4.0% | GAIN, down 3.6% |
+| Omni direct against Omni on native | Machines | **power given by the mean of our three runs, beyond the noise in 0 of 3** | STEADY, unchanged | power given, up 1.6% | STEADY, up 0.2% |
+| Omni direct against Omni on native | Units | **GAIN by the mean of our three runs, beyond the noise in 1 of 3** | GAIN, down 3.7% | GAIN, down 8.5% | GAIN, down 1.7% |
+
+No request failed and none was answered wrong in any arm of any run (9,128 to 11,839 requests answered an arm). The means of the
+three runs, which the bottom line carries: Omni-Compass on native against native, work +6.0%, the 95th percentile +9.5% faster,
+machines +3.1% fewer, serving units +10.2% more; Omni-Compass direct against native, work +7.5%, the 95th percentile +12.1%
+faster, machines +2.5% fewer, serving units +5.2% more; Omni-Compass direct against Omni-Compass on native, work +1.4%, the 95th
+percentile +2.9% faster, machines +0.6% more, serving units +4.6% fewer. No pair reads LOSS on any gauge. The test runs again on
+omni-v23, the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+these results.
+
+### 60.4 The organisms with the real cluster inside, and the big organisms
 
 The six modelled organisms were run with the kind cluster inside as one more muscle at 1, 10 and 100 copies on GitHub
 (`V1_SIX_KUBE.md`, `V3_SIX_KUBE.md`) and at 1,000 copies on a rented Azure machine (`V1_BIG_ORGANISM.md`). At 10 and 100
@@ -8766,11 +8956,11 @@ answer was the same 150 to 160 ms under both.
 
 ![Flowchart: one tick of the grid conductor (grid.yml, every 15 minutes, on its newest code). It starts nothing while an Azure run, a grid report or a verify waits for a runner; it reads every started run back from its name and never starts one twice; it releases the reruns of every benchmark on the engine that stands (A of every benchmark, then B, then C), the next set of each cloud queue whose switch is on, and every grid square not yet started, up to what GitHub runs plus a margin. Nothing is cancelled.](figures/f_conductor.svg)
 
-### 60.4 The bill on a real cloud
+### 60.5 The bill on a real cloud
 
 Azure Kubernetes Service with Azure's own cluster autoscaler as native (`V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): five
-paired repetitions each on a 4-worker fleet, every machine billed every 15 s at list price, a fresh cluster per arm. Every
-gauge read no difference beyond the noise; the bill read −4.7% on steady load and +5.0% on the burst, both with intervals
+paired repetitions each on a 4-worker fleet, every machine billed every 15 s at list price, a fresh cluster per arm. No
+gauge cleared the noise in that one run; the bill read −4.7% on steady load and +5.0% on the burst, both with intervals
 across zero; the burst's p99 read −34% clear of the noise in that one run. This is the honest reading of a fleet in which
 one machine is a quarter of the fleet, so that only a saving of about 30% could clear the noise against an expected saving
 of a few percent (section 46.1). The fleet of 40 workers in nine machine families that can show one machine is
@@ -8789,7 +8979,46 @@ not in the table. A reader should take
 from this what it says and no more: the small fleet's bill reading is inside the noise by the arithmetic of its size, the
 large fleet's reading does not exist yet, and nothing about the bill on a real cloud is claimed in the index until it does.
 
-### 60.5 A real database, a real message broker, a real cache
+### 60.6 The cloud is a wire: three places, one organism, two routes (a composition, class S of L and P)
+
+**A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
+between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
+carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on site or off site).
+Omni-Compass can live in all three places. On the wire alone, as every cloud run in this repository is set (the tune-down on
+the machines only, the pods exactly native's), it can only park machines the cloud's own autoscaler already made, after its own
+trial; so a cloud run alone can show at most a small cut in the bill of the wire. It cannot show the work and the speed gained
+at the software end, nor the energy and the throughput gained at the bare metal, because neither end is under it; those are
+measured where Omni-Compass sits on them and composed with the wire into one organism and one bill by the product law
+R(g) = ∏ℓ Rℓ(g), log R = Σℓ log Rℓ, the variances added (`tools/whole_system.py`, `results/WHOLE_SYSTEM.md`; regrouped into
+places and routes by `docs/engine/export_whole.py`). A provider that ran Omni-Compass on its own back end would see that
+benefit on its own chips and racks; no tenant can meter it, so it is never claimed here as a measurement. No run has stacked the
+layers: each factor is one layer's own run with the layers under it native, and the product assumes a layer's ratio does not
+change when the layers around it also carry Omni-Compass (tested on the governors' four ways: 18 of 30 pairs agree within the
+noise). The stacked run that replaces the composition is preregistered (`docs/WHOLE_SYSTEM_PREREGISTRATION.md`).
+
+| Place | Measured so far (every interval carried, without the card's old run) | The company's expectation (the founder's figures of 24 October: an expectation, never a result) |
+|---|---|---|
+| The software end: the cluster (class L, 22 tests) and the services on it (class L, 17 tests) | the index **GAIN 18.5%**: work **GAIN 24.9%**, speed **GAIN 41.3%**, machines **GAIN 8.5%**, energy **GAIN 2.8%** | about 3 to 4% |
+| The bare metal: the card and the machine | not measured in the headline scope: the machine's own layer (the kernel, Kepler, the host's meter) is not yet run; the card's one run (class P, 2 October, on a controller since replaced) read work per energy **GAIN 3.6%**, the energy drawn cut 3.5% (GAIN) and the 95th percentile 58.5% slower (LOSS) | 2 to 3% |
+| The cloud's wire alone: the machines it bills (Azure, class L, three one-run tests of 4 and 5 paired repetitions) | speed **STEADY** 4.4% (−21.5% to +38.8%), machines **STEADY** 2.4% (−10.0% to +5.8%), the bill **STEADY** 0.8% (−18.8% to +21.2%) | 1 to 2% |
+| The two ends together | see the routes below | about 5% |
+
+Where a measurement and the expectation differ, the measurement stands.
+
+| Route | Light | The whole workload against native (its index; the gauges correlated) | Gauge by gauge |
+|---|---|---|---|
+| On site: the software end × the bare metal | green, GAINING | **GAIN 18.5%** (+16.1% to +20.9%) | work **GAIN 24.9%**; speed **GAIN 41.3%**; machines **GAIN 8.5%**; energy **GAIN 2.8%** |
+| Through the cloud: the software end × the cloud's wire × the bare metal at the back end | green, GAINING | **GAIN 14.8%** (+1.6% to +29.6%) | work **GAIN 24.9%**; speed **GAIN 47.5%**; machines **STEADY** 5.9% (−2.3% to +14.9%); energy **GAIN 2.8%**; the bill **STEADY** 0.8% (−18.8% to +21.2%) |
+
+By the index's rule (only what held the same way in all three of our runs enters) the same routes read **+18.5%** and
+**+14.5%** GAIN (gauges correlated +13.3% to +15.8%), the second the repository's headline: speed +45.3%, machines +5.7%,
+energy +3.1%, work +24.6%, the bill +0.00%. With the card's one old run carried, its speed LOSS pulls the through-the-cloud index
+to +5.4%. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and,
+through the cloud, the wire's. Neither is a bill in money (section 76.8): only the cloud's compute is metered in money, and its
+one-run reading is the STEADY above. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+these results.
+
+### 60.7 A real database, a real message broker, a real cache
 
 Five stacks whose knob is a resource an operator sizes once and leaves, run as one shape of test on the engine that stands,
 omni-v11: three paired repetitions a run, three separate runs (A, B and C, released by the conductor on 18 and 19 October), the
@@ -8799,52 +9028,52 @@ native exactly as the vendor ships it, every other rule unchanged (each preregis
 factory setting is already at the knob's top, the knob is at its limit on native and Omni-Compass watches. On the engine that
 stands every move on these knobs passes the brain's verdict first (section 45.4): a give-back or a spend is written only after
 its paired trial on the stack itself reads no LOSS, so a knob that cannot prove it pays stays at the operator's setting, and a
-table that reads EVEN on every row is the do-no-harm reading, not a missing one. Run and scored by The Omni-Compass LLC's own
+table that reads STEADY on every row is the do-no-harm reading, not a missing one. Run and scored by The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
 - **PostgreSQL 16 behind PgBouncer** (`V11_PGBENCH.md`; runs 39149254727, 39157791268, 39166378754): the pooler's pool size on
-  `select`, `simple_update` and `tpcb_hot`. 35 judged rows read EVEN and one power given: on `simple_update` the most server
+  `select`, `simple_update` and `tpcb_hot`. 35 judged rows read STEADY and one power given: on `simple_update` the most server
   connections open at once rose 8% to 10% in all three runs while the mean held open, the work inside the line, the latency
   and the host's CPU stayed inside the noise. Nothing measurable was bought with it, and the table shows it. Every pool was
   handed back. **At the max** (`V11_PGBENCH_SERVICE.md`; runs 39182915425, 39184166001, 39185403353): the server connections
   held open fell 18% to 22% on `select` and 10% to 16% on `tpcb_hot`, GAIN in all three of our runs; the other 34 judged rows
-  EVEN.
+  STEADY.
 - **MySQL 8.0 under sysbench** (`V11_SYSBENCH.md`; runs 39149259396, 39157795408, 39166382450): the InnoDB buffer pool on four
-  untouched workloads. 46 judged rows EVEN and two where the runs disagree: on `update_index` the throughput (transactions and
+  untouched workloads. 46 judged rows STEADY and two where the runs disagree: on `update_index` the throughput (transactions and
   queries a second, one measure counted twice) moved −0.02%, +0.26% and −0.35%, two runs clear of zero in opposite directions,
   a machine-level effect under an offered rate that pins throughput near 98% of what is offered (`docs/LIMITATIONS.md`,
   section 2). Work, p95, p99 and CPU inside the noise on every other row; every pool handed back. **Native as shipped**
   (`V11_SYSBENCH_SHIPPED.md`; runs 39150486066, 39159004803, 39167578494): from the factory's 128 MB pool Omni-Compass raised
   the pool 5% to 9% on `read_only` and `read_write` and the pages in use 4% to 16% on three workloads, power given in all three
-  of our runs, with work, latency and failures EVEN: at this load the larger pool bought nothing measurable, and the table
-  says so. **At the max** (`V11_SYSBENCH_SERVICE.md`; runs 39182906799, 39184157413, 39184175254): all 48 judged rows EVEN.
+  of our runs, with work, latency and failures STEADY: at this load the larger pool bought nothing measurable, and the table
+  says so. **At the max** (`V11_SYSBENCH_SERVICE.md`; runs 39182906799, 39184157413, 39184175254): all 48 judged rows STEADY.
 - **MongoDB under YCSB** (`V11_YCSB.md`; runs 39149263618, 39158992412, 39167564949): the storage engine's cache on `b`, `c`,
-  `f` and `burst`. 43 judged rows EVEN and one GAIN: on `f` the cache held fell 0.9% to 1.0% in all three runs, with work,
+  `f` and `burst`. 43 judged rows STEADY and one GAIN: on `f` the cache held fell 0.9% to 1.0% in all three runs, with work,
   latency and reads into the cache inside the noise. **At the max** (`V11_YCSB_SERVICE.md`; runs 39182911063, 39184161631,
   39184179710): the cache held fell 0.4% to 0.8% on `b` and 0.6% to 0.8% on `f`, GAIN in all three of our runs; the other 42
-  judged rows EVEN. **Native as shipped** (`V11_YCSB_SHIPPED.md`; runs 39150495654,
+  judged rows STEADY. **Native as shipped** (`V11_YCSB_SHIPPED.md`; runs 39150495654,
   39160201436, 39169863638): the server's own cache (about 7.5 GB) is above the cover's top, the knob is at its limit on native,
-  and all 44 judged rows read EVEN. Every cache handed back.
+  and all 44 judged rows read STEADY. Every cache handed back.
 - **Apache Kafka 3.9.1** (`V11_KAFKA.md`, objective resource; `V11_KAFKA_SERVICE.md`, objective service; runs 39149249969,
   39157787056, 39166374877 and 39150481307, 39159000835, 39167574190): the consumer group's size. Under both objectives the
-  consumers running fell 0.8% on `burst`, GAIN in all three of our runs, every other judged row EVEN (the tuning workload,
+  consumers running fell 0.8% on `burst`, GAIN in all three of our runs, every other judged row STEADY (the tuning workload,
   shown and not counted, read −0.3% under the service objective). Work inside the line, throughput, latency, lag and CPU read
-  EVEN under both; no message lost; every group handed back.
+  STEADY under both; no message lost; every group handed back.
 - **Redis 7.0** (`V11_REDIS.md`, objective resource; `V11_REDIS_SERVICE.md`, objective service; `V11_REDIS_SHIPPED.md`, native
   as shipped; runs 39149244903, 39157782849, 39166371110, then 39149267883, 39158996767, 39167569649, then 39150490855,
   39159008310, 39167582853): the cache's memory ceiling. Under the resource objective, on `large` the work inside the 2 ms line
   and the hit rate rose 1.4% to 1.6%, and on `burst` the ceiling fell 2.3% to 2.6% and the memory used 0.9% to 1.3%, all GAIN in
-  all three of our runs; `small` read EVEN. Under the service objective, on `large` the work inside the line and the hit rate
+  all three of our runs; `small` read STEADY. Under the service objective, on `large` the work inside the line and the hit rate
   rose 1.4% to 1.6% and the mean latency fell 6.3% to 7.3%; on `small` the work and the hit rate rose 1.3% and the mean latency
   fell 1.7% to 2.0%: all GAIN in all three of our runs, for a ceiling 2.2% to 2.6% higher and 1.7% to 1.9% more memory used on
   `small`, **power given in all three of our runs**. With native exactly as shipped (no ceiling, `maxmemory 0`) the knob is at
-  its limit on native: Omni-Compass wrote nothing, and every row reads EVEN but one, a memory rise of 0.01% on `small`, power
-  given. The 99th percentile on `small` reads about 6 µs higher (0.1%) in single runs of the two operator's sets and EVEN by the
+  its limit on native: Omni-Compass wrote nothing, and every row reads STEADY but one, a memory rise of 0.01% on `small`, power
+  given. The 99th percentile on `small` reads about 6 µs higher (0.1%) in single runs of the two operator's sets and STEADY by the
   rule: the harness runs the brain inside the load generator's own process, and a controlled test shows that presence alone
   lengthens the timed requests (`docs/TAIL_LATENCY.md`, section 4); the next version's harness runs it apart, as a
   deployment does. No request failed; every ceiling handed back.
 
-### 60.6 Robustness: the governor killed outright, the long run, its own cost
+### 60.8 Robustness: the governor killed outright, the long run, its own cost
 
 The robustness benchmark (`docs/ROBUSTNESS_PREREGISTRATION.md`) is a test of Omni-Compass itself, not of a gain. Both of its
 tests ran three times on omni-v11, on the kind rig that pulls the served image onto every worker before each arm; the runs of
@@ -8854,10 +9083,10 @@ each test made before that rig are kept in the record and not counted, and they 
 each run). The governor is killed outright at 40% of the window; the watchdog hands every setting back to the operator's; a
 second governor starts at 50% and governs to the end. In all 30 repetitions every setting was back at the operator's 8 to 11 s
 after the kill (the allowance is 60 s), and the second governor governed to the end in every one. In the 120 s after the kill,
-failed requests and the time over the line read EVEN against native in all three runs. Over the whole window the mean response
+failed requests and the time over the line read STEADY against native in all three runs. Over the whole window the mean response
 time fell 29% to 44%, the 95th percentile 39% to 58%, the time over the line 30% to 31%, failed requests 7% to 12% and the alert
 minutes 16% to 23%, GAIN in all three of our runs; HPA replicas rose 3% to 6%, power given; machines the same. The 99th
-percentile reads EVEN: it rose 25% in run A and fell 25% to 27% in B and C. In nine of run A's ten repetitions both arms' 99th
+percentile reads STEADY: it rose 25% in run A and fell 25% to 27% in B and C. In nine of run A's ten repetitions both arms' 99th
 percentile is the probe's 10-second timeout; the rise is one repetition's, where the omni arm's slowest answers reached 9.2 s
 at the load's peak, 140 to 190 s after the kill, with every setting already back at native's and both arms at the same ten
 replicas, while the runner's processor was 100% busy for 70 s. The second governor had started 50 s earlier on the same four
@@ -8869,14 +9098,14 @@ is a quarter); it made 97.5% of the decisions its interval predicts in every rep
 failed; its decision time in the last hour was at most 1.13 times the first hour's (no growth: the limit is 1.5); and every
 setting was handed back at the end of every repetition and read back at the operator's. The mean response time fell 34% to 36%,
 the time over the line 32% to 35% and the alert minutes 14% to 19%, GAIN in all three of our runs; HPA replicas rose 49% to 52%,
-power given; the other service rows read EVEN (three pairs give wide intervals, as the preregistration says they would);
+power given; the other service rows read STEADY (three pairs give wide intervals, as the preregistration says they would);
 machines the same. The earlier engines' robustness tables (`V10_ROBUST_LONG.md`, `V3_ROBUST_KILL.md`) stay their own record.
 
 **The governor's own CPU** is shown in every Kubernetes table of sections 60.1 and 60.2: 0.007 to 0.012 of one core on
 average (all four in one run 0.0081 to 0.0100, faults 0.0094 to 0.0101, the Google day 0.0092 to 0.0098; on omni-v11 the long
 run 0.0104 to 0.0108 and the kill test 0.0126 to 0.0133, a second governor starting inside its window), shown and not judged.
 
-### 60.7 The modelled realms and the independent simulators
+### 60.9 The modelled realms and the independent simulators
 
 Every result here is evidence class S: a statement about a published model under its own native controller, never about
 hardware, and never counted in the Omni index. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
@@ -8886,7 +9115,7 @@ or approved these results.
 
 - **The 1,107 muscles and the seven organisms** (`results/realms_v5/REALMS_V5.md`, run again on omni-v8 on 17 October, every
   reading the same to the digit): every muscle alone over its
-  loads, 527 GAIN and 580 EVEN, none LOSS; every organism, the spine first, GAIN (fewer misses) under its own load, the climb and
+  loads, 527 GAIN and 580 STEADY, none LOSS; every organism, the spine first, GAIN (fewer misses) under its own load, the climb and
   the line, the energy the max took shown as power given. The three GitHub runs of 16 October (38931342073, 38941579484,
   38953616422) reproduced the committed result exactly.
 - **The power grid** (`V11_PANDAPOWER.md`; runs 39151675293, 39160210556, 39169871088): eleven SimBench grids solved by
@@ -8928,35 +9157,55 @@ or approved these results.
 
   The distance from zero net energy fell in three districts and rose 0.02% in one, power given. The seven 2023 districts
   simulate power outages. Their batteries stay native, because the charge is also the building's reserve (omni-v8, after
-  omni-v7 read LOSS there: energy not served +2.0% to +9.8%). Every score there reads EVEN, the same: the energy not served and
+  omni-v7 read LOSS there: energy not served +2.0% to +9.8%). Every score there reads STEADY, the same: the energy not served and
   the discomfort are native's to the last digit. Two rows read "the runs differ" on the time uncomfortable, though the paired
   change is exactly zero in every run: CityLearn's own value moved by at most 3.6 × 10⁻⁵ between runs, in both arms alike.
   In all, 27 score-rows GAIN, 1 power given and no LOSS. The wire's road since then: omni-v9 reads the coming hour, and omni-v10
-  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v19, the engine that stands, carry it unchanged.
-- **The orchestrators on the same organisms, the third arm** (`results/orchestrators/ORCHESTRATORS.md`; preregistered in
-  `docs/ORCHESTRATORS_PREREGISTRATION.md`; the founder's order of 25 October): the Kubernetes scheduler as shipped, its
-  bin-packing profile, Volcano v1.16.0, Kueue v0.20.2, the KAI scheduler v0.18.6 and Koordinator 1.8.0, each rule written from its
-  own release files, on twelve injections from the benchmarks that carry them, on the kind rig (six workers on one runner) and in
-  the cloud (machines of their own under the Cluster Autoscaler), eight repetitions, every arm of a repetition meeting the same
-  random numbers, and the shipped governor of omni-v19 on top of each. On the kind rig, where every worker shares one host, where
-  a pod lands changes nothing: the orchestrators read EVEN against Kubernetes alone but Kueue, whose admission makes work wait (5
-  LOSS), and Koordinator, whose best-effort batch yields the processor to the service (4 GAIN, 3 LOSS, 1 power given); Omni-Compass
-  on top of each reads 20 to 21 GAIN (the 95th percentile down 0.8% to 50.1%, its conveyance giving the serving pods the host's
-  idle processor) and 2 LOSS where the batch stream runs beside a failing service (a job's turnaround up 9.3%: the breach reflex
-  gives the service the processor), none on top of Koordinator. In the cloud, where machines are their own, packing matters: the
-  KAI scheduler, packing the service by its requests, reads 37 LOSS (the 95th percentile up 6.9% to 4,700.0%: its answers time out), Volcano 20,
-  Koordinator 7, Kueue 6 and the bin-packing profile 2; Omni-Compass on top, at the tune-down on the machines alone, reads 85 or 86
-  of 86 rows EVEN, since omni-v19 gives nothing back before it has watched its organism for two hours. Two faults of the model
-  were found in its own first runs and corrected before the third (amendments 1 and 2), each run kept whole in `docs/history`.
+  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v23, the engine that stands, carry it unchanged.
 
-### 60.8 The one number, and the table
+### 60.10 The ten organisms two ways: the twenty scenarios (modelled, class S)
 
-**The one number.** The Omni index over the real categories, the same in all three of our runs, each test read from its own
-newest table with a reading (4 tests on omni-v12, 3 on omni-v11, 7 on omni-v10, until each one's omni-v12 runs land; no table
-is pooled across engines): **+4.3%, GAIN** (real Kubernetes +28.6% over its nine tests, the real cache +0.1%, real messaging +0.1%, the storage-engine
-cache +0.1%, the real database and the buffer pool exactly nothing, each category weighed the same; Azure and the card join as
-their three-run tables land). The second reading, service alone (work and speed scored, machines and energy shown), stands at
-**+11.9%, GAIN** (Kubernetes +96.1%, the cache +0.2%, the other stacks nothing). A category enters at whatever its tables show in
+The ten organisms of section 34.7, each native and with Omni-Compass on native, on engine omni-v19, three runs (seeds 3000,
+3001 and 3002, the same seed in both arms), under the climb for 240 decisions of 15 s, the brain going silent at 80% of every
+run and the lease walking every setting back to native (`results/scenarios/SCENARIOS_20.md`, every run's every gauge in
+`results/scenarios/SCENARIOS_20.json`; `python3 tools/scenarios_20.py`). Evidence class S: a model's energy is not a meter's,
+and a plant written by the people who wrote the law is not an independent test. Each organism is read gauge by gauge as the
+live benchmark engine's harness record reads it, the change per decision averaged over blocks of ten decisions with its 95% interval over
+the 24 blocks, by the key. The gauges: work (the work index, 1.0 native's own work; a rise is GAIN), muscles over the line
+(counted each decision; a fall is GAIN; the change is a share of native's own count), power (the organism's electrical draw; a
+fall is a cut, a rise power given). The record's table, every row (native's own gauges, the mean of runs A, B and C, then
+Omni-Compass on native against native, the word and the mean of the three runs' changes):
+
+| # | Organism | Muscles | Native (Omni-Compass off) | Omni-Compass on native, against native |
+|---:|---|---:|---|---|
+| 1 | The spine | 267 | work index 1.000; 21.38 muscles over the line a decision (8.01% of muscle-decisions); 3,418.4 kW (13,262.9 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 8.36% · power **STEADY** 0.49% |
+| 2 | Compute / AI / Cloud | 540 | work index 1.000; 29.80 muscles over the line a decision (5.52% of muscle-decisions); 3,890.7 kW (14,962.9 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 7.41% · power **GAIN** 0.59% |
+| 3 | Physics / Robotics / Autonomous | 404 | work index 1.000; 38.22 muscles over the line a decision (9.46% of muscle-decisions); 4,811.8 kW (19,023.4 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 3.89% · power **STEADY** 0.26% |
+| 4 | Energy / Facility / Industrial | 480 | work index 1.000; 39.22 muscles over the line a decision (8.17% of muscle-decisions); 2,953,821.5 kW (10,659,898.0 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 3.02% · power **STEADY** 0.00% |
+| 5 | Distribution / Specialized | 484 | work index 1.000; 29.72 muscles over the line a decision (6.14% of muscle-decisions); 15,072.9 kW (55,218.8 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 7.22% · power **STEADY** 0.17% |
+| 6 | The four stacked | 1,908 | work index 1.000; 136.97 muscles over the line a decision (7.18% of muscle-decisions); 2,977,596.8 kW (10,749,103.1 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 5.13% · power **STEADY** 0.00% |
+| 7 | The whole tower | 1,107 | work index 1.000; 75.27 muscles over the line a decision (6.80% of muscle-decisions); 2,967,368.7 kW (10,709,412.1 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 1.58% · power **STEADY** 0.00% |
+| 8 | The orchestra | 55 | work index 1.000; 1.72 muscles over the line a decision (3.13% of muscle-decisions); 91.5 kW (329.4 MJ) | work **STEADY** 0.19% · muscles over the line **GAIN** 63.34% · power **power given** 52.38% |
+| 9 | The live benchmark engine's organism | 60 | work index 1.000; 3.73 muscles over the line a decision (6.21% of muscle-decisions); 408,580.7 kW (1,471,946.9 MJ) | work **STEADY** 0.00% · muscles over the line **GAIN** 5.61% · power **STEADY** 0.00% |
+| 10 | The whole organism, three sectors | layers | the reference of every factor | work **GAIN** 24.6% · speed **GAIN** 45.3% · machines **GAIN** 5.7% · energy **GAIN** 3.1% · bill **STEADY** 0.0%; the index **GAIN** 14.5% (+13.3% to +15.8%, the gauges perfectly correlated) (the composition, by the index's rule, without the card) |
+
+Every GAIN and power given above holds in all three of our runs; every STEADY is under the floor or the same. **No row reads
+LOSS.** The record of 24 October also carried a third way, Omni-Compass by itself (each pool's own autoscaler switched off,
+`realms/harness.py` SOLO), which read LOSS in all three of our runs on work and on muscles over the line in eight organisms,
+32 rows; the founder's order of 25 October took that way out, and its record, with every one of those rows and their cause, is
+kept whole in `docs/history/SCENARIOS_30_2026-10-24.md`. Run and scored by The Omni-Compass LLC's own code. No outside party
+has reviewed or approved these results.
+
+### 60.11 The one number, and the table
+
+**The one number.** The Omni index over the real categories, judged across our three runs by the rule of 24 October, each
+test read from its own newest table with a reading (5 on omni-v16, 2 on omni-v11, 7 on omni-v10; no table is pooled across
+engines): **+3.4%, GAIN** (real Kubernetes **GAIN 28.6%** over its nine tests, the database's buffer pool **GAIN 1.6%**,
+real messaging and the real cache **power given 0.1%** each, the database's storage-engine cache **LOSS 1.4%**, the database
+behind its pooler **LOSS 4.9%**, each category weighed the same; Azure and the card join as their three-run tables land). The
+second reading, service alone (work and speed scored, machines and energy shown), stands at **+9.4%, GAIN** (Kubernetes +96.1%
+GAIN, the cache GAIN 0.4%, messaging STEADY, the buffer pool LOSS 0.00%, the storage-engine cache LOSS 1.2%, the database
+LOSS 12.0%). The benefit sheet reads the index's row GAIN AND LOSS. A category enters at whatever its tables show in
 all three of our runs, nothing included, which is the reader's guarantee that the number is not built from the categories that
 happened to work. The numbers of earlier engines are the road, in `docs/history`, and are never read beside these.
 
@@ -8966,32 +9215,32 @@ happened to work. The numbers of earlier engines are the road, in `docs/history`
 
 | Result (the newest table of each test, three runs each) | Class | Reading | Source |
 |---|---|---|---|
-| Real Kubernetes, steady work in steps (omni-v10) | L | p95 −64% to −65%, p99 −69% to −73%, time over the line −98% to −100%, alert minutes −100%, GAIN; machines and energy EVEN | `results/live/V10_STEADY.md` |
+| Real Kubernetes, steady work in steps (omni-v10) | L | p95 −64% to −65%, p99 −69% to −73%, time over the line −98% to −100%, alert minutes −100%, GAIN; machines and energy STEADY | `results/live/V10_STEADY.md` |
 | Real Kubernetes, demand that wanders (omni-v10) | L | p95 −57% to −66%, time over the line −38% to −45%, alert minutes −21% to −32%, energy −0.3% to −0.4%, GAIN | `results/live/V10_WANDERING.md` |
 | Real Kubernetes, all four in one run (omni-v10) | L | work inside the line +47% to +79%, p95 −56% to −61%, failed requests −9% to −14%, alert minutes −16% to −34%, all GAIN; machines the same | `results/live/V10_ALL_FOUR.md` |
 | Real Kubernetes, faults (omni-v10) | L | p95 −54% to −63%, p99 −43% to −51%, GAIN; replicas +14% to +20%, power given | `results/live/V10_FAULTS.md` |
-| Real Kubernetes, a queue of batch jobs (omni-v10) | L | machines −6% to −14%, node-hours −6% to −14%, standby energy −4% to −10%, mean response −10% to −12%, GAIN; the queue finished EVEN | `results/live/V10_BATCH.md` |
-| Real Kubernetes, a noisy neighbour (omni-v10) | L | time over the line −11%, GAIN; every other row EVEN, the neighbour's own included | `results/live/V10_FAIRNESS.md` |
+| Real Kubernetes, a queue of batch jobs (omni-v10) | L | machines −6% to −14%, node-hours −6% to −14%, standby energy −4% to −10%, mean response −10% to −12%, GAIN; the queue finished STEADY | `results/live/V10_BATCH.md` |
+| Real Kubernetes, a noisy neighbour (omni-v10) | L | time over the line −11%, GAIN; every other row STEADY, the neighbour's own included | `results/live/V10_FAIRNESS.md` |
 | Real Kubernetes, a public day of demand, Google 2011 (omni-v10) | L | p95 −56% to −62%, time over the line −74% to −77%, failed requests −15% to −18%, alert minutes −61% to −66%, GAIN; pods started +120% to +193%, power given | `results/live/V10_TRACE_GOOGLE2011.md` |
 | Real Kubernetes on Goldilocks, KEDA (two ways) and fixed capacity (omni-v11); on CruiseKube (omni-v10) | L | section 60.2 | `results/live/V11_GOLDILOCKS.md`, `V11_KEDA_*.md`, `V11_CAPACITY.md`, `V10_CRUISEKUBE.md` |
 | Robustness, the governor killed outright (omni-v11) | L | every setting back at the operator's 8 to 11 s after the kill in 30 of 30 repetitions; p95 −39% to −58%, failed requests −7% to −12%, alert minutes −16% to −23%, GAIN; replicas +3% to +6%, power given | `results/live/V11_ROBUST_KILL.md` |
 | Robustness, the two-hour run (omni-v11) | L | no leak, decisions valid, no failed decision, every setting handed back; mean response −34% to −36%, GAIN; replicas +49% to +52%, power given | `results/live/V11_ROBUST_LONG.md` |
-| PostgreSQL, MySQL, MongoDB (omni-v11) | L | EVEN on every judged row but four: MongoDB's cache on `f` −0.9% to −1.0%, GAIN; PgBouncer's most connections open +8% to +10%, power given; MySQL's update throughput, the runs disagree; native as shipped: MySQL's pool +5% to +16%, power given, MongoDB EVEN; at the max: PgBouncer's connections held −10% to −22% and MongoDB's cache −0.4% to −0.8%, GAIN, MySQL EVEN | `results/live/V11_PGBENCH*.md`, `V11_SYSBENCH*.md`, `V11_YCSB*.md` |
-| Kafka (omni-v11) | L | consumers −0.8% on `burst`, GAIN under both objectives; the rest EVEN | `results/live/V11_KAFKA.md`, `V11_KAFKA_SERVICE.md` |
-| Redis (omni-v11) | L | work inside the line and hit rate +1.3% to +1.6%, mean latency −1.7% to −7.3%, GAIN; memory +1.7% to +1.9% on `small`, power given; native as shipped EVEN | `results/live/V11_REDIS.md`, `V11_REDIS_SERVICE.md`, `V11_REDIS_SHIPPED.md` |
-| The 1,107 muscles and seven organisms | S | 527 GAIN, 580 EVEN, none LOSS; every organism GAIN under three loads | `results/realms_v5/REALMS_V5.md` |
+| PostgreSQL, MySQL, MongoDB (omni-v11) | L | STEADY on every judged row but four: MongoDB's cache on `f` −0.9% to −1.0%, GAIN; PgBouncer's most connections open +8% to +10%, power given; MySQL's update throughput, the runs disagree; native as shipped: MySQL's pool +5% to +16%, power given, MongoDB STEADY; at the max: PgBouncer's connections held −10% to −22% and MongoDB's cache −0.4% to −0.8%, GAIN, MySQL STEADY | `results/live/V11_PGBENCH*.md`, `V11_SYSBENCH*.md`, `V11_YCSB*.md` |
+| Kafka (omni-v11) | L | consumers −0.8% on `burst`, GAIN under both objectives; the rest STEADY | `results/live/V11_KAFKA.md`, `V11_KAFKA_SERVICE.md` |
+| Redis (omni-v11) | L | work inside the line and hit rate +1.3% to +1.6%, mean latency −1.7% to −7.3%, GAIN; memory +1.7% to +1.9% on `small`, power given; native as shipped STEADY | `results/live/V11_REDIS.md`, `V11_REDIS_SERVICE.md`, `V11_REDIS_SHIPPED.md` |
+| The 1,107 muscles and seven organisms | S | 527 GAIN, 580 STEADY, none LOSS; every organism GAIN under three loads | `results/realms_v5/REALMS_V5.md` |
 | Power grids (omni-v11) | S | 67 gauge-rows GAIN, 14 power given, no LOSS | `results/live/V11_PANDAPOWER.md` |
 | Robot arms (omni-v11) | S | the Gen3: torque −28.6%, tracking error −21.3%, GAIN; two arms left native | `results/live/V11_MUJOCO.md` |
-| Drone swarms (omni-v11) | S | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN; the closest approach spent to about 0.16 m (shown); collisions on a mission draw outside the counted cells, a fault in the wire fixed in omni-v12, its runs under way (section 60.7) | `results/live/V11_SWARM.md` |
+| Drone swarms (omni-v11) | S | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN; the closest approach spent to about 0.16 m (shown); collisions on a mission draw outside the counted cells, a fault in the wire fixed in omni-v12, its runs under way (section 60.9) | `results/live/V11_SWARM.md` |
 | Buildings with batteries (omni-v11) | S | 27 score-rows GAIN, 1 power given, no LOSS; the batteries of the outage districts native | `results/live/V11_CITYLEARN.md` |
 
-**Running now and next.** Every benchmark runs again on omni-v19, the engine that stands, released by the conductor
+**Running now and next.** Every benchmark runs again on omni-v23, the engine that stands, released by the conductor
 (`scripts/dispatch_grid.py`, `scripts/reruns.txt`: A of every benchmark, then B, then C), the steady and wandering Kubernetes
 tests among them; Azure one run at a time in its region (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day;
 A, B and C); the grid with the real cluster inside on GitHub's free runners. The runs of earlier engines already started
 run to their end and stand as their own engine's record. Google and Amazon are not yet run: their first sets, on omni-v10 on 18 October, stopped at the login at no cost, and since 24 October both queues are switched off and kept, wired as Azure's sets run (100 paired repetitions under the stopping rule, the 60 s beat, the $0 check first), each switched on by the founder's word (Google once its key is stored whole, Amazon once its account is on its Paid plan); the GPU chips wait for the founder's word; the CPU governor's measured run waits for a machine with a power meter.
 
-### 60.9 Wire in, or watch: the verdict per knob
+### 60.12 Wire in, or watch: the verdict per knob
 
 The founder's order of 9 October 2026 made a principle of what section 1.2 describes as a mechanism: Omni-Compass need
 not be wired into every muscle. Where it cannot beat the native controller on the muscle's own gauges, the muscle lives by
@@ -9005,7 +9254,7 @@ GAIN and LOSS (or power given) both hold in all three of our runs, a trade shown
 its realms label (`results/realms_v5`): a GAIN on work, speed or misses is write, the energy the max took for it power given and
 never a trade; SAME AS NATIVE and AT ITS LIMIT ON NATIVE are watch.
 
-What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v19); it changes what an operator connects.
+What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v23); it changes what an operator connects.
 
 **The same verdict, live (built 9 October, running since 10 October).** The page judges after the fact; the founder's order is that the
 brain judge in real time, on the knob, before it writes. On the five live stacks that is now in the harnesses (section 45.4;
@@ -9019,7 +9268,7 @@ MongoDB's cache given back a notch a trial). The runs were dispatched on 10 Octo
 rerun of every benchmark on one commit (`docs/RERUN_2026-10-10.md`), and the tables, the index and the page are then read again
 from them.
 
-### 60.10 The second set of 10 October, and the four rules it taught the trial
+### 60.13 The second set of 10 October, and the four rules it taught the trial
 
 The five live products ran a second time on 10 October on the amended trial rule (a spend trial runs to its samples; it is
 never ended by the calm it causes). The trials finished. The brain still refused the Kafka consumer almost every time, and
@@ -9046,7 +9295,7 @@ anywhere pushed to a LOSS to move one thing to a GAIN; one trial at a time insid
 body; every wire forced through it. Part Two gains its chapter when v4 is written and run, and every result in this chapter is
 run again on it.
 
-### 60.11 Threats to validity, stated by us
+### 60.14 Threats to validity, stated by us
 
 A referee will look for the ways these results could mislead. We list the ones we know, what each would do to the
 numbers, and what the record does about it.
@@ -9093,18 +9342,18 @@ numbers, and what the record does about it.
    test's own rules, the derivation receipted and committed before the runs; its result (section 60.1) read the same way
    as the six, p95 65% to 71% faster and machines 6% to 10% fewer, the same in all three of our runs, with no row LOSS.
 
-### 60.12 What is not yet shown, and the open program
+### 60.15 What is not yet shown, and the open program
 
 Three things this manual does not show, and the program that will show them or show their absence:
 
 - **An energy or bill saving on real machines.** The fleet of 40 workers in nine Azure machine families that can show one
   machine is preregistered and dispatched on v3; it runs when Azure's region admits a cluster. If the saving is a few
-  percent, a 40-worker fleet can see it; if the saving is not there, the table will say "no difference beyond the noise"
+  percent, a 40-worker fleet can see it; if the saving is not there, the table will say "STEADY"
   on a fleet that could have seen it, and that will be the result.
 - **The real card.** Every earlier GPU result ran on a controller since replaced. The two-wire governor with the verdict
   runs on rented cards at one named commit, with the wire check first (`docs/GPU_RUN_GUIDE.md`,
   `docs/GPU_PREREGISTRATION.md`); until then the card has no result and the manual says so.
-- **Robustness over a day.** The governor killed outright is a measured result (section 60.6: every setting back in 7 to
+- **Robustness over a day.** The governor killed outright is a measured result (section 60.8: every setting back in 7 to
   11 s, thirty times out of thirty), its own cost is tabulated, and the two-hour run is measured three times (no leak,
   no slowing, every decision expected but a few the cluster's API refused, every setting handed back); the 24-hour run,
   one pair on each of three rented eight-core machines of three families, is under way (`docs/ROBUSTNESS_PREREGISTRATION.md`,
@@ -9112,7 +9361,7 @@ Three things this manual does not show, and the program that will show them or s
 - **A demand shape that is not ours, on more than one trace.** The first public trace (a day of the Google cluster trace of
   2011, section 60.1) read the same way as our own schedules, nine rows GAIN in all three of our runs and none LOSS; it is one day of one
   batch cluster's job arrivals. The Azure Functions invocation trace, a request-driven shape, follows by the same rule, and
-  the "our own schedules" threat of section 60.11 is answered in full only when a second, differently shaped day reads the
+  the "our own schedules" threat of section 60.14 is answered in full only when a second, differently shaped day reads the
   same way.
 
 The queue beyond these, in order, is `docs/REGISTER.md` section 4, one or two at a time, each preregistered before it
@@ -9130,16 +9379,16 @@ published as Omni-Compass 1.0, and the older fingerprints go to `docs/history` a
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **EVEN**: native and Omni-Compass could not be told apart (the 95% interval includes zero: no difference beyond the noise), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A reading counts when it holds the same way in all three of our runs, A, B and C, with every interval clear of zero; **the runs disagree** names a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
-Omni-Compass is wired **out of** every muscle: it reads every reading. It is wired **into** a knob only where the paired measurement shows no gauge of the muscle read **LOSS** against native. Where the measurement shows nothing (**EVEN**), or shows a LOSS, the muscle stays native and Omni only watches it: one wire out, no wire in. This is not a new rule. It is what the engine does on the muscle itself before it moves anything (`omnicompass/verdict.py`: the paired trial, and the verdict **left native** where no step is allowed), and it is the watch arm of every realms run (`docs/REALMS_PREREGISTRATION.md`: the governor reads every period and writes nothing). This page applies the same principle to every published result, one verdict per knob, so that an operator can see which knobs earn a wire in and which stay native. The founder's order of 9 October 2026: where Omni cannot beat native, the muscle lives by itself; we only wire out of it.
+Omni-Compass is wired **out of** every muscle: it reads every reading. It is wired **into** a knob only where the paired measurement shows no gauge of the muscle read **LOSS** against native. Where the measurement shows nothing (**STEADY**), or shows a LOSS, the muscle stays native and Omni only watches it: one wire out, no wire in. This is not a new rule. It is what the engine does on the muscle itself before it moves anything (`omnicompass/verdict.py`: the paired trial, and the verdict **left native** where no step is allowed), and it is the watch arm of every realms run (`docs/REALMS_PREREGISTRATION.md`: the governor reads every period and writes nothing). This page applies the same principle to every published result, one verdict per knob, so that an operator can see which knobs earn a wire in and which stay native. The founder's order of 9 October 2026: where Omni cannot beat native, the muscle lives by itself; we only wire out of it.
 
 Every verdict here is computed by `tools/wiring_verdicts.py` from the test's own result file; nothing is typed in, and `verify.py` fails if this page differs from what the tables give. One row per knob and case: `results/WIRING_VERDICTS.csv` (1214 rows, the 1,107 modelled muscles included one by one, and the seven organisms under three loads).
 
 ### 61.1 The rule
 
-Every judged gauge of a table counts (rows marked "shown, not judged" never do). Every reading is **GAIN**, **EVEN** or **LOSS**, decided by what the gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`): response times and failed requests are time waited, missed or failed, so a fall is GAIN; work done is GAIN when it rises; machines, energy, memory, connections, consumers and processor time are resources spent, so a fall is a cut, a GAIN, and a rise is **power given**, the price named beside what it bought. Each gauge's aim is its preregistration's; an operator whose aim differs reads the same numbers the other way. A knob reads:
+Every judged gauge of a table counts (rows marked "shown, not judged" never do). Every reading is **GAIN**, **STEADY** or **LOSS**, decided by what the gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`): response times and failed requests are time waited, missed or failed, so a fall is GAIN; work done is GAIN when it rises; machines, energy, memory, connections, consumers and processor time are resources spent, so a fall is a cut, a GAIN, and a rise is **power given**, the price named beside what it bought. Each gauge's aim is its preregistration's; an operator whose aim differs reads the same numbers the other way. A knob reads:
 
 - **write**: at least one gauge GAIN across our three runs, and no LOSS and no power given. Omni holds the knob.
 - **watch**: no GAIN across our three runs. The knob stays native; Omni reads it and writes nothing. Where a gauge read LOSS or power given across our three runs, it is named and its cause given below. Where the runs disagree, nothing is settled and the knob stays native until it is.
@@ -9151,12 +9400,12 @@ A modelled muscle (the 1,107 on their plants under its own load and work waiting
 
 | Where | Knobs or cases | Write | Operator's choice | Watch |
 |---|---:|---:|---:|---:|
-| Real stacks, three runs each (Kubernetes under seven demands; the pool, the consumer group, the memory ceiling, the storage-engine cache and the buffer pool, each under its untouched workloads) | 26 | 5 | 20 | 1 |
+| Real stacks, three runs each (Kubernetes under seven demands; the pool, the consumer group, the memory ceiling, the storage-engine cache and the buffer pool, each under its untouched workloads) | 26 | 4 | 19 | 3 |
 | Independent simulators, three runs each (robot arms, grids, districts, swarms; evidence class S) | 38 | 21 | 14 | 3 |
 | The 1,107 modelled muscles, alone on their plants under two loads (evidence class S) | 1107 | 530 | 0 | 577 |
 | The organisms with the real cluster inside (GitHub at 10 and 100 copies; Azure at 1,000) | 14 | 12 | 1 | 1 |
 
-In words: on the real stacks Omni earns its wire in on 5 of 26 knob-cases, trades on 20 and watches on 1. Of the 1,107 modelled muscles, 530 earn a wire in and 577 stay native: 421 of the 577 are at their limit on native (the knob already at the top of its range: nothing to push, read and left native) and 156 read the same as native (nothing moved beyond the noise). A knob left native costs nothing and earns nothing; it needs no wire in, and the page below says so muscle by muscle.
+In words: on the real stacks Omni earns its wire in on 4 of 26 knob-cases, trades on 19 and watches on 3. Of the 1,107 modelled muscles, 530 earn a wire in and 577 stay native: 421 of the 577 are at their limit on native (the knob already at the top of its range: nothing to push, read and left native) and 156 read the same as native (nothing moved beyond the noise). A knob left native costs nothing and earns nothing; it needs no wire in, and the page below says so muscle by muscle.
 
 ### 61.3 The real stacks (evidence class L: live software, three separate GitHub runs on the frozen engine)
 
@@ -9168,15 +9417,15 @@ The knob: the autoscaler's replicas, the floor and the machines, on top of the H
 
 | Demand | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| steady work | mean response cut 48% to 49%, p95 cut 64% to 65%, p99 cut 69% to 73%, time over the line cut 98% to 100%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100%, replicas cut 2.5% to 6.7%, pods started cut 17% to 28%, pod start wait, total (s) cut 2% to 29% | none | **write** | +29.8% | +68.4% | 8 gauges GAIN across our three runs (mean response cut 48% to 49%, p95 cut 64% to 65%, p99 cut 69% to 73%, time over the line cut 98% to 100% and 4 more), none LOSS or power given. Omni holds the knob | `results/live/V10_STEADY.md` |
-| demand that wanders | mean response cut 45% to 50%, p95 cut 57% to 65%, p99 cut 34% to 46%, time over the line cut 38% to 45%, failed requests cut 12% to 21%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 32% | LOSS: pod start wait, total (s) up 5% to 33%; power given: pods started up 20% to 48% | **operator's choice** | +36.5% | +154.6% | GAIN across our three runs: mean response cut 45% to 50%, p95 cut 57% to 65%, p99 cut 34% to 46%, time over the line cut 38% to 45% and 2 more; LOSS across our three runs: pod start wait, total (s) up 5% to 33%; power given across our three runs: pods started up 20% to 48% | `results/live/V10_WANDERING.md` |
-| all four at once | work inside the line up 47% to 79%, mean response cut 38% to 46%, p95 cut 56% to 61%, p99 cut 6% to 38%, time over the line cut 35% to 46%, failed requests cut 9% to 14%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 34%, pod start wait, mean (s) cut 13% to 23% | power given: replicas up 0.5% to 1.9%, pods started up 6% to 43% | **operator's choice** | +39.7% | +95.3% | GAIN across our three runs: work inside the line up 47% to 79%, mean response cut 38% to 46%, p95 cut 56% to 61%, p99 cut 6% to 38% and 4 more; power given across our three runs: replicas up 0.5% to 1.9%, pods started up 6% to 43% | `results/live/V10_ALL_FOUR.md` |
-| a noisy neighbour | mean response cut 10% to 15%, p99 cut 2% to 12%, time over the line cut 11%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 4.9% to 7.7%, pods started cut 22% to 27%, pod start wait, total (s) cut 21% to 32% | power given: replicas up 0.9% to 2.7% | **operator's choice** | +0.0% | +0.0% | GAIN across our three runs: mean response cut 10% to 15%, p99 cut 2% to 12%, time over the line cut 11%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 4.9% to 7.7% and 2 more; power given across our three runs: replicas up 0.9% to 2.7% | `results/live/V10_FAIRNESS.md` |
-| faults | mean response cut 33% to 40%, p95 cut 54% to 63%, p99 cut 43% to 51%, time over the line cut 26% to 31%, failed requests cut 8% to 15%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 12% to 20% | power given: replicas up 14% to 20% | **operator's choice** | +33.6% | +138.4% | GAIN across our three runs: mean response cut 33% to 40%, p95 cut 54% to 63%, p99 cut 43% to 51%, time over the line cut 26% to 31% and 2 more; power given across our three runs: replicas up 14% to 20% | `results/live/V10_FAULTS.md` |
-| a queue of jobs | machines cut 6% to 14%, machine-hours cut 6% to 14%, standby-model energy cut 4.3% to 9.5%, mean response cut 10% to 12%, p95 cut 1.7% to 3.8%, time over the line cut 3.2% to 3.7%, failed requests cut 100%, machines after the queue cut 10% to 22% | LOSS: pod start wait, total (s) up from zero, pod start wait, mean (s) up from zero, queue finished up 0.5% to 0.9%; power given: replicas up 3% to 19%, pods started up from zero | **operator's choice** | +10.2% | +12.7% | GAIN across our three runs: machines cut 6% to 14%, machine-hours cut 6% to 14%, standby-model energy cut 4.3% to 9.5%, mean response cut 10% to 12% and 4 more; LOSS across our three runs: pod start wait, total (s) up from zero, pod start wait, mean (s) up from zero, queue finished up 0.5% to 0.9%; power given across our three runs: replicas up 3% to 19%, pods started up from zero | `results/live/V10_BATCH.md` |
-| a public day of demand (Google 2011) | mean response cut 48% to 50%, p95 cut 56% to 62%, p99 cut 38% to 51%, time over the line cut 74% to 77%, failed requests cut 15% to 18%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 61% to 66%, pod start wait, mean (s) cut 10% to 30% | LOSS: pod start wait, total (s) up 45% to 116%; power given: replicas up 8% to 15%, pods started up 120% to 193% | **operator's choice** | +35.2% | +147.2% | GAIN across our three runs: mean response cut 48% to 50%, p95 cut 56% to 62%, p99 cut 38% to 51%, time over the line cut 74% to 77% and 3 more; LOSS across our three runs: pod start wait, total (s) up 45% to 116%; power given across our three runs: replicas up 8% to 15%, pods started up 120% to 193% | `results/live/V10_TRACE_GOOGLE2011.md` |
-| With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | mean response cut 36% to 37%, p95 cut 52% to 53%, p99 cut 57% to 61%, time over the line cut 97% to 100%, failed requests cut 100%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% | power given: parked-worker energy up 1.1% to 1.8%, standby-model energy up 1.1% to 1.8%, replicas up 1.8% to 3.1% | **operator's choice** | +27.8% | +111.6% | GAIN across our three runs: mean response cut 36% to 37%, p95 cut 52% to 53%, p99 cut 57% to 61%, time over the line cut 97% to 100% and 2 more; power given across our three runs: parked-worker energy up 1.1% to 1.8%, standby-model energy up 1.1% to 1.8%, replicas up 1.8% to 3.1% | `results/live/V11_KEDA_CPU_REQUESTS.md` |
-| With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | mean response cut 57%, p95 cut 72% to 74%, p99 cut 57% to 62%, time over the line cut 98% to 99%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100%, replicas cut 11% to 20%, pods started cut 4% to 28%, pod start wait, total (s) cut 7% to 19% | LOSS: failed requests up from zero; power given: parked-worker energy up 1.6% to 2.2%, standby-model energy up 1.6% to 2.2% | **operator's choice** | +52.8% | +263.9% | GAIN across our three runs: mean response cut 57%, p95 cut 72% to 74%, p99 cut 57% to 62%, time over the line cut 98% to 99% and 4 more; LOSS across our three runs: failed requests up from zero; power given across our three runs: parked-worker energy up 1.6% to 2.2%, standby-model energy up 1.6% to 2.2% | `results/live/V11_KEDA_REQUESTS.md` |
+| steady work | mean response cut 48% to 49%, p95 cut 66%, p99 cut 72% to 74%, time over the line cut 100%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100%, replicas cut 4.1% to 6.3%, pods started cut 20% to 49%, pod start wait, total (s) cut 20% to 54%, pod start wait, mean (s) cut 0% to 21% | none | **write** | +30.9% | +71.5% | 9 gauges GAIN across our three runs (mean response cut 48% to 49%, p95 cut 66%, p99 cut 72% to 74%, time over the line cut 100% and 5 more), none LOSS or power given. Omni holds the knob | `results/live/V21_STEADY.md` |
+| demand that wanders | mean response cut 40% to 45%, p95 cut 56% to 59%, p99 cut 11% to 35%, time over the line cut 35% to 40%, failed requests cut 12% to 15%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 22% to 29%, pod start wait, mean (s) cut 0.5% to 9.9% | power given: replicas up 0.1% to 2.9% | **operator's choice** | +33.6% | +138.5% | GAIN across our three runs: mean response cut 40% to 45%, p95 cut 56% to 59%, p99 cut 11% to 35%, time over the line cut 35% to 40% and 3 more; power given across our three runs: replicas up 0.1% to 2.9% | `results/live/V21_WANDERING.md` |
+| all four at once | work inside the line up 30% to 52%, mean response cut 36% to 43%, p95 cut 51% to 59%, time over the line cut 32% to 37%, failed requests cut 5.1% to 5.4%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 24% | LOSS: pod start wait, total (s) up 16% to 42%; power given: pods started up 8% to 37% | **operator's choice** | +33.5% | +78.3% | GAIN across our three runs: work inside the line up 30% to 52%, mean response cut 36% to 43%, p95 cut 51% to 59%, time over the line cut 32% to 37% and 2 more; LOSS across our three runs: pod start wait, total (s) up 16% to 42%; power given across our three runs: pods started up 8% to 37% | `results/live/V21_ALL_FOUR.md` |
+| a noisy neighbour | mean response cut 12% to 17%, p95 cut 3% to 12%, time over the line cut 9% to 11%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 1.2% to 6.2%, pods started cut 9% to 28%, second app: response time (ms), 99th percentile cut 1% to 16% | LOSS: pod start wait, mean (s) up 5% to 51%, second app: failed requests (%) up 1.1% to 3.7%; power given: replicas up 0.1% to 2.9% | **operator's choice** | +2.2% | +6.8% | GAIN across our three runs: mean response cut 12% to 17%, p95 cut 3% to 12%, time over the line cut 9% to 11%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 1.2% to 6.2% and 2 more; LOSS across our three runs: pod start wait, mean (s) up 5% to 51%, second app: failed requests (%) up 1.1% to 3.7%; power given across our three runs: replicas up 0.1% to 2.9% | `results/live/V21_FAIRNESS.md` |
+| faults | parked-worker energy cut 0.3% to 1.0%, standby-model energy cut 0.3% to 1.0%, mean response cut 38% to 48%, p95 cut 51% to 58%, p99 cut 21% to 60%, time over the line cut 28% to 34%, failed requests cut 11% to 18%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 14% to 22% | power given: replicas up 10% to 20%, pods started up 12% to 22% | **operator's choice** | +30.2% | +119.7% | GAIN across our three runs: parked-worker energy cut 0.3% to 1.0%, standby-model energy cut 0.3% to 1.0%, mean response cut 38% to 48%, p95 cut 51% to 58% and 4 more; power given across our three runs: replicas up 10% to 20%, pods started up 12% to 22% | `results/live/V21_FAULTS.md` |
+| a queue of jobs | machines cut 13% to 15%, machine-hours cut 13% to 15%, standby-model energy cut 9% to 10%, mean response cut 12% to 13%, p95 cut 0.4% to 5.7%, time over the line cut 0.2% to 4.8%, machines after the queue cut 19% to 22% | LOSS: failed requests up from zero, pod start wait, total (s) up from zero, pod start wait, mean (s) up from zero; power given: replicas up 4% to 16%, pods started up from zero | **operator's choice** | +13.7% | +14.1% | GAIN across our three runs: machines cut 13% to 15%, machine-hours cut 13% to 15%, standby-model energy cut 9% to 10%, mean response cut 12% to 13% and 3 more; LOSS across our three runs: failed requests up from zero, pod start wait, total (s) up from zero, pod start wait, mean (s) up from zero; power given across our three runs: replicas up 4% to 16%, pods started up from zero | `results/live/V21_BATCH.md` |
+| a public day of demand (Google 2011) | mean response cut 50%, p95 cut 59% to 64%, p99 cut 48% to 56%, time over the line cut 75% to 80%, failed requests cut 10% to 18%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 61% to 72% | LOSS: pod start wait, total (s) up 88% to 279%; power given: replicas up 2% to 19%, pods started up 79% to 235% | **operator's choice** | +37.6% | +160.7% | GAIN across our three runs: mean response cut 50%, p95 cut 59% to 64%, p99 cut 48% to 56%, time over the line cut 75% to 80% and 2 more; LOSS across our three runs: pod start wait, total (s) up 88% to 279%; power given across our three runs: replicas up 2% to 19%, pods started up 79% to 235% | `results/live/V21_TRACE_GOOGLE2011.md` |
+| With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | mean response cut 37% to 38%, p95 cut 51% to 52%, p99 cut 54% to 58%, time over the line cut 91% to 100%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% | LOSS: pod start wait, total (s) up 27% to 84%; power given: parked-worker energy up 1.4% to 1.7%, standby-model energy up 1.4% to 1.7%, replicas up 11% to 16%, pods started up 31% to 49% | **operator's choice** | +26.6% | +106.1% | GAIN across our three runs: mean response cut 37% to 38%, p95 cut 51% to 52%, p99 cut 54% to 58%, time over the line cut 91% to 100% and 1 more; LOSS across our three runs: pod start wait, total (s) up 27% to 84%; power given across our three runs: parked-worker energy up 1.4% to 1.7%, standby-model energy up 1.4% to 1.7%, replicas up 11% to 16%, pods started up 31% to 49% | `results/live/V21_KEDA_CPU_REQUESTS.md` |
+| With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | mean response cut 57% to 58%, p95 cut 73% to 74%, p99 cut 60% to 66%, time over the line cut 95% to 97%, alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 94% to 100%, replicas cut 15% to 21%, pods started cut 21% to 25%, pod start wait, total (s) cut 22% to 26%, pod start wait, mean (s) cut 1.3% to 4.8% | power given: parked-worker energy up 1.9% to 2.4%, standby-model energy up 1.9% to 2.4% | **operator's choice** | +53.6% | +270.1% | GAIN across our three runs: mean response cut 57% to 58%, p95 cut 73% to 74%, p99 cut 60% to 66%, time over the line cut 95% to 97% and 5 more; power given across our three runs: parked-worker energy up 1.9% to 2.4%, standby-model energy up 1.9% to 2.4% | `results/live/V21_KEDA_REQUESTS.md` |
 
 #### 61.3.2 Real database (PostgreSQL behind PgBouncer, GitHub)
 
@@ -9184,9 +9433,9 @@ The knob: the pooler's pool size (server connections).
 
 | Workload | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| select | connections held open cut 8% to 13% | LOSS: median up 0.0% to 1.2%; power given: connections most at once up 0.0% to 3.3%, host CPU busy cut 0.1% to 2.2%, host CPU-seconds cut 0.2% to 2.5%, CPU per 1,000 inside the line cut 0.1% to 2.4% | **operator's choice** | +2.8% | +0.0% | the runs disagree on p95 (-11% to +7%), p99 (-40% to +22%), mean (-15% to +6%). Under the index's own scoring the GAIN outweighs what was given by +2.8% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V16_PGBENCH.md` |
-| simple_update | connections held open cut 0.8% to 2.8% | power given: connections most at once up 8% to 10%, CPU per 1,000 inside the line up 0.1% to 1.0% | **operator's choice** | +0.4% | +0.0% | the runs disagree on p95 (-3% to +141%), p99 (-35% to +14%), mean (-19% to +15%). Why: connections most at once up 8% to 10% (power given), because amendment 1's add rule ("slow, clients waiting for a server: add") fired 4 to 15 times an arm on this slow write workload and bought servers above the operator's 20, up to 36 at the peak; work, latency and CPU inside the noise, so nothing was bought for them (`docs/POSTGRES_PREREGISTRATION.md`, the second set). The rule stands as written and the verdict for this workload is to watch. Under the index's own scoring the GAIN outweighs what was given by +0.4% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V16_PGBENCH.md` |
-| tpcb_hot | connections held open cut 1.4% to 5.9% | LOSS: work inside the line down 0.1% to 6.5%, p95 cut 0% to 430%; power given: connections most at once up 1.7% to 5.0%, CPU per 1,000 inside the line up 0.5% to 8.9% | **operator's choice** | -16.8% | -31.9% | the runs disagree on p99 (-66% to +32%), median (-1.9% to +1.2%), mean (-29% to +40%). Under the index's own scoring the GAIN outweighs what was given by -16.8% (resource reading); the service reading is -31.9%: a small trade, the operator's to take or leave. | `results/live/V16_PGBENCH.md` |
+| select | connections held open cut 6.0% to 7.2% | power given: host CPU busy up 0.4% to 1.3%, host CPU-seconds up 0.4% to 1.4%, CPU per 1,000 inside the line up 0.5% to 1.3% | **operator's choice** | +1.6% | +0.0% | the runs disagree on p95 (-13% to +5%), p99 (-12% to +5%), mean (-4.8% to +3.0%). Under the index's own scoring the GAIN outweighs what was given by +1.6% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_PGBENCH.md` |
+| simple_update | connections held open cut 1.2% to 3.2% | power given: connections most at once up 6.7% to 8.3% | **operator's choice** | +0.5% | +0.0% | the runs disagree on p95 (-5.0% to +3.9%), p99 (-1% to +12%), mean (-2.2% to +3.7%). Why: connections most at once up 6.7% to 8.3% (power given), because amendment 1's add rule ("slow, clients waiting for a server: add") fired 4 to 15 times an arm on this slow write workload and bought servers above the operator's 20, up to 36 at the peak; work, latency and CPU inside the noise, so nothing was bought for them (`docs/POSTGRES_PREREGISTRATION.md`, the second set). The rule stands as written and the verdict for this workload is to watch. Under the index's own scoring the GAIN outweighs what was given by +0.5% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_PGBENCH.md` |
+| tpcb_hot | p95 cut 0% to 64%, mean cut 0% to 43%, connections held open cut 1.7% to 7.5%, CPU per 1,000 inside the line cut 0.3% to 1.6% | power given: connections most at once up 0.0% to 6.7% | **operator's choice** | +10.5% | +19.2% | the runs disagree on p99 (-65% to +1%). The trade pays under both readings of the index (resource +10.5%, service +19.2%): the operator who runs PostgreSQL for its service wires in and pays in the resource named; an operator who counts that resource above the service watches. | `results/live/V21_PGBENCH.md` |
 
 #### 61.3.3 Real messaging (Apache Kafka, GitHub)
 
@@ -9194,10 +9443,10 @@ The knob: the consumer group's size.
 
 | Workload | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| tuning (tuning workload: shown, never counted) | p95 cut 0.0% to 1.0% | LOSS: p99 up 0.8% to 3.5%; power given: consumers running cut 0% to 12%, consumers most at once up 0% to 33% | **operator's choice** (not counted) |  |  | the runs disagree on mean (-0.8% to +1.4%), messages waiting, most (-1.4% to +0.7%), messages waiting, mean (-0.6% to +1.1%). Why: consumers running cut 0% to 12% (GAIN), because the knob itself: Omni adds consumers while messages wait and the queue is kept short; the consumers running are the price, declared in advance as the gauge expected to rise: the power given (`docs/KAFKA_PREREGISTRATION.md`, the gauges); consumers most at once up 0% to 33% (power given), because the same price at its peak: the group grown to the partition count while the burst is drained. | `results/live/V18_KAFKA.md` |
-| burst | median cut 0% to 27%, consumers running cut 0.8%, host CPU busy cut 0.3% to 0.8%, host CPU-seconds cut 0.2% to 0.8% | LOSS: messages waiting, most up 0.4% to 1.1% | **operator's choice** | +0.3% | +0.0% | the runs disagree on p95 (-2.9% to +1.2%), p99 (-3.2% to +1.8%), mean (-0.5% to +0.8%). Under the index's own scoring the GAIN outweighs what was given by +0.3% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V18_KAFKA.md` |
-| heavy | host CPU busy cut 0.7% to 2.4%, host CPU-seconds cut 0.6% to 2.4%, CPU per 1,000 inside the line cut 0.4% to 2.1% | none | **write** | +0.3% | +0.0% | the runs disagree on p95 (-2.6% to +2.3%), p99 (-1.5% to +2.2%), mean (-1.5% to +3.1%). No LOSS and no power given: Omni holds the knob. | `results/live/V18_KAFKA.md` |
-| light | median cut 1% to 30%, host CPU busy cut 0.1% to 1.4%, host CPU-seconds cut 0.1% to 1.1% | LOSS: work inside the line down 0.1% to 1.4%, p95 up 1% to 71%; power given: consumers running cut 0% to 12%, consumers most at once up 0% to 33% | **operator's choice** | -6.3% | -9.1% | the runs disagree on p99 (-2% to +59%), mean (-2% to +69%), messages waiting, most (-2% to +46%). Why: consumers running cut 0% to 12% (GAIN), because the knob itself: Omni adds consumers while messages wait and the queue is kept short; the consumers running are the price, declared in advance as the gauge expected to rise: the power given (`docs/KAFKA_PREREGISTRATION.md`, the gauges); consumers most at once up 0% to 33% (power given), because the same price at its peak: the group grown to the partition count while the burst is drained. Under the index's own scoring the GAIN outweighs what was given by -6.3% (resource reading); the service reading is -9.1%: a small trade, the operator's to take or leave. | `results/live/V18_KAFKA.md` |
+| tuning (tuning workload: shown, never counted) | none | LOSS: p95 up 1.1% to 5.7%, mean cut 0% to 11%, messages waiting, most up 0.1% to 5.5%, messages waiting, mean cut 0% to 11%; power given: consumers most at once up 0% to 17% | **watch** (not counted) |  |  | the runs disagree on p99 (-2.2% to +9.1%), host CPU busy (-1.0% to +1.4%), host CPU-seconds (-1.0% to +1.4%). Why: consumers most at once up 0% to 17% (power given), because the same price at its peak: the group grown to the partition count while the burst is drained. | `results/live/V21_KAFKA.md` |
+| burst | p99 cut 0.1% to 3.0%, median cut 0.0% to 4.3%, mean cut 0.1% to 5.1%, messages waiting, mean cut 0.4% to 6.0%, host CPU busy cut 1.2% to 2.3%, host CPU-seconds cut 1.3% to 2.3%, CPU per 1,000 inside the line cut 2.0% to 2.5% | none | **write** | +0.5% | +0.0% | the runs disagree on p95 (-3.6% to +2.0%), messages waiting, most (-2.1% to +1.4%). No LOSS and no power given: Omni holds the knob. | `results/live/V21_KAFKA.md` |
+| heavy | none | LOSS: mean cut 0.4% to 3.0%, messages waiting, mean cut 0.1% to 3.9%; power given: consumers running up 0% to 12%, consumers most at once up 0% to 50% | **watch** | -1.2% | +0.0% | the runs disagree on p95 (-1.6% to +1.9%), p99 (-1.6% to +2.3%), messages waiting, most (-0.6% to +1.3%). Why: consumers running up 0% to 12% (power given), because the knob itself: Omni adds consumers while messages wait and the queue is kept short; the consumers running are the price, declared in advance as the gauge expected to rise: the power given (`docs/KAFKA_PREREGISTRATION.md`, the gauges); consumers most at once up 0% to 50% (power given), because the same price at its peak: the group grown to the partition count while the burst is drained. | `results/live/V21_KAFKA.md` |
+| light | none | LOSS: p99 up 0.6% to 9.1%, mean up 0% to 12%, messages waiting, mean up 0% to 11%; power given: consumers running up 0% to 17%, consumers most at once up 0% to 83% | **watch** | -2.4% | +0.0% | the runs disagree on p95 (-1% to +13%), median (-3.7% to +1.2%), messages waiting, most (-1.0% to +3.7%). Why: consumers running up 0% to 17% (power given), because the knob itself: Omni adds consumers while messages wait and the queue is kept short; the consumers running are the price, declared in advance as the gauge expected to rise: the power given (`docs/KAFKA_PREREGISTRATION.md`, the gauges); consumers most at once up 0% to 83% (power given), because the same price at its peak: the group grown to the partition count while the burst is drained. | `results/live/V21_KAFKA.md` |
 
 #### 61.3.4 Real cache (Redis, GitHub)
 
@@ -9205,10 +9454,10 @@ The knob: the cache's memory ceiling.
 
 | Workload | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| tuning (tuning workload: shown, never counted) | work inside the line up 0.8% to 1.2%, hit rate up 0.8% to 1.1%, mean cut 2.2% to 3.7% | power given: memory ceiling held up 1.5% to 2.3%, memory used up 1.2% to 1.9%, host CPU busy up 0% to 28%, host CPU-seconds up 1% to 30%, CPU per 1,000 inside the line cut 0% to 29% | **operator's choice** (not counted) |  |  | Why: memory ceiling held up 1.5% to 2.3% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges); memory used up 1.2% to 1.9% (power given), because the memory actually used follows the ceiling: the working set the operator's 64 MB could not hold is held. | `results/live/V18_REDIS.md` |
-| burst | memory ceiling held cut 2.4% to 2.6%, memory used cut 1.0% to 1.2% | none | **write** | +0.6% | +0.0% | the runs disagree on host CPU busy (-10% to +4%), host CPU-seconds (-11% to +3%), CPU per 1,000 inside the line (-11% to +3%). No LOSS and no power given: Omni holds the knob. | `results/live/V18_REDIS.md` |
-| large | work inside the line up 1.2% to 1.5%, hit rate up 1.2% to 1.5%, mean cut 4.7% to 6.2% | power given: memory ceiling held up 0.4% to 0.7% | **operator's choice** | +0.2% | +0.7% | the runs disagree on host CPU busy (-2.2% to +8.8%), host CPU-seconds (-2% to +10%), CPU per 1,000 inside the line (-3.4% to +8.9%). Why: memory ceiling held up 0.4% to 0.7% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges). The trade pays under both readings of the index (resource +0.2%, service +0.7%): the operator who runs Redis for its service wires in and pays in memory; an operator who counts that resource above the service watches. | `results/live/V18_REDIS.md` |
-| small | work inside the line up 1.2% to 1.3%, hit rate up 1.2% to 1.3%, mean cut 1.5% to 1.9% | power given: memory ceiling held up 2.2% to 2.3%, memory used up 2.0% to 2.2% | **operator's choice** | -0.3% | +0.6% | the runs disagree on host CPU busy (-12% to +4%), host CPU-seconds (-13% to +5%), CPU per 1,000 inside the line (-14% to +4%). Why: memory ceiling held up 2.2% to 2.3% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges); memory used up 2.0% to 2.2% (power given), because the memory actually used follows the ceiling: the working set the operator's 64 MB could not hold is held. The trade pays under the service reading (+0.6%) and not under the resource reading (-0.3%, the preregistered headline): the operator who runs Redis for its speed and has the memory wires in; the operator who counts the memory as the cost watches. | `results/live/V18_REDIS.md` |
+| tuning (tuning workload: shown, never counted) | work inside the line up 0.7% to 1.2%, hit rate up 0.7% to 1.2%, mean cut 2.2% to 3.8% | power given: memory ceiling held up 1.4% to 3.2%, memory used up 1.2% to 2.4% | **operator's choice** (not counted) |  |  | the runs disagree on host CPU busy (-8.4% to +4.9%), host CPU-seconds (-9.2% to +5.0%), CPU per 1,000 inside the line (-9.9% to +3.7%). Why: memory ceiling held up 1.4% to 3.2% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges); memory used up 1.2% to 2.4% (power given), because the memory actually used follows the ceiling: the working set the operator's 64 MB could not hold is held. | `results/live/V21_REDIS.md` |
+| burst | memory ceiling held cut 1.3% to 2.4%, memory used cut 0.1% to 1.0%, host CPU busy cut 2% to 11%, host CPU-seconds cut 2% to 12%, CPU per 1,000 inside the line cut 2% to 12% | none | **write** | +0.5% | +0.0% |  No LOSS and no power given: Omni holds the knob. | `results/live/V21_REDIS.md` |
+| large | work inside the line up 0.7% to 1.7%, hit rate up 0.7% to 1.7%, mean cut 2.7% to 7.8% | power given: memory ceiling held up 0.8% to 1.7%, memory used up 0.5% to 1.0% | **operator's choice** | -0.0% | +0.6% | the runs disagree on host CPU busy (-13% to +17%), host CPU-seconds (-15% to +19%), CPU per 1,000 inside the line (-15% to +17%). Why: memory ceiling held up 0.8% to 1.7% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges); memory used up 0.5% to 1.0% (power given), because the memory actually used follows the ceiling: the working set the operator's 64 MB could not hold is held. The trade pays under the service reading (+0.6%) and not under the resource reading (-0.0%, the preregistered headline): the operator who runs Redis for its speed and has the memory wires in; the operator who counts the memory as the cost watches. | `results/live/V21_REDIS.md` |
+| small | work inside the line up 0.6% to 1.3%, hit rate up 0.7% to 1.3%, mean cut 0.6% to 1.7% | LOSS: p99 up 0.2% to 1.7%; power given: memory ceiling held up 0.8% to 2.2%, memory used up 1.1% to 1.9%, host CPU busy up 1% to 11%, host CPU-seconds up 1% to 12%, CPU per 1,000 inside the line up 0% to 11%, process_cpu_seconds up 0.3% to 2.4% | **operator's choice** | -0.4% | +0.5% | Why: memory ceiling held up 0.8% to 2.2% (power given), because the knob itself: the ceiling grows while the cache is full and misses, so a wide working set is held instead of evicted; the memory is the price of the hit rate, declared in advance as the gauge expected to rise: the power given (`docs/REDIS_PREREGISTRATION.md`, the gauges); memory used up 1.1% to 1.9% (power given), because the memory actually used follows the ceiling: the working set the operator's 64 MB could not hold is held. The trade pays under the service reading (+0.5%) and not under the resource reading (-0.4%, the preregistered headline): the operator who runs Redis for its speed and has the memory wires in; the operator who counts the memory as the cost watches. | `results/live/V21_REDIS.md` |
 
 #### 61.3.5 Real database cache (MongoDB under YCSB, GitHub)
 
@@ -9216,11 +9465,11 @@ The knob: the storage engine's cache size.
 
 | Workload | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| tuning (tuning workload: shown, never counted) | cache size held cut 0.7% to 1.3%, cache in use cut 0.5% to 0.7% | LOSS: p95 up 0.2% to 3.1%, p99 up 1.7% to 3.7% | **operator's choice** (not counted) |  |  | the runs disagree on host CPU busy (-8.4% to +7.8%), host CPU-seconds (-11% to +10%), CPU per 1,000 inside the line (-11% to +10%). | `results/live/V16_YCSB.md` |
-| b | cache size held cut 0.7% to 1.1% | LOSS: p95 up 2.6% to 5.5%, p99 up 0.2% to 3.0%, mean up 0.2% to 2.1%; power given: host CPU busy up 1% to 12%, host CPU-seconds up 1% to 14%, CPU per 1,000 inside the line up 1% to 14% | **operator's choice** | -2.2% | -1.8% |  Under the index's own scoring the GAIN outweighs what was given by -2.2% (resource reading); the service reading is -1.8%: a small trade, the operator's to take or leave. | `results/live/V16_YCSB.md` |
-| burst | cache size held cut 1.7% to 2.2%, cache in use cut 1.2% to 2.1% | LOSS: p99 cut 0.3% to 1.5% | **operator's choice** | +0.5% | +0.0% | the runs disagree on p95 (-1.0% to +3.9%), mean (-1.4% to +1.9%), host CPU busy (-19% to +5%). Under the index's own scoring the GAIN outweighs what was given by +0.5% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V16_YCSB.md` |
-| c | cache size held cut 0.7% to 8.3%, cache in use cut 0.0% to 7.5% | LOSS: p95 cut 0.4% to 8.1%, p99 cut 0.4% to 1.5%, mean up 1.1% to 7.0%; power given: host CPU-seconds cut 0% to 27%, CPU per 1,000 inside the line cut 0% to 27% | **operator's choice** | -3.2% | -1.2% | the runs disagree on host CPU busy (-1% to +23%). Under the index's own scoring the GAIN outweighs what was given by -3.2% (resource reading); the service reading is -1.2%: a small trade, the operator's to take or leave. | `results/live/V16_YCSB.md` |
-| f | cache size held cut 0.8% to 1.0%, cache in use cut 0.4% to 0.9% | LOSS: p95 cut 0% to 12% | **operator's choice** | -0.7% | -1.8% | the runs disagree on p99 (-0.8% to +7.7%), mean (-1.1% to +7.1%), host CPU busy (-5% to +12%). Under the index's own scoring the GAIN outweighs what was given by -0.7% (resource reading); the service reading is -1.8%: a small trade, the operator's to take or leave. | `results/live/V16_YCSB.md` |
+| tuning (tuning workload: shown, never counted) | none | LOSS: p95 up 0.0% to 2.1%, p99 cut 0.3% to 3.8%; power given: cache size held up 5% to 12%, cache in use up 4% to 11%, host CPU busy up 0.4% to 6.6%, host CPU-seconds up 0.5% to 8.7%, CPU per 1,000 inside the line up 0.6% to 8.7%, process_cpu_seconds cut 0.1% to 2.2% | **watch** (not counted) |  |  | the runs disagree on mean (-0.5% to +2.1%). | `results/live/V21_YCSB.md` |
+| b | host CPU busy cut 1.6% to 2.5%, host CPU-seconds cut 1.7% to 3.2%, CPU per 1,000 inside the line cut 1.8% to 3.2% | power given: process_cpu_seconds cut 0.3% to 2.0% | **operator's choice** | -0.3% | +0.0% | the runs disagree on p95 (-0.9% to +2.3%), p99 (-0.8% to +2.4%), mean (-0.9% to +1.4%). Under the index's own scoring the GAIN outweighs what was given by -0.3% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_YCSB.md` |
+| burst | mean cut 0.4% to 4.0% | LOSS: p95 up 0.2% to 5.4%, p99 up 0.4% to 2.5%; power given: cache size held cut 0.4% to 2.9% | **operator's choice** | -0.8% | -1.0% | the runs disagree on cache in use (-1.1% to +4.2%), host CPU busy (-15% to +25%), host CPU-seconds (-18% to +28%). Under the index's own scoring the GAIN outweighs what was given by -0.8% (resource reading); the service reading is -1.0%: a small trade, the operator's to take or leave. | `results/live/V21_YCSB.md` |
+| c | host CPU busy cut 0.2% to 3.8%, host CPU-seconds cut 0.2% to 4.7%, CPU per 1,000 inside the line cut 0.2% to 4.7% | power given: cache in use cut 0.3% to 3.4%, process_cpu_seconds up 0.2% to 1.1% | **operator's choice** | -0.1% | +0.0% | the runs disagree on p99 (-0.9% to +1.4%), mean (-0.6% to +0.6%), cache size held (-0.6% to +3.3%). Under the index's own scoring the GAIN outweighs what was given by -0.1% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_YCSB.md` |
+| f | none | power given: cache size held up 2.6% to 7.5%, cache in use up 2.8% to 7.2% | **watch** | -1.3% | +0.0% | the runs disagree on p95 (-0.7% to +4.5%), mean (-0.9% to +2.6%), host CPU busy (-1% to +17%). | `results/live/V21_YCSB.md` |
 
 #### 61.3.6 Real database buffer pool (MySQL under sysbench, GitHub)
 
@@ -9228,51 +9477,51 @@ The knob: the buffer pool's size.
 
 | Workload | GAIN across our three runs | LOSS or power given across our three runs | Verdict | Index: resource | Index: service | Why | Source |
 |---|---|---|---|---:|---:|---|---|
-| tuning (tuning workload: shown, never counted) | p95 cut 0.6% to 5.9%, p99 cut 1.2% to 1.9%, pool held cut 0% to 13%, pages holding data cut 1% to 12% | LOSS: mean up 2.0% to 2.3%; power given: host CPU busy up 0.4% to 3.7%, host CPU-seconds up 0.5% to 3.8%, CPU per 1,000 inside the line up 0.5% to 3.8% | **operator's choice** (not counted) |  |  |  | `results/live/V16_SYSBENCH.md` |
-| burst | pool held cut 1% to 28%, pages holding data cut 2% to 28% | power given: host CPU busy up 0.5% to 1.6%, host CPU-seconds up 0.5% to 1.9%, CPU per 1,000 inside the line up 0.9% to 2.2% | **operator's choice** | +3.6% | +0.0% | the runs disagree on p95 (-1.2% to +0.6%), p99 (-0.6% to +1.8%). Under the index's own scoring the GAIN outweighs what was given by +3.6% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V16_SYSBENCH.md` |
-| read_only | p95 cut 0.6% to 4.1%, p99 cut 0.6% to 7.0%, mean cut 0.2% to 2.1%, pool held cut 3% to 17%, pages holding data cut 2% to 18% | none | **write** | +2.6% | +1.0% | the runs disagree on host CPU busy (-1.9% to +1.5%), host CPU-seconds (-1.9% to +1.6%), CPU per 1,000 inside the line (-1.9% to +1.0%). No LOSS and no power given: Omni holds the knob. | `results/live/V16_SYSBENCH.md` |
-| read_write | none | LOSS: work inside the line down 0.0% to 5.7%, mean cut 0% to 29% | **watch** | -0.5% | -1.0% | the runs disagree on p95 (-1% to +29%), p99 (-1% to +28%), pool held (-19% to +6%). | `results/live/V16_SYSBENCH.md` |
-| update_index | pool held cut 2.0% to 5.3%, pages holding data cut 4.5% to 9.8% | none | **write** | +0.8% | +0.0% | the runs disagree on work inside the line (-5% to +12%), p95 (-4.1% to +1.0%), p99 (-4.9% to +5.5%). No LOSS and no power given: Omni holds the knob. | `results/live/V16_SYSBENCH.md` |
+| tuning (tuning workload: shown, never counted) | p95 cut 2% to 20%, p99 cut 1.2% to 9.8%, mean cut 3.1% to 6.1%, host CPU busy cut 0.5% to 5.5%, host CPU-seconds cut 0.4% to 5.4%, CPU per 1,000 inside the line cut 0.4% to 5.4% | none | **write** (not counted) |  |  | the runs disagree on pool held (-12% to +11%), pages holding data (-11% to +11%). No LOSS and no power given: Omni holds the knob. | `results/live/V21_SYSBENCH.md` |
+| burst | p95 cut 1.8% to 3.5%, p99 cut 2.4% to 4.1%, pool held cut 4% to 17%, pages holding data cut 2% to 14% | power given: host CPU busy cut 0.2% to 2.6%, host CPU-seconds cut 0.0% to 3.0%, CPU per 1,000 inside the line up 0.3% to 3.7% | **operator's choice** | +3.6% | +1.3% |  The trade pays under both readings of the index (resource +3.6%, service +1.3%): the operator who runs MySQL for its service wires in and pays in the resource named; an operator who counts that resource above the service watches. | `results/live/V21_SYSBENCH.md` |
+| read_only | p99 cut 0.6% to 2.4%, pool held cut 10% to 22%, pages holding data cut 8% to 21% | power given: host CPU busy up 0.5% to 2.0%, host CPU-seconds up 0.5% to 2.4%, CPU per 1,000 inside the line up 0.8% to 2.4% | **operator's choice** | +4.6% | +0.0% | the runs disagree on p95 (-1.8% to +0.6%). Under the index's own scoring the GAIN outweighs what was given by +4.6% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_SYSBENCH.md` |
+| read_write | p99 cut 0.6% to 1.4% | power given: pages holding data up 0.4% to 6.0% | **operator's choice** | +0.0% | +0.0% | the runs disagree on p95 (-2.4% to +1.8%), mean (-0.9% to +0.7%), pool held (-1.1% to +6.7%). Why: pages holding data up 0.4% to 6.0% (power given), because memory bought on real misses: a written working set keeps the pool missing above one percent, so the growth gate lets the pool grow to 1.1 to 1.6 GB in the wide notches; the host's CPU was cut 4% to 6% for it, a GAIN across our three runs, and latency did not move (`docs/MYSQL_PREREGISTRATION.md`, the third set). Under the index's own scoring the GAIN outweighs what was given by +0.0% (resource reading); the service reading is +0.0%: a small trade, the operator's to take or leave. | `results/live/V21_SYSBENCH.md` |
+| update_index | pages holding data cut 0.6% to 0.8%, host CPU busy cut 2% to 38%, host CPU-seconds cut 2% to 38% | none | **write** | +4.9% | +0.0% | the runs disagree on work inside the line (-26% to +197%), p95 (-42% to +116%), p99 (-45% to +107%). No LOSS and no power given: Omni holds the knob. | `results/live/V21_SYSBENCH.md` |
 
 ### 61.4 Every LOSS and every power given across our three runs on a real stack, and why
 
 The founder's question was where the negatives are and why each is there. Every gauge that read LOSS or power given in all three of our runs on a real stack, with its cause read from the preregistration that carries the result:
 
-- **Kubernetes, pod start wait, total (s): demand that wanders up 5% to 33%, a queue of jobs up from zero from zero, a public day of demand (Google 2011) up 45% to 116%, LOSS** (11.9 / 21.3 / 3.3 → 15.8 to 8 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Kubernetes, pods started: demand that wanders up 20% to 48%, all four at once up 6% to 43%, a queue of jobs up from zero from zero, a public day of demand (Google 2011) up 120% to 193%, power given** (0.1 / 4 / 5.2 / 5.8 → 0.6 to 7.1 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Kubernetes, replicas: all four at once up 0.5% to 1.9%, a noisy neighbour up 0.9% to 2.7%, faults up 14% to 20%, a queue of jobs up 3% to 19%, a public day of demand (Google 2011) up 8% to 15%, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.8% to 3.1%, power given** (15.22 / 2.118 / 8.637 / 8.806 / 9.422 / 9.754 → 10.39 to 9.468 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Kubernetes, pod start wait, mean (s): a queue of jobs up from zero from zero, LOSS** (3.3 → 4.2 in run A). See the table. Verdict: **operator's choice**.
-- **Kubernetes, queue finished: a queue of jobs up 0.5% to 0.9%, LOSS** (582.1 → 585.3 in run A). See the table. Verdict: **operator's choice**.
-- **Kubernetes, parked-worker energy: With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.1% to 1.8%, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.6% to 2.2%, power given** (157.6 / 159 → 160.7 to 161.1 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Kubernetes, standby-model energy: With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.1% to 1.8%, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.6% to 2.2%, power given** (157.6 / 159 → 160.7 to 161.1 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Kubernetes, failed requests: With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs up from zero from zero, LOSS** (0 → 0.01198 in run A). See the table. Verdict: **operator's choice**.
-- **PostgreSQL, median: select up 0.0% to 1.2%, LOSS** (0.1593 → 0.1603 in run A). See the table. Verdict: **operator's choice**.
-- **PostgreSQL, connections most at once: select up 0.0% to 3.3%, simple_update up 8% to 10%, tpcb_hot up 1.7% to 5.0%, power given** (20 → 20 to 21.67 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **PostgreSQL, host CPU busy: select cut 0.1% to 2.2%, power given** (0.379 → 0.3806 in run A). See the table. Verdict: **operator's choice**.
-- **PostgreSQL, host CPU-seconds: select cut 0.2% to 2.5%, power given** (644.9 → 647.7 in run A). See the table. Verdict: **operator's choice**.
-- **PostgreSQL, CPU per 1,000 inside the line: select cut 0.1% to 2.4%, simple_update up 0.1% to 1.0%, tpcb_hot up 0.5% to 8.9%, power given** (0.08397 / 0.4653 / 0.6148 → 0.08435 to 0.6695 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **PostgreSQL, work inside the line: tpcb_hot down 0.1% to 6.5%, LOSS** (1324 → 1237 in run A). See the table. Verdict: **operator's choice**.
-- **PostgreSQL, p95: tpcb_hot cut 0% to 430%, LOSS** (56.55 → 299.9 in run A). See the table. Verdict: **operator's choice**.
-- **Kafka, messages waiting, most: burst up 0.4% to 1.1%, LOSS** (1688 → 1707 in run A). See the table. Verdict: **operator's choice**.
-- **Kafka, work inside the line: light down 0.1% to 1.4%, LOSS** (732.9 → 731.2 in run A). See the table. Verdict: **operator's choice**.
-- **Kafka, p95: light up 1% to 71%, LOSS** (2293 → 2319 in run A). See the table. Verdict: **operator's choice**.
-- **Kafka, consumers running: light cut 0% to 12%, power given** (2 → 2.246 in run A). See the table. Verdict: **operator's choice**.
-- **Kafka, consumers most at once: light up 0% to 33%, power given** (2 → 2.667 in run A). See the table. Verdict: **operator's choice**.
-- **Redis, memory ceiling held: large up 0.4% to 0.7%, small up 2.2% to 2.3%, power given** (64 → 64.35 to 65.49 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **Redis, memory used: small up 2.0% to 2.2%, power given** (60.7 → 62.01 in run A). See the table. Verdict: **operator's choice**.
-- **MongoDB, p95: b up 2.6% to 5.5%, c cut 0.4% to 8.1%, f cut 0% to 12%, LOSS** (0.2803 / 0.318 / 0.3497 → 0.2797 to 0.361 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **MongoDB, p99: b up 0.2% to 3.0%, burst cut 0.3% to 1.5%, c cut 0.4% to 1.5%, LOSS** (0.4463 / 0.502 / 0.5383 → 0.4447 to 0.5543 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **MongoDB, mean: b up 0.2% to 2.1%, c up 1.1% to 7.0%, LOSS** (0.1471 / 0.201 → 0.1487 to 0.2051 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **MongoDB, host CPU busy: b up 1% to 12%, power given** (0.2013 → 0.2107 in run A). See the table. Verdict: **operator's choice**.
-- **MongoDB, host CPU-seconds: b up 1% to 14%, c cut 0% to 27%, power given** (274.5 / 350.6 → 348.8 to 368.8 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **MongoDB, CPU per 1,000 inside the line: b up 1% to 14%, c cut 0% to 27%, power given** (0.2057 / 0.2636 → 0.2615 to 0.2774 in run A). See the table. Verdict: **operator's choice** on every workload named.
-- **MySQL, host CPU busy: burst up 0.5% to 1.6%, power given** (0.1007 → 0.1012 in run A). See the table. Verdict: **operator's choice**.
-- **MySQL, host CPU-seconds: burst up 0.5% to 1.9%, power given** (60.45 → 60.76 in run A). See the table. Verdict: **operator's choice**.
-- **MySQL, CPU per 1,000 inside the line: burst up 0.9% to 2.2%, power given** (1.351 → 1.362 in run A). See the table. Verdict: **operator's choice**.
-- **MySQL, work inside the line: read_write down 0.0% to 5.7%, LOSS** (157.3 → 148.3 in run A). See the table. Verdict: **watch**.
-- **MySQL, mean: read_write cut 0% to 29%, LOSS** (20.1 → 25.82 in run A). See the table. Verdict: **watch**.
+- **Kubernetes, replicas: demand that wanders up 0.1% to 2.9%, a noisy neighbour up 0.1% to 2.9%, faults up 10% to 20%, a queue of jobs up 4% to 16%, a public day of demand (Google 2011) up 2% to 19%, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 11% to 16%, power given** (15.09 / 2.11 / 8.376 / 8.865 / 9.512 / 9.699 → 10.08 to 9.651 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kubernetes, pod start wait, total (s): all four at once up 16% to 42%, a queue of jobs up from zero from zero, a public day of demand (Google 2011) up 88% to 279%, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 27% to 84%, LOSS** (0 / 10 / 6.3 / 8.9 → 0.9 to 20.9 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kubernetes, pods started: all four at once up 8% to 37%, faults up 12% to 22%, a queue of jobs up from zero from zero, a public day of demand (Google 2011) up 79% to 235%, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 31% to 49%, power given** (0 / 4.9 / 5.5 / 5.7 / 6.1 → 0.6 to 7.3 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kubernetes, pod start wait, mean (s): a noisy neighbour up 5% to 51%, a queue of jobs up from zero from zero, LOSS** (0 / 1.6 → 0.9 to 1.678 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kubernetes, second app: failed requests (%): a noisy neighbour up 1.1% to 3.7%, LOSS** (13.65 → 13.8 in run A). See the table. Verdict: **operator's choice**.
+- **Kubernetes, failed requests: a queue of jobs up from zero from zero, LOSS** (0 → 0.01036 in run A). See the table. Verdict: **operator's choice**.
+- **Kubernetes, parked-worker energy: With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.4% to 1.7%, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.9% to 2.4%, power given** (157.9 / 159.1 → 161.6 to 161.7 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kubernetes, standby-model energy: With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.4% to 1.7%, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs up 1.9% to 2.4%, power given** (157.9 / 159.1 → 161.6 to 161.7 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **PostgreSQL, host CPU busy: select up 0.4% to 1.3%, power given** (0.3247 → 0.3264 in run A). See the table. Verdict: **operator's choice**.
+- **PostgreSQL, host CPU-seconds: select up 0.4% to 1.4%, power given** (486.9 → 489.6 in run A). See the table. Verdict: **operator's choice**.
+- **PostgreSQL, CPU per 1,000 inside the line: select up 0.5% to 1.3%, power given** (0.1491 → 0.1499 in run A). See the table. Verdict: **operator's choice**.
+- **PostgreSQL, connections most at once: simple_update up 6.7% to 8.3%, tpcb_hot up 0.0% to 6.7%, power given** (20 → 21.33 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Kafka, mean: heavy cut 0.4% to 3.0%, light up 0% to 12%, LOSS** (318.8 / 341 → 323.5 to 339.6 in run A). See the table. Verdict: **watch** on every workload named.
+- **Kafka, messages waiting, mean: heavy cut 0.1% to 3.9%, light up 0% to 11%, LOSS** (277.4 / 62.6 → 281.1 to 62.55 in run A). See the table. Verdict: **watch** on every workload named.
+- **Kafka, consumers running: heavy up 0% to 12%, light up 0% to 17%, power given** (2 → 2 in run A). See the table. Verdict: **watch** on every workload named.
+- **Kafka, consumers most at once: heavy up 0% to 50%, light up 0% to 83%, power given** (2 → 2 in run A). See the table. Verdict: **watch** on every workload named.
+- **Kafka, p99: light up 0.6% to 9.1%, LOSS** (3736 → 3759 in run A). See the table. Verdict: **watch**.
+- **Redis, memory ceiling held: large up 0.8% to 1.7%, small up 0.8% to 2.2%, power given** (64 → 64.51 to 65.17 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Redis, memory used: large up 0.5% to 1.0%, small up 1.1% to 1.9%, power given** (60.7 / 61.29 → 61.52 to 61.6 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **Redis, p99: small up 0.2% to 1.7%, LOSS** (5.74 → 5.75 in run A). See the table. Verdict: **operator's choice**.
+- **Redis, host CPU busy: small up 1% to 11%, power given** (0.1463 → 0.1478 in run A). See the table. Verdict: **operator's choice**.
+- **Redis, host CPU-seconds: small up 1% to 12%, power given** (246.5 → 249.5 in run A). See the table. Verdict: **operator's choice**.
+- **Redis, CPU per 1,000 inside the line: small up 0% to 11%, power given** (0.5917 → 0.5932 in run A). See the table. Verdict: **operator's choice**.
+- **Redis, process_cpu_seconds: small up 0.3% to 2.4%, power given** (308.9 → 309.7 in run A). See the table. Verdict: **operator's choice**.
+- **MongoDB, process_cpu_seconds: b cut 0.3% to 2.0%, c up 0.2% to 1.1%, power given** (183.5 / 196.7 → 185.6 to 199.4 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **MongoDB, p95: burst up 0.2% to 5.4%, LOSS** (0.4083 → 0.409 in run A). See the table. Verdict: **operator's choice**.
+- **MongoDB, p99: burst up 0.4% to 2.5%, LOSS** (0.577 → 0.5793 in run A). See the table. Verdict: **operator's choice**.
+- **MongoDB, cache size held: burst cut 0.4% to 2.9%, f up 2.6% to 7.5%, power given** (512 → 514.9 to 540 in run A). See the table. Verdict: **operator's choice / watch** on every workload named.
+- **MongoDB, cache in use: c cut 0.3% to 3.4%, f up 2.8% to 7.2%, power given** (416.7 / 418.5 → 419.6 to 439 in run A). See the table. Verdict: **operator's choice / watch** on every workload named.
+- **MySQL, host CPU busy: burst cut 0.2% to 2.6%, read_only up 0.5% to 2.0%, power given** (0.189 / 0.1893 → 0.189 to 0.1918 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **MySQL, host CPU-seconds: burst cut 0.0% to 3.0%, read_only up 0.5% to 2.4%, power given** (104.3 / 312.6 → 104.3 to 317.8 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **MySQL, CPU per 1,000 inside the line: burst up 0.3% to 3.7%, read_only up 0.8% to 2.4%, power given** (2.32 / 2.322 → 2.327 to 2.351 in run A). See the table. Verdict: **operator's choice** on every workload named.
+- **MySQL, pages holding data: read_write up 0.4% to 6.0%, power given** (462 → 489.1 in run A). See the table. Verdict: **operator's choice**.
 
-15 of these are a LOSS (failed requests, mean, median, messages waiting, most, p95, p99, pod start wait, mean (s), pod start wait, total (s), queue finished, work inside the line): each is named above with its cause, and each is a fault to find and fix, our own wiring first. The rest are power given, a resource spent to buy the service the knob exists for. Where the resource was given and nothing was bought (PostgreSQL's `simple_update`), the verdict is watch; where it bought service, the verdict is the operator's, and both index readings say what the trade is worth.
+10 of these are a LOSS (failed requests, mean, messages waiting, mean, p95, p99, pod start wait, mean (s), pod start wait, total (s), second app: failed requests (%)): each is named above with its cause, and each is a fault to find and fix, our own wiring first. The rest are power given, a resource spent to buy the service the knob exists for. Where the resource was given and nothing was bought (PostgreSQL's `simple_update`), the verdict is watch; where it bought service, the verdict is the operator's, and both index readings say what the trade is worth.
 
 ### 61.5 The independent simulators (evidence class S: deterministic models with their own native controllers)
 
@@ -9356,9 +9605,9 @@ Every muscle's own row, with its verdict and the reason, is in `results/WIRING_V
 
 | Reading (the label over every load, its word first) | Muscles | Verdict |
 |---|---:|---|
-| EVEN (at its limit on native) | 421 | **watch** |
+| STEADY (at its limit on native) | 421 | **watch** |
 | GAIN (faster + fewer misses) | 396 | **write** |
-| EVEN (the same as native) | 156 | **watch** |
+| STEADY (the same as native) | 156 | **watch** |
 | GAIN (faster) | 85 | **write** |
 | GAIN (fewer misses) | 37 | **write** |
 | GAIN (more work + faster + fewer misses) | 12 | **write** |
@@ -9449,7 +9698,7 @@ Every muscle's own row, with its verdict and the reason, is in `results/WIRING_V
 
 #### 61.6.3 Why the watch muscles are watch
 
-- **421 muscles are at their limit on native.** Native already runs the knob at the top of its range: every admission knob lets everything in while change is permitted (275 admission knobs), a power knob runs the full clock or the full battery power (96 power knobs), and 50 capacity and setpoint knobs sit where native's own controller already has what the plant needs. There is nothing for the max to push; the knob is read and left native, EVEN by design, and no wire in is needed.
+- **421 muscles are at their limit on native.** Native already runs the knob at the top of its range: every admission knob lets everything in while change is permitted (275 admission knobs), a power knob runs the full clock or the full battery power (96 power knobs), and 50 capacity and setpoint knobs sit where native's own controller already has what the plant needs. There is nothing for the max to push; the knob is read and left native, STEADY by design, and no wire in is needed.
 - **156 muscles read the same as native**: 37 of them wrote and nothing moved beyond the noise on work, speed or misses, 119 wrote nothing because native held the reading and the law had nothing to push. Watch, by rule; these are the room the next engine looks for a gain in, in the model gate first.
 
 #### 61.6.4 Power given, muscle by muscle
@@ -9517,24 +9766,24 @@ The knob is the cluster's (the autoscaler's replicas, the floor and the machines
 
 | Cell | Verdict | The table's reading, and the figures | Source |
 |---|---|---|---|
-| compute_ai_cloud at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (response time (ms), 95th percentile; time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -50.3%, time over the line -31.6%), 0 LOSS, 0 power given. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
-| physics_robotics_autonomous at 10 copies (GitHub) | **watch** | each gauge's word: GAIN on 3 (organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 8. The cluster's gauges: 0 GAIN, 0 LOSS, 0 power given. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
-| energy_facility_industrial at 10 copies (GitHub) | **operator's choice** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 1 (HPA replicas, mean), EVEN (inside the noise) on 6. The cluster's gauges: 1 GAIN (time over the line -32.6%), 0 LOSS, 1 power given (replicas +0.6%). The organism's modelled energy -0.3%. | `results/live/V3_SIX_KUBE.md` |
-| distribution_specialized at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (response time (ms), 95th percentile; time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -51.7%, time over the line -35.9%), 0 LOSS, 0 power given. The organism's modelled energy -0.2%. | `results/live/V3_SIX_KUBE.md` |
-| tower at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 6 (response time (ms), 95th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 5. The cluster's gauges: 3 GAIN (p95 -41.6%, time over the line -20.1%, failed requests -8.4%), 0 LOSS, 0 power given. The organism's modelled energy -0.3%. | `results/live/V3_SIX_KUBE.md` |
-| stack at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 6. The cluster's gauges: 2 GAIN (time over the line -12.1%, failed requests -8.5%), 0 LOSS, 0 power given. The organism's modelled work -0.0006% (6 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
-| compute_ai_cloud at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 7. The cluster's gauges: 1 GAIN (time over the line -9.8%), 0 LOSS, 0 power given. The organism's modelled work -0.0008% (8 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
-| physics_robotics_autonomous at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 7. The cluster's gauges: 1 GAIN (time over the line -8.4%), 0 LOSS, 0 power given. The organism's modelled work -0.0011% (11 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
-| energy_facility_industrial at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 7 (time over the response line (% of samples); energy, parked workers still on at idle power (Wh); energy (Wh); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 5. The cluster's gauges: 3 GAIN (time over the line -14.9%, parked-worker energy -0.3%, standby-model energy -0.3%), 0 LOSS, 0 power given. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
-| distribution_specialized at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 6 (response time (ms), 95th percentile; time over the response line (% of samples); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -31.9%, time over the line -21.9%), 0 LOSS, 0 power given. The organism's modelled energy -0.2%. | `results/live/V3_SIX_KUBE.md` |
-| tower at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (time over the response line (% of samples); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, EVEN (inside the noise) on 6. The cluster's gauges: 1 GAIN (time over the line -8.7%), 0 LOSS, 0 power given. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
-| stack at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 6; OFF THE CLOCK in 3 of 5 repetitions (the organism ended up to 277 s after its window: the machine could not step this many muscles in time, and the cell's last steps saw a cluster at rest). The cluster's gauges: 1 GAIN (time over the line -14.6%), 0 LOSS, 0 power given. The organism's modelled work -0.0008% (8 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. Off the clock in 3 of 5 repetitions. | `results/live/V3_SIX_KUBE.md` |
-| tower at 1000 copies (Azure) | **write** | each gauge's word: GAIN on 7 (response time (ms), 95th percentile; response time (ms), 99th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 4. The cluster's gauges: 4 GAIN (p95 -97.6%, p99 -97.9%, time over the line -100.0%, failed requests -100.0%), 0 LOSS, 0 power given. The organism's modelled work -0.0004% (4 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_BIG_ORGANISM.md` |
-| stack at 1000 copies (Azure) | **write** | each gauge's word: GAIN on 7 (response time (ms), 95th percentile; response time (ms), 99th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, EVEN (inside the noise) on 3. The cluster's gauges: 4 GAIN (p95 -94.8%, p99 -96.9%, time over the line -100.0%, failed requests -100.0%), 0 LOSS, 0 power given. The organism's modelled work -0.0006% (6 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_BIG_ORGANISM.md` |
+| compute_ai_cloud at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (response time (ms), 95th percentile; time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -50.3%, time over the line -31.6%), 0 LOSS, 0 power given. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
+| physics_robotics_autonomous at 10 copies (GitHub) | **watch** | each gauge's word: GAIN on 3 (organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 8. The cluster's gauges: 0 GAIN, 0 LOSS, 0 power given. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
+| energy_facility_industrial at 10 copies (GitHub) | **operator's choice** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 1 (HPA replicas, mean), STEADY (inside the noise) on 6. The cluster's gauges: 1 GAIN (time over the line -32.6%), 0 LOSS, 1 power given (replicas +0.6%). The organism's modelled energy -0.3%. | `results/live/V3_SIX_KUBE.md` |
+| distribution_specialized at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (response time (ms), 95th percentile; time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -51.7%, time over the line -35.9%), 0 LOSS, 0 power given. The organism's modelled energy -0.2%. | `results/live/V3_SIX_KUBE.md` |
+| tower at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 6 (response time (ms), 95th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 5. The cluster's gauges: 3 GAIN (p95 -41.6%, time over the line -20.1%, failed requests -8.4%), 0 LOSS, 0 power given. The organism's modelled energy -0.3%. | `results/live/V3_SIX_KUBE.md` |
+| stack at 10 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 6. The cluster's gauges: 2 GAIN (time over the line -12.1%, failed requests -8.5%), 0 LOSS, 0 power given. The organism's modelled work -0.0006% (6 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
+| compute_ai_cloud at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 7. The cluster's gauges: 1 GAIN (time over the line -9.8%), 0 LOSS, 0 power given. The organism's modelled work -0.0008% (8 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
+| physics_robotics_autonomous at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 7. The cluster's gauges: 1 GAIN (time over the line -8.4%), 0 LOSS, 0 power given. The organism's modelled work -0.0011% (11 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.1%. | `results/live/V3_SIX_KUBE.md` |
+| energy_facility_industrial at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 7 (time over the response line (% of samples); energy, parked workers still on at idle power (Wh); energy (Wh); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 5. The cluster's gauges: 3 GAIN (time over the line -14.9%, parked-worker energy -0.3%, standby-model energy -0.3%), 0 LOSS, 0 power given. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
+| distribution_specialized at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 6 (response time (ms), 95th percentile; time over the response line (% of samples); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 6. The cluster's gauges: 2 GAIN (p95 -31.9%, time over the line -21.9%), 0 LOSS, 0 power given. The organism's modelled energy -0.2%. | `results/live/V3_SIX_KUBE.md` |
+| tower at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 5 (time over the response line (% of samples); organism work; organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 0, power given on 0, STEADY (inside the noise) on 6. The cluster's gauges: 1 GAIN (time over the line -8.7%), 0 LOSS, 0 power given. The organism's modelled energy -0.4%. | `results/live/V3_SIX_KUBE.md` |
+| stack at 100 copies (GitHub) | **write** | each gauge's word: GAIN on 4 (time over the response line (% of samples); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 6; OFF THE CLOCK in 3 of 5 repetitions (the organism ended up to 277 s after its window: the machine could not step this many muscles in time, and the cell's last steps saw a cluster at rest). The cluster's gauges: 1 GAIN (time over the line -14.6%), 0 LOSS, 0 power given. The organism's modelled work -0.0008% (8 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. Off the clock in 3 of 5 repetitions. | `results/live/V3_SIX_KUBE.md` |
+| tower at 1000 copies (Azure) | **write** | each gauge's word: GAIN on 7 (response time (ms), 95th percentile; response time (ms), 99th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 4. The cluster's gauges: 4 GAIN (p95 -97.6%, p99 -97.9%, time over the line -100.0%, failed requests -100.0%), 0 LOSS, 0 power given. The organism's modelled work -0.0004% (4 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_BIG_ORGANISM.md` |
+| stack at 1000 copies (Azure) | **write** | each gauge's word: GAIN on 7 (response time (ms), 95th percentile; response time (ms), 99th percentile; time over the response line (% of samples); failed requests (%); organism energy (J); organism time over the line (% of steps); organism work per energy), LOSS on 1 (organism work), power given on 0, STEADY (inside the noise) on 3. The cluster's gauges: 4 GAIN (p95 -94.8%, p99 -96.9%, time over the line -100.0%, failed requests -100.0%), 0 LOSS, 0 power given. The organism's modelled work -0.0006% (6 parts in a million, rounding level) (LOSS or power given) is a model gauge judged muscle by muscle in the realms table and shown here beside the cluster's. The organism's modelled energy -0.4%. | `results/live/V3_BIG_ORGANISM.md` |
 
 ### 61.8 Not decided here
 
-- **Azure's managed Kubernetes (the bill):** the two tables are on Omni v1 (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`) on a 4-worker fleet, where every gauge read EVEN, no difference beyond the noise, but the burst's p99 in one run. A fleet too small to show one machine decides nothing; the fleet that can (`docs/K8S_COMPASS_PREREGISTRATION.md`, the fleet that can show one machine) decides this knob on v3 when it runs. Until then the verdict on Azure is watch, for want of a result rather than because of one.
+- **Azure's managed Kubernetes (the bill):** the two tables are on Omni v1 (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`) on a 4-worker fleet, where every gauge read STEADY, no difference beyond the noise, but the burst's p99 in one run. A fleet too small to show one machine decides nothing; the fleet that can (`docs/K8S_COMPASS_PREREGISTRATION.md`, the fleet that can show one machine) decides this knob on v3 when it runs. Until then the verdict on Azure is watch, for want of a result rather than because of one.
 - **The card (NVIDIA, its own meter):** every earlier card result is obsolete; the current governor has not run on a real card. Nothing to decide yet.
 - **The 24-hour robustness machines:** running; they test the governor's own staying power, not a knob's value.
 
@@ -9683,7 +9932,7 @@ The **primary outcome** is work per energy: requests served per kilojoule the GP
    after every arm.
 7. **The table** (`GPU_REPS.md`): each gauge for native, watch and omni, and three paired contrasts with 95%
    intervals — observation (watch − native), authority (omni − watch), total (omni − native). If an interval includes
-   zero, it reads **EVEN, no difference beyond the noise**; wholly on one side, **GAIN** (or **LOSS**, or **power given**)
+   zero, it reads **STEADY, no difference beyond the noise**; wholly on one side, **GAIN** (or **LOSS**, or **power given**)
    **clear of the noise** (the words of amendment 14). The result label is chosen by rule (`docs/GPU_PREREGISTRATION.md`, amendment 1):
    SUPERIOR WITHIN GUARDRAILS, ENERGY IMPROVEMENT WITH SERVICE TRADEOFF, NONINFERIOR / INCONCLUSIVE, NOT ESTABLISHED,
    AWAY FROM ITS AIM, or INVALID. Also: actuator fidelity (receipt B), control effort and representation fidelity (receipt A). A
@@ -10232,6 +10481,20 @@ observation contrast clear of the noise: NOT ATTRIBUTABLE. The intervals use the
 computed for the run's own degrees of freedom (`omnicompass/student_t.py`); the table it replaces held the same values to
 the last digit up to 20 degrees of freedom and fell to 1.96 beyond them. The first counted run's table (2 October) keeps the
 words it was printed with.
+
+
+### 64.22 Amendment 15 (2026-10-30, the rig, declared before any counted run on it): the window opens once the governor stands
+
+Until this amendment `scripts/gpu_paired.sh` wrote `window_start.txt`, read the energy meters and started the workload the
+instant the governor process was launched, so the governor's own start-up (the interpreter, the first query of the card, the
+snapshot of its limits) was inside the omni and watch arms' windows and outside native's. On a rented card it is a second or
+two of a 600 s arm; on a loaded machine running the harness's own 5 s test arm it was most of the arm, and the governor had
+written nothing by the window's end (found 30 October 2026, `tests/test_gpu_bench.py` on a loaded runner). From this
+amendment every governed arm waits for each governor's first audit record (its snapshot, written before its first decision),
+records that moment in `governor_ready.txt`, and only then reads the meters and opens the window; a governor not standing
+within `GOV_READY_S` (60 s) refuses the arm. Native's window is unchanged. No gauge, rule, gain or guard of the governor
+changes, and `tools/gpu_reps.py` reads the window as before. The card tables already run (omni-v18's A100 run of 24 October;
+omni-v21's A100 tables of 27 October) stand as their own rig's; the next counted runs carry this rig.
 
 ## 65. The Realms Preregistration
 
@@ -12084,7 +12347,7 @@ read it stands as recorded, and every page names it.
 The test (`.github/workflows/kind-addons.yml`, `docs/K8S_COMPASS_PREREGISTRATION.md`) runs native as KEDA with its HTTP add-on.
 In the http setup the add-on scales php-apache on the requests in flight. The omni arm is Omni-Compass on top of the same. On
 omni-v10, the three-run table of the http setup read the mean pod start wait **LOSS in all three of our runs** (+13.0%, +14.1%,
-+21.1% a pod). In the same three runs the total start wait read EVEN, pods started fell 24%, the response time fell 57% (mean)
++21.1% a pod). In the same three runs the total start wait read STEADY, pods started fell 24%, the response time fell 57% (mean)
 and 72% (95th percentile), and CPU used rose 50 to 54% (power given). On omni-v11, two runs of the same setup have landed. The
 third runs to its end on the rig it started on. Under the other setup, both (the CPU target and the requests in flight), the
 mean pod start wait, pooled over the repetitions, was lower in the omni arm on both engines (−7.8% on omni-v10, −6.3% on
@@ -12234,7 +12497,7 @@ By the preregistered rule (a gauge reads LOSS only when it moves away from its a
 interval clear of zero), **no 95th- or 99th-percentile row reads LOSS in any omni-v11 table** (23 tables), and none read
 LOSS in the omni-v10 tables before them. The one omni-v10 LOSS, the pod start wait under KEDA's HTTP add-on, was the test
 machine (an empty node unpacking the image inside the window); since the kind rig pulls the served image onto every worker
-before each arm, it reads EVEN on omni-v11 (`docs/POD_START_WAIT.md`, `results/live/V11_KEDA_REQUESTS.md`).
+before each arm, it reads STEADY on omni-v11 (`docs/POD_START_WAIT.md`, `results/live/V11_KEDA_REQUESTS.md`).
 
 ### 68.2 Real Kubernetes: Omni-Compass's tail was below native's in every repetition
 
@@ -12250,7 +12513,7 @@ ten pairs in each of runs A, B and C), each scored from its own raw files by `to
 ### 68.3 Where a single run's tail rose: the data stores and the kill test
 
 Six tail rows on omni-v11 have one or two runs whose interval lies wholly above zero. None holds in all three runs, so each
-reads EVEN; a page that colours each run's cell on its own shows them red.
+reads STEADY; a page that colours each run's cell on its own shows them red.
 
 | Table, workload | Gauge | A | B | C | What it is |
 |---|---|---|---|---|---|
@@ -12322,7 +12585,7 @@ measured, so it lands with the next engine version and its reruns, never inside 
 The live page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, rebuilt by its own workflow) reads each benchmark's newest
 table. Until the omni-v11 tables reached main it read omni-v10's, where the KEDA pod start wait read LOSS. It also shows
 each run's own interval beside the three-run reading, so a single run's rise, like those in section 68.3, can show as that
-run's own excursion even where the three-run reading is EVEN. With the omni-v11 tables on main (19 October), the page's
+run's own excursion even where the three-run reading is STEADY. With the omni-v11 tables on main (19 October), the page's
 only LOSS is gone, and its next rebuild reads them.
 
 ## 69. How Small an Effect Each Test Can See
@@ -12331,7 +12594,7 @@ only LOSS is gone, and its next rebuild reads them.
 
 Generated by `python3 tools/power.py` from the newest three-run table of each benchmark that stores its rows (`results/live/V*_*.json`); `tools/power.py --check`, run by `verify.py`, fails a push where this page is not what the tables give.
 
-A row reads **EVEN** when a run's 95% interval includes zero: the change is smaller than the test resolves, not zero. The columns say how small:
+A row reads **STEADY** when a run's 95% interval includes zero: the change is smaller than the test resolves, not zero. The columns say how small:
 
 - **MDE, one run**: the smallest true change one run detects with 80% power (two-sided 5%).
 - **MDE, all three runs**: the smallest true change that reads GAIN or LOSS in all three of our runs with 80% power (each run at 92.8%).
@@ -12339,31 +12602,31 @@ A row reads **EVEN** when a run's 95% interval includes zero: the change is smal
 
 Each figure is in percent of native's mean in the least favourable of the three runs. Every number is computed from the table's own intervals with the Student t quantiles the tables use (`omnicompass/student_t.py`).
 
-### 69.1 All Four (omni-v10, `V10_ALL_FOUR.md`, 10 paired repetitions a run)
+### 69.1 All Four (omni-v21, `V21_ALL_FOUR.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| work inside the response line (requests a second; the capacity test's own gauge) | GAIN in all three of our runs | 37.0% | 45.5% | 828 |
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.00%) | 0.2% | 0.3% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.21%) | 0.4% | 0.5% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.21%) | 0.4% | 0.5% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 16.0% | 19.6% | 155 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 21.6% | 26.5% | 281 |
-| response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 50.1% | 61.6% | 1517 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 25.5% | 31.3% | 393 |
-| failed requests (%) | GAIN in all three of our runs | 19.6% | 24.0% | 232 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 9.9% | 12.2% | 60 |
-| pending pods, pod-minutes | shown, not judged | 79.0% | 97.1% | 3770 |
-| utilisation (used / allocatable) | shown, not judged | 1.7% | 2.0% | 2 |
-| CPU used (cores), mean | shown, not judged | 1.7% | 2.0% | 2 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 1.6% | 2.0% | 2 |
-| energy per core-hour (Wh) | shown, not judged | 3.4% | 4.1% | 7 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 7.8% | 9.6% | 37 |
-| pods started | power given by the mean of our three runs, beyond the noise in 0 of 3 | 79.0% | 97.1% | 3771 |
-| pod start wait, total (s) | the runs disagree | 80.6% | 99.0% | 3923 |
-| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 41.8% | 51.4% | 1058 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.5% | 1.8% | 2 |
+| work inside the response line (requests a second; the capacity test's own gauge) | GAIN in all three of our runs | 20.3% | 25.0% | 250 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.02%) | 0.3% | 0.3% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.11%) | 0.4% | 0.4% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.11%) | 0.4% | 0.4% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 19.6% | 24.1% | 232 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 24.8% | 30.5% | 372 |
+| response time (ms), 99th percentile | the runs disagree | 76.0% | 93.4% | 3493 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 20.6% | 25.3% | 257 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 9.8% | 12.0% | 58 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 11.8% | 14.6% | 85 |
+| pending pods, pod-minutes | shown, not judged | 196.6% | 241.5% | 23336 |
+| utilisation (used / allocatable) | shown, not judged | 2.9% | 3.5% | 5 |
+| CPU used (cores), mean | shown, not judged | 2.9% | 3.5% | 5 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 2.9% | 3.6% | 6 |
+| energy per core-hour (Wh) | shown, not judged | 5.4% | 6.6% | 18 |
+| HPA replicas, mean | the runs disagree | 19.2% | 23.6% | 222 |
+| pods started | power given by the mean of our three runs, beyond the noise in 0 of 3 | 62.0% | 76.2% | 2323 |
+| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 81.2% | 99.8% | 3981 |
+| pod start wait, mean (s) | the runs disagree | 30.9% | 38.0% | 578 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 2.9% | 3.5% | 5 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
 ### 69.2 Armada 4W Bare (omni-v12, `V12_ARMADA_4W_BARE.md`, 9 paired repetitions a run)
@@ -12372,7 +12635,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 19.6% | 24.1% | 209 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 19.4% | 23.9% | 205 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 14.0% | 17.2% | 107 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 7.3% | 9.0% | 30 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 14.1% | 17.4% | 109 |
@@ -12429,8 +12692,8 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.08%) | 0.5% | 0.7% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.08%) | 0.5% | 0.7% | 1 |
 | energy, parked workers still on at idle power (Wh) | GAIN in all three of our runs | 1.4% | 1.7% | 2 |
 | energy (Wh) | GAIN in all three of our runs | 1.4% | 1.7% | 2 |
 | response time (ms), mean | GAIN in all three of our runs | 96.5% | 118.7% | 5072 |
@@ -12460,7 +12723,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 6.8% | 8.4% | 26 |
 | node-hours | GAIN in all three of our runs | 6.9% | 8.5% | 27 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.04%) | 0.3% | 0.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.04%) | 0.3% | 0.4% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 5.2% | 6.4% | 15 |
 | response time (ms), mean | GAIN in all three of our runs | 16.3% | 20.0% | 145 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 18.0% | 22.1% | 177 |
@@ -12472,11 +12735,11 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 8.9% | 10.9% | 43 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 3.7% | 4.5% | 8 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.01%) | 0.4% | 0.5% | 1 |
-| queue: job wait, submitted to its first pod running, mean (s) | EVEN, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
-| queue: job wait, submitted to its first pod running, 95th percentile (s) | EVEN, under the floor (the three runs' mean 0.00%) | 0.4% | 0.5% | 1 |
-| queue: job turnaround, submitted to done, mean (s) | EVEN, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
-| queue: jobs unfinished at the window's end | EVEN, the same | 0.0% | 0.0% | 9 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.01%) | 0.4% | 0.5% | 1 |
+| queue: job wait, submitted to its first pod running, mean (s) | STEADY, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | STEADY, under the floor (the three runs' mean 0.00%) | 0.4% | 0.5% | 1 |
+| queue: job turnaround, submitted to done, mean (s) | STEADY, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
+| queue: jobs unfinished at the window's end | STEADY, the same | 0.0% | 0.0% | 9 |
 
 ### 69.6 Armada 4W Vs (omni-v12, `V12_ARMADA_4W_VS.md`, 9 paired repetitions a run)
 
@@ -12502,29 +12765,29 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | queue: job turnaround, submitted to done, mean (s) | GAIN in all three of our runs | 12.2% | 15.0% | 82 |
 | queue: jobs unfinished at the window's end | GAIN in all three of our runs | 0.0% | 0.0% | 9 |
 
-### 69.7 Batch (omni-v10, `V10_BATCH.md`, 10 paired repetitions a run)
+### 69.7 Batch (omni-v21, `V21_BATCH.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | GAIN in all three of our runs | 10.6% | 13.1% | 69 |
-| node-hours | GAIN in all three of our runs | 10.7% | 13.1% | 70 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.07%) | 0.6% | 0.8% | 1 |
-| energy (Wh) | GAIN in all three of our runs | 7.4% | 9.1% | 33 |
-| response time (ms), mean | GAIN in all three of our runs | 5.3% | 6.5% | 17 |
-| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 6.6% | 8.1% | 27 |
-| response time (ms), 99th percentile | the runs disagree | 8.9% | 10.9% | 48 |
-| time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 4.6% | 5.7% | 14 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | EVEN, under the floor (the three runs' mean 0.31%) | 3.0% | 3.6% | 6 |
-| pending pods, pod-minutes | shown, not judged | 3.7% | 4.6% | 9 |
-| utilisation (used / allocatable) | shown, not judged | 13.4% | 16.4% | 108 |
-| CPU used (cores), mean | shown, not judged | 3.9% | 4.8% | 10 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 3.9% | 4.8% | 10 |
-| energy per core-hour (Wh) | shown, not judged | 10.1% | 12.4% | 62 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 22.6% | 27.8% | 309 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.7% | 2 |
+| worker nodes in service, mean | GAIN in all three of our runs | 15.1% | 18.6% | 139 |
+| node-hours | GAIN in all three of our runs | 15.4% | 18.9% | 143 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.11%) | 0.8% | 0.9% | 1 |
+| energy (Wh) | GAIN in all three of our runs | 10.7% | 13.1% | 69 |
+| response time (ms), mean | GAIN in all three of our runs | 6.3% | 7.7% | 24 |
+| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 7.0% | 8.6% | 30 |
+| response time (ms), 99th percentile | STEADY, under the floor (the three runs' mean 0.01%) | 9.5% | 11.7% | 55 |
+| time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 5.4% | 6.7% | 18 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | the runs disagree | 3.5% | 4.2% | 8 |
+| pending pods, pod-minutes | shown, not judged | 5.0% | 6.1% | 15 |
+| utilisation (used / allocatable) | shown, not judged | 20.6% | 25.4% | 258 |
+| CPU used (cores), mean | shown, not judged | 4.7% | 5.8% | 14 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 4.7% | 5.8% | 14 |
+| energy per core-hour (Wh) | shown, not judged | 13.2% | 16.2% | 106 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 36.3% | 44.6% | 796 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 2.2% | 2.7% | 3 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 1.0% | 1.2% | 1 |
-| batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 15.4% | 18.9% | 144 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.13%) | 2.1% | 2.6% | 3 |
+| batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 22.0% | 27.0% | 292 |
 
 ### 69.8 Binpack (omni-v12, `V12_BINPACK.md`, 10 paired repetitions a run)
 
@@ -12532,7 +12795,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 17.1% | 21.0% | 177 |
 | node-hours | GAIN in all three of our runs | 17.0% | 20.9% | 176 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.05%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.05%) | 0.6% | 0.7% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 12.0% | 14.8% | 88 |
 | response time (ms), mean | GAIN in all three of our runs | 10.2% | 12.6% | 64 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 14.5% | 17.9% | 128 |
@@ -12550,7 +12813,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 960.9% | 1180.8% | 557738 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 0.8% | 1.1% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.01%) | 0.2% | 0.3% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.01%) | 0.2% | 0.3% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 28.0% | 34.4% | 475 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 197.8% | 243.1% | 23638 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 0.9% | 1.1% | 1 |
@@ -12561,7 +12824,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 17.7% | 21.7% | 189 |
 | node-hours | GAIN in all three of our runs | 17.8% | 21.9% | 193 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.04%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.04%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 12.4% | 15.2% | 93 |
 | response time (ms), mean | GAIN in all three of our runs | 8.2% | 10.1% | 41 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 11.6% | 14.3% | 82 |
@@ -12576,7 +12839,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 12.5% | 15.4% | 95 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.6% | 2.0% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.49%) | 1.0% | 1.3% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.49%) | 1.0% | 1.3% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 28.7% | 35.2% | 497 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 165.4% | 203.3% | 16533 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 367.0% | 450.9% | 81337 |
@@ -12588,7 +12851,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 18.8% | 23.1% | 215 |
 | node-hours | GAIN in all three of our runs | 18.9% | 23.2% | 216 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.08%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.08%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 13.0% | 15.9% | 102 |
 | response time (ms), mean | GAIN in all three of our runs | 11.6% | 14.3% | 82 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 15.7% | 19.3% | 149 |
@@ -12603,7 +12866,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 15.3% | 18.8% | 142 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.6% | 2.0% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.18%) | 1.0% | 1.2% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.18%) | 1.0% | 1.2% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 28.9% | 35.5% | 503 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 142.2% | 174.8% | 12218 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 314.5% | 386.5% | 59758 |
@@ -12613,10 +12876,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.02%) | 0.3% | 0.4% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.02%) | 0.3% | 0.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 9.7% | 11.9% | 57 |
 | response time (ms), 95th percentile | the runs disagree | 18.4% | 22.6% | 206 |
 | response time (ms), 99th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 25.0% | 30.7% | 378 |
@@ -12630,8 +12893,8 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 9.4% | 11.6% | 54 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.1% | 1.3% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.11%) | 1.2% | 1.5% | 1 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 10 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.11%) | 1.2% | 1.5% | 1 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 10 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 136.3% | 167.5% | 11222 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 256.8% | 315.6% | 39839 |
 | queue: job turnaround, submitted to done, mean (s) | the runs disagree | 9.3% | 11.4% | 53 |
@@ -12642,7 +12905,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 18.8% | 23.1% | 215 |
 | node-hours | GAIN in all three of our runs | 18.9% | 23.2% | 216 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.6% | 0.7% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 13.2% | 16.2% | 105 |
 | response time (ms), mean | GAIN in all three of our runs | 6.8% | 8.4% | 28 |
 | response time (ms), 95th percentile | the runs disagree | 13.6% | 16.7% | 112 |
@@ -12657,7 +12920,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 14.1% | 17.3% | 120 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.0% | 1.3% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.29%) | 0.9% | 1.1% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.29%) | 0.9% | 1.1% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 28.9% | 35.5% | 503 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 103.3% | 126.9% | 6444 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 221.0% | 271.6% | 29510 |
@@ -12669,7 +12932,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 17.7% | 21.7% | 189 |
 | node-hours | GAIN in all three of our runs | 17.7% | 21.8% | 190 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 12.5% | 15.4% | 95 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.7% | 16.9% | 114 |
 | response time (ms), 95th percentile | the runs disagree | 18.5% | 22.7% | 207 |
@@ -12694,10 +12957,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.01%) | 0.8% | 0.9% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.03%) | 0.8% | 0.9% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.03%) | 0.8% | 0.9% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.01%) | 0.8% | 0.9% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.03%) | 0.8% | 0.9% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.03%) | 0.8% | 0.9% | 1 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 3.9% | 4.8% | 10 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 6.9% | 8.5% | 29 |
 | response time (ms), 99th percentile | the runs disagree | 7.7% | 9.4% | 36 |
@@ -12718,8 +12981,8 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.11%) | 0.7% | 0.8% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.11%) | 0.7% | 0.8% | 1 |
 | energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 0.7% | 0.9% | 1 |
 | energy (Wh) | power given in all three of our runs | 0.7% | 0.9% | 1 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 3.8% | 4.6% | 9 |
@@ -12742,10 +13005,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.32%) | 0.8% | 1.0% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.31%) | 0.8% | 1.0% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.31%) | 0.8% | 1.0% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.32%) | 0.8% | 1.0% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.31%) | 0.8% | 1.0% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.31%) | 0.8% | 1.0% | 1 |
 | response time (ms), mean | LOSS in all three of our runs | 3.7% | 4.6% | 9 |
 | response time (ms), 95th percentile | the runs disagree | 4.6% | 5.7% | 13 |
 | response time (ms), 99th percentile | the runs disagree | 8.9% | 11.0% | 49 |
@@ -12766,10 +13029,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.21%) | 1.0% | 1.2% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.32%) | 0.9% | 1.2% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.32%) | 0.9% | 1.2% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.21%) | 1.0% | 1.2% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.32%) | 0.9% | 1.2% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.32%) | 0.9% | 1.2% | 1 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 2.5% | 3.1% | 4 |
 | response time (ms), 95th percentile | the runs disagree | 5.2% | 6.4% | 17 |
 | response time (ms), 99th percentile | the runs disagree | 6.3% | 7.8% | 24 |
@@ -12790,10 +13053,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.31%) | 0.9% | 1.1% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.28%) | 0.9% | 1.1% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.28%) | 0.9% | 1.1% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.31%) | 0.9% | 1.1% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.28%) | 0.9% | 1.1% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.28%) | 0.9% | 1.1% | 1 |
 | response time (ms), mean | GAIN in all three of our runs | 3.6% | 4.4% | 8 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 4.9% | 6.1% | 15 |
 | response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 8.8% | 10.8% | 48 |
@@ -12810,108 +13073,108 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 2.2% | 2.6% | 3 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.19 Cruisekube (omni-v10, `V10_CRUISEKUBE.md`, 10 paired repetitions a run)
+### 69.19 Cruisekube (omni-v21, `V21_CRUISEKUBE.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.13%) | 0.9% | 1.1% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.16%) | 0.9% | 1.1% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.16%) | 0.9% | 1.1% | 1 |
-| response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 3.0% | 3.8% | 6 |
-| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 6.6% | 8.1% | 27 |
-| response time (ms), 99th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 11.3% | 13.9% | 77 |
-| pending pods, pod-minutes | shown, not judged | 948.8% | 1165.9% | 543733 |
-| utilisation (used / allocatable) | shown, not judged | 2.9% | 3.6% | 6 |
-| CPU used (cores), mean | shown, not judged | 2.9% | 3.6% | 6 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 2.9% | 3.5% | 5 |
-| energy per core-hour (Wh) | shown, not judged | 2.7% | 3.3% | 5 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 12.3% | 15.2% | 93 |
-| pods started | the runs disagree | 73.3% | 90.0% | 3243 |
-| pod start wait, total (s) | the runs disagree | 271.3% | 333.4% | 44450 |
-| pod start wait, mean (s) | the runs disagree | 348.1% | 427.7% | 73186 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.7% | 2.1% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.11%) | 0.7% | 0.9% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.7% | 0.8% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.7% | 0.8% | 1 |
+| response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 2.5% | 3.0% | 4 |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 2.5% | 3.1% | 4 |
+| response time (ms), 99th percentile | the runs disagree | 7.2% | 8.9% | 32 |
+| pending pods, pod-minutes | shown, not judged | 336.8% | 413.9% | 68531 |
+| utilisation (used / allocatable) | shown, not judged | 3.0% | 3.7% | 6 |
+| CPU used (cores), mean | shown, not judged | 3.0% | 3.7% | 6 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 3.1% | 3.8% | 6 |
+| energy per core-hour (Wh) | shown, not judged | 2.9% | 3.5% | 6 |
+| HPA replicas, mean | the runs disagree | 12.8% | 15.8% | 100 |
+| pods started | the runs disagree | 61.8% | 76.0% | 2309 |
+| pod start wait, total (s) | the runs disagree | 86.2% | 105.9% | 4488 |
+| pod start wait, mean (s) | the runs disagree | 50.1% | 61.6% | 1516 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 2.2% | 2.7% | 3 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.20 Fairness (omni-v10, `V10_FAIRNESS.md`, 10 paired repetitions a run)
+### 69.20 Fairness (omni-v21, `V21_FAIRNESS.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.19%) | 0.5% | 0.6% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.05%) | 0.6% | 0.7% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.05%) | 0.6% | 0.7% | 1 |
-| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 15.2% | 18.6% | 139 |
-| response time (ms), 95th percentile | the runs disagree | 21.4% | 26.3% | 278 |
-| response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 23.3% | 28.7% | 330 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 10.6% | 13.1% | 69 |
-| failed requests (%) | the runs disagree | 39.7% | 48.8% | 954 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 8.1% | 9.9% | 40 |
-| pending pods, pod-minutes | shown, not judged | 157.6% | 193.7% | 15004 |
-| utilisation (used / allocatable) | shown, not judged | 2.1% | 2.6% | 3 |
-| CPU used (cores), mean | shown, not judged | 2.1% | 2.6% | 3 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 2.2% | 2.6% | 3 |
-| energy per core-hour (Wh) | shown, not judged | 3.6% | 4.4% | 8 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 3.8% | 4.7% | 9 |
-| pods started | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 33.7% | 41.4% | 686 |
-| pod start wait, total (s) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 56.5% | 69.4% | 1927 |
-| pod start wait, mean (s) | the runs disagree | 42.1% | 51.8% | 1073 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.7% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.08%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.01%) | 0.5% | 0.7% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 13.9% | 17.1% | 118 |
+| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 21.1% | 26.0% | 270 |
+| response time (ms), 99th percentile | the runs disagree | 19.2% | 23.6% | 223 |
+| time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 15.5% | 19.1% | 146 |
+| failed requests (%) | the runs disagree | 37.5% | 46.1% | 851 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 7.7% | 9.5% | 37 |
+| pending pods, pod-minutes | shown, not judged | 148.2% | 182.2% | 13272 |
+| utilisation (used / allocatable) | shown, not judged | 2.3% | 2.8% | 4 |
+| CPU used (cores), mean | shown, not judged | 2.3% | 2.8% | 4 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 2.2% | 2.8% | 4 |
+| energy per core-hour (Wh) | shown, not judged | 2.6% | 3.1% | 4 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 4.4% | 5.4% | 12 |
+| pods started | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 35.0% | 43.0% | 741 |
+| pod start wait, total (s) | the runs disagree | 70.4% | 86.5% | 2994 |
+| pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 81.9% | 100.7% | 4053 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 1.5% | 1.8% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| second app: response time (ms), 95th percentile | the runs disagree | 16.9% | 20.8% | 174 |
-| second app: response time (ms), 99th percentile | the runs disagree | 118.5% | 145.6% | 8482 |
-| second app: time over the response line (% of samples) | the runs disagree | 3.9% | 4.7% | 9 |
-| second app: failed requests (%) | the runs disagree | 4.9% | 6.1% | 15 |
+| second app: response time (ms), 95th percentile | the runs disagree | 73.7% | 90.5% | 3278 |
+| second app: response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 84.9% | 104.3% | 4356 |
+| second app: time over the response line (% of samples) | the runs disagree | 8.1% | 9.9% | 40 |
+| second app: failed requests (%) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 8.3% | 10.2% | 42 |
 
-### 69.21 Faults (omni-v10, `V10_FAULTS.md`, 10 paired repetitions a run)
+### 69.21 Faults (omni-v21, `V21_FAULTS.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, under the floor (the three runs' mean 0.00%) | 0.1% | 0.2% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.14%) | 0.8% | 1.0% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.35%) | 0.8% | 0.9% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.35%) | 0.8% | 1.0% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 41.0% | 50.4% | 1016 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 19.9% | 24.5% | 240 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 66.2% | 81.4% | 2650 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 23.3% | 28.6% | 329 |
-| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 17.8% | 21.9% | 193 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 22.0% | 27.1% | 294 |
-| pending pods, pod-minutes | shown, not judged | 263.0% | 323.2% | 41782 |
-| utilisation (used / allocatable) | shown, not judged | 4.7% | 5.8% | 14 |
-| CPU used (cores), mean | shown, not judged | 4.7% | 5.8% | 14 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 4.7% | 5.8% | 14 |
+| worker nodes in service, mean | STEADY, under the floor (the three runs' mean 0.03%) | 0.2% | 0.2% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.46%) | 0.8% | 1.0% | 1 |
+| energy, parked workers still on at idle power (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 0.9% | 1.1% | 1 |
+| energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 0.9% | 1.1% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 34.9% | 42.8% | 734 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 25.8% | 31.7% | 402 |
+| response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 81.8% | 100.5% | 4042 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 22.2% | 27.3% | 299 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 21.1% | 25.9% | 270 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 22.8% | 28.1% | 315 |
+| pending pods, pod-minutes | shown, not judged | 256.5% | 315.1% | 39728 |
+| utilisation (used / allocatable) | shown, not judged | 5.3% | 6.5% | 18 |
+| CPU used (cores), mean | shown, not judged | 5.3% | 6.5% | 18 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 5.3% | 6.5% | 17 |
 | energy per core-hour (Wh) | shown, not judged | 4.9% | 6.0% | 15 |
-| HPA replicas, mean | power given in all three of our runs | 18.2% | 22.4% | 200 |
-| pods started | the runs disagree | 44.2% | 54.3% | 1180 |
-| pod start wait, total (s) | the runs disagree | 174.2% | 214.0% | 18321 |
-| pod start wait, mean (s) | the runs disagree | 126.8% | 155.8% | 9711 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 3.6% | 4.4% | 8 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 24.1% | 29.6% | 350 |
+| pods started | power given by the mean of our three runs, beyond the noise in 1 of 3 | 37.0% | 45.4% | 826 |
+| pod start wait, total (s) | the runs disagree | 253.0% | 310.9% | 38658 |
+| pod start wait, mean (s) | the runs disagree | 238.8% | 293.5% | 34459 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 4.1% | 5.0% | 11 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.22 Goldilocks (omni-v11, `V11_GOLDILOCKS.md`, 10 paired repetitions a run)
+### 69.22 Goldilocks (omni-v21, `V21_GOLDILOCKS.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.13%) | 0.9% | 1.1% | 1 |
-| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 1.1% | 1.3% | 1 |
-| energy (Wh) | power given in all three of our runs | 1.1% | 1.3% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 19.6% | 24.1% | 232 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 18.0% | 22.2% | 197 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 22.8% | 28.1% | 315 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 99.7% | 122.5% | 6007 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 128.4% | 157.8% | 9960 |
-| pending pods, pod-minutes | shown, not judged | 212.5% | 261.1% | 27269 |
-| utilisation (used / allocatable) | shown, not judged | 15.4% | 18.9% | 144 |
-| CPU used (cores), mean | shown, not judged | 15.4% | 18.9% | 144 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 15.6% | 19.1% | 147 |
-| energy per core-hour (Wh) | shown, not judged | 6.5% | 8.0% | 26 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 2.3% | 2.8% | 4 |
-| pods started | GAIN in all three of our runs | 80.4% | 98.8% | 3905 |
-| pod start wait, total (s) | GAIN in all three of our runs | 87.2% | 107.2% | 4598 |
-| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 91.4% | 112.3% | 5042 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 14.7% | 18.1% | 131 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.39%) | 0.8% | 1.1% | 1 |
+| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 1.0% | 1.2% | 1 |
+| energy (Wh) | power given in all three of our runs | 1.0% | 1.2% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 20.7% | 25.4% | 259 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 17.8% | 21.8% | 191 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 16.3% | 20.0% | 160 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 124.9% | 153.5% | 9430 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 314.5% | 386.5% | 59758 |
+| pending pods, pod-minutes | shown, not judged | 284.4% | 349.4% | 48840 |
+| utilisation (used / allocatable) | shown, not judged | 16.1% | 19.8% | 158 |
+| CPU used (cores), mean | shown, not judged | 16.1% | 19.8% | 158 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 16.5% | 20.3% | 165 |
+| energy per core-hour (Wh) | shown, not judged | 7.7% | 9.5% | 36 |
+| HPA replicas, mean | power given in all three of our runs | 17.4% | 21.4% | 184 |
+| pods started | power given in all three of our runs | 73.3% | 90.1% | 3249 |
+| pod start wait, total (s) | LOSS in all three of our runs | 146.0% | 179.4% | 12869 |
+| pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 53.7% | 66.0% | 1745 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 15.8% | 19.4% | 151 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
 ### 69.23 Kai (omni-v12, `V12_KAI.md`, 10 paired repetitions a run)
@@ -12920,7 +13183,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 13.4% | 16.5% | 109 |
 | node-hours | GAIN in all three of our runs | 13.7% | 16.8% | 113 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.01%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.01%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 9.3% | 11.5% | 53 |
 | response time (ms), mean | GAIN in all three of our runs | 8.9% | 10.9% | 48 |
 | response time (ms), 95th percentile | the runs disagree | 23.4% | 28.8% | 331 |
@@ -12935,7 +13198,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | the runs disagree | 16.2% | 19.9% | 159 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 2.4% | 2.9% | 4 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.34%) | 0.5% | 0.6% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.34%) | 0.5% | 0.6% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 24.9% | 30.6% | 374 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 12.2% | 15.1% | 91 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 41.9% | 51.5% | 1063 |
@@ -12947,7 +13210,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 16.4% | 20.1% | 162 |
 | node-hours | GAIN in all three of our runs | 16.2% | 19.9% | 159 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.4% | 0.5% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.4% | 0.5% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 11.4% | 14.0% | 79 |
 | response time (ms), mean | GAIN in all three of our runs | 10.2% | 12.6% | 64 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 14.4% | 17.6% | 125 |
@@ -12974,7 +13237,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.8% | 16.9% | 115 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.5% | 16.6% | 111 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.09%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 9.5% | 11.7% | 55 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 14.0% | 17.2% | 118 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 42.0% | 51.6% | 1066 |
@@ -12999,10 +13262,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.03%) | 0.5% | 0.7% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.5% | 0.6% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.5% | 0.6% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.03%) | 0.5% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.5% | 0.6% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.5% | 0.6% | 1 |
 | response time (ms), mean | LOSS in all three of our runs | 16.1% | 19.8% | 157 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 43.0% | 52.9% | 1118 |
 | response time (ms), 99th percentile | LOSS in all three of our runs | 44.7% | 54.9% | 1206 |
@@ -13017,7 +13280,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 2.2% | 2.8% | 4 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 | batch: queue finished (s) | LOSS in all three of our runs | 4.0% | 4.9% | 10 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 10 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 10 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS in all three of our runs | 633.6% | 778.5% | 242454 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS in all three of our runs | 451.0% | 554.2% | 122836 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 33.3% | 40.9% | 671 |
@@ -13028,7 +13291,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.8% | 16.9% | 115 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.7% | 16.9% | 114 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.7% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 9.6% | 11.8% | 56 |
 | response time (ms), mean | GAIN in all three of our runs | 12.5% | 15.4% | 96 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 16.1% | 19.7% | 156 |
@@ -13058,7 +13321,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 16.4% | 20.1% | 162 |
 | node-hours | GAIN in all three of our runs | 16.4% | 20.1% | 163 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.09%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 11.4% | 14.1% | 79 |
 | response time (ms), mean | GAIN in all three of our runs | 19.2% | 23.6% | 222 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 31.4% | 38.5% | 595 |
@@ -13088,7 +13351,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 21.1% | 25.9% | 243 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 21.3% | 26.2% | 247 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.10%) | 0.4% | 0.5% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.10%) | 0.4% | 0.5% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 15.3% | 18.8% | 127 |
 | response time (ms), mean | the runs disagree | 5.8% | 7.1% | 19 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 11.4% | 14.0% | 71 |
@@ -13115,7 +13378,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 19.7% | 24.2% | 211 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 19.8% | 24.4% | 215 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.28%) | 0.7% | 0.9% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.28%) | 0.7% | 0.9% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 14.2% | 17.4% | 109 |
 | response time (ms), mean | LOSS in all three of our runs | 41.4% | 50.9% | 931 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 66.3% | 81.5% | 2392 |
@@ -13140,10 +13403,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.00%) | 0.5% | 0.7% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.00%) | 0.5% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.6% | 0.8% | 1 |
 | response time (ms), mean | LOSS in all three of our runs | 20.0% | 24.5% | 217 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 40.4% | 49.6% | 887 |
 | response time (ms), 99th percentile | LOSS in all three of our runs | 43.3% | 53.2% | 1021 |
@@ -13158,7 +13421,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 5.5% | 6.7% | 17 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
 | batch: queue finished (s) | LOSS in all three of our runs | 9.1% | 11.2% | 46 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 9 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 9 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 15916.3% | 19570.7% | 137884244 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 26101.8% | 32094.8% | 370828125 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 40.6% | 49.9% | 897 |
@@ -13169,7 +13432,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 19.7% | 24.2% | 211 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 20.0% | 24.6% | 219 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.26%) | 0.7% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.26%) | 0.7% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 14.5% | 17.8% | 115 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 19.8% | 24.4% | 214 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 22.0% | 27.0% | 263 |
@@ -13200,7 +13463,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 21.1% | 25.9% | 243 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 21.5% | 26.4% | 252 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.07%) | 0.8% | 0.9% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.07%) | 0.8% | 0.9% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.6% | 19.2% | 133 |
 | response time (ms), mean | GAIN in all three of our runs | 17.9% | 22.0% | 175 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 24.6% | 30.2% | 329 |
@@ -13225,63 +13488,64 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 310.5% | 381.8% | 52466 |
 | queue: job turnaround, submitted to done, mean (s) | GAIN in all three of our runs | 21.7% | 26.7% | 257 |
 
-### 69.34 Keda Cpu Requests (omni-v11, `V11_KEDA_CPU_REQUESTS.md`, 10 paired repetitions a run)
+### 69.34 Keda Cpu Requests (omni-v21, `V21_KEDA_CPU_REQUESTS.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.16%) | 0.8% | 1.0% | 1 |
-| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 1.1% | 1.3% | 1 |
-| energy (Wh) | power given in all three of our runs | 1.1% | 1.3% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 18.3% | 22.4% | 202 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 16.2% | 19.9% | 159 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 18.1% | 22.3% | 199 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 112.5% | 138.2% | 7642 |
-| pending pods, pod-minutes | shown, not judged | 474.8% | 583.5% | 136173 |
-| utilisation (used / allocatable) | shown, not judged | 12.7% | 15.6% | 98 |
-| CPU used (cores), mean | shown, not judged | 12.7% | 15.6% | 98 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 12.9% | 15.9% | 102 |
-| energy per core-hour (Wh) | shown, not judged | 6.2% | 7.5% | 23 |
-| HPA replicas, mean | power given in all three of our runs | 1.9% | 2.3% | 3 |
-| pods started | the runs disagree | 20.7% | 25.4% | 258 |
-| pod start wait, total (s) | the runs disagree | 45.0% | 55.3% | 1223 |
-| pod start wait, mean (s) | the runs disagree | 39.8% | 48.9% | 957 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 12.4% | 15.2% | 93 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.09%) | 0.9% | 1.1% | 1 |
+| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 1.3% | 1.6% | 2 |
+| energy (Wh) | power given in all three of our runs | 1.3% | 1.6% | 2 |
+| response time (ms), mean | GAIN in all three of our runs | 15.2% | 18.7% | 140 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 13.2% | 16.2% | 106 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 13.8% | 17.0% | 116 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 90.0% | 110.6% | 4890 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 314.5% | 386.5% | 59758 |
+| pending pods, pod-minutes | shown, not judged | 328.2% | 403.3% | 65073 |
+| utilisation (used / allocatable) | shown, not judged | 13.3% | 16.3% | 107 |
+| CPU used (cores), mean | shown, not judged | 13.3% | 16.3% | 107 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 13.9% | 17.1% | 117 |
+| energy per core-hour (Wh) | shown, not judged | 7.0% | 8.6% | 30 |
+| HPA replicas, mean | power given in all three of our runs | 13.2% | 16.2% | 106 |
+| pods started | power given by the mean of our three runs, beyond the noise in 2 of 3 | 51.6% | 63.4% | 1606 |
+| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 60.5% | 74.3% | 2210 |
+| pod start wait, mean (s) | the runs disagree | 33.9% | 41.7% | 695 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 12.1% | 14.9% | 89 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.35 Keda Requests (omni-v11, `V11_KEDA_REQUESTS.md`, 10 paired repetitions a run)
+### 69.35 Keda Requests (omni-v21, `V21_KEDA_REQUESTS.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.31%) | 0.8% | 0.9% | 1 |
-| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 1.1% | 1.4% | 1 |
-| energy (Wh) | power given in all three of our runs | 1.1% | 1.4% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 21.1% | 25.9% | 269 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 24.3% | 29.9% | 358 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 18.5% | 22.7% | 207 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 98.9% | 121.5% | 5903 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 101.3% | 124.5% | 6199 |
-| pending pods, pod-minutes | shown, not judged | 588.2% | 722.8% | 208960 |
-| utilisation (used / allocatable) | shown, not judged | 14.2% | 17.5% | 122 |
-| CPU used (cores), mean | shown, not judged | 14.2% | 17.5% | 122 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 14.4% | 17.8% | 127 |
-| energy per core-hour (Wh) | shown, not judged | 4.4% | 5.4% | 12 |
-| HPA replicas, mean | GAIN in all three of our runs | 12.2% | 15.0% | 90 |
-| pods started | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 29.2% | 35.9% | 517 |
-| pod start wait, total (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 62.3% | 76.6% | 2348 |
-| pod start wait, mean (s) | the runs disagree | 50.6% | 62.2% | 1547 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 14.1% | 17.4% | 121 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.29%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 0.9% | 1.1% | 1 |
+| energy (Wh) | power given in all three of our runs | 0.9% | 1.1% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 18.4% | 22.6% | 205 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 18.0% | 22.1% | 197 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 23.9% | 29.3% | 345 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 88.8% | 109.1% | 4758 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 89.8% | 110.3% | 4870 |
+| pending pods, pod-minutes | shown, not judged | 454.4% | 558.4% | 124729 |
+| utilisation (used / allocatable) | shown, not judged | 14.7% | 18.0% | 130 |
+| CPU used (cores), mean | shown, not judged | 14.7% | 18.0% | 130 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 15.0% | 18.4% | 136 |
+| energy per core-hour (Wh) | shown, not judged | 2.9% | 3.6% | 6 |
+| HPA replicas, mean | GAIN in all three of our runs | 12.3% | 15.2% | 92 |
+| pods started | GAIN in all three of our runs | 22.4% | 27.5% | 303 |
+| pod start wait, total (s) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 44.5% | 54.7% | 1196 |
+| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 36.7% | 45.1% | 814 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 14.2% | 17.5% | 122 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
 ### 69.36 Koordinator (omni-v12, `V12_KOORDINATOR.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, under the floor (the three runs' mean 0.44%) | 2.0% | 2.4% | 3 |
+| worker nodes in service, mean | STEADY, under the floor (the three runs' mean 0.44%) | 2.0% | 2.4% | 3 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 2.2% | 2.7% | 3 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.14%) | 0.8% | 1.0% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.45%) | 1.6% | 1.9% | 2 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.14%) | 0.8% | 1.0% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.45%) | 1.6% | 1.9% | 2 |
 | response time (ms), mean | GAIN in all three of our runs | 12.1% | 14.9% | 89 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 7.7% | 9.4% | 36 |
 | response time (ms), 99th percentile | GAIN in all three of our runs | 11.3% | 13.9% | 78 |
@@ -13310,7 +13574,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 19.3% | 23.7% | 226 |
 | node-hours | GAIN in all three of our runs | 19.4% | 23.8% | 227 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.20%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.20%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 13.5% | 16.6% | 111 |
 | response time (ms), mean | GAIN in all three of our runs | 8.9% | 11.0% | 49 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 11.4% | 14.0% | 79 |
@@ -13325,7 +13589,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | the runs disagree | 13.3% | 16.4% | 108 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.7% | 2.1% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.40%) | 0.8% | 0.9% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.40%) | 0.8% | 0.9% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 30.3% | 37.2% | 554 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 264.4% | 324.9% | 42237 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 480.5% | 590.4% | 139435 |
@@ -13337,7 +13601,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.1% | 6.3% | 16 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.3% | 6.5% | 17 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.27%) | 1.1% | 1.3% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.27%) | 1.1% | 1.3% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 3.5% | 4.4% | 8 |
 | response time (ms), mean | GAIN in all three of our runs | 55.0% | 67.6% | 1827 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 70.9% | 87.1% | 3035 |
@@ -13362,10 +13626,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.15%) | 0.6% | 0.8% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.33%) | 1.0% | 1.2% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.33%) | 1.0% | 1.2% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.15%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.33%) | 1.0% | 1.2% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.33%) | 1.0% | 1.2% | 1 |
 | response time (ms), mean | GAIN in all three of our runs | 52.8% | 64.8% | 1682 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 70.9% | 87.2% | 3040 |
 | response time (ms), 99th percentile | GAIN in all three of our runs | 68.8% | 84.5% | 2856 |
@@ -13380,7 +13644,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 11.6% | 14.2% | 81 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 | batch: queue finished (s) | LOSS in all three of our runs | 31.1% | 38.3% | 587 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 10 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 10 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS in all three of our runs | 343570.5% | 422188.2% | 71297159356 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS in all three of our runs | 351017.8% | 431339.6% | 74421538495 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 697.6% | 857.3% | 293968 |
@@ -13391,7 +13655,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.1% | 6.3% | 16 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.4% | 6.6% | 18 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 3.9% | 4.7% | 9 |
 | response time (ms), mean | GAIN in all three of our runs | 10.2% | 12.6% | 64 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 10.3% | 12.6% | 64 |
@@ -13418,7 +13682,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 19.3% | 23.7% | 226 |
 | node-hours | GAIN in all three of our runs | 19.1% | 23.5% | 222 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.13%) | 1.1% | 1.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.13%) | 1.1% | 1.4% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 14.3% | 17.6% | 125 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 128.8% | 158.3% | 10021 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 379.0% | 465.7% | 86753 |
@@ -13445,7 +13709,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 18.7% | 23.0% | 191 |
 | node-hours | GAIN in all three of our runs | 18.6% | 22.9% | 189 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.15%) | 0.7% | 0.9% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.15%) | 0.7% | 0.9% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 13.0% | 15.9% | 92 |
 | response time (ms), mean | GAIN in all three of our runs | 7.0% | 8.7% | 28 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 9.8% | 12.1% | 53 |
@@ -13497,8 +13761,8 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.04%) | 0.4% | 0.5% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.04%) | 0.4% | 0.5% | 1 |
 | energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 2.0% | 2.4% | 3 |
 | energy (Wh) | power given in all three of our runs | 2.0% | 2.4% | 3 |
 | response time (ms), mean | LOSS in all three of our runs | 37.2% | 45.8% | 755 |
@@ -13525,11 +13789,11 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 2.8% | 3.4% | 5 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 2.6% | 3.2% | 4 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.01%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.01%) | 0.6% | 0.7% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 1.8% | 2.1% | 2 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 12.5% | 15.4% | 86 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 15.0% | 18.4% | 122 |
-| response time (ms), 99th percentile | EVEN, under the floor (the three runs' mean 0.17%) | 16.4% | 20.2% | 147 |
+| response time (ms), 99th percentile | STEADY, under the floor (the three runs' mean 0.17%) | 16.4% | 20.2% | 147 |
 | time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 9.5% | 11.7% | 50 |
 | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 2.7% | 3.3% | 4 |
 | pending pods, pod-minutes | shown, not judged | 30.1% | 37.0% | 494 |
@@ -13543,7 +13807,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | pod start wait, mean (s) | the runs disagree | 705.9% | 868.0% | 271230 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.7% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.37%) | 1.7% | 2.0% | 2 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.37%) | 1.7% | 2.0% | 2 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 12.2% | 15.1% | 82 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 10.1% | 12.4% | 56 |
 | queue: job turnaround, submitted to done, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.2% | 6.4% | 15 |
@@ -13585,7 +13849,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 14.8% | 18.2% | 119 |
 | node-hours | GAIN in all three of our runs | 14.6% | 17.9% | 116 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.03%) | 0.4% | 0.5% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.03%) | 0.4% | 0.5% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 10.2% | 12.5% | 57 |
 | response time (ms), mean | GAIN in all three of our runs | 8.1% | 10.0% | 36 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 13.1% | 16.1% | 94 |
@@ -13600,7 +13864,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | the runs disagree | 11.5% | 14.1% | 72 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 3.0% | 3.7% | 5 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.47%) | 1.4% | 1.7% | 2 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.47%) | 1.4% | 1.7% | 2 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 26.5% | 32.6% | 383 |
 | queue: job wait, submitted to its first pod running, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 101.2% | 124.5% | 5577 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 319.5% | 392.8% | 55558 |
@@ -13612,7 +13876,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 14.3% | 17.6% | 112 |
 | node-hours | GAIN in all three of our runs | 14.2% | 17.5% | 111 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.08%) | 0.4% | 0.5% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.08%) | 0.4% | 0.5% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 9.9% | 12.2% | 54 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 5.9% | 7.3% | 20 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 13.9% | 17.1% | 105 |
@@ -13637,10 +13901,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.01%) | 0.5% | 0.6% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.03%) | 0.7% | 0.8% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.03%) | 0.7% | 0.8% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.01%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.03%) | 0.7% | 0.8% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.03%) | 0.7% | 0.8% | 1 |
 | response time (ms), mean | LOSS in all three of our runs | 10.0% | 12.3% | 55 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 17.2% | 21.2% | 162 |
 | response time (ms), 99th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 20.1% | 24.7% | 220 |
@@ -13655,7 +13919,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 3.1% | 3.8% | 6 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
 | batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 1.4% | 1.7% | 2 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 9 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 9 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS in all three of our runs | 310.0% | 381.2% | 52303 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 422.6% | 519.7% | 97227 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 15.6% | 19.1% | 132 |
@@ -13666,7 +13930,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 14.3% | 17.6% | 112 |
 | node-hours | GAIN in all three of our runs | 14.4% | 17.7% | 114 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.05%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.05%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 10.0% | 12.3% | 55 |
 | response time (ms), mean | GAIN in all three of our runs | 7.8% | 9.6% | 34 |
 | response time (ms), 95th percentile | the runs disagree | 14.7% | 18.1% | 119 |
@@ -13684,7 +13948,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | pod start wait, mean (s) | the runs disagree | 540.4% | 664.5% | 158957 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 2.3% | 2.8% | 3 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 9 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.37%) | 0.9% | 1.1% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.37%) | 0.9% | 1.1% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 25.8% | 31.8% | 364 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 107.4% | 132.1% | 6284 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 69.3% | 85.2% | 2614 |
@@ -13696,7 +13960,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 14.8% | 18.2% | 119 |
 | node-hours | GAIN in all three of our runs | 15.0% | 18.5% | 124 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.5% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.5% | 0.7% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 10.6% | 13.0% | 61 |
 | response time (ms), mean | GAIN in all three of our runs | 12.1% | 14.9% | 80 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 17.1% | 21.0% | 160 |
@@ -13726,7 +13990,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 19.7% | 24.2% | 235 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 20.0% | 24.6% | 243 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.01%) | 0.6% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.01%) | 0.6% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 14.5% | 17.8% | 127 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 6.7% | 8.2% | 28 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 13.6% | 16.7% | 113 |
@@ -13757,7 +14021,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.5% | 19.1% | 146 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.4% | 19.0% | 145 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.23%) | 0.7% | 0.8% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.23%) | 0.7% | 0.8% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 11.3% | 13.9% | 77 |
 | response time (ms), mean | LOSS in all three of our runs | 39.4% | 48.4% | 939 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 45.6% | 56.1% | 1258 |
@@ -13786,10 +14050,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.02%) | 0.4% | 0.5% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.07%) | 1.7% | 2.0% | 2 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.07%) | 1.7% | 2.0% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.02%) | 0.4% | 0.5% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.07%) | 1.7% | 2.0% | 2 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.07%) | 1.7% | 2.0% | 2 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 66.5% | 81.8% | 2674 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 73.2% | 90.0% | 3238 |
 | response time (ms), 99th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 71.4% | 87.7% | 3077 |
@@ -13808,7 +14072,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 30.5% | 37.5% | 564 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 | batch: queue finished (s) | LOSS in all three of our runs | 15.8% | 19.4% | 152 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 10 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 10 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 11078.1% | 13613.1% | 74126399 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 12752.7% | 15670.9% | 98230285 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 38.0% | 46.6% | 871 |
@@ -13819,7 +14083,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.5% | 19.1% | 146 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.4% | 19.0% | 145 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.31%) | 1.1% | 1.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.31%) | 1.1% | 1.4% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 11.2% | 13.8% | 77 |
 | response time (ms), mean | the runs disagree | 51.2% | 62.9% | 1584 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 55.0% | 67.6% | 1829 |
@@ -13847,7 +14111,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 19.7% | 24.2% | 235 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 20.1% | 24.6% | 244 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 1.8% | 2.3% | 3 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 1.8% | 2.3% | 3 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 15.2% | 18.7% | 141 |
 | response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 57.6% | 70.7% | 2002 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 65.8% | 80.8% | 2614 |
@@ -13869,109 +14133,109 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 229.4% | 281.9% | 31784 |
 | queue: job turnaround, submitted to done, mean (s) | GAIN in all three of our runs | 26.5% | 32.6% | 426 |
 
-### 69.57 Robust Kill (omni-v11, `V11_ROBUST_KILL.md`, 10 paired repetitions a run)
+### 69.57 Robust Kill (omni-v21, `V21_ROBUST_KILL.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.21%) | 0.5% | 0.6% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.01%) | 0.4% | 0.5% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.01%) | 0.4% | 0.5% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 22.2% | 27.3% | 299 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 50.2% | 61.7% | 1525 |
-| response time (ms), 99th percentile | the runs disagree | 45.6% | 56.0% | 1257 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 16.7% | 20.6% | 170 |
-| failed requests (%) | GAIN in all three of our runs | 9.7% | 11.9% | 57 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 11.7% | 14.3% | 83 |
-| pending pods, pod-minutes | shown, not judged | 314.5% | 386.5% | 59758 |
-| utilisation (used / allocatable) | shown, not judged | 1.6% | 1.9% | 2 |
-| CPU used (cores), mean | shown, not judged | 1.6% | 1.9% | 2 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 1.6% | 2.0% | 2 |
-| energy per core-hour (Wh) | shown, not judged | 2.9% | 3.6% | 6 |
-| HPA replicas, mean | power given in all three of our runs | 6.6% | 8.1% | 27 |
-| pods started | the runs disagree | 82.8% | 101.7% | 4139 |
-| pod start wait, total (s) | the runs disagree | 134.5% | 165.2% | 10922 |
-| pod start wait, mean (s) | the runs disagree | 50.1% | 61.5% | 1515 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.3% | 1.6% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.09%) | 0.6% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.14%) | 0.6% | 0.8% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.14%) | 0.6% | 0.8% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 32.5% | 39.9% | 637 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 53.8% | 66.1% | 1750 |
+| response time (ms), 99th percentile | the runs disagree | 59.1% | 72.6% | 2111 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 27.8% | 34.1% | 466 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 20.0% | 24.6% | 242 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 18.3% | 22.4% | 202 |
+| pending pods, pod-minutes | shown, not judged | 420.6% | 516.8% | 106851 |
+| utilisation (used / allocatable) | shown, not judged | 1.1% | 1.4% | 1 |
+| CPU used (cores), mean | shown, not judged | 1.1% | 1.4% | 1 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 1.1% | 1.4% | 1 |
+| energy per core-hour (Wh) | shown, not judged | 1.7% | 2.1% | 2 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 6.8% | 8.4% | 29 |
+| pods started | the runs disagree | 90.1% | 110.7% | 4904 |
+| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 121.7% | 149.6% | 8947 |
+| pod start wait, mean (s) | the runs disagree | 37.9% | 46.6% | 870 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 0.9% | 1.1% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| robust: failed requests in the 120 s after the kill (%) | the runs disagree | 32.0% | 39.3% | 618 |
-| robust: time over the line in the 120 s after the kill (% of samples) | the runs disagree | 7.5% | 9.3% | 35 |
+| robust: failed requests in the 300 s after the kill (%) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 14.2% | 17.5% | 123 |
+| robust: time over the line in the 300 s after the kill (% of samples) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 5.3% | 6.5% | 17 |
 
-### 69.58 Robust Long (omni-v11, `V11_ROBUST_LONG.md`, 3 paired repetitions a run)
+### 69.58 Robust Long (omni-v21, `V21_ROBUST_LONG.md`, 3 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.04%) | 0.4% | 0.5% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.13%) | 0.6% | 0.7% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.13%) | 0.6% | 0.7% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 33.2% | 41.2% | 204 |
-| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 54.5% | 67.5% | 548 |
-| response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 58.9% | 73.0% | 640 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 29.4% | 36.4% | 160 |
-| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 31.9% | 39.5% | 188 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 15.3% | 18.9% | 44 |
-| pending pods, pod-minutes | shown, not judged | 313.6% | 388.9% | 18152 |
-| utilisation (used / allocatable) | shown, not judged | 3.5% | 4.4% | 3 |
-| CPU used (cores), mean | shown, not judged | 3.5% | 4.4% | 3 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 3.5% | 4.4% | 3 |
-| energy per core-hour (Wh) | shown, not judged | 2.4% | 3.0% | 2 |
-| HPA replicas, mean | power given in all three of our runs | 14.6% | 18.1% | 40 |
-| pods started | power given by the mean of our three runs, beyond the noise in 1 of 3 | 558.1% | 692.1% | 57484 |
-| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 567.1% | 703.2% | 59338 |
-| pod start wait, mean (s) | the runs disagree | 114.5% | 142.0% | 2420 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 2.8% | 3.5% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.01%) | 0.3% | 0.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.20%) | 0.6% | 0.7% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.20%) | 0.6% | 0.7% | 1 |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 106.0% | 131.4% | 2072 |
+| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 150.7% | 186.9% | 4191 |
+| response time (ms), 99th percentile | the runs disagree | 96.2% | 119.3% | 1709 |
+| time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 111.1% | 137.8% | 2279 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 65.0% | 80.6% | 781 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 62.8% | 77.9% | 729 |
+| pending pods, pod-minutes | shown, not judged | 229.3% | 284.4% | 9706 |
+| utilisation (used / allocatable) | shown, not judged | 4.3% | 5.3% | 4 |
+| CPU used (cores), mean | shown, not judged | 4.3% | 5.3% | 4 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 4.3% | 5.3% | 4 |
+| energy per core-hour (Wh) | shown, not judged | 8.6% | 10.6% | 14 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 130.0% | 161.2% | 3120 |
+| pods started | power given by the mean of our three runs, beyond the noise in 1 of 3 | 572.8% | 710.3% | 60551 |
+| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 709.0% | 879.2% | 92751 |
+| pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 158.3% | 196.3% | 4627 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 3.2% | 3.9% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 3 |
 
-### 69.59 Steady (omni-v10, `V10_STEADY.md`, 10 paired repetitions a run)
+### 69.59 Steady (omni-v21, `V21_STEADY.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.02%) | 0.5% | 0.7% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.26%) | 0.6% | 0.8% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.26%) | 0.6% | 0.8% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 24.4% | 30.0% | 360 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 29.0% | 35.6% | 508 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 29.6% | 36.4% | 531 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 84.3% | 103.6% | 4295 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 87.8% | 107.9% | 4658 |
-| pending pods, pod-minutes | shown, not judged | 152.5% | 187.4% | 14049 |
-| utilisation (used / allocatable) | shown, not judged | 4.1% | 5.1% | 11 |
-| CPU used (cores), mean | shown, not judged | 4.1% | 5.1% | 11 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 4.0% | 4.8% | 10 |
-| energy per core-hour (Wh) | shown, not judged | 3.3% | 4.0% | 7 |
-| HPA replicas, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 9.1% | 11.2% | 51 |
-| pods started | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 49.1% | 60.3% | 1456 |
-| pod start wait, total (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 80.2% | 98.5% | 3885 |
-| pod start wait, mean (s) | the runs disagree | 70.5% | 86.7% | 3005 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 2.9% | 3.6% | 6 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.04%) | 0.9% | 1.2% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.18%) | 1.0% | 1.2% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.18%) | 1.0% | 1.2% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 24.9% | 30.7% | 376 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 32.0% | 39.3% | 618 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 41.0% | 50.4% | 1016 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 104.5% | 128.4% | 6593 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 114.3% | 140.4% | 7891 |
+| pending pods, pod-minutes | shown, not judged | 406.1% | 499.0% | 99597 |
+| utilisation (used / allocatable) | shown, not judged | 4.2% | 5.2% | 11 |
+| CPU used (cores), mean | shown, not judged | 4.2% | 5.2% | 11 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 4.1% | 5.0% | 11 |
+| energy per core-hour (Wh) | shown, not judged | 4.4% | 5.4% | 12 |
+| HPA replicas, mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 12.1% | 14.9% | 89 |
+| pods started | GAIN in all three of our runs | 26.8% | 32.9% | 433 |
+| pod start wait, total (s) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 34.5% | 42.4% | 720 |
+| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 25.3% | 31.1% | 386 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 4.2% | 5.2% | 11 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.60 Trace Google2011 (omni-v10, `V10_TRACE_GOOGLE2011.md`, 10 paired repetitions a run)
+### 69.60 Trace Google2011 (omni-v21, `V21_TRACE_GOOGLE2011.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.05%) | 0.3% | 0.3% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.34%) | 0.3% | 0.3% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.34%) | 0.3% | 0.3% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 23.4% | 28.8% | 331 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 27.1% | 33.3% | 445 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 24.4% | 30.0% | 360 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 52.5% | 64.6% | 1669 |
-| failed requests (%) | GAIN in all three of our runs | 18.1% | 22.2% | 199 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 39.5% | 48.5% | 942 |
-| pending pods, pod-minutes | shown, not judged | 119.6% | 147.0% | 8639 |
-| utilisation (used / allocatable) | shown, not judged | 1.8% | 2.2% | 2 |
-| CPU used (cores), mean | shown, not judged | 1.8% | 2.2% | 2 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 1.7% | 2.0% | 2 |
-| energy per core-hour (Wh) | shown, not judged | 2.8% | 3.5% | 5 |
-| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 19.2% | 23.6% | 224 |
-| pods started | power given in all three of our runs | 134.3% | 165.0% | 10896 |
-| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 118.4% | 145.4% | 8462 |
-| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 54.5% | 67.0% | 1795 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.8% | 2 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.01%) | 0.3% | 0.3% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.36%) | 0.3% | 0.4% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.36%) | 0.3% | 0.4% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 32.4% | 39.8% | 634 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 37.1% | 45.5% | 831 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 40.2% | 49.4% | 977 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 83.6% | 102.8% | 4225 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 20.5% | 25.1% | 253 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 68.2% | 83.8% | 2806 |
+| pending pods, pod-minutes | shown, not judged | 219.7% | 269.9% | 29147 |
+| utilisation (used / allocatable) | shown, not judged | 1.6% | 1.9% | 2 |
+| CPU used (cores), mean | shown, not judged | 1.6% | 1.9% | 2 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 1.5% | 1.9% | 2 |
+| energy per core-hour (Wh) | shown, not judged | 1.6% | 2.0% | 2 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 1 of 3 | 25.4% | 31.2% | 390 |
+| pods started | power given in all three of our runs | 99.8% | 122.6% | 6013 |
+| pod start wait, total (s) | LOSS in all three of our runs | 137.0% | 168.4% | 11339 |
+| pod start wait, mean (s) | the runs disagree | 39.5% | 48.5% | 943 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 1.5% | 1.9% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
 ### 69.61 Vanilla (omni-v12, `V12_VANILLA.md`, 10 paired repetitions a run)
@@ -13980,7 +14244,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 17.7% | 21.7% | 189 |
 | node-hours | GAIN in all three of our runs | 17.8% | 21.9% | 192 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.15%) | 0.8% | 1.0% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.15%) | 0.8% | 1.0% | 1 |
 | energy (Wh) | GAIN in all three of our runs | 12.6% | 15.5% | 97 |
 | response time (ms), mean | GAIN in all three of our runs | 6.0% | 7.4% | 22 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 9.1% | 11.2% | 51 |
@@ -13998,7 +14262,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | pod start wait, mean (s) | the runs disagree | 303.1% | 372.5% | 55509 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 0.8% | 0.9% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.12%) | 0.3% | 0.4% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.12%) | 0.3% | 0.4% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 28.3% | 34.8% | 485 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 188.2% | 231.3% | 21395 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 1.1% | 1.3% | 1 |
@@ -14009,7 +14273,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 16.6% | 20.4% | 167 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 16.6% | 20.4% | 167 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.07%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.07%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 11.7% | 14.4% | 83 |
 | response time (ms), mean | GAIN in all three of our runs | 7.8% | 9.6% | 37 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 10.5% | 12.9% | 68 |
@@ -14027,7 +14291,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 468.9% | 576.2% | 132795 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.8% | 2.2% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.41%) | 0.8% | 1.0% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.41%) | 0.8% | 1.0% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 27.3% | 33.6% | 452 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 150.3% | 184.7% | 13649 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 335.7% | 412.5% | 68058 |
@@ -14039,7 +14303,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 18.8% | 23.1% | 214 |
 | node-hours | GAIN in all three of our runs | 18.9% | 23.2% | 216 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.06%) | 0.5% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) | 0.5% | 0.7% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.3% | 16.4% | 108 |
 | response time (ms), mean | GAIN in all three of our runs | 20.3% | 24.9% | 249 |
 | response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 30.2% | 37.1% | 550 |
@@ -14067,10 +14331,10 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.10%) | 0.5% | 0.6% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.09%) | 0.5% | 0.7% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.09%) | 0.5% | 0.7% | 1 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.10%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.5% | 0.7% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.09%) | 0.5% | 0.7% | 1 |
 | response time (ms), mean | GAIN in all three of our runs | 23.4% | 28.8% | 331 |
 | response time (ms), 95th percentile | GAIN in all three of our runs | 33.0% | 40.6% | 659 |
 | response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 30.4% | 37.4% | 559 |
@@ -14088,7 +14352,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.1% | 1.3% | 1 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 | batch: queue finished (s) | LOSS in all three of our runs | 1.6% | 1.9% | 2 |
-| batch: worker machines in service after the queue finished, mean | EVEN, the same | 0.0% | 0.0% | 10 |
+| batch: worker machines in service after the queue finished, mean | STEADY, the same | 0.0% | 0.0% | 10 |
 | queue: job wait, submitted to its first pod running, mean (s) | LOSS in all three of our runs | 565.5% | 694.9% | 193152 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS in all three of our runs | 273.7% | 336.3% | 45234 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs | 22.6% | 27.8% | 310 |
@@ -14099,7 +14363,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN in all three of our runs | 18.8% | 23.1% | 214 |
 | node-hours | GAIN in all three of our runs | 18.6% | 22.9% | 210 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.02%) | 0.5% | 0.7% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) | 0.5% | 0.7% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 13.0% | 16.0% | 103 |
 | response time (ms), mean | GAIN in all three of our runs | 14.1% | 17.3% | 120 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 30.6% | 37.6% | 567 |
@@ -14114,7 +14378,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | HPA replicas, mean | the runs disagree | 14.5% | 17.8% | 127 |
 | host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.7% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
-| batch: queue finished (s) | EVEN, under the floor (the three runs' mean 0.41%) | 0.9% | 1.1% | 1 |
+| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.41%) | 0.9% | 1.1% | 1 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs | 30.8% | 37.8% | 572 |
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree | 43.0% | 52.9% | 1119 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree | 103.9% | 127.7% | 6522 |
@@ -14126,7 +14390,7 @@ Each figure is in percent of native's mean in the least favourable of the three 
 |---|---|---:|---:|---:|
 | worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 16.6% | 20.4% | 167 |
 | node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 16.4% | 20.1% | 163 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.15%) | 0.5% | 0.6% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.15%) | 0.5% | 0.6% | 1 |
 | energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 11.4% | 14.1% | 80 |
 | response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 26.9% | 33.0% | 436 |
 | response time (ms), 95th percentile | LOSS in all three of our runs | 63.9% | 78.5% | 2464 |
@@ -14147,35 +14411,35 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | GAIN in all three of our runs | 76.6% | 94.1% | 3542 |
 | queue: job turnaround, submitted to done, mean (s) | GAIN in all three of our runs | 13.9% | 17.1% | 117 |
 
-### 69.67 Wandering (omni-v10, `V10_WANDERING.md`, 10 paired repetitions a run)
+### 69.67 Wandering (omni-v21, `V21_WANDERING.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
 |---|---|---:|---:|---:|
-| worker nodes in service, mean | EVEN, the same | 0.0% | 0.0% | 1 |
-| node-hours | EVEN, under the floor (the three runs' mean 0.11%) | 0.3% | 0.4% | 1 |
-| energy, parked workers still on at idle power (Wh) | EVEN, under the floor (the three runs' mean 0.36%) | 0.3% | 0.3% | 1 |
-| energy (Wh) | EVEN, under the floor (the three runs' mean 0.36%) | 0.3% | 0.3% | 1 |
-| response time (ms), mean | GAIN in all three of our runs | 37.1% | 45.6% | 831 |
-| response time (ms), 95th percentile | GAIN in all three of our runs | 70.7% | 86.8% | 3016 |
-| response time (ms), 99th percentile | GAIN in all three of our runs | 41.9% | 51.5% | 1061 |
-| time over the response line (% of samples) | GAIN in all three of our runs | 40.6% | 49.9% | 997 |
-| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 37.6% | 46.2% | 853 |
-| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 18.1% | 22.2% | 198 |
-| pending pods, pod-minutes | shown, not judged | 180.4% | 221.7% | 19653 |
-| utilisation (used / allocatable) | shown, not judged | 2.7% | 3.3% | 5 |
-| CPU used (cores), mean | shown, not judged | 2.7% | 3.3% | 5 |
-| CPU used with Omni's own (cores), mean | shown, not judged | 2.6% | 3.2% | 5 |
-| energy per core-hour (Wh) | shown, not judged | 2.2% | 2.7% | 4 |
-| HPA replicas, mean | the runs disagree | 11.0% | 13.5% | 74 |
-| pods started | power given by the mean of our three runs, beyond the noise in 0 of 3 | 99.1% | 121.8% | 5931 |
-| pod start wait, total (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 120.5% | 148.0% | 8766 |
-| pod start wait, mean (s) | the runs disagree | 54.3% | 66.7% | 1781 |
-| host CPU busy, the real machine under kind (%) | shown, not judged | 2.3% | 2.8% | 4 |
+| worker nodes in service, mean | STEADY, the same | 0.0% | 0.0% | 1 |
+| node-hours | STEADY, under the floor (the three runs' mean 0.03%) | 0.3% | 0.4% | 1 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.32%) | 0.3% | 0.4% | 1 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.32%) | 0.3% | 0.4% | 1 |
+| response time (ms), mean | GAIN in all three of our runs | 20.0% | 24.6% | 242 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 25.4% | 31.2% | 390 |
+| response time (ms), 99th percentile | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 63.6% | 78.2% | 2445 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 23.5% | 28.9% | 335 |
+| failed requests (%) | GAIN in all three of our runs | 14.3% | 17.6% | 125 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN in all three of our runs | 9.8% | 12.1% | 59 |
+| pending pods, pod-minutes | shown, not judged | 282.4% | 347.0% | 48153 |
+| utilisation (used / allocatable) | shown, not judged | 1.4% | 1.7% | 2 |
+| CPU used (cores), mean | shown, not judged | 1.4% | 1.7% | 2 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 1.4% | 1.7% | 2 |
+| energy per core-hour (Wh) | shown, not judged | 3.6% | 4.5% | 8 |
+| HPA replicas, mean | power given by the mean of our three runs, beyond the noise in 0 of 3 | 14.9% | 18.3% | 135 |
+| pods started | the runs disagree | 66.8% | 82.1% | 2696 |
+| pod start wait, total (s) | the runs disagree | 83.1% | 102.1% | 4173 |
+| pod start wait, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 36.0% | 44.2% | 781 |
+| host CPU busy, the real machine under kind (%) | shown, not judged | 1.4% | 1.7% | 2 |
 | host cores (the real machine under kind) | shown, not judged | 0.0% | 0.0% | 10 |
 
-### 69.68 What the EVEN rows mean
+### 69.68 What the STEADY rows mean
 
-158 rows read EVEN. In 1 of them the test could not resolve a change under 10% of native in all three runs, so EVEN there means "no change larger than the MDE shown", and nothing finer is claimed.
+157 rows read STEADY. In 2 of them the test could not resolve a change under 10% of native in all three runs, so STEADY there means "no change larger than the MDE shown", and nothing finer is claimed.
 
 ## 70. Every Change to Every Preregistration
 
@@ -14183,10 +14447,21 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`; `tools/deviations.py --check`, run by `verify.py`, fails a push where this register is not what they give. Each amendment's reason, and what it changed, is written in the preregistration it amends; this register is the index to all of them, newest first. The timing is the amendment's own statement in its heading. Earlier windows, runs and tables keep the rule they ran under, and a three-run table never pools runs from either side of an amendment that changes what it reads.
 
-80 amendments in 16 preregistrations: 62 before the runs it governs; 11 not stated in its heading; 7 after runs began.
+91 amendments in 18 preregistrations: 73 before the runs it governs; 11 not stated in its heading; 7 after runs began.
 
 | Date | Preregistration | Amendment | Timing |
 |---|---|---|---|
+| 2026-10-31 | `docs/SOLO_PREREGISTRATION.md` | Amendment 2 (31 October 2026, written before the runs it governs): Omni direct keeps every muscle Omni-Compass cannot be | before the runs it governs |
+| 2026-10-31 | `docs/SOLO_PREREGISTRATION.md` | Amendment 1 (31 October 2026, written before the runs it governs): the arm's pod writes were refused by the rig's own identity | before the runs it governs |
+| 2026-10-31 | `docs/PACE_PREREGISTRATION.md` | Amendment 4 (31 October, written before any reading of the ladder was seen): the factory beat read again on the engine that stands | before the runs it governs |
+| 2026-10-30 | `docs/YCSB_PREREGISTRATION.md` | Amendment 6 (2026-10-30, declared before any run on it): the max on the cache, through the server's own account of a miss (the next engine's candidate) | before the runs it governs |
+| 2026-10-30 | `docs/REDIS_PREREGISTRATION.md` | Amendment 5 (2026-10-30, declared before any run on it): the max on the cache's ceiling, with the working set's floor (the next engine's candidate) | before the runs it governs |
+| 2026-10-30 | `docs/POSTGRES_PREREGISTRATION.md` | Amendment 4 (2026-10-30, declared before any run on it): the max on the pooler's pool (the next engine's candidate) | before the runs it governs |
+| 2026-10-30 | `docs/MYSQL_PREREGISTRATION.md` | Amendment 6 (2026-10-30, declared before any run on it): the max on the buffer pool, through the server's own account of a miss (the next engine's candidate) | before the runs it governs |
+| 2026-10-30 | `docs/KAFKA_PREREGISTRATION.md` | Amendment 4 (2026-10-30, declared before any run on it): the group's twin and the immune reflex (the next engine's candidate) | before the runs it governs |
+| 2026-10-30 | `docs/GPU_PREREGISTRATION.md` | Amendment 15 (2026-10-30, the rig, declared before any counted run on it): the window opens once the governor stands | before the runs it governs |
+| 2026-10-25 | `docs/ORCHESTRATORS_PREREGISTRATION.md` | Amendment 2: the Cluster Autoscaler acts after the scheduler's pass (written before the third run, 25 October 2026) | before the runs it governs |
+| 2026-10-25 | `docs/ORCHESTRATORS_PREREGISTRATION.md` | Amendment 1: the response time and the pods waiting, corrected in the model (written before the second run, 25 October 2026) | before the runs it governs |
 | 2026-10-25 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (25 October 2026): the ladder is 1, 10, 100 and 500 | not stated in its heading |
 | 2026-10-24 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (2026-10-24, written before any run of it): Google's and Amazon's sets to the cap under the same stopping rule | before the runs it governs |
 | 2026-10-22 | `docs/PACE_PREREGISTRATION.md` | Amendment 3 (22 October, afternoon, written before any omni-v17 run): the beat a dial, the main engine at 60 s | before the runs it governs |
@@ -14272,7 +14547,7 @@ Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`;
 
 
 
-What the newest three-run tables (omni-v11's; omni-v19, the engine that stands from 25 October, runs every benchmark again)
+What the newest three-run tables (omni-v11's; omni-v23, the engine that stands since 31 October, runs every benchmark again)
 can and cannot support, written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
 and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
@@ -14340,9 +14615,9 @@ code. No outside party has reviewed or approved these results.
   rows of the omni-v11 tables the expected number of false readings is at most 0.03. Of those rows, 613 are in tests that
   carry noise; the other 241 are in deterministic simulators, which reproduce to the digit. Over the 613 the expectation is
   0.02. Runs share the harness, so they are not fully independent of it; the number is a guide, not a guarantee.
-- **EVEN is not zero.** A row reads EVEN when the test could not resolve a change; `docs/POWER.md` gives, for every judged
+- **STEADY is not zero.** A row reads STEADY when the test could not resolve a change; `docs/POWER.md` gives, for every judged
   row, the smallest change all three runs would detect. Many data-store rows (three pairs a run) cannot resolve a change
-  under 10% of native; EVEN there means "no change larger than that", and nothing finer is claimed.
+  under 10% of native; STEADY there means "no change larger than that", and nothing finer is claimed.
 - **Rows where the runs disagree** (omni-v11): MySQL's update throughput (above), CityLearn's comfort score in two districts
   (CityLearn's own drift; the paired change exactly zero), and the drone swarm's closest approach, tracking error and
   cruise override (PyBullet's reproduction; the first is the margin of section 71.3, the other two are shown, not judged).
@@ -14425,7 +14700,7 @@ id `29d9808dfb8f…`; the printed configuration `printed_eight_line`, id `cd333d
 
 | Class | Statement | Where |
 |---|---|---|
-| P | omni-v18 on a real card, NVIDIA A100 SXM4 40 GB (Lambda run 40079645681, 24 October), one run of 10 paired repetitions, the card's own meter: every service gauge EVEN (work per energy up 0.2%, the 95th percentile up 0.2%, requests served the same, none lost), the temperature up 1.4% to 1.5% (power given); wire check 7 of 7, fault drill 5 of 5; the governor wrote nothing in 3,050 decisions, both knobs at their top on native (at its limit on native). | `results/gpu/run-20261024T091235Z/GPU_REPS.md` |
+| P | omni-v18 on a real card, NVIDIA A100 SXM4 40 GB (Lambda run 40079645681, 24 October), one run of 10 paired repetitions, the card's own meter: every service gauge STEADY (work per energy up 0.2%, the 95th percentile up 0.2%, requests served the same, none lost), the temperature up 1.4% to 1.5% (power given); wire check 7 of 7, fault drill 5 of 5; the governor wrote nothing in 3,050 decisions, both knobs at their top on native (at its limit on native). | `results/gpu/run-20261024T091235Z/GPU_REPS.md` |
 | P | First real-GPU counted run, NVIDIA A10 (Lambda), 10 paired repetitions, the card's own meter: work per energy +3.6% (+2.7 to +4.5, proven), GPU energy −3.5%, same requests, none lost; wire check 7 of 7, every write read back, every arm restored. | `results/gpu/run-20261002T082232Z/GPU_REPS.md` |
 | L | Set 25 (commit `6fa7a97`), real Kubernetes, 10 paired repetitions: machines in service −32.3%, p95 −57.3%, 0 failed requests, total CPU including Omni's own −0.6% (not proven). | `results/live/LIVE_REPS_25.md` |
 | L | Set 26 (commit `e7f920d`), real Kubernetes, 10 paired repetitions, three arms: the allocation law machines −35.8%, p95 −55.4%; **the compass law in the live controller machines −17.2%, p95 −64.8%**, 0 failed requests, label by the preregistered rule *fewer machines within the band*. | `results/live/LIVE_REPS_26.md` |
@@ -14605,7 +14880,7 @@ Where a row above is wrong or out of date, correct it from the maker's own publi
 
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **EVEN**: native and Omni-Compass could not be told apart (the 95% interval includes zero: no difference beyond the noise), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A reading counts when it holds the same way in all three of our runs, A, B and C, with every interval clear of zero; **the runs disagree** names a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 Current facts only. Earlier states, failures and chronology are kept whole in `docs/HISTORY.md`. The release this page
@@ -14618,295 +14893,124 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v19, fingerprint 9a72693d49b18b9b (62 files).
+- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
-  - every muscle alone, over its loads: EVEN 577, GAIN 530
+  - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
-- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v10 and omni-v11 and omni-v16 and omni-v18, each named in its table): +3.1% GAIN on the resource reading (work, speed, machines, energy), +8.8% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
-  - Real Kubernetes (GitHub): +28.6% GAIN
-  - Real database buffer pool (MySQL under sysbench, GitHub): +1.6% GAIN
-  - Real cache (Redis, GitHub): +0.2% GAIN
-  - Real database cache (MongoDB under YCSB, GitHub): −1.4% LOSS
-  - Real messaging (Apache Kafka, GitHub): −1.9% LOSS
-  - Real database (PostgreSQL behind PgBouncer, GitHub): −4.9% LOSS
+- The Omni index (evidence class L, real machines, every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.2% GAIN on the resource reading (work, speed, machines, energy), 12.9% GAIN on the service reading (work and speed alone). Source: results/OMNI_INDEX.md.
+  - Real Kubernetes (GitHub): 28.4% GAIN
+  - Real database (PostgreSQL behind PgBouncer, GitHub): 4.1% GAIN
+  - Real database buffer pool (MySQL under sysbench, GitHub): 3.2% GAIN
+  - Real cache (Redis, GitHub): 0.0% STEADY
+  - Real database cache (MongoDB under YCSB, GitHub): 0.6% LOSS
+  - Real messaging (Apache Kafka, GitHub): 1.0% power given
 
-**On the engine that stands (omni-v19): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
-| Every real test together: the Omni index | omni-v10 and omni-v11 and omni-v16 and omni-v18 | +3.1% | GAIN AND LOSS | L |
-| Robustness: the two-hour run | omni-v11 | −4.2% | GAIN AND LOSS | L |
-| Robustness: the governor killed outright mid-run | omni-v11 | +10.7% | GAIN, power given | L |
-| Redis, the cache's memory ceiling | omni-v18 | +0.2% | GAIN, power given | L |
-| Real Kubernetes, steady work | omni-v10 | +29.8% | GAIN | L |
-| Real Kubernetes, faults | omni-v10 | +33.6% | GAIN, power given | L |
-| Real Kubernetes, demand that wanders | omni-v10 | +36.5% | GAIN AND LOSS | L |
-| Real Kubernetes, all four at once | omni-v10 | +39.7% | GAIN, power given | L |
-| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v11 | +76.6% | GAIN, power given | L |
-| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v10 | −0.4% | LOSS | L |
-| Real Kubernetes, a queue of jobs | omni-v10 | +10.2% | GAIN AND LOSS | L |
-| Real Kubernetes, a public day of demand (Google 2011) | omni-v10 | +35.2% | GAIN AND LOSS | L |
-| Real Kubernetes, a noisy neighbour | omni-v10 | =0.0% | GAIN, power given | L |
-| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | +63.3% | GAIN, power given | L |
-| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v11 | +41.0% | GAIN, power given | L |
-| Power grids (SimBench), both load models | omni-v11 | +5.8% | GAIN, power given | S |
-| PostgreSQL, the pooler's pool size | omni-v16 | −4.9% | GAIN AND LOSS | L |
-| MySQL, the buffer pool's size | omni-v16 | +1.6% | GAIN AND LOSS | L |
-| MongoDB, the storage engine's cache size | omni-v16 | −1.4% | GAIN AND LOSS | L |
-| Kafka, the consumer group's size | omni-v18 | −1.9% | GAIN AND LOSS | L |
-| Buildings and batteries (CityLearn), the districts with batteries | omni-v11 | +1.5% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | +5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | +155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | +0.3% | GAIN | S |
-| Robot arms (MuJoCo), the three untouched robots | omni-v11 | +3.8% | GAIN | S |
-| Drone swarms, the three untouched cells | omni-v11 | +5.9% | GAIN | S |
+| Every real test together: the Omni index | omni-v21 | 5.2% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
+| Robustness: the two-hour run | omni-v21 | 3.8% | GAIN AND LOSS | L |
+| Robustness: the governor killed outright mid-run | omni-v21 | 8.1% | GAIN AND LOSS | L |
+| Robot arms (MuJoCo), the three untouched robots | omni-v21 | 3.8% | GAIN | S |
+| Redis, the cache's memory ceiling | omni-v21 | 0.0% | GAIN AND LOSS | L |
+| Real Kubernetes, steady work | omni-v21 | 30.9% | GAIN | L |
+| Real Kubernetes, faults | omni-v21 | 30.2% | GAIN, power given | L |
+| Real Kubernetes, demand that wanders | omni-v21 | 33.6% | GAIN, power given | L |
+| Real Kubernetes, all four at once | omni-v21 | 33.5% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v21 | 34.7% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v21 | 0.4% | LOSS | L |
+| Real Kubernetes, a queue of jobs | omni-v21 | 13.7% | GAIN AND LOSS | L |
+| Real Kubernetes, a public day of demand (Google 2011) | omni-v21 | 37.6% | GAIN AND LOSS | L |
+| Real Kubernetes, a noisy neighbour | omni-v21 | 2.2% | GAIN AND LOSS | L |
+| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | 94.7% | GAIN, power given | L |
+| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v21 | 29.8% | GAIN AND LOSS | L |
+| Power grids (SimBench), both load models | omni-v21 | 5.8% | GAIN, power given | S |
+| PostgreSQL, the pooler's pool size | omni-v21 | 4.1% | GAIN, power given | L |
+| MySQL, the buffer pool's size | omni-v21 | 3.2% | GAIN, power given | L |
+| MongoDB, the storage engine's cache size | omni-v21 | 0.6% | GAIN AND LOSS | L |
+| Kafka, the consumer group's size | omni-v21 | 1.0% | GAIN AND LOSS | L |
+| Drone swarms, the three untouched cells | omni-v21 | 3.0% | GAIN | S |
+| Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | 1.5% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
-**The afternoon of 10 October: Omni v4 ordered, the sweep closed, two faults found, the second set landed.** The founder ordered
-the collective mechanism as the next engine (`docs/OMNI_V4_PLAN.md`: one body, one brain, one tick a second; a trial runs to its
-full measurement and is never ended by the calm it causes; the body's cost judged, nothing anywhere pushed to a LOSS to move one thing
-toward its own; one trial at a time inside a body; nothing permanent; the wall belonging to the body; every wire forced through it; the
-six organisms, the four realms, all realms stacked and the whole catalog, re-cut by a written rule). The final coverage sweep
-against the internet added register rows 74 to 78 and five catalog families for v4, and mapped the mega-caps' closed systems to
-the open analogs that carry the same muscles (`docs/COVERAGE_MAP.md`). Two faults GitHub's own runs showed and no local check had
-were fixed: the release manifest, not refreshed after the morning's last document edits, and the cpu-power workflow file, refused
-by GitHub since its first push for an unquoted colon; the verifier now parses every workflow file. The five live products' second
-set on the amended trial rule landed (21 runs) and is archived; its early reading, from the logs, is in `docs/RERUN_2026-10-10.md`
-and the manual's 16.6c: on Kafka the brain allowed the third consumer once and the whole gain returned at 2.5 consumers instead of
-6 to 8, and refused on every other repetition; the trial's measurement, not the law, is the fault, and four trial rules for v4
-follow from it. The legal wording on every page outside the frozen engine now reads "all rights reserved" and "all patents,
-copyrights and trademarks filed in the USA", followed by www.omni-compass.com and nothing after it. The repository now
-keeps itself current: after every finished live run the front-page workflow archives it and `tools/front_page.py` rebuilds every
-table whose three runs are in, the pages read from the tables, and the README's latest lines (`results/live/FRONT_PAGE_STATE.json`
-records what each table was built from).
+### 75.1 The engine that stands
 
-**Everything run again (10 October 2026, 01:24 to 01:31 UTC).** At the founder's order that every result be as of today, every
-benchmark with a result was dispatched again on the current commit `3aac0ab7` (Omni v3, digest `b53d05449ee04c4b`, by
-`tools/omni_version.py --commit`), native and omni, the wiring of each checked against its preregistration before the dispatch:
-70 GitHub runs (the seven Kubernetes tests, the five live stacks on the brain's own verdict, the four simulators, the realms table
-and the kill and long robustness scenarios, three runs each; the organisms with the real cluster inside; the modelled grid at
-1, 10, 100 and 1,000 copies) and the two big organisms at 1,000 copies on rented Azure machines, plus one replacement run for a Kafka
-job GitHub's runner cut off (the record says which and why). By 12:30 UTC 69 of the 71 had landed and every
-table on this page was remade from them; the tables they supersede are whole in `docs/history`. The one shard the runner's
-six-hour limit cut off (the tower at 1,000 copies in the modelled grid) runs again, and that row reads the earlier run until it lands. The record, run by run
-with inputs, times and ids, is `docs/RERUN_2026-10-10.md`. Not restarted, and why: the three 24-hour robustness machines (started
-8 October on the same harness, byte for byte, ending about 10:15 UTC today) and the Azure fleet that can show one machine, which
-waits on the family allowance those machines hold.
+**omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`), on main from 31 October: omni-v22 with one
+guard in the Kubernetes governor's pod muscle of its own, on the founder's order of that day that Omni direct keeps every muscle
+Omni-Compass cannot be. A write of a workload's own scale that the cluster refuses is recorded and the decision goes on; at three
+refusals in a row the knob goes back to native's own pod autoscaler, made from the operator's target and range recorded on the
+workload, and the muscle leaves the workload to it, so the organism never runs with a knob nobody moves. 64 of its 65 files are
+omni-v22's bytes; the model gate against omni-v22 (`results/model_gate/V23_VS_V22.md`, class S) read identical on every gauge of every
+model, no LOSS. Every benchmark runs again on it from 20:00 UTC on 31 October (`scripts/reruns.txt`); the omni-v22 runs started before
+run to their end as omni-v22's record.
 
+**omni-v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files; `docs/OMNI_V22.md`), on main from 30 to 31 October: the five data
+stores' wires brought to the max. What a wire's own rule asks goes through unclamped, up to the operator's cover and never below
+native; memory is spent only where the store's own account of a miss (MySQL's performance schema timer on the data files' reads,
+WiredTiger's page-read time for the application's threads, the Redis application's own split) says the misses are at least the one
+key's floor of the service's time, and only while the host keeps its 5% cushion; a hand-back never goes below the working set's
+floor; Kafka's group has a twin of its arrivals and a reflex; PostgreSQL's pool is never taken below the pooler's own setting
+(`tools/store_brain.py`, the five `tools/run_*.py` wires, `tools/knob_verdict.py`, all in the fingerprint). The model gate against
+omni-v21 (class S) read no LOSS at the counted setting on every store wire; the Kubernetes governor's models read omni-v21's own
+numbers on every gauge (the one governor change, the hand-back tried five times against a transient failure of the cluster's API, moves
+no decision). Every benchmark runs again on it from the moment it reached main (`scripts/reruns.txt`,
+released by the conductor), the five stores first. omni-v21 (`docs/OMNI_V21.md`, the immune system knows itself, knob by knob) stood
+from the evening of 25 October to 30 October; its tables stand as its own record until omni-v22's three runs of each benchmark land.
+The block above is written from the result files on every push: each row names the engine its
+table ran on, and every three-run table of omni-v21 is rebuilt byte for byte from its archived runs by `tools/reproduce.py`
+(all 31 on 27 October). Each earlier engine is on its own page (`docs/OMNI_V<n>.md`); the chronology this page carried until
+27 October is whole in `docs/history/STATE_OF_PLAY_2026-10-27.md`.
 
-### 75.1 In one paragraph (2026-10-25, the engine that stands is omni-v19)
+### 75.2 The whole system, every layer composed
 
-**The engine that stands is **omni-v18** (`OMNI_V18.json`, digest `1cb92edb64c4391d`, 62 files; `docs/OMNI_V18.md`), on main since 23 October, night: omni-v17 with Omni direct, Omni-Compass's own orchestrator run on the muscles with no Kubernetes, taken into the engine (its seven rule-holding files fingerprinted like every other wire, 55 of the 62 files omni-v17's bytes), so the three arms, native, Omni on native and Omni direct, run from one fingerprint; every benchmark runs again on it from 21:19 UTC. Before it, **omni-v17** (`OMNI_V17.json`, digest `7c937d09e4031cc7`, 55 files; `docs/OMNI_V17.md`), on main from 23 October, afternoon, on the founder's order of 22 October, afternoon: the heartbeat is a dial ("5, 15, 30, 60, 75, 90, 120 ... Heartbeat scaled in its monitors. And you're going to set OmniCompass is main engine"). The main engine takes its full decision every 60 s; any beat from 5 to 120 s can be set, the fast checks every 5 s at every beat; every beat is shown beside native with what it buys and what it costs (`results/model_gate/V17_LADDER.md`; on the live engine page, the page's section 2d); the monitors scale with the beat (`omni_heartbeat_seconds`, the staleness alert at three beats, the control panel's `/v1/beat`). It is omni-v16 with two changes in `omni_controller/controller.py` (54 of 55 files are omni-v16's bytes): the default beat moved from 15 to 60 s, and the cruise wait never fewer than two readings, a fault the ladder found at 90 and 120 s before the version landed (the wait's 120 s had rounded to one decision there, and one reading with a pod waiting put every machine in service). Corrected, the kind benchmark's setting reads at 90 s, against 60 s, the machine-hours down 1.7%, EVEN, the minutes over the line down 4.7%, EVEN, the pods waiting down 12.1%, EVEN, the 95th percentile down 0.2%, EVEN; at 120 s the machine-hours down 2.1%, EVEN, the minutes over the line down 3.7%, EVEN, the pods waiting down 29.6%, GAIN; machines parked over the eight days 190 and 119 against 329 at 60 s. The model gate against omni-v16 (`results/model_gate/V17_VS_V16.md`): Every model that sets its own period reads identical to omni-v16 on every gauge and every seed (9 models and the verdict); as shipped, omni-v17 at its 60 s against omni-v16 at its 15 s, every gauge reads EVEN; no LOSS against omni-v16. The ladder (class S): Every beat reads the cluster from about 86,400 times a day at 5 s to 37,400 at 120 s (39,700 at the main engine's 60 s), for 5.5 to 1.6 s of Omni's own processor an hour. In the kind benchmark's setting every beat reads the minutes over the line GAIN against native (−12.0% at the main engine's 60 s, −28.2% at its most), for machine-hours and energy given; the rows that read LOSS against native are in the kind setting pods waiting for a place at 5, 10, 15, 30, 60, 75, 90 and 120 s (+175% to +317%); and in the cloud's pods waiting for a place at 5, 15 and 30 s (+102% to +127%), the 95th percentile at 15 and 30 s (+0.5%, +0.4%), the minutes over the line at 15 s (+2.3%): the engine's, on the next version's list. The real runs read every beat against native and against 60 s (`docs/PACE_PREREGISTRATION.md`, amendment 3), and every benchmark runs again on omni-v17 from 17:00 UTC on 23 October. **omni-v16** (`OMNI_V16.json`, digest `5c5502f12b1c0ce4`, 55 files; `docs/OMNI_V16.md`), on main from the morning of 22 October to that evening, was omni-v15 with every clock of the Kubernetes governor in seconds and the heartbeat at 15 s, and nothing else; at 60 s it made exactly omni-v15's decisions (4,578 audit records, none different; `results/model_gate/V16_VS_V15.md`), and its pace study (`results/model_gate/V16_PACE.md`) is the first half of omni-v17's ladder. **omni-v15** (`OMNI_V15.json`, digest `0a53cdd7a558f803`, 55 files; `docs/OMNI_V15.md`), on main from
-21 October, evening, under the founder's standing order that every fault found is fixed and lands as the next version, was
-omni-v14 with two changes: the brain's request for the power cap trims only while the response line has been clean for the governor's own clear time (on the omni-v11 long run the request switched between the start limit and the trim at 126 of 350 decisions and turned back at 123 of them; on the same decisions the gate leaves 35 moves and 32 reversals), and every wire that holds a governor's rules is inside the fingerprint (eight taken in, their bytes as they stood); a dwell with a glide was built, read in the gate and refused (`docs/OMNI_V15.md`). The model gate against omni-v14 (`results/model_gate/V15_VS_V14.md`, eight seeds, every model and two
-card models new with it) read every service gauge identical on every model, the card models identical (the card governor already applied the gate outside the brain), the verdict identical, and the request's own moves, reversals and travel EVEN on the model cluster (+3.7% at 60 s, −1.4% at 15 s, where breaches are rare and short; the fault's regime, the long run's clustered breaches, reads −72% on the run's own decisions): no LOSS. **omni-v14** (`OMNI_V14.json`, digest `7afba44615fcff8f`, 47 files; `docs/OMNI_V14.md`), on main
-from 04:47 UTC on 21 October by the founder's orders: a knob on every monitor for every muscle, and "tune the engine". It was omni-v13 with two
-changes in the Kubernetes governor: `--native` leaves any muscle where native runs it (the control panel's muscle button); and the
-operator's own commands run without a shell unless they hold a pipe, a redirect or a variable. A third, no conveyance raise on a
-reading that leaves out another workload's starting pods, was refused by the model gate (the web's 95th percentile 6.4% higher than
-omni-v13's) and is kept on a study branch (`docs/OMNI_V14.md`, section 3). The model gate against omni-v13 (`results/model_gate/V14_VS_V13.md`, eight seeds, every model, the batch pods listed as a cluster lists them) read every gauge identical, and the verdict model identical: no LOSS. **omni-v13** (`docs/OMNI_V13.md`), on main from 20 October, was omni-v12 with one fault fixed in the Kubernetes
-governor's conveyance, found on KubeRay's rig with the organism alone (the queue 0.6% to 0.8% later and the web's 99th
-percentile 4% to 13% higher, LOSS in all three runs): the web pods' CPU limits, raised in the queue's first half minute, stayed
-through the saturated queue, so the batch pods hashed 7.6% slower while the web served no faster; no machine was parked during a
-saturated queue (`docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 11). On a shared host at its top beside another workload's room
-every limit given now goes back to the operator's, and every other pod is counted by its own limit. In its model gate
-(`results/model_gate/V13_VS_V12.md`) omni-v13 read no LOSS against omni-v12 in any model, identical on the web-only models, and in a
-batch model set from the KubeRay runs' own files brings the queue and the job turnaround back to native's. **omni-v12**
-(`docs/OMNI_V12.md`), on main from 19 October, was omni-v11 with two faults fixed, both found on the
-omni-v11 runs: a CPU-limit raise the cluster's admission refuses is held instead of being written again at every fast check (in
-the omni-v11 capacity test the governor asked again about 9 times a minute, 970 to 1,000 refused writes an hour, though nothing
-wrong was ever set), and the swarm's proximity reflex hands back the planner's cruise in the tick it is triggered (the omni-v11
-reflex slowed over a second, and on a mission draw outside the counted cells two drones collided). In the model gate
-(`results/model_gate/V12_VS_V11.md`) omni-v12 reads identical to omni-v11 on every gauge of every model but the one whose every raise
-is refused, where it writes 97.5% fewer commands, GAIN. **omni-v11** (`docs/OMNI_V11.md`) is omni-v10 with one guard in the
-Kubernetes governor: a reading with no machine in service is blind, so the governor holds, says why, decides nothing from it and
-writes nothing (found in the omni-v10 CruiseKube test, where every kind worker left service for two minutes; the model gate in
-`results/model_gate/V11_VS_V10.md`). **omni-v10** (`docs/OMNI_V10.md`) is omni-v9 with the CityLearn battery wire's glide at 0.0875 of its range an hour (omni-v9:
-0.0625), the speed that cuts the bill most with no LOSS: omni-v9 had stopped at the fastest glide where no score rose, and by the
-one key (the founder's correction of 17 October) a rise in the ramping or in the distance from net zero is power held, power
-given, never a LOSS. Read on CityLearn before it was pushed, it cuts the bill 8.4% to 20.1% in every district with a price, a
-further 1.1 to 2.4 points beyond omni-v9, and reads no LOSS against native in any district read before the push; the electricity bought, the carbon and
-the peaks fall a little less than on omni-v9, every one still GAIN, and two rows of the 2022 phase 3 are power given (the ramping
-+6.18%, the net-zero shortfall +0.25%). A change that would have steered the outage buildings' batteries outside the outage hours
-was refused: energy not served +0.69% in one 2023 district, a LOSS (`docs/OMNI_V10.md`, section 3). **omni-v9** (`docs/OMNI_V9.md`)
-made the wire read the coming hour (the mean of the same hour over the past seven days, only hours already seen) and made every
-95% interval exact (Student t): the reading of the hour gone had run about five hours behind the day (on omni-v8 the 2022
-robustness district's monthly unevenness rose 0.11%: power held, power given by the key). **omni-v8** (`docs/OMNI_V8.md`) was omni-v7 with one wire changed, the CityLearn runner: a battery whose building simulates
-power outages stays native, because its charge is also the building's reserve. omni-v7's CityLearn table read LOSS in all three
-of our runs in the seven 2023 districts, the only districts CityLearn ships with outages; the cause was ours, found on CityLearn
-itself and reproduced to the last digit, and three narrower repairs were refused on the tuning district before this one. Read
-locally before any GitHub run, omni-v8 gives native's numbers on the 2023 districts and omni-v7's on every other district. The
-other 45 engine files were omni-v7's bytes. Every benchmark runs again on omni-v16 (`scripts/reruns.txt`, released a few a tick by
-the grid conductor, A of every benchmark, then B, then C; the grid and every Azure set restarted on it the same day); until a
-benchmark's three runs land, its row names the engine it ran on (`docs/BENEFIT_SHEET.md` and the standing block above). Results
-are never read across engines. The standing block is written from the result files by `tools/summary.py --fix` and checked on
-every push; the prose below says the same in words.
+`results/WHOLE_SYSTEM.md` (built by `tools/whole_system.py`) composes the layers from the tables that stand: each layer's ratio
+toward its gauge's aim, Rℓ(g) = oℓ/nℓ or nℓ/oℓ, measured with the layer under it as native runs it, composed by the product law
+R(g) = ∏ℓ Rℓ(g), every run's paired interval carried by the delta method, the three runs pooled by inverse variance. It is
+class S over class P and L tables and across engines, and says so; the stacked run, Omni-Compass at every layer at once on one
+machine (the GPU's stacks mode, `lambda-gpu.yml`), is the measurement that replaces it. The numbers stand on that page, never
+copied here.
 
-**On omni-v11: twenty-three three-run tables, each benchmark's newest until omni-v16's land** (`results/live/V11_*.md`, 19
-October; 1,039 judged rows, **0 LOSS**), each rebuilt byte for byte from its raw receipts (`tools/reproduce.py`):
+### 75.3 Open
 
-- **Real Kubernetes (evidence class L), ten pairs a run.** On top of Goldilocks: response time −47% to −48% mean, −61% to −64%
-  at the 95th percentile, alert minutes −100%, pods started −53% to −61%, GAIN. On top of KEDA's HTTP add-on: −57% mean, −72% to
-  −74% at the 95th percentile, alert minutes −100%, replicas −11% to −20%, GAIN; the pod start wait, omni-v10's one LOSS, reads
-  EVEN with the served image pre-pulled. On top of KEDA on the CPU target and the requests: −36% to −38% mean, −52% to −53% at the
-  95th percentile, GAIN; replicas +2% to +3%, power given. Fixed capacity: EVEN at every cap. Parked-worker energy +1.1% to +2.3%,
-  power given. In all 90 paired repetitions Omni-Compass's 95th and 99th percentiles were below native's
-  (`docs/TAIL_LATENCY.md`).
-- **The live stacks (L), three pairs a run.** Redis: work inside the 2 ms line and hit rate +1.3% to +1.6%, mean latency −1.7%
-  to −7.3%, GAIN; memory +1.7% to +1.9% on `small`, power given; native as shipped EVEN. Kafka: consumers −0.8% on `burst`, GAIN
-  under both objectives. MongoDB: the cache −0.9% to −1.0% on `f`, GAIN; at the max −0.4% to −0.8% on `b` and `f`, GAIN.
-  PostgreSQL: the most connections open +8% to +10%, power given; at the max the connections held −10% to −22%, GAIN. MySQL:
-  EVEN but its update throughput, where the runs disagree; from the factory pool the pool +5% to +16%, power given; at the max
-  EVEN on every row.
-- **Robustness (L), on the kind rig with the served image pre-pulled.** The governor killed outright: every setting back 8 to
-  11 s after the kill in 30 of 30 repetitions, a second governor to the end in every one. The long run: no leak, no failed
-  decision, no slowing, everything handed back. No LOSS in either.
-- **The independent simulators (S, published models, never in the headline).** Power grids: 67 gauge-rows GAIN, 14 power given,
-  no LOSS. Robot arms: on the Kinova Gen3 peak torque −28.6% and tracking error −21.3%, GAIN; two arms left native. CityLearn:
-  27 score-rows GAIN, 1 power given, no LOSS; the outage districts' batteries native. Drone swarms: energy a mission −7% to −20%,
-  missions a charge +8% to +25%, GAIN, no near miss in the counted cells; **a fault found beyond them**: the wire spent the
-  closest-approach margin (to about 0.16 m, shown) and, on a mission draw outside the preregistered seeds, let drones collide
-  where native did not, because its proximity reflex slowed over a second instead of at once. The fix held every drone outside
-  the keep-out on every draw tried (`results/model_gate/V12_SWARM_REFLEX.md`) and landed in omni-v12, whose swarm runs judge a
-  collision as a LOSS and fly three mission draws never flown (`docs/SWARM_PREREGISTRATION.md`, amendment 2).
+Each with its receipt, run by run, in `docs/RUN_LEDGER.md`.
 
-**On omni-v10, until their omni-v11 runs land** (`results/live/V10_*.md`, 18 October, ten pairs a run): steady work in steps,
-the 95th percentile −64% to −65%; demand that wanders, −57% to −66%; all four in one run, work inside the line **+47% to +79%**
-and the 95th percentile −56% to −61%; faults, −54% to −63%, replicas +14% to +20% power given; a queue of jobs, machines and
-node-hours **−6% to −14%**, the queue finished EVEN; a noisy neighbour, its own rows EVEN and the governed service's time over
-the line −11%; the Google day of 2011, −56% to −62%, pods started +120% to +193% power given; CruiseKube, EVEN; the two-hour run,
-no leak, every decision valid, every setting handed back, the mean response −33% to −35%. All GAIN in all three of our runs
-where written so; no LOSS but the pod start wait, since read EVEN on omni-v11.
+1. **The card.** omni-v21 on an A100, three runs each (`results/gpu/V21_A100_SAVE_ABC.md`, `V21_A100_CAP_ABC.md`,
+   `V21_A100_CAP_FULL_ABC.md`). At the factory dial (the max) STEADY with no write: native already runs both knobs at their top.
+   The tune-down (dial save): work per energy GAIN by the mean of our three runs (up 0.75%, beyond the noise in 1 of 3), every
+   service gauge STEADY. The cap at 70%: the mean response time LOSS by the mean (beyond the noise in 0 of 3, run A alone). The
+   tune-down as the card's factory dial goes through the model gate as the next version on the founder's word; the cap's rows
+   are on the next version's list. The stacked box (three A10s, `results/gpu/V21_STACKS_A10_ABC.md`): at 1 and 10 copies, complete in all
+   three runs, the card STEADY in every organism; 100 copies one repetition a run, shown, not judged. Where the chip proof stands,
+   what the card's own files say about the mechanism, and what it still needs, step by step with its cost: `docs/THE_CHIPS.md`.
+2. **The three-arm showing on omni-v21** landed (`results/orchestrator/V21_THREE_ARMS_ABC.md`, runs 40474220398,
+   40474223636, 40474227699): Omni-Compass on top of native against native, work GAIN in all three of our runs (up 8.5%), the
+   95th percentile GAIN in all three (down 13.0%); the answer at the top of the README reads it.
+3. **Azure**: the omni-v18 set of 100 paired repetitions finished 29 October (97 passed, 3 failed) as omni-v18's record; the
+   omni-v21 steady set runs (16 of 100 by 30 October, 16:27 UTC: 14 passed, 2 failed, about 68 minutes a repetition); the
+   omni-v22 sets queue behind it, one at a time, each behind Azure's own $0 check (`scripts/azure_queue.txt`;
+   `docs/THE_CHIPS.md` section 6).
+4. **Google and Amazon**: wired as Azure's sets are and switched off; GitHub's own check of 27 October (`cloud-check`) reads
+   their four keys absent from this repository's secrets (`GCP_CREDENTIALS`, `GCP_PROJECT`, `AWS_ACCESS_KEY_ID`,
+   `AWS_SECRET_ACCESS_KEY`; `docs/GOOGLE_SETUP.md` section 4, `docs/AMAZON_SETUP.md` sections 1a to 3).
+5. **The CPU package** (`cpu-power`): needs a bare-metal machine; GitHub's are virtual, with no frequency governor and no energy
+   meter, and the workflow fails rather than hide it.
+6. **The three rows still on omni-v3** in the block above, until their omni-v21 runs land.
+7. **Every LOSS row on omni-v21**, each with its cause in `docs/LOSS_LEDGER.md`: the next version's work, through the model
+   gate first.
+8. **Omni-Compass 1.0**: when the founder declares the engine final, the engine that stands then is published as 1.0 and the
+   older fingerprints go to `docs/history` as the road to it.
 
-**The one number.** The Omni index over the real tests, each test on its newest table with a reading (4 on omni-v12, 3 on
-omni-v11, 7 on omni-v10): **+4.3% GAIN** on the resource reading (work, speed, machines, energy) and **+11.9% GAIN** on the service reading
-(`results/OMNI_INDEX.md`).
-
-**The muscles and the seven organisms, modelled (evidence class S, our own models, never counted in the headline)**: 1,107
-muscles in 70 families (`realms/catalog_v5.csv`), every muscle its own card (`realms/muscle_cards_v5.csv`), every muscle alone
-over its loads EVEN 580 and GAIN 527, LOSS 0; every one of the seven organisms (the spine 267, the muscles every stack runs on;
-Compute / AI / Cloud 540, Physics / Robotics / Autonomous 404, Energy / Facility / Industrial 480, Distribution / Specialized
-484, the four stacked 1,908, the whole tower 1,107) GAIN (fewer misses, and under the climb more work) under the normal, climb
-and line loads, the power given +0.00% to +0.05% (`results/realms_v5/REALMS_V5.md`, the engine it ran on named in its header;
-`docs/THE_SPINE.md`); the grid, 36 of 36 squares of 10 and 100 runs GAIN with the six organisms run so far alone and, with the
-real cluster inside, the organism's time over the line GAIN in 36 of 36 (`results/grid_v5/GRID.md`); the grid on omni-v11 has
-its own manifest (`results/grid_v11/`). Every muscle is written out, organism by organism, the spine first, in
-`docs/REALM_MUSCLES.md`, and explained, wired and carded in `docs/MUSCLE_CATALOG.md` (the manuals' muscle appendix, with every
-family's wiring on a real stack from `docs/wiring_recipes.csv`).
-
-**The cloud (Azure), the bill at native's work.** The founder's order of 14 October: in a cloud Omni-Compass shows one thing,
-the same work as native for a smaller bill, at the tune-down on the machines alone (`--give-back-only`). The Azure sets (the
-steady set, the bursts `1 4 1 6 1 9` and `1 6 1 8 1 6`, the real day on 1 to 9; A, B and C) run one at a time in their region
-on omni-v16, each only after Azure's own $0 check passed (the queue's switch was off for part of 22 October, until the founder
-confirmed that the person whose account the Azure login bills agreed to its use; a key bills only its own account) (since 22 October, as Google's and
-Amazon's: for a while on the night of 21 October the stored Azure key held a text Azure's login refuses, and a set that failed at
-the login would have counted as started; the key was whole again by 00:00 UTC). The sets of earlier engines already started run
-to their end as their own record (omni-v15's campaign started none; the omni-v11 steady set at the cap, its 56th repetition running at 00:00 UTC on 22 October). The only Azure tables up so far are v1's
-4-worker fleet (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): every gauge EVEN, a fleet too small to show one machine.
-**Google (GKE) and Amazon (EKS)** carry the same four sets on the same harness (`scripts/google_queue.txt`,
-`scripts/amazon_queue.txt`), each behind its own `switch=` line; the founder put their secrets in and switched both on on
-18 October (the Operator's Manual's appendices G and H, click by click). Their first sets, on omni-v10, stopped at the login at
-no cost and stay as its record: Google's stored key had been cut short when it was copied from Cloud Shell's screen, and
-Amazon's account is on its Free plan, whose policy denies every machine read. **Both are not yet run, and both queues are switched
-off** (24 October, the founder's words: "leave the Google and Amazon runs in everywhere and just show it not ran yet ... code it to
-wire it the same way that the Azure is running"): every workflow, script, queue, check and page stays, wired as Azure's sets run
-today (the same harness and the main engine's 60 s beat, 100 paired repetitions under the stopping rule, the $0 check before any
-set), and nothing starts or is checked until his word. Google needs its key stored whole (downloaded as a file, never copied from
-the screen; appendix G, its step 4); Amazon needs its account on the Paid plan (appendix H, its step 1a), which Amazon will not
-grant before the $100 credit is spent or the account is six months old. Switched on then, each cloud's sets start behind its own
-$0 check, A, B and C, one at a time in each machine-family queue.
-
-**The card (evidence class P)**: every earlier card result is obsolete; the founder's runs on rented cards (Lambda) come at one
-exact commit of the engine that stands, on his word. **Linux's own CPU governor and meter** (`cpu-power`): built and
-preregistered; it waits for a machine on the metal, because GitHub's machines are virtual and expose neither.
-
-**What is shown and what is not.** Shown, on real Kubernetes, three times each: a faster tail and more work inside the response
-line on the same machines, on top of the operator's own autoscalers and rightsizers (the HPA, Goldilocks, KEDA), through
-faults and a public day of demand, and fewer machines on a queue of jobs; on the live stacks, small gains on the cache and the
-broker and the do-no-harm reading on three databases. Not yet shown: an energy or cloud-bill saving on real machines (energy on
-kind is a declared model; the Azure tables at the tune-down are being made), and anything on a real card.
-
-### 75.2 The whole system, every layer composed (20 October)
-
-The founder's question of 20 October: the cloud is the wire between the chip and the software, Omni-Compass sits at both ends
-and at every layer between, what is the total? `results/WHOLE_SYSTEM.md` (built by `tools/whole_system.py`) answers it from the
-tables that stand: each layer's ratio toward its gauge's aim, Rℓ(g) = oℓ/nℓ or nℓ/oℓ, measured with the layer under it as
-native runs it (the card against its own limiter, the cluster against the HPA, the governors against the orchestrator as
-shipped, the cloud against Azure's own autoscaler), composed by the product law R(g) = ∏ℓ Rℓ(g), every run's paired interval
-carried through by the delta method, the three runs pooled by inverse variance, the layers added in the log. Two readings:
-by the index's rule (an EVEN or one-run gauge counts as exactly 1) and with every interval carried. The product's
-assumption, that a layer's factor does not change when the layers around it carry Omni-Compass too, is tested where the
-tables allow (the governors' four ways: Omni-Compass on the organism alone against on top of the orchestrator, in the same
-repetitions). The composition is class S over class P and L tables and across engines, said so on the page; the stacked
-run (Omni-Compass at every layer at once) is the measurement that would replace it, and the page is remade as each layer's
-omni-v16 runs land. The numbers stand on that page, never copied here.
-
-### 75.3 Omni direct: Omni-Compass's own orchestrator on the muscles, without Kubernetes (23 October)
-
-The founder's order of 23 October: build Omni-Compass's own orchestrator, no Kubernetes or other orchestrator's code in it,
-and show the three arms together: native (Kubernetes' published autoscaling rule on the muscles, written by us as the
-yardstick), Omni on native (Omni on top of that rule, the engine's strict form) and Omni direct (Omni alone on the muscles).
-`omni_orchestrator/` and `docs/OMNI_ORCHESTRATOR.md` are what was built; `docs/OMNI_ORCHESTRATOR_GRADES.md` grades it sector
-by sector (B overall, not production). Its brain carries the engine's own mechanisms (conveyance, the reflex, the twin read as
-Kubernetes would, the fold under the verdict), and in the full form on one host (18 steps of 25 s, one run of each arm, class
-L) Omni direct read against native by the one key: work GAIN (up 4.7%), the 95th percentile GAIN (down 9.9%), units GAIN, a cut
-(down 10.3%), machines EVEN, nothing failed. The three arms together in the quick form (one run each, after a fault the first
-three-arm showing found was fixed: a trial the traffic kept abandoning still held a unit below the twin): Omni on native against
-native, work GAIN (up 8.3%); Omni direct against native, work GAIN (up 9.1%); Omni direct against Omni on native, the 95th
-percentile GAIN (down 13.2%) and units GAIN, a cut (down 9.5%); no LOSS in any pair. And the three runs on GitHub's machines (the full form, A, B and C from one commit) read Omni on native against native work GAIN in all three (up 5.2% to 7.4%) and the 95th percentile GAIN in all three (down 7.5% to 12.1%), Omni direct against native work GAIN in all three (up 5.7% to 9.4%) and the 95th percentile GAIN in all three (down 9.8% to 15.7%), machines EVEN, the units power given or EVEN, and Omni direct against Omni on native EVEN on every gauge; no LOSS in any pair in any run (`results/orchestrator/V18_THREE_ARMS_ABC.md`). Still to come: the comparison against Kubernetes itself on the kind
-rig, and Omni direct on a cloud's machines on the founder's word. The two walls found on the
-way and the mathematics of the unit count's edge are on `docs/THE_ROOM.md`.
-
-### 75.4 Open
-
-1. **Every benchmark on omni-v11**: released A, then B, then C by the conductor from `scripts/reruns.txt` (the steady and
-   wandering Kubernetes tests among them, MySQL, Redis and MongoDB with native as shipped beside the operator's setting,
-   and every data store at the max beside the tune-down: MySQL, MongoDB and PostgreSQL had run at the tune-down alone);
-   each table replaces its earlier engine's row on the sheet when its three runs land. CityLearn's omni-v11 table must read no
-   LOSS in any district, as it did locally.
-2. **The pod start wait under KEDA's HTTP add-on**: LOSS in omni-v10's three runs (+13.0%, +14.1%, +21.1% a pod), root-caused
-   on 18 October to the test machine (`docs/POD_START_WAIT.md`): a pod on a node that never served unpacked its image inside
-   the window on the one runner all kind nodes share. With the served image pre-pulled onto every worker before each arm, the
-   same in both arms, it reads **EVEN** in omni-v11's three runs (`results/live/V11_KEDA_REQUESTS.md`). Closed.
-3. **The kill test and the long run** on omni-v11 (`results/live/V11_ROBUST_KILL.md`, `V11_ROBUST_LONG.md`): every setting
-   back at the operator's 8 to 11 s after the kill in 30 of 30 repetitions, a second governor to the end in every one; over
-   two hours no leak, no failed decision, no slowing, everything handed back; no LOSS in either. Closed; the extended faults'
-   table lands when its runs do.
-4. **The swarm's proximity reflex** (a fault found 19 October beyond the counted cells): fixed in omni-v12, and every wire that
-   holds a governor's rules taken into the fingerprint in omni-v15 (`docs/OMNI_V15.md`, section 2). Closed.
-5. **The grid, the reruns and Azure on omni-v16**: the campaign opened at 07:30 UTC on 22 October; the conductor starts its runs
-   from the afternoon's push (Azure from the founder's word that afternoon, item 6). From omni-v15's push (00:45 UTC) until then
-   it started nothing: it fingerprinted the fetched commit with its own copy of the version tool's scope, which predated
-   omni-v15's eight wires, so no commit matched (fixed: it runs that commit's own version tool, `CHANGELOG.md`, 22 October,
-   afternoon). omni-v15's campaign started no run; the last runs started, omni-v14's at 00:31 UTC, stand as its record. Nothing
-   cancelled. The first omni-v16 starts came at 13:50 UTC; of them the levers check (A) failed three of its 19 checks on a rig
-   omni-v16 had left at decisions of 5 s, too short for the brain's own minute (rightsize and coldstart wait for its calm); the
-   rig now runs the minutes its checks were written for, and the levers check runs again, A, B and C (`docs/OMNI_V16.md`).
-5a. **The heartbeat at 15 s** (`docs/PACE_PREREGISTRATION.md`, amendment 2): the model read no LOSS at 15 s against 60 s
-   (`results/model_gate/V16_PACE.md`, `results/model_gate/V16_VS_V15.md`); against native it read LOSS on the pods waiting for a
-   place (both settings) and, in the cloud's setting, on the 95th percentile and the alert minutes, rows the engine carries at
-   every pace (at 60 s they read EVEN only by the seeds' spread); they are on the next version's list. Three runs of five arms
-   (native, Omni-Compass at 15 s, and at 60, 10 and 5 s) on GitHub's own machines read it for real. A LOSS at 15 s there is
-   root-caused and fixed in the next version.
-6. **Azure, Google and Amazon**: Azure runs (its steady set started by the conductor on 24 October, once its check passed);
-   Google and Amazon are not yet run, their queues switched off, wired as Azure's sets are and started on the founder's word
-   (Google once its key is stored whole, Amazon once its account is on its Paid plan), each behind its own $0 check.
-7. **The card**: the founder's runs on Lambda, one exact commit of omni-v11.
-8. **Linux**: a machine on the metal for `cpu-power`.
-9. **More room**: of the 159 muscles that read EVEN (the same as native) on the realms table, the room search of 16 October
-   (`docs/OMNI_V7.md`) found none under the max's gauges within each muscle's own knob; six process loops miss at most 0.56% of
-   decisions, a card candidate for a later version. The 14 of 26 knob-cases on the real stacks that read watch stay the next
-   engine's question, in the model gate first.
-10. **Omni-Compass 1.0**: when the founder declares the engine final, the engine that stands then is published as 1.0 and
-   the older fingerprints go to `docs/history` as the road to it.
-
-### 75.5 Where things are
+### 75.4 Where things are
 
 | Path | What it is |
 |---|---|
@@ -14914,11 +15018,17 @@ way and the mathematics of the unit count's edge are on `docs/THE_ROOM.md`.
 | `docs/OMNI_COMPASS_OWNERS_MANUAL.md` (PDF: `docs/OMNI_COMPASS_OWNERS_MANUAL.pdf`) | the Owner's Manual: the theory, the mechanism, the engine's source, every result, every muscle (Appendix G) |
 | `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md` (PDF: `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.pdf`) | the Live Engine Manual: how to read the live engine page, its monitors, gauges and knobs, native beside Omni-Compass; what to do when a tile reads LOSS |
 | `docs/BENEFIT_SHEET.md` | one number per benchmark, its word, its engine, every change in words |
-| `docs/LEVELS.md` | every level on one page (muscle, organism, cluster, add-ons, service, plant, cloud, group of clusters), its counts of GAIN, EVEN, power given and LOSS, and any level whose gauges go the other way |
+| `docs/LEVELS.md` | every level on one page (muscle, organism, cluster, add-ons, service, plant, cloud, group of clusters), its counts of GAIN, STEADY, power given and LOSS, and any level whose gauges go the other way |
 | `docs/REGISTER.md` | every muscle family wired, every benchmark run, every benchmark still to run |
 | `docs/WIRING_VERDICTS.md` | write, watch or the operator's choice, per knob, from every result |
-| `docs/OMNI_V12.md` | the engine that stands, what changed and how it was read; the earlier engines' pages (`docs/OMNI_V11.md`, `docs/OMNI_V10.md`, `docs/OMNI_V9.md`, `docs/OMNI_V8.md`, `docs/OMNI_V7.md`, `OMNI_V6.md`, `OMNI_V5.md`, `OMNI_V3.md`, `OMNI_V2.md`, `OMNI_V1.md`) stay with their own results as the road |
+| `docs/OMNI_V22.md` | the engine that stands, what changed and how it was read; each earlier engine's page beside it (`docs/OMNI_V<n>.md`) |
+| `docs/RUN_LEDGER.md` | every chip, cloud and machine run, what it cost, whether it finished, and where its receipt is |
+| `docs/THE_CHIPS.md` | the chips: every GPU run, what the card shows by the one key, what its own files say about the mechanism, and what the chip proof still needs with each step's cost |
+| `docs/AUDIT_2026-10-27.md` | the repository audited top to bottom on 27 October: every finding, its fix at its source, and what holds it |
+| `docs/AUDIT_2026-10-30.md` | the repository graded top to bottom on 30 October: every area's grade on its record, what broke and was fixed, the founder's week, and what is open |
+| `docs/REPORT_CARD.md` | the report card: every section and piece of the repository graded on its record on the engine that stands, with the count of everything and what moves each grade up |
 | `docs/history/STATE_OF_PLAY_2026-10-10.md` | this page as it stood on 10 October, on Omni v3, moved here whole |
+| `docs/history/STATE_OF_PLAY_2026-10-27.md` | this page's chronology as it stood on 27 October, moved here whole |
 
 # Part Eight. Value, License and History
 
@@ -14988,7 +15098,7 @@ resource handed back at the end of every run. On Apache Kafka the earlier set ha
 cost of three to four times the consumers, and on Redis the compass had bought the hit rate with three to four times the
 memory; under the brain's own verdict on the knob (10 October) neither spend was judged on the first set, because the trial
 rule of the day ended a spend trial on the calm the spend itself produced, so both read exactly nothing until the amended
-set lands (section 60.5). The combined index (section 60.8) is +4.8% over the six real categories on the sets of 10 October,
+set lands (section 60.7). The combined index (section 60.11) is +4.8% over the six real categories on the sets of 10 October,
 with no loss in all three of our runs in any category. An operator
 should expect the same honesty from their own paired run: the receipts will say which side of the gain their stack took,
 and whether the compass's own cost (its CPU, its reads) ate into it.
@@ -15035,63 +15145,59 @@ and the other as power given in all three of our runs, because that is what happ
 
 ### 76.5 Where the evidence stands today, read honestly
 
-Every number below is from a three-run table, each row naming the engine it ran on, with its evidence class and the
-question a referee is entitled to ask about it. The engine that stands is **omni-v18** (`OMNI_V18.json`, digest
-`1cb92edb64c4391d`, on main since 23 October, night): omni-v17 (`OMNI_V17.json`, digest `7c937d09e4031cc7`, the founder's heartbeat
-dial) with Omni direct, Omni-Compass's own orchestrator on the muscles with no Kubernetes, taken into the engine (`docs/OMNI_V18.md`;
-its seven rule-holding files fingerprinted, 55 of the 62 files omni-v17's bytes). omni-v17 is omni-v8 (a battery whose building simulates power outages
-stays native, section 76.6) with the CityLearn battery wire reading the coming hour and every interval on the exact Student t
-quantile (omni-v9, `docs/OMNI_V9.md`), the wire's glide at the speed that cuts the bill most with no LOSS (omni-v10,
-`docs/OMNI_V10.md`), the Kubernetes governor holding on a reading with no machine in service (omni-v11, `docs/OMNI_V11.md`), and a raise the cluster's
-admission refused held until something changes, with the swarm's reflex acting at once (omni-v12, `docs/OMNI_V12.md`), and the
-CPU limits the conveyance gave handed back on a shared host at its top beside another workload's room, every other pod counted by
-its own limit (omni-v13, `docs/OMNI_V13.md`), and the
-operator's own commands run without a shell unless they hold one's syntax, and a knob that leaves any muscle native (omni-v14,
-`docs/OMNI_V14.md`), and the brain's request for the power cap trimming only while the response line has been clean for the
-governor's own clear time, with every wire that holds a governor's rules inside the fingerprint (omni-v15, `docs/OMNI_V15.md`),
-and every clock of the Kubernetes governor in seconds, so its decision period is a clean setting, identical to omni-v15 at
-its 60 s, the full decision every 15 s on the founder's word that morning (omni-v16, `docs/OMNI_V16.md`), and the heartbeat a dial, the
-main engine deciding every 60 s and any beat from 5 to 120 s shown beside native with what it buys and what it costs (omni-v17,
-`docs/OMNI_V17.md`, every model that sets its own period identical to omni-v16, as shipped every gauge EVEN, no LOSS). The five data stores' three runs on omni-v16 have landed (`results/live/V16_*.md`: Kafka, PostgreSQL, Redis, MySQL and MongoDB, each with its service set, and Redis, MySQL and MongoDB as shipped), read in the standing block as that engine's own record; none has yet landed on omni-v17, and every benchmark runs again on it from 17:00 UTC on 23 October.
-The governors' first tables, on omni-v12, read two LOSS rows: KubeRay's queue and tail with the organism alone, root-caused to the
-conveyance and fixed in omni-v13 (`docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 11), and Crane's total pod start wait, a sum of
-pods started and the wait per pod, which the metric-aims audit rules on in writing before any table is read by it.
-Every row below names its engine: **omni-v11** where that engine's three runs have landed (Goldilocks, KEDA two ways, fixed
-capacity, the five data stores, the four outside simulators), and **omni-v10** (`OMNI_V10.json`, digest `4bf39b0d707784de`,
-18 October) for the rest, whose service and organism files omni-v11 carries byte for byte and whose Kubernetes governor it
-carries with that one guard added; each runs again on the engine that stands (`scripts/reruns.txt`) and its row is replaced
-here when its three runs land. Results are never read across engines. The newest state, written from the result files on
-every push, is the standing block of `docs/STATE_OF_PLAY.md` and the sheet `docs/BENEFIT_SHEET.md`.
+Every number below is from a three-run table, each row naming the engine its table ran on; the evidence class of each is in
+the table it points to. The engine that stands is **omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files;
+`docs/OMNI_V22.md`, on main since 30 October): the five data stores' wires at the max, each spend gated on the store's own account
+of what a miss costs and on the host's room, never below native (`tools/store_brain.py`); every table below is omni-v21's or an
+earlier engine's own record until omni-v22's three runs of each benchmark land. omni-v21 (`docs/OMNI_V21.md`, 25 to 30 October):
+the immune system knows itself, knob by knob (a knob redlining past its line
+that Omni-Compass's own pushing cannot bring back goes to native where native's twin reads it lower, and stays with
+Omni-Compass where native is not stronger). What each earlier version changed is in section 76.6 and on its own page
+(`docs/OMNI_V<n>.md`). Every benchmark runs again on the engine that stands; a row still on an older engine names it and stands
+as that engine's record until its three runs on the engine that stands land. Results are never read across engines.
 
-| What (engine, three runs each) | Measured, same work | Class | What a referee will ask, and the answer |
-|---|---|---|---|
-| Kubernetes with a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top (omni-v11) | response time **−47% to −48% mean, −61% to −64% at the 95th percentile**, time over the line −98% to −100%, alert minutes −100%, pods started −53% to −61%, GAIN in all three of our runs; machines and failed requests EVEN; parked-worker energy +1.7% to +2.3%, power given | L | "What did Omni-Compass move, if the rightsizer had already set the requests?" The CPU limits it conveyed from the machines' idle processor to the serving pods, within each namespace's quota (16 to 18 settings commands a run, each in the audit), and the HPA target; the rightsizer's recommendation stayed the operator's and was never written |
-| Kubernetes with KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top (omni-v11) | response time **−57% mean, −72% to −74% at the 95th percentile**, time over the line −98% to −99%, alert minutes −100%, HPA replicas **−11% to −20%**, GAIN in all three of our runs; pods started and the pod start wait EVEN; parked-worker energy +1.6% to +2.2%, power given | L | "Fewer replicas and faster?" Yes: the conveyed limits let each pod serve more, so KEDA's own count fell; the energy the busier host drew is power given, shown beside the work |
-| Kubernetes with KEDA on the CPU target and the live requests in flight, Omni-Compass on top (omni-v11) | response time **−36% to −38% mean, −52% to −53% at the 95th percentile**, time over the line −97% to −100%, GAIN in all three of our runs; machines, failed requests and alert minutes EVEN; replicas +2% to +3% and parked-worker energy +1.1% to +1.8%, power given | L | "Why less than the HTTP add-on alone?" KEDA's CPU target already scales on the pods' own use, so part of the room was native's |
-| Kubernetes with a service rightsized by CruiseKube applying its own recommendations (omni-v10); fixed capacity at four CPU caps (omni-v11) | every gauge EVEN; no setting written on CruiseKube; the cap blocks the one lever at every cap | L | "Then what is Omni-Compass for here?" Nothing, on these services: the rightsizing or the cap left no room, the governor took nothing away, and the tables say so |
-| Kubernetes: steady work in steps; demand that wanders (omni-v10) | the 95th percentile **−64% to −65%** (steady) and **−57% to −66%** (wandering), time over the line −98% to −100% and −38% to −45%, alert minutes −100% and −21% to −32%, GAIN in all three of our runs; machines EVEN | L | "And on the plainest loads?" The same reading: faster answers on the same machines |
-| Kubernetes: all four in one run (more work, faster, fewer machines, less energy) (omni-v10) | work inside the response line **+47% to +79%**, the 95th percentile −56% to −61%, failed requests −9% to −14%, alert minutes −16% to −34%, GAIN in all three of our runs; machines the same, energy inside the noise | L | "Is the cluster real?" Kubernetes is real (API server, scheduler, HPA); the nodes are containers on one 4-core GitHub runner, so the host's own busy share is recorded beside every run and the machines column is machine-hours in service, not a bill. The bill is Azure's test (below) |
-| Kubernetes: faults (a machine down, traffic tripled, a runaway pod, a blind probe) (omni-v10) | the 95th percentile −54% to −63%, the 99th −43% to −51%, time over the line −26% to −32%, GAIN in all three of our runs; failed requests and alert minutes EVEN; replicas +14% to +20%, power given | L | "Does the governor slow recovery?" No: it recovers faster, and the replicas it took to do so are shown as power given |
-| Kubernetes: a queue of batch jobs (omni-v10) | machines in service and node-hours **−6% to −14%**, the standby-model energy −4% to −10%, the mean response −10% to −12%, GAIN in all three of our runs; the queue finished EVEN | L | "Fewer machines and no later?" Yes: cruise and idle hand machines back while the pile is worked off at the same pace |
-| Kubernetes: a public day of demand, the Google cluster trace of 2011 (omni-v10) | the 95th percentile **−56% to −62%**, time over the line −74% to −77%, failed requests −15% to −18%, alert minutes −61% to −66%, GAIN in all three of our runs; pods started +120% to +193%, power given | L | "Whose demand shape?" Google's, from a published trace, turned into the schedule by a rule written before the runs and receipted with every part's SHA-256 |
-| Kubernetes: fairness beside a noisy neighbour (omni-v10) | the governed service's time over the line −11%, GAIN in all three of our runs; every other row EVEN, the neighbour's own included | L | "Does it hurt the other tenant?" Not measurably, in three runs of ten pairs |
-| PostgreSQL behind PgBouncer, MySQL under sysbench, MongoDB under YCSB, each also with native as shipped (omni-v11) | every judged row EVEN but four: MongoDB's cache on `f` −0.9% to −1.0%, GAIN; PgBouncer's most connections open +8% to +10%, power given; MySQL's update throughput, the runs disagree; from MySQL's factory pool, the pool +5% to +16%, power given | L | "Then nothing moved?" The verdict refused every give-back that could not prove it cost nothing, so the knob stayed at the operator's: the do-no-harm reading. Where the factory setting is already at the knob's top (MongoDB's own cache), the knob is at its limit on native and Omni-Compass watches |
-| Apache Kafka, the consumer group (omni-v11) | consumers running −0.8% on `burst`, GAIN in all three of our runs under both objectives; work, latency, lag and CPU EVEN; no message lost | L | "Is that worth having?" Small, and stated at its size |
-| Redis, the cache's memory ceiling (omni-v11) | work inside the 2 ms line and hit rate +1.3% to +1.6%, mean latency −1.7% to −7.3%, GAIN in all three of our runs; memory +1.7% to +1.9% on `small`, power given; native as shipped (no ceiling) EVEN | L | "What did it cost?" The memory, shown as power given beside the work it bought; the 99th percentile reads about 6 µs higher in single runs, EVEN by the rule: the harness runs the brain inside the load generator's process, and that presence alone lengthens the timed requests (`docs/TAIL_LATENCY.md`) |
-| Robustness: the two-hour run (omni-v10) | no leak, decisions valid, no failed decision, every setting handed back; mean response −33% to −35%, GAIN; replicas +49%, power given | L | "Does it drift over hours?" No, on every repetition of three runs |
-| The modelled muscles and seven organisms, the spine the seventh: 1,107 muscles in 70 families, every muscle its own card, three loads | every muscle alone EVEN 580, GAIN 527, LOSS 0; every organism GAIN (fewer misses, and under the climb more work) under the normal, climb and line loads, power given +0.00% to +0.05% | S | "Why is the energy not a saving?" Because the max buys work and speed and the energy it takes is power given, shown beside them; the models are ours (class S) and are never counted in the headline |
-| Power grid, 11 SimBench grids in pandapower (omni-v11) | 67 gauge-rows GAIN, 14 power given (line losses in four grids with their own generation, tap operations in one), no LOSS | S | "Where does it cost?" In the rural and semi-urban grids with their own generation, where a lower voltage raises losses; the table shows it |
-| Robot arms, MuJoCo Menagerie (omni-v11) | on the Kinova Gen3 peak torque −28.6%, tracking error −21.3%, copper heating −11.3%, GAIN in all three of our runs; two arms left native by the paired physics trial | S | "What about the arms that gained nothing?" The trial left them native and the table says so |
-| Drone swarms, gym-pybullet-drones, three 20-drone cells (omni-v11) | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN in all three of our runs; no late mission, reserve breach, near miss or collision in the counted cells; the closest approach (shown) spent to about 0.16 m | S | "Is it safe on every mission?" Not on omni-v11: on a mission draw outside the counted cells the wire let drones collide where native did not, because its proximity reflex slowed the drones over a second instead of at once. The fix holds every drone outside the keep-out on every draw tried and landed in omni-v12, whose swarm runs judge a collision as a LOSS and fly three draws never flown (section 60.7). The energy is a declared model from the simulator's own motor constants, not a meter |
-| Buildings with batteries, CityLearn 3.0.2 (omni-v11) | 27 score-rows GAIN (the electricity bought, the peaks, the ramping and the unevenness in the four districts whose batteries moved; the bill −16.1% in the one district with a price), 1 power given, no LOSS | S | "Why are seven districts native?" They simulate power outages, and a battery there is also its building's reserve; omni-v8 leaves those batteries native after omni-v7 read LOSS there (energy not served +2.0% to +9.8%), and every score there is native's to the digit |
-| Azure's bill at the tune-down | the sets run one at a time on omni-v11 (the steady set, two bursts, the Google day) | L, a real bill | "Then where is the saving?" Not claimed until its three-run tables land; the 4-worker v1 fleet read EVEN on every gauge, too small to show one machine |
-| The real card (GPU) | **obsolete**: every earlier card result ran on a controller since replaced | P pending | "When?" The founder's runs on rented cards at one named commit, after the CPU and cloud work |
+The table is written from the benefit sheet (`docs/BENEFIT_SHEET.md`, `tools/benefit_sheet.py`) on every push, so this book
+quotes no number its tables have not given. Every table it names is rebuilt byte for byte from its archived runs by
+`tools/reproduce.py`, and every LOSS row is named with its cause in `docs/LOSS_LEDGER.md`. The questions a referee is entitled
+to ask of a row (whose load, which native, which window, what was spent to buy what) are answered in the table it points to.
 
-The upside the real-software data points toward is a third to a half more work from what is already installed on the
-Kubernetes side, with faster answers, and a smaller, resource-priced gain on the stacks where the knob is a pool, a
-consumer group or a ceiling. It becomes a claim about the bill, not a direction, when two tests land: the bill on a real
-cloud with a fleet big enough to show one machine, and the real card's own meter. We publish each of them as it comes,
-whatever it says.
+<!-- the evidence, one row per benchmark (tools/benefit_sheet.py) -->
+
+| What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |
+|---|---|---:|---|---|
+| Every real test together: the Omni index (omni-v21) | **GAIN AND LOSS** | 5.2% GAIN | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
+| Robustness: the two-hour run (omni-v21) | **GAIN AND LOSS** | 3.8% LOSS | mean response cut 29% to 43% (GAIN); p95 cut 25% to 57% (GAIN); time over the line cut 30% to 41% (GAIN); failed requests cut 9% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 28% (GAIN); replicas up 29% to 50% (power given); pods started up 68% to 226% (power given); pod start wait, total (s) up 90% to 324% (LOSS); pod start wait, mean (s) up 24% to 27% (LOSS) | `results/live/V21_ROBUST_LONG.md` |
+| Robustness: the governor killed outright mid-run (omni-v21) | **GAIN AND LOSS** | 8.1% GAIN | mean response cut 30% to 40% (GAIN); p95 cut 28% to 48% (GAIN); time over the line cut 33% to 35% (GAIN); failed requests cut 9% to 13% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 25% (GAIN); replicas up 2.3% to 7.3% (power given); pod start wait, total (s) up 10% to 79% (LOSS); robust: failed requests in the 300 s after the kill (%) cut 3.7% to 4.3% (GAIN); robust: time over the line in the 300 s after the kill (% of samples) cut 0.5% to 2.6% (GAIN) | `results/live/V21_ROBUST_KILL.md` |
+| Robot arms (MuJoCo), the three untouched robots (omni-v21) | **GAIN** | 3.8% GAIN | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V21_MUJOCO.md` |
+| Redis, the cache's memory ceiling (omni-v21) | **GAIN AND LOSS** | 0%: STEADY | memory ceiling held cut 1.3% to 2.4% (GAIN); memory used cut 0.1% to 1.0% (GAIN); host CPU busy cut 2% to 11% (GAIN); host CPU-seconds cut 2% to 12% (GAIN); CPU per 1,000 inside the line cut 2% to 12% (GAIN); work inside the line up 0.6% to 1.7% (GAIN); hit rate up 0.7% to 1.7% (GAIN); mean cut 0.6% to 7.8% (GAIN); memory ceiling held up 0.8% to 2.2% (power given); memory used up 0.5% to 1.9% (power given); p99 up 0.2% to 1.7% (LOSS); host CPU busy up 1% to 11% (power given); host CPU-seconds up 1% to 12% (power given); CPU per 1,000 inside the line up 0% to 11% (power given); process_cpu_seconds up 0.3% to 2.4% (power given) | `results/live/V21_REDIS.md` |
+| Real Kubernetes, steady work (omni-v21) | **GAIN** | 31% GAIN | mean response cut 48% to 49% (GAIN); p95 cut 66% (GAIN); p99 cut 72% to 74% (GAIN); time over the line cut 100% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% (GAIN); replicas cut 4.1% to 6.3% (GAIN); pods started cut 20% to 49% (GAIN); pod start wait, total (s) cut 20% to 54% (GAIN); pod start wait, mean (s) cut 0% to 21% (GAIN) | `results/live/V21_STEADY.md` |
+| Real Kubernetes, faults (omni-v21) | **GAIN, power given** | 30% GAIN | parked-worker energy cut 0.3% to 1.0% (GAIN); standby-model energy cut 0.3% to 1.0% (GAIN); mean response cut 38% to 48% (GAIN); p95 cut 51% to 58% (GAIN); p99 cut 21% to 60% (GAIN); time over the line cut 28% to 34% (GAIN); failed requests cut 11% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 14% to 22% (GAIN); replicas up 10% to 20% (power given); pods started up 12% to 22% (power given) | `results/live/V21_FAULTS.md` |
+| Real Kubernetes, demand that wanders (omni-v21) | **GAIN, power given** | 34% GAIN | mean response cut 40% to 45% (GAIN); p95 cut 56% to 59% (GAIN); p99 cut 11% to 35% (GAIN); time over the line cut 35% to 40% (GAIN); failed requests cut 12% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 22% to 29% (GAIN); pod start wait, mean (s) cut 0.5% to 9.9% (GAIN); replicas up 0.1% to 2.9% (power given) | `results/live/V21_WANDERING.md` |
+| Real Kubernetes, all four at once (omni-v21) | **GAIN AND LOSS** | 34% GAIN | work inside the line up 30% to 52% (GAIN); mean response cut 36% to 43% (GAIN); p95 cut 51% to 59% (GAIN); time over the line cut 32% to 37% (GAIN); failed requests cut 5.1% to 5.4% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 24% (GAIN); pod start wait, total (s) up 16% to 42% (LOSS); pods started up 8% to 37% (power given) | `results/live/V21_ALL_FOUR.md` |
+| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs (omni-v21) | **GAIN AND LOSS** | 35% GAIN | parked-worker energy up 1.5% to 1.8% (power given); standby-model energy up 1.5% to 1.8% (power given); mean response cut 45% to 47% (GAIN); p95 cut 59% to 61% (GAIN); p99 cut 62% to 65% (GAIN); time over the line cut 96% to 100% (GAIN); replicas up 20% to 29% (power given); pods started up 44% to 103% (power given); pod start wait, total (s) up 75% to 137% (LOSS); pod start wait, mean (s) up 11% to 32% (LOSS) | `results/live/V21_GOLDILOCKS.md` |
+| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs (omni-v21) | **LOSS** | 0.4% LOSS | mean response up 0.9% to 2.4% (LOSS); p95 up 0.0% to 1.8% (LOSS); time over the line up 4.3% (LOSS) | `results/live/V21_CRUISEKUBE.md` |
+| Real Kubernetes, a queue of jobs (omni-v21) | **GAIN AND LOSS** | 14% GAIN | machines cut 13% to 15% (GAIN); machine-hours cut 13% to 15% (GAIN); standby-model energy cut 9% to 10% (GAIN); mean response cut 12% to 13% (GAIN); p95 cut 0.4% to 5.7% (GAIN); time over the line cut 0.2% to 4.8% (GAIN); machines after the queue cut 19% to 22% (GAIN); replicas up 4% to 16% (power given) | `results/live/V21_BATCH.md` |
+| Real Kubernetes, a public day of demand (Google 2011) (omni-v21) | **GAIN AND LOSS** | 38% GAIN | mean response cut 50% (GAIN); p95 cut 59% to 64% (GAIN); p99 cut 48% to 56% (GAIN); time over the line cut 75% to 80% (GAIN); failed requests cut 10% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 61% to 72% (GAIN); pod start wait, total (s) up 88% to 279% (LOSS); replicas up 2% to 19% (power given); pods started up 79% to 235% (power given) | `results/live/V21_TRACE_GOOGLE2011.md` |
+| Real Kubernetes, a noisy neighbour (omni-v21) | **GAIN AND LOSS** | 2.2% GAIN | mean response cut 12% to 17% (GAIN); p95 cut 3% to 12% (GAIN); time over the line cut 9% to 11% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 1.2% to 6.2% (GAIN); pods started cut 9% to 28% (GAIN); second app: response time (ms), 99th percentile cut 1% to 16% (GAIN); pod start wait, mean (s) up 5% to 51% (LOSS); second app: failed requests (%) up 1.1% to 3.7% (LOSS); replicas up 0.1% to 2.9% (power given) | `results/live/V21_FAIRNESS.md` |
+| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs (omni-v21) | **GAIN, power given** | 95% GAIN | parked-worker energy up 1.9% to 2.4% (power given); standby-model energy up 1.9% to 2.4% (power given); mean response cut 57% to 58% (GAIN); p95 cut 73% to 74% (GAIN); p99 cut 60% to 66% (GAIN); time over the line cut 95% to 97% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 94% to 100% (GAIN); replicas cut 15% to 21% (GAIN); pods started cut 21% to 25% (GAIN); pod start wait, total (s) cut 22% to 26% (GAIN); pod start wait, mean (s) cut 1.3% to 4.8% (GAIN) | `results/live/V21_KEDA_REQUESTS.md` |
+| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs (omni-v21) | **GAIN AND LOSS** | 30% GAIN | parked-worker energy up 1.4% to 1.7% (power given); standby-model energy up 1.4% to 1.7% (power given); mean response cut 37% to 38% (GAIN); p95 cut 51% to 52% (GAIN); p99 cut 54% to 58% (GAIN); time over the line cut 91% to 100% (GAIN); replicas up 11% to 16% (power given); pods started up 31% to 49% (power given); pod start wait, total (s) up 27% to 84% (LOSS) | `results/live/V21_KEDA_CPU_REQUESTS.md` |
+| Power grids (SimBench), both load models (omni-v21) | **GAIN, power given** | 5.8% GAIN | energy the loads drew cut 1.3% to 1.5% (GAIN); energy dissipated in lines and transformers cut 0.5% to 2.4% (GAIN); net import from the upstream grid cut 1% to 15% (GAIN); tap operations cut 16% to 38% (GAIN); energy dissipated in lines and transformers up 0.6% to 1.5% (power given); tap operations up 100% (power given) | `results/live/V21_PANDAPOWER.md` |
+| PostgreSQL, the pooler's pool size (omni-v21) | **GAIN, power given** | 4.1% GAIN | connections held open cut 1.2% to 7.5% (GAIN); host CPU busy up 0.4% to 1.3% (power given); host CPU-seconds up 0.4% to 1.4% (power given); CPU per 1,000 inside the line up 0.5% to 1.3% (power given); connections most at once up 0.0% to 8.3% (power given); p95 cut 0% to 64% (GAIN); mean cut 0% to 43% (GAIN); CPU per 1,000 inside the line cut 0.3% to 1.6% (GAIN) | `results/live/V21_PGBENCH.md` |
+| MySQL, the buffer pool's size (omni-v21) | **GAIN, power given** | 3.2% GAIN | p95 cut 1.8% to 3.5% (GAIN); p99 cut 0.6% to 4.1% (GAIN); pool held cut 4% to 22% (GAIN); pages holding data cut 1% to 21% (GAIN); host CPU busy up 0.2% to 2.6% (power given); host CPU-seconds up 0.0% to 3.0% (power given); CPU per 1,000 inside the line up 0.3% to 3.7% (power given); pages holding data up 0.4% to 6.0% (power given); host CPU busy cut 2% to 38% (GAIN); host CPU-seconds cut 2% to 38% (GAIN) | `results/live/V21_SYSBENCH.md` |
+| MongoDB, the storage engine's cache size (omni-v21) | **GAIN AND LOSS** | 0.6% LOSS | host CPU busy cut 0.2% to 3.8% (GAIN); host CPU-seconds cut 0.2% to 4.7% (GAIN); CPU per 1,000 inside the line cut 0.2% to 4.7% (GAIN); process_cpu_seconds up 0.2% to 2.0% (power given); mean cut 0.4% to 4.0% (GAIN); p95 up 0.2% to 5.4% (LOSS); p99 up 0.4% to 2.5% (LOSS); cache size held up 0.4% to 7.5% (power given); cache in use up 0.3% to 7.2% (power given) | `results/live/V21_YCSB.md` |
+| Kafka, the consumer group's size (omni-v21) | **GAIN AND LOSS** | 1.0% LOSS | p99 cut 0.1% to 3.0% (GAIN); median cut 0.0% to 4.3% (GAIN); mean cut 0.1% to 5.1% (GAIN); messages waiting, mean cut 0.4% to 6.0% (GAIN); host CPU busy cut 1.2% to 2.3% (GAIN); host CPU-seconds cut 1.3% to 2.3% (GAIN); CPU per 1,000 inside the line cut 2.0% to 2.5% (GAIN); mean up 0% to 12% (LOSS); messages waiting, mean up 0% to 11% (LOSS); consumers running up 0% to 17% (power given); consumers most at once up 0% to 83% (power given); p99 up 0.6% to 9.1% (LOSS) | `results/live/V21_KAFKA.md` |
+| Drone swarms, the three untouched cells (omni-v21) | **GAIN** | 3.0% GAIN | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V21_SWARM.md` |
+| Buildings and batteries (CityLearn), the districts with batteries (omni-v21) | **GAIN** | 1.5% GAIN | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V21_CITYLEARN.md` |
+
+<!-- end of the evidence -->
+
+What is not in the table yet, and why, is in `docs/RUN_LEDGER.md`: the card's rentals and what came back from each, the clouds
+(Azure's bill at the tune-down; Google and Amazon wired and not yet run) and the CPU package, which needs a bare-metal machine.
+The bill becomes a claim, not a direction, when two tests land: the bill on a real cloud with a fleet big enough to show one
+machine, and the real card's own meter. We publish each of them as it comes, whatever it says.
 
 ### 76.6 One law, versioned; and what came before it
 
@@ -15105,10 +15211,14 @@ seconds and the cloud's one flag as **v7** (16 October), tried in the model gate
 October), the one wire omni-v7's CityLearn table showed was ours to fix: a battery that is also its building's reserve through an
 outage stays native; given, as **v9** (17 October), the battery wire reading the coming hour; given, as **v10** (18 October), the
 battery wire's glide at the speed that cuts the bill most with no LOSS, each proven on CityLearn and in the model gate before it was
-pushed; and given, as **v11**, the engine that stands since 18 October by the founder's order that every fault found be fixed, the
-Kubernetes governor's hold on a reading with no machine in service, proven in a unit test that reproduces the fault and in the model
-gate (`docs/OMNI_V1.md`, `OMNI_V2.md`, `OMNI_V3.md`, `OMNI_V5.md`, `OMNI_V6.md`, `OMNI_V7.md`, `OMNI_V8.md`, `OMNI_V9.md`,
-`OMNI_V10.md`, `OMNI_V11.md`). From v11 on, a version's bookkeeping lands in one command (`tools/land_engine.py`), and the check
+pushed; and given, as **v11** (18 October), by the founder's order that every fault found be fixed, the Kubernetes governor's hold on a
+reading with no machine in service, proven in a unit test that reproduces the fault and in the model gate; then, each the next
+version through the model gate, a raise the cluster refuses held and the swarm's reflex at once (**v12**), the limits handed back
+on a shared host at its top (**v13**), a knob that leaves any muscle native (**v14**), the power cap's request through the line's
+own clear time and every wire in the fingerprint (**v15**), every clock of the governor in seconds (**v16**), the heartbeat a dial
+with the main engine at 60 s (**v17**), Omni direct taken into the engine (**v18**), a pod muscle of its own (**v19**), the five
+data stores' wires fixed at their causes (**v20**), and, as **v21**, the engine that stands since 25 October, the immune system
+knowing itself, knob by knob (`docs/OMNI_V1.md`, `OMNI_V2.md`, `OMNI_V3.md`, `OMNI_V5.md` to `OMNI_V21.md`). From v11 on, a version's bookkeeping lands in one command (`tools/land_engine.py`), and the check
 it adds to `verify.py` refuses a push in which any place still names an older engine as the one that stands. Earlier engines, among them an
 allocation law that gave back about a third of the machines at the cost of response time and a compass law without the
 verdict, produced the numbered sets kept in `docs/history/`; their results are history, labelled as the engine that produced
@@ -15116,10 +15226,10 @@ them, and are never read beside a later engine's. A buyer does not choose betwee
 names the version of it that produced the table. When the founder declares the engine final, the engine that stands then
 is published as Omni-Compass 1.0, with the older fingerprints kept as the road to it, never as a second product.
 
-"Versioned" has a precise meaning here. The engine is a fixed set of files (47 on v11), and `OMNI_V11.json` holds one
-SHA-256 for each of them and one digest over all of them; `OMNI_V10.json`, `OMNI_V9.json`, `OMNI_V8.json`, `OMNI_V7.json`, `OMNI_V6.json`, `OMNI_V5.json`, `OMNI_V3.json`,
-`OMNI_V2.json` and `OMNI_V1.json` do the same for the earlier sets. `python3 tools/omni_version.py` hashes the files in a checkout and prints
-which fingerprint they match (for this edition, `omni-v11 (digest 745aa53ec8eeb67b, 47 files)`), or, when they match none,
+"Versioned" has a precise meaning here. The engine is a fixed set of files (63 on v21), and `OMNI_V21.json` holds one
+SHA-256 for each of them and one digest over all of them; `OMNI_V20.json` back to `OMNI_V5.json`, `OMNI_V3.json`, `OMNI_V2.json`
+and `OMNI_V1.json` do the same for the earlier sets. `python3 tools/omni_version.py` hashes the files in a checkout and prints
+which fingerprint they match (for this edition, `omni-v23 (digest c96ea4105d8747db, 65 files)`), or, when they match none,
 which files differ from the nearest; with `--commit <sha>` it asks the same of any pushed commit, which is how every
 three-run table checks that its runs A, B and C were on the same engine before it combines them, and refuses if they were
 not. The versions differ in exactly the ways their records name, and a reader can check that from the fingerprints rather
@@ -15149,6 +15259,93 @@ rule); a muscle held at a limit of the team's own choosing (its card, or its cov
 written). Each of those is a legitimate setting of the inputs, and each has its own result. What no reader may do is read one
 tune's receipt as another's, or read a receipt without its inputs. The factory tune is the one setting whose receipts this book publishes (the Declaration of the factory tune, `DISCLOSURES.md`, section 3); the dial and the cards are the inputs a licensee may change, and a changed tune's results are its own (section 76.6). Where a result read elsewhere differs from the
 published one, the first presumption is an input: the wiring, the settings or the reading (`DISCLOSURES.md`, section 4).
+
+### 76.8 Healthy production, how a configuration is chosen, the whole-workload benefit, and the scope of the validation
+
+The founder's master specification of 24 October 2026, late night, is written once in `docs/FACTORY_PROFILE.md`; this section
+carries what the owner must hold of it, in its words.
+
+**What Omni-Compass consists of.** A **governing engine** (the executable mathematical rules that turn observations and internal
+state into governing decisions), its **muscle adapters**, a **complete configuration profile** and a **validation harness** (the
+machinery that supplies workloads, executes comparisons, checks requirements and records results). The **factory profile** is
+the complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, the
+decision interval and every other default. A **candidate profile** is a proposed combination of settings under evaluation; the
+**active profile** is the settings actually governing the current run; a **custom profile** is an identifiable configuration
+that differs from the released factory profile. The released factory profile is omni-v23's (`OMNI_V23.json`): the governor's
+full decision every 60 s, the fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`) and on
+the engine's own setting otherwise; it is the profile every published result ran on. The physiological words of this book
+(muscle, organism, nervous system, defensive system, health) are engineering analogies, each pointing to concrete code, signals,
+actuators and checks (`docs/FACTORY_PROFILE.md`, section 2).
+
+**A fixed tune governing a changing system.** Let x be the governed system's state, z the governor's internal state, y its
+observations, θ the complete configuration profile and Δ the full governing decision interval. The public interval choices on
+the bench are Δ ∈ {10, 15, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
+k, with tₖ₊₁ = tₖ + Δ, the general contract is:
+
+| Step | Equation | What it is |
+|---|---|---|
+| observe | `y(k) = h(x(tₖ)) + ε(k)` | the observation, with its sensing delay and noise ε |
+| decide | `(u[req](k), z(k + 1)) = G[θ](z(k), y(k), A(k))` | the requested settings, inside the governing authority A(k) |
+| constrain | `u[cmd](k) = Π[C](u[req](k))` | the constraints C(k): every muscle's own limits, the cover, never below native at the max |
+| land | `u[ack](k) = R(u[cmd](k))` | the setting that actually landed, read back by the adapter |
+| move | `x(tₖ₊₁) = Φ(x(tₖ), u[ack](k), w(k))` | the system moves with the command that landed, under the workload and disturbances w |
+
+G[θ] is the governing engine at profile θ. The system evolves with the command that actually landed, so the requested, the
+commanded and the acknowledged settings are kept distinct and each is logged (the audit; a refused write is held, omni-v12).
+After release θ(k + 1) = θ(k) = θ[factory] for every k, while x, z and u go on changing: one fixed factory tune governs a
+changing workload. "One setting" means one complete profile, θ = (the rules, the gains, the margins and cushions, Δ, the dial,
+every muscle's card, …), more than a choice of heartbeat, and its settings are evaluated jointly, because changing one mechanism
+can move others.
+
+**Healthy production: the two objectives.** Health is the explicit operating requirements: correctness, service limits,
+resource bounds and every applicable hardware limit. With P(θ) the useful output (work done inside the line), C(θ) the
+whole-workload cost inside the declared boundary, Hⱼ(θ) each health reading and Lⱼ its limit, the two objectives are kept
+explicit, and each reported result names its objective and its exact profile:
+
+  maximise E[P(θ)] subject to Hⱼ(θ) ≤ Lⱼ for every health requirement j
+
+(the most healthy production the system can deliver: the max, the default brain), or
+
+  minimise E[C(θ) ⁄ P(θ)] subject to the same requirements
+
+(what that completed production costs: the tune-down, the cloud's machines alone).
+
+**How a configuration is chosen.** The factory baseline is established in eight steps: (1) verify the mechanisms:
+observations, units, authority, actuation, read-back, limits and recovery; (2) exercise the six governing intervals and the
+relevant knob combinations; (3) tune on development workloads, examining the interactions between muscles; (4) validate the
+selected profile on fresh workloads, bursts, sustained demand and the declared failure conditions included; (5) record every
+adverse result and resolve whether the candidate meets the release requirements; (6) freeze the complete factory profile, its
+engine identity and its validation receipts; (7) verify every corresponding implementation and adapter, the C++ harness
+included; (8) release that identified package as the factory baseline. The result is called **the best validated factory
+profile for the declared operating conditions**, which gives "optimal" an assessable meaning. Today the repository is at steps
+1 and 2 for the next profile (the heartbeat sweep and the beat ladder, `results/model_gate/HEARTBEAT_SWEEP.md`,
+`results/model_gate/V17_LADDER.md`, class S); steps 3 to 8 come after the founder confirms the mechanisms, and no profile is
+locked as the baseline before them. Every engine version already passes the model gate and the three-run rule before its results
+stand. The tune rule of section 12.4 is how a released tune is read against the tunes tried so far; it is not the eight steps.
+
+**The whole-workload benefit: the bill.** For each deployment route r (on-site hardware; through the cloud), the costs inside
+the declared boundary are added, each counted once, for each arm a (native, Omni-Compass on native, Omni-Compass direct):
+
+  C(r, a) = Σₖ c(r, a, k),   S(r, a) = (C(r, native) − C(r, a)) ⁄ C(r, native),
+
+for a positive native cost and a valid, matched workload comparison. The two headline views are the total native cost, the
+total Omni-Compass cost and the percentage saved, on site and through the cloud. A component's percentage is a supporting
+measurement; the bill's percentage comes from adding the actual costs. A missing price or an incomplete workload stays visibly
+unresolved: today only the cloud's compute is metered in money (Azure, machine-hours at the list price, `results/live/AKS_BILL.md`);
+energy, machines, storage, network and operation carry no recorded price, so neither route's total is resolved yet, and the
+live benchmark engine shows each component as unresolved beside its measured change. The whole-workload index of section 60.6 is the
+composition's one number over its gauges, not a price.
+
+**The scope of the validation.** Every result identifies the engine version, the configuration, the hardware or model, the
+workload and the measurement boundary that produced it, and says nothing beyond them. The Python, the C++ and the browser port
+share one behavioural contract: the same profile values, meanings and units; the same governing intervals and time-based rules;
+the same authority and constraint decisions; the same handling of stale observations, refused commands and recovery; exact
+agreement for discrete decisions, with tolerances fixed in advance where floating-point arithmetic needs them (`tools/seal.py`,
+`results/SEAL.json`, `docs/engine/check_live_engine.py`). A release record identifies the engine version and its fingerprint,
+the profile, the implementations' parity receipts and the validation receipts: a matching fingerprint establishes identity; the
+validation receipts establish what that identified implementation demonstrated, on the systems, loads and boundaries they name.
+The live benchmark engine's adjustments are variations of the mechanism on its stated backend (class S on the page's own model); an
+adjustment becomes a factory configuration only after validation and a new release declaration.
 
 ---
 
@@ -15820,7 +16017,7 @@ are sourced.
 4. **Aim the chip at about 5% more finished work on the same bill**, cap unchanged and temperature never behind, or at
    fewer joules for the same work. The buyer chooses, and the receipt prints which.
 
-## 88. The Road to the Engine That Stands: Omni v5, v6, v7, v8, v9, 10, 11, 12, 13, 14, 15, 16, 17 and 18
+## 88. The Road to the Engine That Stands: Omni v5, v6, v7, v8, v9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 and 22
 
 ### 88.1 Omni v5 — the engine fingerprint
 
@@ -16111,7 +16308,7 @@ Omni v7 was the engine that stood on main from 16 October (the founder's order: 
 |---|---|---|---|
 | 1 | CPU conveyance obeys the namespace quota | `omni_controller/quota.py`, `muscles.py` | no write Kubernetes would refuse |
 | 2 | On a shared host, no limit raised while the machine is at or over 75% busy or unread (the replica room's guard) | `omni_controller/muscles.py` | the host's top, nothing else |
-| 3 | The verdict reads a trial in the reports' own words (GAIN, EVEN, LOSS) | `omnicompass/verdict.py` | the do-no-harm trigger |
+| 3 | The verdict reads a trial in the reports' own words (GAIN, STEADY, LOSS) | `omnicompass/verdict.py` | the do-no-harm trigger |
 | 4 | Every rule counts in seconds, not decisions | `omni_controller/controller.py` | the same behaviour at any decision period |
 | 5 | The cloud's rule in one word, `--give-back-only` | `omni_controller/controller.py`, `deploy/install/omni-compass-cloud.yaml`, `scripts/kind_bench.sh` | the bill can only fall or stay |
 
@@ -16119,13 +16316,13 @@ Omni v7 was the engine that stood on main from 16 October (the founder's order: 
 
 The original capacity run 38722001872 tried to raise a pod CPU limit while its namespace CPU quota was already full. The candidate reads each namespace's ResourceQuota CPU-limit hard/used values, obeys the stricter pending spec/status ceiling, and reserves each accepted increase across all target deployments in one conveyance pass. It does not increase or delete an operator quota. PriorityClass scope selectors are matched from pod metadata, without deployment or quota names hardwired into the governor. Unknown quota state, read failures and unsupported scopes preserve native limits for expansion; reductions remain possible. Decreases do not create spendable headroom until observed by Kubernetes.
 
-**What the first live trial found, and the correction (16 October).** The three trials of the candidate as first pushed (Goldilocks run 38825214203, the KEDA add-ons run 38825211370, the capacity test run 38825208939; one run of ten pairs each, so single runs, not three-run tables) read the candidate well short of omni-v6's three-run tables on the two add-on tests: Goldilocks response time at the 95th percentile -6% (EVEN) against v6's -58% GAIN in all three runs, HPA replicas +20% and pods started +200% (power given), the pod start wait +172% (LOSS); KEDA on the requests in flight p95 -2.7% (EVEN) against v6's -73%, replicas +17% (power given); KEDA on the CPU target and the requests p95 +3% (EVEN) against v6's -55%; the capacity test EVEN at every cap, as on v5. The governor wrote 5 commands a run against v6's 15 and the host was 4% busier against 40%: conveyance never raised a limit. The audit says why, 65 times in one repetition: `quota: CPU limit expansion blocked, reason: quota read unavailable: CalledProcessError`. The governor's role on every kind test (`deploy/kind/rbac-omni.yaml`, receipted in each run's `rbac_omni.txt`) cannot list ResourceQuotas, and the budget as first written read an unreadable quota as a zero allowance. The model gate had not seen it because its model of the cluster answered the quota read with an empty list. The correction: a namespace whose quotas cannot be read is **no budget known**, not a zero budget; the raise proceeds as it did on omni-v6 and Kubernetes' own admission, which refuses any write over a quota the governor cannot see, stays the authority (the plug reads every write back and a refused one is audited and never advertised); the audit says so once a pass. Where the role can read the quota, the budget bounds every raise as before. The model now runs the convey model a second time with the quota unreadable (section 88.3.6), the regression `test_an_unreadable_quota_holds_nothing` holds the v6 arithmetic under a forbidden read, and the three trials run again on the corrected candidate; the first trials stay in `results/live/raw/` on this branch as the record of the fault.
+**What the first live trial found, and the correction (16 October).** The three trials of the candidate as first pushed (Goldilocks run 38825214203, the KEDA add-ons run 38825211370, the capacity test run 38825208939; one run of ten pairs each, so single runs, not three-run tables) read the candidate well short of omni-v6's three-run tables on the two add-on tests: Goldilocks response time at the 95th percentile -6% (STEADY) against v6's -58% GAIN in all three runs, HPA replicas +20% and pods started +200% (power given), the pod start wait +172% (LOSS); KEDA on the requests in flight p95 -2.7% (STEADY) against v6's -73%, replicas +17% (power given); KEDA on the CPU target and the requests p95 +3% (STEADY) against v6's -55%; the capacity test STEADY at every cap, as on v5. The governor wrote 5 commands a run against v6's 15 and the host was 4% busier against 40%: conveyance never raised a limit. The audit says why, 65 times in one repetition: `quota: CPU limit expansion blocked, reason: quota read unavailable: CalledProcessError`. The governor's role on every kind test (`deploy/kind/rbac-omni.yaml`, receipted in each run's `rbac_omni.txt`) cannot list ResourceQuotas, and the budget as first written read an unreadable quota as a zero allowance. The model gate had not seen it because its model of the cluster answered the quota read with an empty list. The correction: a namespace whose quotas cannot be read is **no budget known**, not a zero budget; the raise proceeds as it did on omni-v6 and Kubernetes' own admission, which refuses any write over a quota the governor cannot see, stays the authority (the plug reads every write back and a refused one is audited and never advertised); the audit says so once a pass. Where the role can read the quota, the budget bounds every raise as before. The model now runs the convey model a second time with the quota unreadable (section 88.3.6), the regression `test_an_unreadable_quota_holds_nothing` holds the v6 arithmetic under a forbidden read, and the three trials run again on the corrected candidate; the first trials stay in `results/live/raw/` on this branch as the record of the fault.
 
 Kubernetes admission remains authoritative. A concurrent rejected write is audited and does not become an invented conveyance gain. The node's existing CPU cushion, operator CPU floor, security hold, workload schedule and benchmark validity checks remain intact. The separate runner shutdown in the historical run has no established cause and is not claimed fixed by this actuator change.
 
 #### 88.3.2 Conveyance on a shared host: one guard, two designs refused by the model
 
-The v6 three-run KEDA table (`results/live/V6_KEDA_REQUESTS.md`) read the pod start wait, mean, +12.5%, +12.0% and +22.7% (EVEN on the three-run rule, LOSS in two single runs) beside response time -59% and CPU used +55%. The run's own files (`results/live/raw/addons-run-38725705826`): 149 raises, each pod's limit set to 1,850m (two serving pods on its node) or 3,700m (one), the HPA at 8.8 replicas on average, the host 0.27 busy under native and 0.34 under Omni-Compass, past 75% busy for 0.3% of its samples. On kind every node is a container on one 4-core machine and reports all four cores as its own, so the limits sum to about three machines: a ceiling, not a use; the kernel's fair scheduler arbitrates when the pods ask for more than the machine, as it does for native's pods.
+The v6 three-run KEDA table (`results/live/V6_KEDA_REQUESTS.md`) read the pod start wait, mean, +12.5%, +12.0% and +22.7% (STEADY on the three-run rule, LOSS in two single runs) beside response time -59% and CPU used +55%. The run's own files (`results/live/raw/addons-run-38725705826`): 149 raises, each pod's limit set to 1,850m (two serving pods on its node) or 3,700m (one), the HPA at 8.8 replicas on average, the host 0.27 busy under native and 0.34 under Omni-Compass, past 75% busy for 0.3% of its samples. On kind every node is a container on one 4-core machine and reports all four cores as its own, so the limits sum to about three machines: a ceiling, not a use; the kernel's fair scheduler arbitrates when the pods ask for more than the machine, as it does for native's pods.
 
 Two repairs were written first and both were refused by the model gate (section 88.3.6) before any real run: **the host's CPU counted once** and shared by every serving pod (at the run's nine replicas 3,500m / 9 is under the operator's 500m, so nothing is ever conveyed: in the model the +64% work and -53% response time of conveyance are lost whole, requests served -16% against v6, LOSS); and **a hold while a pod starts on the host** (start wait 1.1% shorter for requests served -0.11% and response time +0.5%, both LOSS against v6 at the real regime). v7 keeps the one guard the model reads as no LOSS, the same as the replica room's (`omni_controller/capacity.py`): on a shared host no limit is raised while the machine's measured busy share is at or over 75% or cannot be read; limits already given stay; lowering is never held back; each hold is written to the audit (`"convey": "held"`). The slower pod start is the busier host serving more requests, the price of the work; it stays shown in every receipt and is judged as the table judges it.
 
@@ -16140,9 +16337,9 @@ d = mean ln c[trial] − mean ln c[ref],  with the 95% interval  d ± 1.96 · �
 and with τ = ln(1 + tolerance) the allowance in the same units:
 
 - the interval wholly above zero is a **LOSS**: the step is refused and undone, whatever the allowance says;
-- wholly below zero is a **GAIN**; across zero is **EVEN**;
+- wholly below zero is a **GAIN**; across zero is **STEADY**;
 - while the interval's half-width exceeds τ, the evidence is wider than the allowance, and the trial measures on, up to three times `min_samples`, before it decides;
-- a GAIN or EVEN step is allowed only if both estimates are inside the allowance: the median (v6's guard, kept) and d ≤ τ;
+- a GAIN or STEADY step is allowed only if both estimates are inside the allowance: the median (v6's guard, kept) and d ≤ τ;
 - a stepwise knob is read the same way against the costs first measured at native as well, so a run of small steps cannot add up past the allowance.
 
 Every judgement writes its reading and its intervals to the audit (`"reading"`, `"interval_ln"`). `judge="median"` reproduces v6 exactly.
@@ -16182,8 +16379,8 @@ What it read on v7 against v6, 10 seeds (`results/model_gate/`):
 
 | Model | Reading |
 |---|---|
-| cluster, 60 s | v7 and v6 EVEN on every gauge; both against native: bill -1% (EVEN), energy per core-hour -2.4% GAIN, pods waiting for a place about three times native's (v6 LOSS, v7 EVEN). The cloud setting itself barely cuts the bill in this model and makes pods wait; checked against the Azure receipts' own pending-pod gauge before anything is concluded. |
-| cluster, 15 s | v6: bill +43% (power given), pods waiting 10x (LOSS). v7: bill EVEN against native, pods waiting +111% LOSS, p95 +0.3% LOSS. Every rule now keeps its time, and faster is still not free: the default stays 60 s. |
+| cluster, 60 s | v7 and v6 STEADY on every gauge; both against native: bill -1% (STEADY), energy per core-hour -2.4% GAIN, pods waiting for a place about three times native's (v6 LOSS, v7 STEADY). The cloud setting itself barely cuts the bill in this model and makes pods wait; checked against the Azure receipts' own pending-pod gauge before anything is concluded. |
+| cluster, 15 s | v6: bill +43% (power given), pods waiting 10x (LOSS). v7: bill STEADY against native, pods waiting +111% LOSS, p95 +0.3% LOSS. Every rule now keeps its time, and faster is still not free: the default stays 60 s. |
 | convey | v7 as first written (host once, start hold): requests served -16%, p95 +155% against v6, LOSS, nothing conveyed. The busy guard alone: identical to v6 at the real regime and at double load (the hold never binds under 75%). |
 | convey, quota unreadable (added 16 October) | the candidate as first pushed (digest 1a0d1d1b91bc49ad): requests served -39% and p95 +113% against v6, LOSS, the host and the limits given identical to native: nothing conveyed, as the live trials found. The corrected candidate (digest d6d467b824c585f1): identical to v6 on every gauge (+64% requests and -53% p95 against native), with the quota readable and empty and with it unreadable alike. |
 | verdict | a step costing 3% more allowed 28% of the time instead of 40%; 5% more, 14% instead of 26%; a free step 60% instead of 63%. |
@@ -16193,7 +16390,7 @@ What it read on v7 against v6, 10 seeds (`results/model_gate/`):
 Twelve runs on real Kubernetes, ten pairs each, every one omni-v7 (`results/live/V7_*.md`), native against Omni-Compass on top.
 No row reads LOSS on the three-run rule.
 
-| Benchmark | What moved, GAIN in all three of our runs | EVEN | Power given |
+| Benchmark | What moved, GAIN in all three of our runs | STEADY | Power given |
 |---|---|---|---|
 | Goldilocks and the VPA's recommender | response time −45% to −47% mean, −60% to −62% p95, −67% to −69% p99; time over the line −100% | machines, failed requests, replicas, pods started, pod start wait, alert minutes | parked-worker energy +1.6% to +2.3% |
 | KEDA's HTTP add-on | response time −57% to −58% mean, −71% to −75% p95; alert minutes −93% to −96%; replicas −15% to −19%; pods started −17% to −23% | machines, failed requests, pod start wait | parked-worker energy +2.2% to +2.3% |
@@ -16201,7 +16398,7 @@ No row reads LOSS on the three-run rule.
 | CruiseKube applying its own recommendations | nothing: no setting written | every gauge | none |
 | Fixed capacity, four CPU caps | nothing: the cap blocks the one lever | completed work and work inside the line at every cap | none |
 
-Single runs clear of the noise that the other two did not repeat, each EVEN on the rule: CruiseKube's 99th percentile +3.1% (run A)
+Single runs clear of the noise that the other two did not repeat, each STEADY on the rule: CruiseKube's 99th percentile +3.1% (run A)
 and node-hours +1.0% (run B); Goldilocks replicas +3.4% (run C); capacity's completed work +3.8% at 1 core (run A).
 
 #### 88.3.8 The room search (16 October): the muscles that read the same as native
@@ -16401,7 +16598,7 @@ reads a LOSS anywhere: every rise below is power given, and the bill keeps falli
 | phase 2 | net-zero shortfall | -7.53% GAIN | -4.77% GAIN | -3.38% GAIN | -2.54% GAIN | -1.99% GAIN |
 | phase 2 | the bill | -14.12% GAIN | -17.22% GAIN | -18.75% GAIN | -19.17% GAIN | -19.03% GAIN |
 | phase 3 | the ramping | -5.05% GAIN | -1.91% GAIN | +2.32% power given | +6.18% power given | +9.59% power given |
-| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% EVEN | +0.25% power given | +0.41% power given |
+| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% STEADY | +0.25% power given | +0.41% power given |
 | phase 3 | the bill | -6.60% GAIN | -7.32% GAIN | -8.10% GAIN | -8.43% GAIN | -8.32% GAIN |
 
 At 0.05 the 2022 phase 2's daily unevenness rises; from 0.075 the 2022 phase 3's ramping does, and from 0.0875 its net-zero
@@ -16494,35 +16691,35 @@ score is CityLearn's own (each over no battery at all), and every row is read by
 
 | CityLearn score | native | omni-v8 against native | omni-v9 against native |
 |---|---:|---:|---:|
-| the bill | 1.0000 | not run | +0.00% EVEN |
+| the bill | 1.0000 | not run | +0.00% STEADY |
 | electricity bought | 2.0205 | not run | -6.95% GAIN |
-| carbon | 1.0000 | not run | +0.00% EVEN |
+| carbon | 1.0000 | not run | +0.00% STEADY |
 | the daily peak | 2.4165 | not run | -8.92% GAIN |
 | the highest peak | 1.2582 | not run | -4.40% GAIN |
 | the ramping | 1.3828 | not run | -10.40% GAIN |
 | daily unevenness | 0.7972 | not run | -2.75% GAIN |
 | monthly unevenness | 0.8053 | not run | -1.79% GAIN |
 | net-zero shortfall | 9.8346 | not run | -0.08% GAIN |
-| energy not served | 0.0000 | not run | +0.00% EVEN |
-| time uncomfortable | 0.7607 | not run | +0.00% EVEN |
+| energy not served | 0.0000 | not run | +0.00% STEADY |
+| time uncomfortable | 0.7607 | not run | +0.00% STEADY |
 
 **Travis County, 100 buildings**
 
 | CityLearn score | native | omni-v8 against native | omni-v9 against native |
 |---|---:|---:|---:|
-| the bill | 1.0000 | not run | +0.00% EVEN |
+| the bill | 1.0000 | not run | +0.00% STEADY |
 | electricity bought | 3.8416 | not run | -3.96% GAIN |
-| carbon | 1.0000 | not run | +0.00% EVEN |
+| carbon | 1.0000 | not run | +0.00% STEADY |
 | the daily peak | 3.1689 | not run | -5.92% GAIN |
-| the highest peak | 1.3727 | not run | +0.00% EVEN |
+| the highest peak | 1.3727 | not run | +0.00% STEADY |
 | the ramping | 1.1329 | not run | -7.58% GAIN |
 | daily unevenness | 0.5655 | not run | -2.71% GAIN |
 | monthly unevenness | 0.6057 | not run | -1.96% GAIN |
 | net-zero shortfall | -4.6732 | not run | -0.18% GAIN |
-| energy not served | 0.0000 | not run | +0.00% EVEN |
-| time uncomfortable | 0.8454 | not run | +0.00% EVEN |
+| energy not served | 0.0000 | not run | +0.00% STEADY |
+| time uncomfortable | 0.8454 | not run | +0.00% STEADY |
 
-Across the districts above: omni-v8 29 GAIN, 0 EVEN, 7 power given, 0 LOSS (where it was run); omni-v9 58 GAIN, 9 EVEN, 0 power given, 0 LOSS.
+Across the districts above: omni-v8 29 GAIN, 0 STEADY, 7 power given, 0 LOSS (where it was run); omni-v9 58 GAIN, 9 STEADY, 0 power given, 0 LOSS.
 
 The districts: the robustness district, where the omni-v8 row stood and where the cause was found; the tuning district
 (`citylearn_challenge_2022_phase_1`); the 2022 phases 2, 3 and all (shipped in CityLearn's source repository, not in its package,
@@ -16597,7 +16794,7 @@ Read by that key, the ladder omni-v9 ran shows that no glide reads a LOSS anywhe
 | phase 2 | net-zero shortfall | -7.53% GAIN | -4.77% GAIN | -3.38% GAIN | -2.54% GAIN | -1.99% GAIN |
 | phase 3 | the bill | -6.60% GAIN | -7.32% GAIN | -8.10% GAIN | -8.43% GAIN | -8.32% GAIN |
 | phase 3 | the ramping | -5.05% GAIN | -1.91% GAIN | +2.32% power given | +6.18% power given | +9.59% power given |
-| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% EVEN | +0.25% power given | +0.41% power given |
+| phase 3 | net-zero shortfall | -2.21% GAIN | -0.76% GAIN | -0.04% STEADY | +0.25% power given | +0.41% power given |
 
 So 0.0875 is the glide that cuts the bill most with no LOSS: the founder's rule for the tune. Nothing else in the wire changed. The
 compass law, its gain (0.5), its response (1 h), its reading (the coming hour, from the same hour of the past seven days), its band
@@ -16679,11 +16876,11 @@ is CityLearn's own (each over no battery at all), and every row is read by the o
 | monthly unevenness | 0.9892 | -2.28% GAIN | -1.58% GAIN |
 | net-zero shortfall | 1.1315 | -2.78% GAIN | -0.98% GAIN |
 
-Across the districts above: omni-v9 45 GAIN, 0 EVEN, 0 power given, 0 LOSS; omni-v10 43 GAIN, 0 EVEN, 2 power given, 0 LOSS.
+Across the districts above: omni-v9 45 GAIN, 0 STEADY, 0 power given, 0 LOSS; omni-v10 43 GAIN, 0 STEADY, 2 power given, 0 LOSS.
 
 **Alameda County and Travis County (100 buildings each)** were still running locally when this version was pushed; this
 machine runs each neighbourhood for hours, and their omni-v9 runs read no LOSS (`docs/OMNI_V9.md`, section 3). No score in them
-that can read a LOSS moves with the glide: they carry no price (the bill is 1.0 in both arms, EVEN by construction), no outage
+that can read a LOSS moves with the glide: they carry no price (the bill is 1.0 in both arms, STEADY by construction), no outage
 (energy not served is 0 in both arms) and no comfort the electric batteries touch (time uncomfortable +0.00% on omni-v9). Every
 other score there is a resource spent or held, where a rise is power given. Their three runs on GitHub, with every other
 district, make the omni-v10 CityLearn table; the local runs are added here when they finish.
@@ -16694,7 +16891,7 @@ ramping, the unevenness and the net-zero distance. The highest peak holds where 
 against −11.26%), and that district's daily unevenness falls further (−0.94% against −0.09%). Two rows of the 2022 phase 3 rose
 and are power given: the ramping +6.18% and the net-zero shortfall +0.25%. A little more electricity is bought than at omni-v9
 while the bill falls further, so each unit bought costs less on average. None of these five districts carries the occupants' own scores (energy not served, time uncomfortable); in the 2023 districts
-they are native's to the last digit, and in Alameda and Travis they read EVEN on omni-v9.
+they are native's to the last digit, and in Alameda and Travis they read STEADY on omni-v9.
 
 **Shown, power given.** In some months the peak hour with Omni-Compass on top rises above native's. With omni-v10 that happens in
 3 months in the robustness district (omni-v9: 2), 3 in the tuning district (3), 1 in the 2022 phase 2 (1), 1 in the 2022 phase 3 (1)
@@ -16719,7 +16916,7 @@ steered outside the outage hours and handed back to native through each outage. 
 |---|---:|---:|---:|
 | phase 2, local evaluation | +0.19% power given | -2.68% GAIN | -0.12% GAIN |
 | phase 2, online evaluation 1 | -0.09% GAIN | **+0.69% LOSS** | -0.04% GAIN |
-| phase 2, online evaluation 2 | -0.11% GAIN | -0.15% GAIN | +0.00% EVEN |
+| phase 2, online evaluation 2 | -0.11% GAIN | -0.15% GAIN | +0.00% STEADY |
 | phase 2, online evaluation 3 | -0.09% GAIN | -1.44% GAIN | -0.06% GAIN |
 | phase 3, district 1 | -0.25% GAIN | -2.47% GAIN | -0.04% GAIN |
 | phase 3, district 2 | -0.37% GAIN | -0.38% GAIN | -0.03% GAIN |
@@ -16851,7 +17048,7 @@ results.
 
 On the kind rig the governor's role cannot read the namespace's quota. As written since omni-v7, an unreadable quota is "no
 budget known", and the cluster's admission is the authority. In the omni-v11 capacity test admission refused each raise; the
-refusal was read back and audited, so nothing wrong was ever set, and the table read EVEN. But the governor asked again at every
+refusal was read back and audited, so nothing wrong was ever set, and the table read STEADY. But the governor asked again at every
 fast check: a controller that repeats a refused command every few seconds loads the API server and fills its own audit. In
 omni-v12 the refusal is the authority's answer. The same raise is held until something changes: the pod's limit (another writer
 moved it), a smaller raise (the budget moved), or the wait (5 minutes, then 10, 20, 40, 60, never longer). An accepted raise
@@ -16986,7 +17183,7 @@ Against omni-v12, on the same seeds, **no reading is a LOSS in any model**:
 
 Against native in `convey_batch`, omni-v12 read LOSS on six gauges: the queue +1.50%, the job turnaround +10.7%, the 95th
 percentile +14.8%, the requests served −2.5%, the pod start wait +1.9% and the alert minutes +9.8%. omni-v13 reads the queue
-identical to native's, the 95th percentile (−5.3%) and the start wait EVEN, and three LOSS rows. The job turnaround +0.05%
+identical to native's, the 95th percentile (−5.3%) and the start wait STEADY, and three LOSS rows. The job turnaround +0.05%
 (0.04 to 0.17 s a job): the queue's first reading spans the seconds before the batch pods ran, so the web's limits are raised
 once and handed back 15 s later; the rule that closes it is on the next version's list. The requests served −2.1% and the
 alert minutes +9.8%: both engines read the same way with no batch at all on this 3-core host, while the real KubeRay runs
@@ -17207,11 +17404,11 @@ batch queue and turnaround; requests served, the 95th and 99th percentiles, ener
 moves, reversals and travel on both card models (the card governor applied the same gate outside the brain, so the brain's gate
 inside changes nothing there: 17 writes, 16 moves and 15 reversals a run on the card whose voltage falls with its clock, 35, 34
 and 33 on the card near its floor, the same in both engines); and the verdict allows the same share of give-back steps at every
-cost. The request's own wear is the one place the two engines differ, and it reads EVEN: on the model cluster, where the response
+cost. The request's own wear is the one place the two engines differ, and it reads STEADY: on the model cluster, where the response
 line is breached in about 27 of a day's 1,440 minutes and the calm stretches between are long, the request moved 67.3 times a day
-against 64.9 (+3.7%, EVEN), turned back 66.1 times against 63.8 (+3.7%, EVEN) and travelled 20.4 against 19.6 (+3.9%, EVEN) at a
-decision every 60 s; at a decision every 15 s 98.8 moves against 100.1 (−1.4%, EVEN), 96.1 reversals against 97.5 (−1.4%, EVEN),
-29.3 travel against 29.7 (−1.4%, EVEN); with the blink, +3.0%, +2.9% and +3.0%, EVEN. The small rise at 60 s is the gate doing
+against 64.9 (+3.7%, STEADY), turned back 66.1 times against 63.8 (+3.7%, STEADY) and travelled 20.4 against 19.6 (+3.9%, STEADY) at a
+decision every 60 s; at a decision every 15 s 98.8 moves against 100.1 (−1.4%, STEADY), 96.1 reversals against 97.5 (−1.4%, STEADY),
+29.3 travel against 29.7 (−1.4%, STEADY); with the blink, +3.0%, +2.9% and +3.0%, STEADY. The small rise at 60 s is the gate doing
 what the governor declares: omni-v14 kept trimming while the line was breached by less than the queue guard's 5% (a pressure
 between 0 and 0.05), and omni-v15 releases there too, so in a regime of rare, light breaches it releases a little more often. The
 fault was found in the opposite regime, the long run's clustered breaches (126 switches in 350 decisions), where the same gate
@@ -17317,10 +17514,10 @@ nowhere else: the conveyance comes every 15 s exactly (omni-v15: about 3.7 passe
 schedule (omni-v15's decisions drifted by the steps' own time). The model gate's other columns, each engine against native,
 read as they read for omni-v15 (the same rows, the same numbers at 60 s), because nothing but the clocks moved.
 
-At 15 s, where omni-v15's rules counted in decisions ran four times as fast, every gauge reads EVEN against omni-v15, and the
+At 15 s, where omni-v15's rules counted in decisions ran four times as fast, every gauge reads STEADY against omni-v15, and the
 machines parked over the eight days fall from 4,212 to 1,782 (omni-v15 at 60 s: 1,464): the pace no longer changes what a
 rule means. As shipped (the model `cluster_shipped`: omni-v16 at its default of 15 s against omni-v15 at its 60 s, each started
-without a period, as an install file starts it), every gauge reads EVEN: machine hours +2.4%, energy per core-hour −0.5%, the
+without a period, as an install file starts it), every gauge reads STEADY: machine hours +2.4%, energy per core-hour −0.5%, the
 pods waiting for a place −28.5%, the 95th percentile −0.3%, the alert minutes −0.9%. No LOSS against the engine it replaces.
 
 The brain's lock (`results/LOCK_AMENDMENTS.json`) takes an amendment for `omnicompass/adapter.py`: the stack simulator steps
@@ -17330,20 +17527,20 @@ at 60 s, so the held-out seeds replay unchanged (`verify.py`).
 
 omni-v16 alone, eight seeds of a day each on a plant that moves every 5 s, at 60, 15, 10 and 5 s, each faster pace paired by
 seed against 60 s and against native. In the cloud's setting (the tune-down, machines alone), against 60 s, every service
-reading is EVEN at every pace (at 15 s: pending pod minutes −12.1%, the 95th percentile −0.0%, alert minutes +0.5%, machine
+reading is STEADY at every pace (at 15 s: pending pod minutes −12.1%, the 95th percentile −0.0%, alert minutes +0.5%, machine
 hours −0.4%) and energy per core-hour falls 2.6% at 15 s (GAIN); the power cap's request moves more (power given). In the
 kind benchmark's setting (the compass law at the max, every autoscaler sensed), against 60 s, the alert minutes fall 14.7% at
-15 s and 18.4% at 10 and 5 s (GAIN), the autoscaler's shortfall 6% at 10 and 5 s (GAIN), and every other reading is EVEN.
+15 s and 18.4% at 10 and 5 s (GAIN), the autoscaler's shortfall 6% at 10 and 5 s (GAIN), and every other reading is STEADY.
 Omni's own processor: 1.6 to 1.7 s an hour at 60 s, 2.7 at 15 s, 3.4 at 10 s, 5.5 at 5 s (under a thousandth of one core
 at 5 s); its reads: 1,650 an hour at 60 s, 2,190 at 15 s, 3,600 at 5 s. No LOSS against 60 s at any pace.
 
 Against native, the rows read as the engine reads them at every pace, the old 60 s default included, and some read LOSS.
 The pods waiting for a place: in the kind setting about four times native's at every pace (pending pod minutes an hour:
 native 8.2; 32.0 at 60 s, 33.5 at 15 s, 28.8 and 28.6 at 10 and 5 s), LOSS at every pace; in the cloud's setting about twice
-(20.9 at 60 s, 18.4 at 15 s), LOSS at 15 and 5 s and EVEN at 60 and 10 s only by the seeds' spread; on the model gate's 15 s
-plant, +121.6% at 15 s (LOSS) and +209.8% at 60 s (EVEN by the spread). In the cloud's setting at 15 s two small rows read LOSS
-as well: the 95th percentile, +0.47% on the 5 s plant and +0.36% on the gate's (at 60 s +0.49% and +0.63%, EVEN by the
-spread), and the alert minutes, +2.31% on the 5 s plant (at 60 s +1.85%, EVEN). Against 60 s every one of them reads EVEN,
+(20.9 at 60 s, 18.4 at 15 s), LOSS at 15 and 5 s and STEADY at 60 and 10 s only by the seeds' spread; on the model gate's 15 s
+plant, +121.6% at 15 s (LOSS) and +209.8% at 60 s (STEADY by the spread). In the cloud's setting at 15 s two small rows read LOSS
+as well: the 95th percentile, +0.47% on the 5 s plant and +0.36% on the gate's (at 60 s +0.49% and +0.63%, STEADY by the
+spread), and the alert minutes, +2.31% on the 5 s plant (at 60 s +1.85%, STEADY). Against 60 s every one of them reads STEADY,
 the 15 s point estimates the smaller, so they are the engine's and not the pace's: the faster pace narrows the seeds' spread
 until the rows clear zero. They are on the next version's list to be root-caused (`docs/CHANGE_CONTROL.md`), beside the
 blink model's alert minutes (+2.35% against native at 60 s, LOSS, the same in every gate since omni-v13).
@@ -17404,14 +17601,14 @@ In the cloud's setting (the compass law at the tune-down, the machines alone), e
 | Beat | Reads a day | Omni's own processor (s an hour) | Pods waiting (min an hour) | 95th percentile (ms) | Minutes over the line (a day) | Autoscaler short (min an hour) | Machine-hours (a day) | Energy per core-hour (kWh) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | native | | | 8.18 | 79.94 | 27.00 | 1.20 | 133.08 | 0.0357 |
-| every 5 s | 86,412 | 5.51 | 16.52 LOSS | 80.18 EVEN | 27.50 EVEN | 1.20 EVEN | 129.67 EVEN | 0.0344 GAIN |
-| every 10 s | 60,924 | 3.38 | 15.92 EVEN | 80.11 EVEN | 27.12 EVEN | 1.20 EVEN | 133.40 EVEN | 0.0346 GAIN |
-| every 15 s | 52,545 | 2.68 | 18.36 LOSS | 80.31 LOSS | 27.62 LOSS | 1.20 EVEN | 131.48 EVEN | 0.0341 GAIN |
-| every 30 s | 44,009 | 2.07 | 18.59 LOSS | 80.22 LOSS | 27.38 EVEN | 1.20 EVEN | 132.19 EVEN | 0.0347 GAIN |
-| **every 60 s (the main engine)** | 39,691 | 1.69 | 20.88 EVEN | 80.33 EVEN | 27.50 EVEN | 1.20 EVEN | 131.98 EVEN | 0.0350 EVEN |
-| every 75 s | 38,928 | 1.66 | 19.30 EVEN | 80.20 EVEN | 27.38 EVEN | 1.20 EVEN | 131.21 GAIN | 0.0350 GAIN |
-| every 90 s | 38,396 | 1.60 | 18.27 EVEN | 80.35 EVEN | 27.62 EVEN | 1.20 EVEN | 131.29 GAIN | 0.0350 GAIN |
-| every 120 s | 37,415 | 1.58 | 14.01 EVEN | 80.08 EVEN | 27.12 EVEN | 1.20 EVEN | 130.93 EVEN | 0.0352 EVEN |
+| every 5 s | 86,412 | 5.51 | 16.52 LOSS | 80.18 STEADY | 27.50 STEADY | 1.20 STEADY | 129.67 STEADY | 0.0344 GAIN |
+| every 10 s | 60,924 | 3.38 | 15.92 STEADY | 80.11 STEADY | 27.12 STEADY | 1.20 STEADY | 133.40 STEADY | 0.0346 GAIN |
+| every 15 s | 52,545 | 2.68 | 18.36 LOSS | 80.31 LOSS | 27.62 LOSS | 1.20 STEADY | 131.48 STEADY | 0.0341 GAIN |
+| every 30 s | 44,009 | 2.07 | 18.59 LOSS | 80.22 LOSS | 27.38 STEADY | 1.20 STEADY | 132.19 STEADY | 0.0347 GAIN |
+| **every 60 s (the main engine)** | 39,691 | 1.69 | 20.88 STEADY | 80.33 STEADY | 27.50 STEADY | 1.20 STEADY | 131.98 STEADY | 0.0350 STEADY |
+| every 75 s | 38,928 | 1.66 | 19.30 STEADY | 80.20 STEADY | 27.38 STEADY | 1.20 STEADY | 131.21 GAIN | 0.0350 GAIN |
+| every 90 s | 38,396 | 1.60 | 18.27 STEADY | 80.35 STEADY | 27.62 STEADY | 1.20 STEADY | 131.29 GAIN | 0.0350 GAIN |
+| every 120 s | 37,415 | 1.58 | 14.01 STEADY | 80.08 STEADY | 27.12 STEADY | 1.20 STEADY | 130.93 STEADY | 0.0352 STEADY |
 
 In the kind benchmark's setting (the compass law at the max, every autoscaler sensed):
 
@@ -17422,10 +17619,10 @@ In the kind benchmark's setting (the compass law at the max, every autoscaler se
 | every 10 s | 60,942 | 3.43 | 28.80 LOSS | 76.85 GAIN | 19.38 GAIN | 1.12 GAIN | 149.17 power given | 0.0384 power given |
 | every 15 s | 52,490 | 2.66 | 33.51 LOSS | 76.93 GAIN | 20.25 GAIN | 1.14 GAIN | 151.78 power given | 0.0389 power given |
 | every 30 s | 43,869 | 2.01 | 34.09 LOSS | 76.99 GAIN | 21.25 GAIN | 1.16 GAIN | 151.78 power given | 0.0389 power given |
-| **every 60 s (the main engine)** | 39,444 | 1.58 | 31.96 LOSS | 77.18 GAIN | 23.75 GAIN | 1.19 EVEN | 151.29 power given | 0.0388 power given |
-| every 75 s | 38,836 | 1.66 | 29.15 LOSS | 77.17 GAIN | 21.75 GAIN | 1.19 EVEN | 149.50 power given | 0.0384 power given |
-| every 90 s | 38,254 | 1.52 | 28.10 LOSS | 77.01 GAIN | 22.62 GAIN | 1.20 EVEN | 148.78 power given | 0.0383 power given |
-| every 120 s | 37,536 | 1.47 | 22.51 LOSS | 76.99 GAIN | 22.88 GAIN | 1.24 EVEN | 148.18 power given | 0.0382 power given |
+| **every 60 s (the main engine)** | 39,444 | 1.58 | 31.96 LOSS | 77.18 GAIN | 23.75 GAIN | 1.19 STEADY | 151.29 power given | 0.0388 power given |
+| every 75 s | 38,836 | 1.66 | 29.15 LOSS | 77.17 GAIN | 21.75 GAIN | 1.19 STEADY | 149.50 power given | 0.0384 power given |
+| every 90 s | 38,254 | 1.52 | 28.10 LOSS | 77.01 GAIN | 22.62 GAIN | 1.20 STEADY | 148.78 power given | 0.0383 power given |
+| every 120 s | 37,536 | 1.47 | 22.51 LOSS | 76.99 GAIN | 22.88 GAIN | 1.24 STEADY | 148.18 power given | 0.0382 power given |
 
 Each beat against the main engine's 60 s, and every gauge in full, is on the ladder's page.
 
@@ -17443,7 +17640,7 @@ them go: the rule no longer asked for work that waits "decision after decision",
 (`omni_controller/controller.py`): the cruise wait is never fewer than two readings, `max(2, round(120 / period))`, when it
 is derived from seconds; a count an operator sets by hand (`--cruise-after`) stands as set. At every beat up to 80 s the count
 is what it was (24 at 5 s, 8 at 15 s, 4 at 30 s, 2 at 60 and 75 s), so nothing below 80 s moves; at 90 and 120 s it is 2
-(`tests/test_pace_clocks.py`, which fails on the unfixed rule). Corrected, the kind benchmark's setting reads at 90 s, against 60 s, the machine-hours down 1.7%, EVEN, the minutes over the line down 4.7%, EVEN, the pods waiting down 12.1%, EVEN, the 95th percentile down 0.2%, EVEN; at 120 s the machine-hours down 2.1%, EVEN, the minutes over the line down 3.7%, EVEN, the pods waiting down 29.6%, GAIN; machines parked over the eight days 190 and 119 against 329 at 60 s. No other count of the
+(`tests/test_pace_clocks.py`, which fails on the unfixed rule). Corrected, the kind benchmark's setting reads at 90 s, against 60 s, the machine-hours down 1.7%, STEADY, the minutes over the line down 4.7%, STEADY, the pods waiting down 12.1%, STEADY, the 95th percentile down 0.2%, STEADY; at 120 s the machine-hours down 2.1%, STEADY, the minutes over the line down 3.7%, STEADY, the pods waiting down 29.6%, GAIN; machines parked over the eight days 190 and 119 against 329 at 60 s. No other count of the
 governor's falls to a single reading between 5 and 120 s: the breach's clear time (180 s) is 2 decisions at 120 s, the strict
 window (300 s) 2, the trial's phase (1,200 s) 10; the brain's dwell is one step by design and its waits round to the nearest
 step. In the cloud's setting (the machines alone, at the tune-down) every service, machine-hour and energy reading at 90 and
@@ -17457,8 +17654,8 @@ Set at 60 s, the main engine gives up what 15 s bought in the models, and it is 
 setting: in the kind benchmark's setting the minutes over the line are 23.75 a day at 60 s against 20.25 at 15 s (+17.3%: read
 the other way, 15 s against 60 s, −14.7%, GAIN, so 60 s against 15 s is a LOSS by the key), still 12.0% fewer than native's
 27.0 (GAIN against native); in the cloud's setting the energy per core-hour is 2.6% more at 60 s than at 15 s (power given).
-Every other row reads EVEN between the two. The model gate's own models read the change as shipped (`cluster_shipped`, each
-checkout started without a period, as an install file starts it: omni-v17 at its 60 s against omni-v16 at its 15 s): every gauge reads EVEN: the machine-hours −2.3%, the energy per core-hour +0.5%, pods waiting for a place +39.8%, the autoscaler's shortfall +0.2%, the 95th percentile +0.3%, the minutes over the line +0.9%; no LOSS against omni-v16.
+Every other row reads STEADY between the two. The model gate's own models read the change as shipped (`cluster_shipped`, each
+checkout started without a period, as an install file starts it: omni-v17 at its 60 s against omni-v16 at its 15 s): every gauge reads STEADY: the machine-hours −2.3%, the energy per core-hour +0.5%, pods waiting for a place +39.8%, the autoscaler's shortfall +0.2%, the 95th percentile +0.3%, the minutes over the line +0.9%; no LOSS against omni-v16.
 
 #### 88.13.5 The rows against native that read LOSS (the engine's, at every beat)
 
@@ -17510,7 +17707,7 @@ manuals. The levers rig gives each phase the 3, 2 and 3 minutes its checks were 
 omni-v17 changes no gain, preset or muscle, and one rule only at beats slower than 80 s: at any beat up to 80 s set on the
 command line it makes omni-v16's decisions at that beat (the cruise wait's count is unchanged there), and at 60 s those are
 omni-v15's (4,578 audit records on the model cluster, none different, `results/model_gate/V16_VS_V15.md`). The model gate against
-omni-v16 (every model that sets its own period reads identical to omni-v16 on every gauge and every seed (9 models and the verdict); as shipped, omni-v17 at its 60 s against omni-v16 at its 15 s, every gauge reads EVEN; no LOSS against omni-v16.). The brain's C++ twin takes the period on every call and is unchanged (`results/SEAL.json`); the brain's
+omni-v16 (every model that sets its own period reads identical to omni-v16 on every gauge and every seed (9 models and the verdict); as shipped, omni-v17 at its 60 s against omni-v16 at its 15 s, every gauge reads STEADY; no LOSS against omni-v16.). The brain's C++ twin takes the period on every call and is unchanged (`results/SEAL.json`); the brain's
 lock takes no amendment.
 
 #### 88.13.9 The real runs
@@ -17590,12 +17787,12 @@ Our own showing on one host, class L, one run of each arm (`docs/OMNI_ORCHESTRAT
   direct against native, work GAIN, up 9.1%; Omni direct against Omni on native, the 95th percentile GAIN, down 13.2%, and units
   GAIN, a cut, down 9.5%. No LOSS in any pair; nothing failed or wrong in any arm, the batch job or the drills.
 - **Omni direct against native, full form** (18 steps of 25 s): work GAIN, up 4.7%; the 95th percentile GAIN, down 9.9%; units
-  GAIN, a cut, down 10.3%; machines EVEN, down 1.7%; 0 failed and 0 wrong in 20,452 requests.
+  GAIN, a cut, down 10.3%; machines STEADY, down 1.7%; 0 failed and 0 wrong in 20,452 requests.
 
 The model gate against omni-v17 (`results/model_gate/V18_VS_V17.md`): every model reads omni-v17's numbers, because none of omni-v17's
 55 files moved; the gate's models do not run the orchestrator, whose own gate is the showing above.
 
-And after it landed, the three runs on GitHub's machines (the full form, A, B and C from one commit) read Omni on native against native work GAIN in all three (up 5.2% to 7.4%) and the 95th percentile GAIN in all three (down 7.5% to 12.1%), Omni direct against native work GAIN in all three (up 5.7% to 9.4%) and the 95th percentile GAIN in all three (down 9.8% to 15.7%), machines EVEN, the units power given or EVEN, and Omni direct against Omni on native EVEN on every gauge; no LOSS in any pair in any run (`results/orchestrator/V18_THREE_ARMS_ABC.md`).
+And after it landed, the three runs on GitHub's machines (the full form, A, B and C from one commit) read Omni on native against native work GAIN in all three (up 5.2% to 7.4%) and the 95th percentile GAIN in all three (down 7.5% to 12.1%), Omni direct against native work GAIN in all three (up 5.7% to 9.4%) and the 95th percentile GAIN in all three (down 9.8% to 15.7%), machines STEADY, the units power given or STEADY, and Omni direct against Omni on native STEADY on every gauge; no LOSS in any pair in any run (`results/orchestrator/V18_THREE_ARMS_ABC.md`).
 
 #### 88.14.4 What runs on it
 
@@ -17613,6 +17810,348 @@ dry run (the default) shows the price and rents nothing. The GPU runs on Lambda 
 The three-run reading is the full form on GitHub's machines from one commit, on one host each; no cloud machine has run it yet. The comparison of Omni direct against Kubernetes itself on the kind rig is the next
 step. The trade between muscles judged on the organism stays the next version's work, through the model gate. Run and scored by
 The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 88.15 Omni v19: Omni-Compass by itself, a pod muscle of its own
+
+
+
+Omni v19 (`OMNI_V19.json`, digest `36ee67284c035235`, 62 files) lands on 24 October, 16:54 UTC, under the founder's order of
+23 October that every organism is shown three ways: native; Omni-Compass and native; and Omni-Compass by itself, "running direct
+muscles" with native's own controller of that muscle switched off ("there's native, there's Omni and native, and then there's Omni
+asked. It is omni-v18 (`docs/OMNI_V18.md`: Omni direct in the fingerprint) with one muscle added to the Kubernetes governor, in
+`omni_controller/controller.py`, and the models' arm that runs it, in `realms/harness.py` and `realms/plants.py`; 59 of its 62
+files are omni-v18's bytes. Nothing moves unless the operator names a workload to the muscle: with no workload named the engine is
+omni-v18, decision for decision (the model gate below). Preregistered before any run (`docs/SOLO_PREREGISTRATION.md`). Read in the model
+gate against omni-v18 on the same seeds (`results/model_gate/V19_VS_V18.md`), by itself against omni-v18 by itself arm by arm
+(`results/model_gate/SOLO_V19_VS_V18.md`) and by itself beside native and beside Omni-Compass and native
+(`results/model_gate/SOLO_V19.md`) before it was committed. The readings are our own models (evidence class S), never a benchmark
+result. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
+#### 88.15.1 Why it is omni-v19: one name, two engines
+
+This change was first built on the live engine's branch and landed there on 24 October, 01:30 UTC, under the name omni-v18
+(digest `22486290b19349eb`, 55 files, on top of omni-v17), while main's omni-v18 (Omni direct in the fingerprint, digest
+`1cb92edb64c4391d`, 62 files) had stood on main since 23 October, night. One version number names one engine, and no result is
+read across engines, so the two are kept apart: the branch's omni-v18 never stood on main, and nothing it recorded is read as main's
+omni-v18. Its change, the three files above and nothing else in the engine, is taken onto main's omni-v18 here, gated again against
+main's omni-v18 on the same seeds, and lands as omni-v19. Every rule is the branch's; the code's own comments, which named the
+branch's numbers (omni-v17, omni-v18), now name omni-v19, so the three files differ from the branch's bytes in those comments only.
+Main's omni-v18 files and records stay as they were.
+
+#### 88.15.2 The pod muscle of its own
+
+On every engine before it, the Kubernetes governor moved a workload's pods only through the pod autoscaler's own object (its range
+and its target): with the pod autoscaler switched off it had no pod muscle, so "by itself" held every workload at the operator's
+count. omni-v19 gives it one (`--own-replicas namespace/name,...`, or `OMNI_OWN_REPLICAS`; `_own_pods`). For each workload the
+operator names and no autoscaler governs, the governor sets the replica count itself, through the workload's own scale, by strict
+C's rule: replicas = ⌈current × measured busy share / target⌉, up at once, down only to the highest recommendation of the last 300 s,
+inside a tolerance of a tenth. The target is the one the compass moves for an autoscaler: the operator's own (the workload's
+`omnicompass.io/target-utilization` annotation, else `--own-target`), down to 60% of it, the most pods the cover allows past the
+wall. Never below the operator's own count at the max, never above the range's top (`omnicompass.io/replica-range`), never below
+one pod; the count it shipped is recorded once on the workload and handed back by the reset. A workload an autoscaler governs keeps
+its autoscaler: the muscle writes nothing there. `--native replicas` leaves it native and writes nothing; a security hold allows no
+expansion. The muscle keeps the pace of the controller it stands in for: a reconciliation every 15 s on the fast checks
+(`--own-every-s`, the pod autoscaler's sync), at the target the last decision set; the compass moves the target only in a decision,
+at any beat of the dial.
+
+In the models (`realms/harness.py`, `SOLO`; `realms/plants.py`, `native_off`), the arm by itself is the max with every pool whose
+own count is the muscle's knob run with its autoscaler switched off, and its twin (the brain's sense of native) too. A power cap,
+an admission limit and every other plant's knob are a setting native already holds still, or run through native's own loop as its
+actuator: there by itself is the same arm as Omni-Compass and native.
+
+#### 88.15.3 The fault found before it landed
+
+On the branch, rebuilt on omni-v17, whose main engine decides every 60 s (as main's omni-v18 does), the first candidate moved its
+pods only at a decision, once a minute. By itself in the model it then read the minutes over the response line LOSS against native
+(34.8 minutes a day against native's 26.4), the 95th percentile still a GAIN. The pod autoscaler it stands in for syncs every 15 s. The muscle now
+reconciles every 15 s between decisions; its window of fewer pods counts those reconciliations (the strict window's 300 s at any
+beat). Two unit tests hold it (`tests/test_own_replicas.py`, 11 in all).
+
+#### 88.15.4 The model gate against omni-v18 (`results/model_gate/V19_VS_V18.md`)
+
+Every model, 8 seeds of a day: the cluster in the cloud's setting at 60 and 15 s, the blink, the shipped default, the four conveyance
+models, the card and the card near its voltage floor, and the verdict. Every gauge of every model reads **identical** to omni-v18, seed
+for seed (95 rows, and the verdict's every share; only the governor's own measured processor time, a clock reading, differs from run
+to run), because no model names a workload to the muscle. Every table is the one the branch's own gate against omni-v17 printed when
+it landed there, number for number and word for word, as it must be: main's omni-v18 added only Omni direct to omni-v17, and no model
+runs Omni direct. No LOSS against the engine that stands.
+
+In the models, the native arm and the max read byte-identical on both engines (the preregistration's step 3): 806 readings on the
+development seeds 7101 and 7102, 67 muscles each under its own load, the climb and the line, and one body of 60 muscles, every
+reading's hash the same on omni-v18 and omni-v19. The switch acts only in the arm by itself.
+
+#### 88.15.5 The rows against native that read LOSS (the engine's, as on omni-v18)
+
+The same models read against native carry the rows omni-v18 and omni-v17 carry, unchanged, each on the next version's list with its
+cause: at a decision every 15 s in the cloud's setting the pods waiting for a place LOSS (up 121.6%) and the 95th percentile LOSS
+(up 0.36%); the alert minutes with the machines blinking out of the reading LOSS (up 2.35%); in the conveyance model the pod start wait
+LOSS (up 8.99%) and its 95th percentile LOSS (up 10.0%), beside the requests served GAIN (up 64.2%) and the 95th percentile GAIN
+(down 53.1%); in the batch model the requests served LOSS (down 2.11%), the alert minutes LOSS (up 9.82%) and the job turnaround LOSS
+(up 0.05%); the card's 95th percentile LOSS (up 2.38%; near its voltage floor up 5.78%), beside its energy GAIN (down 4.72%; down
+1.30%). Every row is shown.
+
+#### 88.15.6 By itself, in our own model (`results/model_gate/SOLO_V19.md`, 8 seeds of a day, class S)
+
+On the machines as the kind rig has them (every worker made at the start, no Cluster Autoscaler: 12 machines in every arm):
+
+| Gauge | native | Omni-Compass and native | Omni-Compass by itself |
+|---|---:|---:|---:|
+| machine-hours | 288.0 | 288.0 | 288.0 |
+| pods waiting for a place (pod-minutes an hour) | 0.0 | 0.0 | 0.0 |
+| 95th percentile response (ms) | 80.0 | 76.8 | 64.4 |
+| minutes over the response line (a day) | 26.4 | 22.0 | 9.2 |
+
+By the one key, Omni-Compass by itself against native: the 95th percentile **GAIN** (down 19.4%: faster; its 95% interval down 12.2% to 26.6%), the minutes
+over the line **GAIN** (down 64.9%: fewer; down 32.4% to 97.5%), machine-hours, energy per core-hour and pods waiting STEADY (the same
+machines). Against Omni-Compass and native: the 95th percentile **GAIN** (down 16.0%), the minutes over the line **GAIN** (down
+58.0%), the rest STEADY. Omni-Compass and native against native: the 95th percentile **GAIN** (down 4.0%), the minutes over the
+line **GAIN** (down 16.6%). Its own cost: the governor reads each workload it scales twice at each reconciliation (6,417 reads an
+hour in the model, twelve workloads, against 660 on top of native), the reads power given.
+
+Against omni-v18 by itself, arm by arm (`results/model_gate/SOLO_V19_VS_V18.md`): native and Omni-Compass and native read identical on
+both engines, gauge for gauge; by itself, omni-v18 has no pod muscle and holds every workload at the operator's count (its 95th
+percentile 313,407 ms and 1,412 minutes over the line in the day: the model's queue running away), where omni-v19 reads 64.4 ms and
+9.2 minutes: the 95th percentile **GAIN** (down 100.0%), the minutes over the line **GAIN** (down 99.3%), the energy per used
+core-hour **GAIN** (down 4.2%), machine-hours and pods waiting identical. No LOSS in any arm.
+
+#### 88.15.7 Where it runs
+
+On Kubernetes, the kind rig's `ARM=solo` (`scripts/kind_bench.sh`): the pod autoscaler removed after the deploy, the operator's
+target and range written on the workload, the workload at its range's floor, Omni-Compass the only controller of its pods;
+Kubernetes' own scheduler and kubelet stay; the kill switch's check reads the workload back at the count it started at and no
+record of Omni-Compass's left on it. The capture counts the workload's own replicas where no autoscaler stands
+(`fleet/capture/kube_capture.sh`). The three-run tables read it against native (`solo`) and against Omni-Compass and native
+(`solo|compass`) (`tools/confirm_abc.py`, `tools/live_reps.py`). Its runs: `kubernetes by itself` in `scripts/reruns.txt`, the
+steady load with the three arms in rotation (native, Omni-Compass and native, Omni-Compass by itself), A, B and C on GitHub's own
+machines, written before the omni-v19 campaign opened. In our models, the organisms runner's third arm (`tools/run_realms_v5.py`):
+every pool whose own autoscaler can be switched off, read against native and against Omni-Compass and native. Where native is a
+setting, or its own loop is the actuator, the two Omni-Compass arms are one. No cloud runs by itself without the founder's word
+(the order of 14 October: nothing in a cloud adds a machine).
+
+#### 88.15.8 Beside it: Omni direct
+
+Main's omni-v18 took Omni direct into the engine: Omni-Compass's own orchestrator (`omni_orchestrator/`, `docs/OMNI_ORCHESTRATOR.md`)
+runs the organism with no Kubernetes at all, with its own walls, hand, front, room rule, brain and control plane, its seven rule
+files fingerprinted with every other wire. omni-v19 carries those seven files byte for byte. The two answer the same order from
+two sides: Omni direct replaces Kubernetes on the muscles (its arms native, Omni on native and Omni direct, `tools/orchestrator_show.py`);
+Omni-Compass by itself stays on Kubernetes, which still places and runs the pods, and switches off only the controller of the knob
+(on the kind rig the pod autoscaler), the governor its only controller.
+
+#### 88.15.9 The real runs
+
+Every benchmark runs again on omni-v19 (`scripts/reruns.txt`; the conductor's campaign from 16:54:55 UTC on 24 October, the moment
+it stands), and `ARM=solo` joins the kind sets beside native and Omni-Compass and native, three runs, read by the one key.
+
+#### 88.15.10 What it does not claim
+
+No real run of the arm by itself has been made yet: every reading on this page is our own model (class S). The trade between
+muscles judged on the organism stays the next version's work, through the model gate. Run and scored by The Omni-Compass LLC's own
+code. No outside party has reviewed or approved these results.
+### 88.16 Omni v20: the data stores' wires fixed at their causes
+
+
+
+Omni v20 stood on main on 25 October until omni-v21 landed that evening (`docs/OMNI_V21.md`).
+
+Omni v20 (`OMNI_V20.json`, digest `1df07f8e36a97985`, 62 files) lands on 25 October, 13:24 UTC, under the founder's words of
+25 October ("Fix, fix, fix ... The SYS bench, Kafka, whatever ... has got a problem, you got to fucking fix it ... it can be
+fixed") and the standing order that every fault found is fixed and lands as the next version, told, not asked. It is omni-v19
+(`docs/OMNI_V19.md`) with five of its wires changed: the data stores' runners `tools/run_sysbench.py`, `tools/run_kafka.py`,
+`tools/run_ycsb.py`, `tools/run_redis.py` and `tools/run_pgbench.py`. 57 of its 62 files are omni-v19's bytes. The faults were
+found by tracing why the Omni index read +4.32% before the 0.5% key of 24 October and +3.397% after it
+(`docs/STORE_LOSS_ROOT_CAUSES_2026-10-25.md`): seven data-store rows, each with 0 or 1 of its three runs clear of the noise, that
+the new key now counts. Three were faults in our own wiring, two were the test machine. The fixes were read in the store gate
+(`tools/store_gate.py`, `results/model_gate/STORE_GATE.md`) before they were committed. The gate's readings are our own model
+(evidence class S), never a benchmark result. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
+or approved these results.
+
+#### 88.16.1 What changed
+
+- **sysbench: the brain reads its own workload.** `status()` counted only `statement/sql/{select,update,insert,delete}`.
+  sysbench sends prepared statements, which those counters never see, so the brain read 4.1 statements a second (the harness's
+  own monitoring queries) while sysbench sent 999 to 4,198. The compass force and the verdict's work sample were the brain's own
+  queries, and it resized the buffer pool blind, 10 to 23 times an arm. Now sysbench connects as its own account (`omni_load`,
+  created by `--setup` with rights on `sbtest` only), and the brain reads that account's statements from the per-user summary
+  table, prepared ones included (`statement/com/Execute`, `statement/sql/execute`, `execute_sql`, and the four plain ones).
+  Every sysbench row, the GAIN rows included, stood on the blind reading and runs again on omni-v20.
+- **Kafka: an extra consumer is handed back.** Above the operator's count, the hand-back needed a consumer whose 200 ms poll
+  came back empty, which never happens with 8 round-robin partitions: a third consumer allowed after a load peak stayed 170 of 451
+  seconds and bought nothing. Now, above the operator's count, calm gives one consumer back while the backlog is within one poll
+  round (50 messages a consumer), 30 s after the last change, because every change pauses the whole group. "Idle" is a full
+  second with nothing consumed, and a consumer starts busy; no trial starts on the seconds before the producer begins (the
+  2→1→2 double rebalance at the start of every arm is gone).
+- **YCSB: the cache grows back below native.** Below the operator's size, nothing grew the cache on misses; a give-back trial
+  allowed before the working set widened left two arms 64 MB short with misses at 1% or more for 435 of 457 seconds. Now, below
+  native, the cache takes 64 MB a second back while misses are 1% or more, up to native's size, and an open give-back trial is
+  abandoned. "Full" is WiredTiger's own 80%, or evicting in the last second (it was 90%, a level WiredTiger never holds).
+  `serverStatus` is read in full once, then only for the sections the brain reads. mongod's CPU and the harness's are recorded
+  apart, steal apart, beside the host's.
+- **Redis: the CPU apart.** redis-server's, the App's, the brain's and the sampler's CPU are recorded apart, steal apart, beside
+  the host's. The knob's rule is unchanged.
+- **pgbench: the same state every arm.** Each arm starts from `pgbench -i` and a CHECKPOINT; the give-back waits 30 s after an
+  add-back (5 s before); one aggregate line a second is kept from the per-transaction log. The workflow logs vmstat, iostat and
+  PostgreSQL's checkpoints, lock waits and autovacuum into the run's files, so the runner's write stalls (6.2 s of schedule lag
+  in a native arm far under capacity on the omni-v16 runs) can be told from the engine.
+- **The readers.** `tools/omni_index.py`, `tools/ycsb_abc.py` and `tools/redis_abc.py` prefer the stack's own CPU where a run
+  recorded it; older tables read as before (the index stays +3.397% on them).
+
+#### 88.16.2 The gate
+
+The store gate replays every archived omni arm of the omni-v16 three-run tables, second by second, through omni-v19's wires and
+omni-v20's, each with its own verdict fed the recorded cost samples and its own knob, and reads the pair by the gauge's aim. It
+is open-loop: it shows what each wire decides on the same seconds, not how the store would have answered.
+
+| Wire | Arms | What omni-v20 does against omni-v19 |
+|---|---:|---|
+| Kafka | 27 | rebalances in the first 15 s 2.0 → 0, GAIN +100%; writes GAIN +92.9%; seconds below native while short GAIN +100%; seconds above native while calm (light) 37.6 → 6.3, GAIN +83.1% inside the arms' noise; consumers held +0.6%, inside the noise |
+| YCSB | 36 | seconds below native while short 38.9 → 2.2, GAIN +94.4%; cache held power given +5.2%; writes power given +76.6% |
+| pgbench | 26 | writes GAIN +21.0%; seconds below native while clients waited GAIN +12.7%; pool size =0.4%, under the floor |
+| Redis | 9,728 seconds | the two wires decide differently 0 times; the new CPU figures exist only in new runs |
+| sysbench | | the decisions cannot be replayed: the archived files hold only the old reading's counter (4.1 to 4.2 a second against sysbench's 999 to 4,198); a short real run reads the new one |
+
+No LOSS on any wire. The YCSB cache rise is a real change of behaviour: the new "full" opens the grow path on seconds that were
+slow, missing and evicting, which omni-v19 refused as "slow with room to spare". It is power given, and the replay cannot show
+what the extra memory buys; the real runs on omni-v20 read it. One pgbench arm (select, run C rep 3) is left out of the gate
+because omni-v19's own replay matched only 32% of its record there; every other arm reproduces its record in 97% or more of the
+seconds.
+
+#### 88.16.3 What runs again
+
+Every benchmark runs again on omni-v20 (`scripts/reruns.txt`, the conductor's campaign from 13:24 UTC on 25 October), the data
+stores first in meaning: sysbench, Kafka, YCSB, Redis and pgbench. A fourth pgbench repetition, balancing the arm order against
+the runner's drift, is written as a proposed amendment in `docs/POSTGRES_PREREGISTRATION.md`, not yet in force. Tests:
+`tests/test_store_wires.py` (each check fails on omni-v19's runners and passes on omni-v20's) and `tests/test_store_gate.py`.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 88.17 Omni v21: the immune system knows itself, knob by knob
+
+
+
+Omni v21 (`OMNI_V21.json`, digest `b658f05d43c1e602`, 63 files) stood on main from the evening of 25 October to 30 October, when
+omni-v22 (`docs/OMNI_V22.md`, the data stores' wires at the max) landed on it; its tables stand as its own record. It is omni-v20 with
+the immune system's self-knowledge, the founder's order of 25 October:
+
+> "OmniCompass's mechanism must know when something is redlining out of its band when OmniCompass is on it. And if OmniCompass
+> couldn't fix it to stop it redlining, then OmniCompass's own mechanism must know that if native is better, then it switches
+> itself to native. If native is not better, well, then it'll stay wherever and redline there, because redlining less with
+> OmniCompass than something else is still a benefit ... against native ... This code and mechanism need to be built within the
+> C++ harness, within the immune system ... The immune system has to be activated in nervous system to propagate."
+
+#### 88.17.1 The rule, in plain words
+
+| Term | What it is |
+|---|---|
+| **Redlining** | A knob Omni-Compass holds whose gauge is over its own line (the reading divided by the line is over 1) for three decisions in a row. |
+| **Stuck** | Redlining, and Omni-Compass's own pushing has not brought it back: the knob is at its own limit, or the reading has not fallen by 5% of where the redline began. |
+| **Native is stronger** | Native's twin, the same moment under native's own setting, reads lower than Omni-Compass by more than 5%. |
+| **Hand back** | Stuck and native stronger: the knob goes to native and stays there 10 decisions, the hold doubling for each hand-back in a row (up to 160) and halving after a quiet hold. |
+| **Stay** | Stuck and native not stronger: Omni-Compass keeps the knob and says so in its audit. It redlines less than native would, which is still a benefit against native. |
+| **Return** | After the hold, Omni-Compass takes the knob back only when its own twin reads lower than native's by the same margin and nothing redlines with it. |
+| **The nervous system carries it** | An organ every governed knob of which is handed to native has none of Omni-Compass's authority (`native_hold`) until it is returned. |
+
+#### 88.17.2 Where it is written
+
+| Place | What |
+|---|---|
+| `omnicompass/immune.py` | the rule, one knob at a time |
+| `cpp/src/immune.cpp`, `cpp/include/omnicompass/immune.hpp` | its C++ twin, line for line, proven alike to the last bit on 200 seeded scripts (`tests/test_cpp_immune_parity.py`, sealed by `tools/seal.py`) |
+| `omnicompass/nervous_system.py`, `cpp/src/nervous_system.cpp` | `native_hold`: the hand-back carried to the organ's authority, in both twins |
+| `omni_controller/controller.py` | each service's autoscaler target: the response time over its line is the redline; native's twin is the same demand under the operator's target, the replicas native's own rule would ask and the M/M/1 wait they would give |
+
+omni-v19's immune rules come with it onto omni-v20: the hand-back on a pod that waits, the immune memory, native's line, immune
+maturity and the step back (`tests/test_immune_system.py`).
+
+#### 88.17.3 What the model gate read
+
+The model gate against omni-v20 (`results/model_gate/V21_VS_V20.md`, eight seeds, every model, our own models,
+evidence class S): no LOSS against omni-v20 in any model.
+
+| Model | Against omni-v20 |
+|---|---|
+| the cluster (the cloud's setting), at 60 s, at 15 s, with blinks, as shipped | pods waiting for a place down 12.9% to 13.3%, fewer waiting, GAIN; machine-hours up 0.9% to 1.3% and energy per core-hour up 0.8% to 1.0%, power given; the power cap's moves, reversals and travel down 1.3% to 1.4%, GAIN |
+| the conveyance, its quota cases, the batch beside the service | every gauge the same as omni-v20, STEADY |
+| the card, the card near its floor | every gauge the same as omni-v20, STEADY |
+| the verdict | the same as omni-v20, STEADY |
+
+Against native the gate reads the LOSS rows omni-v18, omni-v19 and omni-v20 carry, none caused by this version and each on the
+next version's list: the pod start wait in the conveyance models (up 9.0% and 10.0%), the batch beside the service (requests
+served down 2.1%, alert minutes up 9.8%), and the card's 95th and 99th percentiles (up 0.9% to 5.8%).
+
+Every benchmark runs again on omni-v21 from the moment it reaches main; nothing is read across engines.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 88.18 Omni v22: the data stores' wires at the max, through each store's own account of a miss
+
+
+
+Omni v22 (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files) stood on main from 30 October to 31 October, evening, when
+omni-v23 (`docs/OMNI_V23.md`) landed on it; its runs stand as its own record. It is omni-v21 with the five data stores' wires brought
+to the max, the founder's order of 30 October:
+
+> "Anything that has a problem is what your job is ... find out why they went one way or the other and tweak it and turn it and tune
+> it to the best possible way for an Omni Compass engine to interact with this as a system governor, convergence control core plane
+> that it is ... bring to a solid A mechanism."
+
+The store wires were written on 9 and 10 October with the brain's verdict judging every move under the resource objective, before the
+founder's order of 12 October that the max is the default brain, and were never brought to it. On omni-v21 they carried 33 of the 50
+LOSS rows (`docs/LOSS_LEDGER.md`); their causes, read from the runs' own files, are on `docs/STORE_ROOT_CAUSES_2026-10-30.md`: the
+wall abandoned every spend trial and the fail-up was clamped to the allowance those trials never earned, so in 4,426 of the 4,581
+seconds Redis stood over its line the brain asked for memory and was refused, and Kafka's hand-back gave back a consumer the load
+still needed.
+
+#### 88.18.1 The rule, in plain words
+
+| Term | What it is |
+|---|---|
+| **The max on a store's knob** | The wire's own rule asks; what it asks goes through unclamped, up to the operator's cover, never below native. The resource it takes (memory, consumers, servers) is power given, shown beside what it bought. |
+| **The store's own account of a miss** | MySQL: the performance schema's timer on the data files' reads against the workload's statement timer. MongoDB: WiredTiger's time reading pages from disk for the application's threads against the server's own read latency. Redis: the application's own split of each request into hits and misses. Over the last 10 s, the misses' share of the service's own time. |
+| **The gate** | Memory is spent only where that share is at least the one key's floor, a half of one percent (`tools/readings.py`): under it the misses are nothing the record could read, so memory could buy nothing it could read, and the knob holds and says why. Where the account is not read this second, nothing is known and nothing is taken. |
+| **The host's room** | A notch is taken only while the host keeps 5% of its memory available after it (`/proc/meminfo`, the compass's cushion). Unread, nothing is taken. |
+| **The working set's floor** | A hand-back never goes below the most memory the store held in the last 60 s (with the fullness margin, rounded up to a notch), nor below native: a knob handed back into its working set evicts what the service still asks for and buys it back at the store's price. |
+| **Kafka's twin and reflex** | Each partition's arrivals (the topic's log-end offsets, once a second) placed on the members by the range assignor; a member's rate learned from the seconds the queue grew; the count goes at once to the smallest one that carries the arrivals and the backlog at nine tenths of a member's rate, never clamped; handed back in one move only to a count that carries the last minute's peak at seven tenths, 30 s after the last change; never below the operator's count; the immune hand-back to native when Omni-Compass's count redlines, stuck, and native's twin reads lower. |
+| **PostgreSQL's pool** | A server added while clients wait is never clamped; the pool is never taken below the pooler's own setting. |
+| **The dial** | `OMNI_DIAL=save` keeps omni-v21's loop on every wire (the tune-down, where giving the resource back is the aim); every record carries its dial. |
+| **The fingerprint** | `tools/store_brain.py` (what the three cache wires share) and `tools/knob_verdict.py` (the tune-down's verdict) join it: no rule of the store wires changes without the version changing. |
+| **The hand-back lands** (the Kubernetes governor, the same version) | Every step of the governor's hand-back (the autoscalers' ranges and targets, the operator's own counts, every muscle's lever, the node pool) is tried 5 times against a transient failure of the cluster's API, 1 s apart doubling to 4 s, each on its own, and what did not land is raised and audited, never left silent. On 30 October (six-kube run 41044680505, repetition 346) one 500 from the API on the autoscaler list, at the reset, ended the whole hand-back on its first read: the conveyed CPU limits (1230m, 1850m) and the replica range (1 to 13) stayed behind and the arm was marked invalid. `omni_controller/controller.py` `_persist`, `omni_controller/muscles.py` `_guard_restore`, `RESTORE_TRIES`; `tests/test_restore_retry.py`. |
+
+What was tried and withdrawn: a slope of latency on miss share inside the arms as the price of a miss. It read 0.5 to 1.3 ms a unit
+of miss share on MySQL while the controlled comparison across pool sizes read none; the host's noise moves the misses and the latency
+together, and a regression reads that as a price. The root-cause page's first reading of the MySQL and MongoDB runs, that a miss cost
+the statement nothing, is withdrawn on the same page: the server's own meter, read on a machine of our own, puts the misses at 3% to
+32% of what a statement waits for (a tuning-bench reading, class L on that host, no benchmark result).
+
+#### 88.18.2 Where it is written
+
+| Place | What |
+|---|---|
+| `tools/store_brain.py` | the working set's floor, the store's account of its misses, the gate, the host's room, the max's record |
+| `tools/run_sysbench.py`, `tools/run_ycsb.py`, `tools/run_redis.py` | each cache wire's `Brain`: its own compass law and rule around the shared max; the server's account read each second; the attach check that stops a MongoDB run on a server without the account |
+| `tools/run_kafka.py` | the group's twin, the reflex, the hold, the immune hand-back; the tune-down under the dial |
+| `tools/run_pgbench.py` | the pool's `Brain`: never clamped upward, never below the pooler's own setting |
+| `tools/knob_verdict.py` | the tune-down's verdict, now in the fingerprint; its summary reads the max's records |
+| `omni_controller/controller.py`, `omni_controller/muscles.py` | the hand-back that lands: every step tried 5 times against the API's weather, each muscle on its own, what did not land raised |
+| `tools/store_gate.py` | the store gate: every candidate replayed on omni-v21's archived seconds (class S) |
+| `tools/kafka_model.py`, `tools/redis_model.py` | the two closed-loop models (class S), every input set from omni-v21's runs' own files |
+| `docs/MYSQL_PREREGISTRATION.md` (amendment 6), `docs/YCSB_PREREGISTRATION.md` (6), `docs/POSTGRES_PREREGISTRATION.md` (4), `docs/REDIS_PREREGISTRATION.md` (5), `docs/KAFKA_PREREGISTRATION.md` (4) | declared before any run on them |
+
+#### 88.18.3 What the model gate read
+
+Our own models, evidence class S, never a benchmark result.
+
+| Gate | Against omni-v21 |
+|---|---|
+| the store gate, every store wire's candidate on omni-v21's archived seconds, open-loop (`results/model_gate/V22_STORE_GATE.md`) | no LOSS on any wire or workload; the seconds below native fall to none on every wire (MySQL 97.9 → 0 an arm, MongoDB 12.5 → 0, Redis 36.6 → 0, PostgreSQL 223.5 → 0); the three cache candidates hold at native in the replay because omni-v21's audits carry neither the stores' accounts nor the host's memory; the pooler's servers +28.2% and Kafka's consumers +130.6%, power given |
+| the Redis cache, closed loop (`results/model_gate/V22_REDIS_MODEL.md`) | work inside the line GAIN in every workload (up 7.7% to 22.9%), the mean latency GAIN (down 36% to 59%), the 95th and 99th percentiles GAIN or STEADY, the memory held power given (201 to 304 MB against 62 to 66 MB); no LOSS |
+| the Kafka group, closed loop, 30 s a notch, the development seeds 101 to 108 (`results/model_gate/V22_KAFKA_MODEL.md`) and the untouched seeds 201 to 208 (`…_UNTOUCHED.md`) | no LOSS row; work inside the line GAIN, the 95th and 99th percentiles GAIN, the most messages waiting at once GAIN, consumers power given |
+| the Kafka group at 20 s a notch (run C's setting, not the counted one; `…_20S.md`) | one LOSS row: the burst's most messages waiting at once, up 30.6% inside the seeds' spread (native's queue grows about 1,100 messages in a 20 s notch and one rebalance costs about the same); on the next version's list with its cause |
+| the Kubernetes governor's models (`results/model_gate/V22_VS_V21.md`, `tools/model_gate.py`) | omni-v22's one change to the governor, the hand-back tried five times against the API's weather, moves no decision: every model reads omni-v21's own numbers on every gauge, STEADY, identical |
+
+MySQL's and MongoDB's accounts of a miss are read for real on the first runs of omni-v22 (omni-v21's audits do not carry them), and a
+closed-loop model of each store, set from those runs' own files, is the next model gate's work.
+
+Every benchmark runs again on omni-v22 from the moment it reaches main; nothing is read across engines. The store benchmarks run
+first, every table at the counted 30 s a notch (`scripts/reruns.txt`).
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 89. History
 
@@ -17898,9 +18437,10 @@ against 861-889 MHz on its own. Corrected (amendments 6 and 7); the corrected go
 | Authority | how far the nervous system lets an organ move this decision |
 | Band | a reading's or a knob's safe range |
 | Compass | the band seen as a position from 0 (calm) to 1 (the line), with its bottom in the middle |
-| EVEN | Equalized, Verified baseline, Equilibrium, Neutral: native and Omni could not be told apart (the same, or no difference beyond the noise); the key, front matter |
+| STEADY | Equalized, Verified baseline, Equilibrium, Neutral: the mean change under 0.5% (under the floor), or nothing moved (the same), or a knob at its limit on native; the key, front matter |
 | GAIN | Growth, Advantage, Improvement, Net-positive: a gauge moved the way its declared aim asks, against native; a resource cut is a GAIN; the key, front matter |
-| GAIN in all three of our runs | the same sign in all three runs (A, B, C), every 95% interval clear of zero, and that sign a GAIN for the gauge's aim |
+| GAIN in all three of our runs | the mean change 0.5% or more, every run (A, B, C) moved the same way with its 95% interval clear of zero, and that way a GAIN for the gauge's aim |
+| GAIN by the mean of our three runs | the mean change 0.5% or more toward the gauge's aim, not every run clear of zero; the count of runs beyond the noise stands beside it (Chapter 59) |
 | LOSS | Leakage, Off-track, Setback, Subpar: a gauge moved against its declared aim (less work, a longer wait, more misses); it should never appear, and where it does it is shown, its cause found and fixed; the key, front matter |
 | Power given | a resource spent or held that rose: what Omni put in to buy the work and speed beside it; shown, never called a loss |
 | Cover | a knob's hard range; every write is clipped to it |
@@ -17909,15 +18449,23 @@ against 861-889 MHz on its own. Corrected (amendments 6 and 7); the corrected go
 | Fail up | the return to full capacity the moment service crosses the wall or a sense goes blind |
 | Governor | the process that reads, decides and writes; Omni-Compass |
 | Muscle | any machine, service or controller Omni-Compass reads and sets |
-| Native | the system as it runs without Omni-Compass |
-| No difference beyond the noise | an interval over zero in at least one run: native and omni could not be told apart; the result, stated as such |
+| Native | the system as it runs without Omni-Compass: every muscle under its own native controller, as its vendor ships it (the native baseline) |
+| Omni-Compass on native | the second arm: the native system with Omni-Compass on top of it ("omni") |
+| Omni-Compass direct | the third arm, Omni-Compass by itself: each knob's native controller switched off and Omni-Compass the only controller moving it (section 1.1) |
+| Factory profile | the complete, versioned set of Omni-Compass default settings shipped together (section 76.8; `docs/FACTORY_PROFILE.md`) |
+| Candidate, active and custom profile | a proposed combination under evaluation; the settings actually governing the current run; an identifiable configuration that differs from the released factory profile (section 76.8) |
+| The best validated factory profile for the declared operating conditions | the profile the eight steps of section 76.8 establish; the meaning "optimal" has here, and the only one |
+| Restore factory profile; Return to native | the two restoring controls: reapply the released configuration; hand governance back and restore the recorded native settings (the reset) |
+| The ten organisms; the twenty scenarios | the seven of the catalog, the orchestra, the live benchmark engine's organism and the whole organism, each read native and on native (sections 34.7 and 60.10) |
+| The cloud is a wire | a cloud is the wire between the software end and the bare metal; Omni-Compass can live in all three places (section 60.6) |
+| Beyond the noise | a run whose 95% interval excludes zero; a three-run reading carries the count of its runs beyond the noise (Chapter 59) |
 | Off the clock | a repetition in which either arm ended more than 5% of its window late; marked, the pairing stands |
 | Organism | a set of muscles run together on one clock |
 | Omni index | the one combined number: the geometric mean of every real category's work, speed, machines and energy ratios, each read by the three-run rule |
 | Omni v1, v2, v3 | the frozen engines, fingerprinted file by file; a result belongs to the engine its commit carries |
 | Plug | the two-way connection to one muscle: read, write, read back, restore |
 | Pool (Azure) | one machine family under Azure's autoscaler with its own ceiling; several pools make the fleet |
-| Profile | a named set of the compass's settings for one kind of work: service (the default) or batch |
+| Profile (service or batch) | a named set of the compass's settings for one kind of work, service (the default) or batch: a setting inside a configuration profile |
 | Race | full speed at once while work waits, so a burst is never served slowly |
 | Yield limit line | a muscle's own limit, read live: Omni-Compass takes it right up to the line and never past it, as an engineer loads a material up to its yield limit, the most it carries and still springs back unharmed |
 | Speed floor | the clock a card reaches on its own while busy, learned from its own meter; the governor never sets the ceiling under it |
@@ -18265,7 +18813,7 @@ of the preregistration present including the ones that went against the governor
 rule allows? Of the index: is every real category in it, is every tuning row out of it, and does a loss in all three of our runs enter
 as a loss? Of the raw folder: does the SHA-256 manifest in it match the files, does the governor's audit show every
 decision with its reading and its write, and does the hand-back record read the operator's value? Every one of those
-questions has a yes in this program or a disclosure naming the exception; the disclosures are in section 60.11.
+questions has a yes in this program or a disclosure naming the exception; the disclosures are in section 60.14.
 
 **How to audit one result from this manual to its raw files.** Take any row of Chapter 60. Its source column names a
 three-run table in `results/live/`; the table's head names the three GitHub run ids, the commit each ran on and the engine
@@ -20578,7 +21126,7 @@ Each is a pool of servers, pods, GPUs, links or disks serving a stream of reques
 
 ## Appendix H. Source of the Engine
 
-The full source of every Python file of the engine that stands, omni-v19 (`OMNI_V19.json`, digest 9a72693d49b18b9b), 57 files, as the printed book carries it: `omni_controller/__init__.py`, `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/gpu_compass.py`, `omni_controller/gpu_governor.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omni_orchestrator/__init__.py`, `omni_orchestrator/agent.py`, `omni_orchestrator/brain.py`, `omni_orchestrator/cgroup.py`, `omni_orchestrator/control.py`, `omni_orchestrator/front.py`, `omni_orchestrator/scheduler.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/authority_contract.py`, `omnicompass/ce_score.py`, `omnicompass/closure.py`, `omnicompass/compass.py`, `omnicompass/compass_law.py`, `omnicompass/configurations.py`, `omnicompass/conveyance.py`, `omnicompass/core.py`, `omnicompass/disruption_budget.py`, `omnicompass/edge.py`, `omnicompass/master.py`, `omnicompass/mathdrive.py`, `omnicompass/muscle_sdk.py`, `omnicompass/muscles.py`, `omnicompass/nervous.py`, `omnicompass/nervous_system.py`, `omnicompass/pools.py`, `omnicompass/shield.py`, `omnicompass/speed.py`, `omnicompass/stack_sim.py`, `omnicompass/storage.py`, `omnicompass/student_t.py`, `omnicompass/verdict.py`, `realms/__init__.py`, `realms/compass_arm.py`, `realms/compass_arm_v5.py`, `realms/gpu_card.py`, `realms/harness.py`, `realms/plants.py`, `realms/presets.py`, `tools/run_citylearn.py`, `tools/run_cpu_power.py`, `tools/run_kafka.py`, `tools/run_kil.py`, `tools/run_mujoco.py`, `tools/run_pandapower.py`, `tools/run_pgbench.py`, `tools/run_redis.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`.
+The full source of every Python file of the engine that stands, omni-v23 (`OMNI_V23.json`, digest c96ea4105d8747db), 60 files, as the printed book carries it: `omni_controller/__init__.py`, `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/gpu_compass.py`, `omni_controller/gpu_governor.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omni_orchestrator/__init__.py`, `omni_orchestrator/agent.py`, `omni_orchestrator/brain.py`, `omni_orchestrator/cgroup.py`, `omni_orchestrator/control.py`, `omni_orchestrator/front.py`, `omni_orchestrator/scheduler.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/authority_contract.py`, `omnicompass/ce_score.py`, `omnicompass/closure.py`, `omnicompass/compass.py`, `omnicompass/compass_law.py`, `omnicompass/configurations.py`, `omnicompass/conveyance.py`, `omnicompass/core.py`, `omnicompass/disruption_budget.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/mathdrive.py`, `omnicompass/muscle_sdk.py`, `omnicompass/muscles.py`, `omnicompass/nervous.py`, `omnicompass/nervous_system.py`, `omnicompass/pools.py`, `omnicompass/shield.py`, `omnicompass/speed.py`, `omnicompass/stack_sim.py`, `omnicompass/storage.py`, `omnicompass/student_t.py`, `omnicompass/verdict.py`, `realms/__init__.py`, `realms/compass_arm.py`, `realms/compass_arm_v5.py`, `realms/gpu_card.py`, `realms/harness.py`, `realms/plants.py`, `realms/presets.py`, `tools/knob_verdict.py`, `tools/run_citylearn.py`, `tools/run_cpu_power.py`, `tools/run_kafka.py`, `tools/run_kil.py`, `tools/run_mujoco.py`, `tools/run_pandapower.py`, `tools/run_pgbench.py`, `tools/run_redis.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`, `tools/store_brain.py`.
 
 ## Appendix I. The License
 

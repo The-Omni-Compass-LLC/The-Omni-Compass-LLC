@@ -33,7 +33,8 @@ FAIL_LIMIT = 4                # failures of one workflow in one hour
 RUN_LIMIT = 60                # runs of one workflow started in one hour
 QUIET = {"six": 400, "six-kube": 400, "archive-run": 120}   # workflows whose runs are many by design: their own run limits
 HEALTH_TITLE = "Health watch: a workflow is failing or running away"
-REPO = os.environ.get("GITHUB_REPOSITORY", "The-Omni-Compass-LLC/The-Omni-Compass")
+sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[1]))
+from tools.repo import NAME as REPO  # noqa: E402  (the repository's name, written once)
 
 
 def api(path, method="GET", data=None):

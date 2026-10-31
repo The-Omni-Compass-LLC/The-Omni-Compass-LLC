@@ -51,7 +51,7 @@ jobs:
       - name: Legal notice at the top of this job's report
         run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with: {sparse-checkout: "scripts\nresults/grid_v19\ntools\nrealms\nomnicompass\nomni_controller"}
+        with: {sparse-checkout: "scripts\nresults/grid_v23\ntools\nrealms\nomnicompass\nomni_controller"}
       - name: Start every square with the cluster inside not yet started
         env: {GITHUB_TOKEN: "${{ github.token }}"}
         run: python3 scripts/dispatch_grid.py tick --grid six-kube --ref "${{ github.ref_name }}"
@@ -88,8 +88,32 @@ jobs:
     steps:
       - name: Legal notice at the top of this job's report
         run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4: the code the cluster and the organism need, not the 82,000 result files
-        with: {sparse-checkout: "deploy\nscripts\ntools\npilot\nfleet\ntuning\nomni_controller\nomnicompass\nrealms\nhardware\nresults/hardware"}
+      # Include root-level requirements and legal inputs as well as runtime sources.
+      # Cone mode would treat root filenames as directories, so use explicit patterns.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            deploy/
+            scripts/
+            tools/
+            pilot/
+            fleet/
+            tuning/
+            omni_controller/
+            omni_orchestrator/
+            omnicompass/
+            realms/
+            hardware/
+            results/hardware/
+            requirements.txt
+            OMNI_V*.json
+            README.md
+            LICENSE
+            NOTICE
+            DISCLOSURES.md
+            PATENTS.md
+            TRADEMARKS.md
       - name: Engine and source receipt
         run: |
           set -euo pipefail
@@ -210,8 +234,9 @@ jobs:
     steps:
       - name: Legal notice at the top of this job's report
         run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      # Report needs requirements.txt, the legal bundle, and transitive Python imports.
+      # A sparse checkout silently omitted these dependencies and broke final reporting.
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with: {sparse-checkout: "tools\npilot\nrealms\nomnicompass\nomni_controller\nfleet\nhardware\nresults/hardware"}
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt

@@ -28,7 +28,13 @@ jobs:
       - name: Legal notice at the top of this job's report
         run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with: {sparse-checkout: "tools/health_watch.py", sparse-checkout-cone-mode: false}
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            tools/health_watch.py
+            tools/repo.py
+      - name: Verify health-watch imports before querying GitHub
+        run: python3 -c 'import tools.repo; import tools.health_watch'
       - name: Every workflow's last hour
         env:
           GITHUB_TOKEN: ${{ github.token }}

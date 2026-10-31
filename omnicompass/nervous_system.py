@@ -44,7 +44,7 @@ The safety shield (omnicompass/shield.py) stays downstream and can still veto an
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 from omnicompass.closure import stress_equilibrium
 
@@ -84,6 +84,7 @@ class NervousInputs:
     stale: float = 0.0               # fraction of declared senses that are blind (dropout, frozen, unreadable)
     mode: str = "autopilot"          # "observe" or "autopilot"
     killed: bool = False
+    native_hold: Tuple[str, ...] = ()   # organs the immune system handed to native (omnicompass/immune.py): no authority of Omni's
 
 
 def scalars(i: NervousInputs) -> Dict[str, float]:
@@ -119,11 +120,18 @@ def authority(i: NervousInputs) -> Dict[str, Any]:
                     "admit": (not sec) and seeing and calm >= 0.5 and i.power_stress < 0.9,
                     "pause": sc["sigma"] > 1.0 or i.power_stress >= 0.95 or hot, "step": calm}
     org["rollback"] = {"expand": False, "contract": False, "authorized": bool(i.rollback or sec), "step": 0.0}
-    return {"execute": i.mode == "autopilot", "killed": False, "security_hold": sec, "scalars": sc, "organs": org}
+    # the immune system's hand-back propagated (the founder's order of 25 October): an organ whose knob redlined, that
+    # Omni-Compass could not bring back and where native is the stronger, has none of Omni-Compass's authority until returned
+    for o in i.native_hold:
+        if o in org:
+            org[o] = {**org[o], "expand": False, "contract": False, "step": 0.0, "native": True}
+    return {"execute": i.mode == "autopilot", "killed": False, "security_hold": sec, "scalars": sc, "organs": org,
+            "native_hold": [o for o in i.native_hold if o in org]}
 
 
-def from_governor(g, obs: Dict[str, Any], d: Dict[str, Any] = None, mode: str = None) -> Dict[str, Any]:
-    """Authority from a live omnicompass.adapter.Governor after its step (d = the step's directive)."""
+def from_governor(g, obs: Dict[str, Any], d: Dict[str, Any] = None, mode: str = None, native_hold: Tuple[str, ...] = ()) -> Dict[str, Any]:
+    """Authority from a live omnicompass.adapter.Governor after its step (d = the step's directive); native_hold: the organs
+    the immune system handed to native (omnicompass/immune.py)."""
     x = g.x; p = g.p; L = g.law
     return authority(NervousInputs(
         E=x.E, U=x.U, I_U=x.I_U, S=x.S, push=g.last_push, push_release=getattr(L, "push_release", 0.2),
@@ -131,7 +139,7 @@ def from_governor(g, obs: Dict[str, Any], d: Dict[str, Any] = None, mode: str = 
         security_block=float(obs.get("security_block", 0.0)), slo_clean=bool(obs.get("slo_clean", True)),
         power_stress=float(obs.get("power_stress", 0.0)), thermal=float(obs.get("thermal", 0.0)),
         rollback=bool((d or {}).get("rollback_authorized", False)), stale=float(obs.get("stale", 0.0)),
-        mode=mode or g.mode, killed=g.killed))
+        mode=mode or g.mode, killed=g.killed, native_hold=tuple(native_hold)))
 
 
 def node_release_gate(n: int, per_node_m: float, used_m: float, pending: int, pods_scaling_up: bool,

@@ -5,7 +5,7 @@
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The power grid's A/B/C rule (tools/pandapower_abc.py, docs/OMNI_V1.md): a deterministic simulator, so the three runs must
 reproduce; a gauge reads GAIN or LOSS in all three of our runs by what it is for when they do (energy, the energy dissipated in
-lines and transformers and tap operations are resources spent: a fall is a cut, a GAIN, a rise is power given), EVEN under one part
+lines and transformers and tap operations are resources spent: a fall is a cut, a GAIN, a rise is power given), STEADY under one part
 in a million, and "the runs differ" when they do not; any increase in voltage violations is a LOSS; more tap operations reads
 power given (the declared cost); the shown-only gauges are never judged."""
 import json
@@ -33,7 +33,7 @@ def main():
     assert P.verdict([same] * 3, "zip", "losses_mwh", "lower") == "**power given in all three of our runs**", "more energy dissipated in all three is power given"
     assert P.verdict([same] * 3, "zip", "tap_operations", "lower") == "**power given in all three of our runs**", "the declared cost is power given"
     assert P.verdict([same] * 3, "zip", "violation_bus_share", "never more") == "**LOSS in all three of our runs**", "any increase in violations is a LOSS"
-    assert P.verdict([same] * 3, "zip", "energy_in_mwh", "lower") == "EVEN, the same"
+    assert P.verdict([same] * 3, "zip", "energy_in_mwh", "lower") == "STEADY, the same"
     assert P.verdict([same] * 3, "zip", "vmin", "shown") == "shown, not judged"
     other = rec(load_energy_mwh=56300.0, losses_mwh=548.0, tap_operations=8)
     assert P.verdict([same, same, other], "zip", "load_energy_mwh", "lower") == "**the runs differ**", "a run that does not reproduce is a finding"
@@ -46,7 +46,7 @@ def main():
         assert P.main(dirs + ["--out", str(out)]) == 0
         txt = out.read_text()
         assert "power given in all three of our runs" in txt and "GAIN in all three of our runs" in txt and "Not one engine's three runs" in txt and "ZIP loads" in txt
-    print("PASS  power-grid A/B/C rule: reproduced runs read GAIN, EVEN or LOSS by what each gauge is for, a run that differs is a finding, any added violation "
+    print("PASS  power-grid A/B/C rule: reproduced runs read GAIN, STEADY or LOSS by what each gauge is for, a run that differs is a finding, any added violation "
           "is a LOSS and every extra tap is power given, shown-only gauges never judged")
 
 

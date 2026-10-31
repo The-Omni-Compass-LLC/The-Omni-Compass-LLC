@@ -62,7 +62,7 @@ FIGURES = {
     "levels": "The eight levels of an installation",
     "pedal": "One pedal, no brake: the modes and the two switches",
     "organisms": "The seven organisms on the spine",
-    "readings": "The three-run rule: a change of 0.5% or more is a change, EVEN under it, and the runs that disagree",
+    "readings": "The three-run rule: a change of 0.5% or more is a change, STEADY under it, and the runs that disagree",
     "engine": "The engine's six states, their couplings and the control law",
     "potential": "The double well of the alignment and the cubic potential of the stress",
 }
@@ -349,7 +349,7 @@ def fig_readings():
     rows = [
         ("GAIN in all three of our runs", [(-80, -30), (-95, -40), (-70, -20)], 314),
         ("GAIN by the mean: beyond the noise in 2 of 3", [(-80, -30), (-60, 20), (-75, -25)], 254),
-        ("EVEN, under the floor: the mean under 0.5%", [(-9, 7), (-6, 10), (-10, 5)], 194),
+        ("STEADY, under the floor: the mean under 0.5%", [(-9, 7), (-6, 10), (-10, 5)], 194),
         ("LOSS in all three of our runs", [(30, 80), (45, 95), (20, 70)], 134),
         ("the runs disagree: look into the test", [(-90, -40), (30, 80), (-60, -15)], 74),
     ]

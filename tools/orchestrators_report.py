@@ -10,7 +10,7 @@ results/orchestrators/ORCHESTRATORS.json, every run's gauges and every reading, 
   python3 tools/orchestrators_report.py [--out results/orchestrators]   write the page again from the record
 
 Every reading is paired by repetition (the same injection in both arms) and read by the one key (tools/readings.py): the word
-first, then the size of the change with the word's sign; under 0.5% EVEN. Our own models, evidence class S."""
+first, then the size of the change with the word's sign; under 0.5% STEADY. Our own models, evidence class S."""
 from __future__ import annotations
 
 import argparse
@@ -29,7 +29,7 @@ NAMES = {"p95_ms": "the 95th percentile response time", "alert_minutes": "minute
          "pending_pod_minutes": "pods waiting for a place (pod-minutes)", "batch_turnaround_s": "a job's turnaround",
          "batch_makespan_s": "the stream's makespan (first job in to last job done)", "batch_pods_done": "batch pods done",
          "machine_hours": "machine-hours", "energy_kwh": "energy"}
-WORDS = ("GAIN", "LOSS", "power given", "EVEN")
+WORDS = ("GAIN", "LOSS", "power given", "STEADY")
 
 
 def engine_name():
@@ -130,13 +130,13 @@ def render(rec, meta):
           "| cloud | machines of 2 cores of their own (1.9 allocatable), the Cluster Autoscaler at its defaults, 2 to 9 machines, 90 s to boot |",
           "", "## How to read a cell", "",
           "Each cell is a paired reading by the one key: the word first, then the size of the change with the word's sign "
-          "(GAIN +, LOSS −, power given +, EVEN =). Time waited, missed or failed that fell is a GAIN; work that rose is a GAIN; a "
-          "resource spent that fell is a cut (GAIN) and one that rose is power given, never a loss. A change under 0.5% is EVEN. "
+          "(GAIN +, LOSS −, power given +, STEADY =). Time waited, missed or failed that fell is a GAIN; work that rose is a GAIN; a "
+          "resource spent that fell is a cut (GAIN) and one that rose is power given, never a loss. A change under 0.5% is STEADY. "
           "Beside each count, the detailed tables give the 95% interval over the repetitions.", ""]
     for s in meta["settings"]:
         sname = "on-site (the kind rig)" if s == "onsite" else "the cloud"
         L += [f"## {sname[0].upper() + sname[1:]}: each orchestrator against Kubernetes alone", "",
-              "The words over every gauge of the organism (how many read GAIN, LOSS, power given, EVEN).", "",
+              "The words over every gauge of the organism (how many read GAIN, LOSS, power given, STEADY).", "",
               "| Organism | " + " | ".join(ORCHESTRATORS[k] for k in orchs if k != "default") + " |",
               "|---|" + "---|" * (len(orchs) - 1)]
         for o in meta["organisms"]:

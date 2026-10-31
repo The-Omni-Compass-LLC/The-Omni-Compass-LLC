@@ -25,7 +25,7 @@ OUT = ROOT / "results" / "live" / "GOVERNORS.md"
 RUNS = ROOT / "results" / "live" / "governors_runs.json"
 CATALOG_FILE = ROOT / "realms" / "catalog_v5.csv"
 ENGINE = "omni-v12"
-REPO_RUNS = "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass/actions/runs/"
+from tools.repo import RUNS as REPO_RUNS  # noqa: E402  (the repository's name, written once)
 
 # (slug, name, register row, what it governs, native under it, its test) in the founder's order of naming, the
 # Kubernetes scheduler first because every other one stands on it
@@ -111,7 +111,7 @@ FOUR_SYSTEMS = (("kai", "The KAI scheduler"), ("koordinator", "Koordinator"), ("
                 ("godel", "The Gödel scheduler"), ("karmada", "Karmada"), ("ocm", "Open Cluster Management"),
                 ("armada", "Armada"))
 
-WORDS = ("GAIN", "LOSS", "power given", "EVEN", "the runs disagree", "shown, not judged")
+WORDS = ("GAIN", "LOSS", "power given", "STEADY", "the runs disagree", "shown, not judged")
 
 
 def word_of(reading: str) -> str:
@@ -122,8 +122,8 @@ def word_of(reading: str) -> str:
         return "LOSS"
     if r.startswith("power given"):
         return "power given"
-    if r.startswith("EVEN"):
-        return "EVEN"
+    if r.startswith("STEADY"):
+        return "STEADY"
     if "disagree" in r:
         return "the runs disagree"
     return "shown, not judged"
@@ -245,7 +245,7 @@ def same_organisms():
                 for r in e["omni_vs_orch"][orch].values():
                     if r:
                         top[r["word"]] = top.get(r["word"], 0) + 1
-            words = lambda c: ", ".join(f"{c.get(w, 0)} {w}" for w in ("GAIN", "LOSS", "power given", "EVEN"))
+            words = lambda c: ", ".join(f"{c.get(w, 0)} {w}" for w in ("GAIN", "LOSS", "power given", "STEADY"))
             L.append(f"| {NAMES[orch]} | {'on-site' if s == 'onsite' else 'cloud'} | "
                      f"{'it is native' if orch == 'default' else words(vs)} | {words(top)} |")
     return L + [""]
@@ -273,7 +273,7 @@ def render(runs=None) -> str:
             t, started = table_of(key), runs_of(key, runs)
             if t:
                 c = counts(t)
-                readings.append(f"{tag}{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['EVEN']} EVEN, "
+                readings.append(f"{tag}{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['STEADY']} STEADY, "
                                 f"{c['the runs disagree']} where the runs disagree ([table](V12_{key.upper()}.md))")
                 wheres.append(f"{tag}three runs in")
             elif started:
@@ -304,7 +304,7 @@ def render(runs=None) -> str:
             t = four_way_table(system, tag)
             if t:
                 c = counts(t)
-                cells.append(f"{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['EVEN']} EVEN, "
+                cells.append(f"{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['STEADY']} STEADY, "
                              f"{c['the runs disagree']} where the runs disagree ([table](V12_{system.upper()}_4W_{tag}.md))")
             else:
                 cells.append("runs not yet finished" if started else "not yet run")

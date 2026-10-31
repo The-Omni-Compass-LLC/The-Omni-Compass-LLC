@@ -6,7 +6,7 @@
 """The CityLearn A/B/C rule (tools/citylearn_abc.py, docs/OMNI_V1.md): a deterministic simulator, so the three runs must
 reproduce each other; a score reads GAIN or LOSS in all three of our runs by what it is for when they do (the bill, the electricity
 bought, the carbon, the peaks, the swings and the unevenness are power spent or held: a fall is a cut, a GAIN, a rise is power given; the
-energy not served and the time uncomfortable are misses, and a rise is a LOSS), EVEN under one
+energy not served and the time uncomfortable are misses, and a rise is a LOSS), STEADY under one
 part in a million, and "the runs differ" when they do not; a district with no electric battery is listed as nothing for Omni to move, and a
 district CityLearn cannot run is listed with its error, never dropped."""
 import json
@@ -45,11 +45,13 @@ def main():
     assert C.verdict([same] * 3, COST) == "**GAIN in all three of our runs**", "a bill cut is a GAIN"
     assert C.verdict([same] * 3, PEAK) == "**power given in all three of our runs**", "a higher peak is power held: power given, never a LOSS"
     assert C.verdict([same] * 3, MISS) == "**LOSS in all three of our runs**", "more energy not served in all three is a LOSS"
-    assert C.verdict([same] * 3, "carbon_emissions_total") == "EVEN, the same"
+    assert C.verdict([same] * 3, "carbon_emissions_total") == "STEADY, the same"
     other = rec(3, 0.98, 1.03, 1.05); other["omni"]["kpis"][COST] = 0.97
     assert C.verdict([same, same, other], COST) == "**the runs differ**", "a run that does not reproduce is a finding"
-    tiny = rec(3, 1.0 + 1e-7, 1.0)
-    assert C.verdict([tiny] * 3, COST) == "EVEN, the same", "a change under one part in a million"
+    tiny = rec(3, 1.0 + 1e-7, 1.0)                                       # measured past the ninth decimal: never "the same"
+    assert C.verdict([tiny] * 3, COST) == "STEADY, under the floor (the three runs' mean 0.00%)", "a change under the floor, measured"
+    same9 = rec(3, 1.0 + 1e-10, 1.0)                                     # equal to nine decimal places (the referee's work order of 25 October)
+    assert C.verdict([same9] * 3, COST) == "STEADY, the same", "equal to nine decimal places"
     with tempfile.TemporaryDirectory() as t:
         broken = {"native": {"error": "ValueError: needs interface='entity'"}, "omni": {"error": "ValueError: needs interface='entity'"}}
         dirs = [write(t, i, {"d_bat": same, "d_nobat": rec(0, 1.0, 1.0), "d_broken": broken}) for i in (1, 2, 3)]
@@ -59,7 +61,7 @@ def main():
         assert "| d_nobat | 3 | 1 | none | yes |" in txt, "no battery: nothing for Omni to move"
         assert "| d_broken | `ValueError: needs interface='entity'` |" in txt, "a district CityLearn cannot run is listed"
         assert "LOSS in all three of our runs" in txt and "GAIN in all three of our runs" in txt and "Not one engine's three runs" in txt
-    print("PASS  CityLearn A/B/C rule: reproduced runs read GAIN, EVEN or LOSS by what each score is for, a run that differs is a finding, no battery means nothing to move, "
+    print("PASS  CityLearn A/B/C rule: reproduced runs read GAIN, STEADY or LOSS by what each score is for, a run that differs is a finding, no battery means nothing to move, "
           "a district CityLearn cannot run is listed")
 
 

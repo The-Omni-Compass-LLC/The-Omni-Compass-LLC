@@ -79,7 +79,7 @@ window, the repetitions and the readings are as written above.
 - each step up in the cap: the completed work and the capacity each arm gains per added core.
 
 Across runs A, B and C every row gets one of the three readings of `tools/readings.py`: GAIN or LOSS in all three of
-our runs (the same sign in all three, every interval clear of zero, judged by the gauge's aim), EVEN (no difference beyond the noise), or the runs
+our runs (the same sign in all three, every interval clear of zero, judged by the gauge's aim), STEADY (no difference beyond the noise), or the runs
 disagree. Every row is reported, LOSS included; a LOSS's cause is looked for in our own wiring, setup and scoring first.
 
 ## Validity

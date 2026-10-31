@@ -6,7 +6,7 @@
 """The database runner's rule (tools/run_pgbench.py, docs/POSTGRES_PREREGISTRATION.md), without a database: the decision
 each second (where the time goes decides the direction; calm gives back one idle server and never a server in use; the
 cushion, the dwell, the cover and the fail-up to the pooler's own setting), pgbench's per-transaction log read into the
-gauges, and the paired reading over repetitions (GAIN, LOSS or power given by what the gauge is for, EVEN, never more)."""
+gauges, and the paired reading over repetitions (GAIN, LOSS or power given by what the gauge is for, STEADY, never more)."""
 import math
 import sys
 import tempfile
@@ -77,12 +77,13 @@ def main():
     # the cushion
     assert R.decide(0.4, 0.03, 0.9, 5, 10, snap, 0, 99)[:2] == (10, 0)
     assert R.decide(0.4, -0.03, 0.9, 5, 10, snap, 0, 99)[:2] == (10, 0)
-    # the dwell (amendment 1): adding is never held, even two seconds after taking back; taking back waits five seconds
-    # after adding, then goes
+    # the dwell (amendment 1): adding is never held, even two seconds after taking back; taking back waits DWELL_S after adding
+    # (thirty seconds since the store fix of 25 October, five before), then goes
     assert R.decide(0.5, 0.3, 0.9, 0, 10, snap, -1, 2.0)[:2] == (13, 1), "gas is never held"
     assert R.decide(0.5, 0.3, 0.9, 0, 10, snap, 1, 2.0)[:2] == (13, 1), "the same direction is never held"
     assert R.decide(0.1, -0.3, 0.0, 3, 10, snap, 1, 2.0)[:2] == (10, 0), "the brake dwells after the gas"
-    assert R.decide(0.1, -0.3, 0.0, 3, 10, snap, 1, 6.0)[:2] == (9, -1)
+    assert R.decide(0.1, -0.3, 0.0, 3, 10, snap, 1, R.DWELL_S - 1.0)[:2] == (10, 0), "still inside the dwell"
+    assert R.decide(0.1, -0.3, 0.0, 3, 10, snap, 1, R.DWELL_S + 1.0)[:2] == (9, -1)
     # the cover
     assert R.decide(0.1, -0.3, 0.0, 1, R.FLOOR, snap, 0, 99)[:2] == (R.FLOOR, 0)
     assert R.decide(0.6, 1.0, 0.9, 0, R.CEILING - 3, snap, 0, 99)[:2] == (R.CEILING, 1)
@@ -122,9 +123,9 @@ def main():
     r = R.paired(reps([100, 102, 98], [120, 121, 119], "servers_alive_mean"), "servers_alive_mean", "spent")
     assert r["reading"] == "power given", "more server connections held is power given, never a LOSS"
     r = R.paired(reps([100, 102, 98], [110, 90, 101], "p95_ms"), "p95_ms", "lower")
-    assert r["reading"] == "EVEN, no difference beyond the noise" and not r["significant"]
+    assert r["reading"] == "STEADY, no difference beyond the noise" and not r["significant"]
     r = R.paired(reps([100.0, 100.0, 100.0], [100.0, 100.0, 100.0 + 1e-9], "tps"), "tps", "higher")
-    assert r["reading"] == "EVEN, the same"
+    assert r["reading"] == "STEADY, the same"
     r = R.paired(reps([0, 0, 0], [1, 2, 1], "failed"), "failed", "never more")
     assert r["reading"] == "**LOSS in a repetition**", "more failed transactions is marked whatever the size"
     r = R.paired(reps([20, 20, 20], [11, 12, 10], "pool_mean"), "pool_mean", "shown")
@@ -132,7 +133,7 @@ def main():
     assert R.paired(reps([1, 2], [float("nan"), 3], "x"), "x", "lower")["n"] == 1
     print("PASS  database runner: the direction follows where the time goes, calm gives back one idle server and never one in use nor one in demand, "
           "cushion, dwell, cover and fail-up to the pooler's own setting hold; pgbench's log reads into the gauges; the paired "
-          "reading says GAIN, LOSS or power given by what the gauge is for, EVEN, and never-more")
+          "reading says GAIN, LOSS or power given by what the gauge is for, STEADY, and never-more")
 
 
 if __name__ == "__main__":

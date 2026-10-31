@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The monitor wall beside Omni-Compass: Prometheus collects, Grafana shows the wall (deploy/grafana/omni-compass-wall.json,
+# loaded at start), Alertmanager carries the governor's alert rules (deploy/prometheus/omni-compass-rules.yaml), node_exporter
+# reads this host, and the governor's own exporter (tools/omni_exporter.py) reads its audit. Every port is bound to this
+# machine only; every image is pinned. Read only: nothing in this stack writes a setting anywhere. The governor's settings
+# change only by the governor, its control panel (tools/omni_control.py) and the kill switch (tools/omni_switch.py).
+#   cp .env.example .env   (set GRAFANA_ADMIN_PASSWORD)   then   docker compose up -d   ->   http://127.0.0.1:3000
+services:
+  prometheus:
+    image: prom/prometheus:v2.53.2
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-30d}
+      # the live benchmark engine page may read this Prometheus from the browser ("your own system", Drive tab): only these origins, the page
+      # served from this machine (python3 -m http.server, then http://127.0.0.1:8000/...); never the "null" origin, which every
+      # sandboxed frame on any website carries
+      - --web.cors.origin=${OMNI_PAGE_ORIGIN:-https?://(localhost|127\.0\.0\.1)(:[0-9]+)?}
+      # Grafana Alloy (the alloy profile) writes what it collects here
+      - --web.enable-remote-write-receiver
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./targets:/etc/prometheus/targets:ro
+      - ./secrets:/etc/prometheus/secrets:ro
+      - ../prometheus:/etc/prometheus/rules:ro
+      - prometheus-data:/prometheus
+    ports: ["127.0.0.1:9090:9090"]
+    restart: unless-stopped
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    command: [--config.file=/etc/alertmanager/alertmanager.yml]
+    volumes: ["./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"]
+    ports: ["127.0.0.1:9093:9093"]
+    restart: unless-stopped
+  grafana:
+    image: grafana/grafana:11.2.0
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in deploy/wall/.env (cp .env.example .env)}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/omni/omni-compass-wall.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana:/var/lib/grafana/dashboards/omni:ro
+      - grafana-data:/var/lib/grafana
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+  node-exporter:
+    # this host's own counters (processor, memory, disk, network, RAPL energy where the kernel exposes it); on Linux the
+    # host itself, on Docker Desktop its virtual machine
+    image: prom/node-exporter:v1.8.2
+    command: [--path.rootfs=/host]
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    restart: unless-stopped
+  omni-exporter:
+    # the governor's gauges from the audit it writes (tools/omni_exporter.py, standard library only, read only)
+    image: python:3.12.7-slim
+    command: [python3, /omni/tools/omni_exporter.py, serve, --audit, /audit/audit.jsonl, --bind, 0.0.0.0, --port, "9464"]
+    volumes:
+      - ../../tools:/omni/tools:ro
+      - ${OMNI_AUDIT_DIR:-/var/log/omni}:/audit:ro
+    restart: unless-stopped
+  alloy:
+    # optional (docker compose --profile alloy up -d): Grafana Alloy, an OpenTelemetry Collector distribution with Prometheus
+    # pipelines, collecting the same targets (config.alloy) and writing them into this Prometheus; it collects, it controls nothing
+    image: grafana/alloy:v1.4.2
+    profiles: [alloy]
+    command: [run, --server.http.listen-addr=0.0.0.0:12345, --storage.path=/var/lib/alloy/data, /etc/alloy/config.alloy]
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+      - ./targets:/etc/alloy/targets:ro
+    ports: ["127.0.0.1:12345:12345"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+volumes:
+  prometheus-data: {}
+  grafana-data: {}

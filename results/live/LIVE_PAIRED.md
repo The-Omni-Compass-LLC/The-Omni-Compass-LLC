@@ -10,7 +10,7 @@ ten paired repetitions on kind in GitHub Actions.
 | response time, mean (ms) | 126.1 | 79.4 | −37.1%, GAIN, proven |
 | response time, 95th percentile (ms) | 264 | 120 | −54.6%, GAIN, proven |
 | response time, 99th percentile (ms) | 374.9 | 154.4 | −58.8%, GAIN, proven |
-| failed requests (%) | 0 | 0 | EVEN |
+| failed requests (%) | 0 | 0 | STEADY |
 | pods the autoscaler had to start | 4.9 | 2.6 | −46.9%, GAIN, proven |
 | pod start wait, mean per pod (s) | 2.73 | 1.48 | −45.9%, GAIN, proven |
 | replicas, mean | 8.82 | 6.57 | −25.5%, GAIN, proven |

@@ -486,6 +486,20 @@ computed for the run's own degrees of freedom (`omnicompass/student_t.py`); the 
 the last digit up to 20 degrees of freedom and fell to 1.96 beyond them. The first counted run's table (2 October) keeps the
 words it was printed with.
 
+
+## Amendment 15 (2026-10-30, the rig, declared before any counted run on it): the window opens once the governor stands
+
+Until this amendment `scripts/gpu_paired.sh` wrote `window_start.txt`, read the energy meters and started the workload the
+instant the governor process was launched, so the governor's own start-up (the interpreter, the first query of the card, the
+snapshot of its limits) was inside the omni and watch arms' windows and outside native's. On a rented card it is a second or
+two of a 600 s arm; on a loaded machine running the harness's own 5 s test arm it was most of the arm, and the governor had
+written nothing by the window's end (found 30 October 2026, `tests/test_gpu_bench.py` on a loaded runner). From this
+amendment every governed arm waits for each governor's first audit record (its snapshot, written before its first decision),
+records that moment in `governor_ready.txt`, and only then reads the meters and opens the window; a governor not standing
+within `GOV_READY_S` (60 s) refuses the arm. Native's window is unchanged. No gauge, rule, gain or guard of the governor
+changes, and `tools/gpu_reps.py` reads the window as before. The card tables already run (omni-v18's A100 run of 24 October;
+omni-v21's A100 tables of 27 October) stand as their own rig's; the next counted runs carry this rig.
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

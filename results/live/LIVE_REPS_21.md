@@ -15,13 +15,13 @@ order rotated, both arms of a repetition on one runner. The table was recomputed
 | response time (ms), mean | 151.9 | 107.5 | −29.2% | −55.45 to −33.36 | GAIN, proven |
 | response time (ms), 95th percentile | 304.9 | 191.4 | −37.2% | −148.4 to −78.55 | GAIN, proven |
 | response time (ms), 99th percentile | 438.1 | 298.7 | −31.8% | −191.3 to −87.37 | GAIN, proven |
-| failed requests (%) | 0 | 0 | 0 | 0 to 0 | EVEN |
+| failed requests (%) | 0 | 0 | 0 | 0 to 0 | STEADY |
 | HPA replicas, mean | 8.942 | 7.844 | −12.3% | −1.616 to −0.581 | fewer, proven |
 | worker nodes in service, mean | 6 | 4.745 | −20.9% | −1.524 to −0.986 | fewer, proven (all stayed powered) |
 | CPU used by the app (cores), mean | 0.911 | 1.146 | +25.8% | +0.171 to +0.300 | more, proven |
-| pods started | 4.6 | 6.3 | +37.0% | −0.117 to +3.517 | EVEN, not proven |
-| pod start wait, total (s) | 10.2 | 17 | +66.7% | −1.98 to +15.58 | EVEN, not proven |
-| pending pods, pod-minutes | 0.105 | 0.355 | +238% | −0.074 to +0.574 | EVEN, not proven |
+| pods started | 4.6 | 6.3 | +37.0% | −0.117 to +3.517 | STEADY, not proven |
+| pod start wait, total (s) | 10.2 | 17 | +66.7% | −1.98 to +15.58 | STEADY, not proven |
+| pending pods, pod-minutes | 0.105 | 0.355 | +238% | −0.074 to +0.574 | STEADY, not proven |
 
 ## Energy: a declared model, not a meter
 

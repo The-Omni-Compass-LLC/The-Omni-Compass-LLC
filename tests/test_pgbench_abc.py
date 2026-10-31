@@ -27,13 +27,13 @@ def main():
     assert P.verdict([r(-10, -15, -5)] * 3, "spent") == "**GAIN in all three of our runs**", "a cut is a GAIN"
     assert P.verdict([r(10, 5, 15), r(10, -2, 22), r(10, 5, 15)], "higher") == "**GAIN by the mean of our three runs, beyond the noise in 2 of 3**"
     assert P.verdict([r(10, 5, 15), r(-10, -15, -5), r(10, 5, 15)], "higher") == "**the runs disagree**"
-    assert P.verdict([r(0.0, -1e-9, 1e-9)] * 3, "higher") == "EVEN, the same"
+    assert P.verdict([r(0.0, -1e-9, 1e-9)] * 3, "higher") == "STEADY, the same"
     assert P.verdict([r(0, 0, 0, nat=0), r(1, 1, 1, nat=0), r(0, 0, 0, nat=0)], "never more") == "**LOSS in at least one of our runs**", "one more failed transaction in one run is marked"
-    assert P.verdict([r(0, 0, 0, nat=0)] * 3, "never more") == "EVEN, the same"
+    assert P.verdict([r(0, 0, 0, nat=0)] * 3, "never more") == "STEADY, the same"
     assert P.verdict([r(-5, -8, -2)] * 3, "shown") == "shown, not judged"
     assert P.verdict([r(1, 0, 2), None, r(1, 0, 2)], "higher") == "no value"
     print("PASS  database A/B/C rule: GAIN or LOSS in all three of our runs (by what the gauge is for; a resource spent that rose is power given) only with the same sign and every interval clear of zero in all three runs; an interval "
-          "over zero reads EVEN, no difference beyond the noise, with its count; clear runs pointing different ways read as a disagreement; "
+          "over zero reads STEADY, no difference beyond the noise, with its count; clear runs pointing different ways read as a disagreement; "
           "any added failed transaction is marked; the pool size is shown, never judged")
 
 

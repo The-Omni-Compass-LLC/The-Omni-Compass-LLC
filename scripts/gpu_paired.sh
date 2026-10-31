@@ -173,9 +173,6 @@ for rep in ${REP_ONLY:-$(seq 1 "$REPS")}; do
     smi_pid=$!
     wall_pid=""
     if [ -n "${WALL_METER:-}" ]; then $PY tools/wall_meter.py "$WALL_METER" "$D/wall.csv" 2>"$D/wall.err" & wall_pid=$!; sleep 2; fi
-    rapl > "$D/rapl_start.tsv"
-    devmeter > "$D/device_start.txt"
-    date -u +%s.%N > "$D/window_start.txt"
     gov_pids=()
     if [ "$arm" != "native" ]; then
       mode=watch; [ "$arm" = "omni" ] && mode=cap
@@ -189,7 +186,23 @@ for rep in ${REP_ONLY:-$(seq 1 "$REPS")}; do
           > "$D/governor$sfx.log" 2>&1 &
         gov_pids+=($!)
       done
+      # the window opens only once every governor stands: its first audit record is its snapshot of the card's limits, written
+      # before its first decision. Until 30 October 2026 the workload and the window began the instant the governor was launched,
+      # so its start-up (the interpreter, the first query of the card) was inside the omni arm's window and outside native's; on
+      # a loaded machine that start-up ate most of a short arm. A governor not standing within GOV_READY_S refuses the arm.
+      for g in "${CARDS[@]}"; do
+        sfx=""; [ "${#CARDS[@]}" = 1 ] || sfx="-$g"
+        for _ in $(seq 1 $(( ${GOV_READY_S:-60} * 10 ))); do
+          [ -s "$D/audit$sfx.jsonl" ] && break
+          sleep 0.1
+        done
+        [ -s "$D/audit$sfx.jsonl" ] || { echo "the governor for card $g took no snapshot within ${GOV_READY_S:-60} s: arm refused"; fail=1; }
+      done
+      date -u +%s.%N > "$D/governor_ready.txt"
     fi
+    rapl > "$D/rapl_start.tsv"
+    devmeter > "$D/device_start.txt"
+    date -u +%s.%N > "$D/window_start.txt"
     if [ -n "${WORKLOAD_CMD:-}" ]; then
       OUT_DIR="$D" DEVICE="cuda:${CARDS[0]}" CARDS="$GPU" bash -c "$WORKLOAD_CMD" > "$D/workload.log" 2>&1 || echo "workload exited $?" >> "$D/workload.log"
     else

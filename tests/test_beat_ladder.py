@@ -45,7 +45,7 @@ class Ladder(unittest.TestCase):
         self.assertAlmostEqual(r["governor_cpu_s_per_hour"]["main"], 1.7)
         self.assertAlmostEqual(r["governor_cpu_s_per_hour"]["vs_main"]["relative"], 1.0)
         self.assertIsNone(r["reads_per_hour"]["vs_native"])                                 # native has no governor to read with
-        self.assertIn(r["pending_pod_minutes_per_hour"]["vs_native"]["word"], ("LOSS", "EVEN"))
+        self.assertIn(r["pending_pod_minutes_per_hour"]["vs_native"]["word"], ("LOSS", "STEADY"))
         self.assertEqual(t["counts"]["decisions"]["120"], 720)
 
     def test_reports_that_disagree_are_refused(self):

@@ -85,7 +85,9 @@ for arm in "${order[@]}"; do
   echo "######## ARM $arm (repetition $REP)"
   mkdir -p "bench-$arm-$REP"; cp "/tmp/aks-$name.json" "bench-$arm-$REP/aks_cluster.json"
   if ! PLATFORM=aks ARM="$arm" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
-    echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid" | tee "bench-$arm-$REP/INVALID"; fail=1
+    echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid"
+    [ -f "bench-$arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$arm-$REP/INVALID"
+    fail=1
   fi
   gone "$name"
 done

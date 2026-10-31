@@ -46,11 +46,11 @@ def main():
             {"native": {"p95_ms": 390.0, "lost": 0, "consumers_mean": 2.0}, "omni": {"p95_ms": 15.0, "lost": 0, "consumers_mean": 4.5}}]
     p = K.paired(reps, "p95_ms", "lower"); assert p["reading"] == "GAIN" and p["significant"], "a shorter wait is a GAIN"
     c = K.paired(reps, "consumers_mean", "spent"); assert c["reading"] == "power given", "more consumers held is power given"
-    assert K.paired(reps, "lost", "never more")["reading"] == "EVEN, the same"
+    assert K.paired(reps, "lost", "never more")["reading"] == "STEADY, the same"
     reps[1]["omni"]["lost"] = 1
     assert K.paired(reps, "lost", "never more")["reading"] == "**LOSS in a repetition**", "a message never consumed in any repetition is marked"
     noisy = [{"native": {"x": 1.0}, "omni": {"x": 1.1}}, {"native": {"x": 1.0}, "omni": {"x": 0.9}}, {"native": {"x": 1.0}, "omni": {"x": 1.05}}]
-    assert K.paired(noisy, "x", "lower")["reading"] == "EVEN, no difference beyond the noise"
+    assert K.paired(noisy, "x", "lower")["reading"] == "STEADY, no difference beyond the noise"
     # the service time is spent as CPU
     t0 = time.perf_counter(); K.busy_ms(20); dt = time.perf_counter() - t0
     assert 0.018 <= dt <= 0.2, f"20 ms of work took {dt:.3f} s"

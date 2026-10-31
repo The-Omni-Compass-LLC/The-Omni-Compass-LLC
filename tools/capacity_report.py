@@ -178,7 +178,7 @@ def audit(r) -> str:
         return (f"At {cap}, Omni on top completed {abs(r['work_diff']):,.0f} fewer requests within {r['slo_ms']:.0f} ms "
                 f"than native alone ({r['work_pct']:+.1f}%{iv}): a LOSS, reported as it stands, its cause looked for in our "
                 f"own wiring first.{cap_line}{lim}")
-    return (f"At {cap}, the difference in completed work ({r['work_pct']:+.1f}%{iv}) is inside the noise: EVEN, no "
+    return (f"At {cap}, the difference in completed work ({r['work_pct']:+.1f}%{iv}) is inside the noise: STEADY, no "
             f"difference beyond the noise at this cap.{cap_line}{lim}")
 
 
@@ -244,7 +244,7 @@ def main(argv=None):
           "for Omni on top at the same cap is more work from the same capacity, a GAIN.",
           "- **Each step up in the cap**: if both arms do more as the cap rises, the step table shows which turns each "
           "added core into more completed work.",
-          "- Completed work and capacity are work done, so a rise is GAIN and a fall is LOSS; inside the noise is EVEN (the "
+          "- Completed work and capacity are work done, so a rise is GAIN and a fall is LOSS; inside the noise is STEADY (the "
           "key: `docs/HOW_TO_READ_THE_RESULTS.md`). A LOSS is reported as it stands; its cause is looked for in our own "
           "wiring, setup and scoring first."]
     if left_out:

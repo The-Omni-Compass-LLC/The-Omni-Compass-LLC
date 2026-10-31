@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The Python's seeded runs and the live engine's: the record reproduces, and the page's own loop computes the same runs."""
+"""The Python's seeded runs and the live benchmark engine's: the record reproduces, and the page's own loop computes the same runs."""
 import json
 import shutil
 import sys

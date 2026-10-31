@@ -1,0 +1,238 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+name: injection-grid
+# The founder's order of 25 October: every batch of the Python's 500 Monte Carlo injections runs through every organism, native and
+# with Omni-Compass on native, and through every governor sitting on each organism (the third arm), at 1, 10, 100 and 500 runs and
+# 1, 10, 100 and 500 organisms stacked, "every time [the Python] is ran", so anyone can pick any scenario of that one batch on the
+# live benchmark engine. Each set engine-runs commits on main starts it (its base is the newest record in results/engine_runs), and a dispatch
+# runs any base the Python has run. Eight shards run the bodies, heaviest first (tools/injection_grid.py --shard I/8 --cache-only);
+# the last job reads every shard's runs, writes results/injection_grid/INJECTION_GRID_<base>.json and .md, commits them, and on main
+# rebuilds the live benchmark engine with them. Class S, our own models. Nothing is billed: GitHub's own machines.
+on:
+  workflow_dispatch:
+    inputs:
+      base: {description: "The batch's base (empty: the newest set the Python ran, results/engine_runs)", default: ""}
+  workflow_run:
+    workflows: [engine-runs]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: write
+  actions: write   # on main, the page's rebuild started with this grid
+env:
+  OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+concurrency: {group: injection-grid, cancel-in-progress: false}
+jobs:
+  plan:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      base: ${{ steps.b.outputs.base }}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4: the code, not the archive of raw runs
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - id: b
+        name: The batch
+        run: |
+          set -euo pipefail
+          base="${{ github.event.inputs.base }}"
+          if [ -z "$base" ]; then base=$(python3 -c "import sys; sys.path.insert(0, '.'); from tools.injection_grid import newest_batch; print(newest_batch()['base'])"); fi
+          python3 -c "import sys; sys.path.insert(0, '.'); from tools.injection_grid import newest_batch; b = newest_batch($base); print(f\"batch {b['base']}: the Python's digest {b['python_digest'][:16]}, the C++ engine's {(b['cpp_digest'] or 'not run')[:16]}, {b['cpp_agree']} runs agree\")" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+  shard:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix: {shard: [1, 2, 3, 4, 5, 6, 7, 8]}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - name: Shard ${{ matrix.shard }} of 8 of the bodies on every injection of the batch
+        run: python3 tools/injection_grid.py --base "${{ needs.plan.outputs.base }}" --shard "${{ matrix.shard }}/8" --cache-only --workers "$(nproc)" --cache .cache/injection_grid | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_1
+        env:
+          OMNI_EXPORT_PATHS: |
+            .cache/injection_grid/*.npz
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: injection-grid-${{ needs.plan.outputs.base }}-shard-${{ matrix.shard }}
+          path: ${{ steps.omni_legal_export_1.outputs.paths }}
+          if-no-files-found: error
+      - name: Legal files beside the files this run hands out
+        if: always() && strategy.job-index == 0
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: _legal
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            README.md
+            LICENSE
+            NOTICE
+            DISCLOSURES.md
+            PATENTS.md
+            TRADEMARKS.md
+      - name: Legal notice handed out with this run's files
+        if: always() && strategy.job-index == 0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: legal-notice
+          overwrite: true
+          path: |
+            _legal/README.md
+            _legal/LICENSE
+            _legal/NOTICE
+            _legal/DISCLOSURES.md
+            _legal/PATENTS.md
+            _legal/TRADEMARKS.md
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+  grid:
+    needs: [plan, shard]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: injection-grid-${{ needs.plan.outputs.base }}-shard-*
+          merge-multiple: true
+          path: .cache/injection_grid
+      - name: The grid, every cell of every organism and every governor, from the shards' runs
+        run: python3 tools/injection_grid.py --base "${{ needs.plan.outputs.base }}" --cache .cache/injection_grid --workers "$(nproc)" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: The record committed, with this run's link
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
+          git add results/injection_grid/
+          git commit -q -m "The injection grid on the Python's batch ${{ needs.plan.outputs.base }}: every organism and every governor, 1 to 500 runs x 1 to 500 organisms (injection-grid run $GITHUB_RUN_ID)" || { echo "nothing new"; exit 0; }
+          for attempt in 1 2 3 4 5 6; do
+            git pull -q --rebase && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
+          done
+          echo "::error::the record could not be pushed after six attempts"; exit 1
+      - name: On main, the live benchmark engine rebuilt with this grid
+        if: github.event_name == 'workflow_run' || github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: gh workflow run live-engine.yml --ref main
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
