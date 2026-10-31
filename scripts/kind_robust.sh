@@ -57,7 +57,7 @@ if [ "$MODE" = kill ]; then
   fi
   wait_until 50
   if [ -z "${NATIVE:-}" ] && [ -n "${OMNI_PID:-}" ]; then
-    left=$(( (t0 + D) - $(date +%s) )); iters=$(( left / ${OMNI_INTERVAL:-60} )); (( iters < 1 )) && iters=1
+    left=$(( (t0 + D) - $(date +%s) )); iters=$(( left / ${OMNI_INTERVAL:-20} )); (( iters < 1 )) && iters=1
     p2=$(start_controller "$iters" "$OUT/controller2.log" 2>>"$LOG"); echo "$p2" > "$OUT/omni2.pid"
     sleep 2
     if [ -n "$p2" ] && kill -0 "$p2" 2>/dev/null; then say "second governor started: pid $p2, $iters decisions to the end of the window"

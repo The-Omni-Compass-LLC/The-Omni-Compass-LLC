@@ -684,9 +684,9 @@ TERMS = [
       [("omnicompass/master.py", "one switch in a human hand turns Omni-Compass's governing off everywhere at once")],
       aka=["kill switch", "master switch"]),
     T("the heartbeat", D, "The governor's full decision, one turn of its loop: read, decide, write, renew the lease. The main "
-      "engine takes it every 60 s (omni-v17 on); the controller takes any beat from 5 to 120 s (--interval), and the page offers "
-      "five, 15, 30, 60, 90 and 120 s, each shown beside native with what it buys and what it costs.",
-      [(CL, "the main engine takes its full decision every 60 s"),
+      "engine takes it every 20 s from omni-v24 (60 s from omni-v17 to omni-v23); the controller takes any beat from 5 to 120 s "
+      "(--interval), and the page offers 10, 15, 20, 30, 60, 90 and 120 s, each shown beside native with what it buys and what it costs.",
+      [(FP, "with Δ = 20 s the factory's from omni-v24"),
        (MAN, "One turn of the governor's loop: read, decide, write, renew the lease.")], aka=["heartbeat", "beat", "the heart"]),
     T("the fast checks", D, "The governor's checks between its beats, every 5 s at every beat: the scheduling floor, the pod "
       "reflex, and the conveyance every 15 s. Native's pod autoscaler checks every 15 s.",
@@ -930,11 +930,12 @@ TERMS = [
       "belongs to native's side wear it. Red is only a LOSS and the alarm.",
       [(PAGE_F, "the sides: --brass is Omni-Compass (blue), --steel is Native (orange; red is only LOSS and the alarm)"),
        (MAN, "| Orange | native |")], aka=["orange"]),
-    T("the heartbeat's six buttons", D, "On the page the governor's full decision comes at one of six beats, 10, 15, 30, 60, 90 or "
-      "120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's "
-      "live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading.",
-      [(PAGE_F, "the heartbeat (10, 15, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 30, 60, 90, 120} s")],
-      aka=["heartbeat buttons", "the six beats", "the five beats"]),
+    T("the heartbeat's seven buttons", D, "On the page the governor's full decision comes at one of seven beats, 10, 15, 20, 30, 60, "
+      "90 or 120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own: 20 s from omni-v24 (the "
+      "founder's order of 31 October), 60 s from omni-v17 to omni-v23. The page's live model steps every 15 s, so at 10 s two full "
+      "decisions land in every other step, both on that step's reading, and at 20 s one full decision lands in three steps of four.",
+      [(PAGE_F, "the heartbeat (10, 15, 20, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 20, 30, 60, 90, 120} s")],
+      aka=["heartbeat buttons", "the seven beats", "the six beats", "the five beats"]),
     T("governing engine", A, "The executable mathematical rules that turn observations and internal state into governing decisions.",
       [(FP, "The executable mathematical rules that turn observations and internal state into governing decisions.")],
       aka=["governing engine", "the governing engine"]),

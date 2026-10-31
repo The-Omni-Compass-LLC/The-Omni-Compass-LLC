@@ -20,13 +20,13 @@ kubectl run load-generator --image=busybox:1.36 --restart=Never -- /bin/sh -c \
 for i in $(seq 1 30); do kubectl top nodes >/dev/null 2>&1 && break; sleep 10; done
 
 echo "== Phase A: baseline (HPA alone, Omni observing)"
-python -m omni_controller.controller --mode observe --interval 60 --iterations $((PHASE_S / 60)) \
+python -m omni_controller.controller --mode observe --interval 20 --iterations $((PHASE_S / 20)) \
   --audit "$OUT_DIR/audit_observe.jsonl" --kill-file "$OUT_DIR/kill" &
 OUT="$OUT_DIR/baseline.csv" INTERVAL=15 DURATION="$PHASE_S" bash fleet/capture/kube_capture.sh
 wait
 
 echo "== Phase B: Omni target mode (writes the HPA target)"
-python -m omni_controller.controller --mode target --interval 60 --iterations $((PHASE_S / 60)) \
+python -m omni_controller.controller --mode target --interval 20 --iterations $((PHASE_S / 20)) \
   --audit "$OUT_DIR/audit_target.jsonl" --kill-file "$OUT_DIR/kill" &
 OUT="$OUT_DIR/omni.csv" INTERVAL=15 DURATION="$PHASE_S" bash fleet/capture/kube_capture.sh
 wait

@@ -161,11 +161,12 @@ preregistered seeds were never read by either search.
   made at the start and already paid for, no cluster autoscaler, a parked machine kept at its standby draw;
   `tools/model_gate.py` `StaticFineSim`, `docs/PACE_PREREGISTRATION.md` amendment 5) and in the cloud (`cloud`: the plant with
   the cloud's own autoscaler, the bill its machine-hours). Both on the plant that moves every 5 s, the compass law at the max.
-- **Knobs and values.** The beat P ∈ {10, 20, 30, 60, 90, 120} s and the cover's floor f, on site ∈ {0.6, 0.8, 1.0} (eighteen
-  tunes) and in the cloud ∈ {0.6, 0.8, 0.9, 0.95, 1.0} (thirty tunes: the probe read the floor at 1.0 exactly native's on every
-  gauge of seed 103, so the cloud's admissible tunes, if any, lie near it, and the grid is finer there), the factory tune among
-  them (60 s, 0.6). The 5 s beat is left out for its running time and its cost, read in both ladders
-  (`results/model_gate/V23_LADDER.md`; the on-site ladder of 31 October).
+- **Knobs and values.** The beat is the founder's: 20 s (his order of the same evening, while the search ran: "lock this base
+  engine at 20 ... 60 seconds ... that's way too long"), so the search reads the cover's floor at 20 s alone, on site ∈ {0.6, 0.8,
+  1.0} and in the cloud ∈ {0.6, 0.8, 0.9, 0.95, 1.0} (the probe read the floor at 1.0 exactly native's on every gauge of seed
+  103, so the grid is finer near it), the factory tune at 20 s and 0.6 the main tune. It first ran with the beats 10 to 120 s
+  as well; the readings it took at 10 s before the order (on site at 0.6, and in the cloud at 0.6) are kept in its folder and read
+  in no verdict.
 - **Seeds.** 101 to 108, one day each, native on the same seeds; the gate's seeds 1 to 8 stay untouched for the reading of the
   chosen tunes.
 - **Rule.** Section 2's, as `tools/tune_study.py` `judge()` applies it, each setting on its own: admissible = no gauge reads LOSS

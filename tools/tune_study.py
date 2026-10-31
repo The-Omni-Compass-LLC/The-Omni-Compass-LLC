@@ -42,10 +42,12 @@ from tools.model_gate import GAUGES, PACE_GAUGES, reading, run  # noqa: E402
 # conditions of the factory profile, on site and in the cloud, each its own grid of the beat and the cover's floor (omni-v24's
 # knob, --cover-floor). The first search's grids (22 October: the beat and the compass's balance point, the kind and the
 # cloud's settings) are kept in its own record, results/model_gate/V17_TUNE.json, which judge() reads by its own grids.
-GRIDS = {"onsite": {"beat": [10, 20, 30, 60, 90, 120], "cover-floor": [0.6, 0.8, 1.0]},
-         "cloud": {"beat": [10, 20, 30, 60, 90, 120], "cover-floor": [0.6, 0.8, 0.9, 0.95, 1.0]},
+GRIDS = {"onsite": {"beat": [20], "cover-floor": [0.6, 0.8, 1.0]},
+         "cloud": {"beat": [20], "cover-floor": [0.6, 0.8, 0.9, 0.95, 1.0]},
          "kind": {"beat": [15, 30, 60, 75, 90, 120], "compass-center": [0.2, 0.3, 0.4]}}
-MAIN = {"onsite": {"beat": 60, "cover-floor": 0.6}, "cloud": {"beat": 60, "cover-floor": 0.6},
+# the factory beat is 20 s from omni-v24 (the founder's order of 31 October, evening: "lock this base engine at 20"): the second
+# search reads the cover's floor at that beat in each setting, the factory's 0.6 the main tune
+MAIN = {"onsite": {"beat": 20, "cover-floor": 0.6}, "cloud": {"beat": 20, "cover-floor": 0.6},
         "kind": {"beat": 60, "compass-center": 0.3}}
 WORDS = {"onsite": "on site: the kind rig's own machines, made at the start and already paid for, no cluster autoscaler, the "
                    "compass law at the max",

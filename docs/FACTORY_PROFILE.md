@@ -71,7 +71,9 @@ shows.
 Let x be the governed system's state, z the governor's internal state, y its observations, θ the complete configuration profile,
 and Δ the full governing decision interval. The public interval choices on the bench are
 
-  Δ ∈ {10, 15, 30, 60, 90, 120} s
+  Δ ∈ {10, 15, 20, 30, 60, 90, 120} s
+
+with Δ = 20 s the factory's from omni-v24 (the founder's order of 31 October, evening; 60 s from omni-v17 to omni-v23)
 
 (the controller itself takes any value from 5 to 120 s, `--interval`). At decision k, with tₖ₊₁ = tₖ + Δ, the general contract is
 

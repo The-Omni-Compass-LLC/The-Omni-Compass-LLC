@@ -728,7 +728,7 @@ def capacity_table(root, cols):
 
 
 def engine_default_s():
-    """The engine's own default decision period (omni_controller/controller.py, --interval: 60 s since omni-v17)."""
+    """The engine's own default decision period (omni_controller/controller.py, --interval: 20 s from omni-v24, 60 s from omni-v17)."""
     from omni_controller.controller import parser
     return float(parser().get_default("interval"))
 

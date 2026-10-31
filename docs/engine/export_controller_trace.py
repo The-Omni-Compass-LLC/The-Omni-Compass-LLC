@@ -167,7 +167,7 @@ def run(setting, seed, arm):
         return ticks, decisions
     audit = tmp / "audit.jsonl"
     if setting == "cloud":
-        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--interval", "60",
+        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--interval", "20",
                 "--latency-file", str(lat_path), "--slo-ms", str(SLO_MS), "--audit", str(audit), "--kill-file", str(tmp / "kill"),
                 "--node-scale-cmd", "SIMSCALE {n}", "--min-nodes", str(sim.c.pool.min_nodes), "--max-nodes", str(sim.c.pool.max_nodes),
                 "--headroom", "0.5", "--active-nodes-only", "--max-node-step", "1"]

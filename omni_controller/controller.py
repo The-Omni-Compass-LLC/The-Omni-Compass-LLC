@@ -1562,7 +1562,9 @@ def parser():
     # the heartbeat, a dial (omni-v17, the founder's word of 22 October, afternoon): the main engine decides every 60 s, and any
     # beat can be set (5, 15, 30, 60, 75, 90, 120 s and every value between), each shown beside native; the fast checks run
     # every 5 s at every beat. Every rule counts seconds (omni-v16), so either can be turned alone
-    ap.add_argument("--interval", type=float, default=60.0, help="seconds between governor decisions (the heartbeat, a dial; the main engine 60 s)")
+    # the factory beat is 20 s from omni-v24 (the founder's order of 31 October, evening: "lock this base engine at 20 ... a whole
+    # minute to double check itself ... that's way too long"); 60 s from omni-v17 to omni-v23, 15 s on omni-v16
+    ap.add_argument("--interval", type=float, default=20.0, help="seconds between governor decisions (the heartbeat, a dial; the main engine 20 s from omni-v24)")
     ap.add_argument("--floor-interval", type=float, default=5.0, help="seconds between the fast checks: the scheduling floor, the pod reflex, the conveyance's clock (nodepool mode)")
     ap.add_argument("--convey-every-s", type=float, default=15.0,
                     help="seconds between conveyance passes, counted on the checks (a fast check or a decision; omni-v16)")

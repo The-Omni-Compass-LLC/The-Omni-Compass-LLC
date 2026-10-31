@@ -57,10 +57,10 @@ class Rule(unittest.TestCase):
         self.assertNotIn(bad, v["ranked"])
 
     def test_in_the_cloud_a_bigger_bill_is_not_admissible(self):
-        dear = "beat30-cover-floor0.8"
+        dear = "beat20-cover-floor0.8"
         v = TS.judge(study("cloud", {dear: lambda s: {"alert_minutes": 8.0 + wob(s), "machine_hours": 11.0 + wob(s)}}))["cloud"]
         self.assertFalse(v["rows"][dear]["admissible"])
-        cheap = "beat90-cover-floor1"
+        cheap = "beat20-cover-floor1"
         v = TS.judge(study("cloud", {cheap: lambda s: {"machine_hours": 9.0 + wob(s)}}))["cloud"]
         self.assertEqual(v["dominating"], [cheap])                 # the same work for a smaller bill dominates in the cloud
 

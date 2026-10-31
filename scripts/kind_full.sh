@@ -38,15 +38,15 @@ kubectl get nodes -o wide | tee "$OUT_DIR/nodes_start.txt"
 CAPTURE="ACTIVE_ONLY=1 INTERVAL=15 DURATION=$PHASE_S"
 
 echo "== Phase A: baseline (HPA alone on $WORKERS workers, Omni observing)"
-python -m omni_controller.controller --mode observe --active-nodes-only --interval 60 --iterations $((PHASE_S / 60)) \
+python -m omni_controller.controller --mode observe --active-nodes-only --interval 20 --iterations $((PHASE_S / 20)) \
   --power-cmd "bash scripts/kind_power.sh" --site-limit-w "$SITE_LIMIT_W" \
   --audit "$OUT_DIR/audit_observe.jsonl" --kill-file "$OUT_DIR/kill" &
 env $CAPTURE OUT="$OUT_DIR/baseline.csv" bash fleet/capture/kube_capture.sh
 wait
 
 echo "== Phase B: full engine (HPA target + node pool + power sensing)"
-python -m omni_controller.controller --mode nodepool --active-nodes-only --interval 60 --floor-interval 5 \
-  --iterations $((PHASE_S / 60)) --min-nodes "${MIN_NODES:-2}" --max-nodes "$(( WORKERS - ${NODE_CUSHION:-0} ))" --max-node-step 1 \
+python -m omni_controller.controller --mode nodepool --active-nodes-only --interval 20 --floor-interval 5 \
+  --iterations $((PHASE_S / 20)) --min-nodes "${MIN_NODES:-2}" --max-nodes "$(( WORKERS - ${NODE_CUSHION:-0} ))" --max-node-step 1 \
   --node-scale-cmd "bash scripts/kind_nodepool.sh {n}" --node-restore-cmd "bash scripts/kind_nodepool.sh $WORKERS" \
   --power-cmd "bash scripts/kind_power.sh" --site-limit-w "$SITE_LIMIT_W" \
   --audit "$OUT_DIR/audit_full.jsonl" --kill-file "$OUT_DIR/kill" &
