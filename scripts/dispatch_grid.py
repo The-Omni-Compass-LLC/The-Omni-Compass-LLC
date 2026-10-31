@@ -681,7 +681,7 @@ def cloud_title(wf, kv):
     org = f" organism {kv['organism']} x{kv.get('organism_scale') or '1'}" if kv.get("organism") else ""
     room = f" replica room {kv['replica_ceiling']}" if kv.get("replica_ceiling") else ""
     room += " to the cap, stopping rule" if kv.get("stop_looks") else ""   # a set run to the cap under the stopping rule counts on its own (19 October)
-    dial = kv.get("dial") or "save"
+    dial = kv.get("dial") or "max"   # every cloud workflow's own default since 31 October (the founder's order: the cloud at the max)
     if wf == BYOC_WF:
         c = kv.get("cloud") or "other"
         return f"{wf[:-4]} {c} {what}{org}{room} dial {dial} {c} {kv.get('pool') or 'work0'}"

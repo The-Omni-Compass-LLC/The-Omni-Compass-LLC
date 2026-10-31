@@ -245,8 +245,9 @@ class Conductor(unittest.TestCase):
                     "burst y|load_steps=1 4 1 6 1 9;vm_size=Standard_D2_v4\n")
         q = g.azure_queue(f.name)
         self.assertEqual(len(q), 9)
-        self.assertEqual(q[0][2], "aks-metered steady dial save eastus Standard_D2s_v4")
-        self.assertEqual(q[1][2], "aks-metered burst 1 6 1 8 1 6 dial save eastus Standard_D2_v4")
+        # a set with no dial reads the workflow's own default, the max since 31 October, as the workflow titles it
+        self.assertEqual(q[0][2], "aks-metered steady dial max eastus Standard_D2s_v4")
+        self.assertEqual(q[1][2], "aks-metered burst 1 6 1 8 1 6 dial max eastus Standard_D2_v4")
         steady, x, y = q[0][2], q[1][2], q[2][2]
         # one region is one line at GitHub whatever the machine size (17 October: two sizes treated as two lines cancelled
         # each other's waiting runs): the line busy, nothing starts
@@ -259,11 +260,14 @@ class Conductor(unittest.TestCase):
         self.assertEqual(g.azure_to_start(q, {steady: 3, x: 3, y: 3}, set()), [])
         self.assertEqual(g.azure_title({"dial": "max", "replica_ceiling": "0"}), "aks-metered steady replica room 0 dial max eastus Standard_D2s_v4")
         own = g.azure_queue(g.AZURE_QUEUE)                                 # the repository's own queue reads: the four sets at the
-        self.assertEqual(len(own), 12)                                     # tune-down (the founder's order of 14 October), A, B, C of each
+        self.assertEqual(len(own), 12)                                     # max (the founder's order of 31 October), A, B, C of each
         self.assertEqual([n for r, n, _, _ in own if r == "A"], ["steady", "burst 1 4 1 6 1 9", "burst 1 6 1 8 1 6", "the real day on 1 to 9"])
         for _, _, title, kv in own:
-            self.assertTrue(title.startswith("aks-metered ") and " dial save " in title, title)
-            self.assertEqual((kv.get("dial"), kv.get("replica_ceiling")), ("save", "0"))
+            self.assertTrue(title.startswith("aks-metered ") and " dial max " in title, title)
+            # the replica room read live, as on kind: the operator's cap no longer pinned by the struck rule of 14 October
+            self.assertEqual((kv.get("dial"), kv.get("replica_ceiling")), ("max", None))
+            # a set at the max is never read back as one of the tune-down's started sets
+            self.assertNotIn(" dial save ", title)
 
     def test_one_cloud_one_line_queue_sets_then_its_reruns_and_cancelled_runs_not_counted(self):
         g = self.g

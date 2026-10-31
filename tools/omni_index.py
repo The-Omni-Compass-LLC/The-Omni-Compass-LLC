@@ -96,7 +96,7 @@ WORKLOAD_TABLES = [
 ]
 DB_FILE = WORKLOAD_TABLES[0][1]
 AIM_LOWER = {"speed", "machines", "energy"}   # the measures whose declared aim is lower (work aims higher)
-PENDING = {"Real cloud (Azure AKS, billed)": "the omni-v23 Azure sets run one at a time at the tune-down with native's cap (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day of Google 2011; A, B and C, `scripts/azure_queue.txt`); the category joins as their three-run tables land",
+PENDING = {"Real cloud (Azure AKS, billed)": "the omni-v23 Azure sets run at the max, one at a time once the sets under the struck rule finish (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day of Google 2011; A, B and C, `scripts/azure_queue.txt`; the founder's order of 31 October struck the tune-down on the machines alone); the category joins as their three-run tables land",
            "Real card (NVIDIA, its own meter)": "the rerun on the current card controller (the 2026-10-02 run used the replaced one)"}
 
 
@@ -290,7 +290,7 @@ def main():
          "mean of the real categories, each weighted the same. Modelled muscles are shown beside it, never inside it. "
          "Every number is read from the test's own newest three-run table (`results/live/V<n>_*.json`, the newest engine with all three runs, made by "
          "`tools/confirm_abc.py`, `tools/pgbench_abc.py`, `tools/kafka_abc.py`, `tools/redis_abc.py`, `tools/ycsb_abc.py` and `tools/sysbench_abc.py` from the three archived runs; `tools/omni_index.py`).", "",
-         f"## Headline: Omni-Compass on top of native, real machines, judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
+         f"## Headline: Omni-Compass on top of native, real software on real computers (the software end, class L; not bare metal and not the chip, which enters as its own category), judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
          f"{index_word(head, head_s)}** (more for the same, or the same for less, across work, speed, machines and energy)", "",
          "A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`): GAIN, LOSS or power given in all three of our "
          "runs counts, as the geometric mean of the runs' ratios; STEADY (no difference beyond the noise) counts as exactly 1, so "

@@ -14,7 +14,7 @@ run-name: >-
      github.event.inputs.organism != '' && format(' organism {0} x{1}', github.event.inputs.organism, github.event.inputs.organism_scale) || '',
      github.event.inputs.replica_ceiling != '' && format(' replica room {0}', github.event.inputs.replica_ceiling) || '',
      github.event.inputs.location || 'eastus', github.event.inputs.worker_pools != '' && 'pools' || (github.event.inputs.vm_size || 'Standard_D2s_v4'),
-     github.event.inputs.dial || 'save',
+     github.event.inputs.dial || 'max',
      github.event.inputs.stop_looks != '' && ' to the cap, stopping rule' || '') }}
 on:
   workflow_dispatch:
@@ -36,7 +36,7 @@ on:
       organism_scale: {description: "Copies of the organism on one clock, the real cluster inside (1, 10 or 100)", default: "1"}
       replica_ceiling: {description: "Omni-Compass's replica room: the most replicas it may raise the app's cap to while the cap binds and the line is threatened, handed back once the demand holds still (the compass law; docs/AKS_REPLICA_ROOM_PREREGISTRATION.md); native keeps the operator's cap. 0: the operator's cap, never moved (the cloud sets: the bill at native's work); N: a ceiling of the operator's own; empty: read live (what the machines can hold, one pod under)", default: ""}
       stop_looks: {description: "The preregistered stopping rule (tools/stop_rule.py, the amendment of 19 October): looks, in paired repetitions, at which the set stops once its bill is read (99% intervals; never on a LOSS); empty: every repetition runs", default: ""}
-      dial: {description: "The dial of Omni-Compass on top: save, the tune-down (native's work on the least resource; the founder's order of 14 October for the cloud: the same work as native for a smaller bill), or max (the most work, faster, at any spend)", default: "save"}
+      dial: {description: "The dial of Omni-Compass on top: max, the factory tune (the whole engine, every muscle; the founder's order of 31 October for every cloud: the bill judged beside the work by the one key, never ruled), or save, the tune-down (native's work on the least resource; a changed tune, its receipts its own)", default: "max"}
 # one Azure set at a time per machine family and region (each family has its own 10-vCPU allowance): the default family
 # (Standard_D2s_v4 in eastus, and every multi-pool fleet, which uses it too) keeps the one queue it always had; a set on
 # another family or in another region queues on its own and runs beside it
@@ -162,10 +162,9 @@ jobs:
           AKS_MAX_NODES: ${{ github.event.inputs.max_workers || '4' }}
           HPA_MAX: ${{ github.event.inputs.hpa_max || '' }}
           REPLICA_CEILING: ${{ github.event.inputs.replica_ceiling || '' }}
-          OMNI_DIAL: ${{ github.event.inputs.dial || 'save' }}
-          # in the cloud the governor moves the machines alone (the founder's orders of 14 October, night): pods, processor
-          # limits and power stay native's, so the bill can only fall or stay (scripts/kind_bench.sh, OMNI_MACHINES_ONLY)
-          OMNI_MACHINES_ONLY: '1'
+          # the whole engine at the max in every cloud, the bill judged beside the work (the founder's order of 31 October:
+          # no hard rule; the machines-alone switch of 14 October is struck; scripts/kind_bench.sh)
+          OMNI_DIAL: ${{ github.event.inputs.dial || 'max' }}
           AKS_WORKER_POOLS: ${{ github.event.inputs.worker_pools || '' }}
           CLOSURE: tuning/GLOBAL_LEAGUE_PREREGISTRATION.json
       - if: always() && steps.stop.outputs.run == 'true'

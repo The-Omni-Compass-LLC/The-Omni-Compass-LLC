@@ -3,13 +3,17 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-# The cloud mode (the Operator's Manual, chapter 19): Omni-Compass on top at the tune-down, on the machines alone. It moves
-# no pod autoscaler (--sensed names no service), conveys no processor and caps no power; it parks only machines the
-# cloud's autoscaler already made, after its own trial, and wakes them on a breach. Apply after omni-compass.yaml (the
-# namespace, the service account and the watch role) and rbac-machines.yaml. It ships with --dry-run: it decides and
-# writes nothing until that line is removed. Set the image (<registry>/omni-compass-cloud:<version>), TARGET_URL (the
-# service's URL) and --slo-ms (the service's line), and --max-nodes (the work pools' top). Three containers in one pod:
-# the governor, the probe (its response-time feed) and the watchdog (its lease), sharing one process namespace.
+# The cloud (the Operator's Manual, chapter 19): Omni-Compass on top of a managed cluster at the max, the whole engine, every
+# muscle (the founder's order of 31 October: no hard rule; the tune-down on the machines alone of 14 October is struck). It
+# senses the service and moves its pod target inside the autoscaler's cover, conveys the processor a machine can spare, and
+# parks machines the cloud's own autoscaler made, after its own trial, waking them on a breach; it asks the cloud for no
+# machine itself (the autoscaler, native's machine controller, stays and adds them). The bill is judged beside the work,
+# never ruled. Apply after omni-compass.yaml (the namespace, the service account and the watch role) and rbac-cloud.yaml
+# (the writes the whole engine makes). It ships with --dry-run: it decides and writes nothing until that line is removed.
+# Set the image (<registry>/omni-compass-cloud:<version>), --sensed and --cap-deployments (the service's
+# namespace/deployment: its autoscaler's target moved, its pods' processor conveyed), TARGET_URL (the service's URL),
+# --slo-ms (the service's line) and --max-nodes (the work pools' top). Three containers in one pod: the governor, the probe
+# (its response-time feed) and the watchdog (its lease), sharing one process namespace.
 apiVersion: apps/v1
 kind: Deployment
 metadata: {name: omni-compass, namespace: omni-compass, labels: {app: omni-compass}}
@@ -29,7 +33,8 @@ spec:
       containers:
         - name: controller
           image: omni-compass-cloud:local
-          args: ["--give-back-only", "--mode", "nodepool", "--law", "compass", "--dial", "save", "--sensed", "none/none",
+          args: ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--sensed", "<namespace>/<deployment>",
+                 "--cap-deployments", "<namespace>/<deployment>",
                  "--active-nodes-only", "--interval", "60", "--floor-interval", "5",
                  "--min-nodes", "2", "--max-nodes", "4", "--max-node-step", "1",
                  "--node-scale-cmd", "bash /app/scripts/kind_nodepool.sh {n}",

@@ -36,8 +36,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, the same
-work for a smaller bill.
+faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
+work for the same bill.
 
 **Where the page shows it.** The live benchmark engine page plays every benchmark back from its own SHA-256-checked files, native
 beside Omni-Compass on top of native, lane by lane, and runs the engine's own runs in the page: the Python's seeded runs, and
@@ -1539,9 +1539,10 @@ At each beat the other knobs may want their own combination; that tuning is the 
 
 ### 12.2 Beat Ladder: the two tables
 
-Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the models read (**Cloud Setting at the
-Tune-Down, Machines Alone**: the compass law at the tune-down, the machines alone; **kind Benchmark at the Max, Autoscalers
-Sensed**: the compass law at the max, every autoscaler sensed). The first, **Against Native**, gives each beat's value and its
+Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the models read (**Cloud Setting as Read
+22 and 23 October: the Tune-Down, Machines Alone (Struck 31 October)**: the compass law at the tune-down, the machines alone,
+the cloud's rule when these records were read; **kind Benchmark at the Max, Autoscalers Sensed**: the compass law at the max,
+every autoscaler sensed). The first, **Against Native**, gives each beat's value and its
 word against native: the reads of the cluster a day, the governor's own processor, the pods waiting for a place, the 95th
 percentile, the minutes over the line, the autoscaler short of its target, the machine-hours and the energy per core-hour; native
 has no governor, so its reads and processor are blank, and the main engine's row is set in bold. The second, **Against the Main Engine's 60 s**,
@@ -1816,7 +1817,8 @@ autoscaler's own pace), and an operator may choose another for a system's own re
 choice does. Its five rows of buttons pick the record to read:
 
 - **Beat:** 5, 10, 15, 20, 30, 60, 75, 90 or 120 s.
-- **Setting:** on-site, where the governor sizes the pool on top of the pod autoscaler, or in the cloud, the machines alone.
+- **Setting:** on-site, where the governor sizes the pool on top of the pod autoscaler, or in the cloud, the machines alone (the
+  cloud's rule when the sweep was read on 22 October, struck on 31 October).
 - **Engine:** omni-v16, every clock in seconds, or omni-v15, its rules counted in beats.
 - **Against:** what each reading is set against: native, the same engine at 15 s (omni-v16's factory beat), or the same
   engine at 60 s (omni-v17's). The sweep's record is omni-v16's and omni-v15's; the dial's ladder (the page's section 3d, chapter 12) reads omni-v17.
@@ -1957,10 +1959,12 @@ The cloud providers' section (the page's section 4d) opens with a box: "THE CLOU
 cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and
 autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site
 or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. On the
-wire alone (every cloud run on the page: Omni-Compass at the tune-down on the machines only, the pods exactly native's), all it
-can do is park machines the cloud's own autoscaler already made, after its own trial; so the most a cloud run can show is a small
-cut in the bill of the wire. It cannot show the work and speed gained at the software end, nor the energy and throughput gained
-at the bare metal, because neither end is under it. The larger benefit lives at the two ends. No tenant can meter a provider's
+wire alone (every cloud run on the page so far: Omni-Compass at the tune-down on the machines only, the pods exactly native's,
+the cloud's rule until 31 October), all it could do was park machines the cloud's own autoscaler already made, after its own
+trial, so the most those runs can show is a small cut in the bill of the wire: the wire makes no benefit of its own. From 31
+October every cloud set runs the whole engine at the max on the cloud's cluster, so its receipt shows that the engine holds there
+as on site and how much of the software end's gain comes through the wire, read as work per dollar beside the bill. It cannot
+show the energy and throughput gained at the bare metal, because the provider's machines are not a tenant's to meter. The larger benefit lives at the two ends. No tenant can meter a provider's
 back end, so the page claims that benefit only as the same mechanism measured on hardware the repository can meter (the page's
 section 4f), never as a measurement of the provider's machines.
 
@@ -1973,13 +1977,19 @@ through the cloud with all three, each cell its word and its number with its int
 where a measurement differs from the expectation, the measurement stands. The same box and table stand at the head of the whole
 organism (the page's section 5d), and both follow that section's reading and chip knobs.
 
-### 21.2 One metric: the bill
+### 21.2 More work for the same bill
 
-In a cloud Omni-Compass shows one thing: the same work as native for a smaller bill, never a
-bigger one. Every cloud set runs Omni-Compass at the tune-down on the machines alone (`OMNI_MACHINES_ONLY=1`,
-`--give-back-only`): no pod autoscaler moved, no processor conveyed, no power capped, so the pods are exactly native's. It parks
-only a machine the cloud already made, after its own trial, and wakes it on a breach. The bill and the machines aim lower;
-work, speed and failures must read STEADY or GAIN. Azure runs first and is the measure of the other two (Google Cloud, Amazon
+In a cloud Omni-Compass shows two things: that the engine holds on the cloud's machines as it does on site, and the work per
+dollar, more work for the same bill, never a smaller bill as the aim (the founder's words of 31 October). From 31 October every
+cloud set runs the whole engine at the max on top of the cloud's own autoscaler (the founder's order of that day: no hard rule;
+until then every cloud set ran at the tune-down on the machines alone, `OMNI_MACHINES_ONLY=1`, `--give-back-only`, the order of
+14 October, and those sets stand as their own record). The governor senses the service, moves its pod target inside the
+autoscaler's cover, conveys the processor, and parks a machine the cloud already made, after its own trial, waking it on a
+breach; it asks the cloud for no machine itself. Every gauge is read against native by the one key, and the cloud's judged
+number is the work per dollar: the bill may rise where the work rises more (the founder's words of 31 October: "anybody will pay
+1% more for 10% more product"), a rise shown beside the work it bought, and a tune whose work per dollar falls against native is
+the tune falling out wrong, fixed in our models. Azure's queue holds its sets at the max until they carry the load whose work
+grows with the speed (the work meter), so each receipt can read the work per dollar. Azure runs first and is the measure of the other two (Google Cloud, Amazon
 Web Services): the same tuning, mechanism and harness. Google's and Amazon's sets are not yet run: their queues are switched off
 (24 October), kept ready as Azure's sets run, and the page reads each of their rows "not yet run" until each queue is switched on.
 
@@ -4586,7 +4596,7 @@ From 19 October: every Azure set runs up to 100 paired repetitions a run, the pa
 
 **Cloud-Setting Controller · Class S**
 
-The controller every cloud set runs (omni_controller/controller.py --give-back-only, the tune-down, the machines alone), decision by decision on the repository's modelled cluster (class S). The cloud's own autoscaler runs in both arms. Omni-Compass only parks a machine the cloud already made, after its trial, and wakes it on a breach. The bill counts every machine that exists, in service, booting or parked, from the record.
+The controller every cloud set runs from 31 October (omni_controller/controller.py at the max, the whole engine), decision by decision on the repository's modelled cluster (class S; until the live-engine workflow rebuilds this record from the push of 31 October, the record shown is the one read at the tune-down on the machines alone). The cloud's own autoscaler runs in both arms. Omni-Compass moves the target inside the autoscaler's cover and parks a machine the cloud already made, after its trial, waking it on a breach. The bill counts every machine that exists, in service, booting or parked, from the record.
 
 **Native**
 
@@ -5329,11 +5339,11 @@ The shipped controller's decision trace, replayed from its own audit log one dec
 
 **4d Cloud Providers**
 
-In a cloud the one metric is the bill: whether the same workload costs less with Omni-Compass on top. Each provider's card lists its four test sets and their status.
+In a cloud the bill is read beside the work: whether the same bill buys more work with Omni-Compass on top. Each provider's card lists its four test sets and their status.
 
-In a cloud, Omni-Compass shows one thing: the same work as native for a smaller bill, never a bigger one. Every cloud set runs Omni-Compass at the tune-down on the machines alone: no pod autoscaler moved, no processor conveyed, no power capped, so the pods are exactly native's. It parks only a machine the cloud already made, after its own trial, and wakes it on a breach. The bill and the machines aim lower; work, speed and failures must read STEADY or GAIN. Azure, Google Cloud and Amazon run the same tuning, mechanism and harness.
+In a cloud, Omni-Compass shows two things: that the engine holds on the cloud's machines as it does on site, and the work per dollar: more work for the same bill, never a smaller bill as the aim (the founder's words of 31 October). From 31 October every cloud set runs the whole engine at the max on top of the cloud's own autoscaler (the founder's order of that day: no hard rule): the governor senses the service, moves its pod target inside the autoscaler's cover, conveys the processor, and parks a machine the cloud already made, after its own trial, waking it on a breach; it asks the cloud for no machine itself, and the cloud's autoscaler alone adds machines. Every gauge is read against native by the one key, and the cloud's judged number is the work per dollar: the bill may rise where the work rises more (the founder's words of 31 October: "anybody will pay 1% more for 10% more product"), a rise shown beside the work it bought, and a tune whose work per dollar falls against native is the tune falling out wrong, fixed in our models. Azure's queue holds its sets at the max until they carry the load whose work grows with the speed (the work meter), so each receipt reads the work per dollar. Until 31 October every cloud set ran at the tune-down on the machines alone (no pod autoscaler moved, no processor conveyed, no power capped), and those sets stand as their own record. Azure, Google Cloud and Amazon run the same tuning, mechanism and harness.
 
-A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. On the wire alone (every cloud run on this page: Omni-Compass at the tune-down on the machines only, the pods exactly native's), all it can do is park machines the cloud's own autoscaler already made, after its own trial; so the most a cloud run can show is a small cut in the bill of the wire. It cannot show the work and speed gained at the software end, nor the energy and throughput gained at the bare metal, because neither end is under it. Omni-Compass on the software end (the front end) and on the bare metal (the back end) reaches gauges a cloud run cannot. A cloud provider that runs Omni-Compass on its own back end would see those gauges on its own GPU chips and Linux racks; no tenant can meter a provider's back end, so this page claims it only as the same mechanism measured on hardware we can meter (section L.25), never as a measurement of the provider's machines. The three places compose into one organism and one bill in section L.31.
+A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. The wire makes no benefit of its own. On the wire alone (every cloud run on this page so far: Omni-Compass at the tune-down on the machines only, the pods exactly native's, the cloud's rule until 31 October), all it could do was park machines the cloud's own autoscaler already made, after its own trial, so the most those runs can show is a small cut in the bill of the wire. From 31 October every cloud set runs the whole engine at the max on the cloud's cluster, so its receipt shows that the engine holds there as on site and how much of the software end's gain comes through the wire, read as work per dollar beside the bill. It cannot show the energy and throughput gained at the bare metal, because the provider's machines are not a tenant's to meter. Omni-Compass on the software end (the front end) and on the bare metal (the back end) reaches gauges a cloud run cannot. A cloud provider that runs Omni-Compass on its own back end would see those gauges on its own GPU chips and Linux racks; no tenant can meter a provider's back end, so this page claims it only as the same mechanism measured on hardware we can meter (section L.25), never as a measurement of the provider's machines. The three places compose into one organism and one bill in section L.31.
 
 The company's own expectation, not a measured result (24 October): about 3 to 4% from the front end, 2 to 3% from the back end, about 5% from the two ends together, and 1 to 2% from the wire alone, as a smaller bill or more work for the same bill; the readings of each place stand in the place table of sections L.23 and L.31; where a measurement differs from the expectation, the measurement stands.
 

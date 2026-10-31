@@ -8,8 +8,8 @@ This connects GitHub to a Google Cloud account so two workflows can run the same
 
 - **`gke-metered`**: a real Google Kubernetes Engine cluster, native Kubernetes (with Google's own cluster autoscaler)
   against the same with Omni-Compass on top, the machines Google bills counted every 15 seconds, the organisms with the
-  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set at the
-  tune-down with the governor on the machines alone, so the bill can only fall or stay. The same
+  cluster inside at 1, 10 and 100 copies (`organism`, `organism_scale`), everything deleted at the end; every set with the
+  whole engine at the max on top of the cloud's own autoscaler, the bill judged beside the work (31 October). The same
   design as Azure's `aks-metered` (`docs/K8S_COMPASS_PREREGISTRATION.md`).
 - **`cloud-organism`** with `cloud` = `gcp`: the big organisms (the whole tower and the four stacked, the
   real cluster inside, at 100 copies) on one rented 8-processor machine, the same test Azure's `big-organism-detached` runs.

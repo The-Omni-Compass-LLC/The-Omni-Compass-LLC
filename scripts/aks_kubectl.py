@@ -77,12 +77,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     setup = sub.add_parser('install'); setup.add_argument('--version', required=True); setup.add_argument('--directory', required=True)
-    test = sub.add_parser('check'); test.add_argument('--machines-only', action='store_true')
+    sub.add_parser('check')   # the resize wire is always checked: every cloud runs the whole engine (the founder's order of 31 October)
     args = parser.parse_args()
     if args.command == 'install':
         print(install(args.version, args.directory))
     else:
-        print(json.dumps(check(resize=not args.machines_only)))
+        print(json.dumps(check()))
 
 
 if __name__ == '__main__':
