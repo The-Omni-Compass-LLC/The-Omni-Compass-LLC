@@ -486,7 +486,7 @@ green). The main control panel holds the kill switch, the heartbeat's seven butt
 candidate** (the sweep's best beat as a candidate profile), the active profile with its fingerprint (factory, candidate or
 custom), **Restore factory profile**, **Hold the active profile** and **Return to native**. Its **AUX** button opens the
 **Auxiliary Input**: ten slots, each waiting to be wired to a company's own system (its Prometheus, read only; the native it
-runs; Omni-Compass on top or not), each lighting its own row under the wall and able to flip the wall's monitors to it, and set
+runs; Omni-Compass on top or not), each lighting its own row under the wall and able to flip the wall's monitors that carry a Prometheus query to it, and set
 beside the repository's real records only (live software, class L; the card's meter, class P), never a model: every benchmark
 stays as it is, and a company's own system stands beside it. A model's best beat is a candidate
 for the real runs, never a result, and no profile is locked as the baseline: the factory's beat stays 60 s until the eight

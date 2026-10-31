@@ -985,37 +985,48 @@ the page served behind the same address); a page opened inside another site's sa
 every benchmark on it, without taking one apart. The **AUX** button at the end of the fuse box's master row opens the
 *Auxiliary Input* tab (`#fuseAux`): ten slots, each waiting to be wired to an organism of the reader's own, a cluster, a
 service, a database or a card. A slot takes a name, its Prometheus address, the native controller it runs and whether
-Omni-Compass is on top of that native. The natives offered are the real ones a reader can run: the Kubernetes Horizontal Pod
-Autoscaler and Cluster Autoscaler, KEDA, Goldilocks, CruiseKube, the Kubernetes scheduler, Kueue, Volcano, the KAI scheduler,
-Koordinator, Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio, OKD (OpenShift's open upstream),
-the five data stores' own controllers (MySQL, PostgreSQL with PgBouncer, Redis, MongoDB, Kafka), the GPU's own firmware and
-Linux's processor frequency governor. Red Hat OpenShift Container Platform, IBM Turbonomic and VMware vSphere stand in the list
-marked *not runnable until licensed*, and cannot be chosen. Each native brings its own signal, the query its exporter answers
-(kube-state-metrics, the native's own metrics, or the store's exporter), which the reader may replace with a query of their own.
+Omni-Compass is on top of that native. The natives offered are the real ones: the Kubernetes Horizontal Pod Autoscaler and
+Cluster Autoscaler, KEDA, Goldilocks, CruiseKube, the Kubernetes scheduler, Kueue, Volcano, the KAI scheduler, Koordinator,
+Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio, OKD (OpenShift's open upstream), the five
+data stores' own controllers (MySQL, PostgreSQL with PgBouncer, Redis, MongoDB, Kafka), the GPU's own firmware and Linux's
+processor frequency governor. Red Hat OpenShift Container Platform, IBM Turbonomic and VMware vSphere stand in the list as
+licensed products: a slot reads them on the reader's own licence, and the repository holds no record of them until it runs them
+licensed. Each native brings its signal, the query its exporter answers: the native's own metrics where it serves them
+(kube-state-metrics' replicas for the pod autoscalers, the Cluster Autoscaler's, KEDA's and Kueue's own, the stores' exporters,
+DCGM, node_exporter), else a general kube-state-metrics count, said so beside it; the reader may type a query of their own.
 
-*Wire it* asks the slot's Prometheus `up`; once it answers, the slot reads the four golden signals (work served, errors,
-the 95th-percentile response time, the processor busy), the machines in service, the power (Kepler), the bill (OpenCost), the
-work per dollar (the work answered for each dollar of the bill), the native's own signal and `omni_master_switch` every 15 s,
-read only. Its lamp is a green circle while the system answers, a yellow diamond while it answers with no series yet, a red
-octagon when it does not answer, and dark while it waits to be wired. A wired slot lights its own row on the **Auxiliary Input
-Board** under the monitor wall (`#auxBoard`): one tile a gauge, its value, its last hour and its reading. When the reader's
-system serves `omni_master_switch`, the slot files each reading under the arm it ran in (native alone at 0, Omni-Compass on top at
-1); otherwise under the arm the slot declares. Once each window holds four readings, each gauge is read by the key on the two
-windows' means (the 0.5% floor; work up GAIN, time waited or failed down GAIN, a resource down a cut and GAIN, up power given):
-one run of the reader's own system, never a three-run table, and the two windows ran at different times, so the load may differ
-between them; a paired benchmark runs both arms on the same load (the harness, `docs/HARNESS.md`).
+*Wire it* asks the slot's Prometheus `up`; once it answers, the slot reads every 15 s, read only: the requests answered without a
+server error, the share of server errors, the 95th-percentile response time, the processor busy, the machines ready, the
+processors' power (Kepler), the machines' price an hour (OpenCost's node price: storage, network and the control plane are
+outside it), the requests for each dollar of that price, and the native's signal. Each query has ten seconds to answer, and a
+round still out when the next falls due is not doubled. Its lamp is a green circle while the system answers, a yellow diamond
+while it answers with no series yet or a round had no answer in time, a red octagon when it does not answer, and dark while it
+waits to be wired. A wired slot lights its own row on the **Auxiliary Input Board** under the monitor wall (`#auxBoard`): one
+tile a gauge, its value, its readings since it was wired and its reading. The slot files each reading under the arm the system
+ran in: where the system serves its control panel's own series (`omni_control_mode` at autopilot, `omni_control_governor_up`,
+`omni_control_master_switch_on`, `tools/omni_control.py`), from those; where only the exporter's master switch answers and reads
+0, native; otherwise the arm the slot declares, switched by the reader when the system is switched. Changing a wired slot's
+address, query or native unwires it, so no window holds two systems' readings. Once each window holds four readings, each gauge
+is read by the key on the two windows' means (the 0.5% floor; work up GAIN, time waited or failed down GAIN, a resource down a cut
+and GAIN, up power given; the requests for each dollar up GAIN, down power given): one run of the reader's own system, never a
+three-run table, and the two windows ran at different times, so the load may differ between them; a paired benchmark runs both
+arms on the same load (the harness, `docs/HARNESS.md`).
 
-*Flip the wall to it* turns the wall to that slot: the page's own Prometheus connection is pointed at the slot's address, every
-monitor asks that system its own query, each wall tile carries the answer in a strip at its top, each breaker shows it, and a
-banner over the board names the slot until *The wall back to this page's engine* is pressed. *Beside a record* sets the slot
-beside one of the repository's real records only, a standing three-run table of live software (class L) or the GPU card's
-metered run (class P), the native's own records first; our own models (class S) are never offered. The record is shown as run
-and scored, with its engine; the reader's system and the record are two systems set side by side, neither a result of the
-other. The page writes nothing to the reader's system: the Omni-Compass switch of a slot prints the request that system's own
-control panel takes (`POST /v1/mode` with autopilot for ON, `POST /v1/reset` for OFF, `tools/omni_control.py`, role operator),
-to be sent with the reader's own token; the governor installs from `deploy/install/` on top of the native, which keeps running
-under it in both positions. What is typed in a slot stays in the reader's browser only. Every benchmark on the page stays as it
-is: the reader's own system stands beside it.
+*Flip the wall to it* turns the wall to that slot: the page's own Prometheus connection is pointed at the slot's address, and
+every monitor that carries a Prometheus query asks that system the query; each of their tiles carries the answer in a strip at
+its top, over the page's own drawing, each of their breakers shows it, and the other monitors go on drawing the page's engine and
+records. A banner over the board names the slot until *The wall back to this page's engine* is pressed, the fuse box's own
+*Disconnect* is pressed or the connection fails. *Beside a record* sets the slot beside one of the repository's real records
+only, a standing three-run table of live software (class L) or the GPU card's metered run (class P), the native's own records
+first; our own models (class S) are never offered, and a row a record itself marks a declared model says so in its gauge. Every
+row of the record is shown, LOSS rows included, with its counts by word and its engine; the record ran on its own engine and the
+governor installed today on the engine that stands, so the two are never read as one engine. The reader's system and the record
+are two systems set side by side, neither a result of the other. The page writes nothing to the reader's system: the
+Omni-Compass switch of a slot prints the request that system's own control panel takes (`POST /v1/mode` with autopilot for ON,
+`POST /v1/reset` for OFF, `tools/omni_control.py`, role operator), to be sent with the reader's own token; the Kubernetes
+governor installs from `deploy/install/`, and every other muscle's wiring is in the Operator's Manual, Appendix E. What is typed
+in a slot stays in the reader's browser only. Every benchmark on the page stays as it is: the reader's own system stands beside
+it.
 
 **The wall beside Omni-Compass, in one command.** `deploy/wall` (its README) stands up Prometheus, Grafana with the Omni-Compass
 wall loaded as its home dashboard (`deploy/grafana/omni-compass-wall.json`), Alertmanager with the governor's alert rules,
@@ -3405,7 +3416,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Every breaker ON; rest every monitor off screen; ON / REST | the control panel | whether each monitor is drawn live | the records |
 | Your own system: Connect / Disconnect | the control panel | each monitor's query asked of the operator's Prometheus, read only | the operator's system: nothing is written |
 | AUX; Auxiliary Input slots: Wire it / Unwire / Clear the slot | the control panel (`#fuseAux`) | one slot's readings of the reader's own Prometheus, every 15 s, read only; its row on the Auxiliary Input Board | the reader's system: nothing is written; every benchmark on the page |
-| Auxiliary Input: Flip the wall to it / The wall back to this page's engine | the control panel; the Auxiliary Input Board | every monitor's query asked of that slot's system; each tile and breaker shows its answer | the page's records and engine, back when flipped back |
+| Auxiliary Input: Flip the wall to it / The wall back to this page's engine | the control panel; the Auxiliary Input Board | the query of every monitor that carries one asked of that slot's system; each of those tiles and breakers shows its answer | the other monitors; the page's records and engine, back when flipped back |
 | Auxiliary Input: Omni-Compass ON / OFF; Beside a record | the control panel | the arm the slot declares and the request it prints; the real record set beside the slot | the reader's system: the request is printed, never sent |
 | Demand × | the control panel; the console; the dock | every muscle's demand, both sides, from this decision on | the seed |
 | Noise σ | the control panel; the console; the dock | each muscle's demand each decision, 1 + σ·z, one draw shared by both sides | the seed's day |
