@@ -3254,15 +3254,20 @@ function plateMean(arm) { let t = 0, n = 0; for (const x of (arm && arm.m) || []
 function plateLabel(g, w, h, txt) { g.save(); g.font = `600 11px ${MONO}`; const lines = wrapLines(g, txt, w - 20, w < 420 ? 3 : 2), lh = 15, bh = lines.length*lh + 6, bw = Math.min(w - 12, Math.max(...lines.map(l => g.measureText(l).width)) + 12);
   g.fillStyle = alpha(css.panel, 0.9); g.fillRect(6, h - bh - 6, bw, bh); g.strokeStyle = alpha(css.rule, 0.9); g.lineWidth = 1; g.strokeRect(6.5, h - bh - 5.5, bw - 1, bh - 1);
   g.fillStyle = css.ink; g.textAlign = "left"; g.textBaseline = "top"; g.__raw = true; lines.forEach((l, i) => g.fillText(l, 12, h - bh - 3 + i*lh)); g.__raw = false; g.restore(); }
+// the frame's element lists, found again every 3 s instead of on every frame (the freezes of 31 October: a class search over the
+// whole page on every animation frame)
+const QCA = new Map();
+function qca(sel) { const now = performance.now(), hit = QCA.get(sel); if (hit && now - hit.t < 3000) return hit.els;
+  const els = [...document.querySelectorAll(sel)]; QCA.set(sel, {els, t: now}); return els; }
 const PL_SPIN = {a: 0, t: 0};
 function spinRose(now) {   // the founder's words of 25 October: "the compass dial spinning actively ... with the Omni-Compass side of Omni's mechanism"
   const A = W.omni || W.omniOn, off = W.killed || MASTER.off, dt = PL_SPIN.t ? Math.min(100, now - PL_SPIN.t) : 0; PL_SPIN.t = now;
   const act = off || reduceMotion ? 0 : 0.5 + Math.min(8, (A && A.lastWrites || 0) + 0.5*(A && A.lastMoves || 0));   // degrees per 100 ms: the mechanism's own pace
   PL_SPIN.a = (PL_SPIN.a + act*dt/100) % 360;
-  document.querySelectorAll(".brand .rose").forEach(r => { r.style.transform = `rotate(${PL_SPIN.a.toFixed(2)}deg)`; r.title = off ? "the compass stands still: Omni-Compass is OFF, native runs alone" : "the compass turns with Omni-Compass's mechanism: faster as it writes and moves settings"; }); }
+  qca(".brand .rose").forEach(r => { r.style.transform = `rotate(${PL_SPIN.a.toFixed(2)}deg)`; r.title = off ? "the compass stands still: Omni-Compass is OFF, native runs alone" : "the compass turns with Omni-Compass's mechanism: faster as it writes and moves settings"; }); }
 function drawPlates(now) {
   spinRose(now);
-  document.querySelectorAll("canvas.plateLive").forEach(cv => {
+  qca("canvas.plateLive").forEach(cv => {
     const r = cv.getBoundingClientRect(); if (r.width < 40 || r.bottom < -300 || r.top > innerHeight + 300) return;
     const img = cv.previousElementSibling, G = PLATE_GEO[cv.dataset.plate]; if (!img || !G || !W.omni || !W.nat) return;
     const {g, w, h} = fit(cv, img.clientHeight/Math.max(img.clientWidth, 1)); g.clearRect(0, 0, w, h); GOV.drawn++;
@@ -5751,7 +5756,7 @@ function deskSync() {
     + `<div><span>muscles the two sides hold apart now</span><b>${W.differ || 0}</b></div><div><span>settings written by Omni-Compass now</span><b><span class="o">${o.lastWrites || 0}</span></b></div>`
     + `<div><span>time between frames, mean · 95th (ms)</span><b>${mean.toFixed(1)} · ${p95.toFixed(1)}</b></div><div><span>frames over 1.5 frames, last 60</span><b>${over}</b></div>`
     + `<div><span>knobs</span><b style="font-size:15px">×${W.loadMul.toFixed(2)} · σ ${W.noise.toFixed(2)} · +${W.lagAdd} · ${W.dial === "max" ? "the max" : "tune-down"}${["surge", "lost", "blind", "sec"].filter(active).map(x => " · " + x).join("")}</b></div>`;
-  document.querySelectorAll("[data-skmon]").forEach(el => { el.innerHTML = `${k ? "Omni-Compass OFF" : "Omni-Compass ON"} · decision ${W.t} · past the line <span style="color:var(--steel)">${n.lastOver || 0}</span> · <span style="color:var(--brass)">${o.lastOver || 0}</span> · frame ${mean.toFixed(1)} ms`; });
+  qca("[data-skmon]").forEach(el => { el.innerHTML = `${k ? "Omni-Compass OFF" : "Omni-Compass ON"} · decision ${W.t} · past the line <span style="color:var(--steel)">${n.lastOver || 0}</span> · <span style="color:var(--brass)">${o.lastOver || 0}</span> · frame ${mean.toFixed(1)} ms`; });
 }
 function drawDeskCv() {   // the last 120 decisions: native (orange) and Omni-Compass (blue) each in its own lane on one scale; every knob turned marked
   const cv = $("deskCv"), {g, w, h} = fit(cv, 300/Math.max(cv.clientWidth, 1)); g.clearRect(0, 0, w, h);
@@ -6100,9 +6105,15 @@ function secSigInit() {   // a signal beside every section heading and part titl
     let p = top.previousElementSibling; while (p && !(p.classList && p.classList.contains("partHead"))) p = p.previousElementSibling; if (p && p.id) (SECSIG.part[p.id] = SECSIG.part[p.id] || []).push(m.id); });
   for (const sid in SECSIG.sec) { const h = document.querySelector(`#${sid} h2`); if (h && !h.querySelector(".secsig")) { const sp = document.createElement("span"); sp.className = "secsig"; sp.dataset.secsig = sid; h.appendChild(sp); } }
   for (const pid in SECSIG.part) { const h = document.querySelector(`#${pid} .pt`); if (h && !h.parentElement.querySelector(".secsig")) { const sp = document.createElement("span"); sp.className = "secsig"; sp.dataset.secsig = pid; h.after(sp); } } }
+// the element cache of the lamps and breakers (31 October: every half second each of the page's monitors looked up six or more of
+// its elements by an attribute over the whole 15 MB page, about a thousand full scans a sweep, and the page froze): an element
+// found once is kept while it stays in the page; one not found is looked for again after 5 s
+const QCW = new WeakMap();
+function qc(root, sel) { let m = QCW.get(root); if (!m) { m = new Map(); QCW.set(root, m); } const now = performance.now(), hit = m.get(sel);
+  if (hit && (hit.el ? hit.el.isConnected : now - hit.t < 5000)) return hit.el; const el = root.querySelector(sel); m.set(sel, {el, t: now}); return el; }
 const SECSIG = {sec: {}, part: {}};
 function secSigSweep() { secSigInit();
-  const fill = (key, ids) => { const el = document.querySelector(`[data-secsig="${key}"]`); if (!el) return; const {c, k} = sigCount(ids);
+  const fill = (key, ids) => { const el = qc(document, `[data-secsig="${key}"]`); if (!el) return; const {c, k} = sigCount(ids);
     const t = `${ids.length} monitor${ids.length === 1 ? "" : "s"} here: ${sigTallyTxt(c)}. The worst light leads: ${SIG_MEANS[k]}.`;
     const sk = k + ":" + c.join(","); if (el.dataset.k !== sk) { el.innerHTML = sigHtml(k, c); el.dataset.k = sk; } if (el.title !== t) { el.title = t; el.setAttribute("aria-label", t); } };
   for (const sid in SECSIG.sec) fill(sid, SECSIG.sec[sid]); for (const pid in SECSIG.part) fill(pid, SECSIG.part[pid]);
@@ -6624,13 +6635,13 @@ function fuseSync(all) { const box = $("fuseBox"); if (!box || !box.firstChild |
   for (const [k, v, f] of [["load", W.loadMul, x => "×" + x.toFixed(2)], ["noise", W.noise, x => "σ " + x.toFixed(2)], ["lag", W.lagAdd, x => "+" + x]]) { const r = box.querySelector(`input[data-fzr="${k}"]`), o = box.querySelector(`output[data-fzo="${k}"]`); if (r && document.activeElement !== r && +r.value !== v) r.value = v; if (o) o.textContent = f(v); }
   const SCT = sigCount(MON.list.map(m => m.id));
   MON.list.forEach(m => { const k = lampLit(m.id);
-    const el = box.querySelector(`[data-brk="${m.id}"]`); if (!el) return; const rest = MON.rest.has(m.id), cls = `brk k${k}${rest ? " rest" : ""}`; if (el.className !== cls) el.className = cls;
-    const sg = el.querySelector(`[data-bsig="${m.id}"]`); if (sg && sg.dataset.k !== String(k)) { sg.innerHTML = sig3(k); sg.dataset.k = String(k); }
-    const bw = el.querySelector(`[data-bw="${m.id}"]`); if (bw && bw.dataset.k !== String(k)) { bw.textContent = SIGW(k); bw.className = "sigw " + SIGC(k); bw.dataset.k = String(k); bw.title = LAMP.why[m.id] || SIG_MEANS[k]; }
-    const bp = el.querySelector(`[data-bprom="${m.id}"]`); if (bp) { const v = PROM.on && PROM.vals[m.id]; bp.hidden = !v; if (v && bp.textContent !== "your system: " + v) bp.textContent = "your system: " + v; }
-    const rb = el.querySelector("[data-rest]"); if (rb) { rb.textContent = rest ? "REST" : "ON"; rb.setAttribute("aria-pressed", String(rest)); }
-    const sd = el.querySelector(`[data-bside="${m.id}"]`); if (sd) { const ms = monSide(m.id), t = ms === "nat" ? "native alone" : !LIVE_DRAWN.has(m.id) ? "as recorded" : W.killed ? "native alone (kill switch)" : ms === "omni" ? "Omni-Compass on native" : "native beside Omni-Compass on native"; if (sd.textContent !== t) sd.textContent = t; } });   // each breaker's side is its monitor's own (MON_SIDE): a monitor of native alone is never labelled Omni-Compass's
-  for (const sid in SECSIG.sec) { const el = box.querySelector(`[data-secsig="fz-${sid}"]`); if (!el) continue; const ks = SECSIG.sec[sid].map(lampLit), k = worstK(ks); if (el.dataset.k !== String(k)) { el.innerHTML = sigHtml(k); el.dataset.k = String(k); } }
+    const el = qc(box, `[data-brk="${m.id}"]`); if (!el) return; const rest = MON.rest.has(m.id), cls = `brk k${k}${rest ? " rest" : ""}`; if (el.className !== cls) el.className = cls;
+    const sg = qc(el, `[data-bsig="${m.id}"]`); if (sg && sg.dataset.k !== String(k)) { sg.innerHTML = sig3(k); sg.dataset.k = String(k); }
+    const bw = qc(el, `[data-bw="${m.id}"]`); if (bw && bw.dataset.k !== String(k)) { bw.textContent = SIGW(k); bw.className = "sigw " + SIGC(k); bw.dataset.k = String(k); bw.title = LAMP.why[m.id] || SIG_MEANS[k]; }
+    const bp = qc(el, `[data-bprom="${m.id}"]`); if (bp) { const v = PROM.on && PROM.vals[m.id]; bp.hidden = !v; if (v && bp.textContent !== "your system: " + v) bp.textContent = "your system: " + v; }
+    const rb = qc(el, "[data-rest]"); if (rb) { rb.textContent = rest ? "REST" : "ON"; rb.setAttribute("aria-pressed", String(rest)); }
+    const sd = qc(el, `[data-bside="${m.id}"]`); if (sd) { const ms = monSide(m.id), t = ms === "nat" ? "native alone" : !LIVE_DRAWN.has(m.id) ? "as recorded" : W.killed ? "native alone (kill switch)" : ms === "omni" ? "Omni-Compass on native" : "native beside Omni-Compass on native"; if (sd.textContent !== t) sd.textContent = t; } });   // each breaker's side is its monitor's own (MON_SIDE): a monitor of native alone is never labelled Omni-Compass's
+  for (const sid in SECSIG.sec) { const el = qc(box, `[data-secsig="fz-${sid}"]`); if (!el) continue; const ks = SECSIG.sec[sid].map(lampLit), k = worstK(ks); if (el.dataset.k !== String(k)) { el.innerHTML = sigHtml(k); el.dataset.k = String(k); } }
   const t = `${MON.list.length} breakers: ${sigTallyTxt(SCT.c)} · ${MON.rest.size} rested · the Omni-Compass side ${W.killed ? "native's own (kill switch)" : OMNI_SIDE()}`; const fn = $("fuseNote"); if (fn && fn.textContent !== t) fn.textContent = t; }
 function lampSweep(now) {
   if (now - LAMP.at < 500 || !MON.ready) return; LAMP.at = now;
@@ -6639,15 +6650,15 @@ function lampSweep(now) {
   MON.list.forEach(m => { let r; try { r = lampRead(m); } catch (e) { r = ["none", "not read: " + ((e && e.message) || e)]; } const [lv, why] = r; LAMP.lv[m.id] = lv; LAMP.why[m.id] = why; counts[lv] = (counts[lv] || 0) + 1; if (lv === "lead") lead.push(m.n); if (lv === "red") red.push(m.n);
     const pair = lampPair(m.id), nat = pair ? pair.nat : null, vs = pair ? pair.vs : null;
     if (pair) { LAMP.nat[m.id] = nat; LAMP.vs[m.id] = vs; if (nat[0] === "red") natRed.push(m.n); const kk = vsKey(m.id); (vsSeen[kk] = vsSeen[kk] || {vs, mons: []}).mons.push(m.n); }
-    const el = document.querySelector(`[data-lamp="${m.id}"]`); if (el) { const cls = (nat ? "mlamp dual" : "mlamp lv-" + lv) + " l3w"; if (el.className !== cls) el.className = cls;
+    const el = qc(document, `[data-lamp="${m.id}"]`); if (el) { const cls = (nat ? "mlamp dual" : "mlamp lv-" + lv) + " l3w"; if (el.className !== cls) el.className = cls;
       const vsK = {ok: 0, even: 1, red: 2}[vs ? vs[0] : ""], vsStrip = `<span class="sigStrip">${[["GAIN", "w-gain", 0], ["STEADY", "w-even", 1], ["LOSS", "w-loss", 2]].map(([w, c, j]) => `<span class="word ${c}${j === vsK ? " lit" : " dim"}">${w}</span>`).join("")}</span>`;
       let inner = nat ? `<i class="lseg side-nat"><b class="mside ms-nat">native</b>${sigStrip(LV_K[nat[0]] ?? 0)}</i><i class="lseg side-omni"><b class="mside ms-omni">Omni-Compass</b>${sigStrip(LV_K[lv] ?? 0)}</i><i class="lseg side-vs">now, against native ${vsStrip}</i>` : ESC(LAMP_WORDS[lv] || LAMP_WORDS.none);
       if (el.dataset.inner !== inner) { el.innerHTML = inner; el.dataset.inner = inner; }
-      const sg = document.querySelector(`[data-sig="${m.id}"]`); if (sg) { const k = lampLit(m.id), sh = sig3(k), al = `the light of monitor ${m.n}: ${["green", "yellow", "red", "dark", "red", "grey"][k]}, ${SIGW(k)}. ${nat ? "Omni-Compass against native now: " + (LAMP_VS[vs[0]] || "unread") + ". " + vs[1] : why}. Click for the reason`;
+      const sg = qc(document, `[data-sig="${m.id}"]`); if (sg) { const k = lampLit(m.id), sh = sig3(k), al = `the light of monitor ${m.n}: ${["green", "yellow", "red", "dark", "red", "grey"][k]}, ${SIGW(k)}. ${nat ? "Omni-Compass against native now: " + (LAMP_VS[vs[0]] || "unread") + ". " + vs[1] : why}. Click for the reason`;
         if (sg.dataset.k !== String(k)) { sg.innerHTML = sh; sg.dataset.k = String(k); } if (sg.getAttribute("aria-label") !== al) { sg.setAttribute("aria-label", al); sg.title = al; }
-        const sw = document.querySelector(`[data-sigw="${m.id}"]`); if (sw && sw.dataset.k !== String(k)) { sw.innerHTML = RESULT_MON.has(m.id) ? resStrip(k) : sigStrip(k); sw.dataset.k = String(k); sw.title = RESULT_MON.has(m.id) ? (LAMP.why[m.id] || "") : SIG_MEANS[k]; } }
+        const sw = qc(document, `[data-sigw="${m.id}"]`); if (sw && sw.dataset.k !== String(k)) { sw.innerHTML = RESULT_MON.has(m.id) ? resStrip(k) : sigStrip(k); sw.dataset.k = String(k); sw.title = RESULT_MON.has(m.id) ? (LAMP.why[m.id] || "") : SIG_MEANS[k]; } }
       const tt = nat ? `native: ${nat[1]}; Omni-Compass on top: ${why}; ${vs[1]}. Click for the reason` : `the light: ${why}. Click for the reason`; if (el.title !== tt) el.title = tt;
-      const box = document.querySelector(`[data-lampwhy="${m.id}"]`); if (box && !box.hidden) lampWhyFill(box, m, lv, why); } });
+      const box = qc(document, `[data-lampwhy="${m.id}"]`); if (box && !box.hidden) lampWhyFill(box, m, lv, why); } });
   secSigSweep(); fuseSync(false);
   const bar = $("wallLamps"); if (!bar) return;
   const last = (CQ.log || []).slice().reverse().find(e => e.comp !== "native" && e.comp !== "desk");
