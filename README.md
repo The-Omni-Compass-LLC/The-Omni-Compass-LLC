@@ -138,12 +138,20 @@ wire into one organism and one bill ([`DISCLOSURES.md`](DISCLOSURES.md), section
 A provider that ran Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter
 it, so it is never claimed here as a measurement.
 
-| Place | Measured so far (each on its page, written from its runs) | The company's expectation (the founder's figures of 24 October: an expectation, never a result) |
+**What each place's benchmark shows: the benefit, or that it holds** (the founder's words of 31 October: "We don't have to
+show benefit. We know that. We just need to show we hold, and then we know where the benefit lives"):
+
+| Place | What its benchmark must show | What the record shows (each on its page, written from its runs) |
 |---|---|---|
-| The software end: the cluster and the services on it (class L) | composed layer by layer in [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md) (the cluster, the services), each test on its own engine; one number per benchmark in [`docs/BENEFIT_SHEET.md`](docs/BENEFIT_SHEET.md) | about 3 to 4% |
-| The bare metal: the card and the machine | the card's one finished counted run, omni-v18 on an A100 ([`results/gpu/run-20261024T091235Z/GPU_REPS.md`](results/gpu/run-20261024T091235Z/GPU_REPS.md), class P): every judged gauge STEADY with no write, the power limit already at its top on native; the machine's own layer not yet run; every card rental in [`docs/RUN_LEDGER.md`](docs/RUN_LEDGER.md) | 2 to 3% |
-| The cloud's wire alone: the machines it bills (Azure, class L) | [`results/live/AKS_BILL.md`](results/live/AKS_BILL.md), and the omni-v21 sets as they land | 1 to 2% |
-| The two ends and the wire together | the two routes composed in [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md), quoted in the answer at the top | about 5% from the two ends together |
+| **The software end**: Kubernetes, the orchestrators and governors, the services (class L) | **the benefit** | composed in [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md): over work, speed and machines GAIN, the same power and the same bill; one number per benchmark in [`docs/BENEFIT_SHEET.md`](docs/BENEFIT_SHEET.md) |
+| **The chip**: a processor or GPU card, through its own controls (class P) | **that it holds**: no harm to heat, power or service | the A100's own meter on omni-v21 ([`results/gpu/V21_A100_CAP_ABC.md`](results/gpu/V21_A100_CAP_ABC.md)): work and energy STEADY at the factory tune; every row in section 3b of [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md) |
+| **The cloud**: the wire and the provider's own software (class L) | **that it holds**: the bill not raised beyond the noise, the service not harmed; where the work can grow, the work per dollar | Azure's steady set of 100 paired repetitions ([`results/live/AKS_STEADY_100_OMNI_V18.md`](results/live/AKS_STEADY_100_OMNI_V18.md)): the bill up 1.2%, inside the noise; the 99th percentile GAIN |
+| **Inside the chip or the provider's code** | not measurable from outside | never claimed |
+
+In the cloud the yardstick is the work per dollar: the bill divided by the work, against native; a bill that rises is power
+given beside the work it bought, and the work must rise more. The company's expectation of 24 October (about 3 to 4% from the
+software end, 2 to 3% from the bare metal, about 5% from the two together, 1 to 2% from the wire alone) is an expectation,
+never a result; the founder's word of 31 October sets the wire's own at none.
 
 Where a measurement and the expectation differ, the measurement stands.
 

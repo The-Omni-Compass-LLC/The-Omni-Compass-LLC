@@ -510,6 +510,12 @@ the dock and in the control panel.
 
 This chapter reads the page's section 1, **Control Panel** (`#s-health`).
 
+The section opens with **Factory Profile, Locked: The Main Engine** (`#factoryLocked`): the page opens on the main engine at its
+factory tune, the one setting every benchmark runs, and every link opens it there; only a person pressing a knob moves it off, and
+the factory button brings every knob back. A turned knob never breaks the engine: it changes its mechanism of action, how its
+muscles and the organism share the work, toward the purpose the new setting asks for, and what it shows is that setting's own
+reading, never a benchmark result.
+
 ### 2.1 What the section holds
 
 The control panel (the page's section 1, `#s-health`) stands directly under the wall and switches every monitor of the page.
@@ -2405,6 +2411,14 @@ One batch is one run in the key's sense; three batches make a three-run reading.
 ## 28. Whole Organism
 
 This chapter reads the page's section 5d, **Whole Organism** (`#s-whole`).
+
+The section opens with **What Each Place Shows: the Benefit, or That It Holds** (`#placesHold`). The software end (Kubernetes,
+the orchestrators and governors, the services) is where Omni-Compass decides and works; its benchmark shows the benefit. The chip
+(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark shows that it holds: no harm to its heat,
+its power or its service, read by the card's own meter. The cloud (the wire and the provider's own software) carries the software
+end's work and bills it by machine-hours; its benchmark shows that it holds: the bill not raised beyond the noise and the service
+not harmed, and where the work can grow its yardstick is the work per dollar, the bill divided by the work against native.
+Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
 ### 28.1 Every way a stack is bought
 

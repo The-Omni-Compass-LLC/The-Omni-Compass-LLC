@@ -215,7 +215,24 @@ energy and throughput are not under a tenant; they are measured where Omni-Compa
 composed with the wire by the law above. A provider running Omni-Compass on its own back end would see that benefit on its own
 chips and racks; no tenant can meter it, so it is never claimed here as a measurement. The company's expected ranges (the
 founder's figures of 24 October: about 3 to 4% from the software end, 2 to 3% from the bare metal, about 5% from the two
-together, 1 to 2% from the wire alone) are an expectation, never a result; where a measurement differs, the measurement stands.
+together, 1 to 2% from the wire alone) are an expectation, never a result, and his word of 31 October sets the wire's own at
+none: the wire carries the benefit, it does not make it; where a measurement differs, the measurement stands.
+
+**What each place's benchmark shows: the benefit, or that it holds** (the founder's words of 31 October: "We don't have to
+show benefit. We know that. We just need to show we hold, and then we know where the benefit lives"). Each place is judged by
+what Omni-Compass does there, native against Omni-Compass on top of native, by the one key:
+
+| Place | What Omni-Compass touches there | What its benchmark must show | How it is read |
+|---|---|---|---|
+| **The software end**: Kubernetes, the orchestrators and governors, the services | its decisions and the knobs it turns (machines, replicas, processor conveyed, limits) | **the benefit**: more work, faster, on fewer machines | work, speed and machines, composed in `results/WHOLE_SYSTEM.md` (class L) |
+| **The chip**: a processor or GPU card | only the chip's own controls (its power limit, its clock ceiling), read by the chip's own meter | **that it holds**: no harm to the chip's heat, power or service | every row of the card's own meter against native (class P); the chip enters the composition as exactly 1 |
+| **The cloud**: the wire and the provider's own software | the tenant's cluster on the provider's machines, billed by machine-hours | **that it holds**: the bill not raised beyond the noise and the service not harmed, and, where the work can grow, the work per dollar | the bill and the machines billed against native beside the work (class L); the wire enters the composition as exactly 1 |
+| **Inside the chip or inside the provider's code** | Omni-Compass built into the hardware's firmware or the cloud's own controllers | not measurable from outside; only the maker or the provider can run it | never claimed here |
+
+So the benchmarks show where the benefit lives (the software end) and that the chip and the cloud carry it unharmed. In the
+cloud the yardstick is the work per dollar: the bill divided by the work, against native; a bill that rises is power given
+beside the work it bought, and the work must rise more. Section 3b of `results/WHOLE_SYSTEM.md` lists what the benefit cost
+the chip, the energy and the wire, row by row.
 
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
 beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the
