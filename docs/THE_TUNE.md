@@ -149,6 +149,14 @@ preregistered seeds were never read by either search.
   was read.
 - **Engine.** omni-v24's candidate: omni-v23 (digest `c96ea4105d8747db`) with the cover's floor a knob and the struck
   `--give-back-only` flag removed.
+- **The model, corrected before the search.** The probe found the model's stand-in cluster (`pilot/selfpilot.py`) listing its
+  pods with none of the metadata a real cluster gives every pod and as one repeated object per workload, and taking only the
+  autoscaler's target among the governor's writes: the governor's count of the room beside a workload failed on its first pod
+  (4 to 7 decisions a day lost in the pace models, on every engine read so far), every running pod of a workload read as on
+  one machine, and the raise of the autoscaler's range never landed. Every pod is now its own object with its name, namespace and
+  the workload's label, and the range is taken as the API takes it; the probe of seed 103 then runs with no failed decision.
+  The search and omni-v24's model gate run on the corrected model, both engines alike; every record read before it (the ladders
+  of omni-v17 and omni-v23, the gates to omni-v23, the on-site ladder stopped part way on 31 October) stands as its own record.
 - **Settings.** The two declared operating conditions of the factory profile: on site (`onsite`: the kind rig's own machines,
   made at the start and already paid for, no cluster autoscaler, a parked machine kept at its standby draw;
   `tools/model_gate.py` `StaticFineSim`, `docs/PACE_PREREGISTRATION.md` amendment 5) and in the cloud (`cloud`: the plant with

@@ -82,10 +82,16 @@ class SimKube:
                                "conditions": [{"type": "Ready", "status": "True"}]}} for i in range(p.nodes)]}
         if args[:2] == ("get", "pods"):
             frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0; items = []
+            # every pod its own object with the metadata a real cluster gives it (its name, namespace and the workload's label):
+            # 31 October, the pods carried none, and the list repeated one object per workload, so the governor's count of the
+            # room beside a workload failed on its first pod (KeyError 'metadata', 4 to 7 decisions a day lost in the pace
+            # models) and every running pod of a workload read as on one machine
             for w in c.workloads:
                 run = int(w.replicas * frac)
-                items += [{"status": {"phase": "Running"}, "spec": {"containers": [{"resources": {"requests": {"cpu": f"{int(w.request * 1000)}m"}}}]}}] * run
-                items += [{"status": {"phase": "Pending"}, "spec": {"containers": [{"resources": {"requests": {"cpu": f"{int(w.request * 1000)}m"}}}]}}] * (w.replicas - run)
+                for i in range(int(w.replicas)):
+                    items.append({"metadata": {"name": f"{w.name}-{i}", "namespace": "default", "labels": {"app": w.name}},
+                                  "status": {"phase": "Running" if i < run else "Pending"},
+                                  "spec": {"containers": [{"resources": {"requests": {"cpu": f"{int(w.request * 1000)}m"}}}]}})
             return {"items": items}
         if args[:2] == ("top", "nodes"):
             per = c.used / max(p.nodes, 1)
@@ -100,7 +106,15 @@ class SimKube:
         self.audit({"write": list(args), "why": why, "dry_run": False})
         w = next(x for x in self.sim.c.workloads if x.name == args[2])
         if args[0] == "patch":
-            w.target = json.loads(args[args.index("-p") + 1])[0]["value"] / 100.0
+            body = json.loads(args[args.index("-p") + 1])
+            if isinstance(body, list):                    # a JSON patch: the autoscaler's CPU target
+                w.target = body[0]["value"] / 100.0
+            else:                                         # a merge patch (31 October): the autoscaler's range, as the API takes it
+                spec = body.get("spec") or {}
+                if "maxReplicas" in spec:
+                    w.max_rep = int(spec["maxReplicas"])
+                if "minReplicas" in spec:
+                    w.min_rep = int(spec["minReplicas"])
         elif args[0] == "annotate":
             kv = args[-1]
             w.ann = getattr(w, "ann", {})
