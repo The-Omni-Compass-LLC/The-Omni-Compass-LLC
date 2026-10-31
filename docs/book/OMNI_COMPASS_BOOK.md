@@ -610,7 +610,7 @@ together, and each pair is read on its own: omni against native, direct against 
 |---|---|---|
 | Native | the native controllers alone, as shipped and as the operator set them | the governor not installed, or OFF (chapter 9) |
 | Omni-Compass on native (omni) | the native controllers, with Omni-Compass moving the settings they expose | the governor at the level granted (chapter 7) |
-| Omni-Compass direct | Omni-Compass talking to the muscles directly, the brain, the orchestrator and the scheduler wherever it carries those muscles itself; a knob's native controller switched off only where Omni-Compass carries that muscle and has proven it can move the knob, and every muscle Omni-Compass cannot be kept, native, under it (on Kubernetes the pod autoscaler removed from the workload Omni-Compass's own pod muscle governs; the API server, the scheduler and the kubelet stay; the founder's order of 31 October, `docs/SOLO_PREREGISTRATION.md` amendment 2) | `--own-replicas namespace/name` on a workload no autoscaler governs (Appendix K); on the kind rig `ARM=solo` (`scripts/kind_bench.sh`); chapter 11 |
+| The arm by itself (called Omni-Compass direct on 23 October) | On Kubernetes, Omni-Compass's own pod rule in place of the autoscaler's arithmetic, and nothing else: Omni-Compass is a brain with no organs there, so every organ of Kubernetes (the API server, the scheduler, the kubelet) and every muscle Omni-Compass cannot be stay, native, under it; a knob's native controller is switched off only where Omni-Compass carries that muscle and has proven it can move the knob. The word direct overstates it on Kubernetes (the founder's analysis of 31 October): Omni-Compass can be direct to a knob there, never to a muscle. A mechanism test kept in the record, not a product arm (`docs/SOLO_PREREGISTRATION.md` amendment 2) | `--own-replicas namespace/name` on a workload no autoscaler governs (Appendix K); on the kind rig `ARM=solo` (`scripts/kind_bench.sh`); chapter 11 |
 
 Where native is a setting and not a controller (a cache's ceiling, a buffer pool, a pooler's pool size, a consumer group's
 size), or where native's own loop is the actuator and cannot be switched off (the card's firmware, a servo, an autopilot, a
@@ -921,7 +921,7 @@ the engine's own setting for every other muscle. The whole tune is fixed and fin
 (`python3 tools/omni_version.py`), so an installation can always tell whether it is running the factory tune or a tune of
 its own. Every published result is the factory tune of the engine its table names (`python3 tools/omni_version.py`), and is run again on each engine that stands.
 In the words of `docs/FACTORY_PROFILE.md`, the factory tune is the **factory profile**: the complete, versioned set of
-Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v22's. The best validated
+Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v23's. The best validated
 factory profile for the declared operating conditions has not yet been established: it is chosen only after every mechanism
 is verified and the settings are tuned and validated together (`docs/FACTORY_PROFILE.md`, section 5), and until then the
 released profile stands and no other is locked as the baseline.
@@ -1404,8 +1404,8 @@ respect a limit the wires do not carry.
 
 ### 6.5 The rules of the engine that stands, as an operator meets them
 
-The engine that stands in this edition is **omni-v22** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
-quoted here ran on omni-v7, whose rules omni-v22 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
+The engine that stands in this edition is **omni-v23** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
+quoted here ran on omni-v7, whose rules omni-v23 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
 and the interval table; omni-v11 added one guard to the Kubernetes governor; omni-v12 holds a raise the cluster's admission
 refused until something changes, and the swarm's wire acts on a neighbour at once; omni-v13 hands the CPU limits it gave back to
 the operator's on a shared host at its top while another workload there has room of its own, and counts every other pod by its
@@ -1586,7 +1586,7 @@ python3 tools/run_gpu_card.py results/sim/gpu_two_wire/eval                  # t
 ```
 
 Pass: `VERIFICATION: PASS`. Nothing in your systems is touched.
-What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v22 (digest 0e23a0bc561b900a, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
+What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v23 (digest c96ea4105d8747db, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
 
 **Level 1 - Watch (read-only).**
 

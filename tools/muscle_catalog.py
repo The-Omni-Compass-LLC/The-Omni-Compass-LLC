@@ -5,7 +5,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The catalog of the muscles, explained: what each is for, what Omni-Compass reads and writes on it, how it is
-wired, and which organisms it belongs to. Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v22, carries: the v5 law at its
+wired, and which organisms it belongs to. Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v23, carries: the v5 law at its
 default, the max); writes docs/MUSCLE_CATALOG.md.
 
     python3 tools/muscle_catalog.py

@@ -8,7 +8,7 @@ repository runs it, and does every word on the page say only what the parts do? 
 repository's own code by an independent path and compared, value by value. Run and scored by The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
-**Engine.** The engine that stands is **omni-v22** (`OMNI_V22.json`, digest `0e23a0bc561b900a`, 65 files, since 30 October);
+**Engine.** The engine that stands is **omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files, since 31 October);
 each earlier engine, what it changed and what its model gate read, is on its own page (`docs/OMNI_V<n>.md`). The
 page's records are rebuilt from the engine that stands and the repository's own results by its workflow (`live-engine.yml`,
 `docs/engine/build_live_engine.py`) on every push to main; each record names the commit and the engine it was made on, and

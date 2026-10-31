@@ -76,6 +76,10 @@ rules:
     resources: ["deployments/scale"]      # subresource, which `kubectl scale` patches; a resource of its own under RBAC, so
     resourceNames: ["php-apache"]         # the rule above did not grant it, and every solo arm before 31 October had its
     verbs: ["get", "patch", "update"]     # pod writes refused (docs/SOLO_PREREGISTRATION.md, amendment 1)
+  - apiGroups: ["autoscaling"]            # omni-v23: the hand-back of a knob Omni-Compass cannot move (its scale writes refused
+    resources: ["horizontalpodautoscalers"]   # three times in a row) to native's own pod autoscaler, made from the operator's
+    verbs: ["create"]                     # target and range on the workload (the founder's order of 31 October); create takes
+                                          # no name under RBAC, so this one namespace is its whole reach
   - apiGroups: [""]                       # make before break: mark the pods that leave first (pod-deletion-cost)
     resources: ["pods"]
     verbs: ["patch"]

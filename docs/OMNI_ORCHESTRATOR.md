@@ -166,10 +166,11 @@ The founder's order of 23 October, evening: the three arms are always shown toge
 muscles (the yardstick). **Omni on native:** Omni-Compass on top of that rule, the engine's strict form as on the kind rigs: the
 units are the rule's and never fewer, Omni adds a unit the beat work waits and past the wall, conveys each unit's wall, places by
 the busy rule, packs, parks and wakes machines (brain `omni_native`, `omni_orchestrator/control.py`). **Omni direct:** Omni-Compass
-on the muscles directly, itself the brain, the orchestrator and the scheduler, because here it carries every one of those muscles
-(the placement, the room rule, the machines); no Kubernetes (brain `omni`). Where it does not carry a muscle, that muscle stays,
-native, under it: a knob left with no working controller fails the whole system and is never a result (the founder's order of 31
-October, `docs/SOLO_PREREGISTRATION.md` amendment 2). Every pair is read by the one key, paired by step: Omni on native against native,
+on the muscles directly, itself the brain, the orchestrator and the scheduler, because in this one test it carries every one of
+those muscles (the placement, the room rule, the machines, built from scratch for it); no Kubernetes (brain `omni`). This is the
+only test where the word direct holds: on a Kubernetes stack Omni-Compass is a brain with no organs and can be direct to a knob
+only, never to a muscle (the founder's analysis of 31 October). Where it does not carry a muscle, that muscle stays, native, under
+it: a knob left with no working controller fails the whole system and is never a result (`docs/SOLO_PREREGISTRATION.md` amendment 2). Every pair is read by the one key, paired by step: Omni on native against native,
 Omni direct against native, and Omni direct against Omni on native. The showing runs all three in one go
 (`tools/orchestrator_show.py`), the report carries three columns, and the GitHub run (`orchestrator.yml`) prints the three.
 

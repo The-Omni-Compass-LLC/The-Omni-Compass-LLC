@@ -47,6 +47,12 @@ declared engine.
 | omni-v15 | 22 Oct 02:30 | `0a53cdd7a558f803` | 55 | the brain: the power cap's request trims only while the response line has been clean for the governor's own clear time (the omni-v11 long run's 126 switches in 350 decisions); every wire that holds a governor's rules in the fingerprint (eight taken in, their bytes as they stood) |
 | omni-v16 | 22 Oct 07:30 | `5c5502f12b1c0ce4` | 55 | the Kubernetes governor: every clock in seconds (the brain's minute and its C++ twin, the compass's damping and smoothing, the edge, the additions past the floor, a command's minute to land, the host's busy share, the heat law, one batch job a minute, the conveyance every 15 s, the loop's own schedule), so the decision period is a clean setting; the heartbeat, the full decision, every 15 s by default (the founder's word, "15 sec all over"), the fast checks every 5 s; at 60 s exactly omni-v15's decisions; the pace read by its own runs (`docs/PACE_PREREGISTRATION.md`) |
 | omni-v17 | 23 Oct 17:00 | `7c937d09e4031cc7` | 55 | the Kubernetes governor's heartbeat a dial, the main engine every 60 s (the parser's default; omni-v16's was 15 s), any beat from 5 to 120 s, every beat shown beside native (`results/model_gate/V17_LADDER.md`, the live engine page's 1j); the monitors scale with the beat (`omni_heartbeat_seconds`, the alert at three beats, the panel's `/v1/beat`); the cruise wait never under two readings (at 90 and 120 s it had rounded to one, found by the dial's own ladder before it landed); the founder's order of 22 October, afternoon |
+| omni-v18 | 24 Oct 02:51 | `1cb92edb64c4391d` | 62 | Omni direct taken into the engine: the seven rule files of Omni-Compass's own orchestrator fingerprinted, the three arms shown together (`docs/OMNI_V18.md`) |
+| omni-v19 | 24 Oct 16:54 | `36ee67284c035235` | 62 | the pod muscle of its own (`--own-replicas`) for a workload no autoscaler governs; the models' arm by itself (`docs/OMNI_V19.md`) |
+| omni-v20 | 25 Oct 13:24 | `1df07f8e36a97985` | 62 | the five data stores' wires fixed at their causes (sysbench's own statements, Kafka's hand-back within a poll round, YCSB's cache growing back while it misses) (`docs/OMNI_V20.md`) |
+| omni-v21 | 25 Oct 17:30 | `b658f05d43c1e602` | 63 | the immune system knows itself, knob by knob: a knob redlining past its line that Omni-Compass cannot bring back goes to native when native's twin reads it lower (`docs/OMNI_V21.md`) |
+| omni-v22 | 30 Oct 18:30 | `0e23a0bc561b900a` | 65 | the five data stores' wires at the max, through each store's own account of a miss; the governor's hand-back tried five times against a transient failure of the cluster's API (`docs/OMNI_V22.md`) |
+| omni-v23 | 31 Oct 16:30 | `c96ea4105d8747db` | 65 | Omni direct keeps every muscle Omni-Compass cannot be: a workload's own scale write the cluster refuses three times in a row hands the knob back to native's own pod autoscaler, made from the operator's target and range (the founder's order of 31 October; `docs/OMNI_V23.md`) |
 
 Each version through omni-v15 was a fault found in a real run and fixed, omni-v16 made the decision pace a clean setting
 and set the heartbeat at 15 s on the founder's word, and omni-v17 made the heartbeat a dial with the main engine at 60 s on his
@@ -81,7 +87,9 @@ stands is also a version that is re-proved, re-tested and re-built from its rece
 
 Each change below was found in a real run or in our own reading of the code, and each has its evidence written down. Each
 goes through the model gate against the engine that stands and, when it reads no LOSS there, lands at once as the next version
-with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v17, on the founder's word of 22 October, afternoon: the
+with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v23, on the founder's order of 31 October: a knob whose
+own-scale writes the cluster refuses handed back to native's own autoscaler, so the organism never runs with a knob nobody moves
+(`docs/OMNI_V23.md`); in omni-v17, on the founder's word of 22 October, afternoon: the
 heartbeat a dial, the main engine every 60 s, every beat shown beside native (`docs/OMNI_V17.md`); in omni-v16, on his word that morning: every clock of the
 Kubernetes governor in seconds, the decision pace a clean setting, the heartbeat every 15 s (`docs/OMNI_V16.md`); in omni-v15, from this list: the power cap's
 request through the line's own clear time, every wire in the fingerprint, and the kill test's 300 s reading declared

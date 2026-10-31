@@ -16,7 +16,7 @@ The seven-measure grades of the closest products are in `docs/LANDSCAPE.md`; wha
 maker's publications, is in `docs/COMPARISON.md`; the formal seat is in `docs/THE_SEAT.md`. Read on 24 October 2026 by The
 Omni-Compass LLC from public material; no outside party has reviewed it.
 
-Omni-Compass, in every row below, is this repository's supervisory governor (omni-v22 stands, `README.md`): it sits on top
+Omni-Compass, in every row below, is this repository's supervisory governor (omni-v23 stands, `README.md`): it sits on top
 of a system's native controllers, reads the whole body each beat (every 60 s on the main engine; a dial from 5 to 120 s, the fast checks every 5 s), decides by the compass law, writes each setting
 through a two-way plug that reads every write back, audits every decision, hands every setting back to native gradually
 after a crash (the lease), and has a separate, instant kill switch for security. It never replaces native.
@@ -275,7 +275,7 @@ gauges), a trial run that is never counted, then its A, B and C on the engine th
 | The closest commercial products, graded from public material | `docs/LANDSCAPE.md` | read 24 October 2026 |
 | Borg, Twine, Turbonomic and the native systems, compared by publication | `docs/COMPARISON.md`, `docs/THE_SEAT.md`, `docs/RELATED_WORK.md` | publications only |
 
-Every table above is its own engine's record; the engine that stands is omni-v22 (`README.md`), and every benchmark runs
+Every table above is its own engine's record; the engine that stands is omni-v23 (`README.md`), and every benchmark runs
 again on it. None of the commercial optimizers of section 4 has been run here.
 
 ## Sources

@@ -69,6 +69,22 @@ class KindRigRbac(unittest.TestCase):
         self.assertIn("INVALID RUN: by itself", block)
         self.assertIn("exit 1", block)
 
+    def test_the_hand_back_can_make_natives_autoscaler_and_the_window_that_needed_it_is_refused(self):
+        # omni-v23 (the founder's order of 31 October): a knob whose scale writes the cluster refuses three times in a row goes
+        # back to native's own pod autoscaler, so the identity may create one in the workload's namespace, the preflight proves
+        # it, and a window of the arm by itself in which that happened is refused as a result of that arm
+        app = rules("deploy/kind/rbac-omni.yaml", "Role", "omni-compass-app")
+        create = [r for r in app if "horizontalpodautoscalers" in r.get("resources", []) and "create" in r["verbs"]]
+        self.assertEqual(len(create), 1)
+        self.assertEqual(create[0]["verbs"], ["create"])
+        self.assertNotIn("resourceNames", create[0])
+        rig = (ROOT / "scripts/kind_bench.sh").read_text(encoding="utf-8")
+        can, _ = rig.split('echo "== cannot"', 1)
+        self.assertIn("$(can create hpa -n default)", can)
+        self.assertIn('"handed_back"', rig)
+        self.assertIn("INVALID RUN: by itself, the knob", rig)
+        self.assertIn("an autoscaler stands on the workload at the end", rig)
+
 
 if __name__ == "__main__":
     unittest.main()

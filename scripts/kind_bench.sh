@@ -473,6 +473,7 @@ if [ -z "$NATIVE" ]; then
   {
     echo "== can (each muscle's push)"
     echo "patch hpa/$HPA_NAME (hpa): $(can patch "hpa/$HPA_NAME" -n default)"
+    echo "create hpa (omni-v23: the hand-back of a knob Omni-Compass cannot move to native's own autoscaler): $(can create hpa -n default)"
     echo "patch nodes (node pool: idle mark): $(can patch nodes)"
     echo "create pods/eviction (node pool: drain): $(can create pods --subresource=eviction -n default)"
     echo "patch pods/resize (power cap, in place): $(can patch pods --subresource=resize -n default)"
@@ -876,6 +877,8 @@ elif [ -z "$NATIVE" ]; then
     rep_now=$(kubectl get deployment php-apache -o jsonpath='{.spec.replicas}')
     echo "the workload's replicas after kill: $rep_now (the count it started at: ${SOLO_RANGE%%,*})" | tee -a "$OUT_DIR/kill_switch.txt"
     test "$rep_now" = "${SOLO_RANGE%%,*}"
+    hpa_left=$(kubectl get hpa -n default --no-headers 2>/dev/null | wc -l)
+    [ "$hpa_left" -eq 0 ] || { echo "INVALID RUN: by itself, an autoscaler stands on the workload at the end ($hpa_left): the knob was handed back to native's own autoscaler (omni-v23), so Omni-Compass did not run the arm by itself"; exit 1; }
   else
   restored=$(hpa_cpu_target "$HPA_NAME")
   range_now=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.spec.minReplicas},{.spec.maxReplicas}')
@@ -968,7 +971,10 @@ PY
   if [ "$ARM" = "solo" ]; then
     # by itself, a knob Omni-Compass owns has no other controller (the founder's order of 31 October: every muscle Omni-Compass
     # cannot be stays; a knob left with no working controller fails the whole system): a decision that failed left that knob
-    # unmoved, so the window is refused (docs/SOLO_PREREGISTRATION.md, amendment 2)
+    # unmoved, so the window is refused (docs/SOLO_PREREGISTRATION.md, amendment 2). omni-v23: a knob whose writes the cluster
+    # refused three times in a row was handed back to native's own autoscaler, so the organism kept a controller, but
+    # Omni-Compass did not run this arm by itself: refused as a result of the arm, with the words
+    ! grep -q '"handed_back"' "$OUT_DIR/audit.jsonl" || { echo "INVALID RUN: by itself, the knob was handed back to native's own autoscaler (omni-v23; the cluster refused the muscle's writes): the organism kept a controller, and Omni-Compass did not run the arm by itself ($(grep '"handed_back"' "$OUT_DIR/audit.jsonl" | tail -1 | cut -c1-300))"; exit 1; }
     refused=$(grep -c '"consecutive_failures"' "$OUT_DIR/audit.jsonl" || true)
     [ "$refused" -eq 0 ] || { echo "INVALID RUN: by itself, $refused decisions of Omni-Compass failed and left a knob it owns with no controller (the last: $(grep '"consecutive_failures"' "$OUT_DIR/audit.jsonl" | tail -1 | cut -c1-300))"; exit 1; }
   fi
