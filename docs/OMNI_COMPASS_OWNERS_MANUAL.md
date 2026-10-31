@@ -937,7 +937,7 @@ its mean-log change are both no more than 2% above the reference and above the c
 modelled noisy costs (σ = 0.25) this allows a step that truly costs 3% more 28% of the time instead of the medians'
 40%, one that costs 5% more 14% instead of 26%, and a free step 60% instead of 63% (`docs/OMNI_V7.md`, section 3;
 class S). The engines before v7 read the medians alone (`judge="median"`). A refused step is not tried again for a set
-time (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s beat, 480 at a beat of 15 s; 900 decisions, 30 minutes,
+time (7,200 s on Kubernetes, 360 decisions at the main engine's 20 s beat, 120 at a beat of 60 s; 900 decisions, 30 minutes,
 on a card); a trial begins
 only while the service is calm and nothing waits, no sooner than 600 s (a card 8 decisions) after the last began; and a
 phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card) is
@@ -971,7 +971,7 @@ seat. The vocabulary is used the same way everywhere in this repository (`docs/M
   **reset** (every setting the governor ever wrote is handed back to where native had it, read back, and the record
   removed; every benchmark arm ends with a reset and checks it).
 - **Cruise.** For work that comes as a pile: when pods have waited for a place decision after decision for the cruise
-  wait (120 s: two decisions at the main engine's 60 s, and never fewer than two readings at any beat), machines go
+  wait (120 s: six decisions at the main engine's 20 s, and never fewer than two readings at any beat), machines go
   into service up to the pool's own top (read live: every machine of a fixed pool at once, a growing pool a step a
   decision) and stay there, without second-guessing, until the line has been empty as long. In cruise
   the governor also stops its five-second floor reads, because every machine is already in service and the reads would
@@ -1806,7 +1806,7 @@ on the page's own model for three model days each and reads each day against nat
 sweep's best beat, the one with the most work for Omni-Compass on native and no LOSS, as a candidate profile), the active
 profile with its fingerprint (factory, candidate or custom) and its backend, **Restore factory profile**, **Hold the active
 profile** and **Return to native**. A model's best beat is a candidate for the real runs, never a result; no profile is locked
-as the baseline, and the factory's beat stays 60 s until the eight steps of section 3.8 choose the next. At the page's back
+as the baseline; the factory's beat is 20 s from omni-v24, the founder's choice of 31 October, until the eight steps of section 3.8 choose the next. At the page's back
 stand the glossary and index (`tools/live_glossary.py`): every term in the words of the file it names, the ten organisms with
 their twenty scenarios, every one of the 1,107 muscles of the catalog by realm and family, and the sections where each is used.
 
@@ -2618,9 +2618,9 @@ budget (`hardware/site_exchange.py`) run as models today. Batteries are designed
 The founder's order of 9 October 2026 fixes the order of wiring. Every knob is wired out first and in last, and the wire
 in is connected only by a measurement the brain makes on the knob itself. The steps, for any stack:
 
-![Flowchart: the verdict's trial on one step, from the reference to the reading. While the service is calm and nothing waits, and P after the last trial began (600 s on Kubernetes, 10 decisions at the main engine's 60 s; 8 decisions on a card), the reference is measured fresh at the deepest step already allowed (on a card, at native): n requests (200 response times on Kubernetes; 30 of a card's own service time). One step deeper, under the same traffic, n more are the trial. A phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes, 20 decisions at the main engine's 60 s; 30 decisions on a card) is abandoned: the knob goes back, the step neither allowed nor refused. The reading is the 95% interval of the change in log cost. Continued in the next figure.](book/figures/f_trial.svg)
+![Flowchart: the verdict's trial on one step, from the reference to the reading. While the service is calm and nothing waits, and P after the last trial began (600 s on Kubernetes, 30 decisions at the main engine's 20 s; 8 decisions on a card), the reference is measured fresh at the deepest step already allowed (on a card, at native): n requests (200 response times on Kubernetes; 30 of a card's own service time). One step deeper, under the same traffic, n more are the trial. A phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes, 60 decisions at the main engine's 20 s; 30 decisions on a card) is abandoned: the knob goes back, the step neither allowed nor refused. The reading is the 95% interval of the change in log cost. Continued in the next figure.](book/figures/f_trial.svg)
 
-![Flowchart: the verdict's trial on one step, from the reading to the step allowed or refused. An interval wholly above zero is a LOSS: the step is refused, the knob goes back, and the step is not tried again for R (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s; 900 decisions on a card). An interval wider than the allowance with fewer than 3n trial requests measures on. Otherwise the step is allowed only if the trial's median is within the allowance of the reference and of native and the mean change is within it too; else it is refused, past the allowance. An allowed step moves the deepest allowed step one deeper.](book/figures/f_trial_b.svg)
+![Flowchart: the verdict's trial on one step, from the reading to the step allowed or refused. An interval wholly above zero is a LOSS: the step is refused, the knob goes back, and the step is not tried again for R (7,200 s on Kubernetes, 360 decisions at the main engine's 20 s; 900 decisions on a card). An interval wider than the allowance with fewer than 3n trial requests measures on. Otherwise the step is allowed only if the trial's median is within the allowance of the reference and of native and the mean change is within it too; else it is refused, past the allowance. An allowed step moves the deepest allowed step one deeper.](book/figures/f_trial_b.svg)
 
 1. **Wire out, everything.** Every muscle's readings reach the brain, one wire out per muscle. Nothing is written. This is
    watch mode (section 1.3): where every installation starts, and where any knob returns the moment it stops paying.
@@ -2655,7 +2655,7 @@ controller the verdict already guards the machines (section 1.2). Inside the mod
 directive for every muscle; making the verdict per muscle there is the next engine, Omni v4 (`docs/OMNI_V4_PLAN.md`),
 designed and not built, because every result must be run again on a new engine.
 
-![Timing diagram: a give-back trial from reference to verdict, in decisions. The reference (n requests at the deepest allowed step; on a card, at native), the trial (n more at one step deeper under the same traffic, measuring on up to 3n while the interval is wider than the allowance), the verdict in one decision, and, on a refusal, the quiet period in which the step is not tried again (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s; 900 decisions on a card, 30 min). A phase that outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card), or sees the service leave calm, is abandoned: the knob goes back, the step neither allowed nor refused.](book/figures/t_trial.svg)
+![Timing diagram: a give-back trial from reference to verdict, in decisions. The reference (n requests at the deepest allowed step; on a card, at native), the trial (n more at one step deeper under the same traffic, measuring on up to 3n while the interval is wider than the allowance), the verdict in one decision, and, on a refusal, the quiet period in which the step is not tried again (7,200 s on Kubernetes, 360 decisions at the main engine's 20 s; 900 decisions on a card, 30 min). A phase that outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card), or sees the service leave calm, is abandoned: the knob goes back, the step neither allowed nor refused.](book/figures/t_trial.svg)
 
 ## 10. Stack by Stack
 
@@ -2749,7 +2749,9 @@ sec all over heart beat"), and the same afternoon, having read the reads of the 
 `--interval` is 60 s and `--floor-interval` 5 s in the governor, every rig and every install file; any beat may be set (5,
 15, 30, 60, 75, 90, 120 s and every value between), each shown beside native with what it buys and what it costs
 (`results/model_gate/V17_LADDER.md`; on the live engine page, the page's section 1j, `#s-dial`), and three runs read every beat against native and
-against 60 s (`docs/PACE_PREREGISTRATION.md`, amendment 3). The cushion each muscle keeps is set in
+against 60 s (`docs/PACE_PREREGISTRATION.md`, amendment 3). On 31 October, evening, the founder set the main engine's beat at 20 s
+(omni-v24: "lock this base engine at 20 ... a whole minute to double check itself ... that's way too long"), the page's buttons
+10, 15, 20, 30, 60, 90 and 120 s; every rig, install file and cloud run follows it. The cushion each muscle keeps is set in
 seconds by its own climb, wobble and reaction time, so it is the same at any pace; a longer period would not widen it, only
 leave the governor blind for longer between looks. In the cloud v7 also made the whole rule one flag, `--give-back-only`, enforced in the governor
 itself: every actuator but the node pool off, the replica ceiling 0, the dial at the tune-down (`docs/OMNI_V7.md`,

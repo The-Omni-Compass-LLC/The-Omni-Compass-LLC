@@ -490,6 +490,15 @@ the founder overrides one in the conversation.
   beats (14% at 60 s; `results/model_gate/V23_LADDER.md`, class S): Azure's queue is held (`switch=off`) until the version whose
   cloud tune holds the bill lands, and nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
   100 repetitions.
+- **The base engine locked at 20 s; seven heartbeat buttons** (the founder's order of 31 October, evening: "heartbeat period says 10,
+  15, 30, 60, 90, 120. Change that ... 15, 20, 30, 60, 90, 120 ... you are to lock this base engine at 20 ... It still says 60
+  seconds ... a whole minute to double check itself ... that's way too long"). The factory beat is 20 s from omni-v24: the
+  governor's `--interval` default, every rig (`scripts/kind_bench.sh` `OMNI_INTERVAL`, `kind_paired.sh`, `kind_robust.sh`,
+  `kind_levers.sh`, `kind_full.sh`, `kind_pilot.sh`), every install file and the cloud's, the controller trace and the alert
+  rules' staleness bound (three beats: 60 s); the live engine opens at 20 s and its heartbeat has seven buttons, 10, 15, 20, 30,
+  60, 90 and 120 s (the first number of his list read as 10, the beat he asked for on 24 October). The second tune search reads
+  the cover's floor at that beat (`docs/THE_TUNE.md`, section 4b); a LOSS the gate reads at 20 s is shown, its cause found and
+  fixed in the next version, and does not move the beat.
 - **The factory setting is found, then locked; the knobs are for seeing it move** (the founder's words of 31 October: "We'll have
   all these buttons that allow people to ... change it to see what happens when things move ... nothing breaks, it'll just change
   all these metrics ... we are going to find the most optimal state in every scenario with Omni-Compass, and then we will know
@@ -528,7 +537,7 @@ the founder overrides one in the conversation.
   octagon ... The yield is the diamond ... the circle is green only everywhere it lives"). Every red light and red mark is an
   octagon (a red word is shaped as a stop sign, white on red), every yellow one a yield diamond, every green one round, on every
   monitor, badge, breaker and canvas (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`).
-- **Six heartbeat buttons: 10, 15, 30, 60, 90 and 120 s** (the founder's words: "We need that 10 because we need to show less
+- **Six heartbeat buttons: 10, 15, 30, 60, 90 and 120 s** (seven from 31 October: 20 s added and made the factory's, above) (the founder's words: "We need that 10 because we need to show less
   than what's already standard"). The factory's beat stays the engine's own until the sims and the founder choose the next.
 - **The bill is the sum of the costs** (the master specification): for each deployment route, on site and through the cloud,
   C(r, a) = Σₖ c(r, a, k) inside the declared boundary and S(r, a) = (C(r, native) − C(r, a)) / C(r, native); a component's
