@@ -61,8 +61,8 @@ Omni-Compass on top of native, on the same work. **Native** is the stack as it r
 muscles (processors, memory, machines, pods, caches, queues, power) run by Kubernetes and the open-source orchestrators,
 schedulers, autoscalers, governors and managers the industry runs them with. **Omni-Compass** is the supervisory governor placed on
 top of that native stack; it never replaces it. Every number on the page traces to its run's own files and the code that scored
-it, so anyone can rerun and audit it: real, open-source software on real machines (class L), a physical meter (class P), or our
-own models, marked as such (class S).
+it, so anyone can rerun and audit it: real, open-source software on real computers (class L, GitHub's own machines, never bare
+metal), a physical meter (class P), or our own models, marked as such (class S).
 
 Only what could be run and proven was benchmarked. Where a system could not be seen, run or measured, it is not shown, and nothing
 is claimed for it. The rest of the story is written when others benchmark Omni-Compass, critique it and analyse it on their own
@@ -98,6 +98,29 @@ Why these three words: they are the words of underwriting and actuarial work, wh
 
 Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
+
+## Where Omni-Compass Sits, and What Each Benchmark Shows
+
+<!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
+
+Omni-Compass is software. It always sits on top of a native controller, and it can sit in three places: the software end, the cloud's wire and the chip. The software end runs on site or through the cloud. These are the words for them, used the same way on every page.
+
+- **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
+- **On site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill. The software end's benefit is the same there. In our own models (class S) the on-site plant keeps every machine it starts with.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
+- **Where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+
+| Place | Its benchmark | What it must show | Its readings |
+|---|---|---|---|
+| The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds; the work per dollar read beside the bill | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
+| The chip | a graphics card on Lambda, its own power meter, class P | that it holds; its energy read beside the work | `results/gpu/` |
+| On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
+| The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
+
+<!-- end of the places -->
 
 **How to read a number beside a word.** The word comes first and settles the direction; the number is the size, and it wears
 the word's sign so the two never pull apart: GAIN 29.6% on pods waiting means 29.6% fewer pods waited than under native (a fall
@@ -2045,10 +2068,12 @@ through the cloud with all three, each cell its word and its number with its int
 where a measurement differs from the expectation, the measurement stands. The same box and table stand at the head of the whole
 organism (the page's section 5d), and both follow that section's reading and chip knobs.
 
-### 21.2 More work for the same bill
+### 21.2 The cloud holds; the work per dollar beside the bill
 
-In a cloud Omni-Compass shows two things: that the engine holds on the cloud's machines as it does on site, and the work per
-dollar, more work for the same bill, never a smaller bill as the aim (the founder's words of 31 October). From 31 October every
+What a cloud set must show is that the engine holds on the cloud's machines as it does on site: no judged gauge LOSS against
+native, the work per dollar read beside the bill, the benefit shown where it lives, at the software end, and explained through
+the wire (the founder's words of 31 October, night: "We just need to show we hold"; the words for every place in the front matter, "Where
+Omni-Compass Sits, and What Each Benchmark Shows"). From 31 October every
 cloud set runs the whole engine at the max on top of the cloud's own autoscaler (the founder's order of that day: no hard rule;
 until then every cloud set ran at the tune-down on the machines alone, `OMNI_MACHINES_ONLY=1`, `--give-back-only`, the order of
 14 October, and those sets stand as their own record). The governor senses the service, moves its pod target inside the

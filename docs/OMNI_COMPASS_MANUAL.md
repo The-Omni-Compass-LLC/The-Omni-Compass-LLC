@@ -60,10 +60,10 @@ installation's own (section 3.8). The words are written once, with their exact m
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
 racks, the data center, on site or off site), and Omni-Compass can live in all three places. The wire makes no benefit of its
-own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and a cloud run shows two things only,
-that the engine holds the same on a cloud's machines as on site (no LOSS against native) and how much of the software end's
-gain comes through the wire, read as work per dollar: more work for the same money (Part VI, chapter 19; `DISCLOSURES.md`,
-section 9). A smaller bill is never the aim; how a company spends the gain, as more work or as a cut, is its own choice. Where
+own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and what a cloud run must show is that
+the engine holds the same on a cloud's machines as on site (no judged gauge LOSS against native), the work per dollar read
+beside the bill (Part VI, chapter 19; `DISCLOSURES.md`, sections 9 and 10; the founder's words of 31 October, night: "We just need to show we hold").
+A smaller bill is never the aim; how a company spends the gain, as more work or as a cut, is its own choice. Where
 Omni-Compass sits on neither end, a cloud's bill shows nothing of Omni-Compass.
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
@@ -106,6 +106,29 @@ Why these three words: they are the words of underwriting and actuarial work, wh
 
 Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
+
+## Where Omni-Compass Sits, and What Each Benchmark Shows
+
+<!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
+
+Omni-Compass is software. It always sits on top of a native controller, and it can sit in three places: the software end, the cloud's wire and the chip. The software end runs on site or through the cloud. These are the words for them, used the same way on every page.
+
+- **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
+- **On site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill. The software end's benefit is the same there. In our own models (class S) the on-site plant keeps every machine it starts with.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
+- **Where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+
+| Place | Its benchmark | What it must show | Its readings |
+|---|---|---|---|
+| The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds; the work per dollar read beside the bill | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
+| The chip | a graphics card on Lambda, its own power meter, class P | that it holds; its energy read beside the work | `results/gpu/` |
+| On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
+| The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
+
+<!-- end of the places -->
 
 ## What You Are Looking At: Omni-Compass, Hooked Up, and How to Read Its Report
 
@@ -1849,8 +1872,9 @@ or not. The cloud runs the whole engine at the max, as on site (`dial max`, the 
 the founder's order of 31 October struck the tune-down on the machines alone of 14 October): the governor moves the service's
 pod target inside its autoscaler's cover, conveys the processor a machine can spare, and parks a machine the cloud already
 made only after its own trial shows the response time holds, waking it on a breach; the cloud's own autoscaler, native's
-machine controller, stays in every arm and alone adds machines. The benefit is made at the software end and at the chip and
-comes through the wire as work per dollar: more work for the same money. A smaller bill is never the aim; a company that
+machine controller, stays in every arm and alone adds machines. The set must show that the engine holds: no judged gauge LOSS
+against native, the work per dollar read beside the bill; the benefit is made at the software end and at the chip and comes
+through the wire. A smaller bill is never the aim; a company that
 wants a cut turns the dial down (`dial save`, a changed tune, its receipts its own). The bill is shown beside the work it
 bought, never ruled.
 In the cloud, as everywhere, the governor's fast check (a parked machine woken for pods that wait) runs every 5 seconds,
@@ -3231,14 +3255,6 @@ machines the governor parks: a machine is parked only while the line holds, and 
 ## 19. Running in the Cloud: the Whole Engine, the Bill and the Alarm Minutes
 
 ### 19.1 What the governor moves in a cloud, and how the bill is read
-
-**What each place's check must show.** A stack has three places Omni-Compass can sit. At the software end (Kubernetes, the
-orchestrators and governors, the services) it decides and works, and the check there is the benefit against native: work, speed
-and machines. At the chip (a processor or GPU card) it turns only the chip's own controls, and the check is that the chip holds:
-its heat, its power and its service no worse than native, read by the chip's own meter. In the cloud (the wire and the
-provider's own software) the check is that it holds: the bill not raised beyond the noise and the service not harmed, read as the
-work per dollar where the work can grow. Inside a chip's firmware or a provider's own controllers nothing is measured from
-outside. The results of each check are in the Owner's Manual and the repository's result pages, not here.
 
 In a public cloud every machine that exists is billed, whether it carries work or not, so the bill is a gauge of its own
 there: a service gauge, its aim lower, read by the one key beside the work, the response time, the failures and the alert

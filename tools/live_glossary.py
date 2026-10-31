@@ -466,17 +466,50 @@ TERMS = [
       "machines it bills, metered) and the bare metal (the card, the chip, and the machine: the kernel, bare metal, Kepler).",
       [("tools/whole_system.py", "Omni-Compass sits at both ends and at every layer between"),
        ("tools/whole_system.py", "the machine (the kernel, bare metal, Kepler)")],
-      aka=["bare metal", "the software end"]),
+      aka=["bare metal"]),
     T("the cloud as the wire", A, "The cloud is the wire between the chip at one end and the software at the other, and makes no "
       "benefit of its own. Through the cloud the bare metal belongs to the provider (no tenant can read its meters or write its "
-      "chips' limits), so a cloud run shows two things: that the engine holds on the cloud's machines as it does on site, and how "
-      "much of the software end's gain comes through the wire, read as work per dollar beside the bill (the machines counted every "
-      "fifteen seconds, the bill at list price): more work for the same money, never a smaller bill as the aim. Every cloud set "
-      "runs the whole engine at the max from 31 October (the founder's order of that day struck the tune-down on the machines "
-      "alone); the work and the speed are made on the software end and the bare-metal end.",
+      "chips' limits), so what a cloud run must show is that the engine holds on the cloud's machines as it does on site: no judged "
+      "gauge LOSS against native, the work per dollar read beside the bill (the machines counted every fifteen seconds, the bill at "
+      "list price). The benefit is shown where it lives, at the software end, and explained through the wire, never claimed for "
+      "the wire itself. Every cloud set runs the whole engine at the max from 31 October (the founder's order of that day struck the "
+      "tune-down on the machines alone).",
       [("tools/whole_system.py", "the cloud is the wire between the chip at one end and the software at the other"),
        (DIS, "The cloud's back end is not ours to meter."),
+       (DIS, "what its receipt must show is that the engine holds there"),
        (CL, "judged number is the work per dollar")], aka=["the cloud", "the bill"]),
+    T("the software end", A, "The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and "
+      "the orchestrators on it, the data stores and the services they serve, with Omni-Compass on top of their native controllers. "
+      "This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own "
+      "machines in kind clusters, rented runners never called bare metal and never called the chip.",
+      [(DIS, "This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters.")],
+      aka=["software end"]),
+    T("on site", A, "The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is "
+      "fixed and its hours are no bill, so the software end's benefit is the same there. In our own models the on-site plant keeps "
+      "every machine it starts with.",
+      [(DIS, "The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill.")],
+      aka=["on-site", "onsite"]),
+    T("through the cloud", A, "The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's "
+      "AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and "
+      "added or removed by the cloud's own autoscaler. Its benchmark must show that Omni-Compass holds there.",
+      [(DIS, "Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run)")],
+      aka=["Kubernetes through the cloud"]),
+    T("the chip", A, "The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the "
+      "heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's "
+      "published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not tested by any run here "
+      "and is not claimed.",
+      [(DIS, "Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.")],
+      aka=["chip"]),
+    T("hold", R, "Omni-Compass on top of native harms nothing in a place: every judged gauge (the work done, the response time, the "
+      "minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that "
+      "rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS; "
+      "the cloud's and the chip's benchmarks must show it.",
+      [(DIS, "A place holds when its runs read no LOSS.")], aka=["holds"]),
+    T("where the benefit lives", A, "At the software end, where it is measured. The cloud's wire and the chip are where "
+      "Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own, and a resource the "
+      "chip's runs cut (its energy at the tune-down) is read beside the work, never claimed as the benefit. A benchmark that holds "
+      "is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.",
+      [(DIS, "A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.")]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
       "Omni-Compass rose). The law is omnicompass/compass_law.py (CompassLaw): a band with 5% cushions, two antagonist forces, "

@@ -467,6 +467,19 @@ the founder overrides one in the conversation.
   runs" only a note on its strength, never a condition; in prose a result is said run by run (run A GAIN, run B GAIN, run C GAIN,
   the mean GAIN), never as "a gain only if all three agree".
 
+- **The cloud shows we hold; the places named once** (the founder's words of 31 October, night: "What's the story with the
+  cloud? Did we determine how we're defining the cloud, the chip, the Kubernetes through, and what the benchmark shows? ... We
+  don't have to show benefit. We know that. We just need to show we hold, and then we know where the benefit lives, and we can
+  explain. But either way, you need the terminology ... wherever it's supposed to be, however it's supposed to be"; then: "We
+  know the cloud, the GPU chip ... the benefits only in the software ... Its terminology, its tonality"). What a cloud set and a
+  chip run must show is that Omni-Compass holds there: no judged gauge LOSS against native (the work done, the response time, the
+  minutes over the line, the pods waiting, the failures), the bill, the machine-hours and the energy read beside it as resources
+  (a rise power given), the work per dollar beside the bill. The benefit is shown where it lives, at the software end, measured on
+  real software on real computers, and explained through the wire, never claimed for the wire. The words for the places (the
+  software end, on site, through the cloud, the chip, hold, where the benefit lives) are written once in `tools/places.py` and
+  stand word for word on the README, `DISCLOSURES.md` (section 10), `docs/HOW_TO_READ_THE_RESULTS.md` and the three manuals
+  (`python3 tools/places.py --fix`; `--check`, run by `verify.py`, fails any page that differs), and in the live engine's glossary
+  (`tools/live_glossary.py`); GitHub's runners are never called bare metal and never the chip.
 - **No hard rule; the cloud at the max** (the founder's words of 31 October: "Why is there any hard rule written ... Whatever the
   math does and falls out is whatever happens. All we need to do is tune up what the math does to the best way we can and let
   whatever falls out fall out. And when it falls out wrong, the tuning is wrong"; and, on the cloud: "What I care is to make the

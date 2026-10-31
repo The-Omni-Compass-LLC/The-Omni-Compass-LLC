@@ -712,7 +712,7 @@ def main(argv=None):
     (by_layer_c, total_c, idx_c) = results[(SCOPE_WITHOUT, "carried")]
     (by_layer_a, total_a, idx_a) = results[(SCOPE_WITH, "carried")]
     L.append("Read: the headline is the row **without the card, by the index's rule**: it counts only what held the same way in all three of our runs, "
-             f"on real machines (class L), at the software end (the cluster and the services on it): **{pct(math.exp(idx[0]))}** over work, speed and "
+             f"on real software on GitHub's own machines (class L, the software end, never bare metal: the cluster and the services on it): **{pct(math.exp(idx[0]))}** over work, speed and "
              f"machines; work {pct(interval(total['work'])[0]) if total['work'] else 'not taken'}, speed {pct(interval(total['speed'])[0])} (native's "
              f"95th percentile response over Omni-Compass's), machines {pct(interval(total['machines'])[0])} (native's machines over Omni-Compass's), "
              "for the same power and the same bill (both held at native's, section 1). With every interval carried the same layers read "

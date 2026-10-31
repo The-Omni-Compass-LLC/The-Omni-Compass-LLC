@@ -209,8 +209,9 @@ orchestrators, managers and autoscalers that carry the work) and the hardware en
 racks, the data center). Omni-Compass can live in all three places; the wire makes no benefit of its own. Until 31 October
 every cloud run here was set on the wire alone (the tune-down on the machines only), so it could at most park machines the
 cloud already made and cut the wire's bill a little. From 31 October (the founder's order of that day: no hard rule) every
-cloud set runs the whole engine at the max on the cloud's cluster, so its receipt shows that the engine holds there as on site
-and the work per dollar beside the bill: more work for the same money, never a smaller bill as the aim. The bare metal's
+cloud set runs the whole engine at the max on the cloud's cluster, and what its receipt must show is that the engine holds there
+(section 10): no judged gauge LOSS against native, the work per dollar read beside the bill. The benefit is shown where it
+lives, at the software end, and explained through the wire, never claimed for the wire itself. The bare metal's
 energy and throughput are not under a tenant; they are measured where Omni-Compass sits on them (the card and the machine) and
 composed with the wire by the law above. A provider running Omni-Compass on its own back end would see that benefit on its own
 chips and racks; no tenant can meter it, so it is never claimed here as a measurement. The company's expected ranges (the
@@ -218,21 +219,7 @@ founder's figures of 24 October: about 3 to 4% from the software end, 2 to 3% fr
 together, 1 to 2% from the wire alone) are an expectation, never a result, and his word of 31 October sets the wire's own at
 none: the wire carries the benefit, it does not make it; where a measurement differs, the measurement stands.
 
-**What each place's benchmark shows: the benefit, or that it holds** (the founder's words of 31 October: "We don't have to
-show benefit. We know that. We just need to show we hold, and then we know where the benefit lives"). Each place is judged by
-what Omni-Compass does there, native against Omni-Compass on top of native, by the one key:
-
-| Place | What Omni-Compass touches there | What its benchmark must show | How it is read |
-|---|---|---|---|
-| **The software end**: Kubernetes, the orchestrators and governors, the services | its decisions and the knobs it turns (machines, replicas, processor conveyed, limits) | **the benefit**: more work, faster, on fewer machines | work, speed and machines, composed in `results/WHOLE_SYSTEM.md` (class L) |
-| **The chip**: a processor or GPU card | only the chip's own controls (its power limit, its clock ceiling), read by the chip's own meter | **that it holds**: no harm to the chip's heat, power or service | every row of the card's own meter against native (class P); the chip enters the composition as exactly 1 |
-| **The cloud**: the wire and the provider's own software | the tenant's cluster on the provider's machines, billed by machine-hours | **that it holds**: the bill not raised beyond the noise and the service not harmed, and, where the work can grow, the work per dollar | the bill and the machines billed against native beside the work (class L); the wire enters the composition as exactly 1 |
-| **Inside the chip or inside the provider's code** | Omni-Compass built into the hardware's firmware or the cloud's own controllers | not measurable from outside; only the maker or the provider can run it | never claimed here |
-
-So the benchmarks show where the benefit lives (the software end) and that the chip and the cloud carry it unharmed. In the
-cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given
-beside the work it bought, and the work must rise more. Section 3b of `results/WHOLE_SYSTEM.md` lists what the benefit cost
-the chip, the energy and the wire, row by row.
+**What the record shows in each place so far** (the words for each place, and what each benchmark must show, are in section 10): at the software end the benefit, composed over work, speed and machines in `results/WHOLE_SYSTEM.md` with the same power and the same bill; at the chip, the A100's own meter on omni-v21 (`results/gpu/V21_A100_CAP_ABC.md`) reads work and energy STEADY at the factory tune: it holds; through the cloud, Azure's steady set of 100 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
 beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the
@@ -252,6 +239,29 @@ Prometheus, the page only reads it: it writes to no system.
 
 **The three manuals.** The Operator's Manual wires and runs Omni-Compass, the Owner's holds the whole mechanism and every
 result, the Live Benchmark Engine Manual reads the page; each carries this notice, the `LICENSE`, the `NOTICE` and this page.
+
+## 10. Where Omni-Compass sits, and what each benchmark shows
+
+<!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
+
+Omni-Compass is software. It always sits on top of a native controller, and it can sit in three places: the software end, the cloud's wire and the chip. The software end runs on site or through the cloud. These are the words for them, used the same way on every page.
+
+- **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
+- **On site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill. The software end's benefit is the same there. In our own models (class S) the on-site plant keeps every machine it starts with.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
+- **Where the benefit lives.** At the software end, where it is measured. The cloud's wire and the chip are where Omni-Compass must hold: the wire carries the software end's benefit to the bill and adds none of its own (what a cloud's bill shows, machines parked or more work for each dollar, is made at the software end), and a resource the chip's runs cut, its energy at the tune-down, is read beside the work and never claimed as the benefit. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+
+| Place | Its benchmark | What it must show | Its readings |
+|---|---|---|---|
+| The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds; the work per dollar read beside the bill | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
+| The chip | a graphics card on Lambda, its own power meter, class P | that it holds; its energy read beside the work | `results/gpu/` |
+| On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
+| The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
+
+<!-- end of the places -->
 
 ---
 
