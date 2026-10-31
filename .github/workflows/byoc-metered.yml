@@ -18,7 +18,7 @@ name: byoc-metered
 # the title the conductor reads a started set back by: what ran, the replica room, the dial, then the machine-family queue
 # (the zone and the machine type, the last two words)
 run-name: >-
-  ${{ format('byoc-metered {7} {0}{1}{2}{6} dial {3} {4} {5}', github.event.inputs.load_steps != '' && format('burst {0}', github.event.inputs.load_steps) || 'steady',
+  ${{ format('byoc-metered {7} {0}{1}{2}{6} dial {3} {4} {5}', github.event.inputs.loadgen == 'meter' && format('work meter {0}', github.event.inputs.rate_steps) || (github.event.inputs.load_steps != '' && format('burst {0}', github.event.inputs.load_steps) || 'steady'),
      github.event.inputs.organism != '' && format(' organism {0} x{1}', github.event.inputs.organism, github.event.inputs.organism_scale) || '',
      github.event.inputs.replica_ceiling != '' && format(' replica room {0}', github.event.inputs.replica_ceiling) || '',
      github.event.inputs.dial || 'max', github.event.inputs.cloud || 'other', github.event.inputs.pool || 'work0',
@@ -41,6 +41,8 @@ on:
       organism_scale: {description: "Copies of the organism on one clock, the real cluster inside (1, 10 or 100)", default: "1"}
       replica_ceiling: {description: "Omni-Compass's replica room: the most replicas it may raise the app's cap to while the cap binds and the line is threatened, handed back once the demand holds still (the compass law; docs/AZURE_REPLICA_ROOM_PREREGISTRATION.md); native keeps the operator's cap. 0: the operator's cap, never moved (the cloud sets: the bill at native's work); N: a ceiling of the operator's own; empty: read live (what the machines can hold, one pod under)", default: ""}
       dial: {description: "The dial of Omni-Compass on top: max, the factory tune (the whole engine, every muscle; the founder's order of 31 October for every cloud: the bill judged beside the work by the one key, never ruled), or save, the tune-down (native's work on the least resource; a changed tune, its receipts its own)", default: "max"}
+      loadgen: {description: "The load: open, a fixed rate of requests, the same work in both arms (every set before 31 October); meter, the work meter's rising rates with every answer counted, so the work can grow and the receipt reads the work per dollar (docs/K8S_COMPASS_PREREGISTRATION.md, the amendment of 31 October)", default: "open"}
+      rate_steps: {description: "The work meter's rates, requests per second, rising, one per step (loadgen meter only)", default: ""}
 # one set at a time per cloud (its cluster), as on Azure; a push (which runs nothing) never takes a
 # dispatch's place
 concurrency:
@@ -160,7 +162,8 @@ jobs:
           REP: ${{ matrix.rep }}
           ARMS: ${{ github.event.inputs.arms || 'native compass' }}
           DURATION: ${{ github.event.inputs.duration_s || '900' }}
-          LOADGEN: open
+          LOADGEN: ${{ github.event.inputs.loadgen || 'open' }}
+          RATE_STEPS: ${{ github.event.inputs.rate_steps || '' }}
           LOAD_STEPS: ${{ github.event.inputs.load_steps || '' }}
           ORGANISM: ${{ github.event.inputs.organism || '' }}
           LOAD_MAX: ${{ github.event.inputs.load_max || '6' }}

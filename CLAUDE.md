@@ -490,8 +490,11 @@ the founder overrides one in the conversation.
   amendment of 31 October) once they can read the work per dollar: the Azure sets as built send a fixed rate of requests, so their
   work cannot grow and a set at the max could show only the bill beside a faster answer (on omni-v23 at the max our model reads the
   machine-hours up 9% to 35% across the beats, 14% at 60 s, with the work fixed by the model's own load,
-  `results/model_gate/V23_LADDER.md`, class S). Azure's queue is held (`switch=off`) until its sets carry the load whose work grows
-  with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, built for kind), and nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
+  `results/model_gate/V23_LADDER.md`, class S). Azure's queue was held (`switch=off`) until its sets carried the load whose work grows
+  with the speed, and from 31 October, night, they do: the work meter (`LOADGEN=meter`) runs in every cloud as on kind, the
+  receipt reads the work inside the line and the work per dollar beside the bill from the same run (`tools/live_reps.py`), a
+  tuning case run once freezes the counted rates before run A (`docs/K8S_COMPASS_PREREGISTRATION.md`, the amendment of 31
+  October, night), and the switch is on again, the four sets of the open load waiting behind the meter's; nothing is cancelled. Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most
   100 repetitions.
 - **The factory setting is found, then locked; the knobs are for seeing it move** (the founder's words of 31 October: "We'll have
   all these buttons that allow people to ... change it to see what happens when things move ... nothing breaks, it'll just change
