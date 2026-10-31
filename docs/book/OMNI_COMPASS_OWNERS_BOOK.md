@@ -8980,6 +8980,18 @@ large fleet's reading does not exist yet, and nothing about the bill on a real c
 
 ### 60.6 The cloud is a wire: three places, one organism, two routes (a composition, class S of L and P)
 
+**What each place's benchmark shows: the benefit, or that it holds** (the founder's words of 31 October: "We don't have to
+show benefit. We know that. We just need to show we hold, and then we know where the benefit lives"). The software end
+(Kubernetes, the orchestrators and governors, the services) is where Omni-Compass decides and works; its benchmark shows the
+benefit, composed over work, speed and machines in `results/WHOLE_SYSTEM.md` (class L). The chip (a processor or GPU card) is
+hardware whose own controls Omni-Compass turns; its benchmark shows that it holds, no harm to its heat, its power or its service,
+read by the chip's own meter (class P), and it enters the composition as exactly 1. The cloud (the wire and the provider's own
+software) carries the software end's work and bills it by machine-hours; its benchmark shows that it holds, the bill not raised
+beyond the noise and the service not harmed, and where the work can grow its yardstick is the work per dollar, the bill divided by
+the work against native, a rise in the bill power given beside the work it bought; it enters the composition as exactly 1.
+Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed. What the benefit cost
+the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md` (`DISCLOSURES.md`, section 9).
+
 **A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
 between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
 carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on site or off site).
