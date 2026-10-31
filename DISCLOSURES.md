@@ -87,7 +87,7 @@ tools/omni_version.py`); no setting is presented as universal. **Every published
 factory tune**: the engine its table names (`python3 tools/omni_version.py`), run again on each engine that stands. From
 omni-v17 that tune is held to a declared rule (`docs/THE_TUNE.md`, `tools/tune_study.py`): of the tunes that harm no gauge against native, the
 one against which no other tune tried reads GAIN on one service gauge and LOSS on none, searched on development seeds and read
-again on untouched ones; the claim is non-dominance among the tunes searched, never a global optimum. The live engine page and the
+again on untouched ones; the claim is non-dominance among the tunes searched, never a global optimum. The live benchmark engine page and the
 control panel are a live tuning engine: every knob, button and monitor turns in real time (the beat, the dial, the pedal, each
 muscle driven or left native, up or down, in or out, minus or plus) to show the mechanism of action with native alone, with
 Omni-Compass on top, or both side by side; what it shows at any other setting is the engine's range, never a benchmark result. As
@@ -97,9 +97,18 @@ ways, for many outputs. A licensee may add on, retune, upgrade or tune down any 
 bands and the service lines are exposed); a changed tune is the licensee's own, and so are its results. The factory tune is published only where it reads no LOSS: a LOSS found
 in The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
 published, never as a number to live with (the founder's order of 23 October 2026). The one place a LOSS is meant to be seen
-is the live engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
+is the live benchmark engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
 to watch the system react and the brain hold or recover: that showing is the proof that the mechanism can be broken only by
 leaving it, and a changed tune's readings are the licensee's own.
+
+**The factory profile, and the profile that comes next.** The factory tune is one complete configuration profile, the factory
+profile: every governing rule, gain, margin, decision interval and default setting shipped together, versioned and fingerprinted.
+Today's is omni-v19's. The best validated factory profile for the declared operating conditions is not yet established: it is
+chosen only after every mechanism is verified, every knob combination is tested together on development workloads, and the choice
+is validated on fresh ones; then it is frozen, carried into every implementation (the C++ harness included) and released under its
+own identity. Until then no other profile is presented as the baseline; on the live benchmark engine a candidate is evaluated, never
+released, and a custom profile's readings are its own. The words, the mathematics and the bill's arithmetic are written once in
+`docs/FACTORY_PROFILE.md`.
 
 ## 4. The wiring declaration
 
@@ -165,11 +174,11 @@ machines.
 | The license, in plain answers, and third-party components | `LICENSE`, `LICENSING_FAQ.md`, `ENTERPRISE_LICENSE.md`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, `PATENTS.md`, `TRADEMARKS.md`, `SECURITY.md`, `.github/CLA.md` |
 | The muscles, what each is for and how it is wired | `docs/MUSCLE_CATALOG.md` |
 | Proof the code is the code that ran | `python3 verify.py`, `RELEASE_MANIFEST.json`, `results/SEAL.json` |
-| The live engine: every monitor, its feed and its knobs; the third manual, how to read and operate it | `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, `docs/engine/monitors.json`, `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md` and `.pdf` (the Live Engine Manual's Appendix L, the page word for word: `docs/engine/PAGE_WORD_FOR_WORD.md`) |
+| The live benchmark engine: every monitor, its feed and its knobs; the third manual, how to read and operate it | `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, `docs/engine/monitors.json`, `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md` and `.pdf` (the Live Benchmark Engine Manual's Appendix L, the page word for word: `docs/engine/PAGE_WORD_FOR_WORD.md`) |
 | The whole organism, composed every way it is bought | `results/WHOLE_SYSTEM.md`, `tools/whole_system.py`, `docs/engine/export_whole.py`, `docs/WHOLE_SYSTEM_PREREGISTRATION.md` |
-| The Python's runs that the live engine runs again | `tools/engine_runs.py`, `results/engine_runs/`, `results/heldout_seed_*/` |
+| The Python's runs that the live benchmark engine runs again | `tools/engine_runs.py`, `results/engine_runs/`, `results/heldout_seed_*/` |
 
-## 9. The whole organism, the cloud's back end, and the live engine
+## 9. The whole organism, the cloud's back end, and the live benchmark engine
 
 **The composition is a model of measurements.** `results/WHOLE_SYSTEM.md` (`tools/whole_system.py`) composes each layer's own
 measured ratio, native against Omni-Compass on top of native, into one benefit for a whole stack: the product law
@@ -190,32 +199,42 @@ nor a cloud account). A piece with no measurement enters as exactly 1 and is nam
 **The cloud's back end is not ours to meter.** Through the cloud, the bare metal belongs to the provider: no tenant can read
 its power meters or write its chips' limits, and no run here reaches it. The cloud piece's benefit is what the provider itself
 meters and bills, the machines counted every fifteen seconds and the bill at list price, read native against Omni-Compass on
-top of the cloud's own autoscaler; fewer machines held for the same work is also the provider's own benefit on its own
-hardware. The bare-metal piece is gauged on hardware we can meter (a card's own power meter; a processor's energy counter)
+top of the cloud's own autoscaler. The bare-metal piece is gauged on hardware we can meter (a card's own power meter; a processor's energy counter)
 and is carried to the provider's bare metal only as the same mechanism on the same kind of part, a modelled factor, never as a
 measurement of the provider's machines.
 
+**The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
+orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
+racks, the data center, on-site or off-site). Omni-Compass can live in all three places. On the wire alone, as every cloud run
+in this repository is set (the tune-down on the machines only, the pods exactly native's), it can only park machines the
+cloud's own autoscaler already made, after its own trial; so a cloud run alone can show at most a small cut in the bill of the
+wire. It cannot show the work and the speed gained at the software end, nor the energy and the throughput gained at the bare
+metal, because neither end is under it; those are measured where Omni-Compass sits on them (the cluster and the services; the
+card and the machine), and composed with the wire into one organism and one bill by the law above. A cloud provider that ran
+Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter it, so it is never
+claimed here as a measurement. The company's expected ranges for the three places (the founder's figures of 24 October: about
+3 to 4% from the software end, 2 to 3% from the bare metal, about 5% from the two together, 1 to 2% from the wire alone) are
+an expectation, written as such wherever they appear, never a result; the measured readings stand beside them, and where they
+differ the measurement stands.
+
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
-beside them, and the whole stack composed above, counted by the founder as the eighth organism running native and the ninth
-with Omni-Compass on top of every piece. Every one is read native against Omni-Compass on top of native; none is a product.
+beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the
+cloud's wire, the bare metal) composed above: ten organisms. Each is read two ways, native and Omni-Compass on top of native
+(Omni-Compass is never by itself, the founder's order of 25 October): twenty scenarios, recorded in
+`results/scenarios/SCENARIOS_20.json` (class S, our own models, three runs), every cell with no run reading "not yet run".
+None is a product.
 
-**The live engine.** `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` is a monitor of the repository's records and of the engine's
-own mathematics running in the page. Every monitor carries its evidence class (P a physical meter, L live software, S our own
-models) and its state: live (the engine's port, proven equal to the Python and the C++ on every build by
+**The live benchmark engine.** `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` is a monitor of the repository's records and of the engine's
+own mathematics running in the page, and the live tuning bench: a setting other than the factory profile shows a variation of
+the mechanism, never a result. Every monitor carries its evidence class (P a physical meter, L live software, S our own models)
+and its state: live (the engine's port, proven equal to the Python and the C++ on every build by
 `docs/engine/check_live_engine.py`), a replay of a recorded run from its own files, a reading of the repository's tables, or
-built and awaiting its run. A monitor awaiting its run carries no invented number: its native lane shows what exists, its
-Omni-Compass lane stays empty, and the page names the run that fills it. The CPU host monitor plays the harness on its own
-modelled machine until a machine with its energy counter runs it; the GPU card monitor replays the one metered run of 2
-October, made by a card controller replaced since, until its run on Lambda on the engine that stands lands. The kill switch on the page acts on what
-runs in the page: every Omni-Compass side follows native at once, and a recorded result changes its colour, never a value, a
-word or a row. The page's own seeded runs reproduce the Python's (`tools/engine_runs.py`) receipt by receipt, with one
-SHA-256 digest on each side; the 500 scenarios of `benchmarks/stack_benchmark.py` are replayed from their record with every
-trace hash, not recomputed in the page. The wall's Grafana dashboard (`deploy/grafana/omni-compass-wall.json`) names the
-open-source exporters and series that would carry each monitor on a running system; the page itself reads no live system.
+built and awaiting its run, with no invented number and the run that fills it named. The kill switch on the page acts on
+what runs in the page, and a recorded result changes its colour, never a value, a word or a row. Pointed at an owner's own
+Prometheus, the page only reads it: it writes to no system.
 
-**The three manuals.** The Operator's Manual wires and runs Omni-Compass; the Owner's Manual holds the whole mechanism and every
-result; the Live Engine Manual reads the live engine top to bottom, monitor by monitor and knob by knob. Each carries this
-notice, the `LICENSE`, the `NOTICE` and this page, and none of them changes what a result says.
+**The three manuals.** The Operator's Manual wires and runs Omni-Compass, the Owner's holds the whole mechanism and every
+result, the Live Benchmark Engine Manual reads the page; each carries this notice, the `LICENSE`, the `NOTICE` and this page.
 
 ---
 

@@ -175,9 +175,60 @@ preregistered one with every rule unchanged but native's two settings: Redis exa
 (`maxmemory 0`) and `noeviction` (`tools/run_redis.py --native shipped`, workflow input `native: shipped`). A cache with no
 ceiling holds every key it is given: the knob is at its limit on native, and any ceiling Omni-Compass wrote would sit below
 native, which the max never does. So in the shipped set omni reads the cache, writes nothing and says so in its audit ("native
-has no ceiling: at its limit on native"), and every row reads EVEN; that is the result, said before the run. The value of the
+has no ceiling: at its limit on native"), and every row reads STEADY; that is the result, said before the run. The value of the
 compass on this knob is where an operator has set a ceiling, which the preregistered set measures; its tables keep their name,
 and the shipped set's are named for it (`…_REDIS_SHIPPED.md`).
+
+
+## Amendment 5 (2026-10-30, declared before any run on it): the max on the cache's ceiling, with the working set's floor (the next engine's candidate)
+
+**The cause, from the omni-v21 runs' own files** (`docs/STORE_ROOT_CAUSES_2026-10-30.md`, `tools/store_causes.py`). In 4,426 of the
+4,581 seconds the application stood over its 2 ms line in the omni-v21 resource set (runs 40254205224, 40276907808, 40400989005),
+the brain asked for memory and amendment 2's allowance kept it from it: the wall abandoned the spend trials (62 of 68 in run A)
+and the fail-up itself was clamped to the allowance they never earned, so the cache stayed at 64 to 80 MB. In our own model of the
+cache (`tools/redis_model.py`, class S, its hit and miss latencies the omni-v21 native arms' own records), a ceiling the working set
+fits under raises the hit share from 63% to 72% at 256 MB in the small workload; the misses that remain are each notch's first
+touch of a new keyspace, which no ceiling mends.
+
+**From this amendment** (`tools/run_redis.py` `Brain`, the code the real run and the model drive): the store wires were written on
+9 and 10 October, before the founder's order of 12 October that the max is the default brain, and never brought to it; this brings
+the cache's wire to the max.
+
+- the spend: misses with the cache full go through by the compass's own law (ceil(force / 0.1) notches of 8 MB a second; at the
+  wall a quarter of the cover at once), never clamped by the allowance, up to the cover's top; the memory is power given, shown
+  beside the hits it bought;
+- the hold: the twin is the working set itself, the most memory the cache held in the last 60 s with the fullness margin; calm
+  with nothing evicted hands one notch back a second, never below that floor and never below the operator's ceiling (a ceiling
+  handed back below the working set evicts the keys the application still asks for, and the next rise buys them back at the
+  store's price: the sawtooth the model showed on the first candidate, which read LOSS against omni-v21 in two workloads);
+- the floor: the operator's ceiling, the max's native, handed back at the end as before; the verdict's allowance and its trials
+  stand for the tune-down below it (`dial save`), where giving memory back is the aim.
+- the account of a miss (`tools/store_brain.py`, what the three cache wires share): memory is spent only where the misses are at
+  least the one key's floor (a half of one percent, `tools/readings.py` `SIZE_FLOOR`) of the service's own time over the last 10 s,
+  from the application's own split of each request into hits and misses (the misses' count times what a miss cost beyond a hit,
+  over the requests times their mean); under the floor the misses are nothing the record could read, memory could buy nothing it
+  could read, and the ceiling holds and says why; where the split is not read this second (the wire's older records), nothing is
+  known and nothing is taken;
+- the host's room: a notch is taken only while the host keeps 5% of its memory available after it (`/proc/meminfo`, the compass's
+  cushion); unread, nothing is taken;
+- the record: every second's split and the misses' share of the service's time, the floor and the host's room in the audit; the
+  arm's record carries the max's counts where it carried the verdict's allowance; every workload record carries its `dial`;
+  `OMNI_DIAL=save` keeps omni-v21's loop (the tune-down); `tools/store_brain.py` and `tools/knob_verdict.py` join the fingerprint
+  with this version (`tools/omni_version.py`, `STORE_WIRES`).
+
+**The model gate** (`tools/redis_model.py --compare`, seeds 101 to 103, 30 s a notch, against omni-v21's own loop read from git; the
+model's host has room for every notch; `results/model_gate/V22_REDIS_MODEL.md`): work inside the line GAIN in every workload (small
+up 22.9%, burst up 17.6%, tuning up 10.3%, large up 7.7%), the mean latency GAIN (down 36% to 59%), the 95th and 99th percentiles
+GAIN or EVEN (the large workload's 95th down 95.1%), the memory held power given (201 to 304 MB against 62 to 66 MB); no LOSS row.
+In the open-loop replay of the omni-v21 arms' recorded seconds (`tools/store_gate.py`, class S), whose audits carry neither the
+split nor the host's memory, the candidate holds at the operator's ceiling: seconds below native 36.6 → 0 an arm (shown), seconds
+below native while missing 1.5 → 0 (GAIN +100.0%), the knob's moves 12.3 → 0 (GAIN +100.0%), the ceiling held 64.2 → 64.0 MB
+(EVEN); no LOSS.
+
+**Expected before the runs**, at the counted 30 s a notch, three paired repetitions a run: work inside the line and the mean latency
+GAIN in every untouched workload; the 95th percentile EVEN or GAIN (the misses that remain are cold); the memory ceiling and the
+memory used power given; the knob's moves shown. The counted runs on this amendment run on the next engine version, which lands only
+when the model gate reads no LOSS for every store wire it changes.
 
 ---
 

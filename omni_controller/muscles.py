@@ -54,6 +54,13 @@ from __future__ import annotations
 import csv, json, math, shlex, subprocess, time
 import re
 
+# omni-v22 (30 October): a hand-back step is tried this many times against a transient failure of the cluster's API (a 500 from
+# the server, a dropped connection), 1 s apart doubling to 4 s, about 10 s in all, inside the rig's 60 s wait for the governor
+# to exit and the master switch's stale time. Before, the first failed read ended the whole hand-back: six-kube run
+# 41044680505, repetition 346, one 500 on the autoscaler list left every conveyed limit and the replica range behind, and the
+# arm was marked invalid. Each muscle's hand-back is tried on its own, and what did not land is raised at the end, never silent.
+RESTORE_TRIES = 5
+
 CPU_ANN = "omnicompass.io/original-cpu-limit"
 PAUSE_ANN = "omnicompass.io/paused-by-omni"
 BATCH_LABEL = "omnicompass.io/batch=true"
@@ -237,6 +244,24 @@ class Muscles:
         except Exception as e:  # noqa: BLE001
             err = getattr(e, "stderr", "") or str(e)
             self.audit({"error": f"{name}: {type(e).__name__}: {str(err).strip()[:400]}"})
+
+    def _guard_restore(self, name, fn):
+        """A lever's hand-back, tried RESTORE_TRIES times against a transient failure of the cluster's API (omni-v22: the
+        hand-back must land; a 500 from the server on one read had left the conveyed limits behind), every failed try in the
+        audit; one lever failing never stops the others. A fault that is not the API's weather is reported at once, not
+        retried. Returns whether it landed."""
+        for attempt in range(1, RESTORE_TRIES + 1):
+            try:
+                fn()
+                return True
+            except Exception as e:  # noqa: BLE001
+                err = getattr(e, "stderr", "") or str(e)
+                self.audit({"error": f"{name}: {type(e).__name__}: {str(err).strip()[:400]}", "attempt": attempt, "of": RESTORE_TRIES})
+                if not isinstance(e, (subprocess.CalledProcessError, OSError)):
+                    return False
+                if attempt < RESTORE_TRIES:
+                    time.sleep(min(4.0, 2.0 ** (attempt - 1)))
+        return False
 
     # ---- new levers ---------------------------------------------------------------------------------------------------
     def _named_usage(self, ns, sel=None):
@@ -681,12 +706,14 @@ class Muscles:
 
     # ---- kill -------------------------------------------------------------------------------------------------------
     def restore(self):
-        self._guard("kill cooling", self._restore_cooling)
-        self._guard("kill contain", self._restore_contain)
-        self._guard("kill batch_pace", self._restore_pace)
-        self._guard("kill coldstart", self._restore_coldstart)
-        self._guard("kill rightsize", self._restore_rightsize)
-        self._guard("kill hardware and power cap", self._restore_core)
+        """Every lever handed back, each tried RESTORE_TRIES times on its own; returns the names of the levers that did not land."""
+        missed = []
+        for name, fn in (("kill cooling", self._restore_cooling), ("kill contain", self._restore_contain),
+                         ("kill batch_pace", self._restore_pace), ("kill coldstart", self._restore_coldstart),
+                         ("kill rightsize", self._restore_rightsize), ("kill hardware and power cap", self._restore_core)):
+            if not self._guard_restore(name, fn):
+                missed.append(name)
+        return missed
 
     def _restore_cooling(self):
         if getattr(self.a, "cooling_cmd", ""):

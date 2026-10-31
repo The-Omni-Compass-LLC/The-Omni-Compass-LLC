@@ -51,7 +51,7 @@ sys.path.insert(0, str(ROOT))
 from tools.legal import stamp as legal_stamp                       # noqa: E402
 from tools.readings import with_own_runs, receipt_key, row_gain, word as gel_word, aim as gel_aim, classify as gel_classify, labelled, LABEL_SHOWN  # noqa: E402
 from tools import omni_index                                       # noqa: E402
-from tools.grid_v5 import kube_verdict                             # noqa: E402  (a square's line in GAIN, EVEN and LOSS)
+from tools.grid_v5 import kube_verdict                             # noqa: E402  (a square's line in GAIN, STEADY and LOSS)
 
 LIVE = ROOT / "results" / "live"
 OUT_MD = ROOT / "docs" / "WIRING_VERDICTS.md"
@@ -303,9 +303,9 @@ def away_cell(j, n=12):
 def k8s_why(f, j, v):
     if v == WRITE:
         return (f"{len(j['gain'])} gauges GAIN across our three runs ({fmt_list(j['gain'])}), none LOSS or power given"
-                + (f"; {len(j['noise'])} gauges EVEN, inside the noise" if j["noise"] else "") + ". Omni holds the knob")
+                + (f"; {len(j['noise'])} gauges STEADY, inside the noise" if j["noise"] else "") + ". Omni holds the knob")
     if v == WATCH and not away_of(j):
-        return (f"every judged gauge EVEN ({len(j['noise'])} inside the noise, {len(j['same'])} the same), the neighbour's "
+        return (f"every judged gauge STEADY ({len(j['noise'])} inside the noise, {len(j['same'])} the same), the neighbour's "
                 f"own rows included: beside a noisy neighbour no gauge moved, so under this demand the knob has nothing to move. "
                 f"The same knob writes under the other six demands")
     return (f"GAIN across our three runs: {fmt_list(j['gain'])}"
@@ -319,7 +319,7 @@ def stack_why(f, wl, j, v, res, svc):
     if j["disagree"]:
         parts.append(f"the runs disagree on {', '.join(f'{nm} ({rg})' for _, nm, rg, *_ in j['disagree'][:3])}")
     if not j["gain"] and not away_of(j):
-        parts.append(f"everything EVEN in all three of our runs ({len(j['noise'])} gauges inside the noise" + (f", {len(j['same'])} the same" if j["same"] else "") + ")")
+        parts.append(f"everything STEADY in all three of our runs ({len(j['noise'])} gauges inside the noise" + (f", {len(j['same'])} the same" if j["same"] else "") + ")")
     s = ("; ".join(parts) + ".") if parts else ""
     causes = []
     for k, nm, rg, _, a in away_of(j):
@@ -345,7 +345,7 @@ def stack_why(f, wl, j, v, res, svc):
     if v == WATCH and j["disagree"] and not away_of(j):
         s += " Nothing is settled here, so the knob stays native until three runs agree."
     if v == WATCH and not j["gain"] and not away_of(j) and not j["disagree"]:
-        s += " EVEN under this workload: the knob stays native and Omni reads it."
+        s += " STEADY under this workload: the knob stays native and Omni reads it."
     if v == WRITE:
         s += " No LOSS and no power given: Omni holds the knob."
     return s
@@ -526,7 +526,7 @@ def sim_why(f, name, j, v):
     if j["disagree"]:
         parts.append(f"the runs differ on {', '.join(f'{nm} ({rg})' for _, nm, rg, *_ in j['disagree'][:3])}")
     if not j["gain"] and not away_of(j):
-        parts.append("everything EVEN in all three of our runs")
+        parts.append("everything STEADY in all three of our runs")
     s = ("; ".join(parts) + ".") if parts else ""
     why = SIM_SHORT.get(f, {})
     if f == "V7_PANDAPOWER.md" and away_of(j):
@@ -723,7 +723,7 @@ def main(check=False):
 
     L = ["# Wire in, or watch: the verdict per knob, from every result in the repository", "", *receipt_key(), "",
          "Omni-Compass is wired **out of** every muscle: it reads every reading. It is wired **into** a knob only where the paired "
-         "measurement shows no gauge of the muscle read **LOSS** against native. Where the measurement shows nothing (**EVEN**), or shows "
+         "measurement shows no gauge of the muscle read **LOSS** against native. Where the measurement shows nothing (**STEADY**), or shows "
          "a LOSS, the muscle stays "
          "native and Omni only watches it: one wire out, no wire in. This is not a new rule. It is what the engine does on the muscle "
          "itself before it moves anything (`omnicompass/verdict.py`: the paired trial, and the verdict **left native** where no step is "
@@ -735,7 +735,7 @@ def main(check=False):
          "`verify.py` fails if this page differs from what the tables give. One row per knob and case: `results/WIRING_VERDICTS.csv` "
          f"({len(all_cases)} rows, the 1,107 modelled muscles included one by one, and the seven organisms under three loads).", "",
          "## The rule", "",
-         "Every judged gauge of a table counts (rows marked \"shown, not judged\" never do). Every reading is **GAIN**, **EVEN** or "
+         "Every judged gauge of a table counts (rows marked \"shown, not judged\" never do). Every reading is **GAIN**, **STEADY** or "
          "**LOSS**, decided by what the gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`): "
          "response times and failed requests are time waited, missed or failed, so a fall is GAIN; work done is GAIN when it rises; "
          "machines, energy, memory, connections, consumers and processor time are resources spent, so a fall is a cut, a GAIN, and a "
@@ -887,7 +887,7 @@ def main(check=False):
           f"- **{len(limit)} muscles are at their limit on native.** Native already runs the knob at the top of its range: every admission knob "
           f"lets everything in while change is permitted ({kc['admission']} admission knobs), a power knob runs the full clock or the full battery "
           f"power ({kc['power']} power knobs), and {kc['capacity'] + kc['setpoint']} capacity and setpoint knobs sit where native's own controller "
-          "already has what the plant needs. There is nothing for the max to push; the knob is read and left native, EVEN by design, and no wire in "
+          "already has what the plant needs. There is nothing for the max to push; the knob is read and left native, STEADY by design, and no wire in "
           "is needed.",
           f"- **{len(same_as)} muscles read the same as native**: {len(same_wrote)} of them wrote and nothing moved beyond the noise on work, speed "
           f"or misses, {len(same_as) - len(same_wrote)} wrote nothing because native held the reading and the law had nothing to push. Watch, by rule; "
@@ -929,7 +929,7 @@ def main(check=False):
     # not decided
     L += ["", "## Not decided here", "",
           "- **Azure's managed Kubernetes (the bill):** the two tables are on Omni v1 (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`) on a "
-          "4-worker fleet, where every gauge read EVEN, no difference beyond the noise, but the burst's p99 in one run. A fleet too small to show one "
+          "4-worker fleet, where every gauge read STEADY, no difference beyond the noise, but the burst's p99 in one run. A fleet too small to show one "
           "machine decides nothing; the fleet that can (`docs/K8S_COMPASS_PREREGISTRATION.md`, the fleet that can show one machine) decides this "
           "knob on v3 when it runs. Until then the verdict on Azure is watch, for want of a result rather than because of one.",
           "- **The card (NVIDIA, its own meter):** every earlier card result is obsolete; the current governor has not run on a real card. Nothing "

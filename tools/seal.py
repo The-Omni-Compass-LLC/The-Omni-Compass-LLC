@@ -52,6 +52,10 @@ TWINS = {
     "the edge (each muscle's balance point and wall, the cushion widened at once and narrowed slowly)": {
         "python": ["omnicompass/edge.py"], "cpp": ["cpp/src/edge.cpp", "cpp/include/omnicompass/edge.hpp"],
         "proof": "tests/test_cpp_edge_parity.py"},
+    "the immune system's self-knowledge (a knob redlining that Omni-Compass cannot lift goes to native where native is stronger, "
+    "stays where it is not)": {
+        "python": ["omnicompass/immune.py"], "cpp": ["cpp/src/immune.cpp", "cpp/include/omnicompass/immune.hpp"],
+        "proof": "tests/test_cpp_immune_parity.py"},
     "Omni direct's brain and room rule (the yardstick, the reflex, the compass, the twin, the verdict's depth, the conveyed walls, "
     "the machines, pack and spread)": {
         "python": ["omni_orchestrator/brain.py", "omni_orchestrator/scheduler.py"],
@@ -60,12 +64,15 @@ TWINS = {
     "the engine's seeded runs (the Python's 500 from the jump generator, its draws the input, every twin above the mechanism)": {
         "python": ["tools/engine_runs.py"], "cpp": ["cpp/tools/engine_runs.cpp"],
         "proof": "tests/test_cpp_engine_runs_parity.py"},
+    "the core's Monte Carlo (the Python's 500 RK4 runs from the jump generator, its draws the input, the core's twin the mechanism, four ways)": {
+        "python": ["tools/core_runs.py"], "cpp": ["cpp/tools/core_runs.cpp"],
+        "proof": "tests/test_cpp_core_runs_parity.py"},
 }
 PYTHON_ONLY = {
     "omni_controller/gpu_governor.py (device I/O)": "reading nvidia-smi and writing power limits; its decision rules are twinned above",
     "omni_controller/muscles.py": "Kubernetes and hardware muscles (convey, rightsize, coldstart, batch, contain, cooling, CPU/GPU connectors)",
     "omni_controller/controller.py": "Kubernetes controller (HPA target, pod reflex, machines, strict replicas)",
-    "hardware/node_exchange.py": "CPU + GPU on one power budget (simulation harness; the law itself is twinned above)",
+    "hardware/node_exchange.py": "CPU + GPU on one power budget (modelled harness; the law itself is twinned above)",
     "realms/compass_arm_v5.py": "the max, the default brain of every organism (max_apply, max_body_step, the Bone, the twins, the "
                                 "heat debt); its tune-down runs the compass law, twinned above",
     "realms/harness.py, realms/plants.py": "the organisms' body and its plants (the modelled muscles the harness drives)",
@@ -105,7 +112,13 @@ def prove():
     test_cpp_student_t_parity.main(str(b / "oc_student_t"), 2000)
     from tests import test_cpp_orchestrator_brain_parity
     test_cpp_orchestrator_brain_parity.main(str(b / "oc_orchestrator_brain"), 300)
+    from tests import test_cpp_immune_parity
+    for seed in range(200):
+        lines = test_cpp_immune_parity.script(seed)
+        assert test_cpp_immune_parity.py_answers(lines) == test_cpp_immune_parity.cpp_answers(b / "oc_immune", lines), seed
     test_cpp_engine_runs_parity.main(str(b / "oc_engine_runs"), 100)
+    from tests import test_cpp_core_runs_parity
+    test_cpp_core_runs_parity.main(str(b / "oc_core_runs"), 100)
 
 
 def check():

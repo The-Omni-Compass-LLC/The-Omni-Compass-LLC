@@ -30,8 +30,6 @@ on:
       arm: {description: "v5 (the engine's law, the v5 catalog) or compass (the v3 law, v3's catalog, its stored grid)", default: "v5"}
       load: {description: "The organisms' work demand: line (work waiting in line), normal (their own) or climb (1 2 3 2 3 4 ...)", default: "line"}
       deadline_min: {description: "runs: a shard starts no run that would end after this many minutes (GitHub cuts a job at 360)", default: "320"}
-  push:
-    branches-ignore: [main, raw, "v[0-9]*", "gpu-omni-*", "archive/**"]   # a push to main or a level branch never starts it (20 October: every bot commit started 25 skipped runs and a cascade of cancelled page rebuilds)
 permissions:
   actions: write
   contents: read
@@ -46,7 +44,7 @@ jobs:
       - name: Legal notice at the top of this job's report
         run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with: {sparse-checkout: "scripts\nresults/grid_v19\ntools\nrealms\nomnicompass\nomni_controller"}
+        with: {sparse-checkout: "scripts\nresults/grid_v23\ntools\nrealms\nomnicompass\nomni_controller"}
       - name: Start every square of the modelled grid not yet started
         env: {GITHUB_TOKEN: "${{ github.token }}"}
         run: python3 scripts/dispatch_grid.py tick --grid six --ref "${{ github.ref_name }}"

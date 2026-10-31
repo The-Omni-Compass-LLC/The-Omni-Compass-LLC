@@ -21,7 +21,7 @@ def main(seed=424242):
     m = res["metrics"]
     assert not str(m["pending_pod_minutes_per_hour"]["verdict"]).startswith("LOSS"), m["pending_pod_minutes_per_hour"]
     assert not str(m["hpa_shortfall_minutes_per_hour"]["verdict"]).startswith("LOSS"), m["hpa_shortfall_minutes_per_hour"]
-    for g in ("kwh_per_core_hour", "node_hours_per_core_hour"):     # a resource: a cut (GAIN), EVEN or power given, never a LOSS
+    for g in ("kwh_per_core_hour", "node_hours_per_core_hour"):     # a resource: a cut (GAIN), STEADY or power given, never a LOSS
         assert not str(m[g]["verdict"]).startswith("LOSS"), m[g]
     print(f"self-pilot: energy per core-hour {100 * m['kwh_per_core_hour']['relative']:+.1f}%, node-hours per core-hour "
           f"{100 * m['node_hours_per_core_hour']['relative']:+.1f}%, pending-pod time {m['pending_pod_minutes_per_hour']['verdict']}, "

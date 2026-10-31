@@ -49,7 +49,7 @@ measurement exists.
 5. **Method.** The smallest change every judged row can see (`docs/POWER.md`); every change to every preregistration with
    its timing (`docs/DEVIATIONS.md`); the chance of a false three-run reading, 3.1 × 10⁻⁵ a row (`docs/LIMITATIONS.md`).
 6. **Real Kubernetes.** The omni-v11 tables for Goldilocks, both KEDA setups and fixed capacity: 0 LOSS; the omni-v10 LOSS
-   reads EVEN; Omni-Compass's 95th and 99th percentiles below native's in all 90 paired repetitions
+   reads STEADY; Omni-Compass's 95th and 99th percentiles below native's in all 90 paired repetitions
    (`docs/TAIL_LATENCY.md`).
 7. **Databases and caches.** Ten omni-v11 tables, 0 LOSS; native as shipped kept apart from the operator's setting (a fault
    in the front page's grouping found and fixed before any table mixed them).

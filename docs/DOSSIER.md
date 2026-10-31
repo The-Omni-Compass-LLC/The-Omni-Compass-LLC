@@ -4,7 +4,7 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `0ce65f290`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so.
+Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `4c71e77d50`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so.
 
 ## 1. The mechanism, and proof that it is the one that ran
 
@@ -12,7 +12,7 @@ Every mechanism, harness, receipt and result, read from the files named beside i
 |---|---|---|
 | The whole repository re-runs and checks itself (`python3 verify.py`) | **PASS** | `results/VERIFY_RECEIPT.txt` |
 | The eight-line engine and its six states, fingerprinted (`omnicompass/core.py`) | sha256 `bd615f156169f679…` | `RELEASE_MANIFEST.json` |
-| Python and C++20 twins of every law, proven equal and sealed | seal intact: 15 Python/C++ twins | `results/SEAL.json` |
+| Python and C++20 twins of every law, proven equal and sealed | seal intact: 17 Python/C++ twins | `results/SEAL.json` |
 | The mechanism's identity against the code | mechanism identity matches the code | `results/MECHANISM_IDENTITY.json` |
 | The engine's convergence to its pole under the bounded command | proved | `docs/TRACKING_THEOREM.md` |
 | Safety shield: 2,000,000 adversarial cases | 0 violations | `tests/test_shield_properties.py` |
@@ -23,18 +23,18 @@ The engine is the founder's eight-line equation, integrated by RK4 with the boun
 
 ## 2. Real Kubernetes, Omni v3, every test three times (evidence class L)
 
-Seven tests, ten paired repetitions each, three separate GitHub runs on the frozen engine (A the result, B and C the replications): native Kubernetes (its HPA and scheduler) against the same Kubernetes with Omni-Compass on top, a fresh six-worker cluster per arm, order rotated, the same work sent to both arms. A row reads **GAIN** or **LOSS in all three of our runs** (by what the gauge is for, never by its sign: a response time cut is a GAIN; machines or energy up is **power given**) only when all three runs move the same way with every 95% interval clear of zero; otherwise it reads EVEN, no difference beyond the noise, which is the result. Every Omni arm ends with every setting handed back and read back. Steady runs: A 38013195851 (omni-v3); B 38013200499 (omni-v3); C 38013204648 (omni-v3); the other tests' runs are named in their tables.
+Seven tests, ten paired repetitions each, three separate GitHub runs on the frozen engine (A the result, B and C the replications): native Kubernetes (its HPA and scheduler) against the same Kubernetes with Omni-Compass on top, a fresh six-worker cluster per arm, order rotated, the same work sent to both arms. A row reads **GAIN** or **LOSS in all three of our runs** (by what the gauge is for, never by its sign: a response time cut is a GAIN; machines or energy up is **power given**) only when all three runs move the same way with every 95% interval clear of zero; otherwise it reads STEADY, no difference beyond the noise, which is the result. Every Omni arm ends with every setting handed back and read back. Steady runs: A 38013195851 (omni-v3); B 38013200499 (omni-v3); C 38013204648 (omni-v3); the other tests' runs are named in their tables.
 
 ![Kubernetes on v3](dossier/k8s_v3.png)
 
 | Test | Work | Response time (p95; the batch queue's mean) | Machines in service | Energy (declared model) | Failed requests | Table |
 |---|---|---|---|---|---|---|
-| Steady work in steps | EVEN, equal by design | **-66% to -64%, GAIN in all three of our runs** | **-2% to -2%, GAIN in all three of our runs** | **-2% to -1%, GAIN in all three of our runs** | EVEN, the same | `results/live/V3_STEADY.md` |
-| Demand that wanders | not taken | **-64% to -56%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-13% to -12%, GAIN in all three of our runs** | `results/live/V3_WANDERING.md` |
-| All four in one run | **+54% to +68%, GAIN in all three of our runs** | **-62% to -57%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-14% to -11%, GAIN in all three of our runs** | `results/live/V3_ALL_FOUR.md` |
-| Fairness, a noisy neighbour | not taken | EVEN, inside the noise | EVEN, the same | EVEN, inside the noise | EVEN, inside the noise | `results/live/V3_FAIRNESS.md` |
-| Faults: machine down, spike, runaway pod, blind probe | not taken | **-63% to -58%, GAIN in all three of our runs** | EVEN, inside the noise | EVEN, inside the noise | **-18% to -14%, GAIN in all three of our runs** | `results/live/V3_FAULTS.md` |
-| A queue of batch jobs | not taken | **-13% to -11%, GAIN in all three of our runs** | **-20% to -16%, GAIN in all three of our runs** | **-14% to -11%, GAIN in all three of our runs** | EVEN, inside the noise | `results/live/V3_BATCH.md` |
+| Steady work in steps | STEADY, equal by design | **-66% to -64%, GAIN in all three of our runs** | **-2% to -2%, GAIN in all three of our runs** | **-2% to -1%, GAIN in all three of our runs** | STEADY, the same | `results/live/V3_STEADY.md` |
+| Demand that wanders | not taken | **-64% to -56%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-13% to -12%, GAIN in all three of our runs** | `results/live/V3_WANDERING.md` |
+| All four in one run | **+54% to +68%, GAIN in all three of our runs** | **-62% to -57%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-14% to -11%, GAIN in all three of our runs** | `results/live/V3_ALL_FOUR.md` |
+| Fairness, a noisy neighbour | not taken | STEADY, inside the noise | STEADY, the same | STEADY, inside the noise | STEADY, inside the noise | `results/live/V3_FAIRNESS.md` |
+| Faults: machine down, spike, runaway pod, blind probe | not taken | **-63% to -58%, GAIN in all three of our runs** | STEADY, inside the noise | STEADY, inside the noise | **-18% to -14%, GAIN in all three of our runs** | `results/live/V3_FAULTS.md` |
+| A queue of batch jobs | not taken | **-13% to -11%, GAIN in all three of our runs** | **-20% to -16%, GAIN in all three of our runs** | **-14% to -11%, GAIN in all three of our runs** | STEADY, inside the noise | `results/live/V3_BATCH.md` |
 | A public day of demand: the Google cluster trace of 2011, replayed one step at a time | not taken | **-66% to -64%, GAIN in all three of our runs** | **-9% to -7%, GAIN in all three of our runs** | **-7% to -5%, GAIN in all three of our runs** | **-18% to -11%, GAIN in all three of our runs** | `results/live/V3_TRACE_GOOGLE2011.md` |
 
 Energy on kind is a declared model: the machines are containers on one runner, so a machine out of service cuts modelled watts, not a metered bill. Omni-Compass gives a machine back only after a paired trial shows the service no slower without it (the verdict, `omnicompass/verdict.py`); on these clusters one machine fewer made requests 30-45% slower in most trials, so the machines stayed and were spent on speed and work. The v1 tables (`results/live/V1_*.md`, `docs/OMNI_V1.md`) read the same; the sets before v1 are in `docs/history/`.
@@ -45,11 +45,11 @@ PostgreSQL 16 as shipped behind PgBouncer's shipped pool of 20 is native; omni i
 
 | Workload | Work inside the 50 ms line | p95 | Connections held open | Host CPU-seconds (the compass's own cost) |
 |---|---|---|---|---|
-| `select` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `simple_update` | EVEN, inside the noise | EVEN, inside the noise | the runs disagree | EVEN, inside the noise |
-| `tpcb_hot` | EVEN, inside the noise | EVEN, inside the noise | **-13% to -7%, GAIN in all three of our runs** | EVEN, inside the noise |
+| `select` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `simple_update` | STEADY, inside the noise | STEADY, inside the noise | the runs disagree | STEADY, inside the noise |
+| `tpcb_hot` | STEADY, inside the noise | STEADY, inside the noise | **-13% to -7%, GAIN in all three of our runs** | STEADY, inside the noise |
 
-The compass takes connections back only while the pooler's clients wait for one under 1% of the time and gives them back the moment anyone waits (amendment 2 of `docs/POSTGRES_PREREGISTRATION.md`, 8 October: the first counted set's CPU cost was measured and traced to the harness's own psql launches, not to the pooler, and its first table is kept whole in `docs/history/V3_PGBENCH_set1.md`). Where it reads a cut it is connections held open for the same work, a GAIN, with the host's CPU EVEN (`tpcb_hot`: cut 7% to 13% in all three of our runs); where the add rule buys connections above the operator's setting on a slow write workload (`simple_update`: the most at once up 8% to 12%), that reads power given and counts below 1 in the index. The earlier counted sets are kept whole in `docs/history/V3_PGBENCH_set1.md` to `V3_PGBENCH_set3.md`. Table: `results/live/V3_PGBENCH.md`.
+The compass takes connections back only while the pooler's clients wait for one under 1% of the time and gives them back the moment anyone waits (amendment 2 of `docs/POSTGRES_PREREGISTRATION.md`, 8 October: the first counted set's CPU cost was measured and traced to the harness's own psql launches, not to the pooler, and its first table is kept whole in `docs/history/V3_PGBENCH_set1.md`). Where it reads a cut it is connections held open for the same work, a GAIN, with the host's CPU STEADY (`tpcb_hot`: cut 7% to 13% in all three of our runs); where the add rule buys connections above the operator's setting on a slow write workload (`simple_update`: the most at once up 8% to 12%), that reads power given and counts below 1 in the index. The earlier counted sets are kept whole in `docs/history/V3_PGBENCH_set1.md` to `V3_PGBENCH_set3.md`. Table: `results/live/V3_PGBENCH.md`.
 
 ## 3b. Real messaging: Apache Kafka, a consumer group's operator-set size, Omni v3, three runs (evidence class L)
 
@@ -57,12 +57,12 @@ Apache Kafka as shipped (one broker, a topic of 8 partitions) with the consumer 
 
 | Workload | Work inside the 500 ms line | End-to-end p95 | Consumers running (the resource held) | Host CPU-seconds (the compass's own cost) |
 |---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | EVEN, inside the noise | **-0% to -0%, GAIN in all three of our runs** | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | **-1% to -1%, GAIN in all three of our runs** | EVEN, inside the noise |
-| `heavy` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `light` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | STEADY, inside the noise | **-0% to -0%, GAIN in all three of our runs** | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | **-1% to -1%, GAIN in all three of our runs** | STEADY, inside the noise |
+| `heavy` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `light` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 2, run on 10 October: `docs/RERUN_2026-10-10.md`), the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst` (0.3% on the tuning workload, shown and not counted), a GAIN in all three of our runs, with work, latency and CPU EVEN; `heavy` and `light` read EVEN on every gauge. No message went unconsumed in any arm; every count was handed back. The earlier counted sets are kept whole in `docs/history/V3_KAFKA_set1.md` and `V3_KAFKA_set2.md`. Table: `results/live/V3_KAFKA.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 2, run on 10 October: `docs/RERUN_2026-10-10.md`), the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst` (0.3% on the tuning workload, shown and not counted), a GAIN in all three of our runs, with work, latency and CPU STEADY; `heavy` and `light` read STEADY on every gauge. No message went unconsumed in any arm; every count was handed back. The earlier counted sets are kept whole in `docs/history/V3_KAFKA_set1.md` and `V3_KAFKA_set2.md`. Table: `results/live/V3_KAFKA.md`.
 
 ## 3c. A real cache: Redis, the operator's memory ceiling, Omni v3, three runs (evidence class L)
 
@@ -70,12 +70,12 @@ Redis as Ubuntu ships it with the operator's 64 MB ceiling and allkeys-lru is na
 
 | Workload | Work inside the 2 ms line | Cache hit rate | p95 | Memory ceiling held, MB (the resource held) | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | **+4% to +5%, GAIN in all three of our runs** | **+4% to +5%, GAIN in all three of our runs** | EVEN, inside the noise | **+19% to +26%, power given in all three of our runs** | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `large` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
-| `small` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | **+4% to +5%, GAIN in all three of our runs** | **+4% to +5%, GAIN in all three of our runs** | STEADY, inside the noise | **+19% to +26%, power given in all three of our runs** | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `large` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
+| `small` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 2), every untouched workload reads EVEN on every gauge: under the resource objective the verdict left the ceiling where the operator set it, as the preregistration expected before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (+4% to +5%) and in the hit rate with memory given (+19% to +26%, power given). The earlier counted sets are kept whole in `docs/history/V3_REDIS_set1.md` and `V3_REDIS_set2.md`. Table: `results/live/V3_REDIS.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 2), every untouched workload reads STEADY on every gauge: under the resource objective the verdict left the ceiling where the operator set it, as the preregistration expected before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (+4% to +5%) and in the hit rate with memory given (+19% to +26%, power given). The earlier counted sets are kept whole in `docs/history/V3_REDIS_set1.md` and `V3_REDIS_set2.md`. Table: `results/live/V3_REDIS.md`.
 
 ## 3d. A real database's storage-engine cache: MongoDB under YCSB, the operator's cache size, Omni v3, three runs (evidence class L)
 
@@ -83,13 +83,13 @@ MongoDB 8.0 as its publisher ships it with the operator's WiredTiger cache of 51
 
 | Workload | Work inside the 1 ms line | p95 | Cache size held, MB (the resource held) | Pages read into the cache | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | the runs disagree | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `b` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | **-13% to -10%, GAIN in all three of our runs** | shown, not judged | EVEN, inside the noise |
-| `c` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `f` | EVEN, inside the noise | EVEN, inside the noise | **-15% to -13%, GAIN in all three of our runs** | shown, not judged | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | the runs disagree | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `b` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | **-13% to -10%, GAIN in all three of our runs** | shown, not judged | STEADY, inside the noise |
+| `c` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `f` | STEADY, inside the noise | STEADY, inside the noise | **-15% to -13%, GAIN in all three of our runs** | shown, not judged | STEADY, inside the noise |
 
-On this machine the data files sit in the operating system's page cache as well, so a storage-engine miss is a read from memory, not a disk, as disclosed before the run. On the counted set that stands, the cache size held was cut 10% to 15% on `burst` and `f`, a GAIN in all three of our runs, with work inside the line, p95, mean latency and CPU EVEN; `b` and `c` read EVEN on every gauge; the cache was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_YCSB_set1.md` to `V3_YCSB_set3.md`. Table: `results/live/V3_YCSB.md`.
+On this machine the data files sit in the operating system's page cache as well, so a storage-engine miss is a read from memory, not a disk, as disclosed before the run. On the counted set that stands, the cache size held was cut 10% to 15% on `burst` and `f`, a GAIN in all three of our runs, with work inside the line, p95, mean latency and CPU STEADY; `b` and `c` read STEADY on every gauge; the cache was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_YCSB_set1.md` to `V3_YCSB_set3.md`. Table: `results/live/V3_YCSB.md`.
 
 ## 3e. A real database's buffer pool: MySQL under sysbench, the operator's InnoDB pool size, Omni v3, three runs (evidence class L)
 
@@ -97,13 +97,13 @@ MySQL 8.0 as Ubuntu ships it with the operator's 512 MB InnoDB buffer pool is na
 
 | Workload | Work inside the line | p95 | Buffer pool held, MB (the resource held) | Pages read from disk | Host CPU-seconds |
 |---|---|---|---|---|---|
-| `tuning` (tuning, shown, not counted) | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `burst` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `read_only` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `read_write` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
-| `update_index` | EVEN, inside the noise | EVEN, inside the noise | EVEN, inside the noise | shown, not judged | EVEN, inside the noise |
+| `tuning` (tuning, shown, not counted) | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `burst` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `read_only` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `read_write` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
+| `update_index` | STEADY, inside the noise | STEADY, inside the noise | STEADY, inside the noise | shown, not judged | STEADY, inside the noise |
 
-On the counted set that stands (the brain's own verdict on the knob, amendment 3), every untouched workload reads EVEN on every gauge, and the pool was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_SYSBENCH_set1.md` to `V3_SYSBENCH_set4.md` (the first: 15 of 45 arms not handed back because the plug's restore was issued while the server was still withdrawing the blocks of a shrink, which MySQL ignores; the plug fixed and the fix declared). The update_index work-inside-the-line row counts almost nothing in either arm (a single update's client round trip exceeds the server-side 0.6 ms line) and is disclosed. Table: `results/live/V3_SYSBENCH.md`.
+On the counted set that stands (the brain's own verdict on the knob, amendment 3), every untouched workload reads STEADY on every gauge, and the pool was handed back on every omni arm. The earlier counted sets are kept whole in `docs/history/V3_SYSBENCH_set1.md` to `V3_SYSBENCH_set4.md` (the first: 15 of 45 arms not handed back because the plug's restore was issued while the server was still withdrawing the blocks of a shrink, which MySQL ignores; the plug fixed and the fix declared). The update_index work-inside-the-line row counts almost nothing in either arm (a single update's client round trip exceeds the server-side 0.6 ms line) and is disclosed. Table: `results/live/V3_SYSBENCH.md`.
 
 ## 4. The bill on a real cloud: Azure Kubernetes Service, Omni v1 (evidence class L, a metered bill)
 
@@ -111,8 +111,8 @@ Azure's own cluster autoscaler is native; omni is the same autoscaler with Omni-
 
 | Test | Fleet | Bill | Response time | Reading | Receipt |
 |---|---|---|---|---|---|
-| Steady load, 5 pairs | 4 workers | −4.7%, interval across zero | inside the noise | EVEN, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |
-| A burst sized to the cluster, 5 pairs | 4 workers | +5.0%, interval across zero | p99 −34% clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill EVEN, inside the noise | `results/live/V1_AKS_BURST.md` |
+| Steady load, 5 pairs | 4 workers | −4.7%, interval across zero | inside the noise | STEADY, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |
+| A burst sized to the cluster, 5 pairs | 4 workers | +5.0%, interval across zero | p99 −34% clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill STEADY, inside the noise | `results/live/V1_AKS_BURST.md` |
 
 One machine is a quarter of a 4-worker fleet, so only a cut of about 30% or more can clear the noise there; the expected machine cut is a few percent. The fleet that can show one machine (40 workers in nine machine families, the subscription's per-family allowance being 10 vCPUs) is preregistered and dispatched on v3; its first dispatches were refused by the subscription's allowances and by Azure's own cluster capacity in eastus before any arm ran, each refusal recorded in the preregistration's amendments.
 
@@ -143,14 +143,14 @@ The full grid with every cell: `results/scale/GRID.md`; the receipts, one per si
 
 ## 6. The 945 muscles and the four realms, Omni v3 (evidence class S)
 
-The catalog (`realms/catalog.csv`): 945 muscles in 59 families, 430 in Compute / AI / Cloud, 376 in Physics / Robotics / Autonomous, 470 in Energy / Facility / Industrial and 440 in Distribution / Specialized (1,716 counting a muscle once per realm, a shared spine of 257). Every muscle alone and every organism whole ran as A, B and C on v3 and reproduced to the last digit (`results/realms/REALMS.md`): 0 muscles with a LOSS, every organism GAIN within the guardrails (work per energy +0.1% to +0.3%, work EVEN, time over the line not above native's). On v2 the Physics realm and the tower read GAIN AND LOSS (a service traded for energy); the cause was a missing do-no-harm gate on speed knobs, which made v3 (`docs/OMNI_V3.md`). Three independent simulators with their own native controllers are wired the same way and read by the same rule: the power grid (`results/live/V3_PANDAPOWER.md`: energy drawn and net import cut in all 11 SimBench grids with ZIP loads, a GAIN; the energy dissipated in the lines up in 4 and tap operations 4 → 8 a year in one, power given), robot arms (`results/live/V3_MUJOCO.md`: Gen3 peak torque cut 29%, tracking error cut 21%, energy per takt cut 0.8%, each a GAIN; the Panda's copper heating up 14%, power given; two arms left native, EVEN) and CityLearn (`results/live/V3_CITYLEARN.md`: electricity bought, peak and unevenness cut in all 11 battery districts, a GAIN; the bill up in 7, power given). Every row stands in every table, whichever way it went.
+The catalog (`realms/catalog.csv`): 945 muscles in 59 families, 430 in Compute / AI / Cloud, 376 in Physics / Robotics / Autonomous, 470 in Energy / Facility / Industrial and 440 in Distribution / Specialized (1,716 counting a muscle once per realm, a shared spine of 257). Every muscle alone and every organism whole ran as A, B and C on v3 and reproduced to the last digit (`results/realms/REALMS.md`): 0 muscles with a LOSS, every organism GAIN within the guardrails (work per energy +0.1% to +0.3%, work STEADY, time over the line not above native's). On v2 the Physics realm and the tower read GAIN AND LOSS (a service traded for energy); the cause was a missing do-no-harm gate on speed knobs, which made v3 (`docs/OMNI_V3.md`). Three independent simulators with their own native controllers are wired the same way and read by the same rule: the power grid (`results/live/V3_PANDAPOWER.md`: energy drawn and net import cut in all 11 SimBench grids with ZIP loads, a GAIN; the energy dissipated in the lines up in 4 and tap operations 4 → 8 a year in one, power given), robot arms (`results/live/V3_MUJOCO.md`: Gen3 peak torque cut 29%, tracking error cut 21%, energy per takt cut 0.8%, each a GAIN; the Panda's copper heating up 14%, power given; two arms left native, STEADY) and CityLearn (`results/live/V3_CITYLEARN.md`: electricity bought, peak and unevenness cut in all 11 battery districts, a GAIN; the bill up in 7, power given). Every row stands in every table, whichever way it went.
 
 ## 7. Harnesses and receipts
 
 | Harness | What it proves | Receipt |
 |---|---|---|
 | `scripts/kind_paired.sh`, `tools/live_reps.py`, workflow `benchmark-reps` | native against Omni on real Kubernetes, paired on one runner, the reset checked | `results/live/raw/run-*/live-reps/` |
-| `tools/confirm_abc.py` (and `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `swarm_abc.py`, `mujoco_abc.py`, `pandapower_abc.py`, `citylearn_abc.py`) | three separate runs read by one rule: GAIN or LOSS in all three of our runs (power given for a resource spent that rose), EVEN, the runs disagree; each run's engine checked against the fingerprint | `results/live/V3_*.md`, `V1_*.md` |
+| `tools/confirm_abc.py` (and `pgbench_abc.py`, `kafka_abc.py`, `redis_abc.py`, `swarm_abc.py`, `mujoco_abc.py`, `pandapower_abc.py`, `citylearn_abc.py`) | three separate runs read by one rule: GAIN or LOSS in all three of our runs (power given for a resource spent that rose), STEADY, the runs disagree; each run's engine checked against the fingerprint | `results/live/V3_*.md`, `V1_*.md` |
 | `tools/omni_version.py` | which frozen engine a checkout or any result's commit carries | `OMNI_V1.json`, `OMNI_V2.json`, `OMNI_V3.json` |
 | `scripts/aks_paired.sh`, workflow `aks-metered` | the same on Azure's managed Kubernetes, Azure's own bill, a fresh cluster per arm, the fleet pre-flighted against the subscription's allowances | `results/live/V1_AKS_*.md` |
 | `tools/run_kil.py`, workflows `six-kube`, `big-organism`, `big-organism-detached`; `tools/six_kube_report.py` | the six organisms with a real cluster inside at 1 to 1,000 copies, on GitHub and on a rented machine; the clock rule | `results/live/V1_SIX_KUBE.md`, `V3_SIX_KUBE.md`, `V1_BIG_ORGANISM.md` |
@@ -170,7 +170,7 @@ The rules for each run were written and committed before it ran (`docs/*_PREREGI
 
 ## 8. What is not yet shown
 
-- A cloud bill or energy cut on real machines: the 4-worker Azure fleet reads EVEN, inside the noise, as a fleet too small to show one machine must; the 40-worker fleet runs are the test of that.
+- A cloud bill or energy cut on real machines: the 4-worker Azure fleet reads STEADY, inside the noise, as a fleet too small to show one machine must; the 40-worker fleet runs are the test of that.
 - The real card on the current governor: every earlier card result ran on a controller since replaced and is obsolete; the one-card, card-inside-the-organisms and eight-card runs are the founder's, on rented cards, at one named commit.
 - The grid stops at 100 copies and 100 runs (the founder's order of 12 October, to cut the time and the bill): no 1,000 copies and no 1,000 runs are run on any engine from that day; the v3 cells at 1,000 above stand as they were run.
 - The queue in `docs/REGISTER.md` section 4 (drone swarms on gym-pybullet-drones and Kafka done; Redis running): PX4 and ArduPilot swarms, YCSB and HammerDB, Spark, OpenSearch, fio, Open-RMF, the 24-hour robustness run, Basilisk, Orekit and GMAT, RocketPy, Cantera.

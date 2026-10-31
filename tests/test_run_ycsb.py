@@ -18,10 +18,11 @@ from tools import run_ycsb as Y
 
 class StandinAdmin:
     def __init__(self, mb):
-        self.mb = mb; self.reads = (0, 0)
+        self.mb = mb; self.reads = (0, 0); self.calls = []
 
     def command(self, cmd):
-        if cmd == "serverStatus":
+        if cmd == "serverStatus" or (isinstance(cmd, dict) and "serverStatus" in cmd):   # in full, or with sections asked away (25 October)
+            self.calls.append(cmd)
             return {"wiredTiger": {"cache": {"maximum bytes configured": self.mb * Y.MB, "bytes currently in the cache": self.mb * Y.MB // 2,
                                              "pages read into cache": 100, "unmodified pages evicted": 5, "modified pages evicted": 1,
                                              "pages evicted by application threads": 0, "pages requested from the cache": 10000}},
@@ -83,7 +84,7 @@ def main():
             {"native": {"ops": 2890.0, "cache_mb_mean": 512.0, "failed": 0}, "omni": {"ops": 2945.0, "cache_mb_mean": 920.0, "failed": 0}}]
     assert Y.paired(reps, "ops", "higher")["reading"] == "GAIN"
     assert Y.paired(reps, "cache_mb_mean", "spent")["reading"] == "power given", "more cache held is power given"
-    assert Y.paired(reps, "failed", "never more")["reading"] == "EVEN, the same"
+    assert Y.paired(reps, "failed", "never more")["reading"] == "STEADY, the same"
     reps[1]["omni"]["failed"] = 1
     assert Y.paired(reps, "failed", "never more")["reading"] == "**LOSS in a repetition**"
     assert Y.COVER_MB == (256, 2048) and Y.NATIVE_MB == 512 and lo <= Y.NATIVE_MB <= hi and len(Y.YCSB_SHA256) == 64

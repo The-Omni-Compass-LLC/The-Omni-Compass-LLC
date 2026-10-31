@@ -13,7 +13,7 @@ read it stands as recorded, and every page names it.
 The test (`.github/workflows/kind-addons.yml`, `docs/K8S_COMPASS_PREREGISTRATION.md`) runs native as KEDA with its HTTP add-on.
 In the http setup the add-on scales php-apache on the requests in flight. The omni arm is Omni-Compass on top of the same. On
 omni-v10, the three-run table of the http setup read the mean pod start wait **LOSS in all three of our runs** (+13.0%, +14.1%,
-+21.1% a pod). In the same three runs the total start wait read EVEN, pods started fell 24%, the response time fell 57% (mean)
++21.1% a pod). In the same three runs the total start wait read STEADY, pods started fell 24%, the response time fell 57% (mean)
 and 72% (95th percentile), and CPU used rose 50 to 54% (power given). On omni-v11, two runs of the same setup have landed. The
 third runs to its end on the rig it started on. Under the other setup, both (the CPU target and the requests in flight), the
 mean pod start wait, pooled over the repetitions, was lower in the omni arm on both engines (−7.8% on omni-v10, −6.3% on

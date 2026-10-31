@@ -206,7 +206,7 @@ GAUGES = {"machines": ("spent", lambda t: t["nodes"] + t["boot"] + t["parked"]),
 
 def reading(runs, aim):
     """The three-run rule, the one key's (tools/readings.py, the founder's order of 24 October 2026: a change of 0.5% or more,
-    the mean of the runs, is a change, read by the gauge's aim; EVEN only under 0.5%)."""
+    the mean of the runs, is a change, read by the gauge's aim; STEADY only under 0.5%)."""
     return relative_runs_reading(runs, aim)
 
 

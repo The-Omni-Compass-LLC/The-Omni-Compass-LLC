@@ -4,7 +4,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 name: live-engine
-# The live engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) is a monitor of the engine, never a drawing of it (the
+# The live benchmark engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) is a monitor of the engine, never a drawing of it (the
 # founder's order of 17 October 2026: "wire it up to the engine itself and let the math move through"). Whenever the engine,
 # a model, a harness or a result changes on main, after every front-page refresh, and every three hours besides:
 #   1. docs/engine/build_live_engine.py makes every record the page replays again, with the repository's own code on the
@@ -45,6 +45,8 @@ on:
       - ".github/workflows/live-engine.yml"
   workflow_run:
     workflows: [front-page]
+    branches: [main, "gpu-omni-*"]   # only a run on main or a GPU branch starts it (27 October: 20 pushes to one review branch, each
+                                     # with its 23 skipped runs, started 111 front pages, 111 live engines and 142 sweeps in an hour)
     types: [completed]
   schedule:
     - cron: "41 */3 * * *"
@@ -106,7 +108,7 @@ jobs:
           for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json; do
             [ -e "$f" ] && git add -- "$f"
           done
-          git commit -q -m "Live engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"
+          git commit -q -m "Live benchmark engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"
           git status --short --untracked-files=no | sed 's/^/::notice::left uncommitted by the rebuild (set aside at the push, never pushed): /'
       - name: Push, trying again if the branch moved meanwhile
         run: |

@@ -56,6 +56,20 @@ def audit(path: Path) -> list:
     return out
 
 
+def one_run_word(key: str, row: dict):
+    """One run's word for a gauge of the CPU harness, by the key (tools/readings.py run_word; a count that must never rise, LOSS on any
+    rise): None for a gauge the harness shows and does not judge, or one it does not declare."""
+    sys.path.insert(0, str(ROOT))
+    from tools import readings as R
+    from tools.run_cpu_power import GAUGES
+    aim = next((d for k, _, d in GAUGES if k == key), None)
+    if aim in (None, "shown") or row.get("native") is None or row.get("diff") is None:
+        return None
+    if aim == R.NEVER_MORE:
+        return R.LOSS if row["diff"] > 0 else R.STEADY
+    return R.run_word({"native": row["native"], "diff": row["diff"]}, aim)
+
+
 def main(out: str) -> None:
     if not WL.exists():
         Path(out).write_text(json.dumps({"missing": str(WL.relative_to(ROOT))}), encoding="utf-8")
@@ -81,11 +95,14 @@ def main(out: str) -> None:
         reps.append(rep)
     data = {"source": str(RUN.relative_to(ROOT)), "table": str((RUN / "CPU_POWER.md").relative_to(ROOT)), "cls": "S",
             "note": "the harness tools/run_cpu_power.py on its own modelled machine (--plant sim): a model, never a measurement; the real run "
-                    "waits for a Linux machine with its energy counter (RAPL) and a writable frequency ceiling (register row 79, cpu-power.yml)",
+                    "waits for a Linux machine with its energy counter (RAPL) and a writable frequency ceiling (register row 18, cpu-power.yml)",
             "machine": tuning.get("machine"), "engine": tuning.get("engine"), "workload": tuning.get("workload"), "steps": tuning.get("steps"),
             "step_s": tuning.get("step_s"), "line_ms": tuning.get("line_ms"), "unit_rps": tuning.get("unit_rps"), "cover_khz": tuning.get("cover_khz"),
             "notch_khz": tuning.get("notch_khz"), "objective": tuning.get("objective"),
-            "paired": {k: {kk: v.get(kk) for kk in ("native", "omni", "diff", "ci95", "n", "significant", "reading")} for k, v in (tuning.get("paired") or {}).items() if isinstance(v, dict)},
+            # each row as its table writes it, and beside it its word read again by the key's one-run rule (tools/readings.py run_word,
+            # the 0.5% floor, by the aim tools/run_cpu_power.py declares for the gauge): three paired repetitions are one run
+            "paired": {k: {kk: v.get(kk) for kk in ("native", "omni", "diff", "ci95", "n", "significant", "reading")} | {"word": one_run_word(k, v)}
+                       for k, v in (tuning.get("paired") or {}).items() if isinstance(v, dict)},
             "reps": reps}
     Path(out).write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False, allow_nan=False), encoding="utf-8")
 

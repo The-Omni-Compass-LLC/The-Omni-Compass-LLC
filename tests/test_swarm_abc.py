@@ -5,7 +5,7 @@
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The drone swarms' A/B/C rule (tools/swarm_abc.py): a deterministic simulator, so the three runs must reproduce; a gauge
 reads GAIN or LOSS in all three of our runs by what it is for when they do (energy is a resource spent: a rise reads power given),
-EVEN under one part in a million, "the runs differ" when they do not; a late mission, a reserve breach or a near miss added is a
+STEADY under one part in a million, "the runs differ" when they do not; a late mission, a reserve breach or a near miss added is a
 LOSS; a
 cell the paired trial left native is nothing for Omni to move; a cell with a collision is void; the tuning cell is shown
 and not counted."""
@@ -36,7 +36,7 @@ def main():
     moved = rec(energy_per_mission_j=380.0, fleet_energy_j=7700.0, missions_per_charge=7.0, tracking_rms_m=0.14, min_separation_m=0.18, override_mean=1.5, mission_s=15.0)
     assert M.verdict([moved] * 3, "energy_per_mission_j", "lower") == "**GAIN in all three of our runs**", "energy cut is a GAIN"
     assert M.verdict([moved] * 3, "missions_per_charge", "higher") == "**GAIN in all three of our runs**", "more missions a charge is a GAIN"
-    assert M.verdict([moved] * 3, "late_share", "never more") == "EVEN, the same"
+    assert M.verdict([moved] * 3, "late_share", "never more") == "STEADY, the same"
     assert M.verdict([moved] * 3, "min_separation_m", "shown") == "shown, not judged"
     more = rec(late_share=0.05, reserve_breaches=1, near_miss_ticks=3, missions_per_charge=5.0)
     assert M.verdict([more] * 3, "late_share", "never more") == "**LOSS in all three of our runs**", "a late mission added is a LOSS"
@@ -80,7 +80,7 @@ def main():
         assert "| control ticks with two drones under two collision radii (collisions) | 0 | 2 | +2.000 | +2.000 | +2.000 | **LOSS in all three of our runs** |" in txt, \
             "a collision with Omni-Compass on top is a judged LOSS, not a void cell"
         assert "| long | native collided" in txt, "a cell where native itself collides is void"
-    print("PASS  drone swarms A/B/C rule: reproduced runs read GAIN, EVEN or LOSS by what each gauge is for, a run that differs is a finding, a late mission, "
+    print("PASS  drone swarms A/B/C rule: reproduced runs read GAIN, STEADY or LOSS by what each gauge is for, a run that differs is a finding, a late mission, "
           "a reserve breach or a near miss added is a LOSS, a cell left native is nothing to move, a collision voids the cell, the tuning cell is not counted; "
           "from omni-v12 on a collision Omni-Compass adds is a judged LOSS and only native's own collision voids a cell")
 

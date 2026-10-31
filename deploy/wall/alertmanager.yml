@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# Where the governor's alerts go. Omni-Compass is the autopilot: an alert wakes a person only when the governor itself is in
+# trouble (stale, orphaned, hammering; deploy/prometheus/omni-compass-rules.yaml). No alert presses a governor button by
+# itself: the engine's own safety acts first (the lease walks every setting back after a crash; tools/omni_switch.py watchdog
+# runs the restore commands), and the reset and the kill switch stay a person's press, audited. Until a receiver is added the
+# alerts show in Alertmanager (http://127.0.0.1:9093) and on the wall, and nobody is paged.
+route:
+  receiver: omni-wall
+  group_by: [alertname]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+receivers:
+  - name: omni-wall
+    # to page a person, add one integration here, for example:
+    # webhook_configs: [{url: "https://your-paging-tool.example/hook"}]
+    # slack_configs: [{api_url_file: /etc/alertmanager/slack_url, channel: "#omni-compass"}]

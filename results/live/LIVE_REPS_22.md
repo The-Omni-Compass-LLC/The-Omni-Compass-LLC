@@ -38,12 +38,12 @@ no proven CPU saving.
 | response time (ms), mean | 179.9 | 98.4 | −45.3% | −99.0 to −64.0 | GAIN, proven |
 | response time (ms), 95th percentile | 407.9 | 158.8 | **−61.1%** | −298.3 to −199.9 | GAIN, proven |
 | response time (ms), 99th percentile | 639.4 | 245.1 | −61.7% | −476.4 to −312.3 | GAIN, proven |
-| failed requests (%) | 0 | 0 | 0 | 0 to 0 | EVEN |
+| failed requests (%) | 0 | 0 | 0 | 0 to 0 | STEADY |
 | pending pods, pod-minutes | 0.265 | 0.025 | −90.6% | −0.43 to −0.05 | down, proven (shown, not judged) |
 | HPA replicas, mean | 8.93 | 6.91 | −22.7% | −2.70 to −1.35 | fewer, proven |
 | worker nodes in service, mean | 6 | 4.14 | −31.0% | −2.26 to −1.47 | fewer, proven (all stayed powered) |
-| pods started | 3.6 | 3.0 | −16.7% | −2.66 to +1.46 | EVEN, not proven |
-| pod start wait, total (s) | 12.3 | 5.6 | −54.5% | −15.9 to +2.5 | EVEN, not proven |
+| pods started | 3.6 | 3.0 | −16.7% | −2.66 to +1.46 | STEADY, not proven |
+| pod start wait, total (s) | 12.3 | 5.6 | −54.5% | −15.9 to +2.5 | STEADY, not proven |
 
 ## Plainly
 

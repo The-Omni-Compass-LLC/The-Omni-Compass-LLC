@@ -46,14 +46,18 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python tools/omni_version.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The harness's own checks (a modelled machine)
-        run: python -m unittest tests.test_run_cpu_power 2>&1 | tail -5
+        run: python -m unittest -v tests.test_run_cpu_power
       - name: "Can this machine run it? (GitHub's machines are virtual: expected no)"
         run: |
           set +e
+          set -o pipefail
           sudo -E python3 tools/run_cpu_power.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
           code=$?
-          if [ $code -ne 0 ]; then echo "::notice::GitHub's machine cannot run the benchmark (no governor, no meter): run it on your own machine or name a self-hosted runner"; fi
-          exit 0
+          if [ "$code" -eq 2 ]; then
+            echo "::notice::CPU power benchmark unavailable on this virtual runner; use eligible bare metal."
+            exit 0
+          fi
+          exit "$code"
       - name: Legal notice at the end of this job's report
         if: always()
         run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
@@ -74,7 +78,10 @@ jobs:
       - run: python3 -m pip install -q -r requirements.txt
       - run: python3 tools/omni_version.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The machine, as found
-        run: sudo -E python3 tools/run_cpu_power.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo -E python3 tools/run_cpu_power.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Run every workload, native and omni
         run: |
           set +e
@@ -82,9 +89,11 @@ jobs:
           code=$?
           sudo chown -R "$(id -u):$(id -g)" out run.log || true
           tail -40 run.log
-          grep "^==\|^   " run.log | tee -a "$GITHUB_STEP_SUMMARY"
+          # A summary without matching lines must not overwrite the actual benchmark exit status.
+          { grep -E "^(==|   )" run.log || true; } | tee -a "$GITHUB_STEP_SUMMARY"
+          mkdir -p out
           mv run.log out/run.log
-          exit $code
+          exit "$code"
       - run: cd out && find . -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
       - run: cat out/CPU_POWER.md >> "$GITHUB_STEP_SUMMARY"
       - name: Attach README, licenses and disclosures to this artifact

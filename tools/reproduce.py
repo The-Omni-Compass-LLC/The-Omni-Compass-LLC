@@ -27,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 LIVE = ROOT / "results" / "live"
+ORCH = ROOT / "results" / "orchestrator"     # the orchestrator's three-arm tables (tools/three_arms_abc.py)
 RAW = LIVE / "raw"
 RECIPES = LIVE / "RECIPES.json"
 STATE = LIVE / "FRONT_PAGE_STATE.json"
@@ -55,7 +56,7 @@ def recipes() -> dict:
 
 
 def tables_of(v: int) -> list:
-    return sorted(p.stem for p in LIVE.glob(f"V{v}_*.md") if TABLE.match(p.name))
+    return sorted(p.stem for d in (LIVE, ORCH) for p in d.glob(f"V{v}_*.md") if TABLE.match(p.name))
 
 
 def check_recipes(v: int) -> list:
@@ -81,9 +82,13 @@ def rebuild(name: str, r: dict, scratch: Path):
                        capture_output=True, text=True, cwd=ROOT)
     if p.returncode != 0:
         return [(name, f"{r['tool']} failed: {(p.stdout + p.stderr).strip()[-300:]}")]
+    built_json = scratch / f"{name}.json"
+    if built_json.exists() and not isinstance(json.loads(built_json.read_text()).get("rows"), list):
+        from tools.reread import reread_pair   # every published table stands read again by the rule that stands (verify.py)
+        reread_pair(built_json)
     res = []
     for built in sorted(scratch.glob(f"{name}.*")):
-        mine = LIVE / built.name
+        mine = (ORCH if name.endswith("_THREE_ARMS_ABC") else LIVE) / built.name
         res.append((built.name, "missing in results/live" if not mine.exists() else
                     "same" if mine.read_bytes() == built.read_bytes() else "differs"))
     return res
@@ -112,7 +117,8 @@ def main(argv=None):
                 ok = res == "same"
                 bad += not ok
                 print(f"{'same   ' if ok else 'DIFFERS'} {f}" + ("" if ok else f": {res}"))
-    print(f"reproduce: {len(names)} omni-v{v} tables rebuilt from their raw receipts, "
+    engines = sorted({int(m.group(1)) for n in names for m in [re.match(r"V(\d+)_", n)] if m}) or [v]
+    print(f"reproduce: {len(names)} {' and '.join(f'omni-v{e}' for e in engines)} tables rebuilt from their raw receipts, "
           + ("every file identical to the byte" if not bad else f"{bad} files not identical"))
     return 1 if bad else 0
 

@@ -20,7 +20,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## Every muscle alone, by home realm
 
-| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
+| Realm | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Compute / AI / Cloud | 334 | 21 | 1 | 312 | 0 | 0 | 0 |
 | Physics / Robotics / Autonomous | 119 | 19 | 4 | 95 | 1 | 0 | 0 |
@@ -30,7 +30,7 @@ These are models. A model's energy is not a meter's, and a plant written by the 
 
 ## By knob: what kind of authority Omni held
 
-| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | EVEN (inside the noise, within the guardrails) | EVEN (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
+| Knob | Muscles | GAIN (within the guardrails) | GAIN AND LOSS (energy cut, service traded for it) | STEADY (inside the noise, within the guardrails) | STEADY (not established: inside the noise, a guardrail crossed on the mean) | LESS WORK PER ENERGY | INVALID | Median work per energy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | capacity | 454 | 19 | 0 | 434 | 1 | 0 | 0 | +0.0% |
 | setpoint | 134 | 82 | 4 | 44 | 0 | 0 | 0 | +1.2% |
@@ -119,16 +119,16 @@ For 132 of 134 setpoint muscles, a fixed setpoint at the calm end of the declare
 | well_drawdown_level_target | Agriculture & Irrigation | setpoint | GAIN (within the guardrails) | +18.5% (+16.8 to +20.2) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
 | pivot_speed_setpoint | Agriculture & Irrigation | setpoint | GAIN (within the guardrails) | +18.2% (+16.6 to +19.9) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
 | mainline_pressure_setpoint | Agriculture & Irrigation | setpoint | GAIN (within the guardrails) | +18.0% (+16.6 to +19.3) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| hoist_speed_target | Elevators & Vertical Transport | capacity | EVEN (not established: inside the noise, a guardrail crossed on the mean) | -1.6% (-7.6 to +4.4) | -2.5% (-8.2 to +3.2) | +0.0 (+0.0 to +0.0) |
+| hoist_speed_target | Elevators & Vertical Transport | capacity | STEADY (not established: inside the noise, a guardrail crossed on the mean) | -1.6% (-7.6 to +4.4) | -2.5% (-8.2 to +3.2) | +0.0 (+0.0 to +0.0) |
 | battery_soc_reserve | Energy Storage & Microgrid | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.2% (-0.2 to -0.2) | +0.0% (+0.0 to +0.0) | -1.4 (-1.6 to -1.2) |
 | time_of_use_schedule | Energy Storage & Microgrid | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.2% (-0.2 to -0.2) | +0.0% (+0.0 to +0.0) | -1.4 (-1.5 to -1.3) |
 | microgrid_emergency_reserve | Energy Storage & Microgrid | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.2% (-0.2 to -0.2) | +0.0% (+0.0 to +0.0) | -1.4 (-1.5 to -1.3) |
 | pue_target | Facility & Grid Optimization | setpoint | GAIN, power given (service GAIN, energy given for it) | -0.1% (-0.1 to -0.1) | +0.0% (+0.0 to +0.0) | -0.8 (-1.0 to -0.6) |
-| model_replicas | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_route_weight | AI Inference Serving | setpoint | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_load | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_unload | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
-| model_instance_count | AI Inference Serving | capacity | EVEN (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_replicas | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_route_weight | AI Inference Serving | setpoint | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_load | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_unload | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
+| model_instance_count | AI Inference Serving | capacity | STEADY (inside the noise, within the guardrails) | +0.0% (+0.0 to +0.0) | +0.0% (+0.0 to +0.0) | +0.0 (+0.0 to +0.0) |
 
 ## Validity
 

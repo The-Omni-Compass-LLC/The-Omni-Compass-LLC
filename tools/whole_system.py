@@ -36,7 +36,7 @@ of the total is exp(μ ± 1.96 σ). The index over the gauges is the mean of the
 two bounds, the gauges independent (Var = Σσ²/k²) and the gauges perfectly correlated inside a run (σ = Σσ/k).
 
 Two readings of the same numbers. By the index's rule a gauge of a test enters only when its three-run reading is GAIN,
-LOSS or power given in all three of our runs; an EVEN gauge, a disagreement, or a table of one run enters as exactly 1 with
+LOSS or power given in all three of our runs; a STEADY gauge, a disagreement, or a table of one run enters as exactly 1 with
 no variance (nothing inside the noise is claimed either way). With every interval carried, every measured gauge enters with
 its pooled estimate and its variance whatever its reading, and the total's interval says what the noise allows.
 
@@ -153,13 +153,13 @@ def interval(est):
 
 def word_for(gauge, est):
     """The word for a composed ratio by the one key that stands (the founder's order of 24 October 2026): a change of 0.5% or more
-    either way is a change, EVEN only under it. Above 1 a GAIN; below 1 a LOSS for work and speed and power given for a resource or
+    either way is a change, STEADY only under it. Above 1 a GAIN; below 1 a LOSS for work and speed and power given for a resource or
     the bill; the interval is printed beside it, the word does not wait on it."""
     if est is None:
         return "not measured"
     r, lo, hi = interval(est)
     if abs(r - 1.0) < readings.SIZE_FLOOR:
-        return readings.EVEN
+        return readings.STEADY
     if r > 1.0:
         return readings.GAIN
     return readings.LOSS if AIM[gauge] in ("higher", "lower") else readings.GIVEN
@@ -493,7 +493,7 @@ def main(argv=None):
              "its interval is given under two bounds, the gauges independent (Var = Σσ² / k²) and the gauges perfectly correlated inside a run (σ = Σσ / k).")
     L.append("")
     L.append("Two readings of the same numbers. **By the index's rule** a gauge of a test enters only when its three-run reading is GAIN, LOSS or power "
-             "given in all three of our runs; an EVEN gauge, a disagreement, or a table of one run enters as exactly 1 with no variance (nothing inside the "
+             "given in all three of our runs; a STEADY gauge, a disagreement, or a table of one run enters as exactly 1 with no variance (nothing inside the "
              "noise is claimed either way). **With every interval carried**, every measured gauge enters with its pooled estimate and its variance whatever "
              "its reading, and the total's interval says what the noise allows.")
     L.append("")
@@ -502,8 +502,8 @@ def main(argv=None):
              "does not change when the layers under or over it also carry Omni-Compass (separability). Section 4 tests that assumption where the tables can "
              "(the governors' four ways). The stacked run, Omni-Compass at every layer at once against native at every layer, is the measurement that would "
              "replace this composition; until it exists this page is the answer the standing tables give, with its assumptions in the open. The layers "
-             "also stand on different engines (the card on the controller of 2 October, the cluster tests on omni-v10 and omni-v11, the governors on "
-             "omni-v12), so the composition is across engines, said so here, and remade as each layer's omni-v12 three runs land.")
+             "also stand on different engines, each named in its row below (the card on omni-v18's card governor, the A100 run of 24 October), so the "
+             "composition is across engines, said so here, and remade as each layer's three runs on the engine that stands land.")
     L.append("")
 
     L.append("## 2. The layers, each from its own table")
@@ -529,7 +529,7 @@ def main(argv=None):
         sp_pct = pct(1.0 / interval(sp["est"])[0]) if sp and sp["est"] else "?"
         en_pct = pct(1.0 / interval(en["est"])[0]) if en and en["est"] else "?"
         r_pr = interval(pr["est"])[0]
-        w_pr = (readings.EVEN if abs(r_pr - 1.0) < readings.SIZE_FLOOR else readings.GAIN if r_pr > 1.0 else readings.GIVEN)
+        w_pr = (readings.STEADY if abs(r_pr - 1.0) < readings.SIZE_FLOOR else readings.GAIN if r_pr > 1.0 else readings.GIVEN)
         L.append(f"The card's primary gauge, work per energy (served requests per kJ): {fmt(pr['est'])} in its one run, native {pr['runs'][0][0]:.2f} → "
                  f"{pr['runs'][0][1]:.2f}, {w_pr} by the one key; the same run read the 95th percentile response {sp_pct} "
                  f"({word_for('speed', sp['est']) if sp else 'not measured'}) and the energy drawn {en_pct} "
@@ -577,8 +577,8 @@ def main(argv=None):
              "wide one-run intervals (4 and 5 paired repetitions) are what widen it. With the card's one old run carried the chip's speed LOSS of that "
              f"run pulls the index to **{pct(math.exp(idx_a[0]))}** and its energy GAIN adds to the energy row; the card's omni-v12 run replaces that row.")
     L.append("")
-    L.append("The cloud is the wire, and it has its own factor: the bill. On Azure's own autoscaler the bill read EVEN (×1.000 inside the noise, four "
-             "paired repetitions on the compass law; the v1 fleet's steady set and burst EVEN too), so the cloud layer multiplies the total by 1 so far: "
+    L.append("The cloud is the wire, and it has its own factor: the bill. On Azure's own autoscaler the bill read STEADY (×1.000 inside the noise, four "
+             "paired repetitions on the compass law; the v1 fleet's steady set and burst STEADY too), so the cloud layer multiplies the total by 1 so far: "
              "the benefit measured is at the two ends and the layers between, and the cloud carries it without adding or taking. The omni-v12 Azure "
              "sets at the tune-down (the bill at native's work, `scripts/azure_queue.txt`) are the measurement of that factor; the bill row here changes "
              "the day their three-run tables land.")
@@ -643,7 +643,7 @@ def main(argv=None):
     L.append("")
     L.append(f"*{legal.NOTICE}*")
     L.append("")
-    OUT_MD.write_text("\n".join(L), encoding="utf-8")
+    md_text = "\n".join(L)
 
     out = {"layers": {k: [{**t, "gauges": {g: {**m, "est": list(m["est"]) if m.get("est") else None} for g, m in t["gauges"].items()},
                            "primary": ({**t["primary"], "est": list(t["primary"]["est"])} if t.get("primary") else None)} for t in v]
@@ -654,7 +654,15 @@ def main(argv=None):
                       for (scope, rule), (by_layer, total, idx) in results.items()},
            "separability": [{**s, "top": list(s["top"]), "bare": list(s["bare"])} for s in sep],
            "beside": side}
-    OUT_JSON.write_text(json.dumps(jsonable(out), indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    js_text = json.dumps(jsonable(out), indent=1, ensure_ascii=False) + "\n"
+    if "--check" in (argv if argv is not None else sys.argv[1:]):
+        # 27 October 2026: the composition had stood on older tables while the engine that stands landed its own, because
+        # nothing rebuilt it; verify.py now fails a push where it is not what the tables give
+        bad = [str(q.relative_to(ROOT)) for q, t in ((OUT_MD, md_text), (OUT_JSON, js_text)) if not q.exists() or q.read_text(encoding="utf-8") != t]
+        print("whole system: out of date (python3 tools/whole_system.py): " + ", ".join(bad) if bad else "whole system: in line with the tables")
+        return 1 if bad else 0
+    OUT_MD.write_text(md_text, encoding="utf-8")
+    OUT_JSON.write_text(js_text, encoding="utf-8")
     (by_layer, total, idx) = results[("without the card (the cluster, the services and the cloud)", "index")]
     print(f"whole system, without the card, by the index's rule: {pct(math.exp(idx[0]))} over the gauges; "
           + "; ".join(f"{g} {pct(interval(total[g])[0])}" for g in GAUGES if total[g]))

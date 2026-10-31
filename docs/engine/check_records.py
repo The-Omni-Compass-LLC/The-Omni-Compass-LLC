@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""Checks that the live engine page's three records are the repository's own runs, not a drawing of them.
+"""Checks that the live benchmark engine page's three records are the repository's own runs, not a drawing of them.
 
   harness     docs/engine/export_harness_trace.py against realms/harness.py itself: the organism (run_organism_arm,
               native and the max, the climb) and every muscle alone (run_muscle_arm, the line), decisions over the line

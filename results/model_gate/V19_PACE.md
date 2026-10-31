@@ -12,12 +12,12 @@ A decision every 60 s against native:
 
 | Gauge | Native | Every 60 s | Against native |
 |---|---:|---:|---|
-| machine_hours | 133.076 | 133.076 | =0.00% EVEN (identical) |
-| kwh_per_core_hour | 0.036 | 0.036 | =0.00% EVEN (identical) |
-| pending_pod_minutes_per_hour | 8.183 | 8.183 | =0.00% EVEN (identical) |
-| hpa_shortfall_minutes_per_hour | 1.202 | 1.202 | =0.00% EVEN (identical) |
-| p95_ms | 79.937 | 79.937 | =0.00% EVEN (identical) |
-| alert_minutes | 27.000 | 27.000 | =0.00% EVEN (identical) |
+| machine_hours | 133.076 | 133.076 | 0.00% STEADY (identical) |
+| kwh_per_core_hour | 0.036 | 0.036 | 0.00% STEADY (identical) |
+| pending_pod_minutes_per_hour | 8.183 | 8.183 | 0.00% STEADY (identical) |
+| hpa_shortfall_minutes_per_hour | 1.202 | 1.202 | 0.00% STEADY (identical) |
+| p95_ms | 79.937 | 79.937 | 0.00% STEADY (identical) |
+| alert_minutes | 27.000 | 27.000 | 0.00% STEADY (identical) |
 | power_cap_moves | 0.000 | 37.500 | power given |
 | power_cap_reversals | 0.000 | 36.500 | power given |
 | power_cap_travel | 0.000 | 11.438 | power given |
@@ -34,12 +34,12 @@ A decision every 60 s against native:
 
 | Gauge | Native | Every 60 s | Against native |
 |---|---:|---:|---|
-| machine_hours | 133.076 | 143.263 | +7.65% power given |
-| kwh_per_core_hour | 0.036 | 0.037 | +4.86% power given |
-| pending_pod_minutes_per_hour | 8.183 | 7.757 | +5.20% GAIN |
-| hpa_shortfall_minutes_per_hour | 1.202 | 1.188 | +1.23% GAIN |
-| p95_ms | 79.937 | 74.405 | +6.92% GAIN |
-| alert_minutes | 27.000 | 19.625 | +27.31% GAIN |
+| machine_hours | 133.076 | 143.263 | 7.65% power given |
+| kwh_per_core_hour | 0.036 | 0.037 | 4.86% power given |
+| pending_pod_minutes_per_hour | 8.183 | 7.757 | 5.20% GAIN |
+| hpa_shortfall_minutes_per_hour | 1.202 | 1.188 | 1.23% GAIN |
+| p95_ms | 79.937 | 74.405 | 6.92% GAIN |
+| alert_minutes | 27.000 | 19.625 | 27.31% GAIN |
 | power_cap_moves | 0.000 | 27.750 | power given |
 | power_cap_reversals | 0.000 | 26.750 | power given |
 | power_cap_travel | 0.000 | 8.464 | power given |

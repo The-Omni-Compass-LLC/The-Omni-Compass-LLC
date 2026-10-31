@@ -3,7 +3,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""Checks the live engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) against the engine's own Python.
+"""Checks the live benchmark engine page (docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) against the engine's own Python.
 
 The page carries a JavaScript port of the governor (omnicompass/adapter.py, core.py), the nerves
 (nervous_system.py), the compass law (compass_law.py) and the verdict (verdict.py). This script draws seeded inputs,

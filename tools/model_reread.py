@@ -5,7 +5,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """Every model-gate record read again by the one key that stands (the founder's order of 24 October 2026: a change of 0.5% or
-more either way is a change, read by the gauge's aim; EVEN only under 0.5%).
+more either way is a change, read by the gauge's aim; STEADY only under 0.5%).
 
 Each record keeps its runs seed by seed (`per_seed`), so its readings are recomputed from those numbers with
 `tools/model_gate.reading`, the record's JSON is written with them, and its page is rendered again from it: the model gate's own pages

@@ -37,7 +37,7 @@ The gauges of every Kubernetes set (`tools/live_reps.py`): the response time's m
 the response line, failed requests, alert minutes, pods waiting for a place, the machines in service, machine-hours, energy
 by the declared model, the governor's own processor, and the settings commands written with no person touching either arm.
 Each comparison is paired within its repetition. Three runs, A, B and C (`tools/confirm_abc.py`); every row reads GAIN,
-EVEN, LOSS or power given by the one key (a change of 0.5% or more is a change). Run and scored by The Omni-Compass LLC's own
+STEADY, LOSS or power given by the one key (a change of 0.5% or more is a change). Run and scored by The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
 ## The products, and what each decides on its own

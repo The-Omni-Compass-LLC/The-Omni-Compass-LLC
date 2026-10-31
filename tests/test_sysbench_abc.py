@@ -25,7 +25,7 @@ def main():
                  "omni": {"tps": 101.0, "pool_mb_mean": 384.0, "failed": 0, "handed_back": True}}] * 3
         (d / "tuning.json").write_text(json.dumps({"workload": "tuning", "tuning": True, "reps": reps, "engine": {"commit": ""}}))
         run, recs = A.load(Path(t) / "run-123")
-        assert run == "123" and "tuning" in recs and recs["tuning"]["paired"]["pool_mb_mean"]["reading"] in ("GAIN", "power given", "EVEN, no difference beyond the noise", "EVEN, the same")
+        assert run == "123" and "tuning" in recs and recs["tuning"]["paired"]["pool_mb_mean"]["reading"] in ("GAIN", "power given", "STEADY, no difference beyond the noise", "STEADY, the same")
         empty = Path(t) / "run-124"; empty.mkdir()
         try:
             A.load(empty); raise AssertionError("a folder without records must refuse")

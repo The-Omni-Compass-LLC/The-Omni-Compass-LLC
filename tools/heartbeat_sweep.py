@@ -438,7 +438,7 @@ def table(results, out_md):
     engines = sorted({e for (_, e, _) in by if e != "native"}, key=lambda e: [int(x) if x.isdigit() else x for x in e.replace("-", ".").split(".")], reverse=True)
     from tools.readings import by_word
     def pct(x):            # the number carries the word's sign, never the gauge's raw direction (the key, tools/readings.py)
-        if x["word"].startswith("EVEN (identical)"):
+        if x["word"].startswith("STEADY (identical)"):
             return "identical"
         return f"{by_word(100 * x['relative'], x['word'])} {x['word']}"
     beats = sorted({p for (_, e, p) in by if e != "native"})

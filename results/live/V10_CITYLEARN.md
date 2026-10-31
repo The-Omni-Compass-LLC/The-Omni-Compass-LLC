@@ -4,9 +4,9 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-> **Read again on 24 October 2026 by the rule that stands** (`tools/reread.py`, `tools/readings.py`): a change of 0.5% or more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; EVEN is kept for a change under 0.5%. Where every run moved the same way, clear of zero, the word reads in all three of our runs; otherwise by the mean of our three runs, with the count of runs that stood beyond the noise. The numbers are the runs' own; only the words were read again, and this rule replaces the one the text below describes.
+> **Read again on 24 October 2026 by the rule that stands** (`tools/reread.py`, `tools/readings.py`): a change of 0.5% or more, the mean of the three runs, is a change and reads GAIN, LOSS or power given by what the gauge is for; STEADY is kept for a change under 0.5%. Where every run moved the same way, clear of zero, the word reads in all three of our runs; otherwise by the mean of our three runs, with the count of runs that stood beyond the noise. The numbers are the runs' own; only the words were read again, and this rule replaces the one the text below describes.
 
-CityLearn (University of Texas at Austin) is an independent, deterministic simulator of real buildings with its own controller (BasicRBC) and its own scores; every score is one CityLearn itself aims lower. Native is that controller; omni is the same controller with the compass law on top of its electric battery commands only (`tools/run_citylearn.py`). The same districts ran three times as separate GitHub runs on the same frozen engine. Because the simulator is deterministic, the runs must reproduce each other: a score reads **GAIN** or **LOSS in all three of our runs** when all three runs give the same sign, judged by what the score is for and never by its sign: the electricity bought, the bill, the carbon, the peaks, the swings and the unevenness are the power the district draws and holds and the wear of moving it, so a fall is a cut, a GAIN, and a rise is **power given**; a rise in the energy not served or the time uncomfortable (the occupants' misses) is a LOSS. **EVEN, the same** when the change is under one part in a million, and **the runs differ** when they do not reproduce, which is a finding about the simulator or the harness and is said so. A district with no electric battery gets nothing from Omni (a water tank stays native), so any native/omni difference in it is CityLearn's own run-to-run variation, never an Omni result. Every row is shown, LOSS included.
+CityLearn (University of Texas at Austin) is an independent, deterministic simulator of real buildings with its own controller (BasicRBC) and its own scores; every score is one CityLearn itself aims lower. Native is that controller; omni is the same controller with the compass law on top of its electric battery commands only (`tools/run_citylearn.py`). The same districts ran three times as separate GitHub runs on the same frozen engine. Because the simulator is deterministic, the runs must reproduce each other: a score reads **GAIN** or **LOSS in all three of our runs** when all three runs give the same sign, judged by what the score is for and never by its sign: the electricity bought, the bill, the carbon, the peaks, the swings and the unevenness are the power the district draws and holds and the wear of moving it, so a fall is a cut, a GAIN, and a rise is **power given**; a rise in the energy not served or the time uncomfortable (the occupants' misses) is a LOSS. **STEADY, the same** when the change is under one part in a million, and **the runs differ** when they do not reproduce, which is a finding about the simulator or the harness and is said so. A district with no electric battery gets nothing from Omni (a water tank stays native), so any native/omni difference in it is CityLearn's own run-to-run variation, never an Omni result. Every row is shown, LOSS included.
 
 | Run | GitHub run | Commit | Engine | Districts in the run |
 |---|---|---|---|---:|
@@ -20,16 +20,16 @@ CityLearn (University of Texas at Austin) is an independent, deterministic simul
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | electricity bought (`electricity_consumption_total`) | -7.12% | -7.12% | -7.12% | **GAIN in all three of our runs** |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | daily peak draw (`daily_peak_average`) | -6.62% | -6.62% | -6.62% | **GAIN in all three of our runs** |
 | highest peak (`all_time_peak_average`) | -4.36% | -4.36% | -4.36% | **GAIN in all three of our runs** |
 | ramping (swings hour to hour) (`ramping_average`) | -10.13% | -10.13% | -10.13% | **GAIN in all three of our runs** |
 | daily load unevenness (`daily_one_minus_load_factor_average`) | -2.11% | -2.11% | -2.11% | **GAIN in all three of our runs** |
 | monthly load unevenness (`monthly_one_minus_load_factor_average`) | -1.32% | -1.32% | -1.32% | **GAIN in all three of our runs** |
-| distance from zero net energy (`zero_net_energy`) | +0.02% | +0.02% | +0.02% | EVEN, under the floor (the three runs' mean 0.02%) |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.02% | +0.02% | +0.02% | STEADY, under the floor (the three runs' mean 0.02%) |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | **the runs differ** |
 
 ### citylearn_challenge_2022_phase_all_robustness: 17 buildings, 17 batteries, 0 water tanks left native, 8,760 hours
@@ -50,151 +50,151 @@ CityLearn (University of Texas at Austin) is an independent, deterministic simul
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_2_online_evaluation_1: 3 buildings, 3 batteries, 3 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_2_online_evaluation_2: 3 buildings, 3 batteries, 3 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_2_online_evaluation_3: 3 buildings, 3 batteries, 3 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_3_1: 6 buildings, 6 batteries, 6 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_3_2: 6 buildings, 6 batteries, 6 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### citylearn_challenge_2023_phase_3_3: 6 buildings, 6 batteries, 6 water tanks left native, 2,208 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
-| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| electricity bought (`electricity_consumption_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily peak draw (`daily_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| ramping (swings hour to hour) (`ramping_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| daily load unevenness (`daily_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| monthly load unevenness (`monthly_one_minus_load_factor_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| distance from zero net energy (`zero_net_energy`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
+| time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 
 ### tx_travis_county_neighborhood: 100 buildings, 100 batteries, 39 water tanks left native, 8,760 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | electricity bought (`electricity_consumption_total`) | -4.03% | -4.03% | -4.03% | **GAIN in all three of our runs** |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | daily peak draw (`daily_peak_average`) | -7.13% | -7.13% | -7.13% | **GAIN in all three of our runs** |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | ramping (swings hour to hour) (`ramping_average`) | -8.65% | -8.65% | -8.65% | **GAIN in all three of our runs** |
 | daily load unevenness (`daily_one_minus_load_factor_average`) | -3.32% | -3.32% | -3.32% | **GAIN in all three of our runs** |
 | monthly load unevenness (`monthly_one_minus_load_factor_average`) | -2.30% | -2.30% | -2.30% | **GAIN in all three of our runs** |
-| distance from zero net energy (`zero_net_energy`) | -0.15% | -0.15% | -0.15% | EVEN, under the floor (the three runs' mean 0.15%) |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| distance from zero net energy (`zero_net_energy`) | -0.15% | -0.15% | -0.15% | STEADY, under the floor (the three runs' mean 0.15%) |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | **the runs differ** |
 
 ### vt_chittenden_county_neighborhood: 47 buildings, 47 batteries, 11 water tanks left native, 8,760 hours
 
 | CityLearn score (CityLearn aims every score lower) | A | B | C | Reading |
 |---|---:|---:|---:|---|
-| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| electricity bill (`cost_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | electricity bought (`electricity_consumption_total`) | -2.96% | -2.96% | -2.96% | **GAIN in all three of our runs** |
-| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| carbon (`carbon_emissions_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | daily peak draw (`daily_peak_average`) | -3.16% | -3.16% | -3.16% | **GAIN in all three of our runs** |
-| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| highest peak (`all_time_peak_average`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | ramping (swings hour to hour) (`ramping_average`) | -3.40% | -3.40% | -3.40% | **GAIN in all three of our runs** |
 | daily load unevenness (`daily_one_minus_load_factor_average`) | -0.88% | -0.88% | -0.88% | **GAIN in all three of our runs** |
 | monthly load unevenness (`monthly_one_minus_load_factor_average`) | -0.77% | -0.77% | -0.77% | **GAIN in all three of our runs** |
-| distance from zero net energy (`zero_net_energy`) | -0.44% | -0.44% | -0.44% | EVEN, under the floor (the three runs' mean 0.44%) |
-| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | EVEN, the same |
+| distance from zero net energy (`zero_net_energy`) | -0.44% | -0.44% | -0.44% | STEADY, under the floor (the three runs' mean 0.44%) |
+| energy not served (`annual_normalized_unserved_energy_total`) | +0.00% | +0.00% | +0.00% | STEADY, the same |
 | time uncomfortable (`discomfort_proportion`) | +0.00% | +0.00% | +0.00% | **the runs differ** |
 
 ## Across the districts with batteries
 
 A district counts only when all three runs agree.
 
-| CityLearn score | GAIN in all three of our runs | LOSS in all three of our runs | Power given in all three of our runs | EVEN | The runs differ |
+| CityLearn score | GAIN in all three of our runs | LOSS in all three of our runs | Power given in all three of our runs | STEADY | The runs differ |
 |---|---:|---:|---:|---:|---:|
 | electricity bill | 1 | 0 | 0 | 10 | 0 |
 | electricity bought | 4 | 0 | 0 | 7 | 0 |

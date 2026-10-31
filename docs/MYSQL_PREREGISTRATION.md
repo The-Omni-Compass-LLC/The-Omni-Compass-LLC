@@ -426,6 +426,64 @@ MySQL 8.0's own default, 128 MB (`innodb_buffer_pool_size` unset; `tools/run_sys
 pool, never take from it. The operator's set (512 MB) keeps its name and its tables; the shipped set's tables are named for it
 (`…_SYSBENCH_SHIPPED.md`). Nothing about the shipped set is tuned: it was written before any run on it, on no data.
 
+## Amendment 6 (2026-10-30, declared before any run on it): the max on the buffer pool, through the server's own account of a miss (the next engine's candidate)
+
+**The cause, from the omni-v21 runs' own files** (`docs/STORE_ROOT_CAUSES_2026-10-30.md`, `tools/store_causes.py`). In 3,139 of
+the 3,697 seconds the statements stood over their line in the omni-v21 resource set (runs 40258018856, 40281464587, 40401032384),
+the brain's own rule asked for pool and amendment 3's allowance kept it from it: the wall abandoned the spend trials before their
+samples were in, and the fail-up itself was clamped to the allowance they never earned, so the pool stood at the operator's 512 MB
+at the end of 24 of the 45 arms and at 640 MB in the rest, while the six-table workloads' working set is about 1.3 GB.
+
+**What a miss costs, read from the server itself.** The root-cause page first read the omni-v21 arms across pool sizes (12.4% of
+page reads missing at 384 MB, 10.9% at 512 MB, 9.1% at 640 MB, the statement 0.138 to 0.141 ms) as misses that cost the statement
+nothing. That reading is withdrawn: one notch of pool moves the miss share about three points, worth about 5% of the statement time,
+inside the arms' own spread. The server's own meter is used instead: the performance schema times every read of the data files
+(`file_summary_by_event_name`, `wait/io/file/innodb/innodb_data_file`, enabled and timed as MySQL 8.0 ships; checked on 8.0.46),
+and the workload's statement timer (the reading since the store fix of 25 October) times the statements; their ratio over the last
+10 s is the share of the statements' own time spent reading pages the pool did not hold. On this machine (MySQL 8.0.46, sysbench's
+own workloads, six arms of 60 s; a tuning-bench reading, class L, this host, no benchmark result; the table in
+`docs/STORE_ROOT_CAUSES_2026-10-30.md`, section 5): at the operator's 512 MB pool, point selects over six tables at 3,000 a second,
+137 µs a statement (the rig's 138), 17% of page reads missing, a data file read 70 µs while the host was still writing out the
+dataset it had just prepared (as the rig's arms run), the misses 32% of the statements' time (quartiles 24% and 37%); read-only
+transactions at 300 a second, 95 µs a statement, 11% missing (the rig's 10.9%), a file read 14 µs, the misses 12% (quartiles 8% and
+19%); point selects over three tables, 9% missing, a read 9 µs, the misses 2.8%; at MySQL's shipped 128 MB pool, 15% to 23% missing,
+a read 5 to 7 µs, the misses 5.7% to 7.3%. In every arm the misses are above the key's floor, 3% to 32% of what a statement waits
+for, and only the pool can cut them; the account is read live on the machine the brain runs on.
+
+**From this amendment** (`tools/run_sysbench.py` `Brain`, `tools/store_brain.py`; the store wires were written on 9 and 10 October,
+before the founder's order of 12 October that the max is the default brain, and never brought to it; this brings the pool's wire to it):
+
+- the spend: slow statements with the pool full and missing (amendment 2's rule) grow the pool by the compass's own law (ceil(force /
+  0.1) chunks of 128 MB a second; at the wall four chunks at once), never clamped by an allowance, up to the cover's top (2,048 MB),
+  where the server's own account says the misses are at least the one key's floor (a half of one percent, `tools/readings.py`
+  `SIZE_FLOOR`) of the statements' time over the last 10 s and the host keeps 5% of its memory available after the chunk
+  (`/proc/meminfo`, the compass's cushion); the memory is power given, shown beside the misses it bought off;
+- the hold: where the misses are under the floor the pool holds and the audit says why (memory would buy nothing the key could
+  read); where the server's account or the host's memory is unread this second, nothing is known and nothing is taken;
+- the hand-back: calm with the misses under 1% (amendment 2) gives one chunk back after the dwell, never below the most the pool's
+  data pages occupied in the last 60 s (with the fullness margin, rounded up to a chunk) and never below the operator's 512 MB; the
+  operator's pool handed back at the end as before;
+- the record: every second's data file reads and their time, the misses' share of the statements' time, the floor and the host's
+  room in the audit; the arm's record carries the max's counts (spends, holds by their reason, hand-backs) where it carried the
+  verdict's allowance; every workload record carries its `dial`;
+- the tune-down (`OMNI_DIAL=save`): omni-v21's loop unchanged, the verdict under the resource objective, where giving memory
+  back is the aim;
+- the fingerprint: `tools/store_brain.py` and `tools/knob_verdict.py` join it with this version (`tools/omni_version.py`,
+  `STORE_WIRES`), so no rule of the store wires changes without the version changing.
+
+**The model gate** (`tools/store_gate.py`, class S: the omni-v21 arms' recorded seconds replayed open-loop through the candidate).
+omni-v21's audits carry neither the data files' timer nor the host's memory, so the candidate holds at the operator's pool in every
+replayed arm: seconds below native 97.9 → 0 an arm (shown), seconds below native while missing 65.4 → 0 (GAIN +100.0%), the knob's
+moves 7.5 → 0 (GAIN +100.0%), the pool held 480 → 512 MB (+6.7%, power given); no LOSS. The replay cannot show what the pool buys:
+the first runs on the next engine read the server's account for real, and a closed-loop model of the pool, set from their files,
+follows before any further change to the rule.
+
+**Expected before the runs**, at the counted 30 s a notch, three paired repetitions a run: in the six-table notches the pool rising
+toward the working set (power given) and the misses falling with it; the statement latency and the work inside the line GAIN or
+EVEN; the knob's moves shown; no second below the operator's pool. A LOSS row is a fault to fix, never a number to accept. The
+counted runs on this amendment run on the next engine version, which lands only when the model gate reads no LOSS for every store
+wire it changes.
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

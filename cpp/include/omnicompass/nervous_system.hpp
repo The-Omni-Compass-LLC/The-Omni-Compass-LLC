@@ -3,6 +3,7 @@
 #pragma once
 #include <array>
 #include <map>
+#include <vector>
 #include <string>
 namespace omnicompass {
 double stress_equilibrium(double delta, double alpha_s, double beta_s);   // omnicompass/closure.py, equation (6)
@@ -11,9 +12,10 @@ struct NervousInputs {
   double E{}, U{}, I_U{}, S{}, push{}, push_release{0.2}, U_gate{0.5}, s_eq{1.0};
   double security_block{0.0}; bool slo_clean{true}; double power_stress{0.0}, thermal{0.0};
   bool rollback{false}; double stale{0.0}; bool autopilot{true}; bool killed{false};
+  std::vector<std::string> native_hold;   // organs the immune system handed to native (omnicompass/immune.py)
 };
 struct Scalars { double kappa{}, h{}, sigma{}, nu{}, calm{}; };
-struct Organ { bool expand{}, contract{}; double step{}; std::array<double, 2> envelope{0.0, 0.0}; bool has_envelope{false}; };
+struct Organ { bool expand{}, contract{}; double step{}; std::array<double, 2> envelope{0.0, 0.0}; bool has_envelope{false}; bool native{false}; };
 struct Authority {
   bool execute{}, killed{}, security_hold{};
   Scalars scalars{};

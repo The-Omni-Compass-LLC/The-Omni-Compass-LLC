@@ -36,7 +36,7 @@ import re
 import sys
 from pathlib import Path
 
-from tools.readings import judged, landed, with_own_runs, classify, GAIN, EVEN, LOSS, GIVEN, word_sign  # noqa: E402  (a reading in all three of our runs, or an older "confirmed")
+from tools.readings import judged, landed, with_own_runs, classify, GAIN, STEADY, LOSS, GIVEN, word_sign  # noqa: E402  (a reading in all three of our runs, or an older "confirmed")
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "results" / "live"
@@ -45,7 +45,7 @@ LIVE = ROOT / "results" / "live"
 # its reading by rule. (category, test, file, {measure: row key}, work). work: "equal" (the same fixed-rate work was sent
 # to both arms and none failed: ratio 1), "capacity" (the capacity row of that table), or None (not taken). A measure
 # counts only as its reading allows: GAIN, LOSS or power given in all three of our runs gives the geometric mean of
-# the three runs' ratios; EVEN (under 0.5%, or the same) or the runs disagree gives exactly 1 (nothing
+# the three runs' ratios; STEADY (no difference beyond the noise, or the same) or the runs disagree gives exactly 1 (nothing
 # is claimed either way). Azure's billed runs and the six organisms join the index when their v1 tables land.
 P95 = "response time (ms), 95th percentile"
 MEAN = "response time (ms), mean"
@@ -88,15 +88,15 @@ WORKLOAD_TABLES = [
     ("Real messaging (Apache Kafka, GitHub)", "V7_KAFKA.json", "Kafka `{wl}`: the consumer group's size, three paired repetitions, three runs",
      {"work": "work_inside_line_mps", "speed": "p95_ms", "machines": "consumers_mean", "energy": "cpu_seconds"}),
     ("Real cache (Redis, GitHub)", "V7_REDIS.json", "Redis `{wl}`: the cache's memory ceiling, three paired repetitions, three runs",
-     {"work": "work_inside_line_rps", "speed": "p95_ms", "machines": "maxmemory_mb_mean", "energy": "cpu_seconds"}),
+     {"work": "work_inside_line_rps", "speed": "p95_ms", "machines": "maxmemory_mb_mean", "energy": ("process_cpu_seconds", "cpu_seconds")}),
     ("Real database cache (MongoDB under YCSB, GitHub)", "V7_YCSB.json", "YCSB `{wl}`: the storage engine's cache size, three paired repetitions, three runs",
-     {"work": "work_inside_line_ops", "speed": "p95_ms", "machines": "cache_mb_mean", "energy": "cpu_seconds"}),
+     {"work": "work_inside_line_ops", "speed": "p95_ms", "machines": "cache_mb_mean", "energy": ("process_cpu_seconds", "cpu_seconds")}),
     ("Real database buffer pool (MySQL under sysbench, GitHub)", "V7_SYSBENCH.json", "sysbench `{wl}`: the buffer pool's size, three paired repetitions, three runs",
      {"work": "work_inside_line_tps", "speed": "p95_ms", "machines": "pool_mb_mean", "energy": "cpu_seconds"}),
 ]
 DB_FILE = WORKLOAD_TABLES[0][1]
 AIM_LOWER = {"speed", "machines", "energy"}   # the measures whose declared aim is lower (work aims higher)
-PENDING = {"Real cloud (Azure AKS, billed)": "the omni-v19 Azure sets run one at a time at the tune-down with native's cap (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day of Google 2011; A, B and C, `scripts/azure_queue.txt`); the category joins as their three-run tables land",
+PENDING = {"Real cloud (Azure AKS, billed)": "the omni-v23 Azure sets run one at a time at the tune-down with native's cap (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day of Google 2011; A, B and C, `scripts/azure_queue.txt`); the category joins as their three-run tables land",
            "Real card (NVIDIA, its own meter)": "the rerun on the current card controller (the 2026-10-02 run used the replaced one)"}
 
 
@@ -140,6 +140,17 @@ def newest(fname):
     return found[-1][1] if found else fname
 
 
+def workload_gauge(gauges, key):
+    """One measure's gauge from a workload table: key, or a tuple of keys read in order, the first whose three runs all hold a
+    value (store fix of 25 October: a table written from runs that record the CPU apart reads the stack's own CPU-seconds,
+    process_cpu_seconds; an older table reads the host's, cpu_seconds, as before)."""
+    for k in (key if isinstance(key, tuple) else (key,)):
+        g = gauges.get(k)
+        if g and g.get("runs") and not any(x is None for x in g["runs"]):
+            return g
+    return None
+
+
 def tests():
     out = []
     for cat, name, f, measures, work in SOURCES:
@@ -168,7 +179,7 @@ def tests():
                 continue                                        # the tuning workload is shown in its table, never counted
             r = {}
             for m, key in measures_.items():
-                g = gauges.get(key)
+                g = workload_gauge(gauges, key)
                 if not g or any(x is None for x in g["runs"]):
                     continue
                 reading = g["reading"]
@@ -205,28 +216,29 @@ def pct(x):
 
 
 def pw(x, word):
-    """A ratio's change beside its word, wearing the word's sign (the founder's sign rule, tools/readings.py): GAIN '+', LOSS
-    '−', EVEN '=', power given '+'. A column with no word of its own keeps pct's sign, read by the column's name."""
+    """A ratio's change beside its word: its size alone, no sign, as tools/readings.py by_word prints it (the referee's work order
+    of 25 October: a raw change is never turned to wear the verdict's sign). A column with no word of its own keeps pct's true
+    sign, read by the column's name."""
     if x is None:
         return ""
     v = 100 * (x - 1)
     size = f"{abs(v):.2f}%" if 0 < abs(v) < 0.05 else f"{abs(v):.1f}%"
     sg = word_sign(word)
-    return f"{sg}{size}" if sg else pct(x)
+    return size if sg else pct(x)
 
 
 def with_word(x, word):
-    """'+4.3% GAIN', '+0.1% power given', '=0.0% EVEN'."""
+    """'4.3% GAIN', '0.1% power given', '0.0% STEADY'."""
     return "" if x is None else f"{pw(x, word)} {word}".strip()
 
 
 def word_of(measure_, ratio_):
     """The word for a measure's ratio: above 1 is a GAIN; below 1 a LOSS for work and speed, and power given for machines
-    and energy (a resource put in); exactly 1 is EVEN."""
+    and energy (a resource put in); exactly 1 is STEADY."""
     if ratio_ is None:
         return ""
     if ratio_ == 1.0:
-        return EVEN
+        return STEADY
     if ratio_ > 1.0:
         return GAIN
     return GIVEN if measure_ in ("machines", "energy") else LOSS
@@ -235,11 +247,11 @@ def word_of(measure_, ratio_):
 def index_word(x, service=None):
     """The word for a combined number (a test's, a category's, the headline): a plus is a GAIN; a minus is a LOSS where the
     service reading (work and speed) is below 1 too, and otherwise power given (the resources put in outweigh what they
-    bought on this reading); exactly 1 is EVEN."""
+    bought on this reading); exactly 1 is STEADY."""
     if x is None:
         return ""
     if x == 1.0:
-        return EVEN
+        return STEADY
     if x > 1.0:
         return GAIN
     return LOSS if service is not None and service < 1.0 else GIVEN
@@ -280,10 +292,10 @@ def main():
          "`tools/confirm_abc.py`, `tools/pgbench_abc.py`, `tools/kafka_abc.py`, `tools/redis_abc.py`, `tools/ycsb_abc.py` and `tools/sysbench_abc.py` from the three archived runs; `tools/omni_index.py`).", "",
          f"## Headline: Omni-Compass on top of native, real machines, judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
          f"{index_word(head, head_s)}** (more for the same, or the same for less, across work, speed, machines and energy)", "",
-         "A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`; the founder's order of 24 October 2026): a change "
-         "of 0.5% or more, GAIN, LOSS or power given in all three of our runs or by the mean of our three runs, counts as the "
-         "geometric mean of the runs' ratios; EVEN (under 0.5%, or the same) and runs that disagree count as exactly 1. " + engines_sentence(ts) + " Real Kubernetes, the real database, real messaging, the real cache, the real database's storage-engine cache and the real "
-         "database's buffer pool are the real categories in; the steady and wandering Kubernetes tests join when their omni-v19 runs land, Azure and the card as their three-run tables land. A category's "
+         "A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`): GAIN, LOSS or power given in all three of our "
+         "runs counts, as the geometric mean of the runs' ratios; STEADY (no difference beyond the noise) counts as exactly 1, so "
+         "nothing inside the noise is claimed either way. " + engines_sentence(ts) + " Real Kubernetes, the real database, real messaging, the real cache, the real database's storage-engine cache and the real "
+         "database's buffer pool are the real categories in; the steady and wandering Kubernetes tests join when their omni-v23 runs land, Azure and the card as their three-run tables land. A category's "
          "tuning workload is shown in its own table and never counted. Where native sat at its knee by design (nine tenths of its measured capacity), "
          "a queue that Omni keeps short makes the speed ratio large: that is what the test measures, and the resource it takes stands beside it. Each table names the engine it ran on.", "",
          "| Category | Index (work, speed, machines, energy) | Service reading (work and speed only) | More work by | Faster by (native p95 / omni p95) | Fewer machines by | Less energy by | Tests |",
@@ -298,13 +310,13 @@ def main():
           "The founder asked what a cache is for. Redis is bought for speed and spends memory to deliver it; when this reading was "
           "declared, the index counted that memory at the same weight as the speed, so the Redis table of that day read −25% while "
           "its work and hit rate were a GAIN in all three of our runs (the table that stands now, after the cost fixes of 9 to 10 "
-          "October, reads EVEN on every counted workload). The question is fair and the answer is a second reading, not a changed first one: the same tests, the "
+          "October, reads STEADY on every counted workload). The question is fair and the answer is a second reading, not a changed first one: the same tests, the "
           "same three-run rule, scored on the service the stack is bought for (work inside the line and the 95th percentile) with "
           "the resources it spent or saved shown beside it and not scored. It is computed for every test alike, never for one "
           "stack, and the preregistered reading above stays the headline. The two readings say different true things. Where the "
           "governor buys service with a resource (Redis's memory ceiling, Kafka's consumers) the service reading is higher and the "
           "resource reading says what it took; where it gives a resource back for the same service (the database pools and caches) "
-          "the service reading is EVEN and the resource reading carries the cut, a GAIN. Kafka's speed ratio is a hundredfold (native's "
+          "the service reading is STEADY and the resource reading carries the cut, a GAIN. Kafka's speed ratio is a hundredfold (native's "
           "queue grew at nine tenths of its capacity by design), so the service reading leans on it; a reader who wants the number "
           "without that lean has the category table, where each category is one row. Neither reading hides a LOSS: less work or a "
           "slower response in all three of our runs counts below 1 in both.", ""]
@@ -327,9 +339,9 @@ def main():
             if judged(rd):
                 return with_word(m[k]['ratio'], word_of(k, m[k]['ratio']))
             if rd.startswith("the same fixed-rate work"):
-                return "EVEN (equal by design)"
+                return "STEADY (equal by design)"
             c = classify(rd, "spent" if k in ("machines", "energy") else "higher" if k == "work" else "lower")
-            return {"same": "EVEN, the same", "noise": "EVEN, inside the noise", "disagree": "the runs disagree (counted as 1)"}.get(c, rd)
+            return {"same": "STEADY, the same", "noise": "STEADY, inside the noise", "disagree": "the runs disagree (counted as 1)"}.get(c, rd)
         ix = "" if t["index_pct"] is None else with_word(1 + t['index_pct'] / 100, index_word(1 + t['index_pct'] / 100, None if t['service_pct'] is None else 1 + t['service_pct'] / 100))
         sx = "not taken" if t["service_pct"] is None else with_word(1 + t['service_pct'] / 100, index_word(1 + t['service_pct'] / 100, 1 + t['service_pct'] / 100))
         L.append(f"| {t['category']} | {t['test']} | **{ix}** | {sx} | {cell('work')} | {cell('speed')} | {cell('machines')} | "
