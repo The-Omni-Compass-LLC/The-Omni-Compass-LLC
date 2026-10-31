@@ -677,7 +677,10 @@ def cloud_title(wf, kv):
     machine size or 'pools'; Google: the zone and the machine type; Amazon: the region and the instance type). A set run to
     the paid cap under the stopping rule (stop_looks; docs/K8S_COMPASS_PREREGISTRATION.md, 19 October) carries it in its
     title, so its A, B and C are counted apart from the sets run at five repetitions before it."""
-    what = f"burst {kv['load_steps']}" if kv.get("load_steps") else "steady"
+    # the work meter's sets (31 October: the cloud judged by its work per dollar) carry their rates in the title, as the workflows
+    # write it, so a meter set is never read back as a steady or a burst set
+    what = (f"work meter {kv.get('rate_steps', '')}" if kv.get("loadgen") == "meter"
+            else f"burst {kv['load_steps']}" if kv.get("load_steps") else "steady")
     org = f" organism {kv['organism']} x{kv.get('organism_scale') or '1'}" if kv.get("organism") else ""
     room = f" replica room {kv['replica_ceiling']}" if kv.get("replica_ceiling") else ""
     room += " to the cap, stopping rule" if kv.get("stop_looks") else ""   # a set run to the cap under the stopping rule counts on its own (19 October)
@@ -760,8 +763,11 @@ def azure_queue(path=None, wf=AZURE_WF):
             continue
         name, inputs = (ln.split("|") + [""])[:2]
         kv = dict(x.split("=", 1) for x in inputs.split(";") if "=" in x)
-        entries.append((name.strip(), cloud_title(wf, kv), kv))
-    return [(run, n, t, kv) for run in "ABC" for n, t, kv in entries]
+        # runs=A: a set run once, never counted, such as a tuning case that freezes a counted set's settings before its run A
+        # (31 October: the work meter's rates on a cloud's machines); the conductor's own key, never a workflow input
+        runs = kv.pop("runs", "ABC")
+        entries.append((name.strip(), cloud_title(wf, kv), kv, runs))
+    return [(run, n, t, kv) for run in "ABC" for n, t, kv, runs in entries if run in runs]
 
 
 cloud_queue = azure_queue
