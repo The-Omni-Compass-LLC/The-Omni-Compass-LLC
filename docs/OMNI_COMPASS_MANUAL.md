@@ -315,8 +315,9 @@ the monitor of the engine and of the runs GitHub ran. It says how to follow the 
 turn every knob, where every number comes from, and how the mechanism of action of Omni-Compass against native shows on the
 monitors, section by section in the page's own order. It explains neither how the engine is built nor how it is wired; for the
 first it names the Owner's Manual, for the second this one. Where to look on the page: it opens on the bottom line, then the
-monitor wall and the main control panel (the kill switch, the arm, the heartbeat's six buttons, the sweep, the active profile
-with Restore factory profile and Return to native); its glossary and index stand at its back. How to read each is the Live
+monitor wall and the main control panel (the kill switch, the arm, the heartbeat's seven buttons, the sweep, the active profile
+with Restore factory profile and Return to native, and the AUX button, whose ten slots wire a company's own systems into the
+page beside every benchmark, read only from their own Prometheus); its glossary and index stand at its back. How to read each is the Live
 Engine Manual's; what the readings say is the Owner's Manual's.
 
 The three books share their front matter (the key, the notice, the foreword, the prefaces, the quick reference), their

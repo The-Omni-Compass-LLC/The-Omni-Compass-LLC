@@ -230,7 +230,7 @@ what Omni-Compass does there, native against Omni-Compass on top of native, by t
 | **Inside the chip or inside the provider's code** | Omni-Compass built into the hardware's firmware or the cloud's own controllers | not measurable from outside; only the maker or the provider can run it | never claimed here |
 
 So the benchmarks show where the benefit lives (the software end) and that the chip and the cloud carry it unharmed. In the
-cloud the yardstick is the work per dollar: the bill divided by the work, against native; a bill that rises is power given
+cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given
 beside the work it bought, and the work must rise more. Section 3b of `results/WHOLE_SYSTEM.md` lists what the benefit cost
 the chip, the energy and the wire, row by row.
 

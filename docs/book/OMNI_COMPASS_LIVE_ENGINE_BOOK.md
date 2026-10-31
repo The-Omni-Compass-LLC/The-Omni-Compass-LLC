@@ -2412,7 +2412,7 @@ the orchestrators and governors, the services) is where Omni-Compass decides and
 (a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark shows that it holds: no harm to its heat,
 its power or its service, read by the card's own meter. The cloud (the wire and the provider's own software) carries the software
 end's work and bills it by machine-hours; its benchmark shows that it holds: the bill not raised beyond the noise and the service
-not harmed, and where the work can grow its yardstick is the work per dollar, the bill divided by the work against native.
+not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
 Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
 ### 28.1 Every way a stack is bought
@@ -4950,7 +4950,7 @@ The composition is read four ways (the Scenario knob): the two ways a stack is b
 
 **The page, in its own words.**
 
-WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS. The software end (Kubernetes, the orchestrators and governors, the services) is where Omni-Compass decides and works, and its benchmark shows the benefit: more work, faster, on fewer machines (class L, composed below). The chip (a processor or GPU card) is hardware: Omni-Compass turns only its own controls, and its benchmark shows that it holds: no harm to its heat, its power or its service (the card's own meter, class P). The cloud (the wire and the provider's own software) carries the software end's work and bills it by machine-hours, and its benchmark shows that it holds: the bill not raised beyond the noise and the service not harmed; where the work can grow, its yardstick is the work per dollar, the bill divided by the work against native, a rise in the bill power given beside the work it bought. Inside the chip or the provider's own code cannot be measured from outside and is never claimed. What the benefit cost the chip, the energy and the wire is listed row by row in section L.11 of `results/WHOLE_SYSTEM.md` (`DISCLOSURES.md`, section 9).
+WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS. The software end (Kubernetes, the orchestrators and governors, the services) is where Omni-Compass decides and works, and its benchmark shows the benefit: more work, faster, on fewer machines (class L, composed below). The chip (a processor or GPU card) is hardware: Omni-Compass turns only its own controls, and its benchmark shows that it holds: no harm to its heat, its power or its service (the card's own meter, class P). The cloud (the wire and the provider's own software) carries the software end's work and bills it by machine-hours, and its benchmark shows that it holds: the bill not raised beyond the noise and the service not harmed; where the work can grow, its yardstick is the work per dollar, the work answered within the line divided by the bill, against native, a rise in the bill power given beside the work it bought. Inside the chip or the provider's own code cannot be measured from outside and is never claimed. What the benefit cost the chip, the energy and the wire is listed row by row in section L.11 of `results/WHOLE_SYSTEM.md` (`DISCLOSURES.md`, section 9).
 
 Composed Reading. —
 

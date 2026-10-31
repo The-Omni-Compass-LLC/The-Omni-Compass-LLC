@@ -48,7 +48,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 |---|---|---|
 | CEO, board, acquirer | [Due diligence](docs/DUE_DILIGENCE.md) | [State of play](docs/STATE_OF_PLAY.md) · [claims register](docs/CLAIMS_REGISTER.md) · [every LOSS kept](docs/LOSS_LEDGER.md) · [limitations](docs/LIMITATIONS.md) |
 | CFO, investment committee | [Benefit sheet](docs/BENEFIT_SHEET.md) | [The Omni index](results/OMNI_INDEX.md) · [evidence ledger](docs/EVIDENCE_LEDGER.md) |
-| CTO, chief architect | [Mechanism of action](docs/MECHANISM_OF_ACTION.md) | [The engine that stands, omni-v22](docs/OMNI_V22.md) · [canonical engine](docs/CANONICAL_ENGINE.md) · [formal status](docs/FORMAL_STATUS.md) |
+| CTO, chief architect | [Mechanism of action](docs/MECHANISM_OF_ACTION.md) | [The engine that stands, omni-v23](docs/OMNI_V23.md) · [canonical engine](docs/CANONICAL_ENGINE.md) · [formal status](docs/FORMAL_STATUS.md) |
 | Engineering, SRE | [The Operator's Manual](docs/OMNI_COMPASS_MANUAL.md) | [Integration manual](docs/INTEGRATION_MANUAL.md) · [pilot protocol](docs/PILOT_PROTOCOL.md) · [harness](docs/HARNESS.md) |
 | Security, legal, IP | [Security policy](SECURITY.md) | [Threat model](docs/THREAT_MODEL.md) · [safety case](docs/SAFETY_CASE.md) · [license](LICENSE) · [disclosures](DISCLOSURES.md) |
 | Benchmark referee | [How to read the results](docs/HOW_TO_READ_THE_RESULTS.md) | [The referee's audit pack](docs/audit/README.md) · [every reading recomputed](docs/audit/STATISTICAL_VALIDATION.md) · [the verdict audit](results/verdict_audit/VERDICT_AUDIT.md) |
@@ -95,9 +95,9 @@ Omni-Compass consists of a **governing engine**, its **muscle adapters**, a **co
 
 - **The governing engine** is the executable mathematical rules that turn observations and internal state into governing
   decisions (`omnicompass/`, `omni_controller/controller.py` and its C++ twin `cpp/src/governor.cpp`). The engine that stands
-  is omni-v22 (`OMNI_V22.json`; `python3 tools/omni_version.py`).
+  is omni-v23 (`OMNI_V23.json`; `python3 tools/omni_version.py`).
 - **The factory profile** is the complete, versioned set of Omni-Compass default settings shipped together: the governing
-  rules, gains, margins, the decision interval and every other default. The released factory profile is omni-v22's: the
+  rules, gains, margins, the decision interval and every other default. The released factory profile is omni-v23's: the
   governor's full decision every 60 s, its fast checks every 5 s, every muscle on the card found for it
   (`realms/muscle_cards_v5.csv`) and on the engine's own setting otherwise. It is the profile every published result ran on.
   Freezing a profile fixes the released rules and default tuning, θ(k + 1) = θ(k) = θ[factory], while the system's state, the
@@ -148,7 +148,7 @@ show benefit. We know that. We just need to show we hold, and then we know where
 | **The cloud**: the wire and the provider's own software (class L) | **that it holds**: the bill not raised beyond the noise, the service not harmed; where the work can grow, the work per dollar | Azure's steady set of 100 paired repetitions ([`results/live/AKS_STEADY_100_OMNI_V18.md`](results/live/AKS_STEADY_100_OMNI_V18.md)): the bill up 1.2%, inside the noise; the 99th percentile GAIN |
 | **Inside the chip or the provider's code** | not measurable from outside | never claimed |
 
-In the cloud the yardstick is the work per dollar: the bill divided by the work, against native; a bill that rises is power
+In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power
 given beside the work it bought, and the work must rise more. The company's expectation of 24 October (about 3 to 4% from the
 software end, 2 to 3% from the bare metal, about 5% from the two together, 1 to 2% from the wire alone) is an expectation,
 never a result; the founder's word of 31 October sets the wire's own at none.
@@ -250,7 +250,7 @@ Everything between the markers below is written by the repository itself (`tools
 it, and nothing older than the newest result stands in front of it. Earlier front pages are kept whole in `docs/history/`.
 
 <!-- front-page:status:begin -->
-- **Engine on main:** omni-v22, fingerprint `0e23a0bc561b900a` (65 files); package 0.22.0.
+- **Engine on main:** omni-v23, fingerprint `c96ea4105d8747db` (65 files); package 0.23.0.
 <!-- front-page:status:end -->
 
 **Results the repository rebuilt by itself on the engine that stands** (each live product from its three newest runs; the earlier engines' lines are kept in [`docs/history/FRONT_PAGE_2026-10-12.md`](docs/history/FRONT_PAGE_2026-10-12.md)):
@@ -303,9 +303,9 @@ it, and nothing older than the newest result stands in front of it. Earlier fron
 native, is Omni-Compass on top of native.** Omni-Compass is never by itself (the founder's order of 25 October): it needs
 muscles with their own native controllers under it, never replaces native, and every comparison is read against native.
 
-## The engine that stands: omni-v22 (the data stores' wires at the max, through each store's own account of a miss)
+## The engine that stands: omni-v23 (Omni direct keeps every muscle Omni-Compass cannot be)
 
-The engine on main is **omni-v22** (`OMNI_V22.json`, fingerprint `0e23a0bc561b900a`, 65 files; [`docs/OMNI_V22.md`](docs/OMNI_V22.md)), 30 October: the five data stores' wires brought to the max. What a wire's own rule asks goes through unclamped, up to the operator's cover and never below native; memory is spent only where the store's own account of a miss (MySQL's performance schema timer on the data files' reads, WiredTiger's page-read time for the application's threads, the Redis application's own split) says the misses are at least the one key's floor of the service's time, and only while the host keeps its 5% cushion; a hand-back never goes below the working set's floor; Kafka's group has a twin of its arrivals and a reflex; PostgreSQL's pool is never taken below the pooler's own setting. The model gate against omni-v21 (our own models, class S) read no LOSS at the counted setting on every store wire. omni-v21 (the immune system knows itself, knob by knob; [`docs/OMNI_V21.md`](docs/OMNI_V21.md)) stood from 25 to 30 October, and its tables stand as its own record until omni-v22's three runs of each benchmark land. `python3 tools/omni_version.py` prints the engine of a checkout, and `--commit <sha>` the engine of any pushed commit.
+The engine on main is **omni-v23** (`OMNI_V23.json`, fingerprint `c96ea4105d8747db`, 65 files; [`docs/OMNI_V23.md`](docs/OMNI_V23.md)), 31 October: omni-v22 with one guard in the Kubernetes governor's pod muscle of its own, on the founder's order of that day (Omni direct talks to the muscles directly, but every muscle Omni-Compass cannot be stays, native, under it: "any muscle that we don't have, Omni-Compass cannot be it; it has to be there, if that's Kubernetes or whatever"). A write of a workload's own scale that the cluster refuses is recorded and the decision goes on; at three refusals in a row the knob goes back to native's own pod autoscaler, made from the operator's target and range recorded on the workload, so the organism never runs with a knob nobody moves. 64 of its 65 files are omni-v22's bytes; the model gate against omni-v22 ([`results/model_gate/V23_VS_V22.md`](results/model_gate/V23_VS_V22.md), class S) read identical on every gauge of every model, no LOSS. Found the same day: every arm by itself since 24 October had its pod writes refused by the test rig's own identity and ran with no controller on the pod count ([`docs/SOLO_PREREGISTRATION.md`](docs/SOLO_PREREGISTRATION.md), amendments 1 and 2). omni-v22 ([`docs/OMNI_V22.md`](docs/OMNI_V22.md)) stood from 30 to 31 October: the five data stores' wires brought to the max. What a wire's own rule asks goes through unclamped, up to the operator's cover and never below native; memory is spent only where the store's own account of a miss (MySQL's performance schema timer on the data files' reads, WiredTiger's page-read time for the application's threads, the Redis application's own split) says the misses are at least the one key's floor of the service's time, and only while the host keeps its 5% cushion; a hand-back never goes below the working set's floor; Kafka's group has a twin of its arrivals and a reflex; PostgreSQL's pool is never taken below the pooler's own setting. The model gate against omni-v21 (our own models, class S) read no LOSS at the counted setting on every store wire. omni-v21 (the immune system knows itself, knob by knob; [`docs/OMNI_V21.md`](docs/OMNI_V21.md)) stood from 25 to 30 October, and its tables stand as its own record until omni-v22's three runs of each benchmark land. `python3 tools/omni_version.py` prints the engine of a checkout, and `--commit <sha>` the engine of any pushed commit.
 
 Every engine before it is on its own page, `docs/OMNI_V<n>.md`, with what it changed, why, and what its model gate read; the road from omni-v1 is in [`CHANGELOG.md`](CHANGELOG.md) and `docs/history/`. No result is read across engines: every benchmark runs again on the engine that stands (`scripts/reruns.txt`, released by the conductor, `scripts/dispatch_grid.py`), and a row still on an older engine names it until its three runs on the engine that stands land.
 
@@ -472,7 +472,11 @@ blinking, **REDLINING** (over its line, or a LOSS: the alarm); dark, **AWAITING*
 green). The main control panel holds the kill switch, the heartbeat's seven buttons,
 **10, 15, 20, 30, 60, 90 and 120 s**, a sweep that runs every beat on the page's own model for three model days each, **Try the
 candidate** (the sweep's best beat as a candidate profile), the active profile with its fingerprint (factory, candidate or
-custom), **Restore factory profile**, **Hold the active profile** and **Return to native**. A model's best beat is a candidate
+custom), **Restore factory profile**, **Hold the active profile** and **Return to native**. Its **AUX** button opens the
+**Auxiliary Input**: ten slots, each waiting to be wired to a company's own system (its Prometheus, read only; the native it
+runs; Omni-Compass on top or not), each lighting its own row under the wall and able to flip the wall's monitors to it, and set
+beside the repository's real records only (live software, class L; the card's meter, class P), never a model: every benchmark
+stays as it is, and a company's own system stands beside it. A model's best beat is a candidate
 for the real runs, never a result, and no profile is locked as the baseline: the factory's beat stays 60 s until the eight
 steps of [`docs/FACTORY_PROFILE.md`](docs/FACTORY_PROFILE.md) choose the next. At its back stand the glossary and index
 (`tools/live_glossary.py`): every term in the words of the file it names, the ten organisms and their twenty scenarios, every
@@ -561,7 +565,7 @@ the request logs, the Kafka consumer logs) gzipped; read one with `gunzip -c FIL
 |---|---|
 | **The register: every muscle wired, every benchmark run, every benchmark still to run** | [`docs/REGISTER.md`](docs/REGISTER.md) |
 | **The proof program: every benchmark at full size, every open native engine, the referee-grade package** | [`docs/PROOF_PROGRAM.md`](docs/PROOF_PROGRAM.md) |
-| **The engine that stands, omni-v22, fingerprinted; Omni-Compass by itself; Omni direct and the three arms; the v5 law at the max, the bone, the lease, the dial** | [`docs/OMNI_V22.md`](docs/OMNI_V22.md), [`docs/OMNI_V21.md`](docs/OMNI_V21.md), [`docs/OMNI_V19.md`](docs/OMNI_V19.md), [`docs/OMNI_V18.md`](docs/OMNI_V18.md), [`docs/OMNI_V17.md`](docs/OMNI_V17.md), [`docs/OMNI_V16.md`](docs/OMNI_V16.md), [`docs/OMNI_V15.md`](docs/OMNI_V15.md), [`docs/OMNI_V14.md`](docs/OMNI_V14.md), [`docs/OMNI_V13.md`](docs/OMNI_V13.md), [`docs/OMNI_V5.md`](docs/OMNI_V5.md), `python3 tools/omni_version.py` (the earlier engines stay with their own results as the road to 1.0: [`docs/history/`](docs/history/)) |
+| **The engine that stands, omni-v23, fingerprinted; the arm by itself (Omni-Compass's own pod rule in place of the autoscaler, never direct on Kubernetes); the orchestrator's three arms; the v5 law at the max, the bone, the lease, the dial** | [`docs/OMNI_V23.md`](docs/OMNI_V23.md), [`docs/OMNI_V22.md`](docs/OMNI_V22.md), [`docs/OMNI_V21.md`](docs/OMNI_V21.md), [`docs/OMNI_V19.md`](docs/OMNI_V19.md), [`docs/OMNI_V18.md`](docs/OMNI_V18.md), [`docs/OMNI_V17.md`](docs/OMNI_V17.md), [`docs/OMNI_V16.md`](docs/OMNI_V16.md), [`docs/OMNI_V15.md`](docs/OMNI_V15.md), [`docs/OMNI_V14.md`](docs/OMNI_V14.md), [`docs/OMNI_V13.md`](docs/OMNI_V13.md), [`docs/OMNI_V5.md`](docs/OMNI_V5.md), `python3 tools/omni_version.py` (the earlier engines stay with their own results as the road to 1.0: [`docs/history/`](docs/history/)) |
 | **The heartbeat dial: every beat of the governor beside native, what it buys and what it costs** | [`results/model_gate/V17_LADDER.md`](results/model_gate/V17_LADDER.md), [`docs/PACE_PREREGISTRATION.md`](docs/PACE_PREREGISTRATION.md), on the live engine page, the page's section 1j |
 | Every result, every platform, where each stands | [`docs/STATE_OF_PLAY.md`](docs/STATE_OF_PLAY.md), [`results/OMNI_INDEX.md`](results/OMNI_INDEX.md) |
 | How to read a result table | [`docs/HOW_TO_READ_THE_RESULTS.md`](docs/HOW_TO_READ_THE_RESULTS.md) |

@@ -930,7 +930,7 @@ TERMS = [
       "belongs to native's side wear it. Red is only a LOSS and the alarm.",
       [(PAGE_F, "the sides: --brass is Omni-Compass (blue), --steel is Native (orange; red is only LOSS and the alarm)"),
        (MAN, "| Orange | native |")], aka=["orange"]),
-    T("the heartbeat's seven buttons", D, "On the page the governor's full decision comes at one of seven beats, 10, 15, 30, 60, 90 or "
+    T("the heartbeat's seven buttons", D, "On the page the governor's full decision comes at one of seven beats, 10, 15, 20, 30, 60, 90 or "
       "120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's "
       "live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading.",
       [(PAGE_F, "the heartbeat (10, 15, 20, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 20, 30, 60, 90, 120} s")],
