@@ -29,7 +29,9 @@ and every report point here. Where any other page seems to say more than this pa
    on. Only a meter speaks for hardware.
 2. The models were written by the same people who wrote the law. They show how the mechanism behaves; they are not an
    independent test.
-3. On Kubernetes in kind every machine stays powered, so energy there is a declared model, not a meter.
+3. On Kubernetes in kind every machine stays powered, so energy there is a declared model, not a meter; on the data stores it is
+   the host's processor seconds. Neither is scored in the Omni index: energy is scored only where a meter read it (the card's own
+   meter), and every benefit is claimed at the software end (the founder's order of 31 October, evening).
 4. Every comparison is paired: the same seed, load and clock with and without Omni-Compass, in an order rotated by
    repetition. Intervals are 95% intervals over the paired repetitions. Ratios across seeds are summarised as geometric
    means. Labels are assigned by code from rules written and committed before the run

@@ -132,8 +132,11 @@ def index_part():
     eng = next((r.get("engine") for r in sheet.get("rows", []) if r.get("file") == "results/OMNI_INDEX.md"), None) or "the engines named in its tables"
     out = [f"The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run "
            f"tables of {eng}, each named in its table): {num_word(h, s is not None and s < -0.05)} on the "
-           f"resource reading (work, speed, machines, energy), {num_word(s, True)} on the service reading (work and "
-           "speed alone). Source: results/OMNI_INDEX.md."]
+           f"software end's reading (work, speed and machines; energy shown, never scored where no meter read it), "
+           f"{num_word(s, True)} on the service reading (work and speed alone)"
+           + (f"; the reading declared on 4 October, the modelled energy scored too: {num_word(d['resource_headline_pct_4_october'], s is not None and s < -0.05)}"
+              if d.get("resource_headline_pct_4_october") is not None else "")
+           + ". Source: results/OMNI_INDEX.md."]
     for c, v in sorted((d.get("categories") or {}).items(), key=lambda kv: -(kv[1] or 0)):
         sv = (d.get("service_categories") or {}).get(c)
         out.append(f"  {c}: {num_word(v, sv is not None and sv < -0.05)}")

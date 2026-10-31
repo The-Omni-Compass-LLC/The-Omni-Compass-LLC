@@ -445,9 +445,9 @@ TERMS = [
     T("Omni-Compass", A, "A supervisory governor. It always sits on top of a native controller and never in its place: the "
       "Kubernetes pod autoscaler, GPU firmware, cooling, batteries, a grid's tap changer, a robot's servo. It treats each setting "
       "a native controller already exposes as a muscle and the whole stack as one body. Headline: more work, faster, on fewer "
-      "machines, with less energy.",
+      "machines, for the same energy and the same bill.",
       [(CL, "Omni-Compass is a **supervisory governor**."),
-       (CL, "Headline: more work, faster, on fewer machines, with less energy.")]),
+       (CL, "Headline: more work, faster, on fewer machines, for the same energy and the same bill")]),
     T("native", A, "The whole system by itself with everything it ships with: every muscle under its own native controller. Every "
       "benchmark's baseline, and the controller Omni-Compass always sits on top of. Amber on the page.",
       [(MAN, "The whole system by itself with everything it ships with"),

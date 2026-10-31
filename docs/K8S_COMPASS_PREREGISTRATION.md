@@ -1444,6 +1444,18 @@ it (a rise power given, never a LOSS by itself), with the work per dollar beside
 its runs read no LOSS; a LOSS is root-caused and fixed in the model first, as everywhere. The benefit is not this set's claim: it
 is shown where it lives, at the software end, and explained through the wire. Nothing else about the sets changes.
 
+## Amendment (31 October 2026, night): the Omni index scores the software end; energy that no meter read is shown, never scored
+
+The founder's words of 31 October (`CLAUDE.md`, Orders of 31 October: the benefit lives in the software; the cloud and the chip are
+where Omni-Compass holds). The index's headline scores from this amendment work, speed and machines, the software end's own
+results; energy is scored only where a meter read it (class P: the card's own meter). On kind and on the data stores no meter is
+read (a declared power model's watts; the host's processor seconds), so their energy is a model's estimate about the chip: shown
+in every row and scored as native's, the same juice, never dropped, because a geometric mean of fewer measures would weigh the
+rest more and read higher with nothing gained (`tools/omni_index.py`). No run changes and no table is read again: the same
+three-run tables give both readings, and the reading of 4 October, every measure scored, is printed beside the headline. Read
+from the tables that stand (omni-v21's): the headline GAIN, up 5.0% (the reading of 4 October: GAIN, up 5.2%); the service
+reading (work and speed alone, declared 9 October) unchanged, GAIN, up 12.9%.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
