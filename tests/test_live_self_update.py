@@ -41,6 +41,13 @@ class SelfUpdate(unittest.TestCase):
         self.assertIn("LIVE_ENGINE_VERSION.json", ble.SELF_UPDATE)
         self.assertNotIn("POST", ble.SELF_UPDATE)                                  # it only reads
 
+    def test_the_newer_build_opens_in_a_document_of_its_own(self):
+        # 1 November: written over the open page with document.write, the newer build's script met the open page's own
+        # top-level declarations ("Identifier 'HBS_G' has already been declared") and every frame after it failed
+        self.assertNotIn("document.write", ble.SELF_UPDATE)
+        self.assertIn("URL.createObjectURL(new Blob([html]", ble.SELF_UPDATE)
+        self.assertIn("location.replace(", ble.SELF_UPDATE)
+
     def test_a_rebuild_keeps_one_copy_however_often_it_runs(self):
         once = ble.self_update(PAGE)
         self.assertEqual(ble.self_update(once), once)
