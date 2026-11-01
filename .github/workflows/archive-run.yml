@@ -113,9 +113,10 @@ jobs:
             ( cd "$d" && find . -type f ! -name SHA256SUMS_ALL.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS_ALL.txt )
             # the sums signed: GitHub vouches for this job, Sigstore issues a short-lived certificate to it and logs the
             # signature publicly (SHA256SUMS_ALL.txt.sigstore.json); a failure leaves the run with its sums only
+            was_signed=0
             if [ "$sign" = 1 ]; then
               if timeout 300 python3 -m sigstore sign "$d/SHA256SUMS_ALL.txt" </dev/null >sign.log 2>&1 && [ -s "$d/SHA256SUMS_ALL.txt.sigstore.json" ]; then
-                signed=$((signed + 1))
+                was_signed=1
               else
                 echo "::warning::run $run: its sums could not be signed ($(tail -1 sign.log)); archived with its sums only"
                 rm -f "$d/SHA256SUMS_ALL.txt.sigstore.json"
@@ -125,6 +126,7 @@ jobs:
             bash scripts/raw_archive.sh save "run-$run" "Raw files of run $run archived with the code" \
               || { echo "::warning::run $run could not be saved; the next pass tries again"; rm -rf "$d"; continue; }
             echo "::notice::run $run archived: $(find "$d" -type f | wc -l) files"
+            signed=$((signed + was_signed))             # counted once saved (1 November: a run signed and then refused read as signed)
             rm -rf "$d"                                # its files are on the branch; the runner's disk is freed for the next
             echo "$run" >> archived.txt
             took=$((took + bytes)); done_n=$((done_n + 1))
