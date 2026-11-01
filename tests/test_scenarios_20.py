@@ -52,8 +52,10 @@ class Shape(unittest.TestCase):
                     self.assertIn(g["word"], WORDS, (o["key"], pk, key))
                     self.assertIn(classify(g["reading"], aim(g["aim"])), {"gain", "loss", "given", "noise", "same", "disagree"})
                     self.assertEqual(set(g["runs"]), set(S.RUNS))
-                    for x in S.RUNS:                    # each run's change and interval, as the key prints them
-                        self.assertRegex(g["runs"][x]["cell"], r"^[+−=±]\d")
+                    for x in S.RUNS:                    # each run's change and interval, as the key prints them: the size beside its
+                        # word with no sign, the raw interval apart with its true signs (tools/readings.py by_word, interval_by_word;
+                        # the referee's work order of 25 October)
+                        self.assertRegex(g["runs"][x]["cell"], r"^\d+\.\d+% \(raw [+−±]\d+\.\d+% to [+−±]\d+\.\d+%\)$")
                 self.assertIn(rd["runner"]["labelled"].split(" ")[0].strip(","), {GAIN, STEADY, LOSS, "INVALID"}, (o["key"], pk))
 
     def test_the_whole_organism_is_the_composition_of_the_real_tables(self):
