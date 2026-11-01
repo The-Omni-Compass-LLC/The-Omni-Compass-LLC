@@ -101,9 +101,11 @@ def block_lines() -> list[str]:
          "Omni-Compass is software. It always sits on top of a native controller. A system runs it in one of two places, on bare "
          "metal or through the cloud, and in each place there are two arms, native and Omni-Compass on top of native: four arms, "
          "each read by its bill and the work done inside it. These are the words for them, used the same way on every page.", ""]
-    L += [f"- **{t}.** {d}" for t, d in TERMS]
-    L += ["", "| Place | Its benchmark | What it must show | Its readings |", "|---|---|---|---|"]
+    # the table first, its words after it: a printed chapter that ended on the table left its last rows alone on a page
+    # (1 November: 12% of a page in the Live Benchmark Engine Manual, 22% in the Operator's)
+    L += ["| Place | Its benchmark | What it must show | Its readings |", "|---|---|---|---|"]
     L += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in ROWS]
+    L += [""] + [f"- **{t}.** {d}" for t, d in TERMS]
     L += ["", END]
     return L
 
