@@ -57,15 +57,13 @@ GROUPS = [
     ("hardware", "Bare Metal", (1, 2)),
     ("cloud", "Cloud", (5,)),
 ]
-# every way a stack is bought (the founder's order of 20 October): on-site bare metal; through the cloud (three pieces, and the
-# cloud as two pieces beside it); in the device (the bare metal alone: Omni-Compass built into the card and the machine, nothing
-# else wired); as a service (the software alone: the owner has neither the bare metal nor the cloud account, Omni-Compass sits in
-# the software run for them). Each sums the layers of the pieces it names; a piece with no factor counts as exactly 1.
+# the two places a system runs (the founder's order of 1 November 2026: "that's the only places people will ever run it, and the
+# only way they'll ever run it"): on bare metal, and through the cloud. The order of 20 October's other two ways (in the device, as
+# a service) is struck by it. Each sums the layers of the pieces it names; a piece with no factor counts as exactly 1, so each place
+# here is the software end carried to it, never that place's bill (the bills and the work inside them: results/TWO_BILLS.md).
 SCENARIOS = [
-    ("onsite", "On-Site Bare Metal", ("software", "hardware"), None),
+    ("onsite", "Bare Metal", ("software", "hardware"), None),
     ("cloud", "Through the Cloud", ("cloud", "hardware", "software"), ("cloud", "software")),
-    ("device", "In the Device", ("hardware",), None),
-    ("service", "As a Service", ("software",), None),
 ]
 NOT_RUN = {2: "the machine (the kernel, bare metal, Kepler): not yet run (register row 79), enters as exactly 1"}
 Z95 = 1.959963984540054

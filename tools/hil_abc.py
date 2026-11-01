@@ -36,7 +36,9 @@ from omnicompass.student_t import T95  # noqa: E402
 
 PARTS = (("sim", "the stacks (our own models, class S)"), ("card", "the card (its own meter, class P)"), ("all", "both together"))
 MEASURES = (("primary", "work per energy", WORK_PER), ("work", "work", HIGHER), ("energy", "energy", SPENT),
-            ("viol_pp", "time over the line (percentage points)", LOWER), ("p95", "the card's 95th percentile", LOWER))
+            ("viol_pp", "time over the line (percentage points)", LOWER), ("p95", "the card's 95th percentile", LOWER),
+            ("bill", "the bill (the rental for the arm's window)", SPENT), ("per_dollar", "work per dollar", WORK_PER))
+CARD_ONLY = ("p95", "bill", "per_dollar")      # the card's own response time and its bill: one row each, under the card
 
 
 def contrasts(run_dir):
@@ -50,10 +52,35 @@ def contrasts(run_dir):
         res.setdefault((size, r["organism"]), {}).setdefault(rep, {})[r["arm"]] = r
     out = {}
     for key, reps in res.items():
-        per = [run_hil.contrast(a["omni"], a["native"]) for _, a in sorted(reps.items()) if "omni" in a and "native" in a]
+        per = [card_bill(run_hil.contrast(a["omni"], a["native"]), a["omni"], a["native"])
+               for _, a in sorted(reps.items()) if "omni" in a and "native" in a]
         if per:
             out[key] = per
     return out
+
+
+def card_bill(c, o, n):
+    """The founder's two bills (1 November): the card's bill is the rental for the arm's own window (its wall time at the
+    card's hourly price, which cancels in the change) and its work per dollar the requests it served for that bill. Added to the
+    card's contrasts; an arm without a wall time reads its bill unchanged."""
+    ow, nw = o.get("wall_s") or 0.0, n.get("wall_s") or 0.0
+    c["card"]["bill"] = (ow / nw - 1) if ow and nw else 0.0
+    os_, ns = o["card"].get("served") or 0, n["card"].get("served") or 0
+    c["card"]["per_dollar"] = ((os_ / ow) / (ns / nw) - 1) if ow and nw and os_ and ns else 0.0
+    return c
+
+
+def arm_means(run_dir):
+    """{(size, organism): {"native"|"omni": {"wall_s", "served", "energy_j"}}}: each arm's means over the run's repetitions,
+    the receipts the four arms print beside their readings."""
+    acc = {}
+    for f in sorted(Path(run_dir).rglob("arm.json")):
+        r = json.loads(f.read_text())
+        size = next((int(p.name[5:]) for p in f.parents if p.name.startswith("size-")), 1)
+        a = acc.setdefault((size, r["organism"]), {}).setdefault(r["arm"], [])
+        a.append((float(r.get("wall_s") or 0.0), float(r["card"].get("served") or 0), float(r["card"].get("energy_j") or 0.0)))
+    return {k: {arm: {"wall_s": sum(x[0] for x in v) / len(v), "served": sum(x[1] for x in v) / len(v),
+                      "energy_j": sum(x[2] for x in v) / len(v), "n": len(v)} for arm, v in arms.items()} for k, arms in acc.items()}
 
 
 def run_pair(xs, measure):
@@ -71,27 +98,29 @@ def engine_of(commit):
     return (r.stdout.strip().splitlines() or ["unknown"])[0]
 
 
-def table(title, dirs, ids, commits):
+def table(title, dirs, ids, commits, plan=None):
     runs = [contrasts(d) for d in dirs]
+    means = [arm_means(d) for d in dirs]
     engines = [engine_of(c) for c in commits]
     if len({e.split(" (")[0] for e in engines}) != 1:
         raise SystemExit(f"the three runs ran different engines: {engines}")
     keys = sorted(set().union(*[set(r) for r in runs]))
     lines = [f"# {title}", "",
              f"Three runs on rented cards (A, B and C), engine {engines[0]}; runs " + ", ".join(f"{L} {i} (`{c[:12]}`)" for L, i, c in zip("ABC", ids, commits)) +
-             " (their files on the branch `raw`, `run-<id>/`). Each run planned 10 paired repetitions at 1 copy, 10 at 10 and 10 at 100, and "
-             "reached its rented hours' deadline part-finished: the repetitions each run finished are counted beside each row. A size "
+             " (their files on the branch `raw`, `run-<id>/`). " + (plan or "Each run planned 10 paired repetitions at 1 copy, 10 at 10 and 10 at 100, and "
+             "reached its rented hours' deadline part-finished") + ": the repetitions each run finished are counted beside each row. A size "
              "is judged by the one key where every run finished two or more repetitions of it; with one repetition a run it is shown, not judged.",
              "", "| Copies | Organism | Part | Repetitions (A, B, C) | Measure | Three runs | A | B | C |",
              "|---:|---|---|---|---|---|---|---|---|"]
-    record = {"title": title, "runs": list(ids), "commits": list(commits), "engine": engines[0], "rows": []}
+    record = {"title": title, "runs": list(ids), "commits": list(commits), "engine": engines[0], "rows": [],
+              "arms": [{f"{s}:{o}": v for (s, o), v in m.items()} for m in means]}
     for size, name in keys:
         reps = [r.get((size, name), []) for r in runs]
         counts = [len(x) for x in reps]
         for part, part_name in PARTS:
             for measure, m_name, aim in MEASURES:
-                if measure == "p95" and part != "card":
-                    continue                                   # the card's own response time: one row, under the card
+                if measure in CARD_ONLY and part != "card":
+                    continue                                   # the card's own response time and bill: one row each, under the card
                 rs = [run_pair([x[part] for x in xs], measure) if xs else None for xs in reps]
                 if any(r is None for r in rs):
                     reading = "no value"
@@ -121,8 +150,9 @@ def main(argv=None):
     ap.add_argument("title"); ap.add_argument("a"); ap.add_argument("b"); ap.add_argument("c")
     ap.add_argument("--ids", required=True); ap.add_argument("--commits", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--plan", default=None, help="what each run planned, in words (default: the 1-card stacks of 24 October)")
     args = ap.parse_args(argv)
-    text, record = table(args.title, [args.a, args.b, args.c], args.ids.split(","), args.commits.split(","))
+    text, record = table(args.title, [args.a, args.b, args.c], args.ids.split(","), args.commits.split(","), args.plan)
     out = Path(args.out); out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(stamp(text.split("\n"))) + "\n")
     out.with_suffix(".json").write_text(json.dumps(record, indent=1) + "\n")

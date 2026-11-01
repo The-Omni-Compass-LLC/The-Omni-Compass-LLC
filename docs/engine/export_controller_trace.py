@@ -141,7 +141,7 @@ def run(setting, seed, arm):
         return ticks, decisions
     audit = tmp / "audit.jsonl"
     if setting == "cloud":
-        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--interval", "60",
+        argv = ["--mode", "nodepool", "--law", "compass", "--dial", "max", "--interval", "60", "--floor-interval", "15",   # the model gate's own argv (tools/model_gate.py worker), so the record is the gate's run
                 "--latency-file", str(lat_path), "--slo-ms", str(SLO_MS), "--audit", str(audit), "--kill-file", str(tmp / "kill"),
                 "--node-scale-cmd", "SIMSCALE {n}", "--min-nodes", str(sim.c.pool.min_nodes), "--max-nodes", str(sim.c.pool.max_nodes),
                 "--headroom", "0.5", "--active-nodes-only", "--max-node-step", "1"]

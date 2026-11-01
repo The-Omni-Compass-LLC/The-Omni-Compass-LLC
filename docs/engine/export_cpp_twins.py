@@ -195,6 +195,21 @@ def twins(b: Path, tmp: Path) -> list:
         "300 random verdicts, both judges")
     run([k for k in seal.TWINS if k.startswith("the engine's seeded runs")][0],
         lambda: test_cpp_engine_runs_parity.main(str(b / "oc_engine_runs"), 50) and 0.0, "50 runs from the jump generator")
+    # the four sealed twins verify.py checks besides (the referee grading of 1 November: they were missing from this table)
+    from tests import test_cpp_student_t_parity, test_cpp_edge_parity, test_cpp_orchestrator_brain_parity, test_cpp_immune_parity
+    run([k for k in seal.TWINS if k.startswith("Student's t")][0], lambda: test_cpp_student_t_parity.main(str(b / "oc_student_t"), 500) and None,
+        "500 degrees of freedom, every one identical")
+    run([k for k in seal.TWINS if k.startswith("the edge")][0], lambda: test_cpp_edge_parity.main(str(b / "oc_edge"), 100) and None,
+        "100 seeded scripts, every number")
+
+    def immune():
+        exe = b / "oc_immune"
+        for seed in range(40):
+            lines = test_cpp_immune_parity.script(seed)
+            assert test_cpp_immune_parity.py_answers(lines) == test_cpp_immune_parity.cpp_answers(exe, lines), f"seed {seed}"
+    run([k for k in seal.TWINS if k.startswith("the immune system")][0], immune, "40 seeded scripts, every answer")
+    run([k for k in seal.TWINS if k.startswith("Omni direct's brain")][0],
+        lambda: test_cpp_orchestrator_brain_parity.main(str(b / "oc_orchestrator_brain"), 60) and None, "60 seeded brains, identical")
     return rows
 
 
