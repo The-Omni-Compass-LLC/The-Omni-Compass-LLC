@@ -103,22 +103,22 @@ Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, a
 
 <!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
 
-Omni-Compass is software. It always sits on top of a native controller, and it can sit in three places: the software end, the cloud's wire and the chip. The software end runs on site or through the cloud. These are the words for them, used the same way on every page.
+Omni-Compass is software. It always sits on top of a native controller. A system runs it in one of two places, on bare metal or through the cloud, and in each place there are two arms, native and Omni-Compass on top of native: four arms, each read by its bill and the work done inside it. These are the words for them, used the same way on every page.
 
 - **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
-- **On site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill. The software end's benefit is the same there. In our own models (class S) the on-site plant keeps every machine it starts with.
-- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
-- **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **Bare metal.** The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own: the hours it runs, and the energy the chip's own meter reads. The software end goes with Omni-Compass to it, and there Omni-Compass can reach the chip's own knobs too.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its bill is the cloud's own; the cloud's chips and back end are inside its price and out of Omni-Compass's reach: it governs what the cloud gives, through the cloud's own Kubernetes. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, the two places never added together, since a system runs in one or the other (`results/TWO_BILLS.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
-- **Where the benefit lives.** At the software end, where it is made and measured. It shows through on two receipts, native against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
-- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their receipts. Four places are tested because a buyer asks about all four; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+- **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 | Place | Its benchmark | What it must show | Its readings |
 |---|---|---|---|
 | The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
-| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the software end's gain on the cloud's own bill: the work per dollar, native against Omni-Compass | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
-| The chip | a graphics card on Lambda, its own power meter, class P | that it holds, and the software end's gain on the card's own meter: the work per joule, native against Omni-Compass | `results/gpu/` |
-| On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
+| Bare metal, the chip | a graphics card on Lambda run directly, its rental the bill and its own power meter beside it, class P | that it holds, and the work done inside its bill, A against B: the work per dollar and per joule | `results/TWO_BILLS.md`, `results/gpu/` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the work done inside its bill, C against D: the work per dollar | `results/TWO_BILLS.md` and each set's `results/live/AKS_*.md` |
 | The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
 
 <!-- end of the places -->
@@ -599,11 +599,14 @@ The panel is the bench of `docs/FACTORY_PROFILE.md`: its controls operate the st
 
 The first row: **kill switch** (it reads "Omni-Compass ON · press to hand back to native", and engaged, "ENGAGED · Omni-Compass
 OFF · native alone"; section 2.28); **tune dial**, *the max* or *tune-down*; **body**, *harness, each muscle alone*, *harness, one
-organism* or *the live model*; **time**, 1×, 4×, 16×, 60×, *Pause* and *One decision*.
+organism* or *the live model*; **time**, 1×, 4×, 16×, 60×, *Pause* and *One decision* (each time button's tooltip gives the
+decisions a second this browser runs now beside the speed asked, and says so where the browser cannot keep the speed).
 
 The second row: **demand**, ×0.25 to ×2 the day's own; **noise**, σ 0 to 0.6; **sense delay**, +0 to +6 decisions; **faults, 40
-decisions**: *Surge ×2*, *Lose half*, *A sense blind*, *Security hold*; **breakers**: *every breaker ON*, *rest every monitor off
-screen*; **factory**: *Back to the factory tune*; **your own system** (section 2.25); **keys**: *Keyboard keys* and *Kiosk*.
+decisions**: *Surge ×2*, *Lose half*, *A sense blind*, *Security hold* (a held fault is lit, red, with the decisions it has
+left; *Surge* and *Lose half* act on the console's body part, named in their tooltips); **breakers**: *every breaker ON*, *rest every monitor off
+screen*; **factory**: *Back to the factory tune* (it also turns every rested breaker ON, puts the body back to the opening
+view, the harness with each muscle alone, and turns the jump generator OFF, naming each in its note); **your own system** (section 2.25); **keys**: *Keyboard keys* and *Kiosk*.
 
 The dial, the demand, the noise, the sense delay and the faults act on the live stress-test model; turning any of them while the
 harness plays moves the live benchmark engine to the model, and the control event log says so.
@@ -624,7 +627,7 @@ while native may still raise its own. The note beside the
 buttons says what the beat in force does on the live model, for example "60 s now, the factory's: on the live model the full
 decision every 4 steps of 15 s; the fast checks and native's own 15 s check between".
 
-Its backend is the page's live model (class S); its effect is how often Omni-Compass decides; its limits are the six
+Its backend is the page's live model (class S); its effect is how often Omni-Compass decides; its limits are the seven
 buttons on the page (the shipped controller itself takes any period from 5 to 120 s, `--interval`), and while the active profile
 is held the buttons are disabled. A beat other than 60 s makes the active profile a custom profile, unless it is the candidate
 (section 2.7).
@@ -642,8 +645,11 @@ with its word and its sign, the muscle-decisions past the line, the failed work 
 day is paired with native's on the same seed and read by `three_run_reading` (section 36.4): the change is the mean of the three
 days' changes; under 0.5% STEADY; from 0.5% up the word by the gauge's aim; days that moved 0.5% or more in opposite directions
 disagree. Capacity held that rose is power given. The light is red where work, the muscle-decisions past the line or the failed
-work reads LOSS, green where work reads GAIN, yellow otherwise. The best beat is the one with the most work for Omni-Compass on
-native and no LOSS; it is outlined and marked "the best", and 60 s is marked "the factory's". Under the table, **Kubernetes Governor Model at Six Beats** reads the
+work reads LOSS, green where work reads GAIN, yellow otherwise. Each cell leads with the word, then the direction in words and the
+size, no sign (work up 0.57%). The best beat is the one with the most work for Omni-Compass on native and no LOSS, at least 0.5%
+more work than at the factory's beat, and no LOSS at that beat in the Kubernetes governor's own model under the table; it is
+outlined and marked "the best", and 60 s is marked "the factory's". Where a beat passes the first two and fails the third, the
+note names it and says the factory's beat stays. Under the table, **Kubernetes Governor Model at Every Beat** reads the
 Kubernetes governor's own model at the same beats (the page's section 3d, its ladder record, class S) and names, setting by
 setting, every gauge that reads LOSS against native there; where a beat reads LOSS, the cause is the engine's, on the next
 version's list, and the real runs at each beat decide (`docs/PACE_PREREGISTRATION.md`).
@@ -1059,8 +1065,9 @@ the plant's conditions, and for each of the two arms (`arm="native"`, `"on_nativ
 muscle-decisions past their line, the writes, the cuts to a muscle's range, the setting moves and this decision's actuation
 (`omni_actuation{arm, stage}`). Under it a table sets each beside the series a running system serves (the governor's exporter,
 the service's own `http_requests_total` and `http_request_duration_seconds`, node_exporter's `node_cpu_seconds_total`, Kepler's
-joules, OpenCost's hourly cost) and the PromQL the wall draws it with. Its names are the page's own model (class S); the output
-passes `promtool check metrics`.
+joules, OpenCost's hourly cost) and the PromQL the wall draws it with, and its last column, **Printed above now**, says whether
+the body shown prints that series (a series of the live model is printed while the live model is the body, and the harness's
+while the harness is). Its names are the page's own model (class S); the output passes `promtool check metrics`.
 
 **The Commands tab** (its panel **Governor API Commands**) lists every control with the request a running system takes for it, its role and its note: the kill switch
 and the arm, Return to native, the dial, the heartbeat, each muscle on or left native (`POST /v1/muscle`, the governor's muscles),
@@ -1151,7 +1158,8 @@ under it names the monitors that moved, or says that no monitor carries the vari
   side follows native; *Omni-Compass and native* releases the reset, and every monitor shows Omni-Compass on top of native again.
   It never releases a kill engaged for security: only the kill switch does, and the line says so. The row lights the master
   switch's state whatever turned it, *native* while Omni-Compass is OFF.
-- **Organism**: the spine, the four realms, the four stacked or the tower: the grid's row is marked, and for the spine and the
+- **Organism**: the spine, the four realms, the four stacked or the tower (the row opens on the view the injection grid opens on,
+  the tower at 500 runs): the grid's row is marked, and for the spine and the
   realms the console's fault body part follows; *Back to the factory tune* returns the row to compute, AI and cloud with the
   console's body part, unless it stands on the four stacked or the tower.
 - **Organisms** and **runs** (1, 10, 100, 500, in line with the Python's batch of 500): the injection grid of the page's section 5c moves
@@ -1177,8 +1185,10 @@ native and Omni-Compass on top of native, and never Omni-Compass by itself; the 
 and what is modelled, the clouds) and the CFO's (the summary, every cloud set's machine-hours and bill at list price by the one
 key with its work per dollar beside the bill, or why a set does not read it, the rows of power given and the cuts, and the cloud's
 rule since 31 October: every set at the max, judged on the work per dollar, the bill allowed to rise where the work rises more). Each opens the browser's print, to print or save as a PDF, and downloads the same
-report as a page; the notice stands first and last, every reading is the key's word with the word's sign, and every number names
-its engine and its run.
+report as a page; the notice stands first and last, every reading is the key's word with its size beside it and no sign (the raw
+change, where it is printed, stands apart with its true sign, labelled raw: the referee's work order of 25 October), and every
+number names its engine and the record it is read from, whose three-run table carries the runs' numbers. The CFO's table of power
+given and cuts gives each benchmark's whole reading, its number by the Omni index's rule; each row's own size stands in its table.
 
 Beside them stand the three manuals, each a PDF to download (this one, the Operator's and the Owner's), and *The wall as a
 Grafana dashboard (JSON)*, which saves the wall as `omni-compass-wall.json` (the repository's `deploy/grafana/omni-compass-wall.json`), its panels on the open-source exporters'
@@ -1332,16 +1342,32 @@ its number with its word, and its count of GAIN, LOSS and power given rows. The 
 
 This chapter reads the page's section 2b, **Benefit Against Native** (`#s-answer`).
 
-### 5.1 What it holds
+### 5.1 Two places, two arms: the bill and the work
 
-The section opens on the Omni index, every real test weighed together, read from its record as the page opens
+The section opens on **Two Places, Two Arms: the Bill and the Work**, written by `tools/headline.py` from
+`results/TWO_BILLS.md` (`tools/two_bills.py`), never by hand. A system runs Omni-Compass in one of two places, on bare metal or
+through the cloud, and in each place there are two arms, native and Omni-Compass on top of native (the founder's order of
+1 November): A and B on bare metal, C and D in the cloud. The table has a column for each place and a row for each arm: each box
+gives that place's bill and the work done inside it, run by run, and the last row reads Omni-Compass on native against native by
+the key: on bare metal the bill, the work done, the work per dollar and the chip's energy for each request; in the cloud the bill
+and the work per dollar, or where it is not yet read and why. The two places are never added together. A line under it gives the
+card at the usual load, where every request is served in both arms and the work is fixed by the load. A second table gives what
+runs in each place (one card and the eight-card machine on bare metal; Azure, Google and Amazon through the cloud) with each
+cell's state on the engine that stands. Then **the software both places carry**: the one number, the Omni index, every real
+product counted once over work, speed and machines, with its value for each product; the same tests read on work and speed alone;
+and the layers composed. These are one set of tests on GitHub's own machines read three ways, so they never add, and none is a
+bare-metal or a cloud bill.
+
+### 5.2 What it holds
+
+Then comes the Omni index, every real test weighed together, read from its record as the page opens
 (`results/OMNI_INDEX.md`). Where the engine that stands has not yet landed the tables the index is read from, its head says so
 ("Not Yet Read on omni-v23") and gives the figure of record on the engine its tables stand on, never read as a result of the
 engine that stands, with the count of its GAIN, LOSS and power given rows and the benefit sheet's word for the same tables. The same line
 names the LOSS ledger (`docs/LOSS_LEDGER.md`): every LOSS row of the newest tables, the rows Omni-Compass against its own native
 counted apart, because do no harm is judged by them, each with its cause where one is written (chapter 7).
 
-### 5.2 One real test of the whole loop
+### 5.3 One real test of the whole loop
 
 Under the index stands one real test of the whole loop, three runs on GitHub's own machines (A, B and C from one
 commit), class L, on Omni-Compass's own orchestrator (`omni_orchestrator`), the organism run without Kubernetes: native is
@@ -1353,7 +1379,7 @@ given: Omni-Compass adds them to buy the work and the speed. The note names the 
 `results/orchestrator/V21_THREE_ARMS_ABC.json`), its runs and its commit; the record's other arm, Omni-Compass alone on the
 muscles, stays in the record and is not carried, because Omni-Compass is never by itself.
 
-### 5.3 Bill by Route
+### 5.4 Bill by Route
 
 **Bill by Route** reads each route's bill as its native total, then Omni-Compass's, then the saving, 1 − (the
 Omni-Compass total ÷ the native total), each total the sum of its non-overlapping cost components inside the declared boundary,
@@ -2409,7 +2435,8 @@ record of thirty scenarios is kept as history in `docs/history/SCENARIOS_30_2026
 Each cell carries one signal word and one number against native. The native column reads STEADY and 0%, the yardstick. In the
 Omni-Compass on native column the organism's gauges are work, the time over the line and the power drawn: a cell is red,
 REDLINING, when any of them reads LOSS, green, GAINING, when any reads GAIN and none LOSS, and yellow, STEADY, otherwise; its
-number is the gauge that decided the light (work, where work decides it), with the word's sign (+ a GAIN, − a LOSS, = STEADY). The
+number is the gauge that decided the light (work, where work decides it), named with its direction in words and its size, no
+sign (time over the line down 8.4%). The
 whole organism's cell reads its composition's index over the gauges (chapter 28). Hover a cell for each gauge's reading and each
 run's change.
 
