@@ -75,27 +75,60 @@ with_entry() {   # ROOT_TREE_OR_EMPTY NAME TREE
   { [ -z "$1" ] || git ls-tree "$1" | awk -F'\t' -v n="$2" '$2 != n'; printf '040000 tree %s\t%s\n' "$3" "$2"; } | git mktree
 }
 
+# a push GitHub accepts: under its limit of 2 GB a push, with room for the pack's own overhead
+SPLIT_BYTES="${RAW_SPLIT_BYTES:-1500000000}"
+
+# one commit whose root carries NAME as TREE (and drops DROP when given), built on the newest tip; six attempts
+push_entry() {   # NAME TREE MESSAGE [DROP]
+  local name="$1" tree="$2" msg="$3" drop="${4:-}" root new_tree commit i
+  for i in 1 2 3 4 5 6; do
+    fetch
+    root=$(git rev-parse -q --verify "$REF^{tree}" 2>/dev/null || true)
+    new_tree=$(with_entry "$root" "$name" "$tree")
+    [ -z "$drop" ] || new_tree=$(git ls-tree "$new_tree" | awk -F'\t' -v n="$drop" '$2 != n' | git mktree)
+    if [ -n "$root" ]; then commit=$(git "${ID[@]}" commit-tree "$new_tree" -p "$REF" -m "$msg")
+    else commit=$(git "${ID[@]}" commit-tree "$new_tree" -m "$msg"); fi
+    git push -q "$REMOTE" "$commit:refs/heads/raw" && return 0
+    echo "raw archive: the branch moved (attempt $i); building on its new tip" >&2
+    sleep $((5 * i))
+  done
+  return 1
+}
+
 save() {
-  local dir="$1" msg="$2" idx dir_tree root new_tree commit i
+  local dir="$1" msg="$2" idx dir_tree bytes n part tree f
   [ -d "$W/$dir" ] || { echo "raw archive: $W/$dir does not exist" >&2; return 1; }
   # the folder's own tree, from a private index over results/live/raw/ (main's index and sparse rules untouched)
   idx=$(mktemp); rm -f "$idx"
   GIT_INDEX_FILE="$idx" git -c core.sparseCheckout=false --work-tree="$W" add -f -- "$dir"
   dir_tree=$(GIT_INDEX_FILE="$idx" git --work-tree="$W" write-tree --prefix="$dir/")
   rm -f "$idx"
-  for i in 1 2 3 4 5 6; do
-    fetch
-    root=$(git rev-parse -q --verify "$REF^{tree}" 2>/dev/null || true)
-    if [ -n "$root" ] && [ "$(git rev-parse -q --verify "$REF:$dir" 2>/dev/null)" = "$dir_tree" ]; then
-      echo "raw archive: $dir is already on the branch, unchanged"; return 0
-    fi
-    new_tree=$(with_entry "$root" "$dir" "$dir_tree")
-    if [ -n "$root" ]; then commit=$(git "${ID[@]}" commit-tree "$new_tree" -p "$REF" -m "$msg")
-    else commit=$(git "${ID[@]}" commit-tree "$new_tree" -m "$msg"); fi
-    git push -q "$REMOTE" "$commit:refs/heads/raw" && { echo "raw archive: $dir saved"; return 0; }
-    echo "raw archive: the branch moved (attempt $i); building on its new tip" >&2
-    sleep $((5 * i))
-  done
+  fetch
+  if [ "$(git rev-parse -q --verify "$REF:$dir" 2>/dev/null)" = "$dir_tree" ]; then
+    echo "raw archive: $dir is already on the branch, unchanged"; return 0
+  fi
+  bytes=$(du -sb "$W/$dir" | cut -f1)
+  if [ "$bytes" -gt "$SPLIT_BYTES" ]; then
+    # more than one push holds (1 November: run 40649651196's 2.9 GB was refused at every pass, six times a pass): its
+    # files go up in parts under the staging name <dir>.partial, which is never read as the run (a run counts as archived
+    # by its own name), each part's tree holding every file of the parts before it so a push carries only its own part's
+    # bytes; the last commit names the whole <dir> and drops the staging name
+    n=0; part=0; idx=$(mktemp); rm -f "$idx"
+    while IFS= read -r -d '' f; do
+      GIT_INDEX_FILE="$idx" git -c core.sparseCheckout=false --work-tree="$W" add -f -- "$f"
+      n=$((n + $(stat -c %s "$W/$f")))
+      if [ "$n" -ge "$SPLIT_BYTES" ]; then
+        part=$((part + 1))
+        tree=$(GIT_INDEX_FILE="$idx" git --work-tree="$W" write-tree --prefix="$dir/")
+        push_entry "$dir.partial" "$tree" "$msg (part $part)" || { rm -f "$idx"; echo "raw archive: $dir: part $part could not be pushed after six attempts" >&2; return 1; }
+        n=0
+      fi
+    done < <(cd "$W" && find "$dir" -type f -print0 | sort -z)
+    rm -f "$idx"
+    push_entry "$dir" "$dir_tree" "$msg" "$dir.partial" && { echo "raw archive: $dir saved in $((part + 1)) pushes"; return 0; }
+    echo "raw archive: $dir could not be pushed after six attempts" >&2; return 1
+  fi
+  push_entry "$dir" "$dir_tree" "$msg" && { echo "raw archive: $dir saved"; return 0; }
   echo "raw archive: $dir could not be pushed after six attempts" >&2; return 1
 }
 

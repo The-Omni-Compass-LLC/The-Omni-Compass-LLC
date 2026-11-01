@@ -94,6 +94,23 @@ class RawArchive(unittest.TestCase):
         self.assertEqual((raw / "run-5" / "SHA256SUMS_ALL.txt").read_text(), "five\n")   # 18 October: it stayed absent
         self.assertEqual((raw / "run-1" / "SHA256SUMS_ALL.txt").read_text(), "one\n")
 
+    def test_a_run_over_one_push_goes_up_in_parts_and_is_named_only_whole(self):
+        """1 November: run 40649651196 handed in 2.9 GB, over GitHub's 2 GB a push, and every pass was refused six times."""
+        self.run_("sweep")
+        d = self.repo / "results" / "live" / "raw" / "run-7"
+        d.mkdir(parents=True)
+        for name in ("a.csv", "b.csv", "c.csv"):
+            (d / name).write_text("0123456789")                         # ten bytes each
+        out = self.run_("save", "run-7", "run 7", RAW_SPLIT_BYTES="15")
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertIn("saved in 2 pushes", out.stdout)
+        self.assertEqual(git(self.bare, "ls-tree", "--name-only", "raw:run-7").split(), ["a.csv", "b.csv", "c.csv"])
+        self.assertNotIn("run-7.partial", git(self.bare, "ls-tree", "--name-only", "raw").split())   # the staging name is gone
+        log = git(self.bare, "log", "--format=%s", "raw")
+        self.assertIn("run 7 (part 1)", log)
+        self.assertEqual(self.run_("save", "run-7", "run 7", RAW_SPLIT_BYTES="15").stdout.strip(),
+                         "raw archive: run-7 is already on the branch, unchanged")
+
     def test_save_adds_a_run_on_the_newest_tip_and_never_twice(self):
         self.run_("sweep")
         d = self.repo / "results" / "live" / "raw" / "run-3"
