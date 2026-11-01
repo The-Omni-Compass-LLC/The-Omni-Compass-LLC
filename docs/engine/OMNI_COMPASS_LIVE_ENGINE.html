@@ -6281,12 +6281,15 @@ function fuseMetricsRender(force) { const box = $("fuseMetrics"); if (!box || (b
 // $OMNI_PANEL with a bearer token, every press audited). The page's own model has no network: nothing here is sent anywhere.
 const CMD_HDR = `-H "Authorization: Bearer $OMNI_TOKEN" -H "Content-Type: application/json"`;
 const cmdPost = (path, body, role) => ({cmd: `curl -sS -X POST "$OMNI_PANEL/v1/${path}" ${CMD_HDR} -d '${JSON.stringify(Object.assign({}, body, {reason: "from the live benchmark engine"}))}'`, role});
+const CMD_OFF = {why: "kill"};   // how Omni-Compass was last turned off on this page: the kill (security) or the reset (operator), so the ON request is the right one
 function cmdFor(k, v) {
-  if (k === "kill") return W.killed ? Object.assign(cmdPost("kill", {}, "security"), {note: "the master switch OFF for every governor on the machine: instant, every setting restored"}) : Object.assign(cmdPost("arm", {}, "security"), {note: "ON again only when two holders of the security role press it within ten minutes"});
-  if (k === "native") return Object.assign(cmdPost("reset", {}, "operator"), {note: "every setting handed back to native; the governor stops until the next mode press"});
+  if (k === "kill") { if (W.killed) { CMD_OFF.why = /Return to native/.test((typeof MASTER !== "undefined" && MASTER.reason) || "") ? "reset" : "kill"; return CMD_OFF.why === "reset" ? Object.assign(cmdPost("reset", {}, "operator"), {note: "every setting handed back to native; the governor stops until the next mode press"}) : Object.assign(cmdPost("kill", {}, "security"), {note: "the master switch OFF for every governor on the machine: instant, every setting restored"}); }
+    return CMD_OFF.why === "reset" ? Object.assign(cmdPost("mode", {mode: "autopilot"}, "operator"), {note: "Omni-Compass on top of native again after the reset: the governor starts in autopilot"})
+      : {cmd: [cmdPost("arm", {}, "security").cmd, cmdPost("mode", {mode: "autopilot"}).cmd].join("\n"), role: "security, then operator", note: "after a kill: two holders of the security role arm the master switch within ten minutes, then an operator starts the governor in autopilot"}; }
+  if (k === "native") { CMD_OFF.why = "reset"; } if (k === "native") return Object.assign(cmdPost("reset", {}, "operator"), {note: "every setting handed back to native; the governor stops until the next mode press"});
   if (k === "dial") return Object.assign(cmdPost("dial", {dial: v === "max" ? "max" : "save"}, "operator"), {note: "passes through native, then starts again on the new dial"});
   if (k === "beat") return Object.assign(cmdPost("beat", {seconds: +v}, "operator"), {note: "passes through native, then starts again with --interval " + v});
-  if (k === "unlock" || k === "factory") return {cmd: [cmdPost("dial", {dial: "max"}).cmd, cmdPost("beat", {seconds: MECH0.beat}).cmd, cmdPost("muscle", {muscle: "<each muscle left native>", on: true}).cmd, cmdPost("mode", {mode: "autopilot"}).cmd].join("\n"), role: "operator", note: "the factory profile: the max, the factory beat, every muscle driven, autopilot"};
+  if (k === "unlock" || k === "factory") return Object.assign(cmdPost("factory", {}, "operator"), {note: "Restore factory profile (tools/omni_control.py POST /v1/factory): autopilot, the max, every muscle driven, the factory beat; passes through native"});
   return null; }
 function cmdEcho(k, v) { const el = $("cmdEcho"); if (!el) return; const c = cmdFor(k, v);
   el.innerHTML = c ? `<span class="kl">governor request</span><code>${ESC(c.cmd)}</code><span class="note" style="margin:0">role ${ESC(c.role)}${c.note ? ": " + ESC(c.note) : ""}</span>` : `<span class="kl">governor request</span><span class="note" style="margin:0">none: this control acts on this page's own model (the plant, the time, the view), never on a governor</span>`; }
@@ -6665,7 +6668,7 @@ function auxRecords() { if (AUX.recs) return AUX.recs;
   AUX.recs = out; return out; }
 function auxRecMatch(s, r) { const nat = AUX_NAT[s.native]; if (!nat || !nat[4]) return false; return nat[4] === "gpu" ? !!r.gpu : nat[4].test(r.file); }
 function auxRecOptions(s) { const R = auxRecords(), mine = R.filter(r => auxRecMatch(s, r)), rest = R.filter(r => !auxRecMatch(s, r)), nat = AUX_NAT[s.native];
-  const opt = r => `<option value="${AESC(r.id)}"${r.id === s.rec ? " selected" : ""}>${ESC(r.title)} · ${ESC((r.engine || "").replace("omni-", "v") || "—")} · class ${r.cls} · ${ESC(r.file.split("/").pop())}</option>`;
+  const opt = r => `<option value="${AESC(r.id)}"${r.id === s.rec ? " selected" : ""}>${ESC(r.title)} · ${ESC(r.engine || "—")} · class ${r.cls} · ${ESC(r.file.split("/").pop())}</option>`;
   return `<option value=""${s.rec ? "" : " selected"}>none chosen: choose a real record</option>`
     + (mine.length ? `<optgroup label="${AESC((nat ? nat[1] : "this native") + ": its own records")}">${mine.map(opt).join("")}</optgroup>` : "")
     + `<optgroup label="${mine.length ? "every other real record" : "every real record (none yet of this native)"}">${rest.map(opt).join("")}</optgroup>`; }
@@ -7001,7 +7004,7 @@ function monKnobs() {
         : `<span class="feed">feed: ${ESC(m.feed.exporter || "this page")}${(m.feed.promql || []).length ? " · " + ESC(m.feed.promql[0]) : ""}</span>`) + wireHtml(m);
     m.el.parentNode.insertBefore(d, m.el.nextSibling);
     d.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
-      if (b.hasAttribute("data-mkill")) { masterSet(!MASTER.off, `the kill switch on monitor ${m.n}`); return; }
+      if (b.hasAttribute("data-mkill")) { e.stopPropagation(); masterSet(!MASTER.off, `the kill switch on monitor ${m.n}`); return; }   // one press, one flip: the page-wide kill handler does not take it again
       if (b.hasAttribute("data-minspect")) { monInspect(m, d); return; }
       if (b.hasAttribute("data-mfull")) { monFull(m); return; }
       const k = b.dataset.mk, v = b.dataset.v;
