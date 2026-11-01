@@ -70,36 +70,10 @@ class CloudSim(SimCluster):
 
 
 def cloud_kube(sim):
-    IDLE = "omnicompass.io/idle"
-
-    class Kube(SimKube):
-        def get(self, *args):
-            if args[:2] == ("get", "nodes"):
-                p = self.sim.c.pool
-                node = lambda i, taints: {"metadata": {"name": f"n{i}", "labels": {}}, "spec": {"taints": taints},
-                                          "status": {"allocatable": {"cpu": str(p.cores)}, "conditions": [{"type": "Ready", "status": "True"}]}}
-                return {"items": [node(i, []) for i in range(p.nodes)]
-                        + [node(p.nodes + j, [{"key": IDLE, "effect": "PreferNoSchedule"}]) for j in range(len(self.sim.parked))]}
-            if args[:2] == ("get", "pods") and "-o" in args and args[args.index("-o") + 1] == "name":
-                c = self.sim.c
-                frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0
-                return "\n".join(f"pod/p{i}" for i in range(sum(w.replicas - int(w.replicas * frac) for w in c.workloads)))
-            if args[:2] == ("get", "hpa"):
-                hp = super().get(*args)
-                for h, w in zip(hp["items"], self.sim.c.workloads):
-                    h["spec"].update({"minReplicas": int(w.min_rep), "maxReplicas": int(w.max_rep), "scaleTargetRef": {"kind": "Deployment", "name": w.name}})
-                return hp
-            if args[:2] == ("get", "deployment"):
-                w = next(x for x in self.sim.c.workloads if x.name == args[2]); cpu = f"{int(w.request * 1000)}m"
-                return {"metadata": {"name": w.name, "namespace": "default", "annotations": {}},
-                        "spec": {"replicas": int(w.replicas), "selector": {"matchLabels": {"app": w.name}}, "template": {"metadata": {"labels": {"app": w.name}},
-                                 "spec": {"containers": [{"name": "app", "resources": {"requests": {"cpu": cpu}, "limits": {"cpu": cpu}}}]}}},
-                        "status": {"replicas": int(w.replicas), "readyReplicas": int(w.replicas)}}
-            try:
-                return super().get(*args)
-            except ValueError:
-                raise subprocess.CalledProcessError(1, ["kubectl", *args], stderr="not in the model cluster")
-    return Kube(sim, None)
+    """The model cluster as the governor reads it: tools/model_gate.py's own stand-in, never a copy (1 November 2026: the copy
+    kept here missed the gate's fixes of 24 October, and once the pods carried their metadata the two read differently)."""
+    from tools.model_gate import gate_kube
+    return gate_kube(sim)
 
 
 def observe(sim, lat_rows, lat_path, rng):

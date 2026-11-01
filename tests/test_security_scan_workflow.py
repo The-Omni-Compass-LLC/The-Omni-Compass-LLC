@@ -26,6 +26,19 @@ class ScanFails(unittest.TestCase):
             with self.subTest(step=s.splitlines()[0]):
                 self.assertIn("set -o pipefail", s)
 
+    def test_the_check_reads_the_findings_never_the_counts_every_push_moves(self):
+        from tools.security_scan import substance
+        page = ("over every Python file that runs (`tools/`; 37,470 lines). **2 findings of high severity and 35 of medium "
+                "severity, every one reviewed below; 350 of low severity, counted by kind.**\n"
+                "| B310 (Audit url open) | `tools/a.py` | medium | 2 (46, 90) | the GitHub API |\n"
+                "## Findings of low severity, by kind\n| B603 subprocess | 154 |\nThe low-severity kinds are ...\n")
+        moved = page.replace("37,470", "38,001").replace("(46, 90)", "(51, 97)").replace("350 of low", "410 of low").replace("| 154 |", "| 160 |")
+        self.assertEqual(substance(page), substance(moved))          # a push that shifts lines is not a finding
+        added = page.replace("| medium | 2 (46, 90) |", "| medium | 3 (46, 90, 120) |")
+        self.assertNotEqual(substance(page), substance(added))       # a new finding of medium severity is
+        reviewed = page.replace("the GitHub API", "a new reason")
+        self.assertNotEqual(substance(page), substance(reviewed))    # and so is a changed review
+
     def test_every_review_names_a_file_that_exists(self):
         for _check, path in REVIEWED:
             with self.subTest(path=path):

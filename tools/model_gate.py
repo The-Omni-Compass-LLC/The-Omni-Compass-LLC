@@ -101,6 +101,81 @@ def cap_wear(caps):
 
 
 # ---- the worker: one arm, one seed, run inside one checkout --------------------------------------------------------
+def gate_kube(sim, blink=False):
+    """The model cluster as the governor reads it through kubectl: the gate's one stand-in (1 November 2026). The live page's
+    controller trace (docs/engine/export_controller_trace.py) kept its own copy, which missed the fixes of 24 October (a
+    node's allocatable as the scheduler places pods, the running pods on their machines, the autoscaler's CPU reading); while
+    the pods carried no metadata the governor's room count failed in both and hid it, and once corrected the two disagreed.
+    The worker and the trace now build this one."""
+    from pilot.selfpilot import SimKube
+    from fleet.sim import ALLOC
+    IDLE = "omnicompass.io/idle"
+
+    class Kube(SimKube):
+        reads = 0                                              # every read the governor made (its own cost, omni-v16)
+
+        def get(self, *args):
+            Kube.reads += 1
+            if args[:2] == ("get", "nodes"):                    # in service, then parked (marked idle) until deleted
+                p = self.sim.c.pool
+                node = lambda i, taints: {"metadata": {"name": f"n{i}", "labels": {}},
+                                          # a node's allocatable as the scheduler places pods on it (the plant's ALLOC of its
+                                          # cores, fleet/sim.py), as a real cluster reports it (24 October: the model said all of
+                                          # its cores, so the governor's floor counted room the plant did not place pods in)
+                                          "spec": {"taints": taints}, "status": {"allocatable": {"cpu": f"{int(round(p.cores * ALLOC * 1000))}m"},
+                                          "conditions": [{"type": "Ready", "status": "True"}]}}
+                # the blink (omni-v11): four times a day every machine in service leaves service for two minutes in the
+                # governor's reading, while the model cluster serves on, as the kind cluster of the CruiseKube test did on 18
+                # October (run 39120444653, repetition 8)
+                out_now = blink and BLINK[0] <= self.sim.t % BLINK_EVERY < BLINK[1]
+                gone = [{"key": "node.kubernetes.io/unreachable", "effect": "NoSchedule"}] if out_now else []
+                return {"items": [node(i, list(gone)) for i in range(p.nodes)]
+                        + [node(p.nodes + j, [{"key": IDLE, "effect": "PreferNoSchedule"}]) for j in range(len(self.sim.parked))]}
+            if args[:2] == ("get", "pods") and "-o" in args and args[args.index("-o") + 1] == "json":
+                # every running pod on a machine in service, by name, as a real cluster lists it (24 October: the model's pods
+                # carried no node, so the governor's count of what the machines in service hold, which reads a running pod by
+                # its node, came out 0 and every rule that reads the room saw an empty fleet)
+                got = super().get(*args)
+                n = max(1, self.sim.c.pool.nodes)
+                for i, pod in enumerate(x for x in got["items"] if x["status"].get("phase") == "Running"):
+                    pod["spec"]["nodeName"] = f"n{i % n}"
+                return got
+            if args[:2] == ("get", "pods") and "-o" in args and args[args.index("-o") + 1] == "name":
+                c = self.sim.c
+                frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0
+                pend = sum(w.replicas - int(w.replicas * frac) for w in c.workloads)
+                return "\n".join(f"pod/p{i}" for i in range(pend))
+            if args[:2] == ("get", "hpa"):                      # the HPA as Kubernetes shows it: its range and target
+                hp = super().get(*args)
+                for h, w in zip(hp["items"], self.sim.c.workloads):
+                    h["spec"].update({"minReplicas": int(w.min_rep), "maxReplicas": int(w.max_rep),
+                                      "scaleTargetRef": {"kind": "Deployment", "name": w.name}})
+                    # the pods' mean CPU over their request, as the autoscaler's status reports it (24 October: the model
+                    # reported none, so every rule of the governor that reads the service's demand from it was silent)
+                    h.setdefault("status", {})["currentMetrics"] = [{"type": "Resource", "resource": {
+                        "name": "cpu", "current": {"averageUtilization": int(round(100 * getattr(w, "metric", 0.0)))}}}]
+                return hp
+            if args[:2] == ("top", "pods"):                     # the pods' own usage, as metrics-server reports it
+                sel = args[args.index("-l") + 1] if "-l" in args else ""
+                w = next(x for x in self.sim.c.workloads if sel == f"app={x.name}")
+                c = self.sim.c; frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0; run = int(w.replicas * frac)
+                per = w.metric * w.request * 1000.0 * (w.replicas / max(1, run)) if run else 0.0
+                return "\n".join(f"{w.name}-{i} {int(per)}m 10Mi" for i in range(run))
+            if args[:2] == ("get", "deployment"):
+                w = next(x for x in self.sim.c.workloads if x.name == args[2])
+                cpu = f"{int(w.request * 1000)}m"
+                return {"metadata": {"name": w.name, "namespace": "default", "annotations": {}},
+                        "spec": {"replicas": int(w.replicas), "selector": {"matchLabels": {"app": w.name}},
+                                 "template": {"metadata": {"labels": {"app": w.name}}, "spec": {"containers": [
+                                     {"name": "app", "resources": {"requests": {"cpu": cpu}, "limits": {"cpu": cpu}}}]}}},
+                        "status": {"replicas": int(w.replicas), "readyReplicas": int(w.replicas)}}
+            try:
+                return super().get(*args)
+            except ValueError:
+                raise subprocess.CalledProcessError(1, ["kubectl", *args], stderr="not in the model cluster")
+
+    return Kube(sim, None)
+
 def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud", ctl=""):
     import csv
     from unittest import mock
@@ -249,69 +324,6 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
             f.write("elapsed_seconds,latency_ms,ok\n")
             f.writelines(f"{t:.2f},{ms:.3f},1\n" for t, ms in lat_rows)
 
-    class Kube(SimKube):
-        reads = 0                                              # every read the governor made (its own cost, omni-v16)
-
-        def get(self, *args):
-            Kube.reads += 1
-            if args[:2] == ("get", "nodes"):                    # in service, then parked (marked idle) until deleted
-                p = self.sim.c.pool
-                node = lambda i, taints: {"metadata": {"name": f"n{i}", "labels": {}},
-                                          # a node's allocatable as the scheduler places pods on it (the plant's ALLOC of its
-                                          # cores, fleet/sim.py), as a real cluster reports it (24 October: the model said all of
-                                          # its cores, so the governor's floor counted room the plant did not place pods in)
-                                          "spec": {"taints": taints}, "status": {"allocatable": {"cpu": f"{int(round(p.cores * ALLOC * 1000))}m"},
-                                          "conditions": [{"type": "Ready", "status": "True"}]}}
-                # the blink (omni-v11): four times a day every machine in service leaves service for two minutes in the
-                # governor's reading, while the model cluster serves on, as the kind cluster of the CruiseKube test did on 18
-                # October (run 39120444653, repetition 8)
-                out_now = blink and BLINK[0] <= self.sim.t % BLINK_EVERY < BLINK[1]
-                gone = [{"key": "node.kubernetes.io/unreachable", "effect": "NoSchedule"}] if out_now else []
-                return {"items": [node(i, list(gone)) for i in range(p.nodes)]
-                        + [node(p.nodes + j, [{"key": IDLE, "effect": "PreferNoSchedule"}]) for j in range(len(self.sim.parked))]}
-            if args[:2] == ("get", "pods") and "-o" in args and args[args.index("-o") + 1] == "json":
-                # every running pod on a machine in service, by name, as a real cluster lists it (24 October: the model's pods
-                # carried no node, so the governor's count of what the machines in service hold, which reads a running pod by
-                # its node, came out 0 and every rule that reads the room saw an empty fleet)
-                got = super().get(*args)
-                n = max(1, self.sim.c.pool.nodes)
-                for i, pod in enumerate(x for x in got["items"] if x["status"].get("phase") == "Running"):
-                    pod["spec"]["nodeName"] = f"n{i % n}"
-                return got
-            if args[:2] == ("get", "pods") and "-o" in args and args[args.index("-o") + 1] == "name":
-                c = self.sim.c
-                frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0
-                pend = sum(w.replicas - int(w.replicas * frac) for w in c.workloads)
-                return "\n".join(f"pod/p{i}" for i in range(pend))
-            if args[:2] == ("get", "hpa"):                      # the HPA as Kubernetes shows it: its range and target
-                hp = super().get(*args)
-                for h, w in zip(hp["items"], self.sim.c.workloads):
-                    h["spec"].update({"minReplicas": int(w.min_rep), "maxReplicas": int(w.max_rep),
-                                      "scaleTargetRef": {"kind": "Deployment", "name": w.name}})
-                    # the pods' mean CPU over their request, as the autoscaler's status reports it (24 October: the model
-                    # reported none, so every rule of the governor that reads the service's demand from it was silent)
-                    h.setdefault("status", {})["currentMetrics"] = [{"type": "Resource", "resource": {
-                        "name": "cpu", "current": {"averageUtilization": int(round(100 * getattr(w, "metric", 0.0)))}}}]
-                return hp
-            if args[:2] == ("top", "pods"):                     # the pods' own usage, as metrics-server reports it
-                sel = args[args.index("-l") + 1] if "-l" in args else ""
-                w = next(x for x in self.sim.c.workloads if sel == f"app={x.name}")
-                c = self.sim.c; frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0; run = int(w.replicas * frac)
-                per = w.metric * w.request * 1000.0 * (w.replicas / max(1, run)) if run else 0.0
-                return "\n".join(f"{w.name}-{i} {int(per)}m 10Mi" for i in range(run))
-            if args[:2] == ("get", "deployment"):
-                w = next(x for x in self.sim.c.workloads if x.name == args[2])
-                cpu = f"{int(w.request * 1000)}m"
-                return {"metadata": {"name": w.name, "namespace": "default", "annotations": {}},
-                        "spec": {"replicas": int(w.replicas), "selector": {"matchLabels": {"app": w.name}},
-                                 "template": {"metadata": {"labels": {"app": w.name}}, "spec": {"containers": [
-                                     {"name": "app", "resources": {"requests": {"cpu": cpu}, "limits": {"cpu": cpu}}}]}}},
-                        "status": {"replicas": int(w.replicas), "readyReplicas": int(w.replicas)}}
-            try:
-                return super().get(*args)
-            except ValueError:
-                raise subprocess.CalledProcessError(1, ["kubectl", *args], stderr="not in the model cluster")
-
     if arm != "native":
         from omni_controller.controller import Controller, parser
         # the compass law at the max, every HPA sensed, in both settings: the kind benchmark's (omni-v16's pace models, as
@@ -330,7 +342,7 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
         p = parser()
         a = p.parse_args(argv)
         period = period if period > 0 else float(a.interval)
-        k = Kube(sim, None)
+        k = gate_kube(sim, blink)
         ctl = Controller(a, kube=k)
         real_run = subprocess.run
 
@@ -385,7 +397,7 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
         res["readings_held"] = sum(1 for r in recs if str(r.get("decision", "")).startswith("held"))
         res["decisions"] = sum(1 for r in recs if isinstance(r.get("decision"), dict))
         res["governor_cpu_s_per_hour"] = gov_cpu / (sim.steps * tick_s / 3600.0)
-        res["reads_per_hour"] = Kube.reads / (sim.steps * tick_s / 3600.0)
+        res["reads_per_hour"] = type(k).reads / (sim.steps * tick_s / 3600.0)
         res["engine_tree"] = engine_tree("omni_controller.controller")
     print(json.dumps(res))
 

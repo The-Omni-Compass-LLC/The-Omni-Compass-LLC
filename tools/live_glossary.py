@@ -968,11 +968,11 @@ TERMS = [
       "belongs to native's side wear it. Red is only a LOSS and the alarm.",
       [(PAGE_F, "the sides: --brass is Omni-Compass (blue), --steel is Native (orange; red is only LOSS and the alarm)"),
        (MAN, "| Orange | native |")], aka=["orange"]),
-    T("the heartbeat's six buttons", D, "On the page the governor's full decision comes at one of six beats, 10, 15, 30, 60, 90 or "
+    T("the heartbeat's seven buttons", D, "On the page the governor's full decision comes at one of seven beats, 10, 15, 20, 30, 60, 90 or "
       "120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's "
       "live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading.",
-      [(PAGE_F, "the heartbeat (10, 15, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 30, 60, 90, 120} s")],
-      aka=["heartbeat buttons", "the six beats", "the five beats"]),
+      [(PAGE_F, "the heartbeat (10, 15, 20, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 20, 30, 60, 90, 120} s")],
+      aka=["heartbeat buttons", "the seven beats", "the six beats", "the five beats"]),
     T("governing engine", A, "The executable mathematical rules that turn observations and internal state into governing decisions.",
       [(FP, "The executable mathematical rules that turn observations and internal state into governing decisions.")],
       aka=["governing engine", "the governing engine"]),
@@ -1041,6 +1041,15 @@ TERMS = [
     T("Prometheus Metrics", W, "The fuse box's tab that prints the live model in Prometheus's text exposition format, with the "
       "series a running system serves beside each one and the PromQL the Grafana wall draws it with.",
       [(PAGE_F, "Prometheus Metrics Endpoint")], aka=["Metrics tab", "Prometheus"]),
+    T("Auxiliary Input", D, "The fuse box's AUX button and its tab: ten slots, each waiting to be wired to an organism of the "
+      "reader's own, a cluster, a service, a database or a card. A slot reads that system's own Prometheus every 15 s, read only, "
+      "under the native controller it names (every real native; Red Hat OpenShift Container Platform, IBM Turbonomic and VMware "
+      "vSphere read on the reader's own licence, with no record of ours until we run them licensed), with Omni-Compass on top of it or not. A wired slot lights its own row on the "
+      "Auxiliary Input Board under the wall, one press flips the wall's monitors that carry a Prometheus query to it, and it is set beside the repository's real "
+      "records only (live software, class L; the card's meter, class P), never a model run (class S). Its two windows, native alone and "
+      "Omni-Compass on top, are one run of the reader's own system each, read by the one key; the page writes nothing to that system.",
+      [(PAGE_F, "ten slots, each waiting to be wired to an organism of your own"), (MAN, "The Auxiliary Input: ten slots for the reader's own organisms.")],
+      aka=["AUX", "the auxiliary input", "Auxiliary Input Board", "AUX slots"]),
     T("Commands", D, "The fuse box's tab that lists every control beside the request a running governor takes for it and its "
       "role; the mechanism's knobs and the plant's conditions have none.",
       [(PAGE_F, "Governor API Commands")], aka=["Commands tab"]),
