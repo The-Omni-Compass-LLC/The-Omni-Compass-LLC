@@ -68,7 +68,8 @@ budget plus one hour: above it nothing is rented.
 | `test` `mode` | What runs | Hour budget (given back by) | At Lambda's list price |
 |---|---|---|---|
 | `1card` `fast` | the compute counted run on one A10 | 8 h (9 h) | one A10 $1.29 an hour on 24 October: about $12 |
-| `1card` `stacks` | the whole stacks with the card inside: the wire check and smoke, then the seven organisms at 1, 10 and 100 copies, native and Omni-Compass, the preregistered 5, 3 and 2 repetitions by size (`hil_profile` `standard`) | 24 h (25 h) | about $32 a run; A, B and C (`tag`) each rent their own A10 and run side by side |
+| `1card` `stacks` | the whole stacks with the card inside: the wire check and smoke, then the seven organisms at 1, 10 and 100 copies, native and Omni-Compass, the preregistered 5, 3 and 2 repetitions by size (`hil_profile` `standard`) | 32 h (33 h) | about $43 a run at most; A, B and C (`tag`) each rent their own A10 and run side by side |
+| `1card` `stacks-full` | the same stacks with the card fully loaded inside them (`docs/GPU_PREREGISTRATION.md`, amendment 16): more requests offered than the card serves, so the work done inside the same rented time can rise | 32 h (33 h) | about $43 a run at most; A, B and C side by side |
 | `8card` `pooled` (default) | every stage on eight A100 cards, repetitions pooled across the cards | 10.5 h (11.5 h) | about $14.32 an hour: about $165 at most |
 | `8card` `fast` | a short look, never the result to show | 4 h (5 h) | about $72 at most |
 | `1card` `full` | the whole one-card test | 32 h (33 h) | about $43 |
