@@ -24,10 +24,11 @@
 #    (SKIP_CAP=1);
 # 7. the GPU fault drill, about 10 minutes: the governor killed outright, the master switch pulled, the response feed
 #    blind (SKIP_DRILL=1); everything so far is then packed;
-# 8. the whole stacks with this card inside (tools/run_hil.py): the four realms, the four stacked with duplicates
-#    and the whole tower, each as 1, 10 and 100 copies on one clock with the card inside (no 1,000 copies: the
+# 8. the whole stacks with this card inside (tools/run_hil.py): the spine, the four realms, the four stacked with
+#    duplicates and the whole tower, each as 1, 10 and 100 copies on one clock with the card inside (no 1,000 copies: the
 #    founder's order of 12 October, amendment 13), native and Omni (repetitions 5, 3, 2 by size; HIL_SCALES and
-#    HIL_REPS_BY_SCALE change them; SKIP_HIL=1 skips it);
+#    HIL_REPS_BY_SCALE change them; HIL_WORKLOAD_ARGS loads the card inside the stacks alone, amendment 16, lambda-gpu.yml
+#    mode stacks-full; SKIP_HIL=1 skips it);
 # 9. real AI serving last: a language model served by vLLM, installed in its own environment, 5 repetitions x 3 arms x
 #    300 s; if it cannot install or start, the stage says so and nothing before it is affected (SKIP_LLM=1);
 # 10. packs every result folder into one file to send back, and prints the label each table chose by rule.
@@ -134,10 +135,14 @@ else
   tar czf "results/gpu/omni-gpu-$STAMP-partial.tar.gz" "${PACK[@]}"
   echo "== everything so far packed: results/gpu/omni-gpu-$STAMP-partial.tar.gz"
   if [ -z "${SKIP_HIL:-}" ]; then
-    echo "== the whole stacks with this card inside: six organisms at 1x, 10x and 100x copies, native and Omni (tools/run_hil.py)"
+    echo "== the whole stacks with this card inside: seven organisms at 1x, 10x and 100x copies, native and Omni (tools/run_hil.py)${HIL_WORKLOAD_ARGS:+, the card fully loaded ($HIL_WORKLOAD_ARGS)}"
     set +e
+    # HIL_WORKLOAD_ARGS reaches the card's workload inside the stacks alone (amendment 16: --phases=1.3,1.3,1.3, more
+    # requests offered than the card serves, so the work done can rise inside the same rented time); every step before
+    # it keeps its own load
     ENV_FLOOR_W=$($PY -c "import json,sys; print(json.load(open(sys.argv[1]))['power_min_w'])" "$ENVELOPE") \
-      NVIDIA_SMI="$SMI" GPU="$GPU" $PY tools/run_hil.py --out "results/hil/run-$STAMP" | tee "results/gpu/hil-$STAMP.log" | grep -E "^== |^\| |^- "
+      NVIDIA_SMI="$SMI" GPU="$GPU" WORKLOAD_ARGS="${HIL_WORKLOAD_ARGS:-${WORKLOAD_ARGS:-}}" \
+      $PY tools/run_hil.py --out "results/hil/run-$STAMP" | tee "results/gpu/hil-$STAMP.log" | grep -E "^== |^\| |^- "
     hil_rc=${PIPESTATUS[0]}
     set -e
     PACK+=("results/hil/run-$STAMP")

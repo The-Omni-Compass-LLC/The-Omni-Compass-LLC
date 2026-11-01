@@ -7018,7 +7018,8 @@ budget plus one hour: above it nothing is rented.
 | `test` `mode` | What runs | Hour budget (given back by) | At Lambda's list price |
 |---|---|---|---|
 | `1card` `fast` | the compute counted run on one A10 | 8 h (9 h) | one A10 $1.29 an hour on 24 October: about $12 |
-| `1card` `stacks` | the whole stacks with the card inside: the wire check and smoke, then the seven organisms at 1, 10 and 100 copies, native and Omni-Compass, the preregistered 5, 3 and 2 repetitions by size (`hil_profile` `standard`) | 24 h (25 h) | about $32 a run; A, B and C (`tag`) each rent their own A10 and run side by side |
+| `1card` `stacks` | the whole stacks with the card inside: the wire check and smoke, then the seven organisms at 1, 10 and 100 copies, native and Omni-Compass, the preregistered 5, 3 and 2 repetitions by size (`hil_profile` `standard`) | 32 h (33 h) | about $43 a run at most; A, B and C (`tag`) each rent their own A10 and run side by side |
+| `1card` `stacks-full` | the same stacks with the card fully loaded inside them (`docs/GPU_PREREGISTRATION.md`, amendment 16): more requests offered than the card serves, so the work done inside the same rented time can rise | 32 h (33 h) | about $43 a run at most; A, B and C side by side |
 | `8card` `pooled` (default) | every stage on eight A100 cards, repetitions pooled across the cards | 10.5 h (11.5 h) | about $14.32 an hour: about $165 at most |
 | `8card` `fast` | a short look, never the result to show | 4 h (5 h) | about $72 at most |
 | `1card` `full` | the whole one-card test | 32 h (33 h) | about $43 |
@@ -8104,7 +8105,7 @@ Where a row sums several workloads, grids, districts, cells or robots, each part
 
 - **Azure's managed Kubernetes, the bill** (`results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md`): Omni v1, a 4-worker fleet, every gauge STEADY, inside the noise: 0%, and too small a fleet to show one machine.
 - **The governor's own share of the machine** (`results/live/V3_OWN_COST.md`): 0.6% to 1.3% of one core at every size; shown, not a benchmark against native.
-- **The card (NVIDIA)**: at the factory dial (the max) native already runs both knobs at their top and the governor writes nothing, so the card is not on the sheet; the other tunes, each its own result: The card on omni-v21, the power cap at 70% of the card's top (cap): three runs on an A100: work per energy STEADY, under the floor (the three runs' mean 0.11%) (`results/gpu/V21_A100_CAP_ABC.md`); The card on omni-v21, the power cap at 70% of the card's top (cap-full): three runs on an A100: work per energy STEADY, under the floor (the three runs' mean 0.07%) (`results/gpu/V21_A100_CAP_FULL_ABC.md`); The card on omni-v21, the tune-down (dial save): three runs on an A100: work per energy GAIN by the mean of our three runs, beyond the noise in 1 of 3 (`results/gpu/V21_A100_SAVE_ABC.md`); The stacked box on omni-v21: the seven organisms with an A10 inside, three runs on rented cards: the card's work per energy at 1 copy 7 STEADY, under the floor of 7 organisms; at 10 copies 6 STEADY, under the floor, 1 power given by the mean of our three runs of 7 organisms; at 100 copies 6 one repetition in a run: shown, not judged of 6 organisms (`results/gpu/V21_STACKS_A10_ABC.md`). Every rental, its cost and what came back is in `docs/RUN_LEDGER.md`.
+- **The card (NVIDIA)**: at the factory dial (the max) native already runs both knobs at their top and the governor writes nothing, so the card is not on the sheet; the other tunes, each its own result: The card on omni-v23, the power cap at 70% of the card's top (cap): three runs on an A10: work per energy STEADY, under the floor (the three runs' mean 0.38%) (`results/gpu/V23_A10_CAP_ABC.md`); The card on omni-v23, the power cap at 70% of the card's top, the full load (cap-full): three runs on an A10: work per energy GAIN in all three of our runs (`results/gpu/V23_A10_CAP_FULL_ABC.md`). Every rental, its cost and what came back is in `docs/RUN_LEDGER.md`.
 - **The index's second reading** (service alone, `results/OMNI_INDEX.md`): a second true number for the same tests, not repeated here; this sheet carries the preregistered one.
 
 ## 55. Every Level on One Page
@@ -10611,6 +10612,31 @@ records that moment in `governor_ready.txt`, and only then reads the meters and 
 within `GOV_READY_S` (60 s) refuses the arm. Native's window is unchanged. No gauge, rule, gain or guard of the governor
 changes, and `tools/gpu_reps.py` reads the window as before. The card tables already run (omni-v18's A100 run of 24 October;
 omni-v21's A100 tables of 27 October) stand as their own rig's; the next counted runs carry this rig.
+
+### 64.23 Amendment 16 (2026-11-01, declared before any run of it): the stacks with the card fully loaded
+
+The founder's design of 1 November reads every place by its bill and the work done inside it (`results/TWO_BILLS.md`):
+the chip native (A) and the chip with Omni-Compass on native (B), the cloud native (C) and the cloud with Omni-Compass on
+native (D). The whole stacks with the card inside (amendment 9; omni-v21's three runs, `results/gpu/V21_STACKS_A10_ABC.md`)
+offer the card the usual load (shares 0.3 to 0.8 of its full-power capacity), so the card serves every request in both
+arms and its work cannot differ: there the work is the same by construction and only the energy can move. This amendment
+adds a second form, `lambda-gpu.yml` mode `stacks-full`, and changes nothing in the first:
+
+- the card's workload inside the stacks offers 1.3 times its full-power capacity in every phase (`--phases=1.3,1.3,1.3`,
+  the same full load as the power cap's `cap-full` form), through `HIL_WORKLOAD_ARGS`, which reaches the stacks alone: the
+  wire check and the smoke keep their own load;
+- everything else is the stacks' as declared: the seven organisms (the spine, the four realms, the four stacked, the whole
+  tower) at 1, 10 and 100 copies with the card inside, repetitions 5, 3 and 2 by size (`hil_profile` `standard`), native
+  against Omni-Compass on native at the factory tune (the dial at the max), paired within each repetition, the card's
+  firmware limit as it ships in both arms and no operator's cap;
+- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stands (omni-v23);
+- the reading: per organism and size, the card's requests served (work), its energy, its energy per request served, its
+  95th percentile and its time over the line, and the stacks' own gauges, each by the one key (`tools/readings.py`); the
+  bill of each arm is the rental of its own window at the price the launch printed, so the bill reads the same in both
+  arms unless a window differs, and the work per dollar moves with the work;
+- said before the run: the A10 ships with its power limit at the top of its range, so on native the card already runs at
+  its limit and the factory tune, never below native, may have nothing to raise (omni-v18's A100 run of 24 October wrote
+  nothing for that reason). A STEADY row where the governor wrote nothing is that, said so: not a benefit and not a fault.
 
 ## 65. The Realms Preregistration
 
