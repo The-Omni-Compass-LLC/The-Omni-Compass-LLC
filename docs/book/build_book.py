@@ -312,6 +312,7 @@ MATH = re.compile(r"\$\$(.+?)\$\$|(?<![\\\w$])\$(?=\S)((?:\\\$|[^$\n])+?)(?<=\S)
 
 def inline(t: str) -> str:
     t = t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    t = t.replace("\\[", "\x02").replace("\\]", "\x03")     # Markdown's escaped brackets: a formula's u[req](k), never a link
     codes = []
 
     def keep(m):
@@ -329,6 +330,7 @@ def inline(t: str) -> str:
     t = re.sub(r"(?<![\w_])_(?![\s_])([^_]+?)(?<![\s_])_(?![\w_])", r"<i>\1</i>", t)
     t = glyphs(t, SERIF_CMAP)
     t = re.sub(r"\x01(\d+)\x01", lambda m: maths[int(m.group(1))], t)
+    t = t.replace("\x02", "[").replace("\x03", "]")
     return re.sub(r"\x00(\d+)\x00", lambda m: f'<font name="Mono" size="{PT}">' + glyphs(codes[int(m.group(1))], MONO_CMAP) + "</font>", t)
 
 

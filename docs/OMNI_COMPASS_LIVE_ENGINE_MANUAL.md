@@ -736,11 +736,11 @@ The fourth line, **contract, this decision**, writes the same decision in the sy
 for Omni-Compass on native:
 
   k = the decision on screen · t[k+1] = t[k] + Δ, Δ = the heartbeat set · θ = the active profile's fingerprint and its kind
-  u[req](k): the settings changed · u[cmd](k) = Π[C](u[req](k)): how many were cut to the muscle's own limit
-  u[ack](k) = R(u[cmd](k)): how many of the sixty settings stand at their command, and how many are still moving
+  u\[req\](k): the settings changed · u\[cmd\](k) = Π\[C\](u\[req\](k)): how many were cut to the muscle's own limit
+  u\[ack\](k) = R(u\[cmd\](k)): how many of the sixty settings stand at their command, and how many are still moving
 
-Under it the whole contract is printed once, y(k) = h(x(t[k])) + ε(k); (u[req](k), z(k+1)) = G[θ](z(k), y(k), A(k));
-u[cmd](k) = Π[C](u[req](k)); u[ack](k) = R(u[cmd](k)); x(t[k+1]) = Φ(x(t[k]), u[ack](k), w(k)); θ(k+1) = θ(k) once released, with
+Under it the whole contract is printed once, y(k) = h(x(t[k])) + ε(k); (u\[req\](k), z(k+1)) = G\[θ\](z(k), y(k), A(k));
+u\[cmd\](k) = Π\[C\](u\[req\](k)); u\[ack\](k) = R(u\[cmd\](k)); x(t[k+1]) = Φ(x(t[k]), u\[ack\](k), w(k)); θ(k+1) = θ(k) once released, with
 what each symbol is on this page: x the sixty muscles' settings and loads, y their readings with the sense delay and the noise σ
 set on the panel, w the demand, C each muscle's own range, A Omni-Compass's hand (the max or the tune-down). On the harness the
 line names k, Δ and θ and says the three settings are computed only on the live model; with Omni-Compass off it says nothing is

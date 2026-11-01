@@ -1684,7 +1684,7 @@ The eight equations (Appendix C gives them in full):
 7. d²B/dt² = γ[c] δ S − (ω[B]/Q[B]) dB/dt − ω[B]² B
 8. R[B]: a finite-difference audit of (7), never fed back
 
-**The control law.** u = clip(−f[U](x, t) + K[P] (σ − U), −25, +25), where f[U] is the drift of U with the command
+**The control law.** u = clip(−f\[U\](x, t) + K[P] (σ − U), −25, +25), where f[U] is the drift of U with the command
 at zero, σ is the target pole and K[P] = 12. The first term cancels whatever is shoving U (the push); the second
 pulls U to its pole, harder the farther it is (the pull). The command is held unchanged through every stage of the
 fourth-order Runge-Kutta step and U is never rewritten afterwards. Inside the authority limit, U converges to its pole
@@ -1737,7 +1737,7 @@ convergence and the band and dwell allow; and whether change is permitted, which
 security block. All of this is written to the audit every decision (`docs/MECHANISM_OF_ACTION.md`, sections 3 to 6, and
 `python tools/mechanism.py`, which reproduces the measured numbers in `results/MECHANISM_OF_ACTION.json`).
 
-![Block diagram: from the observations through the engine to the authority. The nine clipped observations are blended into the state x = (E, U, I[U], S, B, Ḃ) with weight a = 0.339; the engine moves one macro step (RK4) and its state persists from decision to decision; the control law u = clip(−f[U] + K[P](σ − U)) is read, never applied to a knob, and its push u/25 goes to the nervous system, which grants the authority to give back only while push ≤ release and U ≥ gate. What leaves the chain is the gate's state, open or held, to the compass law on every muscle.](book/figures/c_engine_loop.svg)
+![Block diagram: from the observations through the engine to the authority. The nine clipped observations are blended into the state x = (E, U, I[U], S, B, Ḃ) with weight a = 0.339; the engine moves one macro step (RK4) and its state persists from decision to decision; the control law u = clip(−f[U] + K\[P\](σ − U)) is read, never applied to a knob, and its push u/25 goes to the nervous system, which grants the authority to give back only while push ≤ release and U ≥ gate. What leaves the chain is the gate's state, open or held, to the compass law on every muscle.](book/figures/c_engine_loop.svg)
 
 The nine observations are worth naming in plain words, because every later number is a weighted sum of them
 (`omnicompass/adapter.py`, `observe_vector` and `assimilate`). **Queue** is the work waiting as a share of the work being

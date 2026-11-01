@@ -1145,6 +1145,8 @@ def source_texts(path: str) -> list[str]:
         if path.endswith(".html"):
             raw = strip_glossary(raw)
         out = [_norm(raw)]
+        if path.endswith(".md"):                     # as it reads: Markdown's escaped brackets (a formula's u[req](k)) unescaped
+            out.append(_norm(raw.replace("\\[", "[").replace("\\]", "]")))
         if path.endswith(".html"):
             vis = html.unescape(raw)
             out += [_norm(re.sub(r"<[^>]+>", "", vis)), _norm(re.sub(r"<[^>]+>", " ", vis))]
@@ -1450,7 +1452,28 @@ def to_md(d: dict) -> str:
     if d["unindexed"]:
         L += ["", "Not printed in the page's own words at this build (defined above, not yet on the page): "
               + "; ".join(e["term"] for e in d["unindexed"]) + "."]
-    return "\n".join(stamp(L)) + "\n"
+    return md_brackets("\n".join(stamp(L)) + "\n")
+
+
+_FORMULA = re.compile(r"([\wΠθΦΣ])\[([^\]\s]{1,16})\]\(")
+
+
+def md_brackets(md: str) -> str:
+    """A formula's brackets escaped wherever a parenthesis follows them (u[req](k) = Π[C](...)), outside code: on GitHub
+    and in the printed books such a pair otherwise reads as a link and the formula prints garbled (1 November)."""
+    out, code = [], False
+    for ln in md.split("\n"):
+        if ln.startswith("```"):
+            code = not code
+        elif not code and not ln.startswith(("    ", "\t")):
+            parts = re.split(r"(`[^`]*`)", ln)
+            for i in range(0, len(parts), 2):
+                prev = None
+                while prev != parts[i]:
+                    prev, parts[i] = parts[i], _FORMULA.sub(lambda m: f"{m.group(1)}\\[{m.group(2)}\\](", parts[i])
+            ln = "".join(parts)
+        out.append(ln)
+    return "\n".join(out)
 
 
 def main(argv=None) -> int:
