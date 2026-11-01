@@ -288,10 +288,10 @@ def _card(stands: str, mode: str):
 
 def _raws(r) -> str:
     out = []
-    for L, x in zip("ABC", r.get("runs") or []):
+    for L, x in zip("123", r.get("runs") or []):
         if x.get("native"):
             c = 100 * x["diff"] / abs(x["native"])
-            out.append(f"{L} {'±0.0' if abs(c) < 0.005 else ('+' if c > 0 else '−') + format(abs(c), '.2f')}%")
+            out.append(f"run {L} {'±0.0' if abs(c) < 0.005 else ('+' if c > 0 else '−') + format(abs(c), '.2f')}%")
     return ", ".join(out)
 
 
@@ -314,50 +314,61 @@ NOT_RENTED = "not yet run; every rental on the founder's word"
 
 def places_block(m) -> list:
     stands = m["stands"]
-    full, cap = _card(stands, "cap-full"), _card(stands, "cap")
-    L = ["### Two Places, Two Arms: the Receipt and the Work", "",
-         "Omni-Compass runs in one of two places: **on bare metal**, your own machines, where the receipt is the chip's own meter; or "
-         "**through a cloud**, where the receipt is the cloud's bill, the cloud's chips and back end inside its price and out of "
-         "Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). In each place there are two arms "
-         "only: **native**, and **Omni-Compass on top of native**. Each box is that place's receipt beside the work done; the reading is "
-         "the work done for each unit of the receipt (each joule on the chip's meter, each dollar of the cloud's bill). The receipt should "
-         "hold; the benefit is the work inside it. The two places are never added together: a system runs in one or the other.", ""]
-    v = stands.split("-v")[1]
-    az = sorted(ROOT.glob(f"results/live/V{v}_AKS*.json"))
-    cloud_nat = cloud_on = f"not yet read on {stands}"
-    cloud_read = (f"work per dollar: read in `{az[-1].relative_to(ROOT).as_posix()}`" if az else
-                  f"work per dollar: not yet read on {stands}; Azure's sets at the max with the work meter are queued "
-                  f"(`scripts/azure_queue.txt`, its switch {_switch('azure')}); Google and Amazon are wired, Google's switch {_switch('google')}, "
-                  f"Amazon's {_switch('amazon')}, not yet run")
-    if full:
-        f, d = full
-        rows = d["rows"]
-        def per(key, arm):
-            r = rows.get(key) or {}
-            return ", ".join(f"{L_} {x[arm]:,.0f}" for L_, x in zip("ABC", r.get("runs") or []))
-        card = re.sub(r"^.*three runs on (an? )?", "", d.get("title", "")).strip() or "the card"
-        head = f"one {card} card, an operator's power cap underneath, fully loaded (`{f.relative_to(ROOT).as_posix()}`)"
-        nat = f"{head}: the chip's energy {per('energy, GPU (J)', 'native')} J; the work done {per('requests served', 'native')} requests served (runs A, B, C)"
-        on = f"the same runs: the chip's energy {per('energy, GPU (J)', 'omni')} J; the work done {per('requests served', 'omni')} requests served"
+    tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
+    chip, cl = tb.get("chip") or {}, tb.get("cloud") or {}
+    L = ["### Two Places, Two Arms: the Bill and the Work", "",
+         "Omni-Compass runs in one of two places: **on bare metal**, a chip run directly, its bill the machine's own (here the rental, "
+         "the chip's own meter beside it); or **through a cloud**, its bill the cloud's, the cloud's chips and back end inside its price "
+         "and out of Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). In each place two arms "
+         "only: **native**, and **Omni-Compass on top of native**. Each box is that place's bill beside the work done inside it; the "
+         "reading is the work for each dollar. The bill should hold; the benefit is the work inside it. The two places are never added "
+         "together: a system runs in one or the other. The four arms, A and B on the chip, C and D in the cloud, are written once in "
+         "[`results/TWO_BILLS.md`](results/TWO_BILLS.md) (`tools/two_bills.py`); these boxes read it.", ""]
+    money = lambda x: f"${x:.4f}"
+    if chip.get("per_run"):
+        pr = chip["per_run"]
+        card = re.sub(r"^.*three runs on (an? )?", "", chip.get("title", "")).strip() or "the card"
+        eng = chip.get("engine", "").split(" (")[0]
+        arm = lambda k: (f"the bill {', '.join(money(r[k]['bill']) for r in pr)}; the work done "
+                         f"{', '.join(f'{r[k]['work']:,.0f}' for r in pr)} requests served (runs 1, 2, 3)")
+        nat = f"one {card} card on Lambda, {eng}, an operator's power cap underneath, fully loaded: {arm('native')}"
+        on = f"the same runs: {arm('omni')}"
         reads = []
-        for key, name in CARD_ROWS:
-            r = rows.get(key)
+        for key, name in (("bill ($, the rental for the arm's window)", "the bill"), ("work done (requests served)", "the work done"),
+                          ("work per dollar (requests served per $)", "work per dollar"), ("energy per served request (J)", "the chip's energy for each request served")):
+            r = (chip.get("rows") or {}).get(key)
             if r:
                 reads.append(f"{name} **{(r.get('reading') or '').replace('**', '')}** (raw {_raws(r)})")
         bare_read = "; ".join(reads)
     else:
-        nat = on = f"not yet read on {stands}"
-        bare_read = f"work per joule: not yet read on {stands}"
-    L += ["| | Bare metal: your own machines, the chip's own meter | Through the cloud: the cloud's bill |", "|---|---|---|",
-          f"| **Native** | {nat} | {cloud_nat} |",
-          f"| **Omni-Compass on top of native** | {on} | {cloud_on} |",
-          f"| **Omni-Compass on native against native** | {bare_read} | {cloud_read} |", ""]
+        nat = on = bare_read = f"not yet read on {stands}"
+    if cl.get("bill"):
+        b, mh, ce = cl["bill"], cl.get("machine_hours") or {}, cl.get("engine", "")
+        pct = 100 * b["diff"] / b["native"]
+        noise = "beyond the noise" if b.get("significant") else "inside the noise"
+        word = K.STEADY if abs(pct) < 100 * K.SIZE_FLOOR else (K.GAIN if pct < 0 else K.GIVEN)   # the word by the floor, the noise said beside it (results/TWO_BILLS.md)
+        cnat = (f"Kubernetes on Azure's AKS, {ce}, {cl.get('repetitions')} paired repetitions (`{cl.get('page')}`): the bill "
+                f"{money(b['native'])} a window at list price, {mh.get('native', 0):.3f} machine-hours; the work done not counted in that set")
+        con = f"the same set: the bill {money(b['omni'])} a window, {mh.get('omni', 0):.3f} machine-hours"
+        cread = (f"the bill {'up' if pct > 0 else 'down'} {abs(pct):.2f}%, **{word}**, {noise}; work per dollar waits for the set on {stands} "
+                 f"(the cloud's work meter came after 31 October), Azure's sets at the max queued (`scripts/azure_queue.txt`, its switch "
+                 f"{_switch('azure')}); Google and Amazon wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}")
+        if ce != stands:
+            cread += f"; a set of {ce}, never read as {stands}'s"
+    else:
+        cnat = con = f"not yet read on {stands}"
+        cread = f"work per dollar: not yet read on {stands}"
+    L += ["| | Bare metal: the chip, its bill and its work | Through the cloud: the cloud's bill and its work |", "|---|---|---|",
+          f"| **A and C: native** | {nat} | {cnat} |",
+          f"| **B and D: Omni-Compass on top of native** | {on} | {con} |",
+          f"| **Omni-Compass on native against native** | {bare_read} | {cread} |", ""]
+    cap = _card(stands, "cap")
     if cap:
         f, d = cap
         r = d["rows"].get("work per energy (served requests per kJ)") or {}
         L += [f"At the usual load (`{f.relative_to(ROOT).as_posix()}`) every request is served in both arms, so the work is fixed by the "
               f"load: work per joule **{(r.get('reading') or '').replace('**', '')}** (raw {_raws(r)}).", ""]
-    # what runs in each place: the seven organisms native and with Omni-Compass on native, on the cards and in the clouds
+    full = _card(stands, "cap-full")
     stacks = sorted(ROOT.glob("results/gpu/V*_STACKS_*_ABC.json"), key=lambda p: int(re.match(r"V(\d+)", p.name).group(1)))
     if stacks:
         sd = json.loads(stacks[-1].read_text(encoding="utf-8"))
@@ -372,31 +383,33 @@ def places_block(m) -> list:
     else:
         org_txt = "not yet run"
     eight = sorted(ROOT.glob("results/gpu/V*_8*CARD*_ABC.json"))
+    v = stands.split("-v")[1]
+    az = sorted(ROOT.glob(f"results/live/V{v}_AKS*.json"))
     L += ["| Place | What runs there | Native against Omni-Compass on native |", "|---|---|---|",
           f"| Bare metal, one card | the card's own workload, at the usual load and fully loaded | {'three runs on ' + stands + ', above' if full else 'not yet run on ' + stands} |",
           f"| Bare metal, one card | the seven organisms (the spine, the four realms, the four stacked, the whole catalog) at 1, 10 and 100 copies | {org_txt} |",
           f"| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies | {('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED} |",
-          f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, switch ' + _switch('azure') + '; not yet read on ' + stands} |",
+          f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, its switch ' + _switch('azure') + '; not yet read on ' + stands} |",
           f"| Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}; not yet run |", ""]
-    # the software both places carry: the Omni index, every real product counted once
     ix = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8"))
     h, sv = float(ix["headline_pct"]), float(ix.get("service_headline_pct") or 0)
     idx_eng = (m["standing"]["index"] or {}).get("engine", "its tables' engines")
-    cats = ix.get("categories") or {}
-    svc = ix.get("service_categories") or {}
+    cats, svc = ix.get("categories") or {}, ix.get("service_categories") or {}
     def short(k):
         mm = re.search(r"\(([^)]*?)(?:, GitHub)?\)$", k)
         return mm.group(1) if mm and mm.group(1) != "GitHub" else re.sub(r"^Real | \(GitHub\)$", "", k)
     cat_txt = "; ".join(f"{short(k)} {_cat_word(x, svc.get(k))} {abs(x):.1f}%" for k, x in sorted(cats.items(), key=lambda kv: -kv[1]) if x is not None)
     w = m["whole"]
     L += [f"**The software both places carry.** Whichever the place, the same software end goes with Omni-Compass, and that is where "
-          f"its benefit is measured so far: real software on GitHub's own computers (class L), never bare metal and never a cloud. **The "
-          f"one number: {_cat_word(h, sv)} {abs(h):.1f}%**, the Omni index, every real product counted once, work, speed and machines "
-          f"scored (`{INDEX_FILE}`, on {idx_eng}). By product: {cat_txt}. The same runs read on work and speed alone, the machines left "
-          f"out, give {_cat_word(sv, sv)} {abs(sv):.1f}%"
+          f"its benefit is measured so far: real software on GitHub's own computers (class L), never bare metal and never a cloud, and "
+          f"with no bill in it. **The one number: {_cat_word(h, sv)} {abs(h):.1f}%**, the Omni index, every real product counted once, "
+          f"work, speed and machines scored (`{INDEX_FILE}`, on {idx_eng}). By product: {cat_txt}. The same runs read on work and speed "
+          f"alone, the machines left out, give {_cat_word(sv, sv)} {abs(sv):.1f}%"
           + (f"; multiplied layer by layer (Kubernetes, then the services on it) they compose to {index_word(w['index'])} {abs(w['index']):.1f}% "
              f"(`results/WHOLE_SYSTEM.md`, class S of class L tables)" if w and w.get("index") is not None else "")
-          + ". Neither of those is a bare-metal or a cloud receipt: those are the boxes above.", ""]
+          + ". These are one set of tests read three ways, so they never add; none of them is a bare-metal or a cloud bill: those are the "
+          "boxes above. Whether the software's gain and the chip's add up on one machine is not yet measured: the organisms on the card "
+          "and in the cloud measure it.", ""]
     return L
 
 

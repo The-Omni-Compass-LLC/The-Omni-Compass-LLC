@@ -1302,11 +1302,12 @@ carries only the pair Omni-Compass on native against native, and only those two 
 commit, the three runs and the file, with the line "Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results."
 
-### 4.4 Whole-Workload Index by Route
+### 4.4 The Software End Carried to Each Place
 
-The second table (`#blBills`) reads the whole workload, bought two ways: **on site**, your software straight on your own
-hardware (the software end × the bare metal; no cloud), and **through the cloud**, your software through the cloud onto its
-hardware (the software end × the cloud's wire × the bare metal at the back end). The big number is the whole workload's index,
+The second table (`#blBills`) reads the software end's composition carried to the two places a system runs: **bare metal**, the
+software end with the chip held at native's (the chip enters as exactly 1, the machine's own layer not yet run), and **through
+the cloud**, the software end with the cloud's bill held at native's. Neither row is that place's bill: each place's bill and the
+work done inside it, native and Omni-Compass on native, are the four boxes of section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
 one number over its gauges, with its word; beside it every gauge with its word and its number. The light follows the index's
 word, and is red where any table under the route reads a slower service or less work LOSS, in either form; a route with no
 composition reads AWAITING, "not yet composed". The bills read the repository's own headline, by the index's rule, with the
@@ -2530,11 +2531,11 @@ Omni-Compass is wired into every piece of a stack through its own two-way plug: 
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
 caches), the bare metal under it (the chip's power limit and clock; the machine's kernel and its own meter) and, where the stack
 is rented, the cloud that bills the machines. The whole-organism monitor (the page's section 5d, `#s-whole`) has a button for each
-way a stack is bought (**Scenario**): *On-Site Bare Metal*, the software on the owner's own bare metal (software × bare metal, no cloud);
-*Through the Cloud*, the cloud's build, its bare metal at the back end and the software (cloud × bare metal × software), with
-the cloud as two pieces beside it; *In the Device*, the bare metal alone, for one who buys the chip or the machine and no
-software stack on it; and *As a Service*, the software alone, for one who runs it on machines someone else meters. The cloud is a
-piece of the stack, bought and billed, and what Omni-Compass does there composes with what it does on every piece beneath it.
+place a system runs (**Scenario**; the founder's order of 1 November: these two are the only places it runs): *Bare Metal*, the
+software on the owner's own machines (software × the chip, no cloud), and *Through the Cloud*, the software through the cloud onto
+its machines (cloud × the chip at the back end × software), with the cloud as two pieces beside it. Each place here is the software
+end carried to it, its chip and its bill held at native's until read; the bills themselves, and the work done inside them, native
+and Omni-Compass on native, are the four boxes of section 2b (`results/TWO_BILLS.md`).
 
 A tenant cannot meter the provider's bare metal at the back of a cloud: the cloud's piece is the bill and the machines the
 provider meters, and the bare-metal piece is gauged on hardware the repository meters and carried to the provider's only as a
@@ -3459,7 +3460,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Benchmark, run, repetition | the page's sections 4a, 4b | which record is played | the record itself |
 | This muscle; Every muscle back under Omni-Compass | the page's section 3e, on the muscle's card; the mechanism panel's last group | one muscle of the stress-test model run by native's own controller alone, or in a replay shown by native's own record, while every other muscle stays governed | the body's recorded totals in a replay; the kill switch, which hands every muscle back at once |
 | Its own load / The climb / Work waiting in line | the page's section 5e | which load the realms table is read under | the table |
-| On-Site Bare Metal / Through the Cloud / In the Device / As a Service | the page's section 5d | which way the stack is bought in the composition | the receipts |
+| Bare Metal / Through the Cloud | the page's section 5d | which way the stack is bought in the composition | the receipts |
 | Every Piece, Intervals Carried / Strict Reading, Index Rule; Chip Run: Beside the Count / In the Count | the page's section 5d | which rule Composed Benefit by Gauge counts by, and whether the chip's run enters; the scorecard's bills and the route's bill follow | the factors |
 | All / LOSS / The runs disagree / Live Now / Guards and Open Items / GitHub; All / ALERT / WARN / INFO | the page's sections 2e, 3b | which rows are shown | the rows |
 | Copy the exposition | the page's section 3b | the clipboard | the page |

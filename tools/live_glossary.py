@@ -1073,9 +1073,11 @@ TERMS = [
       [(PAGE_F, "a knob or profile turned from the factory tune: violet, never a side and never a reading's colour")],
       aka=["violet"]),
     T("Mechanism Knobs", W, "The engine's own knobs, live: the four pieces of the brain, the compass law, Omni-Compass's hand on "
-      "each muscle (the max's push and lift-off, the tune-down's floor, step and dwell), native's own controller (its target, "
+      "each muscle (the max's push and lift-off, the tune-down's floor, step and dwell), the redline reflex (the push at the band "
+      "wall, the streak, the relief share, the native-stronger margin and the hand-back holds), native's own controller (its target, "
       "tolerance, step and window) and every muscle's scale out, scale in, scale up, response time and sensing delay. They turn "
-      "the engine's own equations while it runs, on both governed arms; a knob turned from the factory turns violet, ↺ puts it "
+      "the engine's own equations while it runs, on Omni-Compass on native, and native's controller knobs on every native "
+      "controller; a knob turned from the factory turns violet, ↺ puts it "
       "back, and the factory button puts every one back. A tune other than the factory's is a variation of the mechanism (class "
       "S).",
       [(PAGE_F, "the engine's own knobs, live"),
