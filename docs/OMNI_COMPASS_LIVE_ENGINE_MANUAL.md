@@ -2553,11 +2553,13 @@ end's work and bills it by machine-hours; its benchmark shows that it holds: the
 not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
 Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
-### 28.1 Every way a stack is bought
+### 28.1 The two places a system runs
 
 The whole organism (the page's section 5d, `#s-whole`) opens with the same box as the clouds' section, the cloud is a wire,
-and its table of the three places Omni-Compass lives (section 21.1); the three places compose into one organism and one bill
-below it, read two ways, native and Omni-Compass on top of native.
+and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
+two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
+carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
+are the four boxes of section 2b, never this composition, and the two places are never added together.
 
 Omni-Compass is wired into every piece of a stack through its own two-way plug: the
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the

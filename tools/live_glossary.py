@@ -311,7 +311,7 @@ def whole_organism() -> dict:
                     "native. It has layers, not catalog muscles."),
         "sources": [{"file": "DISCLOSURES.md", "quote": "composes each layer's own measured ratio, native against Omni-Compass on top of native, into one benefit for a whole stack"},
                     {"file": "tools/whole_system.py", "quote": "the cloud is the wire between the chip at one end and the software at the other"},
-                    {"file": "DISCLOSURES.md", "quote": "and the whole organism in its three places (the software end, the cloud's wire, the bare metal) composed above: ten organisms"}],
+                    {"file": "DISCLOSURES.md", "quote": "and the whole organism in its three pieces (the software end, the cloud's wire, the bare metal) composed above: ten organisms"}],
         "aka": ["the whole organism", "whole system"]}
 
 

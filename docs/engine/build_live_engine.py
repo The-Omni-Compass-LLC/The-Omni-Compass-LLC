@@ -1116,7 +1116,7 @@ def scenarios20() -> dict:
         on = r.get("on_native_vs_native") if isinstance(r, dict) else None
         if isinstance(on, dict) and on.get("state") == "composed":   # the whole organism: its composition, the headline scope only
             wh = (((on.get("composition") or {}).get("scopes") or {}).get("without") or {}).get("index", {}).get("whole", {})
-            x["composed"] = {"index": wh.get("index"), "gauges": wh.get("gauges"), "note": "the whole organism in its three places, composed by tools/whole_system.py"}
+            x["composed"] = {"index": wh.get("index"), "gauges": wh.get("gauges"), "note": "the whole organism in its three pieces, composed by tools/whole_system.py"}
         else:
             x["readings"] = {k: pair(v) for k, v in r.items()}
         orgs.append(x)

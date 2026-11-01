@@ -210,7 +210,7 @@ measurement of the provider's machines.
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center). Omni-Compass can live in all three places; the wire makes no benefit of its own. Until 31 October
+racks, the data center). Omni-Compass sits on all three pieces where a system lets it (the software end in either place, the chip only on bare metal); a system itself runs in one of two places, bare metal or the cloud (the founder's order of 1 November); the wire makes no benefit of its own. Until 31 October
 every cloud run here was set on the wire alone (the tune-down on the machines only), so it could at most park machines the
 cloud already made and cut the wire's bill a little. From 31 October (the founder's order of that day: no hard rule) every
 cloud set runs the whole engine at the max on the cloud's cluster, and what its receipt must show is that the engine holds there
@@ -226,7 +226,7 @@ none: the wire carries the benefit, it does not make it; where a measurement dif
 **What the record shows in each place so far** (the words for each place, and what each benchmark must show, are in section 10): at the software end the benefit, the Omni index over work, speed and machines (`results/OMNI_INDEX.md`; composed layer by layer in `results/WHOLE_SYSTEM.md`), with no bill in it; on bare metal, the A10's own bill and meter on omni-v23 (`results/TWO_BILLS.md`, `results/gpu/V23_A10_CAP_FULL_ABC.md`), fully loaded: the bill STEADY, the work done inside it the runs disagree (up in two runs, down in the third, that run's lost work on the next version's list), the chip's energy for each request served GAIN in all three of our runs (the A100's three runs on omni-v21 read work and energy STEADY, `results/gpu/V21_A100_CAP_ABC.md`); through the cloud, Azure's steady set on omni-v18, 98 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
-beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the
+beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three pieces (the software end, the
 cloud's wire, the bare metal) composed above: ten organisms. Each is read two ways, native and Omni-Compass on top of native
 (Omni-Compass is never by itself, the founder's order of 25 October): twenty scenarios, recorded in
 `results/scenarios/SCENARIOS_20.json` (class S, our own models, three runs), every cell with no run reading "not yet run".

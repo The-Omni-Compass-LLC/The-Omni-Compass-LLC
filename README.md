@@ -160,7 +160,9 @@ Omni-Compass consists of a **governing engine**, its **muscle adapters**, a **co
 
 **A cloud is just a wire.** It is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site). Omni-Compass can live in all three places. The wire makes no benefit of its
+racks, the data center, on site or off site). Omni-Compass sits on all three pieces where a system lets it: the software end in either place, and the chip only on bare
+metal, since a cloud's chips are inside its price. A system itself runs in one of two places, bare metal or the cloud (the
+founder's order of 1 November). The wire makes no benefit of its
 own. Until 31 October every cloud run in this repository was set on the wire alone (the tune-down on the machines only, the
 pods exactly native's), so it could only park machines the cloud's own autoscaler already made, after its own trial, and show
 at most a small cut in the bill of the wire. From 31 October (the founder's order of that day: no hard rule) every cloud set
@@ -451,7 +453,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 **Ten organisms, two ways: the twenty scenarios** (our own models, class S, three runs, seeds 3000 to 3002,
 [`results/scenarios/SCENARIOS_20.md`](results/scenarios/SCENARIOS_20.md), written by `python3 tools/scenarios_20.py`). The
 seven organisms of the catalog, the orchestra (the governors' and orchestrators' muscles), the live benchmark engine's own sixty-muscle
-organism and the whole organism in its three places (the software end, the cloud's wire, the bare metal) make ten organisms;
+organism and the whole organism in its three pieces (the software end, the cloud's wire, the bare metal) make ten organisms;
 each is read native and with Omni-Compass on top of native: twenty scenarios. Every one of the nine modelled organisms reads
 its muscles over the line GAIN in all three of our runs (from +1.58% in the whole tower to +63.34% in the orchestra), its work
 STEADY; the orchestra's power is given (+52.38%) and the others' power STEADY or a cut. The whole organism, a composition of the

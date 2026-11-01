@@ -98,7 +98,7 @@ factory card of every muscle, the harness that measures it against native, and t
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site). Omni-Compass can live in all three places. On the wire alone, as every cloud run
+racks, the data center, on site or off site). Omni-Compass sits on all three pieces where a system lets it (the software end in either place, the chip only on bare metal); a system itself runs in one of two places, bare metal or the cloud (the founder's order of 1 November). On the wire alone, as every cloud run
 in this repository is set, it can only park machines the cloud's own autoscaler already made, so a cloud run alone can show at
 most a small cut in the bill of the wire; the work and speed gained at the software end and the energy and throughput gained
 at the bare metal are measured where Omni-Compass sits on them, and composed with the wire into one organism and one bill
@@ -1337,7 +1337,7 @@ Beside the seven organisms of the catalog the repository reads three more, each 
 and none a product (`DISCLOSURES.md`, section 9): **the orchestra**, the muscles that stand for the knobs of the governors and
 orchestrators the founder named (55 muscles, `tools/run_orchestra.py`, the mapping in `tools/governors_page.py`); **the live
 engine's own organism**, the sixty muscles the live benchmark engine page draws (`docs/engine/export_harness_trace.py`); and **the whole
-organism** in its three places, the software end, the cloud's wire and the bare metal, composed from the real tables by the
+organism** in its three pieces, the software end, the cloud's wire and the bare metal, composed from the real tables by the
 product law (`tools/whole_system.py`, section 16.3b). Each of the ten is read two ways on the same seeds: native (every plant
 under its own native controller) and Omni-Compass on native (the max, the factory tune, on top of every native controller).
 Omni-Compass is never by itself (the founder's order of 25 October): it always sits on top of a native controller. Ten
@@ -3819,14 +3819,14 @@ not in the table. A reader should take
 from this what it says and no more: the small fleet's bill reading is inside the noise by the arithmetic of its size, the
 large fleet's reading does not exist yet, and nothing about the bill on a real cloud is claimed in the index until it does.
 
-### 16.3b The cloud is a wire: three places, one organism, two routes (a composition, class S of L and P)
+### 16.3b The cloud is a wire: three pieces, two places, one organism (a composition, class S of L and P)
 
 **What the record shows in each place so far** (the words for each place, and what each benchmark must show, are written once and carried word for word in this manual, the README and `DISCLOSURES.md`, section 10): at the software end the benefit, the Omni index over work, speed and machines (`results/OMNI_INDEX.md`; composed layer by layer in `results/WHOLE_SYSTEM.md`), with no bill in it; on bare metal, the A10's own bill and meter on omni-v23 (`results/TWO_BILLS.md`, `results/gpu/V23_A10_CAP_FULL_ABC.md`), fully loaded: the bill STEADY, the work done inside it the runs disagree (up in two runs, down in the third, that run's lost work on the next version's list), the chip's energy for each request served GAIN in all three of our runs (the A100's three runs on omni-v21 read work and energy STEADY, `results/gpu/V21_A100_CAP_ABC.md`); through the cloud, Azure's steady set on omni-v18, 98 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
 between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
 carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on site or off site).
-Omni-Compass can live in all three places. The wire makes no benefit of its own. Until 31 October every cloud run in this
+Omni-Compass sits on all three pieces where a system lets it (the software end in either place, the chip only on bare metal); a system itself runs in one of two places, bare metal or the cloud (the founder's order of 1 November). The wire makes no benefit of its own. Until 31 October every cloud run in this
 repository was set on the wire alone (the tune-down on the machines only, the pods exactly native's), so it could only park
 machines the cloud's own autoscaler already made, after its own trial, and show at most a small cut in the bill of the wire.
 From 31 October (the founder's order of that day) every cloud set runs the whole engine at the max on the cloud's cluster, the
