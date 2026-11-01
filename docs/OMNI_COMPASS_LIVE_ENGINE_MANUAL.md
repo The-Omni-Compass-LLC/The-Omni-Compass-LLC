@@ -587,8 +587,12 @@ the page opens on *Drive* without them. The fuse box's guide and the mechanism k
 Between the master row and the tabs stands one line, **governor request**. After every press it shows the
 request a running governor would take for it through its control panel (`tools/omni_control.py`), with the role the request
 needs: a heartbeat button, `POST /v1/beat {"seconds": N}`; Return to native, `POST /v1/reset`; the kill switch, `POST /v1/kill`
-(and back on, `POST /v1/arm`, two holders of the security role within ten minutes); the dial, `POST /v1/dial`; Restore factory
-profile, the dial at the max, the factory beat, every muscle driven and autopilot. A control that acts only on this page's own
+(back on after a kill, `POST /v1/arm` by two holders of the security role within ten minutes, then `POST /v1/mode
+{"mode": "autopilot"}` by an operator; back on after the reset, `POST /v1/mode {"mode": "autopilot"}` alone); the dial,
+`POST /v1/dial`; Restore factory profile and Back to the factory tune, `POST /v1/factory` (autopilot, the max, every muscle
+driven, the factory beat), preceded by the two holders' `POST /v1/arm` when the master switch was OFF by a kill, since the panel
+refuses the factory press (409) while it is OFF; Connect and Disconnect, none sent to a governor (a read-only query of your
+Prometheus). A control that acts only on this page's own
 model (the plant's conditions, the faults, the time, the body, the view) says so: it has no request. The page sends nothing
 anywhere; the line is the request written out, `$OMNI_PANEL` the panel's address and `$OMNI_TOKEN` the operator's token. Every switch is written to the control event log with its decision (the page's section 3c), and
 the line at the panel's head counts the breakers by their signal word and the monitors rested, and names the Omni-Compass side:
@@ -656,7 +660,8 @@ version's list, and the real runs at each beat decide (`docs/PACE_PREREGISTRATIO
 
 **Try the candidate** applies the sweep's best beat as a **candidate profile**, a proposed combination of settings under
 evaluation: the factory's knobs with the heartbeat at that beat. The log says "a candidate is evaluated, never released". It
-does nothing before a sweep has run ("no candidate yet: run every beat first") and nothing while the active profile is held. A
+does nothing before a sweep has run ("no candidate yet: run every beat first") and nothing after a sweep that named no beat ("no
+candidate: the sweep named none") and nothing while the active profile is held. A
 model's best beat is a candidate for the real runs, never a result; the factory's beat stays until the real runs read it.
 
 ### 2.7 The profile: factory, candidate, active and custom

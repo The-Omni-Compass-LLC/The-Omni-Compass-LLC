@@ -317,7 +317,7 @@ def places_block(m) -> list:
     tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
     chip, cl = tb.get("chip") or {}, tb.get("cloud") or {}
     L = ["### Two Places, Two Arms: the Bill and the Work", "",
-         "Omni-Compass runs in one of two places: **on bare metal**, a chip run directly, its bill the machine's own (here the rental, "
+         f"On the engine that stands ({stands}), Omni-Compass runs in one of two places: **on bare metal**, a chip run directly, its bill the machine's own (here the rental, "
          "the chip's own meter beside it); or **through a cloud**, its bill the cloud's, the cloud's chips and back end inside its price "
          "and out of Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). In each place two arms "
          "only: **native**, and **Omni-Compass on top of native**. Each box is that place's bill beside the work done inside it; the "
