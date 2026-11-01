@@ -103,22 +103,22 @@ Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, a
 
 <!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
 
-Omni-Compass is software. It always sits on top of a native controller, and it can sit in three places: the software end, the cloud's wire and the chip. The software end runs on site or through the cloud. These are the words for them, used the same way on every page.
+Omni-Compass is software. It always sits on top of a native controller. A system runs it in one of two places, on bare metal or through the cloud, and in each place there are two arms, native and Omni-Compass on top of native: four arms, each read by its bill and the work done inside it. These are the words for them, used the same way on every page.
 
 - **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
-- **On site.** The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill. The software end's benefit is the same there. In our own models (class S) the on-site plant keeps every machine it starts with.
-- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
-- **The chip.** The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **Bare metal.** The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own: the hours it runs, and the energy the chip's own meter reads. The software end goes with Omni-Compass to it, and there Omni-Compass can reach the chip's own knobs too.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its bill is the cloud's own; the cloud's chips and back end are inside its price and out of Omni-Compass's reach: it governs what the cloud gives, through the cloud's own Kubernetes. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, the two places never added together, since a system runs in one or the other (`results/TWO_BILLS.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
-- **Where the benefit lives.** At the software end, where it is made and measured. It shows through on two receipts, native against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
-- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their receipts. Four places are tested because a buyer asks about all four; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+- **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 | Place | Its benchmark | What it must show | Its readings |
 |---|---|---|---|
 | The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
-| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the software end's gain on the cloud's own bill: the work per dollar, native against Omni-Compass | `results/live/AKS_BILL.md` and each set's `results/live/AKS_*.md` |
-| The chip | a graphics card on Lambda, its own power meter, class P | that it holds, and the software end's gain on the card's own meter: the work per joule, native against Omni-Compass | `results/gpu/` |
-| On site | the software end on the owner's own machines; in our own models the on-site plant, class S | the software end's benefit, the machines' hours no bill | `results/model_gate/` |
+| Bare metal, the chip | a graphics card on Lambda run directly, its rental the bill and its own power meter beside it, class P | that it holds, and the work done inside its bill, A against B: the work per dollar and per joule | `results/TWO_BILLS.md`, `results/gpu/` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the work done inside its bill, C against D: the work per dollar | `results/TWO_BILLS.md` and each set's `results/live/AKS_*.md` |
 | The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
 
 <!-- end of the places -->
@@ -492,7 +492,7 @@ its power limit; on the page's own governor, the time between frames; on the pro
 when the digests match, red when they differ); on the governors and orchestrators, their own three-run tables; on a record, the
 judged rows of the newest tables (a LOSS row lights red and stays). A light fed by our own models says so (class S). Under the
 wall the line **Monitor Lights** counts the green, yellow, red, dark and grey lights, names every red one, names the two-sided
-monitors whose native side is red, and gives each live comparison against native once (**Live Comparison Against Native**),
+monitors whose native side is red and those whose Omni-Compass side is red (such a monitor's light reads Omni-Compass against native on the same load; each side's own band is on its badge), and gives each live comparison against native once (**Live Comparison Against Native**),
 beside the engine's own last entry on its side and the **Redline Reflex**'s hand-backs on the live model. The three-reading projection is the light's own: the brain's law acts on the position inside its band and damps on the
 position's rate of change, with a fail-up at the band's 95% wall; it projects nothing ahead.
 
@@ -587,8 +587,12 @@ the page opens on *Drive* without them. The fuse box's guide and the mechanism k
 Between the master row and the tabs stands one line, **governor request**. After every press it shows the
 request a running governor would take for it through its control panel (`tools/omni_control.py`), with the role the request
 needs: a heartbeat button, `POST /v1/beat {"seconds": N}`; Return to native, `POST /v1/reset`; the kill switch, `POST /v1/kill`
-(and back on, `POST /v1/arm`, two holders of the security role within ten minutes); the dial, `POST /v1/dial`; Restore factory
-profile, the dial at the max, the factory beat, every muscle driven and autopilot. A control that acts only on this page's own
+(back on after a kill, `POST /v1/arm` by two holders of the security role within ten minutes, then `POST /v1/mode
+{"mode": "autopilot"}` by an operator; back on after the reset, `POST /v1/mode {"mode": "autopilot"}` alone); the dial,
+`POST /v1/dial`; Restore factory profile and Back to the factory tune, `POST /v1/factory` (autopilot, the max, every muscle
+driven, the factory beat), preceded by the two holders' `POST /v1/arm` when the master switch was OFF by a kill, since the panel
+refuses the factory press (409) while it is OFF; Connect and Disconnect, none sent to a governor (a read-only query of your
+Prometheus). A control that acts only on this page's own
 model (the plant's conditions, the faults, the time, the body, the view) says so: it has no request. The page sends nothing
 anywhere; the line is the request written out, `$OMNI_PANEL` the panel's address and `$OMNI_TOKEN` the operator's token. Every switch is written to the control event log with its decision (the page's section 3c), and
 the line at the panel's head counts the breakers by their signal word and the monitors rested, and names the Omni-Compass side:
@@ -599,11 +603,14 @@ The panel is the bench of `docs/FACTORY_PROFILE.md`: its controls operate the st
 
 The first row: **kill switch** (it reads "Omni-Compass ON · press to hand back to native", and engaged, "ENGAGED · Omni-Compass
 OFF · native alone"; section 2.28); **tune dial**, *the max* or *tune-down*; **body**, *harness, each muscle alone*, *harness, one
-organism* or *the live model*; **time**, 1×, 4×, 16×, 60×, *Pause* and *One decision*.
+organism* or *the live model*; **time**, 1×, 4×, 16×, 60×, *Pause* and *One decision* (each time button's tooltip gives the
+decisions a second this browser runs now beside the speed asked, and says so where the browser cannot keep the speed).
 
 The second row: **demand**, ×0.25 to ×2 the day's own; **noise**, σ 0 to 0.6; **sense delay**, +0 to +6 decisions; **faults, 40
-decisions**: *Surge ×2*, *Lose half*, *A sense blind*, *Security hold*; **breakers**: *every breaker ON*, *rest every monitor off
-screen*; **factory**: *Back to the factory tune*; **your own system** (section 2.25); **keys**: *Keyboard keys* and *Kiosk*.
+decisions**: *Surge ×2*, *Lose half*, *A sense blind*, *Security hold* (a held fault is lit, red, with the decisions it has
+left; *Surge* and *Lose half* act on the console's body part, named in their tooltips); **breakers**: *every breaker ON*, *rest every monitor off
+screen*; **factory**: *Back to the factory tune* (it also turns every rested breaker ON, puts the body back to the opening
+view, the harness with each muscle alone, and turns the jump generator OFF, naming each in its note); **your own system** (section 2.25); **keys**: *Keyboard keys* and *Kiosk*.
 
 The dial, the demand, the noise, the sense delay and the faults act on the live stress-test model; turning any of them while the
 harness plays moves the live benchmark engine to the model, and the control event log says so.
@@ -624,7 +631,7 @@ while native may still raise its own. The note beside the
 buttons says what the beat in force does on the live model, for example "60 s now, the factory's: on the live model the full
 decision every 4 steps of 15 s; the fast checks and native's own 15 s check between".
 
-Its backend is the page's live model (class S); its effect is how often Omni-Compass decides; its limits are the six
+Its backend is the page's live model (class S); its effect is how often Omni-Compass decides; its limits are the seven
 buttons on the page (the shipped controller itself takes any period from 5 to 120 s, `--interval`), and while the active profile
 is held the buttons are disabled. A beat other than 60 s makes the active profile a custom profile, unless it is the candidate
 (section 2.7).
@@ -642,27 +649,34 @@ with its word and its sign, the muscle-decisions past the line, the failed work 
 day is paired with native's on the same seed and read by `three_run_reading` (section 36.4): the change is the mean of the three
 days' changes; under 0.5% STEADY; from 0.5% up the word by the gauge's aim; days that moved 0.5% or more in opposite directions
 disagree. Capacity held that rose is power given. The light is red where work, the muscle-decisions past the line or the failed
-work reads LOSS, green where work reads GAIN, yellow otherwise. The best beat is the one with the most work for Omni-Compass on
-native and no LOSS; it is outlined and marked "the best", and 60 s is marked "the factory's". Under the table, **Kubernetes Governor Model at Six Beats** reads the
+work reads LOSS, green where work reads GAIN, yellow otherwise. Each cell leads with the word, then the direction in words and the
+size, no sign (work up 0.57%). The best beat is the one with the most work for Omni-Compass on native and no LOSS, at least 0.5%
+more work than at the factory's beat, and no LOSS at that beat in the Kubernetes governor's own model under the table; it is
+outlined and marked "the best", and 60 s is marked "the factory's". Where a beat passes the first two and fails the third, the
+note names it and says the factory's beat stays. Under the table, **Kubernetes Governor Model at Every Beat** reads the
 Kubernetes governor's own model at the same beats (the page's section 3d, its ladder record, class S) and names, setting by
 setting, every gauge that reads LOSS against native there; where a beat reads LOSS, the cause is the engine's, on the next
 version's list, and the real runs at each beat decide (`docs/PACE_PREREGISTRATION.md`).
 
 **Try the candidate** applies the sweep's best beat as a **candidate profile**, a proposed combination of settings under
 evaluation: the factory's knobs with the heartbeat at that beat. The log says "a candidate is evaluated, never released". It
-does nothing before a sweep has run ("no candidate yet: run every beat first") and nothing while the active profile is held. A
+does nothing before a sweep has run ("no candidate yet: run every beat first") and nothing after a sweep that named no beat ("no
+candidate: the sweep named none") and nothing while the active profile is held. A
 model's best beat is a candidate for the real runs, never a result; the factory's beat stays until the real runs read it.
 
 ### 2.7 The profile: factory, candidate, active and custom
 
 The **profile** group holds three buttons, and the profile box (`#fuseProfile`) under it says which profile governs.
 
-- **Restore factory profile** reapplies the released configuration: every knob of the mechanism and the heartbeat back to the
-  factory's (60 s), the candidate cleared and any hold released. It leaves the master switch as it stands (its log line reads
-  "Omni-Compass still on").
-- **Hold the active profile** holds every knob as set: the mechanism's knobs, the heartbeat buttons, the sweep, the heartbeat
-  sweep monitor's beat row and the variation switchboard's beat row are disabled, and the note reads "HELD at decision n: the heartbeat
-  … s and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
+- **Restore factory profile** reapplies the released configuration: every knob of the mechanism back to the factory's, the
+  heartbeat to the factory's 60 s, the dial to the max and every muscle handed back by its own switch driven again, the candidate
+  cleared and any hold released; the heartbeat row, the variation switchboard's beat row and the heartbeat sweep monitor move to
+  60 s with it. It leaves the master switch as it stands, and its log line says whether Omni-Compass is ON or OFF.
+- **Hold the active profile** holds the whole profile as set: the mechanism's knobs, the heartbeat buttons, the sweep, the heartbeat
+  sweep monitor's beat row and the variation switchboard's beat row are disabled; the mechanism's factory button, **Try the
+  candidate**, the dial's buttons and the muscles' own switches (the card's, the panel's and the cluster console's) refuse a press with
+  a line in the log, and the request line reads "none sent". The note reads "HELD at decision n: the heartbeat … s, the dial on …,
+  every muscle driven (or so many left native) and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
   factory profile is the released one (omni-v23: the heartbeat 60 s, every muscle on its card); no other profile is released".
 - **Return to native** hands governance back: the reset, the operator's control (`tools/omni_control.py`, `POST /v1/reset`).
   On the page every setting goes to native's own controller and every Omni-Compass side follows native, as with the kill switch,
@@ -673,9 +687,11 @@ The **profile** group holds three buttons, and the profile box (`#fuseProfile`) 
 
 The box's first line is the **active profile**: its kind, FACTORY, CANDIDATE or CUSTOM, the engine, the heartbeat and the
 profile's fingerprint, "profile" and eight hexadecimal digits. The fingerprint (`profHash`) is the 32-bit FNV-1a hash of every
-setting of the mechanism, the heartbeat and every muscle's body included: one identity for one set of settings, so two views
-showing the same fingerprint run the same settings of the mechanism. The kind is FACTORY when no knob of the mechanism is turned
-and the heartbeat is the factory's; CANDIDATE when no knob is turned and the heartbeat is the candidate's; CUSTOM otherwise. The
+setting of the mechanism, the heartbeat and every muscle's body included, and the dial and the muscles left native by their own
+switch once either leaves the factory's: one identity for one set of settings, so two views showing the same fingerprint run the
+same settings. The kind is FACTORY when no knob of the mechanism is turned, the heartbeat is the factory's, the dial is on the max
+and every muscle is driven; CANDIDATE when the same holds with the heartbeat at the candidate's; CUSTOM otherwise, so the tune-down
+or a muscle left native makes a custom profile. The
 line is printed green for FACTORY, yellow for CANDIDATE and violet for CUSTOM, violet being the page's colour of a tune turned
 from the factory, never a side. Its note says what that means: the factory profile is "the released configuration, every muscle on
 the setting found for it; every published result is this profile's"; a candidate is "a proposed combination under evaluation … it
@@ -699,8 +715,9 @@ its table names; a candidate or custom profile on the bench is a variation of th
 and its results are its own. The page opens on the factory profile and holds nothing: no profile is locked when the page opens.
 
 Three buttons put things back, and they differ. *The mechanism back to the factory* (in the mechanism panel) puts back the
-mechanism's knobs alone. *Restore factory profile* puts back the mechanism's knobs and the heartbeat, clears the candidate and
-releases a hold. *Back to the factory tune* (in the control panel's first panel, on the console, in the dock and on every strip) puts back all of
+mechanism's knobs alone: the heartbeat, the dial and the muscles' own switches stay as they are, and while the profile is held it
+refuses, saying why. *Restore factory profile* puts back the mechanism's knobs, the heartbeat, the dial (the max) and every muscle's switch
+(every muscle driven), clears the candidate and releases a hold. *Back to the factory tune* (in the control panel's first panel, on the console, in the dock and on every strip) puts back all of
 that and the page's plant at rest as well (section 11.2).
 
 ### 2.9 Actuation and the contract, this decision
@@ -768,21 +785,27 @@ native included. Only the live brain reads the panel; every other brain on the p
 
 Each knob is a slider with its value, its equation and its factory value under it, and ↺ beside it puts that one knob back. A knob
 turned from the factory turns violet, the page's colour of a changed tune, never a side; each group has a button that puts the
-group back; **The mechanism back to the factory** puts every knob of the panel back, and *Restore factory profile* and *Back to
+group back; **The mechanism back to the factory** puts every knob of the panel back and nothing else (the heartbeat, the dial and the
+muscles' switches stay), and *Restore factory profile* and *Back to
 the factory tune* put back these and more (section 2.8). The count beside it reads either "every knob at the factory: the engine
-as it ships" or how many knobs are turned, "a variation of the mechanism (class S); its readings are its own"; the active profile
-then reads CUSTOM with a new fingerprint. Every turn is written to the control event log with its decision. Each group prints a
+as it ships" or how many knobs are turned, each knob counted once however many muscles it is turned on, the muscle knobs naming
+how many muscles they reach, "a variation of the mechanism (class S); its readings are its own"; the active profile then reads
+CUSTOM with a new fingerprint. A muscle handed back to native by the group's switch is named beside the count, because it makes the
+profile custom and the panel's factory button leaves it as it is. Every turn is written to the control event log with its decision. Each group prints a
 live reading of the quantities its knobs act on, every decision, and the line at the top of the panel prints the live model's
 decision with the muscles past the line, the work served, the work failed and the work waiting this day, native beside
 Omni-Compass on native. The harness replays recorded positions, so turning any knob moves the live benchmark engine to the stress-test model
-(the log says so); the knobs act on that model only. While the active profile is held, the panel's knobs are disabled.
+(the log says so); the knobs act on that model only. While the active profile is held, the panel's knobs and its switch are disabled and its factory button refuses a press, saying why.
 
 ### 2.13 Where each group acts
 
 The compass law, Omni-Compass's hand, the redline reflex, native's controller and every muscle's body move the muscles at once. The brain's four
 pieces move the brain's own state (E, U, I[U], S, B on the brain's monitors) and its grants: at the max every organ may add
-capacity unless a security hold stands, so the brain's calm acts through the give-backs; set the dial to the tune-down to watch
-the four pieces move the muscles too.
+capacity unless a security hold stands, so the brain's calm acts only through the give-backs. With the dial on the tune-down the
+four pieces reach the muscles too, and then only through a give-back, which an organ makes only while the line is clean (no muscle
+of Omni-Compass's side over its line) and the senses see. In the live stress-test model some muscles stand over their line at most
+decisions, so ρ₀, ρ[min], k[I], k[E], the grants and the four tune-down knobs move few settings and no monitor visibly; the live
+readings of Piece 4 and of the push group say whether the line is clean now.
 
 ### 2.14 Piece 1, State and Basin
 
@@ -850,10 +873,12 @@ Source: `omnicompass/adapter.py`, `omnicompass/nervous_system.py`,
 | energy's pull on the target, k[E] | 0 to 1 | 0.297 | as above |
 | the push that still lets go, κ's knee | 0 to 0.05 | 0.005 | κ = 1 while push ≤ the knee, else knee/push |
 | the unity gate, U[gate] | 0 to 0.95 | 0.481 | h = (U − U[gate])/(1 − U[gate]); calm = κ·h·(1 − (σ − 1)⁺)·(1 − min(ν, 1)) |
-| the grants θ[nodes], θ[pods], θ[cpufreq], θ[power], θ[routing], θ[gpu] | 0 to 1 each | 0.7, 0.5, 0.3, 0.3, 0.5, 0.3 | an organ may give back only while calm ≥ its θ, the line clean, the senses seeing |
+| the grants θ[nodes], θ[pods], θ[cpufreq], θ[power], θ[routing], θ[gpu] | 0 to 1 each | 0.7, 0.5, 0.3, 0.3, 0.5, 0.3 | an organ may give back only while calm ≥ its θ, the line clean, the senses seeing; no muscle of the live model is a card, so θ[gpu] moves nothing on the page |
 
 What an operator sees: raising an organ's θ above the live calm removes that organ from the list that may give back now; on the
-tune-down its muscles stop handing capacity back. At the max this piece acts only through the give-backs.
+tune-down its muscles stop handing capacity back. At the max this piece acts only through the give-backs. Every knob of this piece
+acts only on a give-back, and no organ gives back while a muscle of Omni-Compass's side is over its line: the live reading says
+whether the line is clean now and lists only the organs the live model's muscles have.
 
 ### 2.18 Compass Law
 
@@ -869,8 +894,8 @@ past the line now on each side.
 | the cushion before the line | 0 to 0.25 | 0.05 | from 1 − cushion the force is the whole authority A: a muscle is never let past the line |
 | the spring, k[p] | 0.1 to 4 | 1 | F = A·tanh((k[p]·(p − centre) + k[d]·v)/A) |
 | the authority, A | 0.1 to 2 | 1 | the force's ceiling: smooth (tanh), never hammering |
-| the velocity's smoothing, s | 0 to 0.95 | 0.5 | v ← s·v + (1 − s)·Δp/dt |
-| the damping, × each muscle's critical k[d] | 0 to 3 | ×1 | k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt for each muscle's own τ |
+| the velocity's smoothing, s | 0 to 0.95 | 0.3 | v ← s·v + (1 − s)·Δp/dt; 0.3 as the realms' wire sets it |
+| the damping, × each muscle's critical k[d] | 0 to 6 | ×3 | k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt for each muscle's own τ; ×3 as the realms' wire sets it (`realms/compass_arm_v5.py`) |
 
 What an operator sees: the phase plane's shading (the force field) moves with the centre, the spring and the authority; a smaller
 cushion lets the right-hand dots run closer to the right edge before the force fails up; less damping lets the Omni-Compass side
@@ -893,7 +918,8 @@ reading: the settings Omni-Compass wrote this decision, the muscles it holds awa
 
 What an operator sees: a larger push gain makes the Omni-Compass side add capacity faster under a surge (capacity held rises:
 power given), a smaller lift-off holds it longer after the surge; the four tune-down knobs act only with the dial on the
-tune-down.
+tune-down, and then only on a give-back, which waits for the line to be clean (no muscle of Omni-Compass's side over its line; the
+group's live reading says when). In the live model a muscle stands over its line at most decisions, so they move few settings.
 
 ### 2.20 Redline Reflex
 
@@ -916,7 +942,8 @@ The factory numbers are the engine's own (the defaults of `Immune` in `omnicompa
 rule: every one is a knob on this panel, and each light (GAINING, STEADY, REDLINING, OVER THE LINE) reads the live reading
 against its own band whatever the knobs are set to. What an operator sees: a shorter streak or a smaller margin hands muscles to
 native sooner and more often (more hand-backs in the live reading); a longer hold keeps them native longer after a surge. A
-changed reflex is a variation of the mechanism (class S), its readings its own (section 2.23).
+turned hold acts from each muscle's next hand-back: the hold that muscle has reached is rescaled to the new first hold, never past
+the longest. A changed reflex is a variation of the mechanism (class S), its readings its own (section 2.23).
 
 ### 2.21 Native Controller
 
@@ -936,7 +963,7 @@ native's target on native's side while the stress-test model runs.
 ### 2.22 Muscle Scale, Response and Switch
 
 The model's sixty muscles, twelve to a body part.
-Pick the muscle, then the scope: **this muscle**, **its body part** or **every muscle**. Live reading: the muscle's units on
+Pick the muscle (the list follows a muscle clicked on either ring, so the knobs act on the muscle it names), then the scope: **this muscle**, **its body part** or **every muscle**. Live reading: the muscle's units on
 native and on the Omni-Compass side, its ceiling, floor, size, τ and sensing delay, and whether it is governed.
 
 | Knob | Range | Factory | Equation it enters |
@@ -1043,8 +1070,9 @@ the plant's conditions, and for each of the two arms (`arm="native"`, `"on_nativ
 muscle-decisions past their line, the writes, the cuts to a muscle's range, the setting moves and this decision's actuation
 (`omni_actuation{arm, stage}`). Under it a table sets each beside the series a running system serves (the governor's exporter,
 the service's own `http_requests_total` and `http_request_duration_seconds`, node_exporter's `node_cpu_seconds_total`, Kepler's
-joules, OpenCost's hourly cost) and the PromQL the wall draws it with. Its names are the page's own model (class S); the output
-passes `promtool check metrics`.
+joules, OpenCost's hourly cost) and the PromQL the wall draws it with, and its last column, **Printed above now**, says whether
+the body shown prints that series (a series of the live model is printed while the live model is the body, and the harness's
+while the harness is). Its names are the page's own model (class S); the output passes `promtool check metrics`.
 
 **The Commands tab** (its panel **Governor API Commands**) lists every control with the request a running system takes for it, its role and its note: the kill switch
 and the arm, Return to native, the dial, the heartbeat, each muscle on or left native (`POST /v1/muscle`, the governor's muscles),
@@ -1132,15 +1160,21 @@ The **Variation Switchboard** is one group of knobs in the control panel that re
 under it names the monitors that moved, or says that no monitor carries the variation live.
 
 - **Arm**, two buttons, one for each side: *native* is Return to native, the reset (not the kill switch), so every Omni-Compass
-  side follows native; *Omni-Compass and native* releases it, and every monitor shows Omni-Compass on top of native again.
-- **Organism**: the spine, the four realms, the four stacked or the tower: the grid's row is marked, and for the spine and the
-  realms the console's fault body part follows.
+  side follows native; *Omni-Compass and native* releases the reset, and every monitor shows Omni-Compass on top of native again.
+  It never releases a kill engaged for security: only the kill switch does, and the line says so. The row lights the master
+  switch's state whatever turned it, *native* while Omni-Compass is OFF.
+- **Organism**: the spine, the four realms, the four stacked or the tower (the row opens on the view the injection grid opens on,
+  the tower at 500 runs): the grid's row is marked, and for the spine and the
+  realms the console's fault body part follows; *Back to the factory tune* returns the row to compute, AI and cloud with the
+  console's body part, unless it stands on the four stacked or the tower.
 - **Organisms** and **runs** (1, 10, 100, 500, in line with the Python's batch of 500): the injection grid of the page's section 5c moves
   to that many runs × organisms stacked (chapter 27), and the scale grid's square is marked where GitHub's grid carries that
   tier (it runs 1, 10, 100 and 1,000). The organism row sets the injection grid's organism too.
 - **Run**: A, B or C on every replay that holds three runs and on the live organism's record.
-- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
-  sweep record's nearest one and says which, and, unless the active profile is held, the live model's heartbeat is set to it.
+- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: unless the active profile is held, the live model's heartbeat is set to it, as by the
+  heartbeat buttons (section 2.5), and the heartbeat sweep monitor moves to it; the line names every monitor of the live model, which
+  all run on that beat. The row lights the beat in force whatever set it (the heartbeat buttons, the candidate, either factory
+  button).
 
 A monitor that does not carry a variation is left as it is.
 
@@ -1148,13 +1182,18 @@ A monitor that does not carry a variation is left as it is.
 
 **The reports.** Four buttons in the control panel, *Engineering Report*, *CTO Report*, *Board Report* and *CFO Report*,
 write a report from the page's own records at the moment they are pressed: the
-engineer's (every benchmark on the board with its reading, size, rows and record, the Python's runs and their digests, the clouds'
-finished sets, the lights at that moment), the CTO's (the summary; what stands and what runs, which says that two sides are shown,
+engineer's (every benchmark on the board with its number by the Omni index's rule and that number's own word, the index's own for the index
+and its categories and STEADY under the 0.5% floor, its rows counted apart beside the benefit sheet's word for their mix, and its record;
+the Python's runs and their digests, the clouds' finished sets, the lights at that moment by the page's one count of them, the count
+the wall's lights bar and the fuse box print), the CTO's (the summary; what stands and what runs, which says that two sides are shown,
 native and Omni-Compass on top of native, and never Omni-Compass by itself; the board), the board's (the summary, what is proven
 and what is modelled, the clouds) and the CFO's (the summary, every cloud set's machine-hours and bill at list price by the one
-key, the rows of power given and the cuts). Each opens the browser's print, to print or save as a PDF, and downloads the same
-report as a page; the notice stands first and last, every reading is the key's word with the word's sign, and every number names
-its engine and its run.
+key with its work per dollar beside the bill, or why a set does not read it, the rows of power given and the cuts, and the cloud's
+rule since 31 October: every set at the max, judged on the work per dollar, the bill allowed to rise where the work rises more). Each opens the browser's print, to print or save as a PDF, and downloads the same
+report as a page; the notice stands first and last, every reading is the key's word with its size beside it and no sign (the raw
+change, where it is printed, stands apart with its true sign, labelled raw: the referee's work order of 25 October), and every
+number names its engine and the record it is read from, whose three-run table carries the runs' numbers. The CFO's table of power
+given and cuts gives each benchmark's whole reading, its number by the Omni index's rule; each row's own size stands in its table.
 
 Beside them stand the three manuals, each a PDF to download (this one, the Operator's and the Owner's), and *The wall as a
 Grafana dashboard (JSON)*, which saves the wall as `omni-compass-wall.json` (the repository's `deploy/grafana/omni-compass-wall.json`), its panels on the open-source exporters'
@@ -1278,11 +1317,12 @@ carries only the pair Omni-Compass on native against native, and only those two 
 commit, the three runs and the file, with the line "Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results."
 
-### 4.4 Whole-Workload Index by Route
+### 4.4 The Software End Carried to Each Place
 
-The second table (`#blBills`) reads the whole workload, bought two ways: **on site**, your software straight on your own
-hardware (the software end × the bare metal; no cloud), and **through the cloud**, your software through the cloud onto its
-hardware (the software end × the cloud's wire × the bare metal at the back end). The big number is the whole workload's index,
+The second table (`#blBills`) reads the software end's composition carried to the two places a system runs: **bare metal**, the
+software end with the chip held at native's (the chip enters as exactly 1, the machine's own layer not yet run), and **through
+the cloud**, the software end with the cloud's bill held at native's. Neither row is that place's bill: each place's bill and the
+work done inside it, native and Omni-Compass on native, are the four boxes of section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
 one number over its gauges, with its word; beside it every gauge with its word and its number. The light follows the index's
 word, and is red where any table under the route reads a slower service or less work LOSS, in either form; a route with no
 composition reads AWAITING, "not yet composed". The bills read the repository's own headline, by the index's rule, with the
@@ -1307,16 +1347,32 @@ its number with its word, and its count of GAIN, LOSS and power given rows. The 
 
 This chapter reads the page's section 2b, **Benefit Against Native** (`#s-answer`).
 
-### 5.1 What it holds
+### 5.1 Two places, two arms: the bill and the work
 
-The section opens on the Omni index, every real test weighed together, read from its record as the page opens
+The section opens on **Two Places, Two Arms: the Bill and the Work**, written by `tools/headline.py` from
+`results/TWO_BILLS.md` (`tools/two_bills.py`), never by hand. A system runs Omni-Compass in one of two places, on bare metal or
+through the cloud, and in each place there are two arms, native and Omni-Compass on top of native (the founder's order of
+1 November): A and B on bare metal, C and D in the cloud. The table has a column for each place and a row for each arm: each box
+gives that place's bill and the work done inside it, run by run, and the last row reads Omni-Compass on native against native by
+the key: on bare metal the bill, the work done, the work per dollar and the chip's energy for each request; in the cloud the bill
+and the work per dollar, or where it is not yet read and why. The two places are never added together. A line under it gives the
+card at the usual load, where every request is served in both arms and the work is fixed by the load. A second table gives what
+runs in each place (one card and the eight-card machine on bare metal; Azure, Google and Amazon through the cloud) with each
+cell's state on the engine that stands. Then **the software both places carry**: the one number, the Omni index, every real
+product counted once over work, speed and machines, with its value for each product; the same tests read on work and speed alone;
+and the layers composed. These are one set of tests on GitHub's own machines read three ways, so they never add, and none is a
+bare-metal or a cloud bill.
+
+### 5.2 What it holds
+
+Then comes the Omni index, every real test weighed together, read from its record as the page opens
 (`results/OMNI_INDEX.md`). Where the engine that stands has not yet landed the tables the index is read from, its head says so
 ("Not Yet Read on omni-v23") and gives the figure of record on the engine its tables stand on, never read as a result of the
 engine that stands, with the count of its GAIN, LOSS and power given rows and the benefit sheet's word for the same tables. The same line
 names the LOSS ledger (`docs/LOSS_LEDGER.md`): every LOSS row of the newest tables, the rows Omni-Compass against its own native
 counted apart, because do no harm is judged by them, each with its cause where one is written (chapter 7).
 
-### 5.2 One real test of the whole loop
+### 5.3 One real test of the whole loop
 
 Under the index stands one real test of the whole loop, three runs on GitHub's own machines (A, B and C from one
 commit), class L, on Omni-Compass's own orchestrator (`omni_orchestrator`), the organism run without Kubernetes: native is
@@ -1328,7 +1384,7 @@ given: Omni-Compass adds them to buy the work and the speed. The note names the 
 `results/orchestrator/V21_THREE_ARMS_ABC.json`), its runs and its commit; the record's other arm, Omni-Compass alone on the
 muscles, stays in the record and is not carried, because Omni-Compass is never by itself.
 
-### 5.3 Bill by Route
+### 5.4 Bill by Route
 
 **Bill by Route** reads each route's bill as its native total, then Omni-Compass's, then the saving, 1 − (the
 Omni-Compass total ÷ the native total), each total the sum of its non-overlapping cost components inside the declared boundary,
@@ -2384,7 +2440,8 @@ record of thirty scenarios is kept as history in `docs/history/SCENARIOS_30_2026
 Each cell carries one signal word and one number against native. The native column reads STEADY and 0%, the yardstick. In the
 Omni-Compass on native column the organism's gauges are work, the time over the line and the power drawn: a cell is red,
 REDLINING, when any of them reads LOSS, green, GAINING, when any reads GAIN and none LOSS, and yellow, STEADY, otherwise; its
-number is the gauge that decided the light (work, where work decides it), with the word's sign (+ a GAIN, − a LOSS, = STEADY). The
+number is the gauge that decided the light (work, where work decides it), named with its direction in words and its size, no
+sign (time over the line down 8.4%). The
 whole organism's cell reads its composition's index over the gauges (chapter 28). Hover a cell for each gauge's reading and each
 run's change.
 
@@ -2506,11 +2563,11 @@ Omni-Compass is wired into every piece of a stack through its own two-way plug: 
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
 caches), the bare metal under it (the chip's power limit and clock; the machine's kernel and its own meter) and, where the stack
 is rented, the cloud that bills the machines. The whole-organism monitor (the page's section 5d, `#s-whole`) has a button for each
-way a stack is bought (**Scenario**): *On-Site Bare Metal*, the software on the owner's own bare metal (software × bare metal, no cloud);
-*Through the Cloud*, the cloud's build, its bare metal at the back end and the software (cloud × bare metal × software), with
-the cloud as two pieces beside it; *In the Device*, the bare metal alone, for one who buys the chip or the machine and no
-software stack on it; and *As a Service*, the software alone, for one who runs it on machines someone else meters. The cloud is a
-piece of the stack, bought and billed, and what Omni-Compass does there composes with what it does on every piece beneath it.
+place a system runs (**Scenario**; the founder's order of 1 November: these two are the only places it runs): *Bare Metal*, the
+software on the owner's own machines (software × the chip, no cloud), and *Through the Cloud*, the software through the cloud onto
+its machines (cloud × the chip at the back end × software), with the cloud as two pieces beside it. Each place here is the software
+end carried to it, its chip and its bill held at native's until read; the bills themselves, and the work done inside them, native
+and Omni-Compass on native, are the four boxes of section 2b (`results/TWO_BILLS.md`).
 
 A tenant cannot meter the provider's bare metal at the back of a cloud: the cloud's piece is the bill and the machines the
 provider meters, and the bare-metal piece is gauged on hardware the repository meters and carried to the provider's only as a
@@ -2585,7 +2642,8 @@ newest grid with its squares landed*. A square not yet landed says so; a square 
 as pending runner capacity, never rented. The grid's monitor draws the engine that stands' own campaign as GitHub runs it: each
 square filled by its runs started (pale) and measured (solid), as GitHub was read at the build, with the age of that reading in
 its heading; the reading cursor walks every started square and names it under the grid. Once the grid's receipt is written, each
-square takes its word. The road draws the newest grid with its squares landed, under its own engine's name, never read across.
+square takes its word. The grid's light is its own: grey, NO LINE, while no square of the engine that stands is measured, and
+once its squares carry their words, GAIN, STEADY or LOSS on the net of its own squares, never the board's tables. The road draws the newest grid with its squares landed, under its own engine's name, never read across.
 
 ### 29.4 Standing Three-Run Tables
 
@@ -3299,7 +3357,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 - **Factory profile.** The complete, versioned set of Omni-Compass default settings shipped together; on the engine that
   stands, omni-v23's, the heartbeat 60 s, every muscle on its card. Every published result is this profile's.
 - **Fingerprint (of a profile).** The page's FNV-1a hash of every setting of the mechanism, the heartbeat and every muscle's body
-  included: one identity for one set of settings.
+  included, with the dial and the muscles left native once either leaves the factory's: one identity for one set of settings.
 - **Fuse box.** The second panel of the control panel (`#fuseBox`) that switches every monitor from one place: the master
   rows, the heartbeat, the sweep, the profile, each route's bill, the mechanism knobs, the twenty scenarios, the injection grid
   and the breakers.
@@ -3434,7 +3492,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Benchmark, run, repetition | the page's sections 4a, 4b | which record is played | the record itself |
 | This muscle; Every muscle back under Omni-Compass | the page's section 3e, on the muscle's card; the mechanism panel's last group | one muscle of the stress-test model run by native's own controller alone, or in a replay shown by native's own record, while every other muscle stays governed | the body's recorded totals in a replay; the kill switch, which hands every muscle back at once |
 | Its own load / The climb / Work waiting in line | the page's section 5e | which load the realms table is read under | the table |
-| On-Site Bare Metal / Through the Cloud / In the Device / As a Service | the page's section 5d | which way the stack is bought in the composition | the receipts |
+| Bare Metal / Through the Cloud | the page's section 5d | which way the stack is bought in the composition | the receipts |
 | Every Piece, Intervals Carried / Strict Reading, Index Rule; Chip Run: Beside the Count / In the Count | the page's section 5d | which rule Composed Benefit by Gauge counts by, and whether the chip's run enters; the scorecard's bills and the route's bill follow | the factors |
 | All / LOSS / The runs disagree / Live Now / Guards and Open Items / GitHub; All / ALERT / WARN / INFO | the page's sections 2e, 3b | which rows are shown | the rows |
 | Copy the exposition | the page's section 3b | the clipboard | the page |

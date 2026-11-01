@@ -19,3 +19,4 @@ NAME = os.environ.get("GITHUB_REPOSITORY") or HOME
 URL = f"https://github.com/{HOME}"
 RUNS = f"{URL}/actions/runs/"
 RAW = f"{URL}/blob/raw/"
+RAW_MAIN = f"https://raw.githubusercontent.com/{HOME}/main/"   # a file on main as GitHub serves it to any page, the live engine's newest build

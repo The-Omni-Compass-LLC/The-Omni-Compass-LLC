@@ -28,7 +28,7 @@ class Places(unittest.TestCase):
 
     def test_the_block_names_every_place_and_holds_no_number(self):
         b = P.block()
-        for term in ("The software end", "On site", "Through the cloud", "The chip", "Hold", "Where the benefit lives"):
+        for term in ("The software end", "Bare metal", "Through the cloud", "The chip", "The four arms", "Hold", "Where the benefit lives"):
             self.assertIn(f"**{term}.**", b)
         body = b.replace(P.BEGIN, "").replace(P.END, "")
         self.assertIsNone(re.search(r"\d+(\.\d+)?\s*%", body))      # no reading inside the words
@@ -36,16 +36,16 @@ class Places(unittest.TestCase):
     def test_runners_are_never_bare_metal_or_the_chip(self):
         self.assertIn("never called bare metal and never called the chip", P.block())
 
-    def test_the_cloud_and_the_chip_must_show_they_hold(self):
+    def test_the_cloud_and_the_chip_must_show_they_hold(self):   # the two places of the founder's order of 1 November
         rows = {r[0]: r[2] for r in P.ROWS}
         self.assertTrue(rows["Through the cloud"].startswith("that it holds"))
-        self.assertTrue(rows["The chip"].startswith("that it holds"))
+        self.assertTrue(rows["Bare metal, the chip"].startswith("that it holds"))
         self.assertIn("the benefit", rows["The software end"])
 
     def test_the_glossary_carries_every_place(self):
         names = {t["term"] for t in G.TERMS}
-        for term in ("the software end", "on site", "through the cloud", "the chip", "hold", "where the benefit lives",
-                     "the cloud as the wire"):
+        for term in ("the software end", "bare metal", "through the cloud", "the chip", "the four arms", "hold",
+                     "where the benefit lives", "the cloud as the wire"):
             self.assertIn(term, names)
         self.assertEqual(G.check_sources([t for t in G.TERMS if t["term"] in names]), [])
 
