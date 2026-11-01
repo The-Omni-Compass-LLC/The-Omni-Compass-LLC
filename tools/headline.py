@@ -335,7 +335,8 @@ def places_block(m) -> list:
         on = f"the same runs: {arm('omni')}"
         reads = []
         for key, name in (("bill ($, the rental for the arm's window)", "the bill"), ("work done (requests served)", "the work done"),
-                          ("work per dollar (requests served per $)", "work per dollar"), ("energy per served request (J)", "the chip's energy for each request served")):
+                          ("work per dollar (requests served per $)", "work per dollar"), ("energy per served request (J)", "the chip's energy for each request served"),
+                          ("response time, 95th percentile (ms)", "the 95th-percentile response")):
             r = (chip.get("rows") or {}).get(key)
             if r:
                 reads.append(f"{name} **{(r.get('reading') or '').replace('**', '')}** (raw {_raws(r)})")
@@ -499,7 +500,7 @@ def markdown(m) -> str:
               "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
               "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read it STEADY); the chip's own receipt on "
               f"{stands} is the bare-metal box above. What the benefit "
-              "cost the chip, the energy and the wire is listed row by row in section 3b of the same page. A composition across engines "
+              "cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. A composition across engines "
               f"(class S over {cls} tables), never read as one engine's result; each total follows its tables as every benchmark runs again "
               f"on {stands}."]
     L += ["", "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", "", END]
