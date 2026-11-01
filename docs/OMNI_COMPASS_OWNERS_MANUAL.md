@@ -786,9 +786,6 @@ installed is a quarter off the bill.
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v21 | 5.0% | GAIN AND LOSS | L |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v21 | 3.8% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v21 | 8.1% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v21 | 3.8% | GAIN | S |
@@ -811,6 +808,9 @@ installed is a quarter off the bill.
 | Kafka, the consumer group's size | omni-v21 | 1.2% | GAIN AND LOSS | L |
 | Drone swarms, the three untouched cells | omni-v21 | 3.0% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v21 | 1.5% | GAIN | S |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -1475,9 +1475,6 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---:|---|---|
 | Every real test together: the Omni index (omni-v21) | **GAIN AND LOSS** | 5.0% GAIN | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 | Robustness: the two-hour run (omni-v21) | **GAIN AND LOSS** | 3.8% LOSS | mean response cut 29% to 43% (GAIN); p95 cut 25% to 57% (GAIN); time over the line cut 30% to 41% (GAIN); failed requests cut 9% to 15% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 21% to 28% (GAIN); replicas up 29% to 50% (power given); pods started up 68% to 226% (power given); pod start wait, total (s) up 90% to 324% (LOSS); pod start wait, mean (s) up 24% to 27% (LOSS) | `results/live/V21_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run (omni-v21) | **GAIN AND LOSS** | 8.1% GAIN | mean response cut 30% to 40% (GAIN); p95 cut 28% to 48% (GAIN); time over the line cut 33% to 35% (GAIN); failed requests cut 9% to 13% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 25% (GAIN); replicas up 2.3% to 7.3% (power given); pod start wait, total (s) up 10% to 79% (LOSS); robust: failed requests in the 300 s after the kill (%) cut 3.7% to 4.3% (GAIN); robust: time over the line in the 300 s after the kill (% of samples) cut 0.5% to 2.6% (GAIN) | `results/live/V21_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots (omni-v21) | **GAIN** | 3.8% GAIN | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V21_MUJOCO.md` |
@@ -1500,6 +1497,9 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | Kafka, the consumer group's size (omni-v21) | **GAIN AND LOSS** | 1.2% LOSS | p99 cut 0.1% to 3.0% (GAIN); median cut 0.0% to 4.3% (GAIN); mean cut 0.1% to 5.1% (GAIN); messages waiting, mean cut 0.4% to 6.0% (GAIN); host CPU busy cut 1.2% to 2.3% (GAIN); host CPU-seconds cut 1.3% to 2.3% (GAIN); CPU per 1,000 inside the line cut 2.0% to 2.5% (GAIN); mean up 0% to 12% (LOSS); messages waiting, mean up 0% to 11% (LOSS); consumers running up 0% to 17% (power given); consumers most at once up 0% to 83% (power given); p99 up 0.6% to 9.1% (LOSS) | `results/live/V21_KAFKA.md` |
 | Drone swarms, the three untouched cells (omni-v21) | **GAIN** | 3.0% GAIN | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V21_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries (omni-v21) | **GAIN** | 1.5% GAIN | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V21_CITYLEARN.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 
 <!-- end of the evidence -->
 
@@ -1588,7 +1588,7 @@ actuators and checks (`docs/FACTORY_PROFILE.md`, section 2).
 
 **A fixed tune governing a changing system.** Let x be the governed system's state, z the governor's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval. The public interval choices on
-the bench are Δ ∈ {10, 15, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
+the bench are Δ ∈ {10, 15, 20, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
 k, with tₖ₊₁ = tₖ + Δ, the general contract is:
 
 | Step | Equation | What it is |
@@ -1825,7 +1825,7 @@ Omni-Compass direct violet; red is never a side, only the alarm. Every monitor c
 **GAINING** (low in its band with room to climb, or a GAIN); yellow, a yield diamond, **STEADY** (STEADY, inside 0.5%,
 or heading for its line and watched); red, a stop-sign octagon, blinking, **REDLINING** (over its line, or a LOSS: the alarm);
 dark, **AWAITING** (the run that fills it has not landed; never green). The main control panel holds the kill switch, the arm
-(Omni-Compass on native or direct), the heartbeat's six buttons, Δ ∈ {10, 15, 30, 60, 90, 120} s, a sweep that runs every beat
+(Omni-Compass on native or direct), the heartbeat's seven buttons, Δ ∈ {10, 15, 20, 30, 60, 90, 120} s, a sweep that runs every beat
 on the page's own model for three model days each and reads each day against native by the key, **Try the candidate** (the
 sweep's best beat, the one with the most work for Omni-Compass on native and no LOSS, as a candidate profile), the active
 profile with its fingerprint (factory, candidate or custom) and its backend, **Restore factory profile**, **Hold the active
@@ -3820,6 +3820,8 @@ from this what it says and no more: the small fleet's bill reading is inside the
 large fleet's reading does not exist yet, and nothing about the bill on a real cloud is claimed in the index until it does.
 
 ### 16.3b The cloud is a wire: three places, one organism, two routes (a composition, class S of L and P)
+
+**What the record shows in each place so far** (the words for each place, and what each benchmark must show, are written once and carried word for word in this manual, the README and `DISCLOSURES.md`, section 10): at the software end the benefit, composed over work, speed and machines in `results/WHOLE_SYSTEM.md` with the same power and the same bill; at the chip, the A100's own meter on omni-v21 (`results/gpu/V21_A100_CAP_ABC.md`) reads work and energy STEADY at the factory tune: it holds; through the cloud, Azure's steady set of 100 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
 between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
