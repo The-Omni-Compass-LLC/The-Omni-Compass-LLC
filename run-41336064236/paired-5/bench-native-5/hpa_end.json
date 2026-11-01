@@ -1,0 +1,88 @@
+{
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": {
+        "creationTimestamp": "2026-11-01T18:45:51Z",
+        "labels": {
+            "app.kubernetes.io/managed-by": "effective-hpa-controller",
+            "app.kubernetes.io/name": "ehpa-php-apache",
+            "app.kubernetes.io/part-of": "php-apache",
+            "autoscaling.crane.io/effective-hpa-uid": "8edee4fb-70d0-4389-9802-c97cfb6ec614"
+        },
+        "name": "ehpa-php-apache",
+        "namespace": "default",
+        "ownerReferences": [
+            {
+                "apiVersion": "autoscaling.crane.io/v1alpha1",
+                "blockOwnerDeletion": true,
+                "controller": true,
+                "kind": "EffectiveHorizontalPodAutoscaler",
+                "name": "php-apache",
+                "uid": "8edee4fb-70d0-4389-9802-c97cfb6ec614"
+            }
+        ],
+        "resourceVersion": "5340",
+        "uid": "048eb704-253a-415e-a66e-c5e79aa536a0"
+    },
+    "spec": {
+        "maxReplicas": 10,
+        "metrics": [
+            {
+                "resource": {
+                    "name": "cpu",
+                    "target": {
+                        "averageUtilization": 50,
+                        "type": "Utilization"
+                    }
+                },
+                "type": "Resource"
+            }
+        ],
+        "minReplicas": 1,
+        "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "php-apache"
+        }
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2026-11-01T18:46:06Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+            },
+            {
+                "lastTransitionTime": "2026-11-01T18:46:06Z",
+                "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+            },
+            {
+                "lastTransitionTime": "2026-11-01T19:01:07Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+            }
+        ],
+        "currentMetrics": [
+            {
+                "resource": {
+                    "current": {
+                        "averageUtilization": 23,
+                        "averageValue": "47m"
+                    },
+                    "name": "cpu"
+                },
+                "type": "Resource"
+            }
+        ],
+        "currentReplicas": 10,
+        "desiredReplicas": 10,
+        "lastScaleTime": "2026-11-01T18:53:22Z"
+    }
+}
