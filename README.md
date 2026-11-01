@@ -29,8 +29,10 @@ At the usual load (`results/gpu/V23_A10_CAP_ABC.json`) every request is served i
 |---|---|---|
 | Bare metal, one card | the card's own workload, at the usual load and fully loaded | three runs on omni-v23, above |
 | Bare metal, one card | the seven organisms (the spine, the four realms, the four stacked, the whole catalog) at 1, 10 and 100 copies | on omni-v21 (`results/gpu/V21_STACKS_A10_ABC.json`): 175 rows STEADY, 78 rows shown, not judged (one repetition in a run), 3 rows LOSS, 2 rows power given, 1 row the runs disagree, 1 row GAIN; not yet run on omni-v23 |
-| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies | not yet run; every rental on the founder's word |
+| Bare metal, one card, fully loaded | the seven organisms at 1, 10 and 100 copies, the card offered more than it serves (docs/GPU_PREREGISTRATION.md, amendment 16) | started on omni-v23 (lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877); not yet read |
+| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies, each on its own card | started on omni-v23 (lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737); not yet read |
 | Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | queued, its switch on; not yet read on omni-v23 |
+| Through the cloud: Azure, the seven organisms | one rented Azure machine, each organism with the real cluster inside, 100 copies | started on omni-v23 (big-organism-detached, run 41269562586 (100 copies, three repetitions)); not yet read |
 | Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch on, Amazon's on; not yet run |
 
 **The seven organisms in the four arms.** Each organism runs native and with Omni-Compass on native, in each place: fourteen runs on bare metal (A and B) and fourteen through the cloud (C and D), each read by its bill and the work inside it. On bare metal each organism runs with one card inside at 1, 10 and 100 copies, and on the eight-card machine at 1, 10 and 100 copies (every rental on the founder's word).

@@ -43,6 +43,52 @@ CLOUD = ROOT / "results" / "live" / "AKS_STEADY_100_OMNI_V18.json"
 CLOUD_ENGINE = "omni-v18"
 CLOUD_PAGE = "results/live/AKS_STEADY_100_OMNI_V18.md"
 
+# The founder's order of 1 November: the seven organisms, each run native and with Omni-Compass on native, in each place,
+# so fourteen runs on the chip (A against B) and fourteen through the cloud (C against D). Each place reads its own three-run
+# table (tools/hil_abc.py on the card-inside runs: the card's work, its bill and its work per dollar); a place whose table is
+# not yet written says which runs feed it, and a place never run says so.
+ORGANISMS = (("spine", "The spine"), ("compute_ai_cloud", "Compute / AI / Cloud"),
+             ("physics_robotics_autonomous", "Physics / Robotics / Autonomous"),
+             ("energy_facility_industrial", "Energy / Facility / Industrial"), ("distribution_specialized", "Distribution / Specialized"),
+             ("stack", "The four stacked"), ("tower", "The whole tower"))
+ORG_PLACES = (
+    ("chip", "the chip: eight A100 cards on Lambda, each organism on its own card",
+     ROOT / "results" / "gpu" / "V23_A100_8CARD_STACKS_ABC.json", "lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737"),
+    ("chip", "the chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16)",
+     ROOT / "results" / "gpu" / "V23_A10_STACKS_FULL_ABC.json", "lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877"),
+    ("cloud", "through the cloud: Azure, one rented machine with the real cluster inside each organism",
+     ROOT / "results" / "live" / "V23_AZURE_ORGANISMS_ABC.json", "big-organism-detached, run 41269562586 (100 copies, three repetitions)"),
+    ("cloud", "through the cloud: Google Cloud", None, "its key is not in the repository's secrets (docs/GOOGLE_SETUP.md)"),
+    ("cloud", "through the cloud: Amazon Web Services", None,
+     "its key is not in the repository's secrets and the account is on the Free plan (docs/AMAZON_SETUP.md)"),
+)
+ORG_MEASURES = (("work", "work done (requests served)"), ("bill", "bill (the rental for the window)"),
+                ("per_dollar", "work per dollar"))
+
+
+def organisms() -> list:
+    """Each place's organisms: the three-run readings of the card's work, bill and work per dollar at each size, from the
+    place's own table, or the runs that will write it."""
+    out = []
+    for where, label, path, runs in ORG_PLACES:
+        place = {"where": where, "label": label, "table": str(path.relative_to(ROOT)) if path else None, "runs": runs}
+        if path is None or not path.exists():
+            place["status"] = "not yet run" if path is None else "not yet read"
+            out.append(place)
+            continue
+        rec = json.loads(path.read_text(encoding="utf-8"))
+        place.update(status="read", engine=rec.get("engine", ""), run_ids=rec.get("runs", []), rows=[])
+        for name, title in ORGANISMS:
+            for size in sorted({r["copies"] for r in rec["rows"] if r["organism"] == name}):
+                cell = {"organism": name, "title": title, "copies": size}
+                for m, _ in ORG_MEASURES:
+                    row = next((r for r in rec["rows"] if r["organism"] == name and r["copies"] == size and r["part"] == "card"
+                                and r["measure"] == m), None)
+                    cell[m] = row["reading"] if row else "not read"
+                place["rows"].append(cell)
+        out.append(place)
+    return out
+
 
 def chip() -> dict:
     """The chip's three runs: each arm's bill (the rental for its own window, the window its own energy over its mean power),
@@ -95,7 +141,7 @@ def pct(x):
     return f"{100 * x:.2f}%"
 
 
-def page(c: dict, k: dict) -> str:
+def page(c: dict, k: dict, organisms_: list) -> str:
     L = ["# The two bills: four arms, the bill and the work done inside it", "",
          "The founder's design of 1 November 2026: the same work measured against what it cost, on the two bills a customer "
          "pays. **A**, the chip native, and **B**, the chip with Omni-Compass on native: a rented graphics card run directly, its "
@@ -147,7 +193,22 @@ def page(c: dict, k: dict) -> str:
 
     def chip_word(key):
         return c["rows"][names[key]]["reading"].strip("*")
-    L += ["", "## What the two bills say today", "",
+    L += ["", "## The seven organisms in the four arms", "",
+          "Each organism runs native and with Omni-Compass on native in each place: on the chip, A against B, and through the "
+          "cloud, C against D. Every cell is a three-run reading by the one key of the card's own receipts with the organism "
+          "running around it: the requests the card served (the work), the rental for the arm's window (the bill) and the two "
+          "together (work per dollar); the organism's modelled plants are in each place's own table, never in these cells.", ""]
+    for place in organisms_:
+        L += [f"### {place['label'][0].upper()}{place['label'][1:]}", ""]
+        if place["status"] != "read":
+            L += [f"{'Not yet run' if place['status'] == 'not yet run' else 'Not yet read'}: {place['runs']}.", ""]
+            continue
+        L += [f"From `{place['table']}` ({place['engine'].split(' (')[0]}; runs {', '.join(place['run_ids'])}).", "",
+              "| Organism | Copies | " + " | ".join(n for _, n in ORG_MEASURES) + " |", "|---|---:|" + "---|" * len(ORG_MEASURES)]
+        for r in place["rows"]:
+            L.append(f"| {r['title']} | {r['copies']} | " + " | ".join(r[m] for m, _ in ORG_MEASURES) + " |")
+        L.append("")
+    L += ["## What the two bills say today", "",
           f"- **The chip:** the bill {chip_word('bill')} (the same rented window in both arms); the work done inside it "
           f"{chip_word('work')}; the work per dollar {chip_word('per_dollar')}; the energy for each request served "
           f"{chip_word('energy_per')}.",
@@ -161,9 +222,9 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
-    c, k = chip(), cloud()
-    text = "\n".join(stamp(page(c, k).split("\n"))) + "\n"
-    data = json.dumps({"chip": c, "cloud": k}, indent=1, default=str) + "\n"
+    c, k, o = chip(), cloud(), organisms()
+    text = "\n".join(stamp(page(c, k, o).split("\n"))) + "\n"
+    data = json.dumps({"chip": c, "cloud": k, "organisms": o}, indent=1, default=str) + "\n"
     if a.check:
         ok = PAGE.exists() and PAGE.read_text(encoding="utf-8") == text and DATA.exists() and DATA.read_text(encoding="utf-8") == data
         print("the two bills: " + ("in line with the tables" if ok else "out of date (python3 tools/two_bills.py)"))

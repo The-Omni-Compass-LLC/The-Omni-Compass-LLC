@@ -386,11 +386,26 @@ def places_block(m) -> list:
     eight = sorted(ROOT.glob("results/gpu/V*_8*CARD*_ABC.json"))
     v = stands.split("-v")[1]
     az = sorted(ROOT.glob(f"results/live/V{v}_AKS*.json"))
+    # the seven organisms in the four arms (results/TWO_BILLS.json, tools/two_bills.py organisms): each place read from its own
+    # table, or the runs that will write it, or never run
+    org_places = {p.get("table") or p.get("label"): p for p in (tb.get("organisms") or [])}
+
+    def org_place(key, fallback):
+        p = org_places.get(key)
+        if not p:
+            return fallback
+        if p.get("status") == "read":
+            return f"read in `{p['table']}`, every organism at every size in `results/TWO_BILLS.md`"
+        if p.get("status") == "not yet read":
+            return f"started on {stands} ({p['runs']}); not yet read"
+        return f"not yet run: {p['runs']}"
     L += ["| Place | What runs there | Native against Omni-Compass on native |", "|---|---|---|",
           f"| Bare metal, one card | the card's own workload, at the usual load and fully loaded | {'three runs on ' + stands + ', above' if full else 'not yet run on ' + stands} |",
           f"| Bare metal, one card | the seven organisms (the spine, the four realms, the four stacked, the whole catalog) at 1, 10 and 100 copies | {org_txt} |",
-          f"| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies | {('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED} |",
+          f"| Bare metal, one card, fully loaded | the seven organisms at 1, 10 and 100 copies, the card offered more than it serves (docs/GPU_PREREGISTRATION.md, amendment 16) | {org_place('results/gpu/V23_A10_STACKS_FULL_ABC.json', 'not yet run on ' + stands)} |",
+          f"| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies, each on its own card | {org_place('results/gpu/V23_A100_8CARD_STACKS_ABC.json', ('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED)} |",
           f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, its switch ' + _switch('azure') + '; not yet read on ' + stands} |",
+          f"| Through the cloud: Azure, the seven organisms | one rented Azure machine, each organism with the real cluster inside, 100 copies | {org_place('results/live/V23_AZURE_ORGANISMS_ABC.json', 'not yet run on ' + stands)} |",
           f"| Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}; not yet run |", ""]
     # the seven organisms in the four arms (the founder's words of 1 November: "seven organisms ... ran native and with Omni-Compass on
     # them ... each in each arm ... A, B, C and D"): each organism's state in each arm, read from the newest organisms-on-the-card table
