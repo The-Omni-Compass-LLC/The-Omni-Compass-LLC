@@ -35,7 +35,13 @@
         if (!v || !v.built_at || !mine || v.built_at <= mine) return;
         return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
           .then(function (html) {
-            if (html && html.indexOf('id="omniSelfUpdate"') > 0) { document.open(); document.write(html); document.close(); }
+            if (html && html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) {
+              /* the newer build opens as a document of its own, in a fresh script realm: written over this one in
+                 place, its script met this page's own declarations again and stopped (1 November); the few
+                 links beside the page are made absolute, so they still reach the repository's files */
+              html = html.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+              location.replace(URL.createObjectURL(new Blob([html], { type: "text/html" })));
+            }
             else { note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); }
           });
       })
