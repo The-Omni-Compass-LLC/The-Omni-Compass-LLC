@@ -396,7 +396,7 @@ native's colour. "Return to native" in the control panel is the reset, a separat
 **The profile** (chapter 2). The active profile reads FACTORY, CANDIDATE or CUSTOM, with its fingerprint. The factory profile is
 the released one, omni-v23's, the heartbeat 60 s; nothing is held when the page opens. *Restore factory profile* puts the
 mechanism and the heartbeat back; *Hold the active profile* holds every knob as set; *Try the candidate* applies the sweep's best
-beat as a candidate, never a release. The heartbeat has six buttons, 10, 15, 30, 60, 90 and 120 s; the fuse box's tabs add
+beat as a candidate, never a release. The heartbeat has seven buttons, 10, 15, 20, 30, 60, 90 and 120 s; the fuse box's tabs add
 the live model as Prometheus metrics and every press as the request a running governor takes.
 
 **The status board** (chapter 8). Every reading that went against native, worst first, each with its source record and its
@@ -534,14 +534,20 @@ the dock and in the control panel.
 
 This chapter reads the page's section 1, **Control Panel** (`#s-health`).
 
+The section opens with **Factory Profile, Locked: The Main Engine** (`#factoryLocked`): the page opens on the main engine at its
+factory tune, the one setting every benchmark runs, and every link opens it there; only a person pressing a knob moves it off, and
+the factory button brings every knob back. A turned knob never breaks the engine: it changes its mechanism of action, how its
+muscles and the organism share the work, toward the purpose the new setting asks for, and what it shows is that setting's own
+reading, never a benchmark result.
+
 ### 2.1 What the section holds
 
 The control panel (the page's section 1, `#s-health`) stands directly under the wall and switches every monitor of the page.
 It holds three panels, in this order. **Wall Status and Factory Tune** gives the wall's state in one line and the one button
 that puts back the engine's tune as it ships (section 2.2). **Fuse Box** (`#fuseBox`) switches every monitor from one box: its
-master rows, the governor request, its seven tabs, the heartbeat, the profile box, the sweep over every beat, the mechanism knobs,
-the twenty scenarios and the injection grid, one breaker for each monitor, the Prometheus metrics and the governor's commands
-(sections 2.3 to 2.26). **Operator Controls** (`#ctlPanel`) holds the kill switch, the
+master rows, the governor request, its eight tabs, the heartbeat, the profile box, the sweep over every beat, the mechanism knobs,
+the twenty scenarios and the injection grid, one breaker for each monitor, the Prometheus metrics, the governor's commands and the
+auxiliary input's ten slots (sections 2.3 to 2.26). **Operator Controls** (`#ctlPanel`) holds the kill switch, the
 buttons that run the Python's runs in the page, the jump generator, the variation switchboard, the four reports, the three manuals
 and the wall as a Grafana dashboard (sections 2.27 to 2.32). The section draws no monitor of its own: the master switch's wiring
 is the page's section 5g (chapter 31) and the monitor list its appendix E (chapter 39). No value here is typed in: each is
@@ -560,7 +566,8 @@ panel (section 2.28).
 
 The fuse box (`#fuseBox`, the second panel of the control panel, the page's section 1) switches every monitor from one box,
 laid out as a console. Its first row is the master switches, always in view: each acts on the whole page at once, through the same code as
-the console and the dock, both sides alike. Under it stand seven tabs, one shown at a time:
+the console and the dock, both sides alike. The master row ends with one button, **AUX**, the auxiliary input: it reads how many
+of its ten slots are wired and opens them (section 2.25). Under it stand eight tabs, one shown at a time:
 
 | Tab | What it holds |
 |---|---|
@@ -570,6 +577,7 @@ the console and the dock, both sides alike. Under it stand seven tabs, one shown
 | **Monitor Breakers** | one for every monitor, by section (section 2.24) |
 | **Prometheus Metrics** | the live model printed as a Prometheus endpoint, every decision, with the series a running system serves beside each and the PromQL the Grafana wall draws it with (section 2.25) |
 | **Commands** | every control beside the request a running governor takes for it, with its role (section 2.25) |
+| **Auxiliary Input** | ten slots, each waiting to be wired to an organism of the reader's own: its Prometheus, the native it runs, Omni-Compass on top or not, and a real record to set beside it (section 2.25) |
 | **All Tabs** | the whole panel at once, as one long box |
 
 The tab chosen, and the group chosen among the mechanism knobs, are kept in the viewer's own browser only, as a convenience;
@@ -600,9 +608,9 @@ screen*; **factory**: *Back to the factory tune*; **your own system** (section 2
 The dial, the demand, the noise, the sense delay and the faults act on the live stress-test model; turning any of them while the
 harness plays moves the live benchmark engine to the model, and the control event log says so.
 
-### 2.5 The heartbeat period: six buttons
+### 2.5 The heartbeat period: seven buttons
 
-The third row, **heartbeat period**, is the heartbeat, the governor's full decision: six buttons, **10, 15, 30, 60, 90 and 120 s**, and nothing else
+The third row, **heartbeat period**, is the heartbeat, the governor's full decision: seven buttons, **10, 15, 20, 30, 60, 90 and 120 s**, and nothing else
 (`BEATS`). The factory profile's beat is 60 s; 15 s is the standard of native's own pod autoscaler, which checks every 15 s; the
 10 s button shows a beat below that standard. Pressed, a button sets the beat of Omni-Compass on the live stress-test model
 (moving the live benchmark engine to the model if the harness plays), moves the heartbeat sweep monitor (the page's section 4a) to the same
@@ -624,7 +632,7 @@ is held the buttons are disabled. A beat other than 60 s makes the active profil
 ### 2.6 Every beat, three model days each, and the candidate
 
 Beside the heartbeat stands the sweep, the group the page labels **beat sweep · class S** (our own model). **Run every
-beat (10 to 120 s), three days each** runs the live stress-test model for a whole model day at each of the six beats on three
+beat (10 to 120 s), three days each** runs the live stress-test model for a whole model day at each of the seven beats on three
 days, the page's own opening seed and the two after it, the same three at every sweep, with the same demand on both arms; when it
 ends, the model starts the day in hand again from its seed. Nothing runs until the button is pressed: until then the note reads
 "not run yet in this view".
@@ -947,7 +955,8 @@ at once.
 
 Every knob of this panel shows a variation of the mechanism (class S, our own model). The benchmarks prove the factory profile
 only; a custom profile is its tuner's, and so are its readings. This is the one place on the page where a person may turn the
-engine away from its factory profile, break it by hand and watch it break; the factory buttons put it back.
+engine away from its factory profile, change its mechanism of action by hand and watch every
+monitor move with it; the factory buttons put it back.
 
 ### 2.24 Scenarios and Injection Grid, and the Monitor Breakers
 
@@ -965,13 +974,60 @@ as the page's own governor rests a monitor off screen, and frees the frame for t
 draws two sides, which side it shows now (native alone under the kill switch, Omni-Compass on native, or as recorded). *Every
 breaker ON* and *rest every monitor off screen* act on all of them; the panel's own factory button also turns every breaker ON.
 
-### 2.25 Your own system, Prometheus Metrics and Governor API Commands
+### 2.25 Your own system, the Auxiliary Input, Prometheus Metrics and Governor API Commands
 
 The group **your own system** points the page at the operator's own Prometheus: an address, *Connect* and *Disconnect*. Once
 connected, each monitor's own query (its feed in `docs/engine/monitors.json`, the series `tools/omni_exporter.py` and the
 governor's `/metrics` expose) is asked every 15 s, and each breaker shows what that system answers. It is read only: nothing is
 written to the operator's system from the page. The Prometheus must allow the page's address (its `--web.cors.origin` flag, or
 the page served behind the same address); a page opened inside another site's sandbox may be refused by the browser, and says so.
+
+**The Auxiliary Input: ten slots for the reader's own organisms.** Any company can wire its own systems into the page, beside
+every benchmark on it, without taking one apart. The **AUX** button at the end of the fuse box's master row opens the
+*Auxiliary Input* tab (`#fuseAux`): ten slots, each waiting to be wired to an organism of the reader's own, a cluster, a
+service, a database or a card. A slot takes a name, its Prometheus address, the native controller it runs and whether
+Omni-Compass is on top of that native. The natives offered are the real ones: the Kubernetes Horizontal Pod Autoscaler and
+Cluster Autoscaler, KEDA, Goldilocks, CruiseKube, the Kubernetes scheduler, Kueue, Volcano, the KAI scheduler, Koordinator,
+Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster Management, KubeEdge, Nephio, OKD (OpenShift's open upstream), the five
+data stores' own controllers (MySQL, PostgreSQL with PgBouncer, Redis, MongoDB, Kafka), the GPU's own firmware and Linux's
+processor frequency governor. Red Hat OpenShift Container Platform, IBM Turbonomic and VMware vSphere stand in the list as
+licensed products: a slot reads them on the reader's own licence, and the repository holds no record of them until it runs them
+licensed. Each native brings its signal, the query its exporter answers: the native's own metrics where it serves them
+(kube-state-metrics' replicas for the pod autoscalers, the Cluster Autoscaler's, KEDA's and Kueue's own, the stores' exporters,
+DCGM, node_exporter), else a general kube-state-metrics count, said so beside it; the reader may type a query of their own.
+
+*Wire it* asks the slot's Prometheus `up`; once it answers, the slot reads every 15 s, read only: the requests answered without a
+server error, the share of server errors, the 95th-percentile response time, the processor busy, the machines ready, the
+processors' power (Kepler), the machines' price an hour (OpenCost's node price: storage, network and the control plane are
+outside it), the requests for each dollar of that price, and the native's signal. Each query has ten seconds to answer, and a
+round still out when the next falls due is not doubled. Its lamp is a green circle while the system answers, a yellow diamond
+while it answers with no series yet or a round had no answer in time, a red octagon when it does not answer, and dark while it
+waits to be wired. A wired slot lights its own row on the **Auxiliary Input Board** under the monitor wall (`#auxBoard`): one
+tile a gauge, its value, its readings since it was wired and its reading. The slot files each reading under the arm the system
+ran in: where the system serves its control panel's own series (`omni_control_mode` at autopilot, `omni_control_governor_up`,
+`omni_control_master_switch_on`, `tools/omni_control.py`), from those; otherwise the arm the slot declares, switched by the reader
+when the system is switched (never the exporter's `omni_master_switch`, which drops to 0 at the governor's first stop and stays there). Changing a wired slot's
+address, query or native unwires it, so no window holds two systems' readings. Once each window holds four readings, each gauge
+is read by the key on the two windows' means (the 0.5% floor; work up GAIN, time waited or failed down GAIN, a resource down a cut
+and GAIN, up power given; the requests for each dollar up GAIN, down power given): one run of the reader's own system, never a
+three-run table, and the two windows ran at different times, so the load may differ between them; a paired benchmark runs both
+arms on the same load (the harness, `docs/HARNESS.md`).
+
+*Flip the wall to it* turns the wall to that slot: the page's own Prometheus connection is pointed at the slot's address, and
+every monitor that carries a Prometheus query asks that system the query; each of their tiles carries the answer in a strip at
+its top, over the page's own drawing, each of their breakers shows it, and the other monitors go on drawing the page's engine and
+records. A banner over the board names the slot until *The wall back to this page's engine* is pressed, the fuse box's own
+*Disconnect* is pressed or the connection fails. *Beside a record* sets the slot beside one of the repository's real records
+only, a standing three-run table of live software (class L) or the GPU card's metered run (class P), the native's own records
+first; no model run (class S) is ever offered, and a row a live record itself works out from a declared model says so in its gauge. Every
+row of the record is shown, LOSS rows included, with its counts by word and its engine; the record ran on its own engine and the
+governor installed today on the engine that stands, so the two are never read as one engine. The reader's system and the record
+are two systems set side by side, neither a result of the other. The page writes nothing to the reader's system: the
+Omni-Compass switch of a slot prints the request that system's own control panel takes (`POST /v1/mode` with autopilot for ON,
+`POST /v1/reset` for OFF, `tools/omni_control.py`, role operator), to be sent with the reader's own token; the Kubernetes
+governor installs from `deploy/install/`, and every other muscle's wiring is in the Operator's Manual, Appendix E. What is typed
+in a slot stays in the reader's browser only. Every benchmark on the page stays as it is: the reader's own system stands beside
+it.
 
 **The wall beside Omni-Compass, in one command.** `deploy/wall` (its README) stands up Prometheus, Grafana with the Omni-Compass
 wall loaded as its home dashboard (`deploy/grafana/omni-compass-wall.json`), Alertmanager with the governor's alert rules,
@@ -1006,7 +1062,7 @@ view.
 | The body | the live model or the harness record | which body the live monitors draw | the knobs act on the live model only |
 | Time | the live model's clock | 1× to 60×, pause, one decision | none on the records |
 | Demand, noise, sense delay, faults | the live model's plant | both sides alike, the same draw | demand ×0.25 to ×2; σ 0 to 0.6; +0 to +6 decisions; a fault lasts 40 decisions |
-| Heartbeat | Omni-Compass on the live model | how often the full decision lands (section 2.5) | six beats; disabled while held |
+| Heartbeat | Omni-Compass on the live model | how often the full decision lands (section 2.5) | seven beats; disabled while held |
 | Run every beat, Try the candidate | the live model, three model days a beat | the sweep's table, the best beat; a candidate profile | class S; a candidate is never released |
 | Restore factory profile, Hold the active profile | the mechanism's knobs and the heartbeat | the released configuration back; every knob held | the plant's conditions are the factory tune's button |
 | Deployment route | the whole organism's composition and the recorded prices | the route's bill as a sum of costs | a component with no price stays unresolved |
@@ -1083,7 +1139,7 @@ under it names the monitors that moved, or says that no monitor carries the vari
   to that many runs × organisms stacked (chapter 27), and the scale grid's square is marked where GitHub's grid carries that
   tier (it runs 1, 10, 100 and 1,000). The organism row sets the injection grid's organism too.
 - **Run**: A, B or C on every replay that holds three runs and on the live organism's record.
-- **Beat**: 10, 15, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
+- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
   sweep record's nearest one and says which, and, unless the active profile is held, the live model's heartbeat is set to it.
 
 A monitor that does not carry a variation is left as it is.
@@ -1533,7 +1589,7 @@ first panel and in its fuse box, and in every monitor's own knobs, puts back two
 muscle driven, Omni-Compass ON, the 60 s beat, the factory profile restored and any hold released, the mechanism's knobs at the
 factory) and the page's plant at rest (the day as written, demand ×1, noise σ 0, sense delay
 +0, no fault held, the load profile as written, speed 1×, running, no frame load, and the heartbeat sweep monitor on 60 s,
-on-site, pods waiting, against native). It says what it put back. Turn anything, break it, watch it break; this button brings
+on-site, pods waiting, against native). It says what it put back. Turn anything and watch the mechanism change, never break; this button brings
 all of it back. Native alone is not a tune: it is the kill switch. The control panel's
 own factory button also turns every breaker ON.
 
@@ -1598,7 +1654,7 @@ This chapter reads the page's section 3d, **Heartbeat Dial** (`#s-dial`).
 ### 12.1 The dial
 
 The governor's heartbeat, its full decision, is a dial from omni-v17 on (the page's section 3d, `#s-dial`): the main engine, the
-factory profile, decides every 60 s, and on the page any of six beats can be set, 10, 15, 30, 60, 90 or 120 s, with the fast
+factory profile, decides every 60 s, and on the page any of seven beats can be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
 checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor
 counts seconds (omni-v16), so turning the dial changes only how often it looks. Each beat stands beside native with what it buys
 (the reads of the cluster a day) and what it costs (the governor's own processor, and every service row read against native and
@@ -2432,6 +2488,14 @@ One batch is one run in the key's sense; three batches make a three-run reading.
 
 This chapter reads the page's section 5d, **Whole Organism** (`#s-whole`).
 
+The section opens with **What Each Place Shows: the Benefit, or That It Holds** (`#placesHold`). The software end (Kubernetes,
+the orchestrators and governors, the services) is where Omni-Compass decides and works; its benchmark shows the benefit. The chip
+(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark shows that it holds: no harm to its heat,
+its power or its service, read by the card's own meter. The cloud (the wire and the provider's own software) carries the software
+end's work and bills it by machine-hours; its benchmark shows that it holds: the bill not raised beyond the noise and the service
+not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
+Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
+
 ### 28.1 Every way a stack is bought
 
 The whole organism (the page's section 5d, `#s-whole`) opens with the same box as the clouds' section, the cloud is a wire,
@@ -2728,7 +2792,7 @@ page whose engine is not the one `python3 tools/omni_version.py` reads. So the p
 a new engine stands, the build stamps it on the page and rebuilds every record on it, and the page says in a banner that its
 prose was written for the older engine until a person realigns the words.
 
-It is also a live tuning engine, a tuning bench. Its buttons turn the engine's knobs in real time: the heartbeat (six buttons in the control panel, from 10
+It is also a live tuning engine, a tuning bench. Its buttons turn the engine's knobs in real time: the heartbeat (seven buttons in the control panel, from 10
 to 120 s), the dial between the max and the tune-down, the pedal, each muscle driven or left native, up or down, in or out, minus or
 plus. Turning them shows the mechanism of action and its variations with native alone, with Omni-Compass on top of native, or
 both side by side. As on any engine, where the mixture, the intake, the exhaust, the firing or the pistons change what a car's
@@ -2803,7 +2867,7 @@ section opens on its monitors and controls. Each section's introduction stands t
 the page's order: 0 Monitor Wall, 1 Control Panel, then 2a to 5j. It opens with the **Monitor Wall Legend** (each monitor's
 signal and word, what the control panel holds, the five blocks, how a tile is drawn) and the **Organism Ring Guide** (two arms,
 one demand; what a dot's position means; the engine's code behind the default body). Under *0 Monitor Wall* it sets out the
-light count, the redline reflex and every light's meaning; under *1 Control Panel*, the fuse box and its seven tabs, the
+light count, the redline reflex and every light's meaning; under *1 Control Panel*, the fuse box and its eight tabs, the
 mechanism knobs and the manuals; under each lettered section, what that section shows and where it stands in the record. The
 legend's rules are read in the sections that follow: the sides, the words, the 0.5% rule, the signal words and their shapes, and
 the marks.
@@ -3343,7 +3407,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |
 | The body | the control panel; the page's section 3e | which body the live monitors draw | the records |
-| Heartbeat: 10, 15, 30, 60, 90, 120 s | the control panel | the live model's full decision period | the dial's tables (the page's section 3d), which are records |
+| Heartbeat: 10, 15, 20, 30, 60, 90, 120 s | the control panel | the live model's full decision period | the dial's tables (the page's section 3d), which are records |
 | Run every beat (10 to 120 s), three days each | the control panel | three model days at each beat on the live model; the sweep's table | the live day in hand, restored after |
 | Try the candidate | the control panel | the heartbeat set to the sweep's best beat, a candidate profile | every other knob |
 | Restore factory profile | the control panel | the mechanism's knobs and the heartbeat back to the factory's; a hold released; the candidate cleared | the master switch; the plant's conditions |
@@ -3352,6 +3416,9 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Mechanism Knobs; The mechanism back to the factory | the fuse box (`#mechPanel`) | the live model's equations, on Omni-Compass's side (sections 2.11 to 2.23) | the harness record; the records |
 | Every breaker ON; rest every monitor off screen; ON / REST | the control panel | whether each monitor is drawn live | the records |
 | Your own system: Connect / Disconnect | the control panel | each monitor's query asked of the operator's Prometheus, read only | the operator's system: nothing is written |
+| AUX; Auxiliary Input slots: Wire it / Unwire / Clear the slot | the control panel (`#fuseAux`) | one slot's readings of the reader's own Prometheus, every 15 s, read only; its row on the Auxiliary Input Board | the reader's system: nothing is written; every benchmark on the page |
+| Auxiliary Input: Flip the wall to it / The wall back to this page's engine | the control panel; the Auxiliary Input Board | the query of every monitor that carries one asked of that slot's system; each of those tiles and breakers shows its answer | the other monitors; the page's records and engine, back when flipped back |
+| Auxiliary Input: Omni-Compass ON / OFF; Beside a record | the control panel | the arm the slot declares and the request it prints; the real record set beside the slot | the reader's system: the request is printed, never sent |
 | Demand × | the control panel; the console; the dock | every muscle's demand, both sides, from this decision on | the seed |
 | Noise σ | the control panel; the console; the dock | each muscle's demand each decision, 1 + σ·z, one draw shared by both sides | the seed's day |
 | Sense delay (+0 to +6 decisions) | the control panel; the console | the decisions between a muscle's act and its controller's reading, both sides | the demand |
