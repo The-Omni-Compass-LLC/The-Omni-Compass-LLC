@@ -100,8 +100,9 @@ bands and the service lines are exposed); a changed tune is the licensee's own, 
 in The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
 published, never as a number to live with (the founder's order of 23 October 2026). The one place a LOSS is meant to be seen
 is the live benchmark engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
-to watch the system react and the brain hold or recover: that showing is the proof that the mechanism can be broken only by
-leaving it, and a changed tune's readings are the licensee's own.
+to watch the system react and the brain hold or recover: that showing is the proof that the factory tune is the best state found, and that a turned knob never breaks the engine:
+it changes its mechanism of action, how its muscles and the organism share the work, toward the purpose the new setting asks for, and a
+changed tune's readings are the licensee's own.
 
 **The factory profile, and the profile that comes next.** The factory tune is one complete configuration profile, the factory
 profile: every governing rule, gain, margin, decision interval and default setting shipped together, versioned and fingerprinted.
@@ -217,7 +218,10 @@ energy and throughput are not under a tenant; they are measured where Omni-Compa
 composed with the wire by the law above. A provider running Omni-Compass on its own back end would see that benefit on its own
 chips and racks; no tenant can meter it, so it is never claimed here as a measurement. The company's expected ranges (the
 founder's figures of 24 October: about 3 to 4% from the software end, 2 to 3% from the bare metal, about 5% from the two
-together, 1 to 2% from the wire alone) are an expectation, never a result; where a measurement differs, the measurement stands.
+together, 1 to 2% from the wire alone) are an expectation, never a result, and his word of 31 October sets the wire's own at
+none: the wire carries the benefit, it does not make it; where a measurement differs, the measurement stands.
+
+**What the record shows in each place so far** (the words for each place, and what each benchmark must show, are in section 10): at the software end the benefit, composed over work, speed and machines in `results/WHOLE_SYSTEM.md` with the same power and the same bill; at the chip, the A100's own meter on omni-v21 (`results/gpu/V21_A100_CAP_ABC.md`) reads work and energy STEADY at the factory tune: it holds; through the cloud, Azure's steady set of 100 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
 beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three places (the software end, the

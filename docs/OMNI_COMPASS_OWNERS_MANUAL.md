@@ -1588,7 +1588,7 @@ actuators and checks (`docs/FACTORY_PROFILE.md`, section 2).
 
 **A fixed tune governing a changing system.** Let x be the governed system's state, z the governor's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval. The public interval choices on
-the bench are Δ ∈ {10, 15, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
+the bench are Δ ∈ {10, 15, 20, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
 k, with tₖ₊₁ = tₖ + Δ, the general contract is:
 
 | Step | Equation | What it is |
@@ -1825,7 +1825,7 @@ Omni-Compass direct violet; red is never a side, only the alarm. Every monitor c
 **GAINING** (low in its band with room to climb, or a GAIN); yellow, a yield diamond, **STEADY** (STEADY, inside 0.5%,
 or heading for its line and watched); red, a stop-sign octagon, blinking, **REDLINING** (over its line, or a LOSS: the alarm);
 dark, **AWAITING** (the run that fills it has not landed; never green). The main control panel holds the kill switch, the arm
-(Omni-Compass on native or direct), the heartbeat's six buttons, Δ ∈ {10, 15, 30, 60, 90, 120} s, a sweep that runs every beat
+(Omni-Compass on native or direct), the heartbeat's seven buttons, Δ ∈ {10, 15, 20, 30, 60, 90, 120} s, a sweep that runs every beat
 on the page's own model for three model days each and reads each day against native by the key, **Try the candidate** (the
 sweep's best beat, the one with the most work for Omni-Compass on native and no LOSS, as a candidate profile), the active
 profile with its fingerprint (factory, candidate or custom) and its backend, **Restore factory profile**, **Hold the active
@@ -3820,6 +3820,8 @@ from this what it says and no more: the small fleet's bill reading is inside the
 large fleet's reading does not exist yet, and nothing about the bill on a real cloud is claimed in the index until it does.
 
 ### 16.3b The cloud is a wire: three places, one organism, two routes (a composition, class S of L and P)
+
+**What the record shows in each place so far** (the words for each place, and what each benchmark must show, are written once and carried word for word in this manual, the README and `DISCLOSURES.md`, section 10): at the software end the benefit, composed over work, speed and machines in `results/WHOLE_SYSTEM.md` with the same power and the same bill; at the chip, the A100's own meter on omni-v21 (`results/gpu/V21_A100_CAP_ABC.md`) reads work and energy STEADY at the factory tune: it holds; through the cloud, Azure's steady set of 100 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
 
 **A cloud is just a wire** (the founder's words of 24 October: "a big bold statement", carried in every manual). It is the wire
 between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and autoscalers that
