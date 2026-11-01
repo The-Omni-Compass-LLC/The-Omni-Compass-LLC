@@ -465,8 +465,7 @@ TERMS = [
       "the software end (the cluster, Kubernetes, its add-ons, its governors and the services on it), the cloud between them (the "
       "machines it bills, metered) and the bare metal (the card, the chip, and the machine: the kernel, bare metal, Kepler).",
       [("tools/whole_system.py", "Omni-Compass sits at both ends and at every layer between"),
-       ("tools/whole_system.py", "the machine (the kernel, bare metal, Kepler)")],
-      aka=["bare metal"]),
+       ("tools/whole_system.py", "the machine (the kernel, bare metal, Kepler)")]),
     T("the cloud as the wire", A, "The cloud is the wire between the chip at one end and the software at the other, and makes no "
       "benefit of its own. Through the cloud the bare metal belongs to the provider (no tenant can read its meters or write its "
       "chips' limits), so what a cloud run must show is that the engine holds on the cloud's machines as it does on site: no judged "
@@ -484,17 +483,24 @@ TERMS = [
       "machines in kind clusters, rented runners never called bare metal and never called the chip.",
       [(DIS, "This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters.")],
       aka=["software end"]),
-    T("on site", A, "The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is "
-      "fixed and its hours are no bill, so the software end's benefit is the same there. In our own models the on-site plant keeps "
-      "every machine it starts with.",
-      [(DIS, "The software end on the owner's own machines, the bare metal, made and paid for before any run: the pool is fixed and its hours are no bill.")],
-      aka=["on-site", "onsite"]),
+    T("bare metal", A, "The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own "
+      "machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own, the hours "
+      "it runs and the energy the chip's own meter reads; the software end goes with Omni-Compass to it, and there Omni-Compass can "
+      "reach the chip's own knobs too.",
+      [(DIS, "the owner's own machines, or a chip run directly, with the chip's own controllers under the software.")],
+      aka=["on site", "on-site", "onsite"]),
+    T("the four arms", A, "Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, "
+      "native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done "
+      "inside it, the two places never added together (results/TWO_BILLS.md). The software end's tests are one set read three ways "
+      "and none of them is either place's bill.",
+      [(DIS, "Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal")],
+      aka=["four arms", "the two bills", "A, B, C and D"]),
     T("through the cloud", A, "The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's "
       "AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and "
       "added or removed by the cloud's own autoscaler. Its benchmark must show that Omni-Compass holds there.",
       [(DIS, "Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run)")],
       aka=["Kubernetes through the cloud"]),
-    T("the chip", A, "The processor or graphics card under the software, with its own controllers (the power limit, the clocks, the "
+    T("the chip", A, "Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the "
       "heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's "
       "published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not tested by any run here "
       "and is not claimed.",
@@ -505,15 +511,16 @@ TERMS = [
       "rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS; "
       "the cloud's and the chip's benchmarks must show it.",
       [(DIS, "A place holds when its runs read no LOSS.")], aka=["holds"]),
-    T("where the benefit lives", A, "At the software end, where it is made and measured; it shows through on two receipts, native "
-      "against Omni-Compass: the chip's own meter (the work done for each joule) and the cloud's own bill (the work done for each "
-      "dollar). The chip and the wire add no gain of their own: they are where Omni-Compass must hold.",
+    T("where the benefit lives", A, "At the software end, where it is made and measured, with no bill in it; it shows through on the "
+      "two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, "
+      "and each joule of the chip's own meter), through the cloud the work done inside the cloud's bill (each dollar). The chip and "
+      "the wire add no gain of their own: they are where Omni-Compass must hold.",
       [(DIS, "A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.")]),
     T("one mechanism, in one place", A, "Omni-Compass acts in one place, the software end, on top of the controllers a stack "
       "already runs, and changes nothing in the chip or the network or the cloud. Its effect travels the whole path the work "
       "travels (the software, the wire, the chip and back), so it is checked at every place: the software end shows the gain, the wire "
       "and the chip show that it holds and carry the gain to their receipts.",
-      [(DIS, "Four places are tested because a buyer asks about all four; one mechanism makes the gain")],
+      [(DIS, "Two places are tested because a system runs in only those two; one mechanism makes the gain")],
       aka=["felt along the whole path"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
     T("the compass", L, "The word for the band every reading is held in and for the whole mechanism drawn as one picture (the "
@@ -1073,9 +1080,11 @@ TERMS = [
       [(PAGE_F, "a knob or profile turned from the factory tune: violet, never a side and never a reading's colour")],
       aka=["violet"]),
     T("Mechanism Knobs", W, "The engine's own knobs, live: the four pieces of the brain, the compass law, Omni-Compass's hand on "
-      "each muscle (the max's push and lift-off, the tune-down's floor, step and dwell), native's own controller (its target, "
+      "each muscle (the max's push and lift-off, the tune-down's floor, step and dwell), the redline reflex (the push at the band "
+      "wall, the streak, the relief share, the native-stronger margin and the hand-back holds), native's own controller (its target, "
       "tolerance, step and window) and every muscle's scale out, scale in, scale up, response time and sensing delay. They turn "
-      "the engine's own equations while it runs, on both governed arms; a knob turned from the factory turns violet, ↺ puts it "
+      "the engine's own equations while it runs, on Omni-Compass on native, and native's controller knobs on every native "
+      "controller; a knob turned from the factory turns violet, ↺ puts it "
       "back, and the factory button puts every one back. A tune other than the factory's is a variation of the mechanism (class "
       "S).",
       [(PAGE_F, "the engine's own knobs, live"),

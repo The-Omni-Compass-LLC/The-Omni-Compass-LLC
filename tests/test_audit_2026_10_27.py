@@ -124,7 +124,7 @@ class TheAnswer(unittest.TestCase):
 
     def test_it_leads_with_the_engine_that_stands(self):
         stands = headline.the_engine_that_stands()
-        lead = self.md.split("\n")[4]
+        lead = next(ln for ln in self.md.split("\n")[4:] if ln.strip() and not ln.startswith("#"))   # the first paragraph, under the two places' heading (1 November)
         self.assertIn(f"the engine that stands ({stands})", lead)
 
     def test_every_count_is_the_sheets(self):

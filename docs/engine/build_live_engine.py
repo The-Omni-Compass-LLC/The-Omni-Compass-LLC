@@ -107,6 +107,7 @@ LEDGER = {"aks-metered.yml": "Azure", "gke-metered.yml": "Google Cloud", "eks-me
           "cloud-check.yml": "the $0 cloud check", "lambda-gpu.yml": "the GPU on Lambda", "cpu-power.yml": "the CPU package"}
 LEDGER_CACHE = HERE / "github_ledger.json"
 from tools.repo import NAME as REPO   # noqa: E402  (the repository, written once in tools/repo.py)
+from tools.repo import RAW_MAIN   # noqa: E402  (main's files as GitHub serves them, for the page's self-update)
 LEDGER_GAUGES = ["machines billed, machine-hours", "compute bill at list price ($)", "worker nodes in service, mean", "response time (ms), 95th percentile",
                  "failed requests (%)", "time over the response line (% of samples)"]
 
@@ -1115,7 +1116,7 @@ def scenarios20() -> dict:
         r = o.get("readings") or {}
         on = r.get("on_native_vs_native") if isinstance(r, dict) else None
         if isinstance(on, dict) and on.get("state") == "composed":   # the whole organism: its composition, the headline scope only
-            wh = (((on.get("composition") or {}).get("scopes") or {}).get("without") or {}).get("carried", {}).get("whole", {})
+            wh = (((on.get("composition") or {}).get("scopes") or {}).get("without") or {}).get("index", {}).get("whole", {})
             x["composed"] = {"index": wh.get("index"), "gauges": wh.get("gauges"), "note": "the whole organism in its three places, composed by tools/whole_system.py"}
         else:
             x["readings"] = {k: pair(v) for k, v in r.items()}
@@ -1389,6 +1390,71 @@ def first_difference(a, b, path="$"):
     return path, repr(a)[:120], repr(b)[:120]
 
 
+VERSION = HERE / "LIVE_ENGINE_VERSION.json"   # the newest build's stamp, beside the page, read by every copy of the page
+SELF_UPDATE = """<script id="omniSelfUpdate">
+/* The page keeps itself current wherever it is shown (the founder's order of 1 November): a copy on GitHub, on the company's
+   website or saved anywhere reads the newest build's stamp from the repository when it opens and every 24 hours after, and
+   when the repository holds a newer build than this copy it loads that build in place. It only reads; nothing is sent. */
+(function () {
+  var meta = document.querySelector('meta[name="omni-live-source"]');
+  if (!meta || !window.fetch || !window.JSON) return;
+  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0;
+  function own() {
+    var el = document.getElementById("build");
+    try { return (JSON.parse(el.textContent) || {}).built_at || ""; } catch (e) { return ""; }
+  }
+  function note(text, href) {
+    var d = document.createElement("div");
+    d.setAttribute("role", "status");
+    d.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:99999;padding:10px 14px;border-radius:8px;" +
+      "background:#0b2e13;color:#e8ffe8;font:14px/1.4 system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.5)";
+    d.textContent = text + " ";
+    if (href) { var a = document.createElement("a"); a.href = href; a.textContent = "Open the newest build"; a.style.color = "#9fe6a0"; d.appendChild(a); }
+    document.body.appendChild(d);
+  }
+  function check() {
+    last = Date.now();
+    fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (v) {
+        var mine = own();
+        if (!v || !v.built_at || !mine || v.built_at <= mine) return;
+        return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
+          .then(function (html) {
+            if (html && html.indexOf('id="omniSelfUpdate"') > 0) { document.open(); document.write(html); document.close(); }
+            else { note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); }
+          });
+      })
+      .catch(function () {});
+  }
+  function start() {
+    check();
+    setInterval(check, DAY);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && Date.now() - last >= DAY) check(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
+})();
+</script>"""
+
+
+def self_update(page: str) -> str:
+    """The page's link to its newest build (a meta tag naming main's copy of this folder, from tools/repo.py) and the script
+    that follows it, each exactly once and exactly as written here, so every copy of the page updates itself from the
+    repository (docs/engine/LIVE_ENGINE_VERSION.json, written beside the page at every build)."""
+    tag = f'<meta name="omni-live-source" content="{RAW_MAIN}docs/engine/">'
+    page = re.sub(r'<meta name="omni-live-source"[^>]*>\n?', "", page)
+    page = re.sub(r'<script id="omniSelfUpdate">.*?</script>\n?', "", page, flags=re.S)
+    # in the head, before anything else runs (the page's closing notice stays the last thing in its body)
+    return page.replace("</head>", tag + "\n" + SELF_UPDATE + "\n</head>", 1)
+
+
+def write_version(build: dict) -> None:
+    """The newest build's stamp: the engine, its digest, the commit and the time the page was built, and where the page is."""
+    VERSION.write_text(json.dumps({"engine": build.get("engine"), "digest": build.get("digest"), "commit": build.get("commit"),
+                                   "built_at": build.get("built_at"),
+                                   "page_url": f"{RAW_MAIN}docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"}, indent=1) + "\n",
+                       encoding="utf-8")
+
+
 def stamp_fallbacks(page: str, build: dict) -> str:
     """What a reader sees where the page's script does not run (the referee of 30 October): every element of the page's markup
     marked data-rec="build.engine" or data-rec="build.digest" carries the build record's own value, and the engine's two files
@@ -1553,6 +1619,8 @@ def main() -> int:
             bad.append("the appraisal's counts (docs/engine/APPRAISAL.md)")
         if stamp_fallbacks(page, rec["build"]) != page:
             bad.append("the static fallbacks (the engine's name and digest in the markup)")
+        if self_update(page) != page:
+            bad.append("the self-update (the page's link to its newest build on GitHub, and its script)")
         print("every record on the page is the repository's own run" if not bad else "differs from the repository's own run: " + ", ".join(bad))
         for k in bad:
             if k not in rec:          # the appraisal's counts are a file, not a record: named above, no record to compare
@@ -1565,7 +1633,9 @@ def main() -> int:
               "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field"):
         page = inject(page, k, rec[k])
     page = stamp_fallbacks(page, rec["build"])   # the markup's fallbacks follow the build record, never a hand
+    page = self_update(page)                     # every copy of the page follows the newest build on GitHub
     PAGE.write_text(page, encoding="utf-8")
+    write_version(rec["build"])                  # the stamp every copy reads
     write_appraisal(rec)                      # the appraisal's counts follow the records, never a hand
     b = rec["build"]
     print(f"live benchmark engine rebuilt on {b['engine']} ({b['digest']}) at {b['commit'][:12]}, {b['built_at']}; "
