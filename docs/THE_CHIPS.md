@@ -111,7 +111,7 @@ and rents nothing before the founder's word.
 4. **The stacked box's 100-copy size rented alone.** Sizes 1 and 10 spent the 33 rented hours; 100 copies got one
    repetition a run and is shown, not judged. Rented alone: about 33 hours on each of three A10s, about $128.
 5. **Eight cards pooled** (`8card pooled`, every stage on eight A100 cards, repetitions pooled across the cards): the whole
-   design at once, never rented; about 10.5 hours, about $165 at most at Lambda's list price.
+   design at once, never rented; about 10.5 hours, about $257 at most at Lambda's list price ($22.32 an hour on 1 November).
 
 Steps 1 and 3 are the chip proof's own; 2 is the founder's call; 4 and 5 widen it. Nothing here is written as a result
 before the result exists.
