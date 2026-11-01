@@ -1,0 +1,99 @@
+# Repeated live runs on kind (native against omni: Omni-Compass on top of native)
+
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+<!-- how to read this receipt (tools/readings.py) -->
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+<!-- end: how to read this receipt -->
+
+## All columns, mean over repetitions
+
+| Gauge | native | omni |
+|---|---:|---:|
+| worker nodes in service, mean | 6 | 5.445 |
+| node-hours | 2.516 | 2.282 |
+| energy, parked workers still on at idle power (Wh, declared model) | 273.8 | 273.7 |
+| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 273.8 | 256.3 |
+| energy, the machine's own meter over the window (Wh; the processor's RAPL counters, class P) | nan | nan |
+| energy Kepler attributes to the service's pods (Wh; its split of the meter by each pod's CPU time: shown, not judged) | nan | nan |
+| energy, Kepler's reading of the same counters (Wh; Kepler 0.11.4: shown, not judged) | nan | nan |
+| response time (ms), mean | 337.4 | 313.8 |
+| response time (ms), 95th percentile | 1312 | 1469 |
+| response time (ms), 99th percentile | 2213 | 2300 |
+| time over the response line (% of samples) | 12.79 | 12.24 |
+| failed requests (%) | 0 | 0 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 9.6 | 8.5 |
+| settings commands the governor wrote on its own (no person touched either arm) | 0 | 30.7 |
+| governor's additions decided while the service was still inside its line (% of its additions) | nan | 0 |
+| pods with no machine to take them (unschedulable) | 0 | 0 |
+| time pods had no machine to take them, pod-minutes | 0 | 0 |
+| pending pods in a 15 s snapshot, pod-minutes (a pod being started counts too: shown, not judged) | 17.79 | 18.79 |
+| utilisation (used / allocatable) | 0.0636 | 0.06957 |
+| CPU used (cores), mean | 1.526 | 1.514 |
+| Omni's own CPU (cores), mean | 0 | 0.01706 |
+| CPU used with Omni's own (cores), mean | 1.526 | 1.531 |
+| energy per core-hour (Wh, the 25 W standby model; a ratio over CPU used: shown, not judged) | 441.5 | 411.8 |
+| HPA replicas, mean | 2.137 | 2.063 |
+| pods started | 0.1 | 0 |
+| pod start wait, total (s) | 0.2 | 0 |
+| pod start wait, mean (s) | 0.2 | 0 |
+| host CPU busy, the real machine under kind (%) | 44.16 | 45.11 |
+| host cores (the real machine under kind) | 4 | 4 |
+| batch: queue finished (s) | 822 | 828.1 |
+| batch: worker machines in service after the queue finished, mean | 6 | 5.069 |
+| queue: job wait, submitted to its first pod running, mean (s) | 0.8083 | 0.875 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | 1.7 | 2.1 |
+| queue: job turnaround, submitted to done, mean (s) | 133.8 | 135.5 |
+| queue: jobs unfinished at the window's end | 0 | 0 |
+| work inside the response line (requests a second; the capacity test's own gauge) | nan | nan |
+| work per dollar of the bill (answers inside the line for each $; the cloud's judged number) | nan | nan |
+
+**Energy on kind is a declared model, not a meter.** Every worker stays powered and Ready in every arm; the first
+energy row counts a parked worker at its full idle power, which is what kind does. The second counts it at the
+declared standby power, which needs a node autoscaler that really removes the machine; this run has none.
+
+**The babysitting tax.** Omni-Compass runs on autopilot: no person touched a setting in either arm. An alert
+minute is a whole minute whose 95th percentile, failed requests counted over, was over the line: a minute an
+on-call page would be open. The commands are the settings the governor wrote on its own, each in its audit with
+its reason; the share decided inside the line counts its additions (a machine more, or a lower HPA target) made
+before the line was crossed. The alert minutes are judged; the commands and the share are shown, not judged.
+
+## omni (compass law): Omni-Compass on top of native, push and pull on the HPA target and the node pool vs native, 10 paired repetitions
+
+| Gauge | native | omni | Change | 95% interval of the difference | Significant |
+|---|---:|---:|---:|---:|---|
+| worker nodes in service, mean | 6 | 5.445 | −9.3% | −1.2864 to +0.1758 | no |
+| node-hours | 2.516 | 2.282 | −9.3% | −0.5431 to +0.0766 | no |
+| energy, parked workers still on at idle power (Wh, declared model) | 273.8 | 273.7 | −0.0% | −1.5045 to +1.3008 | no |
+| energy, parked workers at 25 W standby (Wh, declared model; kind never does this) | 273.8 | 256.3 | −6.4% | −41.4599 to +6.3979 | no |
+| response time (ms), mean | 337.4 | 313.8 | −7.0% | −44.5253 to −2.7126 | yes: GAIN |
+| response time (ms), 95th percentile | 1312 | 1469 | +12.0% | −24.9225 to +340.7175 | no |
+| response time (ms), 99th percentile | 2213 | 2300 | +3.9% | −124.5083 to +297.9403 | no |
+| time over the response line (% of samples) | 12.79 | 12.24 | −4.3% | −2.7771 to +1.6781 | no |
+| failed requests (%) | 0 | 0 | ±0.000 (native is 0) | ±0.0000 to ±0.0000 | no |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 9.6 | 8.5 | −11.5% | −2.5871 to +0.3871 | no |
+| settings commands the governor wrote on its own (no person touched either arm) | 0 | 30.7 | +30.700 (native is 0) | +17.9440 to +43.4560 | yes, up (shown, not judged) |
+| pods with no machine to take them (unschedulable) | 0 | 0 | ±0.000 (native is 0) | ±0.0000 to ±0.0000 | no |
+| time pods had no machine to take them, pod-minutes | 0 | 0 | ±0.000 (native is 0) | ±0.0000 to ±0.0000 | no |
+| pending pods in a 15 s snapshot, pod-minutes (a pod being started counts too: shown, not judged) | 17.79 | 18.79 | +5.7% | −3.1027 to +5.1161 | no |
+| utilisation (used / allocatable) | 0.0636 | 0.06957 | +9.4% | −0.0007 to +0.0126 | no |
+| CPU used (cores), mean | 1.526 | 1.514 | −0.8% | −0.0637 to +0.0387 | no |
+| Omni's own CPU (cores), mean | 0 | 0.01706 | +0.017 (native is 0) | +0.0150 to +0.0191 | yes, up (shown, not judged) |
+| CPU used with Omni's own (cores), mean | 1.526 | 1.531 | +0.3% | −0.0484 to +0.0576 | no |
+| energy per core-hour (Wh, the 25 W standby model; a ratio over CPU used: shown, not judged) | 441.5 | 411.8 | −6.7% | −64.4624 to +5.0420 | no |
+| HPA replicas, mean | 2.137 | 2.063 | −3.5% | −0.3346 to +0.1854 | no |
+| pods started | 0.1 | 0 | −100.0% | −0.3262 to +0.1262 | no |
+| pod start wait, total (s) | 0.2 | 0 | −100.0% | −0.6524 to +0.2524 | no |
+| pod start wait, mean (s) | 0.2 | 0 | −100.0% | −0.6524 to +0.2524 | no |
+| host CPU busy, the real machine under kind (%) | 44.16 | 45.11 | +2.2% | +0.5266 to +1.3793 | yes, up (shown, not judged) |
+| host cores (the real machine under kind) | 4 | 4 | ±0.0% | ±0.0000 to ±0.0000 | no |
+| batch: queue finished (s) | 822 | 828.1 | +0.7% | −1.3448 to +13.5448 | no |
+| batch: worker machines in service after the queue finished, mean | 6 | 5.069 | −15.5% | −2.0965 to +0.2341 | no |
+| queue: job wait, submitted to its first pod running, mean (s) | 0.8083 | 0.875 | +8.2% | −0.1404 to +0.2737 | no |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | 1.7 | 2.1 | +23.5% | −0.5048 to +1.3048 | no |
+| queue: job turnaround, submitted to done, mean (s) | 133.8 | 135.5 | +1.2% | −4.0881 to +7.4131 | no |
+| queue: jobs unfinished at the window's end | 0 | 0 | ±0.000 (native is 0) | ±0.0000 to ±0.0000 | no |
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
