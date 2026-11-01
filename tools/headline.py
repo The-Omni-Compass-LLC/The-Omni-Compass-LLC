@@ -323,8 +323,9 @@ def markdown(m) -> str:
           f"{', '.join(f'{k} {v}' for k, v in rec['runs'].items())}; commit `{rec['commit'][:12]}`. The record's other arm, Omni-Compass "
           "alone on the muscles, stays in the record and is not carried here.", ""]
     L += ["### Bill by Route", "",
-          "On the cloud alone Omni-Compass parks only machines the cloud's own autoscaler made, so a cloud run can show only a small cut "
-          "in the bill.", "",
+          "Through the cloud the whole engine runs at the max on the cloud's own cluster, on top of the cloud's own autoscaler, from 31 October; "
+          "the cloud is the wire, so a cloud set shows whether Omni-Compass holds there: the bill read beside the work it bought, as the work per dollar "
+          "(the work answered within the line divided by the bill), a bill that rises power given and the work rising more.", "",
           "Each route's bill is its native total cost, then Omni-Compass's, then the saving: 1 − (the Omni-Compass total ÷ the native total), "
           "each total the sum of its non-overlapping cost components inside the declared boundary, on a matched workload "
           "(`docs/THE_TUNE.md`, section 8). A component's own percent is a supporting measurement, never the bill. Where a price or a "
