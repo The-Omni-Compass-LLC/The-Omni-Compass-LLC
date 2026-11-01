@@ -401,6 +401,10 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "places.py"), "--check"], capture_output=True, text=True)
     check("the words for the places (the software end, on site, through the cloud, the chip, hold) stand word for word on every page "
           "(tools/places.py)", r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "two_bills.py"), "--check"], capture_output=True, text=True)
+    check("the two bills (A the chip native, B the chip with Omni-Compass, C the cloud native, D the cloud with Omni-Compass): "
+          "results/TWO_BILLS.md is what the tables give (tools/two_bills.py)", r.returncode == 0,
+          (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "engine_coverage.py"), "--check"], capture_output=True, text=True)
     check("how much of the engine the tests run: docs/ENGINE_COVERAGE.md is what its record gives (tools/engine_coverage.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
