@@ -49,6 +49,14 @@ the noise where separability holds, and the page says where they do not. The sta
 once, against native at every layer) is the measurement that would replace this composition; until it exists this page is
 the answer the standing tables give, with its assumptions in the open.
 
+What is composed (the founder's order of 31 October 2026). The whole organism is shown at the software end: work, speed and machines are
+composed. The energy and the bill are held at native's (exactly 1, shown beside, never composed): on the cluster the energy is a declared
+model of the machines row, never a meter, so composing it would count the fewer machines twice and claim a saving at the chip that no
+meter read; the cloud is the wire, and its bill is kept exactly as native's (the benefit is more work for the same bill). The chip (the
+card) and the wire (the cloud) enter as exactly 1 on every gauge: the chip is kept exactly as native runs it, and its own meter at the
+factory tune reads it so (the omni-v21 A100 three runs, results/gpu/V21_A100_CAP_ABC.md); the cloud's runs are the check that the
+software end's benefit holds through the wire. Both are shown beside, every row.
+
 Every result is read from a table that names its engine; the layers stand on different engines (the card on the controller
 of 2 October, the cluster on omni-v10 and omni-v11, the governors on omni-v12), so the composition is also across engines,
 said so, and remade as each layer's omni-v12 three runs land (`python3 tools/whole_system.py`).
@@ -73,13 +81,30 @@ from omni_index import SOURCES, WORKLOAD_TABLES, newest, CAPACITY, CAPACITY_NOW,
 LIVE = ROOT / "results" / "live"
 OUT_MD = ROOT / "results" / "WHOLE_SYSTEM.md"
 OUT_JSON = ROOT / "results" / "WHOLE_SYSTEM.json"
-GPU_RUN = ROOT / "results" / "gpu" / "run-20261024T091235Z"
+GPU_ABC = ROOT / "results" / "gpu" / "V21_A100_CAP_ABC.json"   # the card at the factory tune (the dial at the max), three runs, its own meter
 
 GAUGES = ("work", "speed", "machines", "energy", "bill")
 AIM = {"work": "higher", "speed": "lower", "machines": "spent", "energy": "spent", "bill": "spent"}
 GAUGE_WORDS = {"work": "work (more)", "speed": "speed (the 95th percentile response, lower)", "machines": "machines (fewer)",
-               "energy": "energy (less)", "bill": "the bill (smaller)"}
+               "energy": "energy (a declared model on the cluster, the card's own meter on the chip)", "bill": "the bill (the cloud's metered bill)"}
 Z = 1.959964
+
+# The founder's order of 31 October 2026: the whole organism is shown at the software end only. Omni-Compass makes the software
+# do more work, faster, on fewer machines; the chip is kept exactly as native runs it and the cloud's wire bill exactly as native's,
+# so the benefit is more work for the same power and the same bill. Composed: work, speed and machines. Held at native's (exactly 1,
+# shown beside, never composed): the energy (on the cluster a declared model of the machines row, never a meter: composed, it would
+# count the fewer machines twice and claim a saving at the chip that no meter read) and the bill (the cloud is the wire; the benefit
+# is more work for the same bill). The card (the chip) and the cloud (the wire) enter as exactly 1 on every gauge; their own runs are
+# shown beside, the card's as the chip measured and left as native runs it, the cloud's as the check that the software end's benefit
+# holds through the wire.
+COMPOSED = ("work", "speed", "machines")
+HELD = {"energy": "held at native's, the same power: on the cluster a declared model of the machines row, never a meter, so it is shown, not composed",
+        "bill": "held at native's, the same bill: the cloud is the wire, and the benefit is more work for the same bill"}
+SCOPE_WITH = "with the card (the chip held exactly as native runs it)"
+SCOPE_WITHOUT = "without the card (the cluster, the services and the cloud)"
+HELD_LAYERS = {"1.": "the chip, kept exactly as native runs it: enters as exactly 1, its three runs shown beside",
+               "5.": "the wire, its bill kept exactly as native's: enters as exactly 1, its runs shown beside as the check that the benefit holds"}
+GAUGE_WORDS_HELD = {"energy": "energy (held at native's: the same power)", "bill": "the bill (held at native's: the same bill)"}
 
 # the cluster layer: the Omni index's Kubernetes tests, the add-on and rightsizing tests, and the governors with Omni-Compass on
 # top of each (the four ways' TOP comparison: compass against native, the orchestrator as shipped under both)
@@ -292,6 +317,23 @@ def cloud_tests():
                 t["gauges"][g] = {"row": key, "reading": "one run: the interval includes zero" if lo < 0 < hi else "one run: clear of the noise",
                                   "judged": False, "est": log_ratio(AIM[g], n_, o_, lo, hi, 4), "runs": [(n_, o_)]}
         out.append(t)
+    # the steady set of 100 paired repetitions (results/live/AKS_STEADY_100_OMNI_V18.md, one run, the stopping rule's looks): the
+    # cloud's best measurement on record, Omni-Compass on top of native at the tune-down on the machines alone
+    p100 = LIVE / "AKS_STEADY_100_OMNI_V18.json"
+    if p100.exists():
+        d = json.loads(p100.read_text())
+        rows = (d.get("paired") or {}).get("compass") or {}
+        n = len((d.get("repetitions") or {}).get("compass") or []) or None
+        t = {"test": (f"Azure Kubernetes Service, Azure's own cluster autoscaler underneath, the steady set, {n} paired repetitions in one run "
+                      "(Omni-Compass at the tune-down on the machines alone)"),
+             "source": "results/live/AKS_STEADY_100_OMNI_V18.md", "runs": ["40069633316"], "engine": "omni-v18", "pairs": [n], "gauges": {}}
+        for g, key in CLOUD_MEASURES.items():
+            row = rows.get(key)
+            if row:
+                lo, hi = row.get("ci95") or (None, None)
+                t["gauges"][g] = {"row": key, "reading": "one run: the interval includes zero" if not row.get("significant") else "one run: clear of the noise",
+                                  "judged": False, "est": log_ratio(AIM[g], row["native"], row["omni"], lo, hi, n), "runs": [(row["native"], row["omni"])]}
+        out.append(t)
     for name, f in (("the steady set", "V1_AKS_STEADY.json"), ("the burst", "V1_AKS_BURST.json")):
         p = LIVE / f
         if not p.exists():
@@ -312,27 +354,93 @@ def cloud_tests():
 
 
 def card_tests():
-    p = GPU_RUN / "GPU_REPS.json"
-    if not p.exists():
+    """The chip: the card governor at the factory tune (the dial at the max) on an A100, three runs, the card's own meter (class P)."""
+    if not GPU_ABC.exists():
         return []
-    d = json.loads(p.read_text())
-    paired = (d.get("paired") or {}).get("omni") or {}
-    n = len([x for x in GPU_RUN.iterdir() if x.name.startswith("rep-")]) or 10
-    t = {"test": (f"NVIDIA A100 (SXM4, 40 GB) on Lambda, the card's own meter, Omni-Compass on the power limit and the clock ceiling, "
-                  f"{n} paired repetitions, one run (24 October; at its limit on native: the governor wrote nothing)"),
-         "source": str((GPU_RUN / "GPU_REPS.md").relative_to(ROOT)), "runs": [], "engine": "omni-v18 (the card governor at commit e3b05dc, the branch gpu-omni-v18)",
-         "pairs": [n], "gauges": {}, "primary": None}
+    d = json.loads(GPU_ABC.read_text())
+    md = GPU_ABC.with_suffix(".md")
+    m = re.search(r"(\d+) paired repetitions each", md.read_text()) if md.exists() else None
+    n = int(m.group(1)) if m else None
+    engine = (d.get("engine") or ["unknown"])[0].split(" (")[0]
+    t = {"test": (f"NVIDIA A100 (SXM4, 40 GB) on Lambda, the card's own meter, Omni-Compass on the power limit and the clock ceiling at the "
+                  f"factory tune (the dial at the max), native's power cap at 70% of the card's top, {n} paired repetitions in each of three runs"),
+         "source": str(md.relative_to(ROOT)), "runs": list(d.get("runs") or []), "engine": engine, "pairs": [n] * len(d.get("runs") or []),
+         "gauges": {}, "primary": None}
+    rows = d.get("rows") or {}
     for g, key in CARD_MEASURES.items():
-        row = paired.get(key)
-        if row:
-            lo, hi = row.get("ci95") or (None, None)
-            t["gauges"][g] = {"row": key, "reading": "one run: clear of the noise" if (lo is not None and (lo > 0 or hi < 0)) else "one run: the interval includes zero",
-                              "judged": False, "est": log_ratio(AIM[g], row["native"], row["omni"], lo, hi, n), "runs": [(row["native"], row["omni"])]}
-    row = paired.get(CARD_PRIMARY)
+        row = rows.get(key)
+        if not row:
+            continue
+        ests = [log_ratio(AIM[g], r["native"], r["omni"], *(r.get("ci95") or (None, None)), n) for r in row["runs"]]
+        t["gauges"][g] = {"row": key, "reading": row["reading"], "judged": readings.judged(row["reading"]), "est": pool(ests),
+                          "runs": [(r["native"], r["omni"]) for r in row["runs"]]}
+    row = rows.get(CARD_PRIMARY)
     if row:
-        lo, hi = row.get("ci95") or (None, None)
-        t["primary"] = {"row": CARD_PRIMARY, "est": log_ratio("higher", row["native"], row["omni"], lo, hi, n), "runs": [(row["native"], row["omni"])]}
+        ests = [log_ratio("higher", r["native"], r["omni"], *(r.get("ci95") or (None, None)), n) for r in row["runs"]]
+        t["primary"] = {"row": CARD_PRIMARY, "reading": row["reading"], "est": pool(ests), "runs": [(r["native"], r["omni"]) for r in row["runs"]]}
     return [t]
+
+
+# ----------------------------------------------------------------------------------------------------------------------- what it cost
+# The founder's words of 31 October 2026: the hardware is shown so a buyer sees the benefit and what it cost: that the software end's
+# gain was not bought by hurting the chip (its heat, its power, its service), by more energy, or by a bigger bill on the wire. Every
+# row of the chip's own meter is listed, every LOSS named; the energy and the bill as measured; the machine's layer as not yet run.
+COST_CARD = [("the factory tune (the dial at the max), native's power cap at 70% of the card's top", "V21_A100_CAP_ABC"),
+             ("the factory tune, the same runs' full-load part", "V21_A100_CAP_FULL_ABC"),
+             ("the tune-down (the dial at save), its own three runs", "V21_A100_SAVE_ABC")]
+
+
+def reading_word(r):
+    r = (r or "").strip("* ")
+    for w in (readings.GAIN, readings.LOSS, readings.STEADY, readings.GIVEN, "the runs disagree"):
+        if r.startswith(w):
+            return w
+    return r.split(",")[0]
+
+
+def cost_ledger(measured):
+    """Per hardware piece and the wire, every reading against native, its word, and the LOSS rows named."""
+    pieces = []
+    rows, srcs = [], []
+    for label, stem in COST_CARD:
+        p = ROOT / "results" / "gpu" / f"{stem}.json"
+        if not p.exists():
+            continue
+        d = json.loads(p.read_text())
+        srcs.append(f"results/gpu/{stem}.md")
+        for g, row in d["rows"].items():
+            ch = [100 * (r["omni"] - r["native"]) / r["native"] for r in row["runs"] if r.get("native")]
+            rows.append({"part": label, "gauge": g, "reading": row["reading"], "word": reading_word(row["reading"]), "changes": ch})
+    if rows:
+        pieces.append({"piece": "the chip (an NVIDIA A100, the card's own meter, class P, omni-v21)", "sources": srcs, "rows": rows})
+    lay = {n.split(".")[0]: v for n, v in measured.items()}
+    def mrow(layer, g, label, note):
+        e = (lay.get(layer) or {}).get(g)
+        if e is None:
+            return None
+        r, lo, hi = interval(e)                         # native over Omni-Compass for a resource; said here as Omni-Compass against native
+        o, olo, ohi = 1.0 / r - 1.0, 1.0 / hi - 1.0, 1.0 / lo - 1.0
+        def way(x):
+            return f"{abs(100 * x):.1f}% {'less' if x < 0 else 'more'}"
+        w = word_for(g, e)
+        noise = "; its 95% interval includes no change" if olo < 0 < ohi else ""
+        return {"part": note, "gauge": label, "word": w, "est": list(e),
+                "reading": f"{w}: Omni-Compass {way(o)} than native (95%: {way(olo)} to {way(ohi)}){noise}"}
+    sw = [r for r in (mrow("3", "energy", "energy, parked workers at standby power (Wh)", "the cluster: a declared model of the machines row, never a meter"),
+                      mrow("4", "energy", "the host's processor seconds", "the services: the host's own count of processor time, a stand-in for energy, never a meter")) if r]
+    if sw:
+        pieces.append({"piece": "the energy the software end drew (class L inputs, no meter)", "sources": ["results/live (the cluster and service tables)"], "rows": sw})
+    cl = [r for r in (mrow("5", "bill", "the compute bill at list price", "Azure: the steady set's 100 paired repetitions (one run), the compass law's four (one run) and the v1 fleet's one-run sets, their mean"),
+                      mrow("5", "machines", "machines billed", "the same runs")) if r]
+    if cl:
+        pieces.append({"piece": "the wire (the cloud's metered bill, class L)", "sources": ["results/live/AKS_STEADY_100_OMNI_V18.md", "results/live/AKS_BILL.md", "results/live/V1_AKS_STEADY.json", "results/live/V1_AKS_BURST.json"], "rows": cl})
+    pieces.append({"piece": "the machine (the kernel, bare metal, Kepler and the machine's own meter)", "sources": ["register row 79"], "rows": [],
+                   "state": "not yet run"})
+    for pc in pieces:
+        pc["count"] = {w: sum(1 for r in pc["rows"] if r["word"] == w) for w in (readings.GAIN, readings.STEADY, readings.GIVEN, readings.LOSS, "the runs disagree")}
+        pc["loss"] = [f"{r['gauge']} ({r['part']}): {r['reading']}" for r in pc["rows"] if r["word"] == readings.LOSS]
+        pc["disagree"] = [f"{r['gauge']} ({r['part']})" for r in pc["rows"] if r["word"] == "the runs disagree"]
+    return pieces
 
 
 # ----------------------------------------------------------------------------------------------------------------------- the layers
@@ -418,17 +526,34 @@ def test_line(t):
     return "; ".join(parts)
 
 
+def held_layer(name):
+    return next((why for pre, why in HELD_LAYERS.items() if name.startswith(pre)), None)
+
+
+def composed(name, g, est):
+    """What a layer's measured gauge enters the composition as: its own factor at the software end; exactly 1 (no variance) for a
+    held gauge (energy, the bill) or a held layer (the chip, the wire); None where nothing was measured."""
+    if est is None:
+        return None
+    if g in HELD or held_layer(name):
+        return (0.0, 0.0)
+    return est
+
+
 def totals(layers, rule):
-    by_layer = {name: layer_gauges(tests, rule) for name, tests in layers.items()}
+    measured = {name: layer_gauges(tests, rule) for name, tests in layers.items()}
+    by_layer = {name: {g: composed(name, g, e) for g, e in gs.items()} for name, gs in measured.items()}
     total = {}
     for g in GAUGES:
         total[g] = combine_sum([by_layer[n][g] for n in by_layer if by_layer[n][g] is not None])
-    idx_es = [total[g] for g in GAUGES if total[g] is not None]
+        if g in HELD:
+            total[g] = (0.0, 0.0)
+    idx_es = [total[g] for g in COMPOSED if total[g] is not None]
     k = len(idx_es)
     idx_mu = sum(m for m, _ in idx_es) / k if k else None
     idx_ind = math.sqrt(sum(s * s for _, s in idx_es)) / k if k else None
     idx_cor = sum(s for _, s in idx_es) / k if k else None
-    return by_layer, total, (idx_mu, idx_ind, idx_cor)
+    return by_layer, total, (idx_mu, idx_ind, idx_cor), measured
 
 
 def jsonable(o):
@@ -454,11 +579,12 @@ def main(argv=None):
     from tools.omni_version import VERSIONS
     standing = f"omni-{next(iter(VERSIONS))}"    # the engine that stands: the version list's newest
 
-    results = {}
-    for scope, layers in (("with the card's one run", layers_all), ("without the card (the cluster, the services and the cloud)", layers_real)):
+    results, measured_all = {}, {}
+    for scope, layers in ((SCOPE_WITH, layers_all), (SCOPE_WITHOUT, layers_real)):
         for rule in ("index", "carried"):
-            by_layer, total, idx = totals(layers, rule)
+            by_layer, total, idx, measured = totals(layers, rule)
             results[(scope, rule)] = (by_layer, total, idx)
+            measured_all[(scope, rule)] = measured
 
     L = []
     L.append("# The whole system: Omni-Compass at every layer, composed by the product law")
@@ -492,6 +618,14 @@ def main(argv=None):
              "layer was measured in its own runs. The total's 95% interval is exp(μ ± 1.96 σ). The index over the gauges is the mean of the gauge logs; "
              "its interval is given under two bounds, the gauges independent (Var = Σσ² / k²) and the gauges perfectly correlated inside a run (σ = Σσ / k).")
     L.append("")
+    L.append("What is composed (the founder's order of 31 October 2026). The whole organism is shown at the software end: **work, speed and machines "
+             "are composed**. **The energy and the bill are held at native's** (exactly 1, shown beside, never composed): on the cluster the energy is a "
+             "declared model of the machines row, never a meter, so composing it would count the fewer machines twice and claim a saving at the chip that "
+             "no meter read; the cloud is the wire and its bill is kept exactly as native's, the benefit being more work for the same bill. **The chip and "
+             "the wire enter as exactly 1 on every gauge**: the chip is kept exactly as native runs it (its own meter at the factory tune reads it so, "
+             "section 2), and the cloud's runs are the check that the software end's benefit holds through the wire. The index over the gauges is the "
+             "mean of the three composed gauges' logs: more work, faster, on fewer machines, for the same power and the same bill.")
+    L.append("")
     L.append("Two readings of the same numbers. **By the index's rule** a gauge of a test enters only when its three-run reading is GAIN, LOSS or power "
              "given in all three of our runs; a STEADY gauge, a disagreement, or a table of one run enters as exactly 1 with no variance (nothing inside the "
              "noise is claimed either way). **With every interval carried**, every measured gauge enters with its pooled estimate and its variance whatever "
@@ -502,25 +636,28 @@ def main(argv=None):
              "does not change when the layers under or over it also carry Omni-Compass (separability). Section 4 tests that assumption where the tables can "
              "(the governors' four ways). The stacked run, Omni-Compass at every layer at once against native at every layer, is the measurement that would "
              "replace this composition; until it exists this page is the answer the standing tables give, with its assumptions in the open. The layers "
-             "also stand on different engines, each named in its row below (the card on omni-v18's card governor, the A100 run of 24 October), so the "
+             "also stand on different engines, each named in its row below (the card on omni-v21's card governor, the A100 three runs), so the "
              "composition is across engines, said so here, and remade as each layer's three runs on the engine that stands land.")
     L.append("")
 
     L.append("## 2. The layers, each from its own table")
     L.append("")
-    L.append("| Layer | Tests | Gauge | By the index's rule | With every interval carried | Word (carried) |")
-    L.append("|---|---:|---|---|---|---|")
-    by_idx = results[("with the card's one run", "index")][0]
-    by_car = results[("with the card's one run", "carried")][0]
+    L.append("Each layer's own measurement, read two ways, and what it enters the composition as (section 1).")
+    L.append("")
+    L.append("| Layer | Tests | Gauge | Measured, by the index's rule | Measured, every interval carried | Word (carried) | Enters the composition as |")
+    L.append("|---|---:|---|---|---|---|---|")
+    by_idx = measured_all[(SCOPE_WITH, "index")]
+    by_car = measured_all[(SCOPE_WITH, "carried")]
     for name, tests in layers_all.items():
         first = True
         for g in GAUGES:
             a, b = by_idx[name].get(g), by_car[name].get(g)
             if a is None and b is None:
                 continue
-            L.append(f"| {name if first else ''} | {len(tests) if first else ''} | {GAUGE_WORDS[g]} | {fmt(a)} | {fmt(b)} | {word_for(g, b)} |")
+            how = held_layer(name) or HELD.get(g) or "its own factor"
+            L.append(f"| {name if first else ''} | {len(tests) if first else ''} | {GAUGE_WORDS[g]} | {fmt(a)} | {fmt(b)} | {word_for(g, b)} | {how} |")
             first = False
-    L.append("| 2. the machine (the kernel, bare metal, Kepler) | 0 | every gauge | not yet run (register row 79): enters as exactly 1 | not yet run | not measured |")
+    L.append("| 2. the machine (the kernel, bare metal, Kepler) | 0 | every gauge | not yet run (register row 79) | not yet run | not measured | exactly 1 |")
     L.append("")
     card = layers_all["1. the card (the chip), class P"]
     if card and card[0].get("primary"):
@@ -530,12 +667,15 @@ def main(argv=None):
         en_pct = pct(1.0 / interval(en["est"])[0]) if en and en["est"] else "?"
         r_pr = interval(pr["est"])[0]
         w_pr = (readings.STEADY if abs(r_pr - 1.0) < readings.SIZE_FLOOR else readings.GAIN if r_pr > 1.0 else readings.GIVEN)
-        L.append(f"The card's primary gauge, work per energy (served requests per kJ): {fmt(pr['est'])} in its one run, native {pr['runs'][0][0]:.2f} → "
-                 f"{pr['runs'][0][1]:.2f}, {w_pr} by the one key; the same run read the 95th percentile response {sp_pct} "
-                 f"({word_for('speed', sp['est']) if sp else 'not measured'}) and the energy drawn {en_pct} "
-                 f"({word_for('energy', en['est']) if en else 'not measured'}). It is omni-v18's card governor at the factory tune, one run (B and C "
-                 "not yet run): the card's own setting already holds both knobs at their top, so the governor wrote nothing (at its limit on native). It is "
-                 "carried here because it is the only real-meter measurement of the chip layer, and the totals are given with and without it.")
+        n_runs = len(pr["runs"])
+        L.append(f"The card's primary gauge, work per energy (served requests per kJ): {fmt(pr['est'])} over its {n_runs} runs, "
+                 f"{pr['reading']}; the same runs read the 95th percentile response {sp_pct} "
+                 f"({sp['reading'] if sp else 'not measured'}) and the energy drawn {en_pct} "
+                 f"({en['reading'] if en else 'not measured'}). It is omni-v21's card governor at the factory tune (the dial at the max) on top of "
+                 "native's power cap at 70% of the card's top, read by the card's own meter (class P). The chip's work and energy read STEADY at the "
+                 "factory tune, so the chip enters the composition as exactly 1: the chip kept exactly as native runs it is what its own meter reads. "
+                 "The tune-down's three runs (results/gpu/V21_A100_SAVE_ABC.md) read the same requests served for 0.7% to 0.85% less of the card's "
+                 "energy in each run, GAIN by the mean of the three runs: a changed tune, its own record, shown and never composed.")
         L.append("")
 
     L.append("### Every test behind the layers")
@@ -556,34 +696,59 @@ def main(argv=None):
         for g in GAUGES:
             if total[g] is None:
                 continue
+            if g in HELD:
+                L.append(f"| {scope} | {rule_w} | {GAUGE_WORDS_HELD[g]} | ×1 | exactly 1: {HELD[g]} | held |")
+                continue
             r, lo, hi = interval(total[g])
             L.append(f"| {scope} | {rule_w} | {GAUGE_WORDS[g]} | ×{r:.4f} | {pct(r)} ({pct(lo)} to {pct(hi)}) | {word_for(g, total[g])} |")
         mu, s_ind, s_cor = idx
         if mu is not None:
             r = math.exp(mu)
-            L.append(f"| {scope} | {rule_w} | **the index over the gauges** | **×{r:.4f}** | **{pct(r)}** (gauges independent {pct(math.exp(mu - Z * s_ind))} to "
+            L.append(f"| {scope} | {rule_w} | **the index over work, speed and machines** | **×{r:.4f}** | **{pct(r)}** (gauges independent {pct(math.exp(mu - Z * s_ind))} to "
                      f"{pct(math.exp(mu + Z * s_ind))}; gauges correlated {pct(math.exp(mu - Z * s_cor))} to {pct(math.exp(mu + Z * s_cor))}) | "
                      f"{word_for('work', (mu, s_cor))} |")
     L.append("")
-    (by_layer, total, idx) = results[("without the card (the cluster, the services and the cloud)", "index")]
-    (by_layer_c, total_c, idx_c) = results[("without the card (the cluster, the services and the cloud)", "carried")]
-    (by_layer_a, total_a, idx_a) = results[("with the card's one run", "carried")]
+    (by_layer, total, idx) = results[(SCOPE_WITHOUT, "index")]
+    (by_layer_c, total_c, idx_c) = results[(SCOPE_WITHOUT, "carried")]
+    (by_layer_a, total_a, idx_a) = results[(SCOPE_WITH, "carried")]
     L.append("Read: the headline is the row **without the card, by the index's rule**: it counts only what held the same way in all three of our runs, "
-             f"on real software on GitHub's own machines (class L, the software end; never bare metal), and composes the cluster, the services on it and the cloud: **{pct(math.exp(idx[0]))}** over the gauges, "
-             f"speed {pct(interval(total['speed'])[0])}, machines {pct(interval(total['machines'])[0])}, energy {pct(interval(total['energy'])[0])}, "
-             f"work {pct(interval(total['work'])[0]) if total['work'] else 'not taken'}, the bill {pct(interval(total['bill'])[0]) if total['bill'] else 'not taken'}. "
-             "With every interval carried the same layers read "
-             f"**{pct(math.exp(idx_c[0]))}** (gauges correlated: {pct(math.exp(idx_c[0] - Z * idx_c[2]))} to {pct(math.exp(idx_c[0] + Z * idx_c[2]))}); the cloud's "
-             "wide one-run intervals (4 and 5 paired repetitions) are what widen it. With the card's one old run carried the chip's speed LOSS of that "
-             f"run pulls the index to **{pct(math.exp(idx_a[0]))}** and its energy GAIN adds to the energy row; the card's omni-v12 run replaces that row.")
+             f"on real software on GitHub's own machines (class L, the software end, never bare metal: the cluster and the services on it): **{pct(math.exp(idx[0]))}** over work, speed and "
+             f"machines; work {pct(interval(total['work'])[0]) if total['work'] else 'not taken'}, speed {pct(interval(total['speed'])[0])} (native's "
+             f"95th percentile response over Omni-Compass's), machines {pct(interval(total['machines'])[0])} (native's machines over Omni-Compass's), "
+             "for the same power and the same bill (both held at native's, section 1). With every interval carried the same layers read "
+             f"**{pct(math.exp(idx_c[0]))}** (gauges correlated: {pct(math.exp(idx_c[0] - Z * idx_c[2]))} to {pct(math.exp(idx_c[0] + Z * idx_c[2]))}). "
+             f"With the card the index reads **{pct(math.exp(idx_a[0]))}** carried: the chip enters as exactly 1, so the two scopes read alike, and "
+             "they are kept apart so the chip's own record stays in view.")
     L.append("")
-    L.append("The cloud is the wire, and it has its own factor: the bill. On Azure's own autoscaler the bill read STEADY (×1.000 inside the noise, four "
-             "paired repetitions on the compass law; the v1 fleet's steady set and burst STEADY too), so the cloud layer multiplies the total by 1 so far: "
-             "the benefit measured is at the two ends and the layers between, and the cloud carries it without adding or taking. The omni-v12 Azure "
-             "sets at the tune-down (the bill at native's work, `scripts/azure_queue.txt`) are the measurement of that factor; the bill row here changes "
-             "the day their three-run tables land.")
+    L.append("The cloud is the wire. Its bill is kept exactly as native's and the layer enters as exactly 1 on every gauge: the benefit lives at the "
+             "software end and the wire carries it. The cloud's own runs are the check that it holds: on Azure's own autoscaler the bill read STEADY "
+             "(four paired repetitions on the compass law, one run; the v1 fleet's steady set and burst STEADY too), shown in section 2 and never "
+             "composed. Read through the cloud, the same index is more work for the same bill: the cost of each unit of work falls by the work's own "
+             "factor while the bill stays native's.")
     L.append("")
 
+    cost = cost_ledger(measured_all[(SCOPE_WITH, "carried")])
+    L.append("## 3b. What the benefit cost: the chip, the energy and the wire against native")
+    L.append("")
+    L.append("The benefit above is the software end's. This section is the other half a buyer asks for: what it cost. Each hardware piece and the "
+             "wire is read against native, every row of its own record, so it can be seen whether the software end's gain was bought by heating or "
+             "wearing the chip, by drawing more power, by serving less, or by a bigger bill (do no harm, `DISCLOSURES.md` section 3). Nothing here is "
+             "composed into the index; a LOSS row is shown and named, never cut.")
+    L.append("")
+    for pc in cost:
+        L.append(f"**{pc['piece']}**" + (f": {pc['state']}." if pc.get("state") else f" (`{'`, `'.join(pc['sources'])}`)"))
+        L.append("")
+        if not pc["rows"]:
+            continue
+        L.append("| Part | Gauge | Reading against native |")
+        L.append("|---|---|---|")
+        for r in pc["rows"]:
+            L.append(f"| {r['part']} | {r['gauge']} | {r['reading']} |")
+        L.append("")
+        c = pc["count"]
+        L.append(f"{len(pc['rows'])} rows: {c[readings.GAIN]} GAIN, {c[readings.STEADY]} STEADY, {c[readings.GIVEN]} power given, {c[readings.LOSS]} LOSS, "
+                 f"{c['the runs disagree']} where the runs disagree." + (f" The LOSS rows: {'; '.join(pc['loss'])}." if pc["loss"] else " No LOSS row."))
+        L.append("")
     L.append("## 4. The assumption tested where the tables allow: separability, from the governors' four ways")
     L.append("")
     L.append("Omni-Compass on the organism alone (compassbare against nativebare) and on top of the orchestrator (compass against native), in the same "
@@ -626,7 +791,8 @@ def main(argv=None):
     L.append("## 6. What is missing, and what replaces what")
     L.append("")
     L.append("- **The machine** (the kernel, bare metal, Kepler and the machine's own meter; register row 79): not yet run. It enters as exactly 1.")
-    L.append(f"- **The card on the engine that stands**: the {standing} run on Lambda (`gpu-{standing}`, one exact commit) replaces the 2 October row.")
+    L.append(f"- **The card on the engine that stands**: the {standing} runs on Lambda (one exact commit, on the founder's word) replace the omni-v21 rows; "
+             "the chip enters as exactly 1 whatever they read, and they stand beside it.")
     L.append("- **The cloud at the tune-down**: the omni-v12 Azure sets (A, B and C of the steady set, the two bursts and the real day) give the bill its "
              "three-run reading; Google and Amazon follow on the same harness.")
     L.append("- **Every cluster and service table on omni-v12**: the campaign (`scripts/reruns.txt`) reruns every benchmark; each row above is replaced by "
@@ -653,6 +819,7 @@ def main(argv=None):
                                             "index": {"mu": idx[0], "sigma_independent": idx[1], "sigma_correlated": idx[2]}}
                       for (scope, rule), (by_layer, total, idx) in results.items()},
            "separability": [{**s, "top": list(s["top"]), "bare": list(s["bare"])} for s in sep],
+           "cost": cost, "composed": list(COMPOSED), "held": HELD, "held_layers": HELD_LAYERS,
            "beside": side}
     js_text = json.dumps(jsonable(out), indent=1, ensure_ascii=False) + "\n"
     if "--check" in (argv if argv is not None else sys.argv[1:]):
@@ -663,10 +830,10 @@ def main(argv=None):
         return 1 if bad else 0
     OUT_MD.write_text(md_text, encoding="utf-8")
     OUT_JSON.write_text(js_text, encoding="utf-8")
-    (by_layer, total, idx) = results[("without the card (the cluster, the services and the cloud)", "index")]
+    (by_layer, total, idx) = results[(SCOPE_WITHOUT, "index")]
     print(f"whole system, without the card, by the index's rule: {pct(math.exp(idx[0]))} over the gauges; "
           + "; ".join(f"{g} {pct(interval(total[g])[0])}" for g in GAUGES if total[g]))
-    (by_layer, total, idx) = results[("without the card (the cluster, the services and the cloud)", "carried")]
+    (by_layer, total, idx) = results[(SCOPE_WITHOUT, "carried")]
     print(f"whole system, without the card, every interval carried: {pct(math.exp(idx[0]))} "
           f"({pct(math.exp(idx[0] - Z * idx[2]))} to {pct(math.exp(idx[0] + Z * idx[2]))}, gauges correlated)")
     print(f"wrote {OUT_MD.relative_to(ROOT)} and {OUT_JSON.relative_to(ROOT)}")

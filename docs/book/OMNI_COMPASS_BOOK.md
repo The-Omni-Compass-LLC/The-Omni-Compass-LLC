@@ -36,8 +36,8 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, with less energy, from the hardware and the controllers already in place; in a cloud, more
-work for the same bill.
+faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
+every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
 
 **Where the proof is.** This book shows how to wire, tune, run and check Omni-Compass. The mechanism, the mathematics and
 every result, each a paired comparison of native and Omni-Compass on top of native run three times, every row kept, LOSS
@@ -56,10 +56,10 @@ installation's own (section 4.8). The words are written once, with their exact m
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
 racks, the data center, on site or off site), and Omni-Compass can live in all three places. The wire makes no benefit of its
-own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and a cloud run shows two things only,
-that the engine holds the same on a cloud's machines as on site (no LOSS against native) and how much of the software end's
-gain comes through the wire, read as work per dollar: more work for the same money (Part Six, chapter 20; `DISCLOSURES.md`,
-Chapter 10). A smaller bill is never the aim; how a company spends the gain, as more work or as a cut, is its own choice. Where
+own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and what a cloud run must show is that
+the engine holds the same on a cloud's machines as on site (no judged gauge LOSS against native), the work per dollar read
+beside the bill (Part Six, chapter 20; `DISCLOSURES.md`, sections 9 and 10; the founder's words of 31 October, night: "We just need to show we hold").
+A smaller bill is never the aim; how a company spends the gain, as more work or as a cut, is its own choice. Where
 Omni-Compass sits on neither end, a cloud's bill shows nothing of Omni-Compass.
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
@@ -1792,8 +1792,9 @@ or not. The cloud runs the whole engine at the max, as on site (`dial max`, the 
 the founder's order of 31 October struck the tune-down on the machines alone of 14 October): the governor moves the service's
 pod target inside its autoscaler's cover, conveys the processor a machine can spare, and parks a machine the cloud already
 made only after its own trial shows the response time holds, waking it on a breach; the cloud's own autoscaler, native's
-machine controller, stays in every arm and alone adds machines. The benefit is made at the software end and at the chip and
-comes through the wire as work per dollar: more work for the same money. A smaller bill is never the aim; a company that
+machine controller, stays in every arm and alone adds machines. The set must show that the engine holds: no judged gauge LOSS
+against native, the work per dollar read beside the bill; the benefit is made at the software end and at the chip and comes
+through the wire. A smaller bill is never the aim; a company that
 wants a cut turns the dial down (`dial save`, a changed tune, its receipts its own). The bill is shown beside the work it
 bought, never ruled.
 In the cloud, as everywhere, the governor's fast check (a parked machine woken for pods that wait) runs every 5 seconds,

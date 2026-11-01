@@ -344,20 +344,19 @@ def markdown(m) -> str:
              f"the provider's energy is not metered to the tenant |")
     w = m["whole"]
     if w and w["index"] is not None:
-        bc = w.get("bill_carried")
-        bill = ("not counted: its Azure tests are one run each, and a table of one run enters as exactly 1 by this rule"
-                + (f" (with every interval carried it reads {bc['word']} {bc['size']:.1f}%"
-                   + (", its 95% interval including no change)" if bc["includes_none"] else ")") if bc else "")
-                if abs(w["bill"]) < 1e-9 else f"{K.GAIN if w['bill'] > 0 else K.GIVEN} {abs(w['bill']):.1f}%")
         cls = " and ".join(f"class {c}" for c in w.get("classes") or []) or "the tables'"
-        L += ["", f"Beside it: the totals composed from the tables that stand, each on its own engine ([`results/WHOLE_SYSTEM.md`]"
-              f"(results/WHOLE_SYSTEM.md), `tools/whole_system.py`; {', '.join(w['engines'])}), the cluster, the services on it and the "
-              f"cloud, by the rule that counts only what held in all three runs: work {w['work']:.1f}% more, the 95th-percentile "
-              f"response time {100 * (1 - 1 / (1 + w['speed'] / 100)):.1f}% shorter (native's time over Omni-Compass's, "
-              f"×{1 + w['speed'] / 100:.3f}), machines "
-              f"{w['machines']:.1f}% fewer, energy {w['energy']:.1f}% less, the cloud's bill {bill}; the index over the gauges "
-              f"{index_word(w['index'])} {abs(w['index']):.1f}%. A composition across engines (class S over {cls} tables), never read as "
-              f"one engine's result; each total follows its tables as every benchmark runs again on {stands}."]
+        sp, mc = 1 + w["speed"] / 100, 1 + w["machines"] / 100           # both native's over Omni-Compass's
+        L += ["", f"Beside it: the whole organism at the software end, composed from the tables that stand, each on its own engine "
+              f"([`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md), `tools/whole_system.py`; {', '.join(w['engines'])}), the cluster and "
+              f"the services on it, by the rule that counts only what held in all three runs: work {w['work']:.1f}% more, the "
+              f"95th-percentile response time {100 * (1 - 1 / sp):.1f}% shorter (native's time over Omni-Compass's, ×{sp:.3f}), machines "
+              f"{100 * (1 - 1 / mc):.1f}% fewer (native's machines over Omni-Compass's, ×{mc:.3f}); the index over work, speed and machines "
+              f"{index_word(w['index'])} {abs(w['index']):.1f}%. The energy and the cloud's bill are held at native's and never counted: the "
+              "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
+              "wire), and the chip is held exactly as native runs it, its own meter reading it STEADY at the factory tune. What the benefit "
+              "cost the chip, the energy and the wire is listed row by row in section 3b of the same page. A composition across engines "
+              f"(class S over {cls} tables), never read as one engine's result; each total follows its tables as every benchmark runs again "
+              f"on {stands}."]
     L += ["", "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", "", END]
     return "\n".join(L)
 

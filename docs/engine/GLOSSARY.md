@@ -111,7 +111,7 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **the conveyance.** Moving a conserved budget between organs (site watts, cluster cores): moved, never created, down the gradient of need. On Kubernetes the governor raises a running pod's processor limit in place to the room its machine can still give under 75% busy, bounded by the namespace's quota, and hands every limit back to the operator's on a shared host at its top: the unit answers at its machine's speed, not its paper quota's, with no unit and no machine added. *Source: `docs/CONVEYANCE_LAW.md`; `docs/OMNI_ORCHESTRATOR.md`; `CLAUDE.md`.*
 - **the factory tune.** The engine as The Omni-Compass LLC tuned and ships it, every muscle on the setting found for it (its own card where one was kept, the engine's own setting otherwise). Every published benchmark result is one engine at its one factory tune; a changed tune's results are the tuner's own. One button returns every knob to it. *Source: `DISCLOSURES.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **the live tuning engine.** The live benchmark engine page and its control panel: every knob, button and monitor turns in real time to show the mechanism of action with native alone, with Omni-Compass on top, or both; what it shows at any other setting is the engine's range, never a benchmark result. *Source: `DISCLOSURES.md`.*
-- **the heartbeat's six buttons.** On the page the governor's full decision comes at one of six beats, 10, 15, 30, 60, 90 or 120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/FACTORY_PROFILE.md`.*
+- **the heartbeat's seven buttons.** On the page the governor's full decision comes at one of seven beats, 10, 15, 20, 30, 60, 90 or 120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/FACTORY_PROFILE.md`.*
 - **factory profile.** The complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, decision interval and every other default. Selected after the mechanisms are verified, candidates are tested together and the choice is validated on fresh workloads; frozen at release, while the engine's state, commands and allocations go on responding. Today's is omni-v19's; the best validated factory profile is not yet established. *Source: `docs/FACTORY_PROFILE.md`.*
 - **candidate profile.** A proposed combination of settings under evaluation; on the page, the best beat of a sweep with the factory's other knobs ("Try the candidate"). It becomes a factory profile only after validation and a new release. *Source: `docs/FACTORY_PROFILE.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **active profile.** The settings actually governing the current run, named on the page as factory, candidate or custom with its fingerprint. *Source: `docs/FACTORY_PROFILE.md`.*
@@ -119,6 +119,7 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **Restore factory profile.** The control that reapplies the released Omni-Compass configuration: every knob of the mechanism and the heartbeat back to the factory's, Omni-Compass still on. *Source: `docs/FACTORY_PROFILE.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **Return to native.** The control that hands governance back and restores the recorded native settings, as the adapter supports. *Source: `docs/FACTORY_PROFILE.md`.*
 - **governor request.** The row under the fuse box's master switches: after every press, the request a running governor takes for it through its control panel (tools/omni_control.py), with its role; the page sends nothing. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
+- **Auxiliary Input.** The fuse box's AUX button and its tab: ten slots, each waiting to be wired to an organism of the reader's own, a cluster, a service, a database or a card. A slot reads that system's own Prometheus every 15 s, read only, under the native controller it names (every real native; Red Hat OpenShift Container Platform, IBM Turbonomic and VMware vSphere read on the reader's own licence, with no record of ours until we run them licensed), with Omni-Compass on top of it or not. A wired slot lights its own row on the Auxiliary Input Board under the wall, one press flips the wall's monitors that carry a Prometheus query to it, and it is set beside the repository's real records only (live software, class L; the card's meter, class P), never a model run (class S). Its two windows, native alone and Omni-Compass on top, are one run of the reader's own system each, read by the one key; the page writes nothing to that system. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md`.*
 - **Commands.** The fuse box's tab that lists every control beside the request a running governor takes for it and its role; the mechanism's knobs and the plant's conditions have none. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 
 ### Proof and Evidence
@@ -1988,7 +1989,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Term | Kind | Where on the page |
 |---|---|---|
 | the 0.5% floor | term | 2a (#s-bottom); 3d (#s-dial); 3f (#s-plane); 4c (#s-live); 4d (#s-cloud); 5h (#s-math); B (#s-guide); D (#s-read) |
-| the 95% interval on Student's t | term | 2b (#s-answer); 2c (#s-board); 3f (#s-plane); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
+| the 95% interval on Student's t | term | 2c (#s-board); 3f (#s-plane); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | A | term | 5h (#s-math) |
 | a changed tune's violet | term | B (#s-guide) |
 | a governor's way | term | B (#s-guide) |
@@ -1997,6 +1998,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | alert minute | term | C (#s-problem); D (#s-read) |
 | at its limit on native | term | 4f (#s-stacks); 5e (#s-fleet); B (#s-guide); D (#s-read) |
 | automatic optimizer | term | 3i (#s-dash) |
+| Auxiliary Input | term | 0 (#s-wall); B (#s-guide) |
 | AWAITING | term | B (#s-guide) |
 | the band | term | 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 5d (#s-whole); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem) |
 | the benefit board | term | 2c (#s-board); B (#s-guide); C (#s-problem) |
@@ -2005,7 +2007,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the C++ twin | term | 1 (#s-health); 4g (#s-github); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); E (#s-monlist); G (#s-disclose) |
 | calm | term | 3e (#s-decision); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the centre | term | 3a (#s-engines); 5f (#s-lab); 5h (#s-math); B (#s-guide) |
-| the chip | term | 4f (#s-stacks); 5d (#s-whole); B (#s-guide) |
+| the chip | term | 2b (#s-answer); 4f (#s-stacks); 5d (#s-whole); B (#s-guide) |
 | the climb | term | 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
 | the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | collector | term | 3i (#s-dash) |
@@ -2026,8 +2028,8 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Energy / Facility / Industrial | organism | 3c (#s-desk); C (#s-problem) |
 | the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | evidence classes P, L, S | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); E (#s-monlist); G (#s-disclose) |
-| factory profile | term | B (#s-guide); G (#s-disclose) |
-| the factory tune | term | 1 (#s-health); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
+| factory profile | term | 1 (#s-health); B (#s-guide); G (#s-disclose) |
+| the factory tune | term | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
 | fail up | term | 5h (#s-math); B (#s-guide) |
 | family | term | 2c (#s-board); 3b (#s-feed); 5e (#s-fleet); B (#s-guide) |
 | the fast checks | term | 3d (#s-dial); 4a (#s-ops); C (#s-problem) |
@@ -2045,7 +2047,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | health | term | 3g (#s-brain); 4a (#s-ops); 5d (#s-whole) |
 | the heartbeat | term | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | the heat debt | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
-| hold | term | 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
+| hold | term | 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
 | the immune system | term | 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | the injection | term | 3c (#s-desk); 5a (#s-proof); 5b (#s-cpp); 5c (#s-scn); 5i (#s-fail); B (#s-guide) |
 | the injection grid | term | 5c (#s-scn); B (#s-guide) |
@@ -2057,7 +2059,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | knob | term | 1 (#s-health); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4f (#s-stacks); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); B (#s-guide); D (#s-read); E (#s-monlist); G (#s-disclose) |
 | the lease | term | 1 (#s-health); 3a (#s-engines); 3f (#s-plane); 4a (#s-ops); 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
 | lift-off | term | 3g (#s-brain); 5h (#s-math); B (#s-guide) |
-| the line | term | 3a (#s-engines); 3c (#s-desk); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| the line | term | 3a (#s-engines); 3c (#s-desk); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Live Organism | organism | 3a (#s-engines); 3b (#s-feed); 3f (#s-plane); 5f (#s-lab); 5g (#s-master); 5h (#s-math); B (#s-guide) |
 | the live tuning engine | term | G (#s-disclose) |
 | LOSS | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 2d (#s-loss); 2e (#s-status); 3c (#s-desk); 3d (#s-dial); 3f (#s-plane); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
@@ -2104,7 +2106,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the seven organisms | term | 3a (#s-engines); 5e (#s-fleet); B (#s-guide) |
 | shown, not judged | term | 5e (#s-fleet); D (#s-read) |
 | the snapshot | term | 3a (#s-engines); 5h (#s-math) |
-| the software end | term | 2b (#s-answer); B (#s-guide) |
+| the software end | term | 2b (#s-answer); 5d (#s-whole); B (#s-guide) |
 | Spine | organism | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the spine | term | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the stack | term | B (#s-guide) |
@@ -2124,15 +2126,16 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the two-way plug | term | 3a (#s-engines); 3e (#s-decision); 3i (#s-dash); 4a (#s-ops); 4c (#s-live); 5a (#s-proof); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | Variation Switchboard | term | 1 (#s-health); 5c (#s-scn) |
 | the verdict | term | 2a (#s-bottom); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
-| Whole Organism | organism | 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| Whole Organism | organism | 2b (#s-answer); 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Whole Tower | organism | B (#s-guide) |
 | work waiting in line | term | 3b (#s-feed); B (#s-guide) |
+| the yardstick | term | 5d (#s-whole) |
 | κ | term | 3g (#s-brain); 5h (#s-math) |
 | ν | term | 3g (#s-brain); 5h (#s-math) |
 | ρ* | term | 5h (#s-math) |
 | σ | term | 3c (#s-desk); 3g (#s-brain); 3h (#s-verdict); 5a (#s-proof); 5h (#s-math) |
 
-Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's six buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; one mechanism, in one place; preset; protocol 4; the seal; where the benefit lives; the yardstick.
+Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's seven buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; one mechanism, in one place; preset; protocol 4; the seal; where the benefit lives.
 
 ---
 
