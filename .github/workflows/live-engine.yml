@@ -93,6 +93,10 @@ jobs:
         run: |
           python docs/engine/build_live_engine.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The page's engine against the Python and the C++; every record against the repository's own runs
+        # the check reads with the access the build had (1 November: without GitHub's token the check's own rebuild read a run's
+        # engine from CHANGELOG.md where the build had read it from GitHub's run record, and the two words differed)
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           python docs/engine/check_live_engine.py | tee -a "$GITHUB_STEP_SUMMARY"
           python docs/engine/check_records.py --seed 3000 3001 3002 | tee -a "$GITHUB_STEP_SUMMARY"
