@@ -500,6 +500,31 @@ within `GOV_READY_S` (60 s) refuses the arm. Native's window is unchanged. No ga
 changes, and `tools/gpu_reps.py` reads the window as before. The card tables already run (omni-v18's A100 run of 24 October;
 omni-v21's A100 tables of 27 October) stand as their own rig's; the next counted runs carry this rig.
 
+## Amendment 16 (2026-11-01, declared before any run of it): the stacks with the card fully loaded
+
+The founder's design of 1 November reads every place by its bill and the work done inside it (`results/TWO_BILLS.md`):
+the chip native (A) and the chip with Omni-Compass on native (B), the cloud native (C) and the cloud with Omni-Compass on
+native (D). The whole stacks with the card inside (amendment 9; omni-v21's three runs, `results/gpu/V21_STACKS_A10_ABC.md`)
+offer the card the usual load (shares 0.3 to 0.8 of its full-power capacity), so the card serves every request in both
+arms and its work cannot differ: there the work is the same by construction and only the energy can move. This amendment
+adds a second form, `lambda-gpu.yml` mode `stacks-full`, and changes nothing in the first:
+
+- the card's workload inside the stacks offers 1.3 times its full-power capacity in every phase (`--phases=1.3,1.3,1.3`,
+  the same full load as the power cap's `cap-full` form), through `HIL_WORKLOAD_ARGS`, which reaches the stacks alone: the
+  wire check and the smoke keep their own load;
+- everything else is the stacks' as declared: the seven organisms (the spine, the four realms, the four stacked, the whole
+  tower) at 1, 10 and 100 copies with the card inside, repetitions 5, 3 and 2 by size (`hil_profile` `standard`), native
+  against Omni-Compass on native at the factory tune (the dial at the max), paired within each repetition, the card's
+  firmware limit as it ships in both arms and no operator's cap;
+- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stands (omni-v23);
+- the reading: per organism and size, the card's requests served (work), its energy, its energy per request served, its
+  95th percentile and its time over the line, and the stacks' own gauges, each by the one key (`tools/readings.py`); the
+  bill of each arm is the rental of its own window at the price the launch printed, so the bill reads the same in both
+  arms unless a window differs, and the work per dollar moves with the work;
+- said before the run: the A10 ships with its power limit at the top of its range, so on native the card already runs at
+  its limit and the factory tune, never below native, may have nothing to raise (omni-v18's A100 run of 24 October wrote
+  nothing for that reason). A STEADY row where the governor wrote nothing is that, said so: not a benefit and not a fault.
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
