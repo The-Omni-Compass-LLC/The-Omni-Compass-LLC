@@ -1768,10 +1768,12 @@ def build():
     story += front_chapter(doc, INTRO, MAN[INTRO])
     story += front_chapter(doc, "The key: GAIN, STEADY and LOSS", MAN["The key: GAIN, STEADY and LOSS"])
     story += front_chapter(doc, "What You Are Looking At", MAN["What You Are Looking At: Omni-Compass, Hooked Up, and How to Read Its Report"])
+    # the disclosures before the card and the summary: the last chapter before the body ends its page as it falls, and the
+    # disclosures end on a table and long lists, so a short chapter after them takes up their last page (1 November)
+    story += front_chapter(doc, "Disclosures, Declarations and Disclaimers", doc_body("DISCLOSURES.md")[1], kind="F")
     story += front_chapter(doc, "Quick Reference: The Card for the Glove Box", MAN["Quick Reference: The Card for the Glove Box"])
     if OWNER:
         story += front_chapter(doc, "Executive Summary", MAN["Executive Summary"])
-    story += front_chapter(doc, "Disclosures, Declarations and Disclaimers", doc_body("DISCLOSURES.md")[1], kind="F")
     md_parts = [f"# THE OMNI-COMPASS {EDITION_NAME.upper()}", "", BANNER_MD, "", EDITION, "", FILED, "",
                 "The printable book of this text, with its contents and appendices: "
                 f"`docs/{OUT_PDF.name}`. Built by `docs/book/build_book.py`" + (" --owner" if OWNER else " --live" if LIVE else "") + ".", ""]
