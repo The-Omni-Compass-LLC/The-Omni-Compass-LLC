@@ -289,7 +289,7 @@ Omni-Compass at every layer of a stack, each layer measured against its own nati
 
 Sectors: Software (3. the cluster (Kubernetes, its add-ons, its governors), class L, 4. the services on the cluster, class L); Cloud (5. the cloud (Azure, the bill metered), class L); Bare Metal (1. the card (the chip), class P, the machine (the kernel, bare metal, Kepler): not yet run (register row 79), enters as exactly 1).
 
-Every way it is bought: Bare Metal; Through the Cloud.
+Every way it is bought: The Software End Carried to Bare Metal; The Software End Carried to the Cloud.
 
 *Source: `DISCLOSURES.md`; `tools/whole_system.py`.*
 
@@ -2009,7 +2009,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the C++ twin | term | 1 (#s-health); 4g (#s-github); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); E (#s-monlist); G (#s-disclose) |
 | calm | term | 3e (#s-decision); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the centre | term | 3a (#s-engines); 5f (#s-lab); 5h (#s-math); B (#s-guide) |
-| the chip | term | 2b (#s-answer); 4f (#s-stacks); 5d (#s-whole); B (#s-guide) |
+| the chip | term | 2b (#s-answer); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | the climb | term | 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
 | the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | collector | term | 3i (#s-dash) |
@@ -2028,10 +2028,10 @@ Every term, organism and arm with the sections of the page that print it, by the
 | do no harm | term | 2b (#s-answer); 3c (#s-desk); C (#s-problem); G (#s-disclose) |
 | the edge | term | 2c (#s-board); 3a (#s-engines) |
 | Energy / Facility / Industrial | organism | 3c (#s-desk); C (#s-problem) |
-| the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
+| the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | evidence classes P, L, S | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); E (#s-monlist); G (#s-disclose) |
 | factory profile | term | 1 (#s-health); B (#s-guide); G (#s-disclose) |
-| the factory tune | term | 1 (#s-health); 3c (#s-desk); 4f (#s-stacks); 5d (#s-whole); B (#s-guide); G (#s-disclose) |
+| the factory tune | term | 1 (#s-health); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
 | fail up | term | 5h (#s-math); B (#s-guide) |
 | family | term | 2c (#s-board); 3b (#s-feed); 5e (#s-fleet); B (#s-guide) |
 | the fast checks | term | 3d (#s-dial); 4a (#s-ops); C (#s-problem) |
@@ -2050,7 +2050,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | health | term | 3g (#s-brain); 4a (#s-ops); 5d (#s-whole) |
 | the heartbeat | term | 1 (#s-health); 3a (#s-engines); 3c (#s-desk); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | the heat debt | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
-| hold | term | 2b (#s-answer); 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
+| hold | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
 | the immune system | term | 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | the injection | term | 3c (#s-desk); 5a (#s-proof); 5b (#s-cpp); 5c (#s-scn); 5i (#s-fail); B (#s-guide) |
 | the injection grid | term | 5c (#s-scn); B (#s-guide) |
@@ -2069,7 +2069,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the max | term | 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 4c (#s-live); 4d (#s-cloud); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); B (#s-guide); G (#s-disclose) |
 | Mechanism Knobs | term | 1 (#s-health); B (#s-guide) |
 | the model gate | term | 3h (#s-verdict); 4d (#s-cloud); G (#s-disclose) |
-| modelled | term | 3a (#s-engines); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| modelled | term | 3a (#s-engines); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | the monitor wall | term | 0 (#s-wall); 1 (#s-health); 3a (#s-engines); 3i (#s-dash); 4a (#s-ops); 4d (#s-cloud); 4f (#s-stacks); 5a (#s-proof); 5b (#s-cpp); 5g (#s-master); 5h (#s-math); B (#s-guide); E (#s-monlist); G (#s-disclose) |
 | Monte Carlo | term | 1 (#s-health); 5a (#s-proof); B (#s-guide) |
 | muscle | term | 1 (#s-health); 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 5b (#s-cpp); 5e (#s-fleet); 5f (#s-lab); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
@@ -2108,7 +2108,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the seven organisms | term | 2b (#s-answer); 3a (#s-engines); 5e (#s-fleet); B (#s-guide) |
 | shown, not judged | term | 2b (#s-answer); 5e (#s-fleet); D (#s-read) |
 | the snapshot | term | 3a (#s-engines); 5h (#s-math) |
-| the software end | term | 2a (#s-bottom); 2b (#s-answer); 5d (#s-whole); B (#s-guide) |
+| the software end | term | 2a (#s-bottom); 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | Spine | organism | 1 (#s-health); 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the spine | term | 1 (#s-health); 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the stack | term | 2b (#s-answer); B (#s-guide) |
@@ -2119,7 +2119,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | template | term | 5e (#s-fleet) |
 | three runs A, B and C | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5c (#s-scn); 5d (#s-whole); 5h (#s-math); 5i (#s-fail); B (#s-guide); C (#s-problem); D (#s-read) |
 | through the cloud | term | 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
-| the tower | term | 1 (#s-health); B (#s-guide) |
+| the tower | term | 1 (#s-health); 2b (#s-answer); B (#s-guide) |
 | the traffic signal | term | 0 (#s-wall); 2a (#s-bottom); B (#s-guide) |
 | the tune-down | term | 3c (#s-desk); 3e (#s-decision); 5b (#s-cpp); 5h (#s-math); B (#s-guide); G (#s-disclose) |
 | the twin | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
@@ -2128,7 +2128,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Variation Switchboard | term | 1 (#s-health); 5c (#s-scn) |
 | the verdict | term | 2a (#s-bottom); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3h (#s-verdict); 4a (#s-ops); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Whole Organism | organism | 2b (#s-answer); 3i (#s-dash); 4f (#s-stacks); 5d (#s-whole); 5g (#s-master); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
-| Whole Tower | organism | B (#s-guide) |
+| Whole Tower | organism | 2b (#s-answer); B (#s-guide) |
 | work waiting in line | term | 3b (#s-feed); B (#s-guide) |
 | the yardstick | term | 5d (#s-whole) |
 | κ | term | 3g (#s-brain); 5h (#s-math) |

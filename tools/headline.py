@@ -392,6 +392,42 @@ def places_block(m) -> list:
           f"| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies | {('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED} |",
           f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, its switch ' + _switch('azure') + '; not yet read on ' + stands} |",
           f"| Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}; not yet run |", ""]
+    # the seven organisms in the four arms (the founder's words of 1 November: "seven organisms ... ran native and with Omni-Compass on
+    # them ... each in each arm ... A, B, C and D"): each organism's state in each arm, read from the newest organisms-on-the-card table
+    # and the cloud's records; nothing typed
+    ORG = (("spine", "The spine"), ("compute_ai_cloud", "Compute, AI and cloud"), ("physics_robotics_autonomous", "Physics, robotics and autonomous"),
+           ("energy_facility_industrial", "Energy, facility and industrial"), ("distribution_specialized", "Distribution and specialized"),
+           ("stack", "The four realms stacked"), ("tower", "The whole catalog (the tower)"))
+    by_org = {}
+    if stacks:
+        for r in sd.get("rows") or []:
+            o = by_org.setdefault(r.get("organism"), {"words": {}, "copies": set()})
+            t = str(r.get("reading", "")).replace("**", "")
+            w = next((x for x in (K.STEADY, K.GAIN, K.LOSS, K.GIVEN, "the runs disagree") if t.startswith(x)), None)
+            if w:
+                o["words"][w] = o["words"].get(w, 0) + 1
+            o["copies"].add(r.get("copies"))
+    seng = (sd.get("engine") or "").split(" (")[0] if stacks else ""
+    org_cloud = sorted(ROOT.glob(f"results/live/V{v}_*ORGANISM*.json"))
+    cloud_cell = (f"read in `{org_cloud[-1].relative_to(ROOT).as_posix()}`" if org_cloud else
+                  f"not yet run (Azure queued, its switch {_switch('azure')}; Google's switch {_switch('google')}, Amazon's {_switch('amazon')}, each behind its $0 check)")
+    L += ["**The seven organisms in the four arms.** Each organism runs native and with Omni-Compass on native, in each place: fourteen "
+          "runs on bare metal (A and B) and fourteen through the cloud (C and D), each read by its bill and the work inside it. On bare "
+          "metal each organism runs with one card inside at 1, 10 and 100 copies, and on the eight-card machine at 1, 10 and 100 copies "
+          f"({NOT_RENTED.replace('not yet run; ', '')}).", "",
+          "| Organism | A: bare metal, native | B: bare metal, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |",
+          "|---|---|---|---|---|"]
+    for key, name in ORG:
+        o = by_org.get(key)
+        if o:
+            cps = ", ".join(str(c) for c in sorted(x for x in o["copies"] if x is not None))
+            a = f"run with one A10 inside at {cps} copies, on {seng}" + (f"; not yet on {stands}" if seng != stands else "")
+            b = (", ".join(f"{n} row{'' if n == 1 else 's'} {w}" for w, n in sorted(o["words"].items(), key=lambda kv: -kv[1]))
+                 + f" against A (`{stacks[-1].relative_to(ROOT).as_posix()}`)")
+        else:
+            a = b = "not yet run"
+        L.append(f"| {name} | {a} | {b} | {cloud_cell} | {cloud_cell} |")
+    L.append("")
     ix = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8"))
     h, sv = float(ix["headline_pct"]), float(ix.get("service_headline_pct") or 0)
     idx_eng = (m["standing"]["index"] or {}).get("engine", "its tables' engines")

@@ -193,11 +193,13 @@ assumption is tested where the tables can test it (the governors' four ways), an
 composition is preregistered in `docs/WHOLE_SYSTEM_PREREGISTRATION.md`. Until it runs, the composition is class S of class P
 and L measurements, and every page that shows it says so.
 
-**Every way a stack is bought.** The same law is read four ways (`docs/engine/export_whole.py`): on-site bare metal (the
-software on the owner's own racks and chips); through the cloud (the cloud's build, its bare metal at the back end and the
-software; and the cloud as two pieces, the back end left to the provider); in the device (Omni-Compass in the bare metal
-alone, the card and the machine); and as a service (the software alone, for an owner with neither bare metal of their own
-nor a cloud account). A piece with no measurement enters as exactly 1 and is named.
+**The two places a system runs.** The same law is read in the two places a system runs Omni-Compass (the founder's order of
+1 November 2026; `docs/engine/export_whole.py`): the software end carried to bare metal (the software on the owner's own
+machines and chips), and the software end carried to the cloud (the cloud's build, its bare metal at the back end and the
+software; and the cloud as two pieces, the back end left to the provider). A piece with no measurement in the composition
+enters as exactly 1 and is named; neither place's composition is that place's bill. The bills themselves, and the work done
+inside them, native and Omni-Compass on native (the four arms: A and B on bare metal, C and D through the cloud), are read in
+`results/TWO_BILLS.md`.
 
 **The cloud's back end is not ours to meter.** Through the cloud, the bare metal belongs to the provider: no tenant can read
 its power meters or write its chips' limits, and no run here reaches it. The cloud piece's benefit is what the provider itself
