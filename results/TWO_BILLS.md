@@ -37,6 +37,30 @@ From `results/live/AKS_STEADY_100_OMNI_V18.md`, the newest cloud set with a mete
 
 This set counted no work done: the cloud's work meter came with the cloud sets after 31 October, so its work per dollar is not read here; the set on the engine that stands reads it.
 
+## The seven organisms in the four arms
+
+Each organism runs native and with Omni-Compass on native in each place: on the chip, A against B, and through the cloud, C against D. Every cell is a three-run reading by the one key of the card's own receipts with the organism running around it: the requests the card served (the work), the rental for the arm's window (the bill) and the two together (work per dollar); the organism's modelled plants are in each place's own table, never in these cells.
+
+### The chip: eight A100 cards on Lambda, each organism on its own card
+
+Not yet read: lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737.
+
+### The chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16)
+
+Not yet read: lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877.
+
+### Through the cloud: Azure, one rented machine with the real cluster inside each organism
+
+Not yet read: big-organism-detached, run 41269562586 (100 copies, three repetitions).
+
+### Through the cloud: Google Cloud
+
+Not yet run: its key is not in the repository's secrets (docs/GOOGLE_SETUP.md).
+
+### Through the cloud: Amazon Web Services
+
+Not yet run: its key is not in the repository's secrets and the account is on the Free plan (docs/AMAZON_SETUP.md).
+
 ## What the two bills say today
 
 - **The chip:** the bill STEADY, under the floor (the three runs' mean 0.01%) (the same rented window in both arms); the work done inside it the runs disagree; the work per dollar the runs disagree; the energy for each request served GAIN in all three of our runs.
