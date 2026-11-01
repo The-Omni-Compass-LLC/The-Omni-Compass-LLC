@@ -492,7 +492,7 @@ its power limit; on the page's own governor, the time between frames; on the pro
 when the digests match, red when they differ); on the governors and orchestrators, their own three-run tables; on a record, the
 judged rows of the newest tables (a LOSS row lights red and stays). A light fed by our own models says so (class S). Under the
 wall the line **Monitor Lights** counts the green, yellow, red, dark and grey lights, names every red one, names the two-sided
-monitors whose native side is red, and gives each live comparison against native once (**Live Comparison Against Native**),
+monitors whose native side is red and those whose Omni-Compass side is red (such a monitor's light reads Omni-Compass against native on the same load; each side's own band is on its badge), and gives each live comparison against native once (**Live Comparison Against Native**),
 beside the engine's own last entry on its side and the **Redline Reflex**'s hand-backs on the live model. The three-reading projection is the light's own: the brain's law acts on the position inside its band and damps on the
 position's rate of change, with a fail-up at the band's 95% wall; it projects nothing ahead.
 
@@ -657,12 +657,15 @@ model's best beat is a candidate for the real runs, never a result; the factory'
 
 The **profile** group holds three buttons, and the profile box (`#fuseProfile`) under it says which profile governs.
 
-- **Restore factory profile** reapplies the released configuration: every knob of the mechanism and the heartbeat back to the
-  factory's (60 s), the candidate cleared and any hold released. It leaves the master switch as it stands (its log line reads
-  "Omni-Compass still on").
-- **Hold the active profile** holds every knob as set: the mechanism's knobs, the heartbeat buttons, the sweep, the heartbeat
-  sweep monitor's beat row and the variation switchboard's beat row are disabled, and the note reads "HELD at decision n: the heartbeat
-  … s and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
+- **Restore factory profile** reapplies the released configuration: every knob of the mechanism back to the factory's, the
+  heartbeat to the factory's 60 s, the dial to the max and every muscle handed back by its own switch driven again, the candidate
+  cleared and any hold released; the heartbeat row, the variation switchboard's beat row and the heartbeat sweep monitor move to
+  60 s with it. It leaves the master switch as it stands, and its log line says whether Omni-Compass is ON or OFF.
+- **Hold the active profile** holds the whole profile as set: the mechanism's knobs, the heartbeat buttons, the sweep, the heartbeat
+  sweep monitor's beat row and the variation switchboard's beat row are disabled; the mechanism's factory button, **Try the
+  candidate**, the dial's buttons and the muscles' own switches (the card's, the panel's and the cluster console's) refuse a press with
+  a line in the log, and the request line reads "none sent". The note reads "HELD at decision n: the heartbeat … s, the dial on …,
+  every muscle driven (or so many left native) and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
   factory profile is the released one (omni-v23: the heartbeat 60 s, every muscle on its card); no other profile is released".
 - **Return to native** hands governance back: the reset, the operator's control (`tools/omni_control.py`, `POST /v1/reset`).
   On the page every setting goes to native's own controller and every Omni-Compass side follows native, as with the kill switch,
@@ -673,9 +676,11 @@ The **profile** group holds three buttons, and the profile box (`#fuseProfile`) 
 
 The box's first line is the **active profile**: its kind, FACTORY, CANDIDATE or CUSTOM, the engine, the heartbeat and the
 profile's fingerprint, "profile" and eight hexadecimal digits. The fingerprint (`profHash`) is the 32-bit FNV-1a hash of every
-setting of the mechanism, the heartbeat and every muscle's body included: one identity for one set of settings, so two views
-showing the same fingerprint run the same settings of the mechanism. The kind is FACTORY when no knob of the mechanism is turned
-and the heartbeat is the factory's; CANDIDATE when no knob is turned and the heartbeat is the candidate's; CUSTOM otherwise. The
+setting of the mechanism, the heartbeat and every muscle's body included, and the dial and the muscles left native by their own
+switch once either leaves the factory's: one identity for one set of settings, so two views showing the same fingerprint run the
+same settings. The kind is FACTORY when no knob of the mechanism is turned, the heartbeat is the factory's, the dial is on the max
+and every muscle is driven; CANDIDATE when the same holds with the heartbeat at the candidate's; CUSTOM otherwise, so the tune-down
+or a muscle left native makes a custom profile. The
 line is printed green for FACTORY, yellow for CANDIDATE and violet for CUSTOM, violet being the page's colour of a tune turned
 from the factory, never a side. Its note says what that means: the factory profile is "the released configuration, every muscle on
 the setting found for it; every published result is this profile's"; a candidate is "a proposed combination under evaluation … it
@@ -699,8 +704,9 @@ its table names; a candidate or custom profile on the bench is a variation of th
 and its results are its own. The page opens on the factory profile and holds nothing: no profile is locked when the page opens.
 
 Three buttons put things back, and they differ. *The mechanism back to the factory* (in the mechanism panel) puts back the
-mechanism's knobs alone. *Restore factory profile* puts back the mechanism's knobs and the heartbeat, clears the candidate and
-releases a hold. *Back to the factory tune* (in the control panel's first panel, on the console, in the dock and on every strip) puts back all of
+mechanism's knobs alone: the heartbeat, the dial and the muscles' own switches stay as they are, and while the profile is held it
+refuses, saying why. *Restore factory profile* puts back the mechanism's knobs, the heartbeat, the dial (the max) and every muscle's switch
+(every muscle driven), clears the candidate and releases a hold. *Back to the factory tune* (in the control panel's first panel, on the console, in the dock and on every strip) puts back all of
 that and the page's plant at rest as well (section 11.2).
 
 ### 2.9 Actuation and the contract, this decision
@@ -768,21 +774,27 @@ native included. Only the live brain reads the panel; every other brain on the p
 
 Each knob is a slider with its value, its equation and its factory value under it, and ↺ beside it puts that one knob back. A knob
 turned from the factory turns violet, the page's colour of a changed tune, never a side; each group has a button that puts the
-group back; **The mechanism back to the factory** puts every knob of the panel back, and *Restore factory profile* and *Back to
+group back; **The mechanism back to the factory** puts every knob of the panel back and nothing else (the heartbeat, the dial and the
+muscles' switches stay), and *Restore factory profile* and *Back to
 the factory tune* put back these and more (section 2.8). The count beside it reads either "every knob at the factory: the engine
-as it ships" or how many knobs are turned, "a variation of the mechanism (class S); its readings are its own"; the active profile
-then reads CUSTOM with a new fingerprint. Every turn is written to the control event log with its decision. Each group prints a
+as it ships" or how many knobs are turned, each knob counted once however many muscles it is turned on, the muscle knobs naming
+how many muscles they reach, "a variation of the mechanism (class S); its readings are its own"; the active profile then reads
+CUSTOM with a new fingerprint. A muscle handed back to native by the group's switch is named beside the count, because it makes the
+profile custom and the panel's factory button leaves it as it is. Every turn is written to the control event log with its decision. Each group prints a
 live reading of the quantities its knobs act on, every decision, and the line at the top of the panel prints the live model's
 decision with the muscles past the line, the work served, the work failed and the work waiting this day, native beside
 Omni-Compass on native. The harness replays recorded positions, so turning any knob moves the live benchmark engine to the stress-test model
-(the log says so); the knobs act on that model only. While the active profile is held, the panel's knobs are disabled.
+(the log says so); the knobs act on that model only. While the active profile is held, the panel's knobs and its switch are disabled and its factory button refuses a press, saying why.
 
 ### 2.13 Where each group acts
 
 The compass law, Omni-Compass's hand, the redline reflex, native's controller and every muscle's body move the muscles at once. The brain's four
 pieces move the brain's own state (E, U, I[U], S, B on the brain's monitors) and its grants: at the max every organ may add
-capacity unless a security hold stands, so the brain's calm acts through the give-backs; set the dial to the tune-down to watch
-the four pieces move the muscles too.
+capacity unless a security hold stands, so the brain's calm acts only through the give-backs. With the dial on the tune-down the
+four pieces reach the muscles too, and then only through a give-back, which an organ makes only while the line is clean (no muscle
+of Omni-Compass's side over its line) and the senses see. In the live stress-test model some muscles stand over their line at most
+decisions, so ρ₀, ρ[min], k[I], k[E], the grants and the four tune-down knobs move few settings and no monitor visibly; the live
+readings of Piece 4 and of the push group say whether the line is clean now.
 
 ### 2.14 Piece 1, State and Basin
 
@@ -850,10 +862,12 @@ Source: `omnicompass/adapter.py`, `omnicompass/nervous_system.py`,
 | energy's pull on the target, k[E] | 0 to 1 | 0.297 | as above |
 | the push that still lets go, κ's knee | 0 to 0.05 | 0.005 | κ = 1 while push ≤ the knee, else knee/push |
 | the unity gate, U[gate] | 0 to 0.95 | 0.481 | h = (U − U[gate])/(1 − U[gate]); calm = κ·h·(1 − (σ − 1)⁺)·(1 − min(ν, 1)) |
-| the grants θ[nodes], θ[pods], θ[cpufreq], θ[power], θ[routing], θ[gpu] | 0 to 1 each | 0.7, 0.5, 0.3, 0.3, 0.5, 0.3 | an organ may give back only while calm ≥ its θ, the line clean, the senses seeing |
+| the grants θ[nodes], θ[pods], θ[cpufreq], θ[power], θ[routing], θ[gpu] | 0 to 1 each | 0.7, 0.5, 0.3, 0.3, 0.5, 0.3 | an organ may give back only while calm ≥ its θ, the line clean, the senses seeing; no muscle of the live model is a card, so θ[gpu] moves nothing on the page |
 
 What an operator sees: raising an organ's θ above the live calm removes that organ from the list that may give back now; on the
-tune-down its muscles stop handing capacity back. At the max this piece acts only through the give-backs.
+tune-down its muscles stop handing capacity back. At the max this piece acts only through the give-backs. Every knob of this piece
+acts only on a give-back, and no organ gives back while a muscle of Omni-Compass's side is over its line: the live reading says
+whether the line is clean now and lists only the organs the live model's muscles have.
 
 ### 2.18 Compass Law
 
@@ -869,8 +883,8 @@ past the line now on each side.
 | the cushion before the line | 0 to 0.25 | 0.05 | from 1 − cushion the force is the whole authority A: a muscle is never let past the line |
 | the spring, k[p] | 0.1 to 4 | 1 | F = A·tanh((k[p]·(p − centre) + k[d]·v)/A) |
 | the authority, A | 0.1 to 2 | 1 | the force's ceiling: smooth (tanh), never hammering |
-| the velocity's smoothing, s | 0 to 0.95 | 0.5 | v ← s·v + (1 − s)·Δp/dt |
-| the damping, × each muscle's critical k[d] | 0 to 3 | ×1 | k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt for each muscle's own τ |
+| the velocity's smoothing, s | 0 to 0.95 | 0.3 | v ← s·v + (1 − s)·Δp/dt; 0.3 as the realms' wire sets it |
+| the damping, × each muscle's critical k[d] | 0 to 6 | ×3 | k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt for each muscle's own τ; ×3 as the realms' wire sets it (`realms/compass_arm_v5.py`) |
 
 What an operator sees: the phase plane's shading (the force field) moves with the centre, the spring and the authority; a smaller
 cushion lets the right-hand dots run closer to the right edge before the force fails up; less damping lets the Omni-Compass side
@@ -893,7 +907,8 @@ reading: the settings Omni-Compass wrote this decision, the muscles it holds awa
 
 What an operator sees: a larger push gain makes the Omni-Compass side add capacity faster under a surge (capacity held rises:
 power given), a smaller lift-off holds it longer after the surge; the four tune-down knobs act only with the dial on the
-tune-down.
+tune-down, and then only on a give-back, which waits for the line to be clean (no muscle of Omni-Compass's side over its line; the
+group's live reading says when). In the live model a muscle stands over its line at most decisions, so they move few settings.
 
 ### 2.20 Redline Reflex
 
@@ -916,7 +931,8 @@ The factory numbers are the engine's own (the defaults of `Immune` in `omnicompa
 rule: every one is a knob on this panel, and each light (GAINING, STEADY, REDLINING, OVER THE LINE) reads the live reading
 against its own band whatever the knobs are set to. What an operator sees: a shorter streak or a smaller margin hands muscles to
 native sooner and more often (more hand-backs in the live reading); a longer hold keeps them native longer after a surge. A
-changed reflex is a variation of the mechanism (class S), its readings its own (section 2.23).
+turned hold acts from each muscle's next hand-back: the hold that muscle has reached is rescaled to the new first hold, never past
+the longest. A changed reflex is a variation of the mechanism (class S), its readings its own (section 2.23).
 
 ### 2.21 Native Controller
 
@@ -936,7 +952,7 @@ native's target on native's side while the stress-test model runs.
 ### 2.22 Muscle Scale, Response and Switch
 
 The model's sixty muscles, twelve to a body part.
-Pick the muscle, then the scope: **this muscle**, **its body part** or **every muscle**. Live reading: the muscle's units on
+Pick the muscle (the list follows a muscle clicked on either ring, so the knobs act on the muscle it names), then the scope: **this muscle**, **its body part** or **every muscle**. Live reading: the muscle's units on
 native and on the Omni-Compass side, its ceiling, floor, size, τ and sensing delay, and whether it is governed.
 
 | Knob | Range | Factory | Equation it enters |
@@ -1132,15 +1148,20 @@ The **Variation Switchboard** is one group of knobs in the control panel that re
 under it names the monitors that moved, or says that no monitor carries the variation live.
 
 - **Arm**, two buttons, one for each side: *native* is Return to native, the reset (not the kill switch), so every Omni-Compass
-  side follows native; *Omni-Compass and native* releases it, and every monitor shows Omni-Compass on top of native again.
+  side follows native; *Omni-Compass and native* releases the reset, and every monitor shows Omni-Compass on top of native again.
+  It never releases a kill engaged for security: only the kill switch does, and the line says so. The row lights the master
+  switch's state whatever turned it, *native* while Omni-Compass is OFF.
 - **Organism**: the spine, the four realms, the four stacked or the tower: the grid's row is marked, and for the spine and the
-  realms the console's fault body part follows.
+  realms the console's fault body part follows; *Back to the factory tune* returns the row to compute, AI and cloud with the
+  console's body part, unless it stands on the four stacked or the tower.
 - **Organisms** and **runs** (1, 10, 100, 500, in line with the Python's batch of 500): the injection grid of the page's section 5c moves
   to that many runs × organisms stacked (chapter 27), and the scale grid's square is marked where GitHub's grid carries that
   tier (it runs 1, 10, 100 and 1,000). The organism row sets the injection grid's organism too.
 - **Run**: A, B or C on every replay that holds three runs and on the live organism's record.
-- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: the heartbeat sweep monitor moves to that beat, or to the
-  sweep record's nearest one and says which, and, unless the active profile is held, the live model's heartbeat is set to it.
+- **Beat**: 10, 15, 20, 30, 60, 90 or 120 s: unless the active profile is held, the live model's heartbeat is set to it, as by the
+  heartbeat buttons (section 2.5), and the heartbeat sweep monitor moves to it; the line names every monitor of the live model, which
+  all run on that beat. The row lights the beat in force whatever set it (the heartbeat buttons, the candidate, either factory
+  button).
 
 A monitor that does not carry a variation is left as it is.
 
@@ -1148,11 +1169,14 @@ A monitor that does not carry a variation is left as it is.
 
 **The reports.** Four buttons in the control panel, *Engineering Report*, *CTO Report*, *Board Report* and *CFO Report*,
 write a report from the page's own records at the moment they are pressed: the
-engineer's (every benchmark on the board with its reading, size, rows and record, the Python's runs and their digests, the clouds'
-finished sets, the lights at that moment), the CTO's (the summary; what stands and what runs, which says that two sides are shown,
+engineer's (every benchmark on the board with its number by the Omni index's rule and that number's own word, the index's own for the index
+and its categories and STEADY under the 0.5% floor, its rows counted apart beside the benefit sheet's word for their mix, and its record;
+the Python's runs and their digests, the clouds' finished sets, the lights at that moment by the page's one count of them, the count
+the wall's lights bar and the fuse box print), the CTO's (the summary; what stands and what runs, which says that two sides are shown,
 native and Omni-Compass on top of native, and never Omni-Compass by itself; the board), the board's (the summary, what is proven
 and what is modelled, the clouds) and the CFO's (the summary, every cloud set's machine-hours and bill at list price by the one
-key, the rows of power given and the cuts). Each opens the browser's print, to print or save as a PDF, and downloads the same
+key with its work per dollar beside the bill, or why a set does not read it, the rows of power given and the cuts, and the cloud's
+rule since 31 October: every set at the max, judged on the work per dollar, the bill allowed to rise where the work rises more). Each opens the browser's print, to print or save as a PDF, and downloads the same
 report as a page; the notice stands first and last, every reading is the key's word with the word's sign, and every number names
 its engine and its run.
 
@@ -2585,7 +2609,8 @@ newest grid with its squares landed*. A square not yet landed says so; a square 
 as pending runner capacity, never rented. The grid's monitor draws the engine that stands' own campaign as GitHub runs it: each
 square filled by its runs started (pale) and measured (solid), as GitHub was read at the build, with the age of that reading in
 its heading; the reading cursor walks every started square and names it under the grid. Once the grid's receipt is written, each
-square takes its word. The road draws the newest grid with its squares landed, under its own engine's name, never read across.
+square takes its word. The grid's light is its own: grey, NO LINE, while no square of the engine that stands is measured, and
+once its squares carry their words, GAIN, STEADY or LOSS on the net of its own squares, never the board's tables. The road draws the newest grid with its squares landed, under its own engine's name, never read across.
 
 ### 29.4 Standing Three-Run Tables
 
@@ -3299,7 +3324,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 - **Factory profile.** The complete, versioned set of Omni-Compass default settings shipped together; on the engine that
   stands, omni-v23's, the heartbeat 60 s, every muscle on its card. Every published result is this profile's.
 - **Fingerprint (of a profile).** The page's FNV-1a hash of every setting of the mechanism, the heartbeat and every muscle's body
-  included: one identity for one set of settings.
+  included, with the dial and the muscles left native once either leaves the factory's: one identity for one set of settings.
 - **Fuse box.** The second panel of the control panel (`#fuseBox`) that switches every monitor from one place: the master
   rows, the heartbeat, the sweep, the profile, each route's bill, the mechanism knobs, the twenty scenarios, the injection grid
   and the breakers.
