@@ -60,6 +60,23 @@ The prices below are an owner's example (a three-node cluster, the founder's ill
 
 Which place is cheaper for the same work (the weekend cluster in a cloud, the always-on one on bare metal) is the owner's choice of place, and a cloud's hypervisor share is the same in both arms: neither is a benefit of Omni-Compass. What Omni-Compass changes is the work the same machines serve and, in a cloud, the hours billed (`owner_bill` in `tools/work_per_bill.py` reads any owner's line items the same way).
 
+## A $100 million budget, read by the equation
+
+The $100 M is an example, the founder's of 2 November: a company whose IT infrastructure costs 2.9% of its revenue (the example's own figure, of the order public surveys of IT spending report for large firms, about 3% of revenue), so the budget stands for a revenue of about $3.45 B ($100 M / 0.029). The 2.9% is the size of the budget against the revenue; it is not a cost Omni-Compass removes.
+
+An owner's budget is read the same way, place by place, from the receipts and nothing else. Split the owner's native spend into the places it runs in, S(cloud) + S(bare metal) = $100 M, and read each place's G from its own receipt; G(total) is their spend-weighted mean and lies between them. The scale is plain arithmetic: each point of G on a $100 M spend is $1 M of work at native's price per unit of work, about 0.029% of the example's revenue. What can be written today:
+
+| Place | Its bill with Omni-Compass | The work with Omni-Compass | What the receipts let an owner write today |
+|---|---|---|---|
+| Bare metal (a lease of $100 M) | the same $100 M: the same boxes in both arms, b = 0 | w, the work the same boxes serve | the A10 receipt's own ratios applied to the spend (arithmetic, not a measurement of a fleet): +$1.51 M, +$0.73 M, −$0.70 M of work at native's price per unit of work, out of the same $100 M; the three runs disagree, so no figure is claimed |
+| Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, the work answered inside the line (the work meter) | the one set read so far moved the compute bill +1.21% (inside the noise) and did not count its work; our own model at the max reads the machine-hours up 9% to 35% (class S): the cloud's bill may rise where the work rises more, so a smaller cloud bill is not what the record points to |
+
+**What no budget may show.** Three limits come from the engine and from physics, not from the receipts:
+
+- No line item called a "stack tax" falls to zero. The share a place's own software layer takes (Vₒ above: a hypervisor's, an orchestrator's) is the same in both arms, because Omni-Compass sits on top of that layer and removes nothing; it cancels in G and is never a saving.
+- No machine runs at 100% of its silicon. Every muscle is driven to its own limit and never past it, and the compass law keeps a 5% cushion at each line; and in any queue the waiting grows without bound as the busy share nears one (for one server, the mean time in the system is 1/(μ − λ), which diverges as the arrival rate λ nears the service rate μ). A budget that turns 75% of a fleet's capacity into 100% of it contradicts the engine's own rule.
+- Idle hours are not "eliminated". Omni-Compass parks machines the cloud's own autoscaler made and the work does not need, so that autoscaler can remove them; it keeps the cushion the response line needs, and it wakes a machine before the line is crossed. How many hours that removes is what the cloud sets are measuring.
+
 ## What the receipts say today
 
 **Bare metal** (The card on omni-v23, the power cap at 70% of the card's top, the full load (cap-full): three runs on an A10; omni-v23 (digest c96ea4105d8747db, 65 files); `results/TWO_BILLS.json chip (results/gpu/V23_A10_CAP_FULL_ABC.json)`):
