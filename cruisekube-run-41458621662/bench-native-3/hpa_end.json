@@ -1,0 +1,105 @@
+{
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"keda.sh/v1alpha1\",\"kind\":\"ScaledObject\",\"metadata\":{\"annotations\":{},\"name\":\"php-apache\",\"namespace\":\"default\"},\"spec\":{\"advanced\":{\"horizontalPodAutoscalerConfig\":{\"name\":\"php-apache\"}},\"maxReplicaCount\":10,\"minReplicaCount\":1,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"php-apache\"},\"triggers\":[{\"metadata\":{\"interceptorRoute\":\"php-apache\",\"scalerAddress\":\"keda-add-ons-http-external-scaler.keda:9090\"},\"type\":\"external-push\"}]}}\n"
+        },
+        "creationTimestamp": "2026-11-02T14:09:07Z",
+        "labels": {
+            "app.kubernetes.io/managed-by": "keda-operator",
+            "app.kubernetes.io/name": "php-apache",
+            "app.kubernetes.io/part-of": "php-apache",
+            "app.kubernetes.io/version": "2.21.0",
+            "scaledobject.keda.sh/name": "php-apache"
+        },
+        "name": "php-apache",
+        "namespace": "default",
+        "ownerReferences": [
+            {
+                "apiVersion": "keda.sh/v1alpha1",
+                "blockOwnerDeletion": true,
+                "controller": true,
+                "kind": "ScaledObject",
+                "name": "php-apache",
+                "uid": "b24cd5fb-7fdc-4b4e-b83f-4701e8db095c"
+            }
+        ],
+        "resourceVersion": "21431",
+        "uid": "31ead05e-9c32-44fb-b123-b42ffaa8b8a2"
+    },
+    "spec": {
+        "maxReplicas": 10,
+        "metrics": [
+            {
+                "external": {
+                    "metric": {
+                        "name": "s0-http_php-apache_concurrency",
+                        "selector": {
+                            "matchLabels": {
+                                "scaledobject.keda.sh/name": "php-apache"
+                            }
+                        }
+                    },
+                    "target": {
+                        "averageValue": "1",
+                        "type": "AverageValue"
+                    }
+                },
+                "type": "External"
+            }
+        ],
+        "minReplicas": 1,
+        "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "php-apache"
+        }
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2026-11-02T14:09:14Z",
+                "message": "recent recommendations were higher than current one, applying the highest recent recommendation",
+                "reason": "ScaleDownStabilized",
+                "status": "True",
+                "type": "AbleToScale"
+            },
+            {
+                "lastTransitionTime": "2026-11-02T14:09:14Z",
+                "message": "the HPA was able to successfully calculate a replica count from external metric s0-http_php-apache_concurrency(\u0026LabelSelector{MatchLabels:map[string]string{scaledobject.keda.sh/name: php-apache,},MatchExpressions:[]LabelSelectorRequirement{},})",
+                "reason": "ValidMetricFound",
+                "status": "True",
+                "type": "ScalingActive"
+            },
+            {
+                "lastTransitionTime": "2026-11-02T14:09:14Z",
+                "message": "the desired count is within the acceptable range",
+                "reason": "DesiredWithinRange",
+                "status": "False",
+                "type": "ScalingLimited"
+            }
+        ],
+        "currentMetrics": [
+            {
+                "external": {
+                    "current": {
+                        "averageValue": "334m"
+                    },
+                    "metric": {
+                        "name": "s0-http_php-apache_concurrency",
+                        "selector": {
+                            "matchLabels": {
+                                "scaledobject.keda.sh/name": "php-apache"
+                            }
+                        }
+                    }
+                },
+                "type": "External"
+            }
+        ],
+        "currentReplicas": 3,
+        "desiredReplicas": 3,
+        "lastScaleTime": "2026-11-02T15:40:04Z"
+    }
+}
