@@ -1469,6 +1469,12 @@ class Book(BaseDocTemplate):
                 return
             anchor = getattr(f, "_anchor", False) or (isinstance(f, KeepTogether)
                                                       and any(getattr(x, "_anchor", False) for x in getattr(f, "_content", ())))
+            if not anchor and isinstance(f, Heading):
+                # a heading opens the paragraph under it: when that paragraph names the next figure, the heading goes
+                # with it, so it never stands alone at a page's foot while its text waits behind a floating figure
+                nxt = next((x for x in flowables[1:6] if not isinstance(x, (Spacer, Heading))), None)
+                anchor = bool(nxt is not None and (getattr(nxt, "_anchor", False) or (isinstance(nxt, KeepTogether) and any(
+                    getattr(x, "_anchor", False) for x in getattr(nxt, "_content", ())))))
             share = avail / frame._aH
             if anchor and not frame._atTop and (share <= 1 - FILL or len(self._floats) >= 2 and share <= 0.45):
                 # the paragraph that names the next figure (with the heading it opens under, if any) does not start
@@ -1913,6 +1919,9 @@ def report_fill(pdf):
             short.append(f"p{n} {reach:.0%}")
     print(f"page fill: {len(book) - len(short)} of {len(book)} pages at least {FILL:.0%} used; under it: "
           + (", ".join(short) if short else "none"))
+    # every word inside its cell and no figure under its type (the founder's orders of 16 October and 2 November)
+    print("figures shrunk below their 9 pt type: " + (", ".join(f"{k} ×{f}" for k, f in SCH.SCALED) or "none")
+          + "; labels wider than their box: " + (", ".join(f"{t[:40]!r}" for t, _ in SCH.OVERFLOWS) or "none"))
 
 
 def md_text(src, nb):
