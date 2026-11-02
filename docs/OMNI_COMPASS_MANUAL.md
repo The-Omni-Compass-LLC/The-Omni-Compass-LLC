@@ -33,7 +33,7 @@ for it. The usual answer is to add: more machines, more power, more people watch
 controllers is not an answer most operators will take: they are proven, often certified, and the people on call know them.
 
 **What Omni-Compass does about it.** Omni-Compass is a supervisory governor. It sits on top of those native controllers and
-never replaces them. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
+never replaces them. It never touches the data: no request, packet, file or byte of the work passes through it. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
 reading; one wire out, the setting), takes a snapshot of every setting before its first write, and governs the whole stack as
 one body, the organism: every muscle driven as far as its own limit and never past it, and, on the engine that stands, never
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
@@ -59,7 +59,7 @@ installation's own (section 3.8). The words are written once, with their exact m
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site), and Omni-Compass can live in all three places. The wire makes no benefit of its
+racks, the data center, on site or off site), and Omni-Compass can be wired in at all three, and in each it acts in one place, the software end, on top of the controllers already there. The wire makes no benefit of its
 own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and what a cloud run must show is that
 the engine holds the same on a cloud's machines as on site (no judged gauge LOSS against native), the work per dollar read
 beside the bill (Part VI, chapter 19; `DISCLOSURES.md`, sections 9 and 10; the founder's words of 31 October, night: "We just need to show we hold").
@@ -124,9 +124,10 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **Bare metal.** The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own: the hours it runs, and the energy the chip's own meter reads. The software end goes with Omni-Compass to it, and there Omni-Compass can reach the chip's own knobs too.
 - **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its bill is the cloud's own; the cloud's chips and back end are inside its price and out of Omni-Compass's reach: it governs what the cloud gives, through the cloud's own Kubernetes. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
 - **The chip.** Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
-- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, the two places never added together, since a system runs in one or the other (`results/TWO_BILLS.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
+- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, each place on its own, since a system runs in one or the other; an owner who runs work in both may weigh them only by its own spend, through G(total) (`results/TWO_BILLS.md`, `docs/WORK_PER_BILL.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
 - **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
@@ -678,13 +679,13 @@ it, read back, and the record removed.
 **Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
-**What the letters of the number mean.** Read in order, DEX-YLL-1 is the way the engine runs:
+**What the letters of the number mean.** Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1); science and software people read each part on sight. Read in order, DEX-YLL-1 is the way the engine runs:
 
-| DEX | YLL | 1 |
-|---|---|---|
-| **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and still spring back unharmed; past it, the damage is permanent. Omni-Compass runs every muscle up to its own yield limit line, read live, and never past it. | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here it is one closed loop: one body, one brain, every result read back and the next step decided from it. |
-
-Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1). Science and software people read each part on sight.
+| Letters | What they mean |
+|---|---|
+| DEX | **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. |
+| YLL | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and still spring back unharmed; past it, the damage is permanent. Omni-Compass runs every muscle up to its own yield limit line, read live, and never past it. |
+| 1 | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here it is one closed loop: one body, one brain, every result read back and the next step decided from it. |
 
 ## Table of Contents
 
@@ -1863,8 +1864,6 @@ and never governed), and one or several **work pools** under Azure's own cluster
 Omni-Compass idling the machines it gives back, which the autoscaler then deletes on its own schedule. The bill counts
 every work machine that exists, every 15 seconds, priced at Azure's list price for its family; each cluster is deleted when its arm ends, so nothing keeps billing.
 
-![Wiring schematic: a managed cloud cluster, the whole engine at the max on top of the cloud's own autoscaler. The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](book/figures/s_cloud_machines.svg)
-
 **Sizing the fleet to the lever.** The smallest saving a fleet can show is one machine. On 4 workers one machine is
 25% of the fleet, so only a saving of about 30% or more can clear the noise; on 15 workers about 10%; on 96 about 3%.
 A few percent of a 4-worker fleet is less than one machine, so a 4-worker receipt whose machine rows stand inside the noise is the honest reading of a fleet too small for the lever, not a result against it. A new subscription allows 200 vCPUs in a region but 10 per machine family, so
@@ -1894,6 +1893,8 @@ line. On machines already paid for and in a cloud alike, the fast checks also gi
 machine already has, which takes seconds and needs no new pod (the founder's order of 31 October struck the cloud's rule that
 switched this lever off: a pod given more processor may read busier to its autoscaler and ask for more pods, and what that does
 to the bill is read beside the work it bought, never ruled).
+
+![Wiring schematic: a managed cloud cluster, the whole engine at the max on top of the cloud's own autoscaler. The schematic is read top to bottom as an electrical drawing: the governor (the control unit) with its sense terminals S1, S2, … on the left and its motor terminals M1, M2, … on its lower edge; the motor bus through the kill switch into the plug, the system's own command written and read back; the plug into the native controller; the native controller setting the muscle, drawn as a potentiometer with its cover; the system under native carrying the meters; and the meters back along one bus, the wire in, to the sense terminals. The audit stands beside the governor. The senses are the probe's feed, the pods waiting and the machines in service; the only motors park a machine (a PreferNoSchedule taint), wake it (the taint removed) and mark its pods first to go; no autoscaler is moved, no processor conveyed, no power capped. A machine is parked only after its own trial (the response time holds within 2%) and woken on a breach: at the next decision (15 s) for a response time over the line, at the next fast check (5 s) for a waiting pod. No cloud credential: the governor holds a Kubernetes service account that can read, taint and annotate, nothing more.](book/figures/s_cloud_machines.svg)
 
 ### 7.2 A database behind its connection pooler
 
@@ -2528,15 +2529,15 @@ not, it is written once here or in chapters 14, 18, 19 and 20.
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site). Omni-Compass can live in all three places: on the software end (the cluster and
+racks, the data center, on site or off site). Omni-Compass can be wired in at all three places, and in each it acts in one place, the software end, on top of the controllers already there: on the software end (the cluster and
 its services, chapters 6 and 7), on the bare metal (the card and the machine, chapter 21 and section 7.9) and on the wire
 itself, the cloud of this part. The wire makes no benefit of its own (chapter 19): on a managed cluster the governor runs the
 whole engine on the cluster and its services, the software end, so a cloud receipt shows that the engine holds there as on
 site and how much of that end's gain comes through the wire as work per dollar. It cannot show the energy and the
 throughput gained at the bare metal, because the provider's chips are not under it. An installation that wants the whole benefit installs Omni-Compass at each place
 it owns, receipts each one where it sits, and composes them into one organism and one bill (`DISCLOSURES.md`, section 9; the
-bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far,
-and the company's expectation for each place, are in the Owner's Manual; neither is your receipt.
+bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far
+are in the Owner's Manual; they are not your receipt.
 
 ### 13.1 What the implementer delivers
 
@@ -5327,6 +5328,12 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | System pool | the pool of machines that carries the cluster's add-ons and the governor, tainted so no workload lands there, never governed |
 | Work pool | a pool labelled `omni-role=work`, under the cloud's autoscaler, whose machines the governor may park |
 | OFF switch of record | the form of the OFF switch the runbook names for a cluster: scaling the governor to zero, or a commit to Git where continuous delivery reconciles it (sections 20.3 and 27.4) |
+| Data path | the route the work's own data takes (requests, packets, files, bytes); Omni-Compass is never in it: it reads the gauges (one wire in) and writes the settings native controllers already accept (one wire out) |
+| The seat | where Omni-Compass sits: in one place, the software end, on top of every controller the stack runs, as one body; it changes nothing in the silicon or the cloud's back end, and its effect is carried along the whole path the work travels |
+| The three layers | the chip, the cloud and the software, where the industry attacks the cost of computing; each layer's own answer moves its own terms of the one equation, and Omni-Compass's gain is read on top of it (`docs/INDUSTRY_LANDSCAPE.md`) |
+| Work for the bill, E | the work done over the bill, E = W / B; the gain G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 (`results/TWO_BILLS.md`) |
+| Four arms | A and B, native and Omni-Compass on native on bare metal; C and D, the same through the cloud; each read by its bill, the work done inside it and the work per dollar |
+| Alert minutes | whole minutes whose 95th percentile, failed requests counted over, was over the response line: the minutes an on-call page would be open, native beside Omni-Compass; the oversight the record measures, never people |
 
 ## Appendix A - Command Reference
 

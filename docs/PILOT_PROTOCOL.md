@@ -78,6 +78,7 @@ at the start.
 | The chip | the work per joule: the work completed over the card's own energy counter, with its clocks, temperature and throttle reasons beside it | the card's published interface (`nvidia-smi`, NVML) |
 | On site | the work per machine-hour: the pool is the owner's, so its hours are no bill | the capture below |
 | The service, every place | the 95th percentile response time (the 90th and 99th beside it), the minutes over the response line, the pods waiting for a place, the failed requests, the work completed | the licensee's own monitoring |
+| Oversight, every place | the alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line: the minutes an on-call page would be open), and the operations engineer-hours where the licensee logs them, each turned into dollars only at the licensee's own rates | the alert history and the licensee's own time records |
 | Omni-Compass itself | every write it made, read back, and every reason | its audit (`--audit`) |
 
 Capture both arms read-only with `fleet/capture/kube_capture.sh`, then score each run:
@@ -88,6 +89,36 @@ It reports node-hours and energy per used CPU core-hour, utilisation, pending-po
 minutes, each with a bootstrap 95% interval over hourly blocks. Energy is measured only where the capture holds a meter's
 `power_w`; where no meter reads it, energy is not scored. Each run needs at least 24 hourly blocks per arm (a 10-day run
 holds about 240).
+
+### The paired audit sheet
+
+One sheet a run, filled in only from that run's own records, both columns measured, nothing written before the run and
+every LOSS row kept. The licensee's own engineers fill it in; the one key reads it across the three runs.
+
+```
+OMNI-COMPASS PAIRED AUDIT — native against Omni-Compass on native
+Window: ____ days     Place: bare metal / through the cloud     Engine: omni-v__ (fingerprint ________)
+Run: A / B / C  (each run paired; the same work offered to both arms)
+
+                                         NATIVE          OMNI-COMPASS ON NATIVE
+WORK      Work completed (requests/jobs) __________      __________
+BILL      Machine-hours billed           __________      __________
+          Rate per machine-hour ($)      __________      __________   (the same rate in both)
+          Other metered line items ($)   __________      __________
+          Bill, B ($)                    __________      __________
+FOR THE   E = W / B (work per dollar)    __________      __________
+BILL      G = E(Omni) / E(native) − 1    ____________   read across the three runs: GAIN, STEADY or LOSS
+OVERSIGHT Alert minutes (p95 over line)  __________      __________
+          Operations engineer-hours      __________      __________   (the licensee's own logs)
+          Labor at the licensee's rate   __________      __________
+HEALTH    Failed requests                __________      __________
+          95th-percentile response (ms)  __________      __________
+```
+
+On bare metal the bill is fixed for the window, so a benefit shows as more work inside it (W); through the cloud it may
+show as more work, a smaller bill (B), or both. Either way it is read in G, the one equation of `results/TWO_BILLS.md`.
+The labor line is the licensee's: the record of this repository counts alert minutes and the governor's own commands, never
+people, and no rate or share is assumed for it.
 
 ## Reading it
 
