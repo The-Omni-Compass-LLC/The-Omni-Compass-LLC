@@ -186,6 +186,10 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 - **console.** One screen to deploy, scale, restart and set rules across clusters, where a person decides: Rancher, Portainer, Lens, the OpenShift console. The rules set there are the native Omni-Compass sits on top of. *Source: `docs/FACTORY_PROFILE.md`.*
 - **automatic optimizer.** A product that watches one layer and changes its settings itself, mostly for a cloud bill: the comparable, benchmarked as native with it and then with Omni-Compass on top. *Source: `docs/FACTORY_PROFILE.md`.*
 - **supervisory governor.** What Omni-Compass is: it reads the whole body every beat, decides with one law across every muscle, writes through a two-way plug, reads each write back, audits, hands back gradually and stops at the kill switch, on top of every native controller. *Source: `docs/FACTORY_PROFILE.md`.*
+- **cascade: inner and outer loops.** How Omni-Compass sits on a stack, in the terms of control engineering: every native controller (the card's firmware, the cloud's node autoscaler, the pod autoscaler, a database's pool) is an inner loop that closes on its own signal at its own clock; Omni-Compass is the supervisory outer loop on top of them, reading the whole body and moving the setpoints the inner loops already accept. The inner loops stay in charge of their own actuation and are never removed. *Source: `docs/INDUSTRY_LANDSCAPE.md`.*
+- **setpoint.** The value a native controller steers toward and already accepts from outside: the pod autoscaler's target, a replica count, a pod's processor limit, a card's power limit, a pool's size. What Omni-Compass writes, one at a time, through the two-way plug, read back after every write and restored at the end. *Source: `docs/INDUSTRY_LANDSCAPE.md`.*
+- **control plane and data plane.** The data plane is the road the work travels (requests, packets, bytes, from the application through the network to the chip); the control plane is where the controllers that set that road live. Omni-Compass works in the control plane only: no request or byte of the workload passes through it, and it touches no data, cache, network or silicon. *Source: `docs/INDUSTRY_LANDSCAPE.md`.*
+- **the industry's three layers.** The chip, the cloud and the software, where the cost of computing is being attacked at once; each layer's tools act on their own layer's actuator (the silicon and the card's controls; the machine fleet and its price; placement, replicas and each service's setting). Omni-Compass acts on the setpoints of the native controllers in all three, on top of them; no product of anyone else was benchmarked here (appendix C, docs/INDUSTRY_LANDSCAPE.md). *Source: `docs/INDUSTRY_LANDSCAPE.md`.*
 - **the dashboards.** The page's section 3i: the live benchmark engine in nine forms an operations team reads (a board of panels, a host map, a graph, an event stream, a cluster console, a one-line diagram, a wall of numbers, the cost by body part, and Omni-Compass's own two-way pipeline), by muscle, body part or the whole organism. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **contract, this decision.** The decision on screen in the symbols of the factory profile's mathematics: k, Δ, θ, the settings requested u\[req\](k), commanded u\[cmd\](k) = Π\[C\](u\[req\](k)) and acknowledged u\[ack\](k) = R(u\[cmd\](k)), computed on the live model. *Source: `docs/FACTORY_PROFILE.md`; `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **Prometheus Metrics.** The fuse box's tab that prints the live model in Prometheus's text exposition format, with the series a running system serves beside each one and the PromQL the Grafana wall draws it with. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
@@ -1995,21 +1999,22 @@ Every term, organism and arm with the sections of the page that print it, by the
 | a changed tune's violet | term | B (#s-guide) |
 | a governor's way | term | B (#s-guide) |
 | active profile | term | B (#s-guide) |
-| actuation feedback | term | 3b (#s-feed); B (#s-guide) |
+| actuation feedback | term | 3b (#s-feed); B (#s-guide); C (#s-problem) |
 | alert minute | term | C (#s-problem); D (#s-read) |
 | at its limit on native | term | 4f (#s-stacks); 5e (#s-fleet); B (#s-guide); D (#s-read) |
 | automatic optimizer | term | 3i (#s-dash) |
 | Auxiliary Input | term | 0 (#s-wall); B (#s-guide) |
 | AWAITING | term | B (#s-guide) |
 | the band | term | 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 5d (#s-whole); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem) |
-| bare metal | term | 2b (#s-answer); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
+| bare metal | term | 2b (#s-answer); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the benefit board | term | 2c (#s-board); B (#s-guide); C (#s-problem) |
 | the bill of a route | term | 2b (#s-answer); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the bone | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
 | the C++ twin | term | 1 (#s-health); 4g (#s-github); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); E (#s-monlist); G (#s-disclose) |
 | calm | term | 3e (#s-decision); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 5f (#s-lab); 5h (#s-math); B (#s-guide); C (#s-problem) |
+| cascade: inner and outer loops | term | C (#s-problem) |
 | the centre | term | 3a (#s-engines); 5f (#s-lab); 5h (#s-math); B (#s-guide) |
-| the chip | term | 2b (#s-answer); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
+| the chip | term | 2b (#s-answer); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the climb | term | 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
 | the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
 | collector | term | 3i (#s-dash) |
@@ -2019,6 +2024,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Compute / AI / Cloud | organism | 3c (#s-desk); C (#s-problem) |
 | the conductor | term | 3c (#s-desk) |
 | console | term | 1 (#s-health); 2c (#s-board); 3a (#s-engines); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3i (#s-dash); 4d (#s-cloud); 5e (#s-fleet); 5f (#s-lab); 5i (#s-fail); B (#s-guide) |
+| control plane and data plane | term | C (#s-problem) |
 | the conveyance | term | 3d (#s-dial); 5a (#s-proof); 5h (#s-math); B (#s-guide); G (#s-disclose) |
 | the cover | term | 5h (#s-math) |
 | the cushion | term | 3a (#s-engines); 3e (#s-decision); 4a (#s-ops); 5j (#s-self) |
@@ -2052,6 +2058,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the heat debt | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
 | hold | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
 | the immune system | term | 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| the industry's three layers | term | C (#s-problem) |
 | the injection | term | 3c (#s-desk); 5a (#s-proof); 5b (#s-cpp); 5c (#s-scn); 5i (#s-fail); B (#s-guide) |
 | the injection grid | term | 5c (#s-scn); B (#s-guide) |
 | the jump generator | term | 1 (#s-health); 5a (#s-proof); 5b (#s-cpp); B (#s-guide) |
@@ -2060,7 +2067,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the key | term | 2a (#s-bottom); 2b (#s-answer); 2e (#s-status); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4d (#s-cloud); 4f (#s-stacks); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read) |
 | the kill switch | term | 1 (#s-health); 2c (#s-board); 3b (#s-feed); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 5g (#s-master); 5h (#s-math); B (#s-guide) |
 | knob | term | 1 (#s-health); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4f (#s-stacks); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); B (#s-guide); D (#s-read); E (#s-monlist); G (#s-disclose) |
-| the lease | term | 1 (#s-health); 3a (#s-engines); 3f (#s-plane); 4a (#s-ops); 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
+| the lease | term | 1 (#s-health); 3a (#s-engines); 3f (#s-plane); 4a (#s-ops); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | lift-off | term | 3g (#s-brain); 5h (#s-math); B (#s-guide) |
 | the line | term | 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 3f (#s-plane); 3g (#s-brain); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Live Organism | organism | 3a (#s-engines); 3b (#s-feed); 3f (#s-plane); 5f (#s-lab); 5g (#s-master); 5h (#s-math); B (#s-guide) |
@@ -2077,7 +2084,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | native's colour | term | 1 (#s-health); 3a (#s-engines); 3b (#s-feed); 3f (#s-plane); 3i (#s-dash); 4d (#s-cloud); 5g (#s-master); B (#s-guide); D (#s-read) |
 | the nervous system | term | 3a (#s-engines); 3e (#s-decision); 3g (#s-brain); 4c (#s-live); 5b (#s-cpp); 5h (#s-math); B (#s-guide); D (#s-read); G (#s-disclose) |
 | observer | term | 3i (#s-dash) |
-| Omni index | term | 2b (#s-answer); B (#s-guide); D (#s-read) |
+| Omni index | term | 2b (#s-answer); B (#s-guide); C (#s-problem); D (#s-read) |
 | Omni-Compass | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 2d (#s-loss); 2e (#s-status); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5g (#s-master); 5h (#s-math); 5i (#s-fail); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); E (#s-monlist); G (#s-disclose) |
 | Omni-Compass on native | term, arm | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 3f (#s-plane); 3i (#s-dash); 4a (#s-ops); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Omni-Compass's blue | term | 2c (#s-board); 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4d (#s-cloud); 4g (#s-github); 5d (#s-whole); B (#s-guide); D (#s-read) |
@@ -2105,10 +2112,11 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Return to native | term | B (#s-guide) |
 | RK4 | term | 1 (#s-health); 3a (#s-engines); 5a (#s-proof); 5h (#s-math); B (#s-guide) |
 | the runs disagree | term | 2b (#s-answer); 2c (#s-board); 2d (#s-loss); 2e (#s-status); 5e (#s-fleet); D (#s-read) |
+| setpoint | term | 3i (#s-dash); 5h (#s-math); C (#s-problem) |
 | the seven organisms | term | 2b (#s-answer); 3a (#s-engines); 5e (#s-fleet); B (#s-guide) |
 | shown, not judged | term | 2b (#s-answer); 5e (#s-fleet); D (#s-read) |
 | the snapshot | term | 3a (#s-engines); 5h (#s-math) |
-| the software end | term | 2a (#s-bottom); 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
+| the software end | term | 2a (#s-bottom); 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | Spine | organism | 1 (#s-health); 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the spine | term | 1 (#s-health); 2b (#s-answer); 3a (#s-engines); 3c (#s-desk); 5h (#s-math); B (#s-guide) |
 | the stack | term | 2b (#s-answer); B (#s-guide) |

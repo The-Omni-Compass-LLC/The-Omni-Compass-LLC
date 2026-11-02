@@ -52,6 +52,14 @@ people".
 | "zero oversight", "zero manual maintenance", "no engineers needed" | never measured; what is measured is fewer alert minutes, and the governor's own audit (every change logged with its reason, read back, handed back to native after a crash) is there for people to read |
 | "native = code with no controller" | native is the system's own controllers (the Kubernetes autoscaler among them), which stay in every arm |
 
+## The industry landscape page
+
+The website's `/docs/industry-landscape` page is `docs/INDUSTRY_LANDSCAPE.md`, word for word: the chip, the cloud and the
+software, what each layer's tools act on, where Omni-Compass sits on top of them (a supervisory outer loop over the native inner
+loops, in the control plane only), and each benefit at the strength the record shows. It names no product as falling short and does
+not claim the only approach, a smaller bill, fewer people or no trade-off; the products of each layer are graded from their own
+public material in `docs/LANDSCAPE.md`.
+
 ## The manuals on the website
 
 The website should carry the repository's own manuals as they are built (`docs/OMNI_COMPASS_MANUAL.pdf`,

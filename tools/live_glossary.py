@@ -1035,6 +1035,26 @@ TERMS = [
       "writes through a two-way plug, reads each write back, audits, hands back gradually and stops at the kill switch, on top of "
       "every native controller.", [(FP, "| Supervisory governor | reads the whole body every beat, decides with one law across every muscle")],
       aka=["supervisory governor", "governor"]),
+    T("cascade: inner and outer loops", W, "How Omni-Compass sits on a stack, in the terms of control engineering: every native "
+      "controller (the card's firmware, the cloud's node autoscaler, the pod autoscaler, a database's pool) is an inner loop that "
+      "closes on its own signal at its own clock; Omni-Compass is the supervisory outer loop on top of them, reading the whole body "
+      "and moving the setpoints the inner loops already accept. The inner loops stay in charge of their own actuation and are never "
+      "removed.", [("docs/INDUSTRY_LANDSCAPE.md", "the native controllers stay the inner loops, in charge of their own actuation; Omni-Compass is the outer loop")],
+      aka=["cascade", "inner loop", "outer loop", "inner loops", "outer loops"]),
+    T("setpoint", W, "The value a native controller steers toward and already accepts from outside: the pod autoscaler's target, a "
+      "replica count, a pod's processor limit, a card's power limit, a pool's size. What Omni-Compass writes, one at a time, through "
+      "the two-way plug, read back after every write and restored at the end.",
+      [("docs/INDUSTRY_LANDSCAPE.md", "moves the **setpoints** those inner loops already accept")], aka=["setpoints"]),
+    T("control plane and data plane", W, "The data plane is the road the work travels (requests, packets, bytes, from the "
+      "application through the network to the chip); the control plane is where the controllers that set that road live. Omni-Compass "
+      "works in the control plane only: no request or byte of the workload passes through it, and it touches no data, cache, network or "
+      "silicon.", [("docs/INDUSTRY_LANDSCAPE.md", "It works in the **control plane** only, never the data plane")], aka=["control plane", "data plane"]),
+    T("the industry's three layers", W, "The chip, the cloud and the software, where the cost of computing is being attacked at "
+      "once; each layer's tools act on their own layer's actuator (the silicon and the card's controls; the machine fleet and its "
+      "price; placement, replicas and each service's setting). Omni-Compass acts on the setpoints of the native controllers in all "
+      "three, on top of them; no product of anyone else was benchmarked here (appendix C, docs/INDUSTRY_LANDSCAPE.md).",
+      [("docs/INDUSTRY_LANDSCAPE.md", "The cost of computing is being attacked in three layers at once: the chip, the cloud and the software")],
+      aka=["three layers", "the three layers"]),
     T("the dashboards", W, "The page's section 3i: the live benchmark engine in nine forms an operations team reads (a board of panels, a host "
       "map, a graph, an event stream, a cluster console, a one-line diagram, a wall of numbers, the cost by body part, and "
       "Omni-Compass's own two-way pipeline), by muscle, body part or the whole organism.",
