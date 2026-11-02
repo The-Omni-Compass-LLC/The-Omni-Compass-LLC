@@ -1348,7 +1348,7 @@ def records(runs: bool) -> dict:
         reg["grafana"] = XGF.main(str(t / "wall.json")) if CHECKING else XGF.main()
     name, digest = engine()
     from tools.readings import SIZE_FLOOR
-    build = {"engine": name, "digest": digest, "commit": git("rev-parse", "HEAD"), "floor": SIZE_FLOOR,
+    build = {"engine": name, "digest": digest, "commit": git("rev-parse", "HEAD"), "floor": SIZE_FLOOR, "factory_beat": factory_beat(),
              "built_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
              "realms_engine": s["realms"]["run"]["engine"], "receipts_engines": sorted({r["engine"] for r in s["receipts"]}),
              # GitHub's running and queued runs, with the moment they were read; None where this build did not read them (no token)
@@ -1470,17 +1470,29 @@ def write_version(build: dict) -> None:
                        encoding="utf-8")
 
 
+def factory_beat() -> int | float:
+    """The factory's heartbeat, in seconds: the governor's own default --interval (omni_controller/controller.py), so the page
+    follows the engine that stands (60 s from omni-v17 to omni-v23, 20 s from omni-v24) and is never written by hand."""
+    src = (ROOT / "omni_controller" / "controller.py").read_text(encoding="utf-8")
+    m = re.search(r'add_argument\(\s*"--interval"\s*,[^)]*?default\s*=\s*([0-9.]+)', src, re.S)
+    if not m:
+        raise SystemExit("omni_controller/controller.py: no --interval default to read the factory's beat from")
+    v = float(m.group(1))
+    return int(v) if v.is_integer() else v
+
+
 def stamp_fallbacks(page: str, build: dict) -> str:
     """What a reader sees where the page's script does not run (the referee of 30 October): every element of the page's markup
     marked data-rec="build.engine" or data-rec="build.digest" carries the build record's own value, and the engine's two files
     (engJson, engDoc) their names, so no older engine is printed even before the script fills them. Only the markup before the
     first script is touched; the records and the engine's code are never rewritten here."""
     import html as _html
-    cut = page.find("<script")
-    cut = len(page) if cut < 0 else cut
+    body = page.find("<body")
+    cut = page.find("<script", body if body >= 0 else 0)          # the body's first script: the head's self-update (1 November)
+    cut = len(page) if cut < 0 else cut                            # sits before the body and must not end the markup read here
     head, tail = page[:cut], page[cut:]
-    head = re.sub(r'(<[^<>]*\bdata-rec="build\.(engine|digest)"[^<>]*>)[^<]*(?=<)',
-                  lambda m: m.group(1) + _html.escape(str(build.get(m.group(2)) or "")), head)
+    head = re.sub(r'(<[^<>]*\bdata-rec="build\.(engine|digest|factory_beat)"[^<>]*>)[^<]*(?=<)',
+                  lambda m: m.group(1) + _html.escape(str(build.get(m.group(2)) if build.get(m.group(2)) is not None else "")), head)
     n = str(build.get("engine") or "").rsplit("v", 1)[-1]
     if n.isdigit():
         head = re.sub(r'(<code id="engJson">)[^<]*(?=<)', lambda m: m.group(1) + f"OMNI_V{n}.json", head)
@@ -1626,7 +1638,7 @@ def main() -> int:
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
         # the ledger, the commit and the time) is a reading with its own read time, not rebuilt by a check
-        pb, keep = embedded(page, "build") or {}, ("engine", "digest", "realms_engine", "receipts_engines")
+        pb, keep = embedded(page, "build") or {}, ("engine", "digest", "factory_beat", "realms_engine", "receipts_engines")
         strip = lambda bd: [{k: v for k, v in x.items() if k not in ("now", "abc")} for x in (bd or [])]
         if any(pb.get(k) != rec["build"][k] for k in keep) or strip(pb.get("board")) != strip(rec["build"]["board"]):
             bad.append("build")
