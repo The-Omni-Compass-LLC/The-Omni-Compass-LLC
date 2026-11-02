@@ -1472,7 +1472,8 @@ def write_version(build: dict) -> None:
 
 def factory_beat() -> int | float:
     """The factory's heartbeat, in seconds: the governor's own default --interval (omni_controller/controller.py), so the page
-    follows the engine that stands (60 s from omni-v17 to omni-v23, 20 s from omni-v24) and is never written by hand."""
+    follows each engine as it lands (its default is 60 s from omni-v17 to omni-v23 and 20 s from omni-v24) and is never written
+    by hand."""
     src = (ROOT / "omni_controller" / "controller.py").read_text(encoding="utf-8")
     m = re.search(r'add_argument\(\s*"--interval"\s*,[^)]*?default\s*=\s*([0-9.]+)', src, re.S)
     if not m:
