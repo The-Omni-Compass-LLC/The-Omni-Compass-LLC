@@ -40,7 +40,8 @@ is admissible when no gauge reads LOSS against native (in a cloud the machine-ho
 the admissible beats the factory beat is the one no other dominates on the service gauges; where none is admissible the factory
 beat stays 60 s. Amendment 6 read the twelve beats, 5 to 120 s, again on the corrected model (its stand-in cluster gives every
 pod its own object and metadata), in both places, on the tune study's development seeds 101 to 108, one day each (our own models,
-evidence class S):
+evidence class S; the record `results/model_gate/V23_LADDER_CORRECTED.md`, written by `tools/beat_ladder.py` from its source report
+`results/model_gate/V23_LADDER_CORRECTED_SOURCE.json`, which names the tree each place ran on):
 
 - **On site** (the kind rig's own machines, made at the start, no cluster autoscaler): every beat admissible, and 10 s the one
   beat no other dominates (rule 2). Against 60 s at 10 s: the minutes over the response line down 65.5%, from 6.9 to 2.4 a day
