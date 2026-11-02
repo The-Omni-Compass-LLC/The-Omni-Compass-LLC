@@ -43,7 +43,9 @@ SETTINGS = (("pace_cloud", "cloud", "the cloud's setting: the compass law on top
                                     "31 October, the founder's order of that day, the max with every muscle, the bill judged)"),
             ("pace_kind", "kind", "the kind benchmark's setting: the compass law at the max, every autoscaler sensed, on the plant with "
                                   "the cloud's own autoscaler (from 31 October the same model as the cloud's at the max, "
-                                  "docs/PACE_PREREGISTRATION.md amendment 5)"))
+                                  "docs/PACE_PREREGISTRATION.md amendment 5)"),
+            ("pace_onsite", "on site", "on site: the kind rig's own machines, made at the start, no cluster autoscaler, the compass law "
+                                       "at the max (docs/PACE_PREREGISTRATION.md amendment 6, the corrected model))"))
 NAMES = {"machine_hours": "Machine hours (a day)", "kwh_per_core_hour": "Energy per core-hour (kWh)",
          "pending_pod_minutes_per_hour": "Pods waiting for a place (minutes an hour)",
          "hpa_shortfall_minutes_per_hour": "Pod autoscaler short of its target (minutes an hour)",
