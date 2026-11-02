@@ -178,6 +178,25 @@ def markdown(d: dict) -> str:
          "| The bill B | the card's rental for the window (the same hours in both arms) | the cloud's own bill at list price |",
          "| The work W | requests served in the window (the card's own receipt; no response line) | requests answered inside the line (the work meter) |",
          "| The second receipt | the card's own meter: energy for each request served | the machine-hours beside the bill |", "",
+         "## The bill, line by line", "",
+         "The bill is the sum of its line items, B = Σₖ cₖ, and each item's change counts by its share of native's bill, b = Σₖ sₖ·bₖ. "
+         "Which items Omni-Compass can move, and which the receipts read so far have priced:", "",
+         "| Line item | Through the cloud: how it is billed | Moved by Omni-Compass? | Bare metal: how it is billed | Moved by Omni-Compass? |",
+         "|---|---|---|---|---|",
+         "| The server (compute) | by the second: machine-hours × the hourly price | yes: the machines it parks and wakes, the pods it "
+         "places (priced in the cloud receipt read so far, at list price) | a flat lease or a rental by the hour for the same box | no: the "
+         "same box in both arms, so this item holds and G ≈ w (priced in the chip receipt: the metered window at $1.29 an hour) |",
+         "| Electricity | inside the price | no line of its own | paid by the owner where the box sits on its own meter | yes: the card's "
+         "own meter reads the energy for each request served (GAIN in all three A10 runs); not priced in the receipt, a line an owner adds "
+         "at its own rate |",
+         "| Data out (egress) | per gigabyte that leaves the cloud | only through the work: more requests served can send more data out, "
+         "a rise proportional to the work (not priced in the receipt read so far) | an allowance or a flat port | no, inside the allowance |",
+         "| Storage and its speed | per gigabyte stored, plus the speed tier bought | no (not priced) | inside the box | no |",
+         "| The hidden labour | inside the cloud's premium | no | the owner's staff | no |", "",
+         "So the receipts read so far price the item Omni-Compass moves most in each place (the cloud's machine-hours; the chip's window), "
+         "and leave out items it does not move. An item it does not move has bₖ = 0 and only pulls b toward 0, so an owner's full bill "
+         "shows a smaller b than the compute line alone; an item that grows with the work (egress) takes back a share of w in the cloud, "
+         "and an owner's own electricity rate gives bare metal a second line where the card's energy cut is paid back.", "",
          "## What the receipts say today", ""]
     bm = pl.get("bare_metal")
     if bm:
