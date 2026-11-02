@@ -7457,7 +7457,7 @@ Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction
 
 
 > Evaluation and Simulation use only; any other use requires a signed, paid Omni-Compass Enterprise License. See
-> [`LICENSE`](../LICENSE).
+> [`LICENSE`](../../LICENSE).
 
 This connects GitHub to an Azure account so the workflow `aks-metered` can build a real Azure Kubernetes Service
 cluster, run native Kubernetes (with Azure's own cluster autoscaler) against the same with Omni-Compass on top, count

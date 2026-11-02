@@ -32,6 +32,7 @@ height, headings scaled up from it; only the running heads and footers are small
 from __future__ import annotations
 
 import json
+import os
 import csv
 import re
 import sys
@@ -310,8 +311,25 @@ def esc_txt(x: str) -> str:
 MATH = re.compile(r"\$\$(.+?)\$\$|(?<![\\\w$])\$(?=\S)((?:\\\$|[^$\n])+?)(?<=\S)(?<!\\)\$(?![\w$])")
 
 
+def book_links(md: str) -> str:
+    """The one-file text lives in docs/book/; a relative link its chapters carry is written from docs/ (or the root, for the
+    README's), so each is rewritten to reach the same file from docs/book/ (1 November: '../LICENSE' reached nothing)."""
+    def fix(m):
+        text, url = m.group(1), m.group(2)
+        if re.match(r"(?:[a-z]+:|#|/)", url):
+            return m.group(0)
+        path, sep, frag = url.partition("#")
+        for base in (ROOT / "docs", ROOT):
+            tgt = (base / path).resolve()
+            if path and tgt.exists():
+                return f"[{text}]({os.path.relpath(tgt, BOOK).replace(os.sep, '/')}{sep}{frag})"
+        return m.group(0)
+    return re.sub(r"(?<!\\)\[([^\]\n]*)\]\(([^)\s]+)\)", fix, md)
+
+
 def inline(t: str) -> str:
     t = t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    t = t.replace("\\[", "\x02").replace("\\]", "\x03")     # Markdown's escaped brackets: a formula's u[req](k), never a link
     codes = []
 
     def keep(m):
@@ -329,6 +347,7 @@ def inline(t: str) -> str:
     t = re.sub(r"(?<![\w_])_(?![\s_])([^_]+?)(?<![\s_])_(?![\w_])", r"<i>\1</i>", t)
     t = glyphs(t, SERIF_CMAP)
     t = re.sub(r"\x01(\d+)\x01", lambda m: maths[int(m.group(1))], t)
+    t = t.replace("\x02", "[").replace("\x03", "]")
     return re.sub(r"\x00(\d+)\x00", lambda m: f'<font name="Mono" size="{PT}">' + glyphs(codes[int(m.group(1))], MONO_CMAP) + "</font>", t)
 
 
@@ -1833,7 +1852,7 @@ def build():
     story += [FlushFloats(), Spacer(1, 8), KeepTogether([GoldRule(FW, 1.2, 10),
               Paragraph(inline(BANNER_MD[2:]), ParagraphStyle("end", parent=BODY, alignment=TA_LEFT))])]
     doc.multiBuild(story, canvasmaker=INDEX.getCanvasMaker())
-    OUT_MD.write_text(normalize_markdown("\n".join(md_parts) + "\n")[0], encoding="utf-8")   # the notice on top and at the end
+    OUT_MD.write_text(book_links(normalize_markdown("\n".join(md_parts) + "\n")[0]), encoding="utf-8")   # the notice on top and at the end
     seen = sorted(set(UNRESOLVED))
     print(f"references not resolved to the book's numbering: {len(seen)}" + "".join("\n  " + s for s in seen))
     print(OUT_PDF, doc.page, "pages")

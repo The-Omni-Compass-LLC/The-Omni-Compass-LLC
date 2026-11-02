@@ -116,9 +116,10 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **Bare metal.** The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own: the hours it runs, and the energy the chip's own meter reads. The software end goes with Omni-Compass to it, and there Omni-Compass can reach the chip's own knobs too.
 - **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its bill is the cloud's own; the cloud's chips and back end are inside its price and out of Omni-Compass's reach: it governs what the cloud gives, through the cloud's own Kubernetes. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
 - **The chip.** Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
-- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, the two places never added together, since a system runs in one or the other (`results/TWO_BILLS.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
+- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, each place on its own, since a system runs in one or the other; an owner who runs work in both may weigh them only by its own spend, through G(total) (`results/TWO_BILLS.md`, `docs/WORK_PER_BILL.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, Y = W / B, in each place native against Omni-Compass on native, G = Y(Omni-Compass on native) / Y(native) − 1 = (1 + w) / (1 + b) − 1 ≈ w − b, w the change in the work done and b the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (w > b, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`).
 - **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
@@ -737,11 +738,11 @@ The fourth line, **contract, this decision**, writes the same decision in the sy
 for Omni-Compass on native:
 
   k = the decision on screen · t[k+1] = t[k] + Δ, Δ = the heartbeat set · θ = the active profile's fingerprint and its kind
-  u[req](k): the settings changed · u[cmd](k) = Π[C](u[req](k)): how many were cut to the muscle's own limit
-  u[ack](k) = R(u[cmd](k)): how many of the sixty settings stand at their command, and how many are still moving
+  u\[req\](k): the settings changed · u\[cmd\](k) = Π\[C\](u\[req\](k)): how many were cut to the muscle's own limit
+  u\[ack\](k) = R(u\[cmd\](k)): how many of the sixty settings stand at their command, and how many are still moving
 
-Under it the whole contract is printed once, y(k) = h(x(t[k])) + ε(k); (u[req](k), z(k+1)) = G[θ](z(k), y(k), A(k));
-u[cmd](k) = Π[C](u[req](k)); u[ack](k) = R(u[cmd](k)); x(t[k+1]) = Φ(x(t[k]), u[ack](k), w(k)); θ(k+1) = θ(k) once released, with
+Under it the whole contract is printed once, y(k) = h(x(t[k])) + ε(k); (u\[req\](k), z(k+1)) = G\[θ\](z(k), y(k), A(k));
+u\[cmd\](k) = Π\[C\](u\[req\](k)); u\[ack\](k) = R(u\[cmd\](k)); x(t[k+1]) = Φ(x(t[k]), u\[ack\](k), w(k)); θ(k+1) = θ(k) once released, with
 what each symbol is on this page: x the sixty muscles' settings and loads, y their readings with the sense delay and the noise σ
 set on the panel, w the demand, C each muscle's own range, A Omni-Compass's hand (the max or the tune-down). On the harness the
 line names k, Δ and θ and says the three settings are computed only on the live model; with Omni-Compass off it says nothing is
@@ -1334,7 +1335,7 @@ whole workload (a model of measurements, class S of class L and P; chapter 28). 
 as no change, because the machine's own layer is not yet run and the card's one run, made on a controller since replaced,
 stands outside the headline scope; so both bills are the software end's and, through the cloud, the wire's, and the cloud's own
 bill is not counted (its tests are one run each, and by the index's rule a table of one run enters as exactly 1), as the
-cloud-is-a-wire box explains (the page's section 4d, chapter 21). The two bills follow the whole
+page's section 4d explains (chapter 21). The two bills follow the whole
 organism's two knobs in the page's section 5d, the reading and the chip's one run in or out. The index here is a composition's
 one number, not a price; each route's bill as a sum of costs is the control panel's (section 2.10).
 
@@ -2113,9 +2114,12 @@ every table `results/STEERING.json` holds, each on its own engine, beside native
 
 This chapter reads the page's section 4d, **Cloud Providers** (`#s-cloud`).
 
-### 21.1 The cloud is a wire
+### 21.1 The cloud's wire and the two ends
 
-The cloud providers' section (the page's section 4d) opens with a box: "THE CLOUD IS A WIRE. A CLOUD RUN ALONE CAN SHOW ONLY A LITTLE." A
+The cloud providers' section (the page's section 4d, **Cloud Wire and the Two Ends**) opens with the readings of each place, gauge by
+gauge, composed by our own code (class S) from the layers measured in it (class L and P), the chip and the cloud's wire entered as
+exactly 1 by the founder's order of 31 October; through the cloud the one number a receipt must prove is work for the bill, native
+against Omni-Compass on native in the same cloud (`docs/WORK_PER_BILL.md`). A
 cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and
 autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site
 or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. On the
@@ -2128,7 +2132,7 @@ show the energy and throughput gained at the bare metal, because the provider's 
 back end, so the page claims that benefit only as the same mechanism measured on hardware the repository can meter (the page's
 section 4f), never as a measurement of the provider's machines.
 
-The box then gives the company's own expectation, not a measured result (24 October): about 3 to 4%
+Appendix B, under 4d, gives the company's own expectation, not a measured result (24 October): about 3 to 4%
 from the front end, 2 to 3% from the back end, about 5% from the two ends together, and 1 to 2% from the wire alone, as a smaller
 bill or more work for the same bill. Under it a table reads the measured readings of each place, gauge by gauge (work, speed,
 machines, energy, the bill): the software end, the bare metal, the cloud's wire alone, on site with the two ends together, and
@@ -2149,7 +2153,8 @@ until then every cloud set ran at the tune-down on the machines alone, `OMNI_MAC
 autoscaler's cover, conveys the processor, and parks a machine the cloud already made, after its own trial, waking it on a
 breach; it asks the cloud for no machine itself. Every gauge is read against native by the one key, and the cloud's judged
 number is the work per dollar: the bill may rise where the work rises more (the founder's words of 31 October: "anybody will pay
-1% more for 10% more product"), a rise shown beside the work it bought, and a tune whose work per dollar falls against native is
+1% more for 10% more product", the aim the cloud is judged by, not a measurement: no cloud set read so far has counted its work), a
+rise shown beside the work it bought, and a tune whose work per dollar falls against native is
 the tune falling out wrong, fixed in our models. From 31 October, night, every cloud set carries the load whose work grows with the
 speed (the work meter), so each receipt reads the work per dollar; Azure's queue runs a tuning case first, once, to freeze the
 counted rates. Azure runs first and is the measure of the other two (Google Cloud, Amazon
@@ -2554,11 +2559,13 @@ end's work and bills it by machine-hours; its benchmark shows that it holds: the
 not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
 Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
-### 28.1 Every way a stack is bought
+### 28.1 The two places a system runs
 
-The whole organism (the page's section 5d, `#s-whole`) opens with the same box as the clouds' section, the cloud is a wire,
-and its table of the three places Omni-Compass lives (section 21.1); the three places compose into one organism and one bill
-below it, read two ways, native and Omni-Compass on top of native.
+The whole organism (the page's section 5d, `#s-whole`) opens with a box, "WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS",
+and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
+two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
+carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
+are the four boxes of section 2b, never this composition, and the two places are never added together.
 
 Omni-Compass is wired into every piece of a stack through its own two-way plug: the
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
