@@ -221,6 +221,8 @@ it from omni-v24's campaign on: the compass arm on kind at the factory's 10 s, 6
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
+The record of this amendment's run (written into the repository on 2 November 2026, the founder's order that every number stands on its record): `results/model_gate/V23_LADDER_CORRECTED.md`, rendered by `tools/beat_ladder.py` from `results/model_gate/V23_LADDER_CORRECTED_SOURCE.json`. On site the runs ran on the omni-v23 tree (commit a278eac262); through a cloud on the candidate tree of 31 October (commit ebf83ecaf9), which runs every pace exactly as omni-v23 (it writes the cover's floor as a knob at the factory's 0.6 and strikes the machines-only rule; every run sets its own beat and none passes the machines-only flag).
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

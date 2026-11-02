@@ -6,7 +6,7 @@
 
 **Open the live benchmark engine (the running page):** <https://claude.ai/artifact/PmGS8ogFLMQiuyjU2YEFn3>. The file in this repository, [`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`](docs/engine/OMNI_COMPASS_LIVE_ENGINE.html), is its source: GitHub shows a page's source as text and does not run it, so open the link above, or download the file and open it in a browser. **The whole engine in one file** (every monitor, knob and record inside it, about 15 MB, for a phone, a laptop or a website): [`docs/live/index.html`](docs/live/index.html), built from the page by `docs/engine/build_standalone.py`; with GitHub Pages serving `docs/` it opens at <https://the-omni-compass-llc.github.io/The-Omni-Compass-LLC/live/>.
 
-> **Evidence-integrity notice (2026-10-29).** The +5.2% Omni index is an internally computed geometric-mean composite of heterogeneous benchmark ratios, **not** a measured 5.2% reduction in total compute bills or a universal throughput improvement. Its Kubernetes energy values include modeled estimates; database, messaging and cache energy values can use CPU-time proxies, and the “machines” axis can mean connections, consumers, or allocated memory rather than physical machines. The +6.0% useful-work result is a specific three-run comparison on omni-v18, not a result proven for all engines or workloads. Results from different engines must not be represented as one end-to-end physical trial. “STEADY” can mean a nonzero difference below the existing 0.5% reporting threshold; it does not establish exact equality. All results are internally run and scored, not independently certified. See [the evidence-integrity audit](docs/EVIDENCE_INTEGRITY_AUDIT_20261029.md) before quoting performance or savings figures.
+> **Evidence-integrity notice (2026-10-29).** The Omni index is an internally computed geometric-mean composite of heterogeneous benchmark ratios, **not** a measured reduction in total compute bills or a universal throughput improvement. Its Kubernetes energy values include modeled estimates; database, messaging and cache energy values can use CPU-time proxies, and the “machines” axis can mean connections, consumers, or allocated memory rather than physical machines. Each useful-work result is a specific three-run comparison on the engine its own table names, not a result proven for all engines or workloads. Results from different engines must not be represented as one end-to-end physical trial. “STEADY” can mean a nonzero difference below the existing 0.5% reporting threshold; it does not establish exact equality. All results are internally run and scored, not independently certified. See [the evidence-integrity audit](docs/EVIDENCE_INTEGRITY_AUDIT_20261029.md) before quoting performance or savings figures.
 
 
 <!-- headline: written by tools/headline.py from the result files; never edited by hand -->
@@ -183,7 +183,7 @@ wire into one organism and one bill ([`DISCLOSURES.md`](DISCLOSURES.md), section
 A provider that ran Omni-Compass on its own back end would see that benefit on its own chips and racks; no tenant can meter
 it, so it is never claimed here as a measurement.
 
-**What the record shows in each place so far** (the words for each place are in the section "Where Omni-Compass sits, and what each benchmark shows" below): at the software end the benefit, the Omni index over work, speed and machines ([`results/OMNI_INDEX.md`](results/OMNI_INDEX.md); composed layer by layer in [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md)), with no bill in it; on bare metal, the A10's own bill and meter on omni-v23 ([`results/TWO_BILLS.md`](results/TWO_BILLS.md), [`results/gpu/V23_A10_CAP_FULL_ABC.md`](results/gpu/V23_A10_CAP_FULL_ABC.md)), fully loaded: the bill STEADY, the work done inside it the runs disagree (up in two runs, down in the third, that run's lost work on the next version's list), the chip's energy for each request served GAIN in all three of our runs (the A100's three runs on omni-v21 read work and energy STEADY, [`results/gpu/V21_A100_CAP_ABC.md`](results/gpu/V21_A100_CAP_ABC.md)); through the cloud, Azure's steady set on omni-v18, 98 paired repetitions ([`results/live/AKS_STEADY_100_OMNI_V18.md`](results/live/AKS_STEADY_100_OMNI_V18.md)) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md). In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more. No place carries a figure before its runs read it (the founder's order of 2 November); the founder's word of 31 October sets the wire's own benefit at none.
+**What the record shows in each place so far** (the words for each place are in the section "Where Omni-Compass sits, and what each benchmark shows" below): at the software end the benefit, the Omni index over work, speed and machines ([`results/OMNI_INDEX.md`](results/OMNI_INDEX.md); composed layer by layer in [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md)), with no bill in it; on bare metal, the A10's own bill and meter on omni-v23 ([`results/TWO_BILLS.md`](results/TWO_BILLS.md), [`results/gpu/V23_A10_CAP_FULL_ABC.md`](results/gpu/V23_A10_CAP_FULL_ABC.md)), fully loaded: the bill STEADY, the work done inside it the runs disagree (up in two runs, down in the third, that run's lost work on the next version's list), the chip's energy for each request served GAIN in all three of our runs (the A100's three runs on omni-v21 read work and energy STEADY, [`results/gpu/V21_A100_CAP_ABC.md`](results/gpu/V21_A100_CAP_ABC.md)); through the cloud, Azure's steady set on omni-v18, 97 paired repetitions ([`results/live/AKS_STEADY_100_OMNI_V18.md`](results/live/AKS_STEADY_100_OMNI_V18.md)) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of [`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md). In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more. No place carries a figure before its runs read it (the founder's order of 2 November); the founder's word of 31 October sets the wire's own benefit at none.
 
 ## Notices for every reader
 
@@ -360,7 +360,7 @@ muscles with their own native controllers under it, never replaces native, and e
 
 ## The engine that stands: omni-v24 (the factory beat for its place)
 
-The engine on main is **omni-v24** (`OMNI_V24.json`, fingerprint `66c8f2d94b3e4725`, 65 files; [`docs/OMNI_V24.md`](docs/OMNI_V24.md)), 1 November: omni-v23 with the heartbeat it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that the basic setting is found and then locked ("60 seconds is a disadvantage, it's not a benefit"; "You pick and find out"). With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the owner's own machines) it takes its full decision every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that fails keeps 60 s, and a beat set by hand always wins, so the heartbeat stays a dial. The rule that picked the two beats was frozen before any reading was seen ([`docs/PACE_PREREGISTRATION.md`](docs/PACE_PREREGISTRATION.md), amendments 4 to 6; our own models, class S): on site 10 s was the one beat no other dominated (against 60 s the minutes over the response line down 65.5%, the 95th percentile down 9.9%: fewer and faster, GAIN; the machines the same; the reads of the cluster and Omni-Compass's own processor power given); through a cloud no beat kept the bill from rising against native, so 60 s stays there and those rows are on the next version's list with their cause. 64 of its 65 files are omni-v23's bytes; the model gate against omni-v23 ([`results/model_gate/V24_VS_V23.md`](results/model_gate/V24_VS_V23.md)): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. omni-v23 ([`docs/OMNI_V23.md`](docs/OMNI_V23.md), Omni direct keeps every muscle Omni-Compass cannot be: a knob whose writes are refused goes back to native's own controller) stood from 31 October to 1 November.
+The engine on main is **omni-v24** (`OMNI_V24.json`, fingerprint `66c8f2d94b3e4725`, 65 files; [`docs/OMNI_V24.md`](docs/OMNI_V24.md)), 1 November: omni-v23 with the heartbeat it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that the basic setting is found and then locked ("60 seconds is a disadvantage, it's not a benefit"; "You pick and find out"). With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the owner's own machines) it takes its full decision every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that fails keeps 60 s, and a beat set by hand always wins, so the heartbeat stays a dial. The rule that picked the two beats was frozen before any reading was seen ([`docs/PACE_PREREGISTRATION.md`](docs/PACE_PREREGISTRATION.md), amendments 4 to 6; our own models, class S; the record [`results/model_gate/V23_LADDER_CORRECTED.md`](results/model_gate/V23_LADDER_CORRECTED.md)): on site 10 s was the one beat no other dominated (against 60 s the minutes over the response line down 65.5%, the 95th percentile down 9.9%: fewer and faster, GAIN; the machines the same; the reads of the cluster and Omni-Compass's own processor power given); through a cloud no beat kept the bill from rising against native, so 60 s stays there and those rows are on the next version's list with their cause. 64 of its 65 files are omni-v23's bytes; the model gate against omni-v23 ([`results/model_gate/V24_VS_V23.md`](results/model_gate/V24_VS_V23.md)): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. omni-v23 ([`docs/OMNI_V23.md`](docs/OMNI_V23.md), Omni direct keeps every muscle Omni-Compass cannot be: a knob whose writes are refused goes back to native's own controller) stood from 31 October to 1 November.
 
 Every engine before it is on its own page, `docs/OMNI_V<n>.md`, with what it changed, why, and what its model gate read; the road from omni-v1 is in [`CHANGELOG.md`](CHANGELOG.md) and `docs/history/`. No result is read across engines: every benchmark runs again on the engine that stands (`scripts/reruns.txt`, released by the conductor, `scripts/dispatch_grid.py`), and a row still on an older engine names it until its three runs on the engine that stands land.
 
@@ -380,94 +380,56 @@ again on this engine**; the card version's results below stand as that version's
 
 ## The muscles and the seven organisms, modelled: every muscle its own card (13 October; the spine the seventh organism, 16 October)
 
-The engine at its default, **the max**, with **the living body**, and **every muscle its own card**: the brain is one,
-its settings each muscle's own. An automatic search over every muscle (development seeds only, today's global setting
-always one of the choices) found the settings that do each muscle the most good; a card enters the engine only if it won
-twice, on two separate sets of development seeds, and on no seed under any load was it over its line more often than
-native, did less work, or cleared its line later. 364 muscles carry a card of their own (333 machine
-pools, 31 batteries), each printed in plain words in the [muscle catalog](docs/MUSCLE_CATALOG.md); inside a body, a
-battery wired by its power keeps the body's own margin on its line ([`docs/FORMAL_V5.md`](docs/FORMAL_V5.md), section
-5). Preregistered seeds 3000-3009, ten paired runs per muscle,
-per organism and per load, commit `9819a903cba3`, engine omni-v8 (fingerprint `f93d233136a1f902`; run again on 17 October on omni-v8,
-the spine the seventh organism, every reading reproducing the table of 16 October to the digit); it runs again on the engine that
-stands (`realms-v5.yml`, `scripts/reruns.txt`), and until its table lands this one is omni-v8's. Evidence class
-**S**: modelled plants, not meters. Every row, losses included:
-[`results/realms_v5/REALMS_V5.md`](results/realms_v5/REALMS_V5.md).
+<!-- the muscles and the seven organisms, written from their records (tools/organism_words.py) -->
+Every number in this section is computed from its record by `python3 tools/organism_words.py`, and `verify.py` fails a
+push where any of them differs from what the records give. Evidence class **S**: our own models of the plants, not
+meters; a plant written by the people who wrote the law is not an independent test.
 
-**Every muscle alone (1,107), under its own load and with work waiting in line:**
+**The 1,107 muscles and the seven organisms** ([`results/realms_v5/REALMS_V5.md`](results/realms_v5/REALMS_V5.md)). The newest
+record is engine omni-v8's: run 2026-10-17 15:39 UTC, commit `9819a903cba3`, preregistered seeds 3000 to 3009 (ten paired runs
+per muscle, per organism and per load), read again by the 0.5% rule on 24 October 2026. It runs again on the engine that stands;
+until its table lands, this one is omni-v8's.
 
-| Reading | Muscles | With one global setting |
-|---|---:|---:|
-| **GAIN** (more work, its line cleared sooner or fewer misses, beyond the noise, and no LOSS on any of the three, under either load) | **527** | 517 |
-| of them: clear the waiting line sooner | 493 | 493 |
-| of them: over their line less often | 409 | 398 |
-| of them: more work | 33 | 32 |
-| STEADY, at its limit on native (native already runs the knob at the top of its range: full clock, full torque, full battery power, nothing turned away; the max writes nothing) | 421 | 421 |
-| STEADY, the same as native (as the realms table reads it, nothing beyond the noise to gain: native already did all the work that came) | 159 | 169 |
-| **LOSS, or GAIN AND LOSS** | **0** | 0 |
+| Every muscle alone, under its own load and with work waiting in line | Muscles of 1,107 |
+|---|---:|
+| **GAIN**: fewer misses, faster or more work, and no LOSS under either load | **530** |
+| of them: the waiting line cleared sooner | 493 |
+| of them: over the line less often | 445 |
+| of them: more work | 12 |
+| STEADY, at its limit on native (native already runs the knob at the top of its range; Omni-Compass writes nothing) | 421 |
+| STEADY, the same as native | 156 |
+| **LOSS**, or GAIN and LOSS | **0** |
 
-The realms table was written before the rule of 24 October 2026 and reads its words by the noise; it is not among the tables
-read again by that rule (`tools/reread.py` reads `results/live/` and the model gate), so a muscle it counts STEADY may hold a
-change of 0.5% or more.
+Each organism under each load: the change in decisions over the line (Omni-Compass's count against native's), the
+largest change in work over the three loads, and the largest power given (the organism's energy against native's).
 
-| Kind | With work waiting in line (one global setting in brackets) | Power given | Wear |
-|---|---|---:|---:|
-| Compute pools (458) | line cleared in **7.2 min instead of 16.9** (7.8); over the line 1.40% → 0.33% of the time (0.40%) | +33% (+21%) | machine-hours +68% (+43%) |
-| Battery sites (44) | over the line 13.4% → 7.6% (peak ceiling; 9.9%), 17.1% → 14.0% (reserve; 15.0%), 14.7% → 14.0% (discharge timed for the line; 14.5%) | up to +0.14% | battery kWh cycled −0.6% to +30% |
-| Motion axes at their own peak speed (37) | over the line 12.1% → 8.3% of the time; work +0.7% (no card beat the global setting) | +1.4% | motor heat +3.9% |
+| Organism (muscles) | Over the line: its own load | the climb | work waiting in line | Work, largest change | Power given, largest |
+|---|---:|---:|---:|---|---:|
+| The spine (267) | GAIN, down 6.1% | GAIN, down 7.9% | GAIN, down 8.8% | STEADY, 0.003% (under the 0.5% floor) | power given, up 0.04% |
+| Compute / AI / Cloud (540) | GAIN, down 3.6% | GAIN, down 7.0% | GAIN, down 8.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.05% |
+| Physics / Robotics / Autonomous (404) | GAIN, down 2.5% | GAIN, down 3.2% | GAIN, down 2.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.03% |
+| Energy / Facility / Industrial (480) | GAIN, down 7.5% | GAIN, down 2.7% | GAIN, down 8.3% | STEADY, 0.000% (under the 0.5% floor) | power given, up 0.00% |
+| Distribution / Specialized (484) | GAIN, down 2.8% | GAIN, down 7.2% | GAIN, down 4.7% | STEADY, 0.003% (under the 0.5% floor) | power given, up 0.03% |
+| The four stacked (1,908) | GAIN, down 3.6% | GAIN, down 4.8% | GAIN, down 4.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.00% |
+| The whole tower (1,107) | GAIN, down 1.9% | GAIN, down 1.4% | GAIN, down 1.1% | STEADY, 0.000% (under the 0.5% floor) | power given, up 0.00% |
 
-**The seven organisms** (the spine, the four realms, the four stacked and the tower; every plant coupled on one clock, the hour around each battery site's daily peak): **fewer misses
-than native under all three loads, the same work or more, and not one plant with less work or more misses**: 0 of 1,908
-in the four stacked, 0 in every other organism, under every load. Inside a body the cards remove more misses with less power given than one global setting did.
+**The grid** (the seven organisms at 1, 10 and 100 copies, each at 1, 10 and 100 runs). Its one written report is engine
+omni-v5's ([`results/grid_v5/GRID.md`](results/grid_v5/GRID.md)); its modelled squares read, in the report's own words:
+"modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%;
+power given +0.000% to +0.065%". The squares with the real cluster inside are read gauge by gauge in the same report. The grid
+has been sent on every engine since, omni-v6 to omni-v24 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has
+been written yet; until one is, the grid is read only on omni-v5.
 
-| Load | Over the line, change (every muscle its own card) | One global setting | Work | Power given |
-|---|---|---|---|---:|
-| Own load | −1.9% to −7.5% in every organism (the spine −6.1%) | −1.6% to −6.4% | equal | up to +0.01% (was +0.06%) |
-| The climb (1 2 3 2 3 4 ..., up to twice its own) | −7.9% the spine, −7.2% distribution, −7.0% compute, −4.8% the four stacked, −3.2% physics, −2.7% energy, −1.4% the tower | −0.9% to −3.5% | more work in five of seven | up to +0.05% (was +0.07%) |
-| Work waiting in line | −1.1% to −8.8% in every organism (the spine −8.8%) | −1.0% to −7.2% | equal | up to +0.04% (was +0.07%) |
+**The twenty scenarios** (ten organisms, each native and with Omni-Compass on native; engine omni-v23, run 2026-10-31 20:06 UTC,
+three runs, seeds 3000 to 3002; [`results/scenarios/SCENARIOS_20.md`](results/scenarios/SCENARIOS_20.md)). In the 9 modelled
+organisms the muscles over the line read GAIN in 9 (from GAIN, down 1.58% in the whole tower to GAIN, down 63.34% in the
+orchestra); the work STEADY in 9; the power STEADY in 7 (Compute / AI / Cloud: GAIN, a cut, down 0.59%; The orchestra: power
+given, up 52.38%). The whole organism without the card, composed from the real tables (class S, a composition of class P and
+class L measurements), reads GAIN 22.5% by the index's rule; its tables come from 5 engines (omni-v1, omni-v12, omni-v18,
+omni-v21, the engine of commit 5b2832f (4 October 2026)), so it is a composition across engines, never one engine's reading.
+<!-- end of the muscles and the seven organisms -->
 
-**The grid** ([`results/grid_v5/GRID.md`](results/grid_v5/GRID.md)): the seven organisms (the spine's squares in the conductor's queue
-since 16 October) at 1, 10 and 100 copies on one
-clock, each at its first 1, 10 and 100 runs, with work waiting in line. **Modelled** (class S): fewer misses than native
-in all 54 squares run so far, the same work, the power given at most +0.065%. **With the real Kubernetes cluster inside** (the
-cluster measured, class L; the organism modelled): at 1 and 10 copies, in every square of 10 and 100 repetitions, the
-real service spent 12% to 59% less time over its response line, and its slowest 5% of responses were 24% to 56% faster
-(inside the noise in 2 of those 24 squares). At 100 copies the test machine itself is the limit: GitHub's four-core
-machine carries the real cluster and the model of up to 190,800 muscles at once, and native alone kept its CPU 87% to 91%
-busy and failed 32% to 43% of requests. There the real service spent 8% to 13% less time over its line, and in the four
-stacked and the whole tower at 100 repetitions the 95th percentile of its responses read LOSS (up 45% and 13.5%), with the
-four stacked behind the window's clock in 49 of 100 repetitions. Those two squares are run again with a longer window
-([`docs/GRID_LONG_WINDOW_PREREGISTRATION.md`](docs/GRID_LONG_WINDOW_PREREGISTRATION.md)), and on the new engine every
-square runs again with the organism on its own core (protocol 3), so the machine no longer sets the result. The same report reads the organism's
-modelled energy up (+0.06% at most, power given), with no extra modelled work for it, so the organism's work per energy
-reads LOSS in 22 of the 36 squares of 10 and 100 repetitions; and, in 5 squares, 0.2% to 0.6% more copies of the service
-(power given).
-
-The lease handed every knob back to native in every run. On this version GitHub reproduced the realms table in runs A,
-B and C (2,214 rows, 0 differences). **Goldilocks**, three runs of ten pairs (Omni-Compass on top of a service
-rightsized by Goldilocks and the Vertical Pod Autoscaler's recommender; class L): the average response 44% to 48%
-faster, the slowest 5% of responses 59% to 62% faster, time over the response line down 99% to 100%, GAIN in all three
-of our runs, on the same machines, for 1.9% to 2.6% more energy on the declared model, the power given
-([`results/live/V5_GOLDILOCKS.md`](results/live/V5_GOLDILOCKS.md)). **The capacity test**, three runs (the same CPU cap
-in both arms, four cap levels): no row clear of the noise in all three runs at any cap, where the cap itself blocks the one
-lever Omni-Compass has there, more copies of the service; read again by the rule of 24 October 2026 (a change of 0.5% or
-more is a change), its eight rows read the runs disagree on six, LOSS on one (completed work at 1.5 cores, the same way in
-all three runs, 0 of 3 clear of the noise) and GAIN on one (2 of 3 runs moved 0.5% or more, 0 of 3 clear of the noise)
-([`results/live/V5_CAPACITY.md`](results/live/V5_CAPACITY.md)).
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
-
-**Ten organisms, two ways: the twenty scenarios** (our own models, class S, three runs, seeds 3000 to 3002,
-[`results/scenarios/SCENARIOS_20.md`](results/scenarios/SCENARIOS_20.md), written by `python3 tools/scenarios_20.py`). The
-seven organisms of the catalog, the orchestra (the governors' and orchestrators' muscles), the live benchmark engine's own sixty-muscle
-organism and the whole organism in its three places (the software end, the cloud's wire, the bare metal) make ten organisms;
-each is read native and with Omni-Compass on top of native: twenty scenarios. Every one of the nine modelled organisms reads
-its muscles over the line GAIN in all three of our runs (from +1.58% in the whole tower to +63.34% in the orchestra), its work
-STEADY; the orchestra's power is given (+52.38%) and the others' power STEADY or a cut. The whole organism, a composition of the
-real tables, reads GAIN 14.5% by the index's rule. No LOSS row. The record of 24 October also carried a third way,
-Omni-Compass by itself (each pool's own autoscaler switched off), which read LOSS in all three of our runs on work and on
-muscles over the line in eight organisms, 32 rows; the founder's order of 25 October took that way out (Omni-Compass is never
-by itself), and its record is kept whole in
-[`docs/history/SCENARIOS_30_2026-10-24.md`](docs/history/SCENARIOS_30_2026-10-24.md).
 
 ## The manuals: the Operator's Manual, the Owner's Manual and the Live Benchmark Engine Manual
 
@@ -553,12 +515,8 @@ The engine is written twice, in Python and in C++ ([`cpp/`](cpp/)), line for lin
 Omni-Compass also runs the organism as its own orchestrator, with no Kubernetes or other orchestrator's code in it
 ([`docs/OMNI_ORCHESTRATOR.md`](docs/OMNI_ORCHESTRATOR.md), graded in [`docs/OMNI_ORCHESTRATOR_GRADES.md`](docs/OMNI_ORCHESTRATOR_GRADES.md)).
 Three arms are always shown together: native (Kubernetes' published autoscaling rule on the muscles, written by us as the
-yardstick), Omni on native (Omni on top of that rule) and Omni direct (Omni alone on the muscles). In the full form on one host
-(one run of each arm, class L) Omni direct read against native by the one key: work GAIN (up 4.7%), the 95th percentile GAIN
-(down 9.9%), units GAIN, a cut (down 10.3%), machines STEADY, nothing failed. The three arms together, quick form (one run each):
-Omni on native against native, work GAIN (up 8.3%); Omni direct against native, work GAIN (up 9.1%); Omni direct against Omni
-on native, the 95th percentile GAIN (down 13.2%) and units GAIN, a cut (down 9.5%); no LOSS in any pair, after the fault the
-first three-arm showing found was fixed (a trial the traffic kept abandoning still cost a unit). The three-run reading on GitHub
+yardstick), Omni on native (Omni on top of that rule) and Omni direct (Omni alone on the muscles). The single runs of the first
+showings (one run of each arm, on omni-v18) are not a reading and are not quoted here. The three-run reading on GitHub
 (`orchestrator.yml`, omni-v21) is the record: Omni-Compass on native against native reads work GAIN and the 95th
 percentile GAIN in all three of our runs; Omni-Compass direct against native reads both GAIN by the mean of our three runs;
 Omni-Compass direct against Omni-Compass on native reads work LOSS by the mean of our three runs, beyond the noise in 1 of 3,
