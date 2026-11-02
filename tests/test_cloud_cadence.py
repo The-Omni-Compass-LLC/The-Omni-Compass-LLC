@@ -45,7 +45,14 @@ def samples_needed():
 def periods(env):
     """The periods a run hands the governor: the run's own, else the rig's defaults (scripts/kind_bench.sh)."""
     rig = (ROOT / "scripts" / "kind_bench.sh").read_text()
-    d_i = float(re.search(r'OMNI_INTERVAL="\$\{OMNI_INTERVAL:-([0-9.]+)\}"', rig).group(1))
+    m = re.search(r'OMNI_INTERVAL="\$\{OMNI_INTERVAL:-([0-9.]+)\}"', rig)
+    if m:
+        d_i = float(m.group(1))
+    else:                    # omni-v24: the rig asks the engine its factory beat for the place; this run is a cloud's
+        assert 'OMNI_INTERVAL="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"' in rig
+        sys.path.insert(0, str(ROOT))
+        from omni_controller.controller import FACTORY_BEAT
+        d_i = FACTORY_BEAT["through the cloud"]
     d_f = float(re.search(r'OMNI_FLOOR_INTERVAL="\$\{OMNI_FLOOR_INTERVAL:-([0-9.]+)\}"', rig).group(1))
     i = re.search(r"OMNI_INTERVAL: '([0-9.]+)'", env); f = re.search(r"OMNI_FLOOR_INTERVAL: '([0-9.]+)'", env)
     return (float(i.group(1)) if i else d_i), (float(f.group(1)) if f else d_f)

@@ -47,7 +47,9 @@ class Weather:
 
 
 def governor(k):
-    a = parser().parse_args(["--mode", "nodepool", "--law", "compass", "--audit", ""])
+    # the beat set by hand, as an operator may: with no beat set, omni-v24 reads the nodes once at start for its factory beat
+    # (a failed read leaves the longer beat), and that read is not one of the hand-back's reads these tests count
+    a = parser().parse_args(["--mode", "nodepool", "--law", "compass", "--audit", "", "--interval", "60"])
     c = Controller(a, kube=k)
     c.records = []
     c.audit = lambda rec: (c.records.append(rec), rec)[1]

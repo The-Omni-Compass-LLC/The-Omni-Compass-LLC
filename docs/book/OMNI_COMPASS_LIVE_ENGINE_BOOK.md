@@ -172,7 +172,7 @@ played back.
 **What this manual covers.** Every section of the page in the page's own order; every gauge, with its side, its aim and its
 word; every control, with its backend, its effects and its limits; the factory profile against the active one; the two tickers
 that show the mechanism of action; the trace from any tile to the record it came from; and what to do when a tile reads LOSS.
-It covers the page as built on omni-v23; a later engine renames itself on the page's title block and this book is realigned in
+It covers the page as built on omni-v24; a later engine renames itself on the page's title block and this book is realigned in
 the same push.
 
 **What this manual does not cover.** How the engine is built, its equations beyond the ones the page itself prints, the
@@ -297,7 +297,8 @@ native's colour. "Return to native" in the control panel is the reset, a separat
 (chapter 2).
 
 **The profile** (chapter 2). The active profile reads FACTORY, CANDIDATE or CUSTOM, with its fingerprint. The factory profile is
-the released one, omni-v23's, the heartbeat 60 s; nothing is held when the page opens. *Restore factory profile* puts the
+the released one, omni-v24's, the heartbeat 60 s on the page's own model (omni-v24's factory beat through a cloud; on site it
+decides every 10 s); nothing is held when the page opens. *Restore factory profile* puts the
 mechanism and the heartbeat back; *Hold the active profile* holds every knob as set; *Try the candidate* applies the sweep's best
 beat as a candidate, never a release. The heartbeat has seven buttons, 10, 15, 20, 30, 60, 90 and 120 s; the fuse box's tabs add
 the live model as Prometheus metrics and every press as the request a running governor takes.
@@ -575,7 +576,7 @@ The **profile** group holds three buttons, and the profile box (`#fuseProfile`) 
   candidate**, the dial's buttons and the muscles' own switches (the card's, the panel's and the cluster console's) refuse a press with
   a line in the log, and the request line reads "none sent". The note reads "HELD at decision n: the heartbeat … s, the dial on …,
   every muscle driven (or so many left native) and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
-  factory profile is the released one (omni-v23: the heartbeat 60 s, every muscle on its card); no other profile is released".
+  factory profile is the released one (omni-v24: the heartbeat 60 s, every muscle on its card); no other profile is released".
 - **Return to native** hands governance back: the reset, the operator's control (`tools/omni_control.py`, `POST /v1/reset`).
   On the page every setting goes to native's own controller and every Omni-Compass side follows native, as with the kill switch,
   but the switch then reads "OFF by the reset · native alone · press to turn ON" and the event log names the reset. A second
@@ -1123,7 +1124,7 @@ introduction stands there under the section's number and title, so the sections 
 Native is orange everywhere and Omni-Compass blue, and every monitor, section and part carries its signal and its word: red
 REDLINING, yellow STEADY, green GAINING.
 
-### 3.2 The sections, as built on omni-v23
+### 3.2 The sections, as built on omni-v24
 
 Appendix A lists every section with its anchor and the chapter of this book that reads it. In the page's order:
 
@@ -1256,7 +1257,7 @@ This chapter reads the page's section 2b, **Benefit Against Native** (`#s-answer
 
 ### 5.1 Two places, two arms: the bill and the work
 
-The section opens on **Two Places, Two Arms: the Bill and the Work**, written by `tools/headline.py` from
+The section opens on **Four Arms, A, B, C and D: the Bill and the Work Done Inside It**, written by `tools/headline.py` from
 `results/TWO_BILLS.md` (`tools/two_bills.py`), never by hand. A system runs Omni-Compass in one of two places, on bare metal or
 through the cloud, and in each place there are two arms, native and Omni-Compass on top of native (the founder's order of
 1 November): A and B on bare metal, C and D in the cloud. The table has a column for each place and a row for each arm: each box
@@ -1274,7 +1275,7 @@ bare-metal or a cloud bill.
 
 Then comes the Omni index, every real test weighed together, read from its record as the page opens
 (`results/OMNI_INDEX.md`). Where the engine that stands has not yet landed the tables the index is read from, its head says so
-("Not Yet Read on omni-v23") and gives the figure of record on the engine its tables stand on, never read as a result of the
+("Not Yet Read on omni-v24") and gives the figure of record on the engine its tables stand on, never read as a result of the
 engine that stands, with the count of its GAIN, LOSS and power given rows and the benefit sheet's word for the same tables. The same line
 names the LOSS ledger (`docs/LOSS_LEDGER.md`): every LOSS row of the newest tables, the rows Omni-Compass against its own native
 counted apart, because do no harm is judged by them, each with its cause where one is written (chapter 7).
@@ -2844,8 +2845,9 @@ under the same rule, the engine's setting for the rest (`realms/muscle_cards_v5.
 
 In the words of `docs/FACTORY_PROFILE.md`, the page is the **live tuning bench**: the interface that operates the engine's
 controls and displays their effects through the connected backend. The **factory profile** is the complete, versioned set of
-Omni-Compass default settings shipped together; on the engine that stands it is omni-v23's (`OMNI_V23.json`): the governor's
-full decision every 60 s, the fast checks every 5 s, every muscle on the card found for it and on the engine's own setting
+Omni-Compass default settings shipped together; on the engine that stands it is omni-v24's (`OMNI_V24.json`): the governor's
+full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start, the fast checks
+every 5 s, every muscle on the card found for it and on the engine's own setting
 otherwise. The **active profile** is the settings actually governing the current run. An adjustment on the bench produces an
 identifiable active configuration, a **custom profile**; it becomes a new factory profile only after validation and a new
 release declaration. The control panel shows which profile is active and its fingerprint (section 2.7).
@@ -2967,7 +2969,7 @@ the hold doubling for each hand-back in a row up to 160; it takes the muscle bac
 than native's by 5%. Where native is not stronger it stays, because redlining less than native is still a benefit against native.
 The red is still wired on its side, so that if a muscle does redline there (a fault, a bug), it is seen at once. That is the kill
 switch's purpose: when something redlines that Omni-Compass itself cannot stop, one press hands every muscle back to native in the
-same instant. The engine that stands, omni-v23, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
+same instant. The engine that stands, omni-v24, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
 C++ twin `cpp/src/immune.cpp`, proven alike on 200 seeded scripts, and the nervous system's `native_hold`; on Kubernetes each
 service's autoscaler target, native's twin the operator's own target), beside the SLO reflex and the pod reflex of the Kubernetes
 governor (`omni_controller/controller.py`); the page's live model (class S) applies the same rule, with the engine's own numbers, to
@@ -3175,7 +3177,7 @@ Every number on the wall can be walked back to the file it came from.
 ### 43.2 The engine's name and the profile
 
 Every table and every monitor names the engine it ran on; the page's title block names the engine
-the page stands on (omni-v23). A table on an older engine stands only until its runs on the engine that stands land, and the
+the page stands on (omni-v24). A table on an older engine stands only until its runs on the engine that stands land, and the
 board says which it is. Nothing is read across engines. Every result the page plays ran the factory profile of the engine its
 table names; the control panel names the profile governing the live model now, with its fingerprint (section 2.7), and a
 candidate or custom profile there is never a result of record.
@@ -3363,9 +3365,10 @@ A copy whose page, engine or records differ from what these print is not a copy 
   the lease's walk back, the kill switch.
 - **Dial.** The max (every muscle to its own limit, never below native; the default) or the tune-down (never more than native).
 - **Engine that stands.** The engine version on main, named on the page's title block and in `python3 tools/omni_version.py`;
-  omni-v23 for this edition.
+  omni-v24 for this edition.
 - **Factory profile.** The complete, versioned set of Omni-Compass default settings shipped together; on the engine that
-  stands, omni-v23's, the heartbeat 60 s, every muscle on its card. Every published result is this profile's.
+  stands, omni-v24's, the heartbeat 10 s on site and 60 s through a cloud (60 s on the page's own model), every muscle on its card.
+  Every result on the engine that stands is this profile's; every earlier result is its own engine's.
 - **Fingerprint (of a profile).** The page's FNV-1a hash of every setting of the mechanism, the heartbeat and every muscle's body
   included, with the dial and the muscles left native once either leaves the factory's: one identity for one set of settings.
 - **Fuse box.** The second panel of the control panel (`#fuseBox`) that switches every monitor from one place: the master
