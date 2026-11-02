@@ -82,9 +82,11 @@ def stale_engine(files):
     out = []
     for p in files:
         # docs/engine/PAGE_WORD_FOR_WORD.md is the live page as it last rendered, its engine its build record's until the
-        # live-engine workflow builds it again on the push that lands an engine; docs/SITE_AUDIT.md quotes every finding
+        # live-engine workflow builds it again on the push that lands an engine; docs/SITE_AUDIT.md quotes every finding; the
+        # three built books (docs/book/OMNI_COMPASS_*) are builds of manuals this check reads, the live one with that snapshot
         if p.startswith(("results/", "release/", "docs/history/", "archive/", "OMNI_V", "docs/engine/audit_")) \
                 or p in ("CHANGELOG.md", "RELEASE_MANIFEST.json", "docs/engine/PAGE_WORD_FOR_WORD.md", "docs/SITE_AUDIT.md") \
+                or p.startswith("docs/book/OMNI_COMPASS_") \
                 or not p.endswith((".md", ".py", ".txt", ".yml", ".yaml", ".cff", ".toml")) \
                 or (re.match(r"docs/OMNI_V\d+(_PLAN)?\.md$", p) and p != own_page):
             continue

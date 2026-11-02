@@ -190,6 +190,21 @@ def equation(c: dict, k: dict) -> list:
          "speed provisioned | not metered: both arms hold the same data on the same disks |",
          "| the labor to run it | the operator's own staff | much of it inside the cloud's price | not counted; Omni-Compass's own "
          "processor is counted, as power given, beside each run |", "",
+         "**What Omni-Compass can move, term by term.** The work done in a window is W = C × (1 − V) × U: C the work one chip "
+         "can do in the window fed all through it, V the share the place's own software layer takes before the work reaches the "
+         "chip (a cloud's virtual machines and orchestration; none on a card run directly), U the chip-time kept fed in the window, "
+         "counted in chip-windows (one chip fed all through the window is 1; a machine parked is fed none of the time it is "
+         "parked). Inside one place both arms run the same chips under the same layer, so C and V are the same in both and cancel: "
+         "ΔW = U(Omni-Compass) / U(native) − 1, the utilization Omni-Compass wins (the chip fed, the queue drained, the machines in "
+         "service doing work). The bill, line by line: on a card rented directly B = the rate × the hours rented, the same in both "
+         "arms, so ΔB = 0 and G(chip) = U(B) / U(A) − 1; through a cloud B = R × H + (data out × its rate) + (storage × its rate) + "
+         "the cloud's other metered services, and of these Omni-Compass moves H, the machine-hours kept on (a machine parked while "
+         "idle leaves the bill and takes no fed time with it), the others the same in both arms for the same workload, so G(cloud) "
+         "= (U(D) / U(C)) × (B(C) / B(D)) − 1: the same work for fewer machine-hours is a GAIN, and so is more work for the same "
+         "hours. Omni-Compass moves no C (the chip's own speed) and no V (the place's own layer, and the path the data takes "
+         "through it). C and V differ between places and are why the same work carries a different bill in each: the places are "
+         "never set against each other, and a figure for any place's V or price that this repository did not measure is never "
+         "written as one of its own.", "",
          "A line item the same in both arms adds the same dollars to both bills: it leaves ΔW as it is and draws ΔB toward zero, so "
          "a receipt drawn inside a wider boundary reads a smaller bill change for the same work change. Each table names its "
          "boundary; a line item not metered stays written as not metered, never filled with a guessed price.", "",
