@@ -41,6 +41,11 @@
   4" (Omni-Compass moves only the settings native controllers accept: it parks and wakes machines, moves the autoscalers'
   targets and resizes pods' processor through the Kubernetes API, and sets a card's own power limit; it touches no data path,
   cache or network).
+- Omni-Compass works in the control plane, never the data plane: it reads each native controller's own meters (one wire out)
+  and writes the one setting that controller already accepts (one wire in), through a plug that records the setting before
+  the first write, reads back every write and restores the setting at the end. No request, data packet or byte of the
+  workload passes through it; it does not intercept, compress, order, queue or schedule the work's data. Where it helps, it
+  is because the controllers it steers place the machines, pods, processor and power where the work is.
 
 ## Read first
 
