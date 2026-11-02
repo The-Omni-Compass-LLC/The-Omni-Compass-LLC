@@ -111,6 +111,14 @@ def places() -> dict:
     return out
 
 
+def owner_bill(items: dict, moved: dict) -> dict:
+    """An owner's own bill read through the equation: items {line: dollars a period, native}, moved {line: change in that line's
+    quantity with Omni-Compass on native, as a fraction}. Returns B native, B with Omni-Compass, b and each line's share."""
+    bn = sum(items.values())
+    bo = sum(c * (1 + moved.get(k, 0.0)) for k, c in items.items())
+    return {"B_native": bn, "B_omni": bo, "b": bo / bn - 1, "shares": {k: c / bn for k, c in items.items()}}
+
+
 def total_for(spend: dict, wb: dict) -> float:
     """G(total) for an owner's own native spend S(p) in each place over one period: Σ S(p)(1 + w(p)) / Σ S(p)(1 + b(p)) − 1.
     It equals the change in total work per dollar with each place's work valued at native's own price per unit of work there,
@@ -139,6 +147,10 @@ def build() -> dict:
 
 def markdown(d: dict) -> str:
     pl, eq = d["places"], d["equation"]
+    bm0, cl0 = pl.get("bare_metal") or {}, pl.get("cloud") or {}
+    chip_w = ", ".join(_pct(r["w"]) for r in bm0.get("runs", [])) or "not yet read"
+    chip_usd = ", ".join(("$" if r["w"] >= 0 else "−$") + f"{abs(500 * r['w']):.2f}" for r in bm0.get("runs", [])) or "not yet read"
+    cloud_b = _pct(cl0["b"]) if cl0.get("b") is not None else "not read"
     L = ["# Work for the Bill: the One Number the Receipts Prove", "",
          "What the receipts of the chip and of the clouds must show is how much work is done for the bill, native against "
          "Omni-Compass on native (the founder's words of 2 November). This page writes it as one equation, reads every term from a "
@@ -206,6 +218,24 @@ def markdown(d: dict) -> str:
          "and leave out items it does not move. An item it does not move has bₖ = 0 and only pulls b toward 0, so an owner's full bill "
          "shows a smaller b than the compute line alone; an item that grows with the work (egress) takes back a share of w in the cloud, "
          "and an owner's own electricity rate gives bare metal a second line where the card's energy cut is paid back.", "",
+         "## Reading your own bill: a worked example", "",
+         "The prices below are an owner's example (a three-node cluster, the founder's illustration of 2 November), not a result; "
+         "the changes put through them are only what the receipts measured. Each place is read on its own.", "",
+         "| Example | Its bill, line by line (native) | What Omni-Compass can move | Read through the equation |",
+         "|---|---|---|---|",
+         "| Bare metal, always on | the lease $500 a month (egress and storage inside the box) | none of the bill: the same boxes in "
+         "both arms, b = 0 | G = w, the work the same boxes serve: on the A10's receipts w was " + chip_w + "; at native's price per "
+         "unit of work that is " + chip_usd + " of work a month out of the same $500, and the three runs disagree |",
+         "| Through the cloud, always on | compute 720 h × $4.50 = $3,240, egress 500 GB × $0.08 = $40, storage $30: $3,310 | the "
+         "hours (the machines it parks and wakes), 97.9% of this bill; egress only as the work grows; storage not at all | b ≈ 0.979 × "
+         "the change in machine-hours; the one cloud set read so far moved its machine-hours " + cloud_b + " (inside the noise, at the "
+         "tune-down on the machines alone) and did not count its work, so G is not read |",
+         "| Through the cloud, weekends only (40 h) | compute $180, egress $4, storage $30: $214 | the hours, 84.1% of this bill | the same "
+         "reading: b ≈ 0.841 × the change in machine-hours |", "",
+         "Which place is cheaper for the same work (the weekend cluster in a cloud, the always-on one on bare metal) is the owner's "
+         "choice of place, and a cloud's hypervisor share is the same in both arms: neither is a benefit of Omni-Compass. What "
+         "Omni-Compass changes is the work the same machines serve and, in a cloud, the hours billed (`owner_bill` in "
+         "`tools/work_per_bill.py` reads any owner's line items the same way).", "",
          "## What the receipts say today", ""]
     bm = pl.get("bare_metal")
     if bm:

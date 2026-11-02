@@ -26,6 +26,18 @@ class WorkForTheBill(unittest.TestCase):
         self.assertGreater(wpb.run_g({"work": 100.0, "bill": 1.0}, {"work": 112.0, "bill": 1.01})["G"], 0)
         self.assertLess(wpb.run_g({"work": 100.0, "bill": 1.0}, {"work": 101.0, "bill": 1.05})["G"], 0)
 
+    def test_an_owners_bill_counts_each_line_by_its_share(self):
+        # a line Omni-Compass does not move only pulls b toward 0: the compute line's −10% is −9.79% of a $3,310 bill
+        r = wpb.owner_bill({"compute": 3240.0, "egress": 40.0, "storage": 30.0}, {"compute": -0.10})
+        self.assertAlmostEqual(r["B_native"], 3310.0)
+        self.assertAlmostEqual(r["b"], -0.10 * 3240.0 / 3310.0, places=12)
+        self.assertAlmostEqual(sum(r["shares"].values()), 1.0, places=12)
+
+    def test_the_combined_number_lies_between_the_places(self):
+        g = wpb.total_for({"bare": 500.0, "cloud": 3310.0}, {"bare": (0.02, 0.0), "cloud": (0.05, 0.01)})
+        self.assertGreater(g, 0.02)
+        self.assertLess(g, (1.05 / 1.01) - 1)
+
     def test_the_page_is_what_the_receipts_give(self):
         self.assertEqual(wpb.main(["--check"]), 0, "python3 tools/work_per_bill.py")
 

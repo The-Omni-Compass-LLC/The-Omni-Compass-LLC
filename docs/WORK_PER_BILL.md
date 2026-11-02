@@ -46,6 +46,18 @@ The bill is the sum of its line items, B = Σₖ cₖ, and each item's change co
 
 So the receipts read so far price the item Omni-Compass moves most in each place (the cloud's machine-hours; the chip's window), and leave out items it does not move. An item it does not move has bₖ = 0 and only pulls b toward 0, so an owner's full bill shows a smaller b than the compute line alone; an item that grows with the work (egress) takes back a share of w in the cloud, and an owner's own electricity rate gives bare metal a second line where the card's energy cut is paid back.
 
+## Reading your own bill: a worked example
+
+The prices below are an owner's example (a three-node cluster, the founder's illustration of 2 November), not a result; the changes put through them are only what the receipts measured. Each place is read on its own.
+
+| Example | Its bill, line by line (native) | What Omni-Compass can move | Read through the equation |
+|---|---|---|---|
+| Bare metal, always on | the lease $500 a month (egress and storage inside the box) | none of the bill: the same boxes in both arms, b = 0 | G = w, the work the same boxes serve: on the A10's receipts w was +1.51%, +0.73%, −0.70%; at native's price per unit of work that is $7.53, $3.66, −$3.50 of work a month out of the same $500, and the three runs disagree |
+| Through the cloud, always on | compute 720 h × $4.50 = $3,240, egress 500 GB × $0.08 = $40, storage $30: $3,310 | the hours (the machines it parks and wakes), 97.9% of this bill; egress only as the work grows; storage not at all | b ≈ 0.979 × the change in machine-hours; the one cloud set read so far moved its machine-hours +1.21% (inside the noise, at the tune-down on the machines alone) and did not count its work, so G is not read |
+| Through the cloud, weekends only (40 h) | compute $180, egress $4, storage $30: $214 | the hours, 84.1% of this bill | the same reading: b ≈ 0.841 × the change in machine-hours |
+
+Which place is cheaper for the same work (the weekend cluster in a cloud, the always-on one on bare metal) is the owner's choice of place, and a cloud's hypervisor share is the same in both arms: neither is a benefit of Omni-Compass. What Omni-Compass changes is the work the same machines serve and, in a cloud, the hours billed (`owner_bill` in `tools/work_per_bill.py` reads any owner's line items the same way).
+
 ## What the receipts say today
 
 **Bare metal** (The card on omni-v23, the power cap at 70% of the card's top, the full load (cap-full): three runs on an A10; omni-v23 (digest c96ea4105d8747db, 65 files); `results/TWO_BILLS.json chip (results/gpu/V23_A10_CAP_FULL_ABC.json)`):
