@@ -639,13 +639,14 @@ installed is a quarter off the bill.
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
+- **The engine on this checkout:** omni-v24, fingerprint 66c8f2d94b3e4725 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
+- **The four arms** (`results/TWO_BILLS.md`): **A**, the chip native, and **B**, the chip with Omni-Compass on native (omni-v23, three runs): B against A, the bill STEADY, under the floor (the three runs' mean 0.01%), the work done the runs disagree, work per dollar the runs disagree; **C**, the cloud native, and **D**, the cloud with Omni-Compass on native (omni-v18, 98 paired repetitions on Azure): D against C, the bill up 1.21%, inside the noise; Google and Amazon wired, not yet run.
 - The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.0% GAIN on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), 12.9% GAIN on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: 5.2% GAIN. Source: results/OMNI_INDEX.md.
   - Real Kubernetes (GitHub): 28.0% GAIN
   - Real database (PostgreSQL behind PgBouncer, GitHub): 4.2% GAIN
@@ -654,7 +655,7 @@ installed is a quarter off the bill.
   - Real database cache (MongoDB under YCSB, GitHub): 0.5% LOSS
   - Real messaging (Apache Kafka, GitHub): 1.2% power given
 
-**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v24): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
@@ -794,7 +795,7 @@ its mean-log change are both no more than 2% above the reference and above the c
 modelled noisy costs (σ = 0.25) this allows a step that truly costs 3% more 28% of the time instead of the medians'
 40%, one that costs 5% more 14% instead of 26%, and a free step 60% instead of 63% (`docs/OMNI_V7.md`, section 3;
 class S). The engines before v7 read the medians alone (`judge="median"`). A refused step is not tried again for a set
-time (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s beat, 480 at a beat of 15 s; 900 decisions, 30 minutes,
+time (7,200 s on Kubernetes, 120 decisions at a 60 s beat, 120 at 10 s beat, 480 at a beat of 15 s; 900 decisions, 30 minutes,
 on a card); a trial begins
 only while the service is calm and nothing waits, no sooner than 600 s (a card 8 decisions) after the last began; and a
 phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card) is
@@ -828,7 +829,8 @@ seat. The vocabulary is used the same way everywhere in this repository (`docs/M
   **reset** (every setting the governor ever wrote is handed back to where native had it, read back, and the record
   removed; every benchmark arm ends with a reset and checks it).
 - **Cruise.** For work that comes as a pile: when pods have waited for a place decision after decision for the cruise
-  wait (120 s: two decisions at the main engine's 60 s, and never fewer than two readings at any beat), machines go
+  wait (120 s: two decisions at a 60 s beat, twelve at the factory's 10 s on site, and never fewer than two readings at any
+  beat), machines go
   into service up to the pool's own top (read live: every machine of a fixed pool at once, a growing pool a step a
   decision) and stay there, without second-guessing, until the line has been empty as long. In cruise
   the governor also stops its five-second floor reads, because every machine is already in service and the reads would
@@ -969,7 +971,7 @@ hands every setting back to native's value when it stops, dies or is switched of
 
 ### 2.3 Real Kubernetes, each gain beside its cost (L, three runs of ten pairs, kind on one GitHub runner)
 
-The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v23, the engine that stands since 31 October, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
+The rows marked omni-v11 are the newest tables; the others are omni-v10's. omni-v24, the engine that stands since 1 November, runs every test again, and each test's three runs on it replace its row as they land (the conductor is running them).
 
 | Test | Gain, the same in all three of our runs | What it cost |
 |---|---|---|
@@ -3321,7 +3323,7 @@ analysis: **no outside security review or penetration test has been made**, and 
 | The settings the governor writes (replicas, the autoscaler's target, a node's idle mark, a CPU limit, a power cap, a database pool) | Whoever controls them controls the service's capacity |
 | The governor's identity on the system (on Kubernetes its service account and token) | It carries every right the governor has |
 | The hand-back: the snapshot of native's settings, the registry of restore commands, the switch file | They put the system back when the governor stops; whoever can write them chooses what "back" means |
-| The engine's code (the 65 fingerprinted files of omni-v23, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
+| The engine's code (the 65 fingerprinted files of omni-v24, the engine that stands) and the harness that measures it | A changed engine is a different product; a changed harness is a different result |
 | The audit lines and the raw receipts | They are the evidence for every result and every decision |
 | The cloud and GPU credentials (GitHub secrets) | They spend money and create machines |
 
@@ -3462,86 +3464,120 @@ Generated by `python3 tools/sbom.py` from `requirements-lock.txt` (Omni-Compass 
 | charset-normalizer | 3.5.2 | MIT | brought by reportlab |
 | websockets | 17.2 | BSD-3-Clause | brought by mujoco |
 
-## 26. The Engine That Stands: Omni v23
+## 26. The Engine That Stands: Omni v24
 
 
 
-Omni v23 (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files) is omni-v22 with one guard in the Kubernetes governor's pod muscle of its
-own (`omni_controller/controller.py`, `_own_pods` and `_own_refused`), on the founder's order of 31 October, given on reading that
-the arm by itself had read like native:
+Omni v24 (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files) is omni-v23 with one change in the Kubernetes governor
+(`omni_controller/controller.py`, `factory_beat`): the heartbeat it ships with, its full decision, is read from the place it
+runs in, a decision every 10 s on site and every 60 s through a cloud. On the founder's orders:
 
-> "Omni direct is directly to muscles, but Omni direct still might need an autoscaler like Kubernetes ... we still might need a
-> muscle or two we're using. We're going straight into all the muscles as the brain and orchestrator, scheduler and all that, but
-> what Omni-Compass can't do and needs the muscle for has to be achieved even in direct, so that it can work and do everything else
-> ... Don't just embed some shit and fail the whole system because we don't have the muscle to do something ... any muscle that we
-> don't have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever."
+> "Whatever is the best one out of all that helps the best system is the factory set one." (23 October)
+>
+> "60 seconds is a disadvantage, it's not a benefit ... we have to have the basic line engine tuned to what we call the basic
+> setting, and then we lock that, and anybody can turn and tweak it to another scenario." (31 October)
+>
+> "You pick and find out." (31 October, night)
+>
+> "Update, push, build, wire, and give me my new version engine and everything." (1 November)
 
-64 of its 65 files are omni-v22's bytes. No gain, preset, card or law moves; do no harm keeps its strictest form.
+64 of its 65 files are omni-v23's bytes. No gain, guard, preset, card or law moves; do no harm keeps its strictest form. Every
+rule of the governor counts seconds (omni-v16), so the beat changes only how often the governor looks, never how long any rule
+waits; the fast checks (the scheduling floor, the pod reflex, the conveyance's clock) stay every 5 s at every beat.
 
-**What "direct" can and cannot mean** (the founder's analysis, the same day: "Omni-Compass would have to become the Kubernetes
-mechanism to be what's considered direct"). On a Kubernetes stack Omni-Compass is a brain with no organs: Kubernetes' scheduler
-places every pod and the kubelet runs every container, in every arm. The arm by itself there is Omni-Compass's own pod rule in place
-of the autoscaler's arithmetic and nothing else, so it is never called direct; it is a mechanism test kept in the record, not a
-product arm, and the product has two sides, native and Omni-Compass on native (the founder's order of 25 October). The one test
-where the word holds is the orchestrator showing without Kubernetes (`docs/OMNI_ORCHESTRATOR.md`), where Omni-Compass's own small
-orchestrator is the organs; its three arms read, run by run: Omni-Compass on native the strongest in all three (the most work, the
-fastest response in two, fewer machines in all), native the weakest, the arm by itself between them (level with Omni-Compass on
-native in run A, behind it in B and C). This guard serves every arm: wherever Omni-Compass's own rule cannot move a knob, the organ
-that can gets it back.
+### 26.1 What changes in the engine
 
-### 26.1 What was found
+- With no `--interval` set, the governor reads the cluster's nodes once, at its start. A node whose `spec.providerID` names a
+  public cloud's machine (`azure://`, `gce://`, `aws://`, `oci://`, `digitalocean://`, `linode://`, `ibm://`, `alicloud://`,
+  `hcloud://`, `scaleway://`, `vultr://`) makes the place "through the cloud", and the beat is 60 s. Every other node (kind's
+  `kind://`, the owner's own machines, a private cloud the owner runs, a node with no providerID) makes it "on site", and the
+  beat is 10 s. A reading that fails, or finds no node, keeps the longer beat, 60 s: a blind reading decides nothing (omni-v11).
+- `--interval` set by hand always wins. The heartbeat stays a dial (any beat from 5 to 120 s; the live engine's six buttons,
+  10, 15, 30, 60, 90 and 120 s), and every beat a person sets is that person's tune, its results its own.
+- The audit's first record names the place, the beat and the reason (`factory_beat`), so every run says which beat it ran at
+  and why.
+- `--print-factory-beat` prints the beat for the cluster the kubectl reaches and exits. Every rig asks the engine through it
+  (`scripts/factory_beat.sh`), so the rule is written once, in the engine.
 
-Every arm by itself run on kind from omni-v19 (24 October) to omni-v22 had the governor's pod writes refused by the rig's own
-identity: `kubectl scale` patches the scale subresource, `deployments/scale`, a resource of its own under Kubernetes' RBAC, and the
-rig's role granted `patch` on `deployments` by name and never the subresource. Fifteen of fifteen decisions a window ended
-Forbidden, in every repetition; the workload stayed at the operator's count; the machine and conveyance muscles wrote as always, so
-the window's no-write check never fired. omni-v21's three runs of the entry were admitted and are read in no table; omni-v22's two
-were marked invalid by a second rig fault. Both rig faults are fixed (`docs/SOLO_PREREGISTRATION.md`, amendment 1). What the engine
-lacked is this version: when Omni-Compass cannot be a knob's muscle, the knob must go back to the muscle that can, so the organism
-never runs with a knob nobody moves (amendment 2, the founder's order above).
+### 26.2 Why these two beats: the pick, before the gate
 
-### 26.2 What changes in the engine
+The rule that picks the factory beat was frozen before any reading was seen (`docs/PACE_PREREGISTRATION.md`, amendment 4): a beat
+is admissible when no gauge reads LOSS against native (in a cloud the machine-hours stand for the bill and may not rise); among
+the admissible beats the factory beat is the one no other dominates on the service gauges; where none is admissible the factory
+beat stays 60 s. Amendment 6 read the twelve beats, 5 to 120 s, again on the corrected model (its stand-in cluster gives every
+pod its own object and metadata), in both places, on the tune study's development seeds 101 to 108, one day each (our own models,
+evidence class S):
 
-- A write of a workload's own scale that the cluster refuses (its permission, its admission, its API) is recorded in the audit
-  (`own_replicas`, `refused` n, the cluster's words) and the decision goes on; the cluster keeps the last count that landed. Before
-  omni-v23 the exception ended the decision (`decision failed (n in a row)`) and nothing else happened, decision after decision.
-- At `OWN_REFUSALS` (3) refusals in a row Omni-Compass cannot be that knob's muscle: it makes native's own pod autoscaler from the
-  operator's own target and range recorded on the workload (`kubectl autoscale deployment NAME --cpu-percent=T --min=lo --max=hi`;
-  with no range recorded, from one to ten times the operator's count), audits the hand-back (`handed_back`, `after_refusals`,
-  `target`, `range`), and leaves the workload to it for the rest of the run: the snapshot's governed set holds it from the next
-  decision on, and the reset leaves native's autoscaler standing. A hand-back the cluster refuses too is audited
-  (`hand_back_refused`) and tried at the next refusal.
-- A write that lands ends the run of refusals.
-- Every other arm is untouched: Omni-Compass on native never removes native's controller, so a refused write there leaves native's
-  own controller moving the knob as before; the machines, the conveyance, the power cap and the batch muscles are omni-v22's bytes.
+- **On site** (the kind rig's own machines, made at the start, no cluster autoscaler): every beat admissible, and 10 s the one
+  beat no other dominates (rule 2). Against 60 s at 10 s: the minutes over the response line down 65.5%, from 6.9 to 2.4 a day
+  (fewer, GAIN); the 95th percentile response down 9.9%, from 59.3 to 53.4 ms (faster, GAIN); the pod autoscaler short of its
+  target down 6.2% (GAIN); the power-cap request's moves down 47.2% and its reversals down 53.1% (GAIN); the machine-hours
+  identical (on site the machines are already made and paid for). What it costs: the governor reads the cluster 6,897 times an
+  hour where it read 2,317 (up 197.7%, power given), and its own processor works 10.3 s an hour where it worked 1.3 s (power
+  given).
+- **Through a cloud** (the plant with the cloud's own autoscaler, Omni-Compass at the max on top): no beat admissible. Every
+  beat raised the machine-hours against native, up 7.8% to 33.7% (up 14.7% at 60 s): the bill, which the rule does not let rise
+  in a cloud; and every beat but 90 s raised the pods waiting for a place (LOSS, up 15.4% at 60 s). By rule 4 the factory beat
+  stays 60 s, and those rows go on the next version's list with their cause: the autoscaler target held ahead of the load buys
+  machines the cloud bills, and a pod waits while the cloud makes a machine (the next design: ask the cloud for a machine
+  without making a real pod wait).
 
-### 26.3 What changes in the rig, not the engine
+### 26.3 The model gate
 
-The kind identity (`deploy/kind/rbac-omni.yaml`) gains `create` on `horizontalpodautoscalers` in the default namespace, for the
-hand-back alone, and the preflight proves it; a window of the arm by itself in which the knob was handed back is refused as a
-result of that arm (the organism was kept whole, but Omni-Compass did not run the arm by itself): `INVALID RUN: by itself, the knob
-... was handed back to native's own autoscaler`. `tests/test_kind_rig_rbac.py` fails a rig without either.
+`results/model_gate/V24_VS_V23.md` (our own models, evidence class S; `tools/model_gate.py`, seeds 1 to 8, one day each, the engine
+that stood, omni-v23, against the candidate, omni-v24): no LOSS against omni-v23 in any model. Eleven of the twelve models read identical
+on every gauge and every seed (the verdict model among them): every model that sets its own beat, and the shipped cloud model (`cluster_shipped`), where both engines
+decide every 60 s because the model's nodes are a cloud's machines.
 
-### 26.4 The model gate
+The new on-site model (`onsite_shipped`: each engine at its own default beat on the kind rig's own machines, no cluster autoscaler, the
+5 s plant) is the preregistered reading of the pick on the untouched seeds (amendment 4: omni-v23 at its shipped 60 s against the
+pick; the same seeds, plant and beats as `--pace-periods 60,10`). omni-v24 at its 10 s against omni-v23 at its 60 s:
 
-`results/model_gate/V23_VS_V22.md` (class S, our own models; `tools/model_gate.py`, seeds 1 to 8, the engine that stood, omni-v22,
-the candidate omni-v23): every one of the 95 gauge rows of the 11 models reads identical on every seed, the counts identical, no LOSS. No model refuses a write of the cluster, so the guard never fires in the models and the
-candidate reads identical to omni-v22 on every gauge; its proof is the tests below and the arm's own files when the entry runs again.
+- the minutes over the response line down 60.7%, from 7.0 to 2.8 a day (fewer, GAIN);
+- the 95th percentile response down 8.2%, from 61.0 to 56.0 ms (faster, GAIN);
+- the pod autoscaler short of its target down 5.1% (GAIN);
+- the power-cap request's moves down 53.3% and its reversals down 58.5% (GAIN);
+- the machine-hours identical; no pod waited for a place in either engine; no error, no held reading, and no trial abandoned
+  (omni-v23 abandoned 6).
 
-### 26.5 The tests
+Against native on site, omni-v24: the minutes over the line down 89.8%, the 95th percentile down 29.7%, the autoscaler's shortfall
+down 10.4% (GAIN), the machines the same. What it costs: the governor reads the cluster 6,079 times an hour where omni-v23 read 2,131,
+and its own processor works 10.7 s an hour where it worked 1.3 s (power given).
 
-`tests/test_own_replicas.py`, `HandBack`: a cluster that refuses the scale write three times in a row gets native's own autoscaler
-at the operator's 50% target and 1 to 10 range, the muscle writes nothing more to that workload, the count the cluster kept stands
-(never a knob nobody moves); a write that lands after two refusals ends the run of refusals and no autoscaler is made; with no range
-recorded the autoscaler's ceiling is ten times the operator's count. The unit-test suite, the function tests and the release check
-pass on the tree; no C++ twin changes (the Kubernetes governor has none).
+The rows that read LOSS against native in the cloud and card models (pods waiting for a place, a pod's start wait, the batch's
+requests and minutes over the line, the card's 95th percentile) are omni-v23's own, identical seed for seed on omni-v24: the beat
+does not reach them. Each stays on the next version's list with its cause (`docs/CHANGE_CONTROL.md`).
+
+### 26.4 The tests
+
+`tests/test_pace_clocks.py`, `test_the_factory_beat_is_the_places`: a cluster of kind nodes gets 10 s; nodes of Azure, Google
+and Amazon get 60 s; nodes with no providerID get 10 s; a reading that fails, or finds no node, gets 60 s; a beat set by hand
+is kept; the install files set no beat. `tests/test_cloud_cadence.py`: every cloud rig's beat is 60 s. The unit-test suite, the
+function tests and the release check pass on the tree; no C++ twin changes (the Kubernetes governor has none).
+
+### 26.5 What changes in the rigs and the install files, not the engine
+
+- The kind rigs ask the engine for the beat (`scripts/kind_bench.sh`, `kind_full.sh`, `kind_pilot.sh`, `pilot_shadow.sh`),
+  so a kind run decides every 10 s and a managed cluster's run (Azure) every 60 s; each run writes its beat beside its files
+  (`omni_interval.txt`), as every run has since omni-v16. The pace arms of `scripts/kind_paired.sh` still set their own beat;
+  the robustness test's second governor reads the first one's beat from the run's own file (`scripts/kind_robust.sh`); the
+  levers' mechanism proof keeps the 60 s beat its checks were written at, set by hand (`scripts/kind_levers.sh`).
+- The install files set no beat (`deploy/install/omni-compass.yaml`, `omni-compass-cloud.yaml`, `deploy/controller.yaml`), so
+  an installed governor reads its own place.
+- `tools/model_gate.py`: the model's stand-in nodes carry a providerID as a real cluster's do (a cloud's machine in the cloud
+  setting, kind's elsewhere), and the gate reads a new model, `onsite_shipped`: each checkout at its own default beat on site,
+  on the 5 s plant.
+- `tools/live_reps.py`: a run without its beat file is older than omni-v16 and is read at the 60 s it ran at.
 
 ### 26.6 What is run again
 
-Every benchmark runs again on omni-v23 from 20:00 UTC on 31 October 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the conductor's
-campaign, `scripts/dispatch_grid.py`). The omni-v22 runs started before that moment run to their end as omni-v22's record; nothing is
-cancelled. The entry `kubernetes by itself` runs on the rig as amended, three arms, its table kept in the record and not carried on
-the front page (the founder's order of 25 October).
+Every benchmark runs again on omni-v24 from 01:30 UTC on 2 November 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the
+conductor's campaign, `scripts/dispatch_grid.py`). The omni-v23 runs started before that moment run to their end as omni-v23's
+record; nothing is cancelled. On kind, which is on site, the compass arm decides every 10 s; on Azure, through the cloud, every
+60 s, as on omni-v23. The real runs of the pace preregistration (amendment 3's arms) read the factory beat beside the dial's
+other beats. The card governor on the chips (`omni_controller/gpu_governor.py`) keeps its own clock and is unchanged.
+
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 27. The Engines and Their Audit
 
@@ -3667,6 +3703,7 @@ declared engine.
 | omni-v21 | 25 Oct 17:30 | `b658f05d43c1e602` | 63 | the immune system knows itself, knob by knob: a knob redlining past its line that Omni-Compass cannot bring back goes to native when native's twin reads it lower (`docs/OMNI_V21.md`) |
 | omni-v22 | 30 Oct 18:30 | `0e23a0bc561b900a` | 65 | the five data stores' wires at the max, through each store's own account of a miss; the governor's hand-back tried five times against a transient failure of the cluster's API (`docs/OMNI_V22.md`) |
 | omni-v23 | 31 Oct 20:00 | `c96ea4105d8747db` | 65 | Omni direct keeps every muscle Omni-Compass cannot be: a workload's own scale write the cluster refuses three times in a row hands the knob back to native's own pod autoscaler, made from the operator's target and range (the founder's order of 31 October; `docs/OMNI_V23.md`) |
+| omni-v24 | 2 Nov 01:30 | `66c8f2d94b3e4725` | 65 | the factory beat for its place: with no beat set, the Kubernetes governor reads the cluster's nodes at its start and decides every 10 s on site and every 60 s through a cloud (a reading that fails keeps 60 s, a beat set by hand always wins), the pick of a rule frozen before any reading (docs/PACE_PREREGISTRATION.md, amendments 4 to 6); the model gate against omni-v23: no LOSS; eleven of twelve models identical; on site the minutes over the line down 60.7% and the 95th percentile down 8.2% (GAIN) |
 
 Each version through omni-v15 was a fault found in a real run and fixed, omni-v16 made the decision pace a clean setting
 and set the heartbeat at 15 s on the founder's word, and omni-v17 made the heartbeat a dial with the main engine at 60 s on his
@@ -3701,7 +3738,8 @@ stands is also a version that is re-proved, re-tested and re-built from its rece
 
 Each change below was found in a real run or in our own reading of the code, and each has its evidence written down. Each
 goes through the model gate against the engine that stands and, when it reads no LOSS there, lands at once as the next version
-with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v23, on the founder's order of 31 October: a knob whose
+with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v24, on the founder's orders of 23 and 31 October and his word of 1 November: the factory beat for its place,
+10 s on site and 60 s through a cloud, the pick of the pace preregistration's frozen rule (`docs/OMNI_V24.md`); in omni-v23, on the founder's order of 31 October: a knob whose
 own-scale writes the cluster refuses handed back to native's own autoscaler, so the organism never runs with a knob nobody moves
 (`docs/OMNI_V23.md`); in omni-v17, on the founder's word of 22 October, afternoon: the
 heartbeat a dial, the main engine every 60 s, every beat shown beside native (`docs/OMNI_V17.md`); in omni-v16, on his word that morning: every clock of the
@@ -3733,7 +3771,7 @@ cluster.
 
 
 
-Line coverage of every Python file in the engine that stands (omni-v23), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `2b1390a7dc02`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
+Line coverage of every Python file in the engine it was measured on (omni-v23; omni-v24, the engine that stands since, is measured at the next `--measure`), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `2b1390a7dc02`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
 
 **71% of the engine's 11,424 statements run under the tests** (8,148 run, 3,276 not). Coverage counts lines a test executes, not what it asserts: the properties the tests check are in `tests/test_engine_properties.py`, and the proofs of the core in `docs/ENGINE_PROOFS.md`.
 
@@ -4685,248 +4723,67 @@ In the runners the spine is `spine` (organism 7 in `tools/run_scale.py` and the 
 | The four stacked | `stack` (5) | 1,908 | the four realms' organisms on one clock, every duplicate of the spine kept |
 | The whole tower | `tower` (6) | 1,107 | every muscle of the catalog once |
 
-### 37.2 The spine: 267 muscles, in all four realms, an organism of its own
+### 37.2 The 1,107 muscles in the four realms they live in, heaviest hitter first
 
-The thirteen families below are the computers every realm's work runs on and the power and cooling they need: Kubernetes workloads, containers, placement, node fleets, cloud capacity, hosts, GPUs, network, storage, observability, reliability and security, electrical distribution and cooling. Run alone, the spine is a data center with nothing of any one trade in it; under a realm, it is what that realm's own muscles stand on.
+**Heaviest hitters first** (the founder's order of 1 November): every list of the muscles is ordered by what Omni-Compass did for each muscle against native in the record of every muscle alone (`results/realms_v5/REALMS_V5.json`; our own models, evidence class S; omni-v8, run 2026-10-17 15:39 UTC, 10 seeds, both loads). First the muscles that take decisions back under their line, the largest share of all their decisions first (a decision over the line is a muscle past its own limit, the first harm do no harm names); then the muscles that clear the work waiting in line sooner, the most first; then the muscles that only add work; then the muscles the same as native; last the muscles at their limit on native, where Omni-Compass writes nothing; equal hits by the catalog's number. The four lists are the four realms, each muscle under its home realm, every muscle once (`tools/heavy_hitters.py`).
 
-#### 37.2.1 Kubernetes Workload Scaling (32; plant: compute_pool, server)
-replicas [capacity], hpa_cpu_target [setpoint], hpa_memory_target [setpoint], hpa_custom_target [setpoint], vpa_apply [capacity], scale_to_zero [capacity], keda_threshold [admission], rollout_rate [capacity], max_surge [capacity], max_unavailable [capacity], deployment_pause_resume [admission], rollout_abort [admission], pod_eviction [admission], pdb_policy [capacity], scheduler_queue_priority [admission], api_priority_fairness [admission], hpa_min_replicas [capacity], hpa_max_replicas [capacity], hpa_scale_down_stabilisation_window [setpoint], hpa_scale_up_stabilisation_window [setpoint], hpa_scaling_rate_policies [capacity], hpa_policy_selection [capacity], hpa_tolerance [capacity], hpa_sync_period [capacity], vpa_minmax_allowed_resources [capacity], keda_polling_interval [setpoint], rollout_progress_deadline [admission], rollout_readiness_delay [capacity], unhealthy_pod_eviction_policy [admission], graceful_termination [capacity], probes [capacity], kepler_energy_target_autoscaling [setpoint]
+Each realm below lists its home muscles, every muscle once, heaviest hitter first and down to its last; a muscle of the spine (it sits in all four realms) is listed under its home realm and marked (spine). Each name is followed by its rank in its realm and the one knob Omni-Compass may hold on it, in brackets.
 
-#### 37.2.2 Container Resources (25; plant: compute_pool, server)
-cpu_request [capacity], cpu_limit [capacity], memory_request [capacity], memory_limit [capacity], ephemeral_storage [capacity], hugepages [capacity], io_weight [setpoint], pids_limit [capacity], memory_high [capacity], memory_reclaim [capacity], swap_limit [capacity], cgroup_io_max [capacity], cpu_weight [setpoint], cpu_quota [admission], cpuset [capacity], runtime_class [capacity], in_place_resize [capacity], namespace_quota [admission], default_limits [capacity], memory_hard_limit [capacity], memory_protection [capacity], io_latency_target [setpoint], freeze [admission], cruisekube_request_rightsizing [capacity], goldilocks_vpa_request_recommendation [capacity]
+#### 37.2.1 Compute / AI / Cloud: 444 muscles, heaviest hitter first
 
-#### 37.2.3 Kubernetes Placement & Scheduling (21; plant: compute_pool, server)
-node_selector [capacity], node_affinity [capacity], pod_anti_affinity [capacity], topology_spread [capacity], numa_placement [capacity], gpu_topology [capacity], storage_locality [capacity], network_locality [capacity], taint_toleration [setpoint], priority_class [admission], preemption_policy [admission], device_claim [capacity], failure_domain_spread [capacity], scheduler_backoff [admission], gang_admission [admission], deschedule [capacity], scheduler_scoring_strategy [capacity], scheduler_plugin_weights [setpoint], scheduling_gates [admission], cpu_manager [capacity], peaks_power_aware_placement [capacity]
+1 architecture_selection [capacity] (spine); 2 dra_claim_capacity [capacity]; 3 global_failover [capacity]; 4 lora_adapter_load [capacity]; 5 accelerator_selection [capacity] (spine); 6 sync_boost [capacity] (spine); 7 instance_refresh [capacity] (spine); 8 continuous_batching [capacity]; 9 nodepool_weight [setpoint] (spine); 10 vm_overcommit_density [capacity]; 11 edge_site_node_pool [capacity]; 12 edge_offload [capacity]; 13 dra_binding_readiness [capacity]; 14 dra_binding_failure_response [capacity]; 15 zone_dispatch [capacity]; 16 model_replicas [capacity]; 17 model_instance_count [capacity]; 18 max_batch_size [capacity]; 19 vm_start_stop [capacity] (spine); 20 agones_fleet_max_replicas [capacity]; 21 node_shutdown [capacity] (spine); 22 max_pods_per_node [capacity] (spine); 23 node_provision [capacity] (spine); 24 node_consolidate [capacity] (spine); 25 node_pool_min [capacity] (spine); 26 warm_runner_pool [capacity]; 27 node_config_rollout [capacity]; 28 cloud_capacity_class [capacity]; 29 workload_migrate_region [capacity]; 30 runner_scale_set_max_runners [capacity]; 31 region_selection [capacity] (spine); 32 region_dispatch [capacity]; 33 placement_group [capacity] (spine); 34 vm_migrate [capacity] (spine); 35 tensor_parallel_degree [capacity]; 36 node_pool_max [capacity] (spine); 37 edge_dispatch [capacity]; 38 asg_max [capacity] (spine); 39 zone_selection [capacity] (spine); 40 multi_cluster_dispatch [capacity]; 41 game_node_pool_autoscaler [capacity]; 42 batch_queue_delay [capacity]; 43 gpu_persistence_mode [capacity] (spine); 44 mig_mode [capacity] (spine); 45 model_route_weight [setpoint]; 46 vgpu_partition [capacity]; 47 expander [capacity] (spine); 48 machine_remediation [capacity]; 49 cross_cluster_replication [capacity]; 50 dra_device_class_selection [capacity]; 51 interruption_response [capacity] (spine); 52 capacity_class [capacity] (spine); 53 vm_size [capacity] (spine); 54 target_tracking_policy [setpoint] (spine); 55 consolidate_after [capacity] (spine); 56 scale_down_unneeded_time [capacity] (spine); 57 spot_mix [capacity] (spine); 58 pulse_phase [capacity]; 59 mcp_max_unavailable [capacity]; 60 chunked_prefill [capacity]; 61 dra_device_configuration [setpoint]; 62 node_replace [capacity] (spine); 63 kv_cache_swap_space [capacity]; 64 node_desired [capacity] (spine); 65 measurement_scheduling [capacity]; 66 kubelet_reserved_resources [capacity] (spine); 67 instance_family [capacity] (spine); 68 consolidation_policy [capacity] (spine); 69 cluster_version_pacing [capacity]; 70 boot_disk_class [capacity] (spine); 71 scaling_cooldown_warmup [capacity] (spine); 72 gpu_mps [capacity] (spine); 73 node_power_on [capacity] (spine); 74 gpu_timeslice [capacity] (spine); 75 node_pool_limits [capacity] (spine); 76 dra_claim_sharing [capacity]; 77 inference_max_tokens [capacity]; 78 gpu_allocate [capacity] (spine); 79 mig_geometry [capacity] (spine); 80 gpu_ecc_response [capacity] (spine); 81 expire_after [capacity] (spine); 82 vm_count [capacity] (spine); 83 gpu_compute_mode [capacity] (spine); 84 dra_device_taint [capacity]; 85 disaggregated_prefill_decode [capacity]; 86 model_load [capacity]; 87 predictive_scaling [capacity] (spine); 88 gpu_temperature_target [setpoint] (spine); 89 hypervisor_cpu_pinning [capacity]; 90 scale_down_delay_after_add [capacity] (spine); 91 asg_min [capacity] (spine); 92 machine_failure_domain [capacity]; 93 model_unload [capacity]; 94 fn_snapstart_restore [capacity]; 95 deschedule [capacity] (spine); 96 cpu_manager [capacity] (spine); 97 vpa_minmax_allowed_resources [capacity] (spine); 98 hpa_cpu_target [setpoint] (spine); 99 gpu_reset [capacity] (spine); 100 peaks_power_aware_placement [capacity] (spine); 101 scale_to_zero_panic_window [setpoint]; 102 default_limits [capacity] (spine); 103 irqbalance_affinity [capacity]; 104 rollout_rate [capacity] (spine); 105 scheduler_scoring_strategy [capacity] (spine); 106 topology_spread [capacity] (spine); 107 hpa_custom_target [setpoint] (spine); 108 hpa_scale_down_stabilisation_window [setpoint] (spine); 109 io_latency_target [setpoint] (spine); 110 reservation_mix [capacity] (spine); 111 max_surge [capacity] (spine); 112 cpuset [capacity] (spine); 113 memory_high [capacity] (spine); 114 cpu_weight [setpoint] (spine); 115 swappiness_reclaim [capacity] (spine); 116 hugepage_pool_reserve [capacity]; 117 vpa_apply [capacity] (spine); 118 pids_limit [capacity] (spine); 119 memory_limit [capacity] (spine); 120 pod_anti_affinity [capacity] (spine); 121 memory_hard_limit [capacity] (spine); 122 goldilocks_vpa_request_recommendation [capacity] (spine); 123 fn_provisioned_concurrency [capacity]; 124 runtime_class [capacity] (spine); 125 replicas [capacity] (spine); 126 taint_toleration [setpoint] (spine); 127 device_claim [capacity] (spine); 128 fn_prewarm_pool [capacity]; 129 fn_reserved_concurrency [capacity]; 130 keda_polling_interval [setpoint] (spine); 131 graceful_termination [capacity] (spine); 132 drm_license_server_pool [capacity]; 133 core_packing [capacity] (spine); 134 in_place_resize [capacity] (spine); 135 cgroup_cpu_weight [capacity]; 136 irq_affinity [capacity] (spine); 137 scale_to_zero [capacity] (spine); 138 cruisekube_request_rightsizing [capacity] (spine); 139 memory_bandwidth [capacity] (spine); 140 scheduler_plugin_weights [setpoint] (spine); 141 numa_placement [capacity] (spine); 142 vcpu_allocation [capacity]; 143 llc_allocation [capacity] (spine); 144 hpa_scale_up_stabilisation_window [setpoint] (spine); 145 fn_memory_size [capacity]; 146 cgroup_io_max [capacity] (spine); 147 network_locality [capacity] (spine); 148 rollout_readiness_delay [capacity] (spine); 149 hpa_memory_target [setpoint] (spine); 150 page_reclaim_rate [capacity] (spine); 151 packager_workers [capacity]; 152 cpu_limit [capacity] (spine); 153 memory_protection [capacity] (spine); 154 probes [capacity] (spine); 155 swap_limit [capacity] (spine); 156 io_weight [setpoint] (spine); 157 hpa_scaling_rate_policies [capacity] (spine); 158 voice_chat_mixer_pool [capacity]; 159 cpu_request [capacity] (spine); 160 ephemeral_storage [capacity] (spine); 161 hpa_max_replicas [capacity] (spine); 162 agones_fleet_buffer_size [capacity]; 163 reset_scheduling [capacity]; 164 pdb_policy [capacity] (spine); 165 agones_fleet_min_replicas [capacity]; 166 memory_ballooning [capacity]; 167 gate_scheduling [capacity]; 168 hugepages [capacity] (spine); 169 gpu_topology [capacity] (spine); 170 hpa_min_replicas [capacity] (spine); 171 kepler_energy_target_autoscaling [setpoint] (spine); 172 turbo_boost [capacity] (spine); 173 cgroup_cpu_quota [capacity]; 174 cgroup_memory_high [capacity]; 175 storage_locality [capacity] (spine); 176 node_selector [capacity] (spine); 177 hpa_policy_selection [capacity] (spine); 178 memory_reclaim [capacity] (spine); 179 script_validation_threads [capacity]; 180 hpa_tolerance [capacity] (spine); 181 pulse_duration [setpoint]; 182 failure_domain_spread [capacity] (spine); 183 transparent_hugepages [capacity] (spine); 184 memory_request [capacity] (spine); 185 numa_balance [capacity] (spine); 186 fn_concurrency_limit [capacity]; 187 core_online_offline [capacity] (spine); 188 qubit_mapping [capacity]; 189 hpa_sync_period [capacity] (spine); 190 max_unavailable [capacity] (spine); 191 origin_shield_cache_size [capacity]; 192 tls_session_cache [capacity]; 193 dynamical_decoupling [capacity]; 194 shot_allocation [capacity]; 195 tcp_buffer_autotune [capacity]; 196 noise_aware_routing [capacity]; 197 node_affinity [capacity] (spine); 198 relay_server_pool [capacity]; 199 io_scheduler_depth [capacity]; 200 block_nr_requests [capacity]; 201 coupling_control [capacity]; 202 net_rx_coalesce [capacity]; 203 archive_node_storage_tier [capacity]; 204 node_db_cache_size [capacity]; 205 rdma_bandwidth [capacity]; 206 dpu_sf_tx_rate [capacity]; 207 nic_affinity [capacity]; 208 smartnic_flow_steering [capacity]; 209 dpu_service_placement [capacity]; 210 max_peer_connections [capacity]; 211 pulse_amplitude [capacity]; 212 sriov_vf_allocation [capacity]; 213 congestion_response [capacity]; 214 build_cache_size [capacity]; 215 nvlink_placement [capacity]; 216 sriov_vf_count [capacity]; 217 smartnic_offload_enable [capacity]; 218 nvswitch_route [capacity]; 219 rail_selection [capacity]; 220 collective_protocol [capacity]; 221 rank_placement [capacity]; 222 gpudirect_policy [capacity]; 223 dpu_pf_tx_rate [capacity]; 224 nic_hca_selection [capacity]; 225 dpu_vf_tx_rate [capacity]; 226 dpu_bandwidth_share [capacity]; 227 dpu_qos_group [capacity]; 228 collective_algorithm [capacity]; 229 fabric_failover [capacity]; 230 rdma_route [capacity]; 231 dpu_failover [capacity]; 232 collective_chunk_size [capacity]; 233 transcoder_worker_pool [capacity]; 234 checkpoint_trigger [capacity]; 235 straggler_mitigation [capacity]; 236 rank_mapping [capacity]; 237 worker_allocation [capacity]; 238 backfill_policy [capacity]; 239 training_workers [capacity]; 240 data_parallelism [capacity]; 241 job_slots [capacity]; 242 gradient_accumulation [capacity]; 243 resource_reservation [capacity]; 244 job_walltime [capacity]; 245 checkpoint_restart [capacity]; 246 checkpoint_interval [setpoint]; 247 mpi_ranks [capacity]; 248 thumbnail_sprite_batch [capacity]; 249 node_allocation [capacity]; 250 indexer_batch_workers [capacity]; 251 accelerator_share [capacity]; 252 pipeline_parallelism [capacity]; 253 oversubscription [capacity]; 254 expert_parallelism [capacity]; 255 tensor_parallelism [capacity]; 256 global_batch_size [capacity]; 257 resource_reclaim [capacity]; 258 test_shard_parallelism [capacity]; 259 runner_scale_set_min_runners [capacity]; 260 cpu_gpu_ratio [setpoint]; 261 gang_schedule [capacity]; 262 remote_execution_workers [capacity]; 263 partition_limits [capacity]; 264 binpack_pressure [capacity]; 265 elastic_worker_count [capacity]; 266 spread_pressure [capacity]; 267 maintenance_evacuation [capacity]; 268 replay_render_batch [capacity]; 269 microbatch_size [capacity]; 270 dataloader_workers [capacity]; 271 training_gang_size [capacity]; 272 compute_comm_overlap [capacity]; 273 activation_checkpointing [capacity]; 274 memory_per_rank [capacity]; 275 cfs_scheduler_latency [setpoint]; 276 transparent_hugepages [setpoint]; 277 numa_auto_balancing [setpoint]; 278 dirty_ratio_writeback [setpoint]; 279 vm_swappiness [setpoint]; 280 zswap_pool_fraction [setpoint]; 281 page_cache_reclaim [setpoint]; 282 net_qdisc_codel_target [setpoint]; 283 fn_timeout_budget [setpoint]; 284 numa_vcpu_pinning [setpoint]; 285 dead_letter_retry_cap [setpoint]; 286 ttl_eviction_waste [setpoint]; 287 retry_budget_window [setpoint]; 288 abr_bitrate_ladder_cap [setpoint]; 289 player_buffer_target [setpoint]; 290 edge_cache_ttl [setpoint]; 291 segment_duration_target [setpoint]; 292 encoder_lookahead_frames [setpoint]; 293 game_server_tick_rate [setpoint]; 294 matchmaking_wait_window [setpoint]; 295 mempool_max_size [setpoint]; 296 utxo_cache_flush_interval [setpoint]; 297 artifact_retention_ttl [setpoint]; 298 edge_sync_interval [setpoint]; 299 api_concurrency [admission]; 300 queue_concurrency [admission]; 301 queue_backpressure [admission]; 302 job_admission [admission]; 303 batch_admission [admission]; 304 inference_admission [admission]; 305 load_shed [admission]; 306 priority_gate [admission]; 307 tenant_admission [admission]; 308 burst_limit [admission]; 309 deadline_admission [admission]; 310 work_budget [admission]; 311 request_queue_limit [admission]; 312 retry_admission [admission]; 313 background_work_gate [admission]; 314 maintenance_work_gate [admission]; 315 keda_threshold [admission] (spine); 316 deployment_pause_resume [admission] (spine); 317 rollout_abort [admission] (spine); 318 pod_eviction [admission] (spine); 319 scheduler_queue_priority [admission] (spine); 320 api_priority_fairness [admission] (spine); 321 cpu_quota [admission] (spine); 322 priority_class [admission] (spine); 323 preemption_policy [admission] (spine); 324 scheduler_backoff [admission] (spine); 325 gang_admission [admission] (spine); 326 node_cordon [admission] (spine); 327 node_drain [admission] (spine); 328 disruption_budget [admission] (spine); 329 machine_health_gate [admission]; 330 mcp_pause [admission]; 331 operator_reconcile_budget [admission]; 332 infra_machine_admission [admission]; 333 cpufreq_min [power] (spine); 334 cpufreq_max [power] (spine); 335 rapl_package_power [power] (spine); 336 uncore_frequency [power] (spine); 337 energy_perf_preference [power] (spine); 338 cpu_idle_policy [power] (spine); 339 memory_pressure_gate [admission] (spine); 340 thermal_throttle_policy [power] (spine); 341 host_power_profile [power] (spine); 342 gpu_power_limit [power] (spine); 343 gpu_sm_clock [power] (spine); 344 gpu_memory_clock [power] (spine); 345 gpu_quarantine [admission] (spine); 346 gpu_thermal_limit [power] (spine); 347 gpu_job_power_budget [admission] (spine); 348 gpu_fabric_quarantine [admission]; 349 collective_concurrency [admission]; 350 communication_priority [admission]; 351 fabric_isolation [admission]; 352 inference_concurrency [admission]; 353 kv_cache_budget [admission]; 354 prefix_cache_budget [admission]; 355 speculative_decode_budget [admission]; 356 model_precision [power]; 357 inference_priority [admission]; 358 inference_slo_gate [admission]; 359 training_preempt [admission]; 360 training_precision [power]; 361 job_priority [admission]; 362 job_preemption [admission]; 363 parallel_io_budget [admission]; 364 collective_budget [admission]; 365 scratch_budget [admission]; 366 scheduler_fair_share [admission]; 367 task_admission [admission]; 368 task_priority [admission]; 369 cluster_quota [admission]; 370 task_preemption [admission]; 371 queue_fairness [admission]; 372 deadline_pressure [admission]; 373 scheduler_retry [admission]; 374 circuit_admission [admission]; 375 circuit_scheduling [admission]; 376 pulse_frequency [power]; 377 error_mitigation_budget [admission]; 378 quantum_queue_priority [admission]; 379 data_residency_gate [admission]; 380 latency_region_gate [admission]; 381 cost_region_gate [admission]; 382 carbon_region_gate [admission]; 383 federation_quota [admission]; 384 global_admission [admission]; 385 rollout_progress_deadline [admission] (spine); 386 unhealthy_pod_eviction_policy [admission] (spine); 387 namespace_quota [admission] (spine); 388 freeze [admission] (spine); 389 scheduling_gates [admission] (spine); 390 scale_down_utilisation_threshold [admission] (spine); 391 kubelet_eviction_thresholds [admission] (spine); 392 frequency_governor [power] (spine); 393 dram_power_limit [power] (spine); 394 application_clocks [power] (spine); 395 autoscaling_target_concurrency_qps [admission]; 396 request_priority_levels [admission]; 397 node_power_saving [power]; 398 cpu_frequency_per_job [power]; 399 request_concurrency_limit [admission]; 400 vm_cpu_cap_by_priority [admission] (spine); 401 per_pod_cpu_frequency_range_and_c_state_access [power] (spine); 402 uncore_frequency_per_node [power] (spine); 403 target_clocks [power] (spine); 404 adaptive_concurrency_limit [admission]; 405 priority_request_queue_under_limit [admission]; 406 climatik_inference_power_cap [power] (spine); 407 ear_cpu_frequency_policy [power] (spine); 408 ear_global_energy_budget [admission] (spine); 409 k8s_power_manager_core_profile [power] (spine); 410 adaptive_gpu_power_cap [power] (spine); 411 nvidia_platform_power_budget [power] (spine); 412 dra_device_eviction [admission]; 413 dpu_cpu_budget [admission]; 414 dpu_memory_budget [admission]; 415 cpufreq_dvfs_governor [power]; 416 ksm_memory_dedup [capacity]; 417 cpu_cstate_governor [power]; 418 fn_scale_to_zero_idle [admission]; 419 fn_burst_admission [admission]; 420 live_migration_pacing [admission]; 421 vm_memory_dedup_ksm [capacity]; 422 ingress_intake_pacing [capacity]; 423 gc_compaction_pacing [capacity]; 424 backpressure_threshold [admission]; 425 queue_drain_rate [capacity]; 426 compaction_debt_drain [capacity]; 427 rate_limit_token_bucket [admission]; 428 connection_admission [admission]; 429 waf_inspection_sampling [capacity]; 430 ddos_shield_admission [admission]; 431 live_transcode_gpu_clocks [power]; 432 vod_transcode_batch_power [power]; 433 cdn_request_coalescing [admission]; 434 media_ingest_admission [admission]; 435 players_per_server_cap [admission]; 436 matchmaking_admission_rate [admission]; 437 cloud_gaming_gpu_clocks [power]; 438 block_relay_admission [admission]; 439 rpc_work_queue_depth [admission]; 440 validator_host_power_profile [power]; 441 build_concurrency_limit [admission]; 442 job_queue_admission [admission]; 443 build_node_cpu_frequency [power]; 444 edge_inference_gpu_clocks [power].
 
-#### 37.2.4 Node Fleet & Karpenter-Class Control (24; plant: compute_pool, node)
-node_desired [capacity], node_pool_min [capacity], node_pool_max [capacity], node_provision [capacity], node_cordon [admission], node_drain [admission], node_consolidate [capacity], node_replace [capacity], node_shutdown [capacity], node_power_on [capacity], nodepool_weight [setpoint], disruption_budget [admission], consolidation_policy [capacity], consolidate_after [capacity], expire_after [capacity], capacity_class [capacity], scale_down_utilisation_threshold [admission], scale_down_unneeded_time [capacity], scale_down_delay_after_add [capacity], expander [capacity], node_pool_limits [capacity], kubelet_eviction_thresholds [admission], kubelet_reserved_resources [capacity], max_pods_per_node [capacity]
+#### 37.2.2 Physics / Robotics / Autonomous: 137 muscles, heaviest hitter first
 
-#### 37.2.5 Cloud VM & Capacity (21; plant: compute_pool, node)
-vm_count [capacity], vm_size [capacity], vm_start_stop [capacity], vm_migrate [capacity], instance_family [capacity], asg_min [capacity], asg_max [capacity], spot_mix [capacity], reservation_mix [capacity], zone_selection [capacity], region_selection [capacity], architecture_selection [capacity], accelerator_selection [capacity], boot_disk_class [capacity], placement_group [capacity], interruption_response [capacity], target_tracking_policy [setpoint], scaling_cooldown_warmup [capacity], vm_cpu_cap_by_priority [admission], predictive_scaling [capacity], instance_refresh [capacity]
+1 controller_update_rate [capacity]; 2 humanoid_gait_speed [capacity]; 3 jerk_limit [capacity]; 4 vehicle_speed_envelope [capacity]; 5 velocity_acceleration_scaling [capacity]; 6 joint_velocity [capacity]; 7 joint_position [capacity]; 8 balance_correction [capacity]; 9 drone_battery_failsafe_reserve [setpoint]; 10 humanoid_step_height [capacity]; 11 amr_fleet_charge_threshold [setpoint]; 12 locomotion_speed [capacity]; 13 trajectory_tolerances [capacity]; 14 joint_acceleration [capacity]; 15 manipulator_payload_speed_scaling [capacity]; 16 humanoid_balance_margin [capacity]; 17 swarm_formation_spacing [capacity]; 18 collision_margin [capacity]; 19 shaft_speed_target [capacity]; 20 ros2_executor_threads [capacity]; 21 ardupilot_wpnav_speed [capacity]; 22 cartesian_velocity [capacity]; 23 trajectory_speed [capacity]; 24 trajectory_acceleration [capacity]; 25 px4_mpc_xy_vel_max [capacity]; 26 steering_angle [capacity]; 27 engine_load_sharing_setpoint [capacity]; 28 trim_target [capacity]; 29 auxiliary_engine_staging [capacity]; 30 agv_speed [capacity]; 31 conveyor_speed [capacity]; 32 task_assignment [capacity]; 33 traffic_reservation [capacity]; 34 elevator_request [capacity]; 35 amr_fleet_active_robots [capacity]; 36 robot_route [capacity]; 37 px4_mpc_acc_hor [capacity]; 38 altitude_target [capacity]; 39 waypoint_authority [capacity]; 40 px4_mc_rollrate_max [capacity]; 41 actuator_saturation_envelope [capacity]; 42 px4_mpc_z_vel_max_up [capacity]; 43 velocity_target [capacity]; 44 attitude_rate_target [capacity]; 45 attitude_target [capacity]; 46 attitude_rate_gains [capacity]; 47 battery_reserve [capacity]; 48 robot_dispatch [capacity]; 49 slow_steaming_speed_target [capacity]; 50 human_safe_stop [capacity]; 51 door_request [capacity]; 52 charging_dispatch [capacity]; 53 fleet_failover [capacity]; 54 ros2_qos_history_depth [setpoint]; 55 ros2_control_loop_rate [setpoint]; 56 joint_effort [power]; 57 force_limit [power]; 58 gripper_force [power]; 59 braking_force [power]; 60 warehouse_zone_admission [admission]; 61 robot_quarantine [admission]; 62 fleet_concurrency [admission]; 63 throttle_envelope [power]; 64 flight_hold [admission]; 65 return_to_home [admission]; 66 land_action [admission]; 67 mission_admission [admission]; 68 geofence_response [admission]; 69 failsafe_selection [admission]; 70 battery_reserve_threshold [admission]; 71 flight_mode_transition [admission]; 72 flight_termination_safe_state [admission]; 73 space_command_admission [admission]; 74 flight_task_schedule [admission]; 75 space_mode_transition [admission]; 76 payload_duty_cycle [power]; 77 communication_allocation [capacity]; 78 space_power_budget [power]; 79 space_thermal_command [power]; 80 attitude_command_envelope [capacity]; 81 reaction_wheel_allocation [capacity]; 82 rcs_authority [power]; 83 safe_mode_transition [admission]; 84 watchdog_recovery [admission]; 85 instrument_activation [capacity]; 86 fault_isolation [admission]; 87 horizontal_speed_limit [power]; 88 vertical_speed_limits [power]; 89 acceleration_jerk_limits [power]; 90 state_of_charge_limits [power]; 91 smart_charging_schedule [admission]; 92 traction_effort_limit [power]; 93 regenerative_braking_share [power]; 94 coasting_speed_target [capacity]; 95 dwell_time_schedule [admission]; 96 hvac_duty_cycle [power]; 97 train_auxiliary_power_budget [power]; 98 platform_approach_speed [capacity]; 99 acceleration_rate_setpoint [capacity]; 100 wheel_slip_protection_mode [admission]; 101 traction_motor_thermal_derate [power]; 102 catenary_voltage_limit [power]; 103 timetable_recovery_margin [admission]; 104 headway_target [capacity]; 105 door_release_hold [admission]; 106 propeller_pitch_limit [power]; 107 shaft_power_limit [power]; 108 bow_thruster_duty [power]; 109 ballast_pump_mode [admission]; 110 shore_power_mode [admission]; 111 hotel_load_budget [power]; 112 rudder_rate_limit [power]; 113 hoist_speed_target [capacity]; 114 acceleration_limit [capacity]; 115 regen_drive_mode [power]; 116 standby_power_mode [admission]; 117 destination_dispatch_schedule [admission]; 118 car_parking_mode [admission]; 119 door_dwell_hold [admission]; 120 escalator_speed_target [capacity]; 121 group_capacity_mode [admission]; 122 motor_thermal_derate [power]; 123 brake_test_schedule [admission]; 124 fire_recall_mode [admission]; 125 traction_torque_limit [power]; 126 regen_braking_level [power]; 127 battery_charge_limit [power]; 128 battery_discharge_limit [power]; 129 battery_thermal_target [power]; 130 motor_thermal_limit [power]; 131 energy_recovery_target [power]; 132 auxiliary_power_budget [power]; 133 fast_charge_current [power]; 134 fast_charge_voltage [power]; 135 vehicle_safe_state [admission]; 136 humanoid_joint_torque_limit [power]; 137 ardupilot_atc_accel_r_max [power].
 
-#### 37.2.6 Host CPU & Memory (26; plant: compute_pool, cpu_host)
-cpufreq_min [power], cpufreq_max [power], rapl_package_power [power], uncore_frequency [power], energy_perf_preference [power], cpu_idle_policy [power], memory_bandwidth [capacity], numa_balance [capacity], irq_affinity [capacity], llc_allocation [capacity], memory_pressure_gate [admission], page_reclaim_rate [capacity], transparent_hugepages [capacity], core_online_offline [capacity], thermal_throttle_policy [power], host_power_profile [power], frequency_governor [power], turbo_boost [capacity], dram_power_limit [power], swappiness_reclaim [capacity], core_packing [capacity], per_pod_cpu_frequency_range_and_c_state_access [power], uncore_frequency_per_node [power], ear_cpu_frequency_policy [power], ear_global_energy_budget [admission], k8s_power_manager_core_profile [power]
+#### 37.2.3 Energy / Facility / Industrial: 249 muscles, heaviest hitter first
 
-#### 37.2.7 GPU Hardware (22; plant: compute_pool, gpu)
-gpu_allocate [capacity], gpu_power_limit [power], gpu_sm_clock [power], gpu_memory_clock [power], gpu_persistence_mode [capacity], gpu_compute_mode [capacity], mig_mode [capacity], mig_geometry [capacity], gpu_timeslice [capacity], gpu_mps [capacity], gpu_quarantine [admission], gpu_reset [capacity], gpu_thermal_limit [power], gpu_ecc_response [capacity], gpu_job_power_budget [admission], application_clocks [power], gpu_temperature_target [setpoint], sync_boost [capacity], target_clocks [power], climatik_inference_power_cap [power], adaptive_gpu_power_cap [power], nvidia_platform_power_budget [power]
+1 site_battery_dispatch [capacity]; 2 renewable_dispatch [capacity]; 3 generator_start_stop [capacity]; 4 facility_peak_guard [capacity]; 5 volt_var [capacity]; 6 storage_dispatch [capacity]; 7 volt_watt [capacity]; 8 peak_shaving [capacity]; 9 pue_target [setpoint]; 10 microgrid_emergency_reserve [setpoint]; 11 time_of_use_schedule [setpoint]; 12 battery_soc_reserve [setpoint]; 13 electrolyzer_power [power]; 14 heat_pump_power [power]; 15 pv_curtailment [power]; 16 battery_discharge_power [power]; 17 pdu_outlet_control [capacity] (spine); 18 battery_charge_power [power]; 19 phase_balance [capacity] (spine); 20 generator_dispatch [capacity] (spine); 21 cooling_power_budget [power]; 22 ups_shutdown_battery_test [capacity] (spine); 23 ups_operating_mode [capacity] (spine); 24 reactive_power_target [setpoint] (spine); 25 grid_export_limit [power]; 26 voltage_target [setpoint] (spine); 27 ev_charge_power [power]; 28 grid_import_limit [power]; 29 constant_power_factor_reactive_power [power]; 30 facility_power_budget [power]; 31 utility_demand_limit [power]; 32 it_power_budget [power]; 33 microgrid_demand_limit [power]; 34 valve_position [setpoint]; 35 furnace_setpoint [setpoint]; 36 pressure_setpoint [setpoint]; 37 temperature_setpoint [setpoint]; 38 mass_flow_setpoint [setpoint]; 39 tank_level_target [setpoint]; 40 server_power_cap [power] (spine); 41 rack_power_cap [power] (spine); 42 pdu_branch_power_limit [power] (spine); 43 ups_charge_rate [power] (spine); 44 ups_discharge_rate [power] (spine); 45 supply_air_temperature [setpoint] (spine); 46 return_air_target [setpoint] (spine); 47 coolant_supply_temperature [setpoint] (spine); 48 coolant_flow [capacity] (spine); 49 pump_speed [capacity] (spine); 50 fan_speed [capacity] (spine); 51 chiller_setpoint [setpoint] (spine); 52 cooling_tower_fan [capacity] (spine); 53 cooling_capacity [capacity] (spine); 54 gpu_thermal_envelope [setpoint] (spine); 55 cpu_thermal_envelope [setpoint] (spine); 56 rack_power_allocation [power]; 57 server_fan_speed [capacity] (spine); 58 economiser [capacity] (spine); 59 setpoint_reset_trim_and_respond [setpoint]; 60 duct_static_pressure_setpoint [setpoint]; 61 optimal_start_stop [capacity]; 62 hierarchical_power_budget_row_pdu_switchboard_controllers [power] (spine); 63 priority_aware_capping_throttle_low_priority_first [power] (spine); 64 power_oversubscription_with_prediction [power] (spine); 65 chiller_plant_supervisory_control_rl_with_safety_layer [capacity] (spine); 66 operating_room_air_change_setpoint [setpoint]; 67 isolation_room_pressure_target [setpoint]; 68 patient_room_temperature_setpoint [setpoint]; 69 surgical_suite_humidity_target [setpoint]; 70 ahu_supply_air_temperature [setpoint]; 71 pharmacy_cold_room_setpoint [setpoint]; 72 sterile_storage_humidity_setpoint [setpoint]; 73 imaging_suite_cooling_capacity [capacity]; 74 chiller_plant_staging [capacity]; 75 exhaust_fan_capacity [capacity]; 76 mainline_pressure_setpoint [setpoint]; 77 soil_moisture_target [setpoint]; 78 pivot_speed_setpoint [setpoint]; 79 greenhouse_temperature_setpoint [setpoint]; 80 greenhouse_co2_target [setpoint]; 81 vent_position_setpoint [setpoint]; 82 grain_dryer_temperature_setpoint [setpoint]; 83 cold_storage_temperature_setpoint [setpoint]; 84 milking_vacuum_level_setpoint [setpoint]; 85 well_drawdown_level_target [setpoint]; 86 compressor_discharge_pressure_setpoint [setpoint]; 87 pump_station_suction_pressure_target [setpoint]; 88 line_pack_target [setpoint]; 89 pipeline_flow_setpoint [setpoint]; 90 terminal_tank_level_target [setpoint]; 91 heater_outlet_temperature_setpoint [setpoint]; 92 valve_position_target [setpoint]; 93 cathodic_protection_voltage [setpoint]; 94 sag_mill_load_setpoint [setpoint]; 95 mill_speed_target [setpoint]; 96 crusher_gap_setpoint [setpoint]; 97 cyclone_feed_pressure_target [setpoint]; 98 thickener_underflow_density_target [setpoint]; 99 conveyor_speed_setpoint [setpoint]; 100 dewatering_pump_level_target [setpoint]; 101 stockpile_level_target [setpoint]; 102 supply_temperature_setpoint [setpoint]; 103 return_temperature_target [setpoint]; 104 differential_pressure_setpoint [setpoint]; 105 thermal_storage_level_target [setpoint]; 106 outdoor_reset_setpoint [setpoint]; 107 cooling_network_supply_temperature [setpoint]; 108 cooling_storage_level_target [setpoint]; 109 turbine_speed_droop_setpoint [setpoint]; 110 unit_load_setpoint [setpoint]; 111 boiler_steam_pressure_setpoint [setpoint]; 112 feedwater_level_target [setpoint]; 113 excitation_voltage_setpoint [setpoint]; 114 hydro_gate_position_target [setpoint]; 115 combustion_air_ratio_setpoint [setpoint]; 116 cooling_water_flow_setpoint [setpoint]; 117 inlet_guide_vane_position [setpoint]; 118 nuclear_rod_position_target [setpoint]; 119 inverter_volt_var_setpoint [setpoint]; 120 inverter_volt_watt_setpoint [setpoint]; 121 plant_reactive_power_target [setpoint]; 122 rotor_speed_setpoint [setpoint]; 123 inverter_frequency_droop_setpoint [setpoint]; 124 string_mppt_voltage_setpoint [setpoint]; 125 reactor_temperature_setpoint [setpoint]; 126 agitator_speed_setpoint [setpoint]; 127 fermenter_dissolved_oxygen_target [setpoint]; 128 ph_setpoint [setpoint]; 129 pasteurizer_holding_temperature_setpoint [setpoint]; 130 freezer_tunnel_temperature_setpoint [setpoint]; 131 cleanroom_pressure_cascade_setpoint [setpoint]; 132 lyophilizer_shelf_temperature_setpoint [setpoint]; 133 chromatography_flow_setpoint [setpoint]; 134 oven_zone_temperature_setpoint [setpoint]; 135 voltage_regulator_tap [setpoint]; 136 transformer_tap [setpoint]; 137 feeder_voltage_target [setpoint]; 138 frequency_droop_setpoint [setpoint]; 139 chamber_temperature [setpoint]; 140 chamber_pressure [setpoint]; 141 valve_position_water [setpoint]; 142 reservoir_level_target [setpoint]; 143 line_pressure_target [setpoint]; 144 flow_target_water [setpoint]; 145 zone_temperature_target [setpoint]; 146 zone_airflow [capacity]; 147 ahu_fan_speed [capacity]; 148 damper_position [capacity]; 149 economizer_position [capacity]; 150 boiler_setpoint [setpoint]; 151 humidity_target [setpoint]; 152 thermal_storage_dispatch [capacity]; 153 plc_cycle_authority [admission]; 154 machine_cell_admission [admission]; 155 pump_flow [capacity]; 156 compressor_speed [capacity]; 157 heater_power [power]; 158 conveyor_rate [capacity]; 159 feed_rate [capacity]; 160 purge_vent_action [admission]; 161 energy_load_shed [admission]; 162 flex_load_admission [admission]; 163 load_transfer [admission] (spine); 164 electrical_isolation [admission] (spine); 165 breaker_trip_gate [admission] (spine); 166 compressor_authority [power] (spine); 167 rack_thermal_budget [power] (spine); 168 thermal_workload_migrate [admission] (spine); 169 thermal_load_shed [admission] (spine); 170 demand_response [admission]; 171 electricity_price_gate [admission]; 172 carbon_intensity_gate [admission]; 173 grid_frequency_response [admission]; 174 facility_islanding [admission]; 175 controller_mode [capacity]; 176 alarm_limits [capacity]; 177 safety_interlock_trip [capacity]; 178 opc_ua_writes [capacity]; 179 run_to_run_control [capacity]; 180 idle_sleep_mode [capacity]; 181 ward_night_setback_mode [admission]; 182 medical_gas_plant_demand_limit [power]; 183 emergency_power_load_shed [admission]; 184 irrigation_pump_speed [capacity]; 185 fertigation_dose [power]; 186 barn_ventilation_rate [capacity]; 187 drip_zone_dispatch [admission]; 188 compressor_unit_staging [capacity]; 189 vfd_pump_speed [capacity]; 190 leak_detection_shutdown [admission]; 191 batch_interface_dispatch [admission]; 192 drag_reducing_agent_dose [power]; 193 pressure_protection_priority [admission]; 194 flotation_aeration_rate [power]; 195 reagent_dose [power]; 196 ventilation_on_demand_airflow [capacity]; 197 slurry_pump_speed [capacity]; 198 tailings_discharge_shutdown [admission]; 199 ore_blend_dispatch [admission]; 200 network_pump_speed [capacity]; 201 heat_pump_staging [capacity]; 202 chp_dispatch [admission]; 203 peak_boiler_heater_output [power]; 204 substation_flow_limit [capacity]; 205 peak_demand_shed [admission]; 206 agc_participation_limit [capacity]; 207 reserve_dispatch_priority [admission]; 208 turbine_ramp_rate_limit [capacity]; 209 emissions_shutdown [admission]; 210 active_power_curtailment [power]; 211 wind_turbine_yaw_offset [capacity]; 212 pitch_angle_limit [capacity]; 213 ramp_rate_limit [capacity]; 214 tracker_stow_mode [admission]; 215 noise_mode_schedule [admission]; 216 ice_detection_shutdown [admission]; 217 cip_cycle_dispatch [admission]; 218 steam_sterilizer_cycle_priority [admission]; 219 refrigerant_compressor_authority [admission]; 220 batch_hold_quarantine [admission]; 221 capacitor_bank_switch [capacity]; 222 inverter_real_power [power]; 223 inverter_reactive_power [power]; 224 feeder_load_transfer [capacity]; 225 distribution_storage_dispatch [admission]; 226 demand_response_dispatch [admission]; 227 grid_protection_mode [admission]; 228 grid_restoration_sequence [admission]; 229 tool_job_dispatch [admission]; 230 wafer_route [capacity]; 231 chamber_recipe_selection [admission]; 232 gas_flow [capacity]; 233 rf_power [power]; 234 vacuum_pump_speed [capacity]; 235 robot_transfer_rate [capacity]; 236 lot_priority [admission]; 237 tool_quarantine [admission]; 238 pump_speed_water [capacity]; 239 aeration_rate [power]; 240 chemical_dose_rate [power]; 241 filtration_backwash [admission]; 242 lift_station_dispatch [admission]; 243 leak_isolation [admission]; 244 water_demand_shed [admission]; 245 water_emergency_shutdown [admission]; 246 heat_pump_mode [admission]; 247 occupancy_ventilation [admission]; 248 building_demand_limit [power]; 249 hvac_emergency_mode [admission].
 
-#### 37.2.8 Network Routing & Switching (19; plant: compute_pool, network)
-lb_weight [setpoint], route_weight [setpoint], rate_limit [admission], bandwidth_limit [capacity], qos_class [capacity], connection_limit [admission], failover_route [capacity], nic_rate_limit [admission], nic_queue_count [capacity], queue_discipline [capacity], congestion_control [capacity], egress_budget [admission], ingress_budget [admission], ecmp_weight [setpoint], path_selection [capacity], network_isolation [admission], nic_interrupt_coalescing [capacity], nic_ring_size [capacity], port_link_power [power]
+#### 37.2.4 Distribution / Specialized: 277 muscles, heaviest hitter first
 
-#### 37.2.9 Storage Block/File/Object (20; plant: compute_pool, storage)
-volume_size [capacity], iops_limit [capacity], throughput_limit [capacity], replica_count [capacity], storage_tier [capacity], volume_placement [capacity], snapshot_trigger [capacity], rebalance [capacity], recovery_rate [capacity], backfill_rate [capacity], compaction_pressure [capacity], cache_allocation [capacity], object_replication [capacity], erasure_code_profile [capacity], storage_admission [admission], degraded_storage_gate [admission], scrub_schedule [capacity], io_scheduler [capacity], disk_power_spin_down [power], lifecycle_tiering [capacity]
+1 io_capacity [capacity]; 2 vacuum_compaction_rate [capacity]; 3 read_route [capacity]; 4 db_failover [capacity]; 5 db_cache [capacity]; 6 payment_failover [capacity]; 7 db_pool_resize [capacity]; 8 shard_placement [capacity]; 9 db_replicas [capacity]; 10 db_memory [capacity]; 11 checkpoint_rate [capacity]; 12 settlement_batch [capacity]; 13 order_reservation [capacity]; 14 authorization_route [capacity]; 15 processor_route_weight [setpoint]; 16 buffer_pool [capacity]; 17 background_writer [capacity]; 18 synchronous_replication [capacity]; 19 parallel_workers [capacity]; 20 idempotency_window [setpoint]; 21 refund_queue_rate [capacity]; 22 ehr_application_replicas [capacity]; 23 backtest_grid_nodes [capacity]; 24 pacs_archive_tier_target [setpoint]; 25 broker_cluster_nodes [capacity]; 26 reconstruction_gpu_workers [capacity]; 27 service_failover [capacity]; 28 background_workers [capacity]; 29 runtime_memory [capacity]; 30 thread_pool [capacity]; 31 fetch_batch_size [capacity]; 32 collector_memory_limit [capacity] (spine); 33 degraded_mode [capacity] (spine); 34 go_runtime [capacity]; 35 cache_size [capacity]; 36 event_loop_workers [capacity]; 37 index_workers [capacity]; 38 cache_failover [capacity]; 39 per_pod_energy_attribution [capacity] (spine); 40 canary_weight [setpoint]; 41 dns_traffic_weight [setpoint]; 42 cache_sharding [capacity]; 43 embedding_workers [capacity]; 44 ran_scheduler_weight [setpoint]; 45 cache_replicas [capacity]; 46 backup_trigger [capacity] (spine); 47 rebalance_rate [capacity]; 48 segment_merge_rate [capacity]; 49 load_balancing_policy [capacity]; 50 broker_failover [capacity]; 51 cache_writeback_rate [capacity]; 52 jvm_heap [capacity]; 53 retention_window [setpoint] (spine); 54 dead_letter_divert [capacity]; 55 process_count [capacity]; 56 keepalive_connection_reuse [capacity]; 57 cache_ttl [setpoint]; 58 application_cache_size [capacity]; 59 waf_inspection_workers [capacity]; 60 vector_batch_size [capacity]; 61 memory_size_threads [capacity]; 62 traffic_mirror [capacity]; 63 shard_count [capacity]; 64 shard_replication [capacity]; 65 cache_prefetch [capacity]; 66 session_affinity [capacity]; 67 order_gateway_sessions [capacity]; 68 traffic_divert [capacity]; 69 replication_factor [capacity]; 70 traffic_divert_recovery [capacity] (spine); 71 partition_count [capacity]; 72 query_route [capacity]; 73 rollback [capacity] (spine); 74 producer_batch_size [capacity]; 75 shard_rebalance [capacity]; 76 ran_ue_handover [capacity]; 77 ran_antenna_tilt [capacity]; 78 message_retention [capacity]; 79 vector_search_k [capacity]; 80 pre_trade_risk_check_workers [capacity]; 81 matching_engine_threads [capacity]; 82 remote_write_queue [capacity] (spine); 83 policy_enforcement [capacity] (spine); 84 ran_carrier_enable [capacity]; 85 ran_cell_sleep [capacity]; 86 cache_memory_limit [capacity]; 87 index_refresh_rate [capacity]; 88 request_hedging [capacity]; 89 worker_count [capacity]; 90 metric_scrape_interval [setpoint] (spine); 91 ran_prb_allocation [capacity]; 92 partition_placement [capacity]; 93 runtime_restart [capacity]; 94 cache_compression [capacity]; 95 connection_pool_runtime [capacity]; 96 cache_warmup [capacity]; 97 lifecycle_tiering [capacity] (spine); 98 cache_flush_rate [capacity]; 99 erasure_code_profile [capacity] (spine); 100 ran_du_cu_placement [capacity]; 101 restart [capacity] (spine); 102 batching [capacity] (spine); 103 prefetch [capacity]; 104 throughput_limit [capacity] (spine); 105 ran_cell_traffic_steering [capacity]; 106 scrub_schedule [capacity] (spine); 107 memory_disk_alarm [capacity]; 108 bandwidth_limit [capacity] (spine); 109 volume_placement [capacity] (spine); 110 mqtt_broker_max_connections [capacity]; 111 volume_size [capacity] (spine); 112 nic_interrupt_coalescing [capacity] (spine); 113 nic_queue_count [capacity] (spine); 114 origin_shield_concurrency [capacity]; 115 route_weight [setpoint] (spine); 116 cache_allocation [capacity] (spine); 117 qos_class [capacity] (spine); 118 object_replication [capacity] (spine); 119 storage_tier [capacity] (spine); 120 backfill_rate [capacity] (spine); 121 nic_ring_size [capacity] (spine); 122 edge_cache_size [capacity]; 123 dns_resolver_cache_size [capacity]; 124 market_data_fanout_threads [capacity]; 125 lb_weight [setpoint] (spine); 126 queue_discipline [capacity] (spine); 127 ids_capture_threads [capacity]; 128 replica_count [capacity] (spine); 129 recovery_rate [capacity] (spine); 130 connection_pool [capacity]; 131 rebalance [capacity] (spine); 132 io_scheduler [capacity] (spine); 133 snapshot_trigger [capacity] (spine); 134 compaction_pressure [capacity] (spine); 135 congestion_control [capacity] (spine); 136 path_selection [capacity] (spine); 137 failover_route [capacity] (spine); 138 ecmp_weight [setpoint] (spine); 139 mail_queue_concurrency [capacity]; 140 iops_limit [capacity] (spine); 141 route_replan [capacity]; 142 compensation_action [capacity]; 143 shipment_batch [capacity]; 144 surveillance_alert_queue_workers [capacity]; 145 stage_parallelism [capacity]; 146 executor_size [capacity]; 147 shuffle_bandwidth [capacity]; 148 siem_ingest_pipeline_workers [capacity]; 149 cache_fraction [setpoint]; 150 shuffle_partitions [capacity]; 151 dynamic_allocation_max [capacity]; 152 speculation_policy [capacity]; 153 batch_interval [setpoint]; 154 warehouse_queue [capacity]; 155 dynamic_allocation_min [capacity]; 156 query_slots [capacity]; 157 post_trade_settlement_workers [capacity]; 158 data_locality_wait [capacity]; 159 workflow_worker_rate [capacity]; 160 inventory_allocation [capacity]; 161 fulfillment_route [capacity]; 162 carrier_selection [capacity]; 163 task_queue_rate [capacity]; 164 sla_escalation [capacity]; 165 rail_mounted_gantry_dispatch [capacity]; 166 quay_crane_allocation [capacity]; 167 stacking_height_target [setpoint]; 168 horizontal_transport_fleet_size [capacity]; 169 yard_crane_fleet_size [capacity]; 170 shore_power_connection_capacity [capacity]; 171 cdn_cache_ttl [setpoint]; 172 prefetch_aggressiveness [setpoint]; 173 market_data_conflation_interval [setpoint]; 174 fix_session_heartbeat_interval [setpoint]; 175 tick_store_write_batch [setpoint]; 176 colocation_rack_cooling_setpoint [setpoint]; 177 ids_ring_buffer_size [setpoint]; 178 mqtt_max_inflight_messages [setpoint]; 179 mqtt_session_expiry [setpoint]; 180 dns_negative_cache_ttl [setpoint]; 181 mail_retry_interval [setpoint]; 182 rate_limit [admission] (spine); 183 connection_limit [admission] (spine); 184 nic_rate_limit [admission] (spine); 185 egress_budget [admission] (spine); 186 ingress_budget [admission] (spine); 187 network_isolation [admission] (spine); 188 circuit_breaker [admission]; 189 retry_budget [admission]; 190 service_timeout [admission]; 191 service_concurrency [admission]; 192 outlier_ejection [admission]; 193 health_threshold [admission]; 194 fault_injection_gate [admission]; 195 storage_admission [admission] (spine); 196 degraded_storage_gate [admission] (spine); 197 query_concurrency [admission]; 198 replication_lag_gate [admission]; 199 db_write_throttle [admission]; 200 transaction_concurrency [admission]; 201 lock_timeout [admission]; 202 producer_quota [admission]; 203 consumer_quota [admission]; 204 broker_io_quota [admission]; 205 queue_depth_limit [admission]; 206 consumer_concurrency [admission]; 207 retry_backoff [admission]; 208 stream_priority [admission]; 209 cache_eviction_policy [admission]; 210 cache_admission [admission]; 211 hot_key_isolation [admission]; 212 cache_connection_limit [admission]; 213 search_concurrency [admission]; 214 search_timeout [admission]; 215 index_memory_budget [admission]; 216 hot_shard_isolation [admission]; 217 search_admission [admission]; 218 etl_concurrency [admission]; 219 spill_threshold [admission]; 220 stream_backpressure [admission]; 221 analytics_admission [admission]; 222 gc_budget [admission]; 223 async_concurrency [admission]; 224 request_timeout [admission]; 225 runtime_cpu_budget [admission]; 226 runtime_io_budget [admission]; 227 export_concurrency [admission] (spine); 228 cardinality_budget [admission] (spine); 229 telemetry_shed [admission] (spine); 230 actuator_freeze [admission] (spine); 231 workload_isolate [admission] (spine); 232 credential_rotation_gate [admission] (spine); 233 rate_abuse_gate [admission] (spine); 234 fault_domain_isolate [admission] (spine); 235 kill_switch [admission] (spine); 236 payment_admission [admission]; 237 payment_concurrency [admission]; 238 payment_retry [admission]; 239 payment_timeout [admission]; 240 fraud_review_gate [admission]; 241 transaction_queue_limit [admission]; 242 inventory_hold [admission]; 243 checkout_load_shed [admission]; 244 workflow_admission [admission]; 245 workflow_retry [admission]; 246 workflow_backoff [admission]; 247 workflow_timeout [admission]; 248 dispatch_priority [admission]; 249 port_link_power [power] (spine); 250 disk_power_spin_down [power] (spine); 251 circuit_breakers [admission]; 252 dicom_router_concurrency [admission]; 253 hl7_interface_queue_limit [admission]; 254 fhir_api_rate_limit [admission]; 255 modality_worklist_timeout [admission]; 256 patient_monitoring_gateway_capacity [admission]; 257 lab_analyzer_batch_window [admission]; 258 telehealth_session_admission [admission]; 259 clinical_backup_window [admission]; 260 imaging_prefetch_priority [admission]; 261 berth_window_admission [admission]; 262 truck_gate_rate_limit [admission]; 263 reefer_plug_power_budget [power]; 264 container_dwell_priority [admission]; 265 vessel_arrival_pacing [admission]; 266 equipment_charging_window [admission]; 267 ran_connection_admission [admission]; 268 ran_slice_resource_budget [admission]; 269 ran_tx_power [power]; 270 ran_fronthaul_budget [admission]; 271 tiered_cache_promotion [capacity]; 272 edge_pop_admission [admission]; 273 order_admission_rate_limit [admission]; 274 kernel_bypass_poll_cores [power]; 275 end_of_day_risk_batch_power [power]; 276 ids_rule_group_admission [admission]; 277 endpoint_scan_scheduling [admission].
 
-#### 37.2.10 Observability & Telemetry (9; plant: compute_pool, server)
-collector_memory_limit [capacity], export_concurrency [admission], cardinality_budget [admission], retention_window [setpoint], remote_write_queue [capacity], telemetry_shed [admission], metric_scrape_interval [setpoint], batching [capacity], per_pod_energy_attribution [capacity]
+### 37.3 The spine: 267 muscles, in all four realms, an organism of its own, heaviest hitter first
 
-#### 37.2.11 Reliability, Security & Recovery (12; plant: compute_pool, server)
-restart [capacity], rollback [capacity], traffic_divert_recovery [capacity], degraded_mode [capacity], actuator_freeze [admission], workload_isolate [admission], credential_rotation_gate [admission], policy_enforcement [capacity], rate_abuse_gate [admission], fault_domain_isolate [admission], backup_trigger [capacity], kill_switch [admission]
+The thirteen families of the spine are the computers every realm's work runs on and the power and cooling they need: Kubernetes workloads, containers, placement, node fleets, cloud capacity, hosts, GPUs, network, storage, observability, reliability and security, electrical distribution and cooling. Run alone, the spine is a data center with nothing of any one trade in it; under a realm, it is what that realm's own muscles stand on. Its muscles, heaviest hitter first:
 
-#### 37.2.12 PDU, UPS & Electrical Distribution (18; plant: energy_storage, ups)
-server_power_cap [power], rack_power_cap [power], pdu_branch_power_limit [power], pdu_outlet_control [capacity], ups_operating_mode [capacity], ups_charge_rate [power], ups_discharge_rate [power], phase_balance [capacity], load_transfer [admission], reactive_power_target [setpoint], voltage_target [setpoint], generator_dispatch [capacity], electrical_isolation [admission], breaker_trip_gate [admission], ups_shutdown_battery_test [capacity], hierarchical_power_budget_row_pdu_switchboard_controllers [power], priority_aware_capping_throttle_low_priority_first [power], power_oversubscription_with_prediction [power]
+1 architecture_selection [capacity]; 2 accelerator_selection [capacity]; 3 sync_boost [capacity]; 4 instance_refresh [capacity]; 5 nodepool_weight [setpoint]; 6 vm_start_stop [capacity]; 7 node_shutdown [capacity]; 8 max_pods_per_node [capacity]; 9 node_provision [capacity]; 10 node_consolidate [capacity]; 11 node_pool_min [capacity]; 12 region_selection [capacity]; 13 placement_group [capacity]; 14 vm_migrate [capacity]; 15 node_pool_max [capacity]; 16 asg_max [capacity]; 17 zone_selection [capacity]; 18 gpu_persistence_mode [capacity]; 19 mig_mode [capacity]; 20 expander [capacity]; 21 interruption_response [capacity]; 22 capacity_class [capacity]; 23 vm_size [capacity]; 24 target_tracking_policy [setpoint]; 25 consolidate_after [capacity]; 26 scale_down_unneeded_time [capacity]; 27 spot_mix [capacity]; 28 node_replace [capacity]; 29 node_desired [capacity]; 30 kubelet_reserved_resources [capacity]; 31 instance_family [capacity]; 32 consolidation_policy [capacity]; 33 boot_disk_class [capacity]; 34 scaling_cooldown_warmup [capacity]; 35 gpu_mps [capacity]; 36 node_power_on [capacity]; 37 gpu_timeslice [capacity]; 38 node_pool_limits [capacity]; 39 gpu_allocate [capacity]; 40 mig_geometry [capacity]; 41 gpu_ecc_response [capacity]; 42 pdu_outlet_control [capacity]; 43 expire_after [capacity]; 44 vm_count [capacity]; 45 gpu_compute_mode [capacity]; 46 predictive_scaling [capacity]; 47 phase_balance [capacity]; 48 gpu_temperature_target [setpoint]; 49 generator_dispatch [capacity]; 50 scale_down_delay_after_add [capacity]; 51 asg_min [capacity]; 52 deschedule [capacity]; 53 collector_memory_limit [capacity]; 54 cpu_manager [capacity]; 55 degraded_mode [capacity]; 56 vpa_minmax_allowed_resources [capacity]; 57 hpa_cpu_target [setpoint]; 58 gpu_reset [capacity]; 59 peaks_power_aware_placement [capacity]; 60 default_limits [capacity]; 61 rollout_rate [capacity]; 62 scheduler_scoring_strategy [capacity]; 63 topology_spread [capacity]; 64 hpa_custom_target [setpoint]; 65 per_pod_energy_attribution [capacity]; 66 hpa_scale_down_stabilisation_window [setpoint]; 67 io_latency_target [setpoint]; 68 reservation_mix [capacity]; 69 max_surge [capacity]; 70 cpuset [capacity]; 71 memory_high [capacity]; 72 cpu_weight [setpoint]; 73 swappiness_reclaim [capacity]; 74 vpa_apply [capacity]; 75 pids_limit [capacity]; 76 backup_trigger [capacity]; 77 ups_shutdown_battery_test [capacity]; 78 memory_limit [capacity]; 79 pod_anti_affinity [capacity]; 80 memory_hard_limit [capacity]; 81 goldilocks_vpa_request_recommendation [capacity]; 82 runtime_class [capacity]; 83 ups_operating_mode [capacity]; 84 replicas [capacity]; 85 taint_toleration [setpoint]; 86 device_claim [capacity]; 87 reactive_power_target [setpoint]; 88 keda_polling_interval [setpoint]; 89 retention_window [setpoint]; 90 graceful_termination [capacity]; 91 core_packing [capacity]; 92 in_place_resize [capacity]; 93 irq_affinity [capacity]; 94 scale_to_zero [capacity]; 95 cruisekube_request_rightsizing [capacity]; 96 memory_bandwidth [capacity]; 97 scheduler_plugin_weights [setpoint]; 98 numa_placement [capacity]; 99 llc_allocation [capacity]; 100 hpa_scale_up_stabilisation_window [setpoint]; 101 traffic_divert_recovery [capacity]; 102 cgroup_io_max [capacity]; 103 network_locality [capacity]; 104 rollout_readiness_delay [capacity]; 105 hpa_memory_target [setpoint]; 106 page_reclaim_rate [capacity]; 107 cpu_limit [capacity]; 108 rollback [capacity]; 109 voltage_target [setpoint]; 110 memory_protection [capacity]; 111 probes [capacity]; 112 swap_limit [capacity]; 113 io_weight [setpoint]; 114 hpa_scaling_rate_policies [capacity]; 115 remote_write_queue [capacity]; 116 policy_enforcement [capacity]; 117 cpu_request [capacity]; 118 ephemeral_storage [capacity]; 119 hpa_max_replicas [capacity]; 120 pdb_policy [capacity]; 121 hugepages [capacity]; 122 gpu_topology [capacity]; 123 hpa_min_replicas [capacity]; 124 kepler_energy_target_autoscaling [setpoint]; 125 turbo_boost [capacity]; 126 metric_scrape_interval [setpoint]; 127 storage_locality [capacity]; 128 node_selector [capacity]; 129 hpa_policy_selection [capacity]; 130 memory_reclaim [capacity]; 131 hpa_tolerance [capacity]; 132 failure_domain_spread [capacity]; 133 transparent_hugepages [capacity]; 134 memory_request [capacity]; 135 numa_balance [capacity]; 136 lifecycle_tiering [capacity]; 137 erasure_code_profile [capacity]; 138 core_online_offline [capacity]; 139 restart [capacity]; 140 hpa_sync_period [capacity]; 141 max_unavailable [capacity]; 142 batching [capacity]; 143 throughput_limit [capacity]; 144 scrub_schedule [capacity]; 145 bandwidth_limit [capacity]; 146 volume_placement [capacity]; 147 node_affinity [capacity]; 148 volume_size [capacity]; 149 nic_interrupt_coalescing [capacity]; 150 nic_queue_count [capacity]; 151 route_weight [setpoint]; 152 cache_allocation [capacity]; 153 qos_class [capacity]; 154 object_replication [capacity]; 155 storage_tier [capacity]; 156 backfill_rate [capacity]; 157 nic_ring_size [capacity]; 158 lb_weight [setpoint]; 159 queue_discipline [capacity]; 160 replica_count [capacity]; 161 recovery_rate [capacity]; 162 rebalance [capacity]; 163 io_scheduler [capacity]; 164 snapshot_trigger [capacity]; 165 compaction_pressure [capacity]; 166 congestion_control [capacity]; 167 path_selection [capacity]; 168 failover_route [capacity]; 169 ecmp_weight [setpoint]; 170 iops_limit [capacity]; 171 server_power_cap [power]; 172 rack_power_cap [power]; 173 pdu_branch_power_limit [power]; 174 ups_charge_rate [power]; 175 ups_discharge_rate [power]; 176 supply_air_temperature [setpoint]; 177 return_air_target [setpoint]; 178 coolant_supply_temperature [setpoint]; 179 coolant_flow [capacity]; 180 pump_speed [capacity]; 181 fan_speed [capacity]; 182 chiller_setpoint [setpoint]; 183 cooling_tower_fan [capacity]; 184 cooling_capacity [capacity]; 185 gpu_thermal_envelope [setpoint]; 186 cpu_thermal_envelope [setpoint]; 187 server_fan_speed [capacity]; 188 economiser [capacity]; 189 hierarchical_power_budget_row_pdu_switchboard_controllers [power]; 190 priority_aware_capping_throttle_low_priority_first [power]; 191 power_oversubscription_with_prediction [power]; 192 chiller_plant_supervisory_control_rl_with_safety_layer [capacity]; 193 keda_threshold [admission]; 194 deployment_pause_resume [admission]; 195 rollout_abort [admission]; 196 pod_eviction [admission]; 197 scheduler_queue_priority [admission]; 198 api_priority_fairness [admission]; 199 cpu_quota [admission]; 200 priority_class [admission]; 201 preemption_policy [admission]; 202 scheduler_backoff [admission]; 203 gang_admission [admission]; 204 node_cordon [admission]; 205 node_drain [admission]; 206 disruption_budget [admission]; 207 cpufreq_min [power]; 208 cpufreq_max [power]; 209 rapl_package_power [power]; 210 uncore_frequency [power]; 211 energy_perf_preference [power]; 212 cpu_idle_policy [power]; 213 memory_pressure_gate [admission]; 214 thermal_throttle_policy [power]; 215 host_power_profile [power]; 216 gpu_power_limit [power]; 217 gpu_sm_clock [power]; 218 gpu_memory_clock [power]; 219 gpu_quarantine [admission]; 220 gpu_thermal_limit [power]; 221 gpu_job_power_budget [admission]; 222 rate_limit [admission]; 223 connection_limit [admission]; 224 nic_rate_limit [admission]; 225 egress_budget [admission]; 226 ingress_budget [admission]; 227 network_isolation [admission]; 228 storage_admission [admission]; 229 degraded_storage_gate [admission]; 230 export_concurrency [admission]; 231 cardinality_budget [admission]; 232 telemetry_shed [admission]; 233 actuator_freeze [admission]; 234 workload_isolate [admission]; 235 credential_rotation_gate [admission]; 236 rate_abuse_gate [admission]; 237 fault_domain_isolate [admission]; 238 kill_switch [admission]; 239 load_transfer [admission]; 240 electrical_isolation [admission]; 241 breaker_trip_gate [admission]; 242 compressor_authority [power]; 243 rack_thermal_budget [power]; 244 thermal_workload_migrate [admission]; 245 thermal_load_shed [admission]; 246 rollout_progress_deadline [admission]; 247 unhealthy_pod_eviction_policy [admission]; 248 namespace_quota [admission]; 249 freeze [admission]; 250 scheduling_gates [admission]; 251 scale_down_utilisation_threshold [admission]; 252 kubelet_eviction_thresholds [admission]; 253 frequency_governor [power]; 254 dram_power_limit [power]; 255 application_clocks [power]; 256 port_link_power [power]; 257 disk_power_spin_down [power]; 258 vm_cpu_cap_by_priority [admission]; 259 per_pod_cpu_frequency_range_and_c_state_access [power]; 260 uncore_frequency_per_node [power]; 261 target_clocks [power]; 262 climatik_inference_power_cap [power]; 263 ear_cpu_frequency_policy [power]; 264 ear_global_energy_budget [admission]; 265 k8s_power_manager_core_profile [power]; 266 adaptive_gpu_power_cap [power]; 267 nvidia_platform_power_budget [power].
 
-#### 37.2.13 Cooling, Chillers & Thermodynamics (18; plant: thermal_zone, data_hall)
-supply_air_temperature [setpoint], return_air_target [setpoint], coolant_supply_temperature [setpoint], coolant_flow [capacity], pump_speed [capacity], fan_speed [capacity], chiller_setpoint [setpoint], compressor_authority [power], cooling_tower_fan [capacity], cooling_capacity [capacity], rack_thermal_budget [power], gpu_thermal_envelope [setpoint], cpu_thermal_envelope [setpoint], thermal_workload_migrate [admission], thermal_load_shed [admission], server_fan_speed [capacity], economiser [capacity], chiller_plant_supervisory_control_rl_with_safety_layer [capacity]
+### 37.4 Organism 1: Compute / AI / Cloud: 273 own muscles on the spine of 267 = 540 in its organism
 
-### 37.3 Organism 1: Compute / AI / Cloud: 273 own muscles on the spine of 267 = 540 in its organism
+The spine above, and its 273 own muscles (every muscle whose realms include it and that is not the spine's), heaviest hitter first:
 
-The spine above, and these families of its own.
+1 dra_claim_capacity [capacity]; 2 global_failover [capacity]; 3 lora_adapter_load [capacity]; 4 continuous_batching [capacity]; 5 vm_overcommit_density [capacity]; 6 edge_site_node_pool [capacity]; 7 edge_offload [capacity]; 8 dra_binding_readiness [capacity]; 9 dra_binding_failure_response [capacity]; 10 zone_dispatch [capacity]; 11 model_replicas [capacity]; 12 model_instance_count [capacity]; 13 max_batch_size [capacity]; 14 agones_fleet_max_replicas [capacity]; 15 warm_runner_pool [capacity]; 16 node_config_rollout [capacity]; 17 cloud_capacity_class [capacity]; 18 workload_migrate_region [capacity]; 19 runner_scale_set_max_runners [capacity]; 20 region_dispatch [capacity]; 21 tensor_parallel_degree [capacity]; 22 edge_dispatch [capacity]; 23 multi_cluster_dispatch [capacity]; 24 game_node_pool_autoscaler [capacity]; 25 batch_queue_delay [capacity]; 26 model_route_weight [setpoint]; 27 vgpu_partition [capacity]; 28 machine_remediation [capacity]; 29 cross_cluster_replication [capacity]; 30 dra_device_class_selection [capacity]; 31 pulse_phase [capacity]; 32 mcp_max_unavailable [capacity]; 33 chunked_prefill [capacity]; 34 dra_device_configuration [setpoint]; 35 kv_cache_swap_space [capacity]; 36 measurement_scheduling [capacity]; 37 cluster_version_pacing [capacity]; 38 dra_claim_sharing [capacity]; 39 inference_max_tokens [capacity]; 40 dra_device_taint [capacity]; 41 disaggregated_prefill_decode [capacity]; 42 model_load [capacity]; 43 hypervisor_cpu_pinning [capacity]; 44 machine_failure_domain [capacity]; 45 model_unload [capacity]; 46 fn_snapstart_restore [capacity]; 47 scale_to_zero_panic_window [setpoint]; 48 irqbalance_affinity [capacity]; 49 hugepage_pool_reserve [capacity]; 50 fn_provisioned_concurrency [capacity]; 51 fn_prewarm_pool [capacity]; 52 fn_reserved_concurrency [capacity]; 53 drm_license_server_pool [capacity]; 54 cgroup_cpu_weight [capacity]; 55 vcpu_allocation [capacity]; 56 fn_memory_size [capacity]; 57 packager_workers [capacity]; 58 voice_chat_mixer_pool [capacity]; 59 agones_fleet_buffer_size [capacity]; 60 reset_scheduling [capacity]; 61 agones_fleet_min_replicas [capacity]; 62 memory_ballooning [capacity]; 63 gate_scheduling [capacity]; 64 cgroup_cpu_quota [capacity]; 65 cgroup_memory_high [capacity]; 66 script_validation_threads [capacity]; 67 pulse_duration [setpoint]; 68 fn_concurrency_limit [capacity]; 69 qubit_mapping [capacity]; 70 origin_shield_cache_size [capacity]; 71 tls_session_cache [capacity]; 72 dynamical_decoupling [capacity]; 73 shot_allocation [capacity]; 74 tcp_buffer_autotune [capacity]; 75 noise_aware_routing [capacity]; 76 relay_server_pool [capacity]; 77 io_scheduler_depth [capacity]; 78 block_nr_requests [capacity]; 79 coupling_control [capacity]; 80 net_rx_coalesce [capacity]; 81 archive_node_storage_tier [capacity]; 82 node_db_cache_size [capacity]; 83 rdma_bandwidth [capacity]; 84 dpu_sf_tx_rate [capacity]; 85 nic_affinity [capacity]; 86 smartnic_flow_steering [capacity]; 87 dpu_service_placement [capacity]; 88 max_peer_connections [capacity]; 89 pulse_amplitude [capacity]; 90 sriov_vf_allocation [capacity]; 91 congestion_response [capacity]; 92 build_cache_size [capacity]; 93 nvlink_placement [capacity]; 94 sriov_vf_count [capacity]; 95 smartnic_offload_enable [capacity]; 96 nvswitch_route [capacity]; 97 rail_selection [capacity]; 98 collective_protocol [capacity]; 99 rank_placement [capacity]; 100 gpudirect_policy [capacity]; 101 dpu_pf_tx_rate [capacity]; 102 nic_hca_selection [capacity]; 103 dpu_vf_tx_rate [capacity]; 104 dpu_bandwidth_share [capacity]; 105 dpu_qos_group [capacity]; 106 collective_algorithm [capacity]; 107 fabric_failover [capacity]; 108 rdma_route [capacity]; 109 dpu_failover [capacity]; 110 collective_chunk_size [capacity]; 111 transcoder_worker_pool [capacity]; 112 checkpoint_trigger [capacity]; 113 straggler_mitigation [capacity]; 114 rank_mapping [capacity]; 115 worker_allocation [capacity]; 116 backfill_policy [capacity]; 117 training_workers [capacity]; 118 data_parallelism [capacity]; 119 job_slots [capacity]; 120 gradient_accumulation [capacity]; 121 resource_reservation [capacity]; 122 job_walltime [capacity]; 123 checkpoint_restart [capacity]; 124 checkpoint_interval [setpoint]; 125 mpi_ranks [capacity]; 126 thumbnail_sprite_batch [capacity]; 127 node_allocation [capacity]; 128 indexer_batch_workers [capacity]; 129 accelerator_share [capacity]; 130 pipeline_parallelism [capacity]; 131 oversubscription [capacity]; 132 expert_parallelism [capacity]; 133 tensor_parallelism [capacity]; 134 global_batch_size [capacity]; 135 resource_reclaim [capacity]; 136 test_shard_parallelism [capacity]; 137 runner_scale_set_min_runners [capacity]; 138 cpu_gpu_ratio [setpoint]; 139 gang_schedule [capacity]; 140 remote_execution_workers [capacity]; 141 partition_limits [capacity]; 142 binpack_pressure [capacity]; 143 elastic_worker_count [capacity]; 144 spread_pressure [capacity]; 145 maintenance_evacuation [capacity]; 146 replay_render_batch [capacity]; 147 microbatch_size [capacity]; 148 dataloader_workers [capacity]; 149 training_gang_size [capacity]; 150 compute_comm_overlap [capacity]; 151 activation_checkpointing [capacity]; 152 memory_per_rank [capacity]; 153 cfs_scheduler_latency [setpoint]; 154 transparent_hugepages [setpoint]; 155 numa_auto_balancing [setpoint]; 156 dirty_ratio_writeback [setpoint]; 157 vm_swappiness [setpoint]; 158 zswap_pool_fraction [setpoint]; 159 page_cache_reclaim [setpoint]; 160 net_qdisc_codel_target [setpoint]; 161 fn_timeout_budget [setpoint]; 162 numa_vcpu_pinning [setpoint]; 163 dead_letter_retry_cap [setpoint]; 164 ttl_eviction_waste [setpoint]; 165 retry_budget_window [setpoint]; 166 abr_bitrate_ladder_cap [setpoint]; 167 player_buffer_target [setpoint]; 168 edge_cache_ttl [setpoint]; 169 segment_duration_target [setpoint]; 170 encoder_lookahead_frames [setpoint]; 171 game_server_tick_rate [setpoint]; 172 matchmaking_wait_window [setpoint]; 173 mempool_max_size [setpoint]; 174 utxo_cache_flush_interval [setpoint]; 175 artifact_retention_ttl [setpoint]; 176 edge_sync_interval [setpoint]; 177 api_concurrency [admission]; 178 queue_concurrency [admission]; 179 queue_backpressure [admission]; 180 job_admission [admission]; 181 batch_admission [admission]; 182 inference_admission [admission]; 183 load_shed [admission]; 184 priority_gate [admission]; 185 tenant_admission [admission]; 186 burst_limit [admission]; 187 deadline_admission [admission]; 188 work_budget [admission]; 189 request_queue_limit [admission]; 190 retry_admission [admission]; 191 background_work_gate [admission]; 192 maintenance_work_gate [admission]; 193 machine_health_gate [admission]; 194 mcp_pause [admission]; 195 operator_reconcile_budget [admission]; 196 infra_machine_admission [admission]; 197 gpu_fabric_quarantine [admission]; 198 collective_concurrency [admission]; 199 communication_priority [admission]; 200 fabric_isolation [admission]; 201 inference_concurrency [admission]; 202 kv_cache_budget [admission]; 203 prefix_cache_budget [admission]; 204 speculative_decode_budget [admission]; 205 model_precision [power]; 206 inference_priority [admission]; 207 inference_slo_gate [admission]; 208 training_preempt [admission]; 209 training_precision [power]; 210 job_priority [admission]; 211 job_preemption [admission]; 212 parallel_io_budget [admission]; 213 collective_budget [admission]; 214 scratch_budget [admission]; 215 scheduler_fair_share [admission]; 216 task_admission [admission]; 217 task_priority [admission]; 218 cluster_quota [admission]; 219 task_preemption [admission]; 220 queue_fairness [admission]; 221 deadline_pressure [admission]; 222 scheduler_retry [admission]; 223 circuit_admission [admission]; 224 circuit_scheduling [admission]; 225 pulse_frequency [power]; 226 error_mitigation_budget [admission]; 227 quantum_queue_priority [admission]; 228 data_residency_gate [admission]; 229 latency_region_gate [admission]; 230 cost_region_gate [admission]; 231 carbon_region_gate [admission]; 232 federation_quota [admission]; 233 global_admission [admission]; 234 autoscaling_target_concurrency_qps [admission]; 235 request_priority_levels [admission]; 236 node_power_saving [power]; 237 cpu_frequency_per_job [power]; 238 request_concurrency_limit [admission]; 239 adaptive_concurrency_limit [admission]; 240 priority_request_queue_under_limit [admission]; 241 dra_device_eviction [admission]; 242 dpu_cpu_budget [admission]; 243 dpu_memory_budget [admission]; 244 cpufreq_dvfs_governor [power]; 245 ksm_memory_dedup [capacity]; 246 cpu_cstate_governor [power]; 247 fn_scale_to_zero_idle [admission]; 248 fn_burst_admission [admission]; 249 live_migration_pacing [admission]; 250 vm_memory_dedup_ksm [capacity]; 251 ingress_intake_pacing [capacity]; 252 gc_compaction_pacing [capacity]; 253 backpressure_threshold [admission]; 254 queue_drain_rate [capacity]; 255 compaction_debt_drain [capacity]; 256 rate_limit_token_bucket [admission]; 257 connection_admission [admission]; 258 waf_inspection_sampling [capacity]; 259 ddos_shield_admission [admission]; 260 live_transcode_gpu_clocks [power]; 261 vod_transcode_batch_power [power]; 262 cdn_request_coalescing [admission]; 263 media_ingest_admission [admission]; 264 players_per_server_cap [admission]; 265 matchmaking_admission_rate [admission]; 266 cloud_gaming_gpu_clocks [power]; 267 block_relay_admission [admission]; 268 rpc_work_queue_depth [admission]; 269 validator_host_power_profile [power]; 270 build_concurrency_limit [admission]; 271 job_queue_admission [admission]; 272 build_node_cpu_frequency [power]; 273 edge_inference_gpu_clocks [power].
 
-#### 37.3.1 Work Admission & Demand Shaping (19; plant: compute_pool, server)
-api_concurrency [admission], queue_concurrency [admission], queue_backpressure [admission], job_admission [admission], batch_admission [admission], inference_admission [admission], load_shed [admission], priority_gate [admission], tenant_admission [admission], burst_limit [admission], deadline_admission [admission], work_budget [admission], request_queue_limit [admission], retry_admission [admission], background_work_gate [admission], maintenance_work_gate [admission], request_concurrency_limit [admission], adaptive_concurrency_limit [admission], priority_request_queue_under_limit [admission]
+### 37.5 Organism 2: Physics / Robotics / Autonomous: 137 own muscles on the spine of 267 = 404 in its organism
 
-#### 37.3.2 OpenShift & Machine API (9; plant: compute_pool, node)
-machine_remediation [capacity], machine_health_gate [admission], mcp_pause [admission], mcp_max_unavailable [capacity], node_config_rollout [capacity], operator_reconcile_budget [admission], cluster_version_pacing [capacity], infra_machine_admission [admission], machine_failure_domain [capacity]
+The spine above, and its 137 own muscles (every muscle whose realms include it and that is not the spine's), heaviest hitter first:
 
-#### 37.3.3 GPU Fabric & RDMA (18; plant: compute_pool, fabric)
-nvlink_placement [capacity], nvswitch_route [capacity], gpu_fabric_quarantine [admission], rdma_bandwidth [capacity], rdma_route [capacity], nic_affinity [capacity], collective_concurrency [admission], collective_algorithm [capacity], collective_chunk_size [capacity], rank_placement [capacity], gpudirect_policy [capacity], congestion_response [capacity], rail_selection [capacity], fabric_failover [capacity], communication_priority [admission], fabric_isolation [admission], collective_protocol [capacity], nic_hca_selection [capacity]
+1 controller_update_rate [capacity]; 2 humanoid_gait_speed [capacity]; 3 jerk_limit [capacity]; 4 vehicle_speed_envelope [capacity]; 5 velocity_acceleration_scaling [capacity]; 6 joint_velocity [capacity]; 7 joint_position [capacity]; 8 balance_correction [capacity]; 9 drone_battery_failsafe_reserve [setpoint]; 10 humanoid_step_height [capacity]; 11 amr_fleet_charge_threshold [setpoint]; 12 locomotion_speed [capacity]; 13 trajectory_tolerances [capacity]; 14 joint_acceleration [capacity]; 15 manipulator_payload_speed_scaling [capacity]; 16 humanoid_balance_margin [capacity]; 17 swarm_formation_spacing [capacity]; 18 collision_margin [capacity]; 19 shaft_speed_target [capacity]; 20 ros2_executor_threads [capacity]; 21 ardupilot_wpnav_speed [capacity]; 22 cartesian_velocity [capacity]; 23 trajectory_speed [capacity]; 24 trajectory_acceleration [capacity]; 25 px4_mpc_xy_vel_max [capacity]; 26 steering_angle [capacity]; 27 engine_load_sharing_setpoint [capacity]; 28 trim_target [capacity]; 29 auxiliary_engine_staging [capacity]; 30 agv_speed [capacity]; 31 conveyor_speed [capacity]; 32 task_assignment [capacity]; 33 traffic_reservation [capacity]; 34 elevator_request [capacity]; 35 amr_fleet_active_robots [capacity]; 36 robot_route [capacity]; 37 px4_mpc_acc_hor [capacity]; 38 altitude_target [capacity]; 39 waypoint_authority [capacity]; 40 px4_mc_rollrate_max [capacity]; 41 actuator_saturation_envelope [capacity]; 42 px4_mpc_z_vel_max_up [capacity]; 43 velocity_target [capacity]; 44 attitude_rate_target [capacity]; 45 attitude_target [capacity]; 46 attitude_rate_gains [capacity]; 47 battery_reserve [capacity]; 48 robot_dispatch [capacity]; 49 slow_steaming_speed_target [capacity]; 50 human_safe_stop [capacity]; 51 door_request [capacity]; 52 charging_dispatch [capacity]; 53 fleet_failover [capacity]; 54 ros2_qos_history_depth [setpoint]; 55 ros2_control_loop_rate [setpoint]; 56 joint_effort [power]; 57 force_limit [power]; 58 gripper_force [power]; 59 braking_force [power]; 60 warehouse_zone_admission [admission]; 61 robot_quarantine [admission]; 62 fleet_concurrency [admission]; 63 throttle_envelope [power]; 64 flight_hold [admission]; 65 return_to_home [admission]; 66 land_action [admission]; 67 mission_admission [admission]; 68 geofence_response [admission]; 69 failsafe_selection [admission]; 70 battery_reserve_threshold [admission]; 71 flight_mode_transition [admission]; 72 flight_termination_safe_state [admission]; 73 space_command_admission [admission]; 74 flight_task_schedule [admission]; 75 space_mode_transition [admission]; 76 payload_duty_cycle [power]; 77 communication_allocation [capacity]; 78 space_power_budget [power]; 79 space_thermal_command [power]; 80 attitude_command_envelope [capacity]; 81 reaction_wheel_allocation [capacity]; 82 rcs_authority [power]; 83 safe_mode_transition [admission]; 84 watchdog_recovery [admission]; 85 instrument_activation [capacity]; 86 fault_isolation [admission]; 87 horizontal_speed_limit [power]; 88 vertical_speed_limits [power]; 89 acceleration_jerk_limits [power]; 90 state_of_charge_limits [power]; 91 smart_charging_schedule [admission]; 92 traction_effort_limit [power]; 93 regenerative_braking_share [power]; 94 coasting_speed_target [capacity]; 95 dwell_time_schedule [admission]; 96 hvac_duty_cycle [power]; 97 train_auxiliary_power_budget [power]; 98 platform_approach_speed [capacity]; 99 acceleration_rate_setpoint [capacity]; 100 wheel_slip_protection_mode [admission]; 101 traction_motor_thermal_derate [power]; 102 catenary_voltage_limit [power]; 103 timetable_recovery_margin [admission]; 104 headway_target [capacity]; 105 door_release_hold [admission]; 106 propeller_pitch_limit [power]; 107 shaft_power_limit [power]; 108 bow_thruster_duty [power]; 109 ballast_pump_mode [admission]; 110 shore_power_mode [admission]; 111 hotel_load_budget [power]; 112 rudder_rate_limit [power]; 113 hoist_speed_target [capacity]; 114 acceleration_limit [capacity]; 115 regen_drive_mode [power]; 116 standby_power_mode [admission]; 117 destination_dispatch_schedule [admission]; 118 car_parking_mode [admission]; 119 door_dwell_hold [admission]; 120 escalator_speed_target [capacity]; 121 group_capacity_mode [admission]; 122 motor_thermal_derate [power]; 123 brake_test_schedule [admission]; 124 fire_recall_mode [admission]; 125 traction_torque_limit [power]; 126 regen_braking_level [power]; 127 battery_charge_limit [power]; 128 battery_discharge_limit [power]; 129 battery_thermal_target [power]; 130 motor_thermal_limit [power]; 131 energy_recovery_target [power]; 132 auxiliary_power_budget [power]; 133 fast_charge_current [power]; 134 fast_charge_voltage [power]; 135 vehicle_safe_state [admission]; 136 humanoid_joint_torque_limit [power]; 137 ardupilot_atc_accel_r_max [power].
 
-#### 37.3.4 AI Inference Serving (24; plant: compute_pool, gpu)
-model_replicas [capacity], model_route_weight [setpoint], model_load [capacity], model_unload [capacity], model_instance_count [capacity], continuous_batching [capacity], max_batch_size [capacity], batch_queue_delay [capacity], inference_concurrency [admission], inference_max_tokens [capacity], kv_cache_budget [admission], prefix_cache_budget [admission], speculative_decode_budget [admission], model_precision [power], inference_priority [admission], inference_slo_gate [admission], autoscaling_target_concurrency_qps [admission], scale_to_zero_panic_window [setpoint], request_priority_levels [admission], kv_cache_swap_space [capacity], chunked_prefill [capacity], tensor_parallel_degree [capacity], disaggregated_prefill_decode [capacity], lora_adapter_load [capacity]
+### 37.6 Organism 3: Energy / Facility / Industrial: 213 own muscles on the spine of 267 = 480 in its organism
 
-#### 37.3.5 AI Training (18; plant: compute_pool, gpu_batch)
-training_workers [capacity], global_batch_size [capacity], microbatch_size [capacity], gradient_accumulation [capacity], data_parallelism [capacity], tensor_parallelism [capacity], pipeline_parallelism [capacity], expert_parallelism [capacity], checkpoint_interval [setpoint], checkpoint_trigger [capacity], training_preempt [admission], training_gang_size [capacity], elastic_worker_count [capacity], straggler_mitigation [capacity], training_precision [power], compute_comm_overlap [capacity], activation_checkpointing [capacity], dataloader_workers [capacity]
+The spine above, and its 213 own muscles (every muscle whose realms include it and that is not the spine's), heaviest hitter first:
 
-#### 37.3.6 HPC & Distributed Compute (19; plant: compute_pool, batch)
-job_slots [capacity], mpi_ranks [capacity], rank_mapping [capacity], node_allocation [capacity], job_walltime [capacity], job_priority [admission], job_preemption [admission], checkpoint_restart [capacity], parallel_io_budget [admission], collective_budget [admission], accelerator_share [capacity], cpu_gpu_ratio [setpoint], memory_per_rank [capacity], scratch_budget [admission], scheduler_fair_share [admission], backfill_policy [capacity], node_power_saving [power], cpu_frequency_per_job [power], partition_limits [capacity]
+1 site_battery_dispatch [capacity]; 2 renewable_dispatch [capacity]; 3 generator_start_stop [capacity]; 4 facility_peak_guard [capacity]; 5 volt_var [capacity]; 6 storage_dispatch [capacity]; 7 volt_watt [capacity]; 8 peak_shaving [capacity]; 9 pue_target [setpoint]; 10 microgrid_emergency_reserve [setpoint]; 11 time_of_use_schedule [setpoint]; 12 battery_soc_reserve [setpoint]; 13 electrolyzer_power [power]; 14 heat_pump_power [power]; 15 pv_curtailment [power]; 16 battery_discharge_power [power]; 17 battery_charge_power [power]; 18 cooling_power_budget [power]; 19 grid_export_limit [power]; 20 ev_charge_power [power]; 21 grid_import_limit [power]; 22 constant_power_factor_reactive_power [power]; 23 facility_power_budget [power]; 24 utility_demand_limit [power]; 25 it_power_budget [power]; 26 microgrid_demand_limit [power]; 27 valve_position [setpoint]; 28 furnace_setpoint [setpoint]; 29 pressure_setpoint [setpoint]; 30 temperature_setpoint [setpoint]; 31 mass_flow_setpoint [setpoint]; 32 tank_level_target [setpoint]; 33 rack_power_allocation [power]; 34 setpoint_reset_trim_and_respond [setpoint]; 35 duct_static_pressure_setpoint [setpoint]; 36 optimal_start_stop [capacity]; 37 operating_room_air_change_setpoint [setpoint]; 38 isolation_room_pressure_target [setpoint]; 39 patient_room_temperature_setpoint [setpoint]; 40 surgical_suite_humidity_target [setpoint]; 41 ahu_supply_air_temperature [setpoint]; 42 pharmacy_cold_room_setpoint [setpoint]; 43 sterile_storage_humidity_setpoint [setpoint]; 44 imaging_suite_cooling_capacity [capacity]; 45 chiller_plant_staging [capacity]; 46 exhaust_fan_capacity [capacity]; 47 mainline_pressure_setpoint [setpoint]; 48 soil_moisture_target [setpoint]; 49 pivot_speed_setpoint [setpoint]; 50 greenhouse_temperature_setpoint [setpoint]; 51 greenhouse_co2_target [setpoint]; 52 vent_position_setpoint [setpoint]; 53 grain_dryer_temperature_setpoint [setpoint]; 54 cold_storage_temperature_setpoint [setpoint]; 55 milking_vacuum_level_setpoint [setpoint]; 56 well_drawdown_level_target [setpoint]; 57 compressor_discharge_pressure_setpoint [setpoint]; 58 pump_station_suction_pressure_target [setpoint]; 59 line_pack_target [setpoint]; 60 pipeline_flow_setpoint [setpoint]; 61 terminal_tank_level_target [setpoint]; 62 heater_outlet_temperature_setpoint [setpoint]; 63 valve_position_target [setpoint]; 64 cathodic_protection_voltage [setpoint]; 65 sag_mill_load_setpoint [setpoint]; 66 mill_speed_target [setpoint]; 67 crusher_gap_setpoint [setpoint]; 68 cyclone_feed_pressure_target [setpoint]; 69 thickener_underflow_density_target [setpoint]; 70 conveyor_speed_setpoint [setpoint]; 71 dewatering_pump_level_target [setpoint]; 72 stockpile_level_target [setpoint]; 73 supply_temperature_setpoint [setpoint]; 74 return_temperature_target [setpoint]; 75 differential_pressure_setpoint [setpoint]; 76 thermal_storage_level_target [setpoint]; 77 outdoor_reset_setpoint [setpoint]; 78 cooling_network_supply_temperature [setpoint]; 79 cooling_storage_level_target [setpoint]; 80 turbine_speed_droop_setpoint [setpoint]; 81 unit_load_setpoint [setpoint]; 82 boiler_steam_pressure_setpoint [setpoint]; 83 feedwater_level_target [setpoint]; 84 excitation_voltage_setpoint [setpoint]; 85 hydro_gate_position_target [setpoint]; 86 combustion_air_ratio_setpoint [setpoint]; 87 cooling_water_flow_setpoint [setpoint]; 88 inlet_guide_vane_position [setpoint]; 89 nuclear_rod_position_target [setpoint]; 90 inverter_volt_var_setpoint [setpoint]; 91 inverter_volt_watt_setpoint [setpoint]; 92 plant_reactive_power_target [setpoint]; 93 rotor_speed_setpoint [setpoint]; 94 inverter_frequency_droop_setpoint [setpoint]; 95 string_mppt_voltage_setpoint [setpoint]; 96 reactor_temperature_setpoint [setpoint]; 97 agitator_speed_setpoint [setpoint]; 98 fermenter_dissolved_oxygen_target [setpoint]; 99 ph_setpoint [setpoint]; 100 pasteurizer_holding_temperature_setpoint [setpoint]; 101 freezer_tunnel_temperature_setpoint [setpoint]; 102 cleanroom_pressure_cascade_setpoint [setpoint]; 103 lyophilizer_shelf_temperature_setpoint [setpoint]; 104 chromatography_flow_setpoint [setpoint]; 105 oven_zone_temperature_setpoint [setpoint]; 106 voltage_regulator_tap [setpoint]; 107 transformer_tap [setpoint]; 108 feeder_voltage_target [setpoint]; 109 frequency_droop_setpoint [setpoint]; 110 chamber_temperature [setpoint]; 111 chamber_pressure [setpoint]; 112 valve_position_water [setpoint]; 113 reservoir_level_target [setpoint]; 114 line_pressure_target [setpoint]; 115 flow_target_water [setpoint]; 116 zone_temperature_target [setpoint]; 117 zone_airflow [capacity]; 118 ahu_fan_speed [capacity]; 119 damper_position [capacity]; 120 economizer_position [capacity]; 121 boiler_setpoint [setpoint]; 122 humidity_target [setpoint]; 123 thermal_storage_dispatch [capacity]; 124 plc_cycle_authority [admission]; 125 machine_cell_admission [admission]; 126 pump_flow [capacity]; 127 compressor_speed [capacity]; 128 heater_power [power]; 129 conveyor_rate [capacity]; 130 feed_rate [capacity]; 131 purge_vent_action [admission]; 132 energy_load_shed [admission]; 133 flex_load_admission [admission]; 134 demand_response [admission]; 135 electricity_price_gate [admission]; 136 carbon_intensity_gate [admission]; 137 grid_frequency_response [admission]; 138 facility_islanding [admission]; 139 controller_mode [capacity]; 140 alarm_limits [capacity]; 141 safety_interlock_trip [capacity]; 142 opc_ua_writes [capacity]; 143 run_to_run_control [capacity]; 144 idle_sleep_mode [capacity]; 145 ward_night_setback_mode [admission]; 146 medical_gas_plant_demand_limit [power]; 147 emergency_power_load_shed [admission]; 148 irrigation_pump_speed [capacity]; 149 fertigation_dose [power]; 150 barn_ventilation_rate [capacity]; 151 drip_zone_dispatch [admission]; 152 compressor_unit_staging [capacity]; 153 vfd_pump_speed [capacity]; 154 leak_detection_shutdown [admission]; 155 batch_interface_dispatch [admission]; 156 drag_reducing_agent_dose [power]; 157 pressure_protection_priority [admission]; 158 flotation_aeration_rate [power]; 159 reagent_dose [power]; 160 ventilation_on_demand_airflow [capacity]; 161 slurry_pump_speed [capacity]; 162 tailings_discharge_shutdown [admission]; 163 ore_blend_dispatch [admission]; 164 network_pump_speed [capacity]; 165 heat_pump_staging [capacity]; 166 chp_dispatch [admission]; 167 peak_boiler_heater_output [power]; 168 substation_flow_limit [capacity]; 169 peak_demand_shed [admission]; 170 agc_participation_limit [capacity]; 171 reserve_dispatch_priority [admission]; 172 turbine_ramp_rate_limit [capacity]; 173 emissions_shutdown [admission]; 174 active_power_curtailment [power]; 175 wind_turbine_yaw_offset [capacity]; 176 pitch_angle_limit [capacity]; 177 ramp_rate_limit [capacity]; 178 tracker_stow_mode [admission]; 179 noise_mode_schedule [admission]; 180 ice_detection_shutdown [admission]; 181 cip_cycle_dispatch [admission]; 182 steam_sterilizer_cycle_priority [admission]; 183 refrigerant_compressor_authority [admission]; 184 batch_hold_quarantine [admission]; 185 capacitor_bank_switch [capacity]; 186 inverter_real_power [power]; 187 inverter_reactive_power [power]; 188 feeder_load_transfer [capacity]; 189 distribution_storage_dispatch [admission]; 190 demand_response_dispatch [admission]; 191 grid_protection_mode [admission]; 192 grid_restoration_sequence [admission]; 193 tool_job_dispatch [admission]; 194 wafer_route [capacity]; 195 chamber_recipe_selection [admission]; 196 gas_flow [capacity]; 197 rf_power [power]; 198 vacuum_pump_speed [capacity]; 199 robot_transfer_rate [capacity]; 200 lot_priority [admission]; 201 tool_quarantine [admission]; 202 pump_speed_water [capacity]; 203 aeration_rate [power]; 204 chemical_dose_rate [power]; 205 filtration_backwash [admission]; 206 lift_station_dispatch [admission]; 207 leak_isolation [admission]; 208 water_demand_shed [admission]; 209 water_emergency_shutdown [admission]; 210 heat_pump_mode [admission]; 211 occupancy_ventilation [admission]; 212 building_demand_limit [power]; 213 hvac_emergency_mode [admission].
 
-#### 37.3.7 Distributed Cluster Managers (15; plant: compute_pool, batch)
-task_admission [admission], task_priority [admission], resource_reservation [capacity], cluster_quota [admission], task_preemption [admission], binpack_pressure [capacity], spread_pressure [capacity], gang_schedule [capacity], worker_allocation [capacity], maintenance_evacuation [capacity], oversubscription [capacity], resource_reclaim [capacity], queue_fairness [admission], deadline_pressure [admission], scheduler_retry [admission]
+### 37.7 Organism 4: Distribution / Specialized: 217 own muscles on the spine of 267 = 484 in its organism
 
-#### 37.3.8 Quantum Computing Control Simulation (16; plant: compute_pool, qpu)
-qubit_mapping [capacity], circuit_admission [admission], shot_allocation [capacity], circuit_scheduling [admission], gate_scheduling [capacity], pulse_amplitude [capacity], pulse_duration [setpoint], pulse_phase [capacity], pulse_frequency [power], coupling_control [capacity], reset_scheduling [capacity], measurement_scheduling [capacity], dynamical_decoupling [capacity], noise_aware_routing [capacity], error_mitigation_budget [admission], quantum_queue_priority [admission]
+The spine above, and its 217 own muscles (every muscle whose realms include it and that is not the spine's), heaviest hitter first:
 
-#### 37.3.9 Cross-Cluster, Multi-Region & Edge (18; plant: compute_pool, node)
-multi_cluster_dispatch [capacity], region_dispatch [capacity], zone_dispatch [capacity], edge_dispatch [capacity], cloud_capacity_class [capacity], workload_migrate_region [capacity], data_residency_gate [admission], latency_region_gate [admission], cost_region_gate [admission], carbon_region_gate [admission], global_failover [capacity], federation_quota [admission], cross_cluster_replication [capacity], edge_offload [capacity], global_admission [admission], edge_site_node_pool [capacity], edge_inference_gpu_clocks [power], edge_sync_interval [setpoint]
+1 io_capacity [capacity]; 2 vacuum_compaction_rate [capacity]; 3 read_route [capacity]; 4 db_failover [capacity]; 5 db_cache [capacity]; 6 payment_failover [capacity]; 7 db_pool_resize [capacity]; 8 shard_placement [capacity]; 9 db_replicas [capacity]; 10 db_memory [capacity]; 11 checkpoint_rate [capacity]; 12 settlement_batch [capacity]; 13 order_reservation [capacity]; 14 authorization_route [capacity]; 15 processor_route_weight [setpoint]; 16 buffer_pool [capacity]; 17 background_writer [capacity]; 18 synchronous_replication [capacity]; 19 parallel_workers [capacity]; 20 idempotency_window [setpoint]; 21 refund_queue_rate [capacity]; 22 ehr_application_replicas [capacity]; 23 backtest_grid_nodes [capacity]; 24 pacs_archive_tier_target [setpoint]; 25 broker_cluster_nodes [capacity]; 26 reconstruction_gpu_workers [capacity]; 27 service_failover [capacity]; 28 background_workers [capacity]; 29 runtime_memory [capacity]; 30 thread_pool [capacity]; 31 fetch_batch_size [capacity]; 32 go_runtime [capacity]; 33 cache_size [capacity]; 34 event_loop_workers [capacity]; 35 index_workers [capacity]; 36 cache_failover [capacity]; 37 canary_weight [setpoint]; 38 dns_traffic_weight [setpoint]; 39 cache_sharding [capacity]; 40 embedding_workers [capacity]; 41 ran_scheduler_weight [setpoint]; 42 cache_replicas [capacity]; 43 rebalance_rate [capacity]; 44 segment_merge_rate [capacity]; 45 load_balancing_policy [capacity]; 46 broker_failover [capacity]; 47 cache_writeback_rate [capacity]; 48 jvm_heap [capacity]; 49 dead_letter_divert [capacity]; 50 process_count [capacity]; 51 keepalive_connection_reuse [capacity]; 52 cache_ttl [setpoint]; 53 application_cache_size [capacity]; 54 waf_inspection_workers [capacity]; 55 vector_batch_size [capacity]; 56 memory_size_threads [capacity]; 57 traffic_mirror [capacity]; 58 shard_count [capacity]; 59 shard_replication [capacity]; 60 cache_prefetch [capacity]; 61 session_affinity [capacity]; 62 order_gateway_sessions [capacity]; 63 traffic_divert [capacity]; 64 replication_factor [capacity]; 65 partition_count [capacity]; 66 query_route [capacity]; 67 producer_batch_size [capacity]; 68 shard_rebalance [capacity]; 69 ran_ue_handover [capacity]; 70 ran_antenna_tilt [capacity]; 71 message_retention [capacity]; 72 vector_search_k [capacity]; 73 pre_trade_risk_check_workers [capacity]; 74 matching_engine_threads [capacity]; 75 ran_carrier_enable [capacity]; 76 ran_cell_sleep [capacity]; 77 cache_memory_limit [capacity]; 78 index_refresh_rate [capacity]; 79 request_hedging [capacity]; 80 worker_count [capacity]; 81 ran_prb_allocation [capacity]; 82 partition_placement [capacity]; 83 runtime_restart [capacity]; 84 cache_compression [capacity]; 85 connection_pool_runtime [capacity]; 86 cache_warmup [capacity]; 87 cache_flush_rate [capacity]; 88 ran_du_cu_placement [capacity]; 89 prefetch [capacity]; 90 ran_cell_traffic_steering [capacity]; 91 memory_disk_alarm [capacity]; 92 mqtt_broker_max_connections [capacity]; 93 origin_shield_concurrency [capacity]; 94 edge_cache_size [capacity]; 95 dns_resolver_cache_size [capacity]; 96 market_data_fanout_threads [capacity]; 97 ids_capture_threads [capacity]; 98 connection_pool [capacity]; 99 mail_queue_concurrency [capacity]; 100 route_replan [capacity]; 101 compensation_action [capacity]; 102 shipment_batch [capacity]; 103 surveillance_alert_queue_workers [capacity]; 104 stage_parallelism [capacity]; 105 executor_size [capacity]; 106 shuffle_bandwidth [capacity]; 107 siem_ingest_pipeline_workers [capacity]; 108 cache_fraction [setpoint]; 109 shuffle_partitions [capacity]; 110 dynamic_allocation_max [capacity]; 111 speculation_policy [capacity]; 112 batch_interval [setpoint]; 113 warehouse_queue [capacity]; 114 dynamic_allocation_min [capacity]; 115 query_slots [capacity]; 116 post_trade_settlement_workers [capacity]; 117 data_locality_wait [capacity]; 118 workflow_worker_rate [capacity]; 119 inventory_allocation [capacity]; 120 fulfillment_route [capacity]; 121 carrier_selection [capacity]; 122 task_queue_rate [capacity]; 123 sla_escalation [capacity]; 124 rail_mounted_gantry_dispatch [capacity]; 125 quay_crane_allocation [capacity]; 126 stacking_height_target [setpoint]; 127 horizontal_transport_fleet_size [capacity]; 128 yard_crane_fleet_size [capacity]; 129 shore_power_connection_capacity [capacity]; 130 cdn_cache_ttl [setpoint]; 131 prefetch_aggressiveness [setpoint]; 132 market_data_conflation_interval [setpoint]; 133 fix_session_heartbeat_interval [setpoint]; 134 tick_store_write_batch [setpoint]; 135 colocation_rack_cooling_setpoint [setpoint]; 136 ids_ring_buffer_size [setpoint]; 137 mqtt_max_inflight_messages [setpoint]; 138 mqtt_session_expiry [setpoint]; 139 dns_negative_cache_ttl [setpoint]; 140 mail_retry_interval [setpoint]; 141 circuit_breaker [admission]; 142 retry_budget [admission]; 143 service_timeout [admission]; 144 service_concurrency [admission]; 145 outlier_ejection [admission]; 146 health_threshold [admission]; 147 fault_injection_gate [admission]; 148 query_concurrency [admission]; 149 replication_lag_gate [admission]; 150 db_write_throttle [admission]; 151 transaction_concurrency [admission]; 152 lock_timeout [admission]; 153 producer_quota [admission]; 154 consumer_quota [admission]; 155 broker_io_quota [admission]; 156 queue_depth_limit [admission]; 157 consumer_concurrency [admission]; 158 retry_backoff [admission]; 159 stream_priority [admission]; 160 cache_eviction_policy [admission]; 161 cache_admission [admission]; 162 hot_key_isolation [admission]; 163 cache_connection_limit [admission]; 164 search_concurrency [admission]; 165 search_timeout [admission]; 166 index_memory_budget [admission]; 167 hot_shard_isolation [admission]; 168 search_admission [admission]; 169 etl_concurrency [admission]; 170 spill_threshold [admission]; 171 stream_backpressure [admission]; 172 analytics_admission [admission]; 173 gc_budget [admission]; 174 async_concurrency [admission]; 175 request_timeout [admission]; 176 runtime_cpu_budget [admission]; 177 runtime_io_budget [admission]; 178 payment_admission [admission]; 179 payment_concurrency [admission]; 180 payment_retry [admission]; 181 payment_timeout [admission]; 182 fraud_review_gate [admission]; 183 transaction_queue_limit [admission]; 184 inventory_hold [admission]; 185 checkout_load_shed [admission]; 186 workflow_admission [admission]; 187 workflow_retry [admission]; 188 workflow_backoff [admission]; 189 workflow_timeout [admission]; 190 dispatch_priority [admission]; 191 circuit_breakers [admission]; 192 dicom_router_concurrency [admission]; 193 hl7_interface_queue_limit [admission]; 194 fhir_api_rate_limit [admission]; 195 modality_worklist_timeout [admission]; 196 patient_monitoring_gateway_capacity [admission]; 197 lab_analyzer_batch_window [admission]; 198 telehealth_session_admission [admission]; 199 clinical_backup_window [admission]; 200 imaging_prefetch_priority [admission]; 201 berth_window_admission [admission]; 202 truck_gate_rate_limit [admission]; 203 reefer_plug_power_budget [power]; 204 container_dwell_priority [admission]; 205 vessel_arrival_pacing [admission]; 206 equipment_charging_window [admission]; 207 ran_connection_admission [admission]; 208 ran_slice_resource_budget [admission]; 209 ran_tx_power [power]; 210 ran_fronthaul_budget [admission]; 211 tiered_cache_promotion [capacity]; 212 edge_pop_admission [admission]; 213 order_admission_rate_limit [admission]; 214 kernel_bypass_poll_cores [power]; 215 end_of_day_risk_batch_power [power]; 216 ids_rule_group_admission [admission]; 217 endpoint_scan_scheduling [admission].
 
-#### 37.3.10 Linux Kernel & OS Control (20; plant: compute_pool, cpu_host)
-cgroup_cpu_weight [capacity], cgroup_cpu_quota [capacity], cgroup_memory_high [capacity], cfs_scheduler_latency [setpoint], cpufreq_dvfs_governor [power], transparent_hugepages [setpoint], io_scheduler_depth [capacity], numa_auto_balancing [setpoint], dirty_ratio_writeback [setpoint], vm_swappiness [setpoint], tcp_buffer_autotune [capacity], block_nr_requests [capacity], ksm_memory_dedup [capacity], net_rx_coalesce [capacity], cpu_cstate_governor [power], zswap_pool_fraction [setpoint], page_cache_reclaim [setpoint], irqbalance_affinity [capacity], net_qdisc_codel_target [setpoint], hugepage_pool_reserve [capacity]
-
-#### 37.3.11 Serverless & Functions (FaaS) (9; plant: compute_pool, server)
-fn_concurrency_limit [capacity], fn_provisioned_concurrency [capacity], fn_scale_to_zero_idle [admission], fn_memory_size [capacity], fn_prewarm_pool [capacity], fn_reserved_concurrency [capacity], fn_burst_admission [admission], fn_snapstart_restore [capacity], fn_timeout_budget [setpoint]
-
-#### 37.3.12 Virtualization & Hypervisor (9; plant: compute_pool, cpu_host)
-vcpu_allocation [capacity], memory_ballooning [capacity], vm_overcommit_density [capacity], live_migration_pacing [admission], numa_vcpu_pinning [setpoint], sriov_vf_allocation [capacity], vgpu_partition [capacity], vm_memory_dedup_ksm [capacity], hypervisor_cpu_pinning [capacity]
-
-#### 37.3.13 Gut: Data-plane Intake & Waste (8; plant: process_loop, process)
-ingress_intake_pacing [capacity], dead_letter_retry_cap [setpoint], gc_compaction_pacing [capacity], ttl_eviction_waste [setpoint], backpressure_threshold [admission], queue_drain_rate [capacity], retry_budget_window [setpoint], compaction_debt_drain [capacity]
-
-#### 37.3.14 Skin: Perimeter & Admission (5; plant: compute_pool, server)
-rate_limit_token_bucket [admission], connection_admission [admission], waf_inspection_sampling [capacity], tls_session_cache [capacity], ddos_shield_admission [admission]
-
-#### 37.3.15 Media Streaming & CDN (14; plant: process_loop, process)
-abr_bitrate_ladder_cap [setpoint], player_buffer_target [setpoint], transcoder_worker_pool [capacity], live_transcode_gpu_clocks [power], vod_transcode_batch_power [power], packager_workers [capacity], origin_shield_cache_size [capacity], edge_cache_ttl [setpoint], segment_duration_target [setpoint], cdn_request_coalescing [admission], drm_license_server_pool [capacity], thumbnail_sprite_batch [capacity], media_ingest_admission [admission], encoder_lookahead_frames [setpoint]
-
-#### 37.3.16 Game Servers & Real-Time Interactive (12; plant: compute_pool, server)
-agones_fleet_buffer_size [capacity], agones_fleet_min_replicas [capacity], agones_fleet_max_replicas [capacity], game_server_tick_rate [setpoint], players_per_server_cap [admission], matchmaking_admission_rate [admission], matchmaking_wait_window [setpoint], relay_server_pool [capacity], voice_chat_mixer_pool [capacity], game_node_pool_autoscaler [capacity], replay_render_batch [capacity], cloud_gaming_gpu_clocks [power]
-
-#### 37.3.17 Blockchain & Ledger Nodes (10; plant: compute_pool, storage)
-node_db_cache_size [capacity], mempool_max_size [setpoint], max_peer_connections [capacity], script_validation_threads [capacity], block_relay_admission [admission], rpc_work_queue_depth [admission], utxo_cache_flush_interval [setpoint], indexer_batch_workers [capacity], archive_node_storage_tier [capacity], validator_host_power_profile [power]
-
-#### 37.3.18 CI/CD & Build Farms (10; plant: compute_pool, batch)
-runner_scale_set_min_runners [capacity], runner_scale_set_max_runners [capacity], build_concurrency_limit [admission], build_cache_size [capacity], test_shard_parallelism [capacity], job_queue_admission [admission], artifact_retention_ttl [setpoint], build_node_cpu_frequency [power], remote_execution_workers [capacity], warm_runner_pool [capacity]
-
-#### 37.3.19 DPU SmartNIC & Programmable IO (12; plant: compute_pool, fabric)
-dpu_pf_tx_rate [capacity], dpu_vf_tx_rate [capacity], dpu_sf_tx_rate [capacity], dpu_bandwidth_share [capacity], dpu_qos_group [capacity], sriov_vf_count [capacity], smartnic_flow_steering [capacity], smartnic_offload_enable [capacity], dpu_cpu_budget [admission], dpu_memory_budget [admission], dpu_service_placement [capacity], dpu_failover [capacity]
-
-#### 37.3.20 Kubernetes Dynamic Device Allocation (8; plant: compute_pool, gpu)
-dra_device_class_selection [capacity], dra_claim_capacity [capacity], dra_claim_sharing [capacity], dra_device_taint [capacity], dra_device_eviction [admission], dra_binding_readiness [capacity], dra_binding_failure_response [capacity], dra_device_configuration [setpoint]
-
-### 37.4 Organism 2: Physics / Robotics / Autonomous: 137 own muscles on the spine of 267 = 404 in its organism
-
-The spine above, and these families of its own.
-
-#### 37.4.1 Robotics Motion Control (26; plant: motion_axis, robot_joint)
-joint_position [capacity], joint_velocity [capacity], joint_acceleration [capacity], joint_effort [power], cartesian_velocity [capacity], trajectory_speed [capacity], trajectory_acceleration [capacity], jerk_limit [capacity], collision_margin [capacity], force_limit [power], gripper_force [power], locomotion_speed [capacity], steering_angle [capacity], braking_force [power], balance_correction [capacity], trajectory_tolerances [capacity], velocity_acceleration_scaling [capacity], controller_update_rate [capacity], ros2_executor_threads [capacity], ros2_qos_history_depth [setpoint], ros2_control_loop_rate [setpoint], humanoid_balance_margin [capacity], humanoid_gait_speed [capacity], humanoid_joint_torque_limit [power], humanoid_step_height [capacity], manipulator_payload_speed_scaling [capacity]
-
-#### 37.4.2 Robotics Fleet & Warehouse Automation (17; plant: compute_pool, robot_fleet)
-robot_dispatch [capacity], task_assignment [capacity], traffic_reservation [capacity], robot_route [capacity], charging_dispatch [capacity], battery_reserve [capacity], elevator_request [capacity], door_request [capacity], conveyor_speed [capacity], agv_speed [capacity], warehouse_zone_admission [admission], robot_quarantine [admission], fleet_failover [capacity], human_safe_stop [capacity], fleet_concurrency [admission], amr_fleet_charge_threshold [setpoint], amr_fleet_active_robots [capacity]
-
-#### 37.4.3 Aviation & Autonomous Flight (28; plant: motion_axis, flight_axis)
-throttle_envelope [power], attitude_target [capacity], attitude_rate_target [capacity], velocity_target [capacity], altitude_target [capacity], waypoint_authority [capacity], flight_hold [admission], return_to_home [admission], land_action [admission], mission_admission [admission], geofence_response [admission], failsafe_selection [admission], battery_reserve_threshold [admission], actuator_saturation_envelope [capacity], flight_mode_transition [admission], flight_termination_safe_state [admission], attitude_rate_gains [capacity], horizontal_speed_limit [power], vertical_speed_limits [power], acceleration_jerk_limits [power], px4_mpc_xy_vel_max [capacity], px4_mpc_z_vel_max_up [capacity], px4_mpc_acc_hor [capacity], px4_mc_rollrate_max [capacity], ardupilot_wpnav_speed [capacity], ardupilot_atc_accel_r_max [power], drone_battery_failsafe_reserve [setpoint], swarm_formation_spacing [capacity]
-
-#### 37.4.4 Spacecraft & Flight Software (14; plant: motion_axis, reaction_wheel)
-space_command_admission [admission], flight_task_schedule [admission], space_mode_transition [admission], payload_duty_cycle [power], communication_allocation [capacity], space_power_budget [power], space_thermal_command [power], attitude_command_envelope [capacity], reaction_wheel_allocation [capacity], rcs_authority [power], safe_mode_transition [admission], watchdog_recovery [admission], instrument_activation [capacity], fault_isolation [admission]
-
-#### 37.4.5 Rail Traction & Train Control (14; plant: motion_axis, rail_traction)
-traction_effort_limit [power], regenerative_braking_share [power], coasting_speed_target [capacity], dwell_time_schedule [admission], hvac_duty_cycle [power], train_auxiliary_power_budget [power], platform_approach_speed [capacity], acceleration_rate_setpoint [capacity], wheel_slip_protection_mode [admission], traction_motor_thermal_derate [power], catenary_voltage_limit [power], timetable_recovery_margin [admission], headway_target [capacity], door_release_hold [admission]
-
-#### 37.4.6 Marine Propulsion & Vessel Automation (12; plant: motion_axis, marine_propulsion)
-shaft_speed_target [capacity], propeller_pitch_limit [power], shaft_power_limit [power], bow_thruster_duty [power], ballast_pump_mode [admission], engine_load_sharing_setpoint [capacity], slow_steaming_speed_target [capacity], auxiliary_engine_staging [capacity], shore_power_mode [admission], hotel_load_budget [power], trim_target [capacity], rudder_rate_limit [power]
-
-#### 37.4.7 Elevators & Vertical Transport (12; plant: motion_axis, elevator_hoist)
-hoist_speed_target [capacity], acceleration_limit [capacity], regen_drive_mode [power], standby_power_mode [admission], destination_dispatch_schedule [admission], car_parking_mode [admission], door_dwell_hold [admission], escalator_speed_target [capacity], group_capacity_mode [admission], motor_thermal_derate [power], brake_test_schedule [admission], fire_recall_mode [admission]
-
-#### 37.4.8 Automotive EV & Mobile Powertrain (14; plant: motion_axis, ev_traction)
-state_of_charge_limits [power], smart_charging_schedule [admission], traction_torque_limit [power], regen_braking_level [power], battery_charge_limit [power], battery_discharge_limit [power], battery_thermal_target [power], motor_thermal_limit [power], vehicle_speed_envelope [capacity], energy_recovery_target [power], auxiliary_power_budget [power], fast_charge_current [power], fast_charge_voltage [power], vehicle_safe_state [admission]
-
-### 37.5 Organism 3: Energy / Facility / Industrial: 213 own muscles on the spine of 267 = 480 in its organism
-
-The spine above, and these families of its own.
-
-#### 37.5.1 Industrial PLC & Process Automation (18; plant: process_loop, process)
-plc_cycle_authority [admission], machine_cell_admission [admission], valve_position [setpoint], pump_flow [capacity], compressor_speed [capacity], heater_power [power], furnace_setpoint [setpoint], pressure_setpoint [setpoint], temperature_setpoint [setpoint], mass_flow_setpoint [setpoint], tank_level_target [setpoint], conveyor_rate [capacity], feed_rate [capacity], purge_vent_action [admission], controller_mode [capacity], alarm_limits [capacity], safety_interlock_trip [capacity], opc_ua_writes [capacity]
-
-#### 37.5.2 Energy Storage & Microgrid (19; plant: energy_storage, microgrid)
-battery_charge_power [power], battery_discharge_power [power], battery_soc_reserve [setpoint], grid_import_limit [power], grid_export_limit [power], pv_curtailment [power], ev_charge_power [power], heat_pump_power [power], electrolyzer_power [power], microgrid_demand_limit [power], peak_shaving [capacity], time_of_use_schedule [setpoint], energy_load_shed [admission], flex_load_admission [admission], storage_dispatch [capacity], microgrid_emergency_reserve [setpoint], volt_var [capacity], volt_watt [capacity], constant_power_factor_reactive_power [power]
-
-#### 37.5.3 Facility & Grid Optimization (15; plant: energy_storage, facility)
-facility_power_budget [power], utility_demand_limit [power], demand_response [admission], electricity_price_gate [admission], carbon_intensity_gate [admission], renewable_dispatch [capacity], generator_start_stop [capacity], site_battery_dispatch [capacity], pue_target [setpoint], cooling_power_budget [power], it_power_budget [power], rack_power_allocation [power], facility_peak_guard [capacity], grid_frequency_response [admission], facility_islanding [admission]
-
-#### 37.5.4 Healthcare Critical Environments (13; plant: thermal_zone, hospital)
-operating_room_air_change_setpoint [setpoint], isolation_room_pressure_target [setpoint], patient_room_temperature_setpoint [setpoint], surgical_suite_humidity_target [setpoint], ahu_supply_air_temperature [setpoint], pharmacy_cold_room_setpoint [setpoint], sterile_storage_humidity_setpoint [setpoint], imaging_suite_cooling_capacity [capacity], chiller_plant_staging [capacity], exhaust_fan_capacity [capacity], ward_night_setback_mode [admission], medical_gas_plant_demand_limit [power], emergency_power_load_shed [admission]
-
-#### 37.5.5 Agriculture & Irrigation (14; plant: process_loop, irrigation)
-irrigation_pump_speed [capacity], mainline_pressure_setpoint [setpoint], soil_moisture_target [setpoint], pivot_speed_setpoint [setpoint], fertigation_dose [power], greenhouse_temperature_setpoint [setpoint], greenhouse_co2_target [setpoint], vent_position_setpoint [setpoint], grain_dryer_temperature_setpoint [setpoint], cold_storage_temperature_setpoint [setpoint], barn_ventilation_rate [capacity], milking_vacuum_level_setpoint [setpoint], well_drawdown_level_target [setpoint], drip_zone_dispatch [admission]
-
-#### 37.5.6 Oil & Gas Pipelines (14; plant: process_loop, pipeline)
-compressor_discharge_pressure_setpoint [setpoint], pump_station_suction_pressure_target [setpoint], line_pack_target [setpoint], pipeline_flow_setpoint [setpoint], compressor_unit_staging [capacity], vfd_pump_speed [capacity], terminal_tank_level_target [setpoint], leak_detection_shutdown [admission], batch_interface_dispatch [admission], heater_outlet_temperature_setpoint [setpoint], drag_reducing_agent_dose [power], valve_position_target [setpoint], cathodic_protection_voltage [setpoint], pressure_protection_priority [admission]
-
-#### 37.5.7 Mining & Mineral Processing (14; plant: process_loop, mill)
-sag_mill_load_setpoint [setpoint], mill_speed_target [setpoint], crusher_gap_setpoint [setpoint], flotation_aeration_rate [power], cyclone_feed_pressure_target [setpoint], thickener_underflow_density_target [setpoint], reagent_dose [power], conveyor_speed_setpoint [setpoint], dewatering_pump_level_target [setpoint], ventilation_on_demand_airflow [capacity], stockpile_level_target [setpoint], slurry_pump_speed [capacity], tailings_discharge_shutdown [admission], ore_blend_dispatch [admission]
-
-#### 37.5.8 District Heating & Cooling (13; plant: process_loop, district_heat)
-supply_temperature_setpoint [setpoint], return_temperature_target [setpoint], differential_pressure_setpoint [setpoint], network_pump_speed [capacity], heat_pump_staging [capacity], chp_dispatch [admission], thermal_storage_level_target [setpoint], peak_boiler_heater_output [power], substation_flow_limit [capacity], peak_demand_shed [admission], outdoor_reset_setpoint [setpoint], cooling_network_supply_temperature [setpoint], cooling_storage_level_target [setpoint]
-
-#### 37.5.9 Power Generation & Turbine Control (14; plant: process_loop, turbine)
-turbine_speed_droop_setpoint [setpoint], unit_load_setpoint [setpoint], boiler_steam_pressure_setpoint [setpoint], feedwater_level_target [setpoint], agc_participation_limit [capacity], excitation_voltage_setpoint [setpoint], hydro_gate_position_target [setpoint], combustion_air_ratio_setpoint [setpoint], cooling_water_flow_setpoint [setpoint], inlet_guide_vane_position [setpoint], reserve_dispatch_priority [admission], turbine_ramp_rate_limit [capacity], emissions_shutdown [admission], nuclear_rod_position_target [setpoint]
-
-#### 37.5.10 Renewable Generation & Inverter Control (13; plant: process_loop, inverter)
-inverter_volt_var_setpoint [setpoint], inverter_volt_watt_setpoint [setpoint], active_power_curtailment [power], plant_reactive_power_target [setpoint], wind_turbine_yaw_offset [capacity], pitch_angle_limit [capacity], rotor_speed_setpoint [setpoint], inverter_frequency_droop_setpoint [setpoint], ramp_rate_limit [capacity], tracker_stow_mode [admission], string_mppt_voltage_setpoint [setpoint], noise_mode_schedule [admission], ice_detection_shutdown [admission]
-
-#### 37.5.11 Pharmaceutical & Food Manufacturing (14; plant: process_loop, batch_reactor)
-reactor_temperature_setpoint [setpoint], agitator_speed_setpoint [setpoint], fermenter_dissolved_oxygen_target [setpoint], ph_setpoint [setpoint], pasteurizer_holding_temperature_setpoint [setpoint], freezer_tunnel_temperature_setpoint [setpoint], cip_cycle_dispatch [admission], cleanroom_pressure_cascade_setpoint [setpoint], lyophilizer_shelf_temperature_setpoint [setpoint], chromatography_flow_setpoint [setpoint], steam_sterilizer_cycle_priority [admission], oven_zone_temperature_setpoint [setpoint], refrigerant_compressor_authority [admission], batch_hold_quarantine [admission]
-
-#### 37.5.12 Building & Critical Environment HVAC (15; plant: thermal_zone, building)
-setpoint_reset_trim_and_respond [setpoint], duct_static_pressure_setpoint [setpoint], optimal_start_stop [capacity], zone_temperature_target [setpoint], zone_airflow [capacity], ahu_fan_speed [capacity], damper_position [capacity], economizer_position [capacity], boiler_setpoint [setpoint], heat_pump_mode [admission], humidity_target [setpoint], occupancy_ventilation [admission], building_demand_limit [power], thermal_storage_dispatch [capacity], hvac_emergency_mode [admission]
-
-#### 37.5.13 Grid Transmission & Distribution (12; plant: process_loop, feeder_voltage)
-capacitor_bank_switch [capacity], voltage_regulator_tap [setpoint], transformer_tap [setpoint], inverter_real_power [power], inverter_reactive_power [power], feeder_voltage_target [setpoint], feeder_load_transfer [capacity], distribution_storage_dispatch [admission], demand_response_dispatch [admission], frequency_droop_setpoint [setpoint], grid_protection_mode [admission], grid_restoration_sequence [admission]
-
-#### 37.5.14 Semiconductor Fab & Precision Manufacturing (13; plant: process_loop, chamber)
-run_to_run_control [capacity], idle_sleep_mode [capacity], tool_job_dispatch [admission], wafer_route [capacity], chamber_recipe_selection [admission], chamber_temperature [setpoint], chamber_pressure [setpoint], gas_flow [capacity], rf_power [power], vacuum_pump_speed [capacity], robot_transfer_rate [capacity], lot_priority [admission], tool_quarantine [admission]
-
-#### 37.5.15 Water Wastewater & Pumping (12; plant: process_loop, water)
-pump_speed_water [capacity], valve_position_water [setpoint], reservoir_level_target [setpoint], line_pressure_target [setpoint], flow_target_water [setpoint], aeration_rate [power], chemical_dose_rate [power], filtration_backwash [admission], lift_station_dispatch [admission], leak_isolation [admission], water_demand_shed [admission], water_emergency_shutdown [admission]
-
-### 37.6 Organism 4: Distribution / Specialized: 217 own muscles on the spine of 267 = 484 in its organism
-
-The spine above, and these families of its own.
-
-#### 37.6.1 Service Mesh & API Reliability (16; plant: compute_pool, server)
-circuit_breaker [admission], retry_budget [admission], service_timeout [admission], service_concurrency [admission], connection_pool [capacity], traffic_divert [capacity], traffic_mirror [capacity], canary_weight [setpoint], outlier_ejection [admission], health_threshold [admission], dns_traffic_weight [setpoint], session_affinity [capacity], request_hedging [capacity], fault_injection_gate [admission], service_failover [capacity], load_balancing_policy [capacity]
-
-#### 37.6.2 Database & Transactions (19; plant: compute_pool, database)
-db_replicas [capacity], db_memory [capacity], db_cache [capacity], query_concurrency [admission], read_route [capacity], shard_placement [capacity], db_failover [capacity], replication_lag_gate [admission], db_write_throttle [admission], db_pool_resize [capacity], transaction_concurrency [admission], lock_timeout [admission], checkpoint_rate [capacity], vacuum_compaction_rate [capacity], parallel_workers [capacity], background_writer [capacity], synchronous_replication [capacity], buffer_pool [capacity], io_capacity [capacity]
-
-#### 37.6.3 Messaging & Streaming (22; plant: compute_pool, server)
-partition_count [capacity], partition_placement [capacity], producer_quota [admission], consumer_quota [admission], broker_io_quota [admission], message_retention [capacity], queue_depth_limit [admission], consumer_concurrency [admission], producer_batch_size [capacity], fetch_batch_size [capacity], rebalance_rate [capacity], replication_factor [capacity], retry_backoff [admission], dead_letter_divert [capacity], stream_priority [admission], broker_failover [capacity], prefetch [capacity], memory_disk_alarm [capacity], mqtt_broker_max_connections [capacity], mqtt_max_inflight_messages [setpoint], mqtt_session_expiry [setpoint], broker_cluster_nodes [capacity]
-
-#### 37.6.4 Cache & Memory Services (16; plant: compute_pool, server)
-cache_size [capacity], cache_ttl [setpoint], cache_eviction_policy [admission], cache_replicas [capacity], cache_sharding [capacity], cache_prefetch [capacity], cache_writeback_rate [capacity], cache_admission [admission], hot_key_isolation [admission], cache_connection_limit [admission], cache_memory_limit [capacity], cache_compression [capacity], cache_warmup [capacity], cache_failover [capacity], cache_flush_rate [capacity], memory_size_threads [capacity]
-
-#### 37.6.5 Search, Indexing & Vector DB (16; plant: compute_pool, server)
-index_workers [capacity], index_refresh_rate [capacity], segment_merge_rate [capacity], search_concurrency [admission], search_timeout [admission], shard_count [capacity], shard_replication [capacity], shard_rebalance [capacity], vector_search_k [capacity], vector_batch_size [capacity], embedding_workers [capacity], index_memory_budget [admission], query_route [capacity], hot_shard_isolation [admission], search_admission [admission], circuit_breakers [admission]
-
-#### 37.6.6 Data Analytics & ETL (15; plant: compute_pool, batch)
-executor_size [capacity], dynamic_allocation_min [capacity], dynamic_allocation_max [capacity], shuffle_partitions [capacity], shuffle_bandwidth [capacity], etl_concurrency [admission], stage_parallelism [capacity], query_slots [capacity], spill_threshold [admission], cache_fraction [setpoint], batch_interval [setpoint], stream_backpressure [admission], data_locality_wait [capacity], speculation_policy [capacity], analytics_admission [admission]
-
-#### 37.6.7 Runtime & Application (21; plant: compute_pool, server)
-worker_count [capacity], thread_pool [capacity], jvm_heap [capacity], gc_budget [admission], connection_pool_runtime [capacity], application_cache_size [capacity], runtime_memory [capacity], async_concurrency [admission], event_loop_workers [capacity], process_count [capacity], request_timeout [admission], background_workers [capacity], runtime_cpu_budget [admission], runtime_io_budget [admission], runtime_restart [capacity], go_runtime [capacity], keepalive_connection_reuse [capacity], dns_resolver_cache_size [capacity], dns_negative_cache_ttl [setpoint], mail_queue_concurrency [capacity], mail_retry_interval [setpoint]
-
-#### 37.6.8 Reliability, Security & Recovery (6; plant: compute_pool, network)
-ids_capture_threads [capacity], ids_ring_buffer_size [setpoint], ids_rule_group_admission [admission], waf_inspection_workers [capacity], siem_ingest_pipeline_workers [capacity], endpoint_scan_scheduling [admission]
-
-#### 37.6.9 Commerce & Payment Systems (15; plant: compute_pool, commerce)
-payment_admission [admission], payment_concurrency [admission], payment_retry [admission], payment_timeout [admission], fraud_review_gate [admission], authorization_route [capacity], processor_route_weight [setpoint], transaction_queue_limit [admission], idempotency_window [setpoint], order_reservation [capacity], inventory_hold [admission], checkout_load_shed [admission], refund_queue_rate [capacity], settlement_batch [capacity], payment_failover [capacity]
-
-#### 37.6.10 Workflow, Logistics & Fulfillment (15; plant: compute_pool, workflow)
-workflow_admission [admission], workflow_worker_rate [capacity], task_queue_rate [capacity], workflow_retry [admission], workflow_backoff [admission], workflow_timeout [admission], inventory_allocation [capacity], fulfillment_route [capacity], warehouse_queue [capacity], carrier_selection [capacity], dispatch_priority [admission], shipment_batch [capacity], route_replan [capacity], sla_escalation [capacity], compensation_action [capacity]
-
-#### 37.6.11 Medical Imaging & Clinical Systems (12; plant: compute_pool, clinical)
-pacs_archive_tier_target [setpoint], dicom_router_concurrency [admission], ehr_application_replicas [capacity], hl7_interface_queue_limit [admission], fhir_api_rate_limit [admission], reconstruction_gpu_workers [capacity], modality_worklist_timeout [admission], patient_monitoring_gateway_capacity [admission], lab_analyzer_batch_window [admission], telehealth_session_admission [admission], clinical_backup_window [admission], imaging_prefetch_priority [admission]
-
-#### 37.6.12 Ports & Maritime Logistics (12; plant: compute_pool, port)
-quay_crane_allocation [capacity], yard_crane_fleet_size [capacity], berth_window_admission [admission], truck_gate_rate_limit [admission], horizontal_transport_fleet_size [capacity], reefer_plug_power_budget [power], shore_power_connection_capacity [capacity], rail_mounted_gantry_dispatch [capacity], container_dwell_priority [admission], vessel_arrival_pacing [admission], stacking_height_target [setpoint], equipment_charging_window [admission]
-
-#### 37.6.13 Content Delivery & Edge Cache (6; plant: process_loop, process)
-cdn_cache_ttl [setpoint], edge_cache_size [capacity], origin_shield_concurrency [capacity], prefetch_aggressiveness [setpoint], tiered_cache_promotion [capacity], edge_pop_admission [admission]
-
-#### 37.6.14 Financial Markets & Trading Systems (14; plant: compute_pool, server)
-matching_engine_threads [capacity], order_gateway_sessions [capacity], order_admission_rate_limit [admission], pre_trade_risk_check_workers [capacity], market_data_fanout_threads [capacity], market_data_conflation_interval [setpoint], fix_session_heartbeat_interval [setpoint], kernel_bypass_poll_cores [power], tick_store_write_batch [setpoint], post_trade_settlement_workers [capacity], end_of_day_risk_batch_power [power], colocation_rack_cooling_setpoint [setpoint], backtest_grid_nodes [capacity], surveillance_alert_queue_workers [capacity]
-
-#### 37.6.15 Telecom RAN & Edge Radio (12; plant: compute_pool, ran)
-ran_connection_admission [admission], ran_ue_handover [capacity], ran_cell_traffic_steering [capacity], ran_slice_resource_budget [admission], ran_prb_allocation [capacity], ran_scheduler_weight [setpoint], ran_tx_power [power], ran_antenna_tilt [capacity], ran_carrier_enable [capacity], ran_cell_sleep [capacity], ran_du_cu_placement [capacity], ran_fronthaul_budget [admission]
-
-### 37.7 Organism 5: the four stacked, every duplicate kept, 1,908 muscles
+### 37.8 Organism 5: the four stacked, every duplicate kept, 1,908 muscles
 
 The four realms' organisms above, run on one clock as one body (`stack`; the older name `stack_1226` is read as an alias): every muscle listed under organisms 1 to 4, the spine counted once in each, 1,908 in all.
 
-### 37.8 Organism 6: the whole tower, all 1,107 muscles once
+### 37.9 Organism 6: the whole tower, all 1,107 muscles once
 
 Every muscle of the catalog once (`tower`; the older name `organism_656` is read as an alias): the spine and every realm's own families, 1,107 in all.
 
-### 37.9 Organism 7: the spine, 267 muscles
+### 37.10 Organism 7: the spine, 267 muscles
 
 The spine listed first above, run on its own (`spine`): the same muscles, the same native controllers, nothing of any one realm on top of them.
 
@@ -5934,9 +5791,9 @@ budget (`hardware/site_exchange.py`) run as models today. Batteries are designed
 The founder's order of 9 October 2026 fixes the order of wiring. Every knob is wired out first and in last, and the wire
 in is connected only by a measurement the brain makes on the knob itself. The steps, for any stack:
 
-![Flowchart: the verdict's trial on one step, from the reference to the reading. While the service is calm and nothing waits, and P after the last trial began (600 s on Kubernetes, 10 decisions at the main engine's 60 s; 8 decisions on a card), the reference is measured fresh at the deepest step already allowed (on a card, at native): n requests (200 response times on Kubernetes; 30 of a card's own service time). One step deeper, under the same traffic, n more are the trial. A phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes, 20 decisions at the main engine's 60 s; 30 decisions on a card) is abandoned: the knob goes back, the step neither allowed nor refused. The reading is the 95% interval of the change in log cost. Continued in the next figure.](figures/f_trial.svg)
+![Flowchart: the verdict's trial on one step, from the reference to the reading. While the service is calm and nothing waits, and P after the last trial began (600 s on Kubernetes, 10 decisions at a 60 s beat, the factory's through a cloud, 60 at its 10 s on site; 8 decisions on a card), the reference is measured fresh at the deepest step already allowed (on a card, at native): n requests (200 response times on Kubernetes; 30 of a card's own service time). One step deeper, under the same traffic, n more are the trial. A phase that sees the service leave calm or outlasts its limit (1,200 s on Kubernetes, 20 decisions at a 60 s beat, 120 at 10 s; 30 decisions on a card) is abandoned: the knob goes back, the step neither allowed nor refused. The reading is the 95% interval of the change in log cost. Continued in the next figure.](figures/f_trial.svg)
 
-![Flowchart: the verdict's trial on one step, from the reading to the step allowed or refused. An interval wholly above zero is a LOSS: the step is refused, the knob goes back, and the step is not tried again for R (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s; 900 decisions on a card). An interval wider than the allowance with fewer than 3n trial requests measures on. Otherwise the step is allowed only if the trial's median is within the allowance of the reference and of native and the mean change is within it too; else it is refused, past the allowance. An allowed step moves the deepest allowed step one deeper.](figures/f_trial_b.svg)
+![Flowchart: the verdict's trial on one step, from the reading to the step allowed or refused. An interval wholly above zero is a LOSS: the step is refused, the knob goes back, and the step is not tried again for R (7,200 s on Kubernetes, 120 decisions at a 60 s beat, 120 at 10 s; 900 decisions on a card). An interval wider than the allowance with fewer than 3n trial requests measures on. Otherwise the step is allowed only if the trial's median is within the allowance of the reference and of native and the mean change is within it too; else it is refused, past the allowance. An allowed step moves the deepest allowed step one deeper.](figures/f_trial_b.svg)
 
 1. **Wire out, everything.** Every muscle's readings reach the brain, one wire out per muscle. Nothing is written. This is
    watch mode (section 1.3): where every installation starts, and where any knob returns the moment it stops paying.
@@ -5971,7 +5828,7 @@ controller the verdict already guards the machines (section 1.2). Inside the mod
 directive for every muscle; making the verdict per muscle there is the next engine, Omni v4 (`docs/OMNI_V4_PLAN.md`),
 designed and not built, because every result must be run again on a new engine.
 
-![Timing diagram: a give-back trial from reference to verdict, in decisions. The reference (n requests at the deepest allowed step; on a card, at native), the trial (n more at one step deeper under the same traffic, measuring on up to 3n while the interval is wider than the allowance), the verdict in one decision, and, on a refusal, the quiet period in which the step is not tried again (7,200 s on Kubernetes, 120 decisions at the main engine's 60 s; 900 decisions on a card, 30 min). A phase that outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card), or sees the service leave calm, is abandoned: the knob goes back, the step neither allowed nor refused.](figures/t_trial.svg)
+![Timing diagram: a give-back trial from reference to verdict, in decisions. The reference (n requests at the deepest allowed step; on a card, at native), the trial (n more at one step deeper under the same traffic, measuring on up to 3n while the interval is wider than the allowance), the verdict in one decision, and, on a refusal, the quiet period in which the step is not tried again (7,200 s on Kubernetes, 120 decisions at a 60 s beat, 120 at 10 s; 900 decisions on a card, 30 min). A phase that outlasts its limit (1,200 s on Kubernetes; 30 decisions on a card), or sees the service leave calm, is abandoned: the knob goes back, the step neither allowed nor refused.](figures/t_trial.svg)
 
 
 ## 46. Stack by Stack
@@ -6040,8 +5897,9 @@ wants a cut turns the dial down (`dial save`, a changed tune, its receipts its o
 bought, never ruled.
 In the cloud, as everywhere, the governor's fast checks (the scheduling floor, the pod reflex, and the conveyance every 15
 seconds whichever check falls due) run every 5 seconds, three times as fast as the HPA's own 15-second check, and its full
-decision every 60 seconds, the main engine's beat (omni-v17; omni-v16 decided every 15 seconds, the HPA's own pace, and every
-engine before it every 60 seconds), the beat a dial from 5 to 120 seconds. Through
+decision every 60 seconds, the factory beat through a cloud (omni-v24, which decides every 10 seconds on site; omni-v17 to
+omni-v23 decided every 60 seconds everywhere, omni-v16 every 15 seconds, the HPA's own pace, and every engine before it every 60
+seconds), the beat a dial from 5 to 120 seconds. Through
 v6 a shorter decision period was not a free setting: the give-back trial's phase (`max_trial`, 20 decisions), the breach
 cool-down (`--slo-clear`), cruise (`--cruise-after`) and the trial spacing counted in decisions, so at 5 seconds a trial
 would have lasted 100 seconds, too short for the 200 response times it measures, and no machine would ever have been
@@ -7567,7 +7425,7 @@ A **receipt** here is a result file in this repository made by a paired run: the
 counted runs, the engine identified by its fingerprint (`tools/omni_version.py --commit`), every row reported, losses
 included. A receipt is read in the class of evidence it is: **P** a physical meter, **L** real software (a real
 Kubernetes cluster, a real database), **S** our own models, **V** a property of the code. S is never presented as
-proof of a physical saving. A result belongs to the engine it ran on and is never read across engines. Each test is read from its own newest three-run table, and every row names its engine: omni-v11's where its three runs have landed, omni-v10's where they have not. omni-v23, the engine that stands since 31 October, runs every benchmark again, and its tables replace these as they land (omni-v22 brought the five data stores' wires to the max, each spend gated on the store's own account of a miss, and changed nothing the Kubernetes governor runs; omni-v21 gave the immune system its self-knowledge, knob by knob; omni-v20 fixed the five data stores' wires at their causes; omni-v19 gave the Kubernetes governor a pod muscle of its own for a workload no autoscaler governs, which writes nothing unless a workload is named to it; omni-v18 took Omni direct into the fingerprint and changed nothing the Kubernetes governor runs; omni-v17 changed the Kubernetes governor's default beat, from 15 to 60 s, the heartbeat a dial, and kept its cruise wait at two readings or more at a slow beat; omni-v16 changed only the Kubernetes governor's clocks, each now counted in seconds, identical to omni-v15 at a 60 s decision, and set its full decision every 15 s, omni-v15 only the brain's power-cap request and the fingerprint's scope, omni-v14 only the Kubernetes governor's knob and its commands, omni-v13 added only the Kubernetes governor's hand-back of the CPU limits it gave on a shared host at its top, omni-v12 only the governor's hold on a raise the cluster refused and the swarm's reflex at once, omni-v11 only the governor's hold on a reading with no machine in service, omni-v10 only the CityLearn battery's glide). The earlier engines' receipts are the road, in `docs/history`.
+proof of a physical saving. A result belongs to the engine it ran on and is never read across engines. Each test is read from its own newest three-run table, and every row names its engine: omni-v11's where its three runs have landed, omni-v10's where they have not. omni-v24, the engine that stands since 1 November, runs every benchmark again, and its tables replace these as they land (omni-v22 brought the five data stores' wires to the max, each spend gated on the store's own account of a miss, and changed nothing the Kubernetes governor runs; omni-v21 gave the immune system its self-knowledge, knob by knob; omni-v20 fixed the five data stores' wires at their causes; omni-v19 gave the Kubernetes governor a pod muscle of its own for a workload no autoscaler governs, which writes nothing unless a workload is named to it; omni-v18 took Omni direct into the fingerprint and changed nothing the Kubernetes governor runs; omni-v17 changed the Kubernetes governor's default beat, from 15 to 60 s, the heartbeat a dial, and kept its cruise wait at two readings or more at a slow beat; omni-v16 changed only the Kubernetes governor's clocks, each now counted in seconds, identical to omni-v15 at a 60 s decision, and set its full decision every 15 s, omni-v15 only the brain's power-cap request and the fingerprint's scope, omni-v14 only the Kubernetes governor's knob and its commands, omni-v13 added only the Kubernetes governor's hand-back of the CPU limits it gave on a shared host at its top, omni-v12 only the governor's hold on a raise the cluster refused and the swarm's reflex at once, omni-v11 only the governor's hold on a reading with no machine in service, omni-v10 only the CityLearn battery's glide). The earlier engines' receipts are the road, in `docs/history`.
 How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of every three-run row: `tools/readings.py`.
 
 ### 52.1 What the receipts say, read together
@@ -8049,6 +7907,8 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **STEADY** and **LOSS**, judged by what each gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). **On this sheet the sign is the system's own declared aims, gauge by gauge: a plus is a GAIN; a minus is a LOSS on work, speed, misses or failures, and power given on a resource spent (energy, machines, memory).** The number carries its word. Beside it every change judged across our three runs is written out with which way it went and its word: "p95 cut 65% (GAIN)", "memory ceiling held up 215% (power given)". An operator whose aims differ reads the same numbers the other way.
 
 The result tables (the files in the last column) keep every change with its raw sign: a response time that fell reads "-65%" there, and the Reading column beside it says GAIN.
+
+**The four arms** (the founder's order of 1 November; `results/TWO_BILLS.md`, `tools/two_bills.py`): **A**, the chip native; **B**, the chip with Omni-Compass on native; **C**, the cloud native; **D**, the cloud with Omni-Compass on native, each read by its bill, the work done inside it and the work per dollar. Every row below is one place's native against Omni-Compass on native (B against A on a chip, D against C through a cloud, the software end's own pairs elsewhere), on the engine it names.
 
 The number is the Omni index's rule (`results/OMNI_INDEX.md`): each judged gauge becomes a ratio oriented so that above one is a GAIN; it counts only where judged across our three runs, anything else counts as exactly one; the number is the geometric mean of the ratios, minus one, in percent. For the tests inside the index the number is the index's own resource reading of that test; for a stack with several workloads it is the stack's index category; for the simulators and the organisms the same arithmetic runs over every judged gauge of their tables. Built from the tables by `tools/benefit_sheet.py`, checked by `verify.py`.
 
@@ -8960,7 +8820,7 @@ three runs, which the bottom line carries: Omni-Compass on native against native
 machines +3.1% fewer, serving units +10.2% more; Omni-Compass direct against native, work +7.5%, the 95th percentile +12.1%
 faster, machines +2.5% fewer, serving units +5.2% more; Omni-Compass direct against Omni-Compass on native, work +1.4%, the 95th
 percentile +2.9% faster, machines +0.6% more, serving units +4.6% fewer. No pair reads LOSS on any gauge. The test runs again on
-omni-v23, the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+omni-v24, the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
 these results.
 
 ### 60.4 The organisms with the real cluster inside, and the big organisms
@@ -9208,7 +9068,7 @@ or approved these results.
   the discomfort are native's to the last digit. Two rows read "the runs differ" on the time uncomfortable, though the paired
   change is exactly zero in every run: CityLearn's own value moved by at most 3.6 × 10⁻⁵ between runs, in both arms alike.
   In all, 27 score-rows GAIN, 1 power given and no LOSS. The wire's road since then: omni-v9 reads the coming hour, and omni-v10
-  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v23, the engine that stands, carry it unchanged.
+  glides at 0.0875 an hour (`docs/OMNI_V8.md` to `docs/OMNI_V10.md`); omni-v11 to omni-v24, the engine that stands, carry it unchanged.
 
 ### 60.10 The ten organisms two ways: the twenty scenarios (modelled, class S)
 
@@ -9281,7 +9141,7 @@ happened to work. The numbers of earlier engines are the road, in `docs/history`
 | Drone swarms (omni-v11) | S | energy a mission −7% to −20%, missions a charge +8% to +25%, GAIN; the closest approach spent to about 0.16 m (shown); collisions on a mission draw outside the counted cells, a fault in the wire fixed in omni-v12, its runs under way (section 60.9) | `results/live/V11_SWARM.md` |
 | Buildings with batteries (omni-v11) | S | 27 score-rows GAIN, 1 power given, no LOSS; the batteries of the outage districts native | `results/live/V11_CITYLEARN.md` |
 
-**Running now and next.** Every benchmark runs again on omni-v23, the engine that stands, released by the conductor
+**Running now and next.** Every benchmark runs again on omni-v24, the engine that stands, released by the conductor
 (`scripts/dispatch_grid.py`, `scripts/reruns.txt`: A of every benchmark, then B, then C), the steady and wandering Kubernetes
 tests among them; Azure one run at a time in its region (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day;
 A, B and C); the grid with the real cluster inside on GitHub's free runners. The runs of earlier engines already started
@@ -9301,7 +9161,7 @@ GAIN and LOSS (or power given) both hold in all three of our runs, a trade shown
 its realms label (`results/realms_v5`): a GAIN on work, speed or misses is write, the energy the max took for it power given and
 never a trade; SAME AS NATIVE and AT ITS LIMIT ON NATIVE are watch.
 
-What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v23); it changes what an operator connects.
+What the page says (written 16 October from the tables then standing; each row names its engine). On the real stacks, 10 of 26 knob-cases write, 2 are the operator's choice and 14 watch (the sets of 10 October on omni-v3 and the four v6 tables; each row names its engine and the v3 rows run again on v6). Of the independent simulators' 39 cases, 21 write, 15 are trades (the four SimBench grids that export, where the lower voltage costs line losses; the seven 2023 CityLearn districts, where the bill read power given) and 3 watch (two robots the engine itself left native, one grid where nothing was bought). Of the 1,107 modelled muscles on the v5 realms result, 527 write and 580 watch: 421 of the 580 are at their limit on native (every admission knob, 96 power knobs and 50 capacity and setpoint knobs that native already runs at the top of their range: nothing to push, read and left native) and 159 read the same as native (40 wrote and nothing moved beyond the noise, 119 wrote nothing). Every one of the seven organisms writes under every load, the power given shown beside its gain. Of the 14 organism cells with the real cluster inside, 12 write on the cluster's gauges, one is the operator's choice and one watches. Nothing on the page changes the engine, which stays the engine that stands (omni-v24); it changes what an operator connects.
 
 **The same verdict, live (built 9 October, running since 10 October).** The page judges after the fact; the founder's order is that the
 brain judge in real time, on the knob, before it writes. On the five live stacks that is now in the harnesses (section 45.4;
@@ -10629,7 +10489,7 @@ adds a second form, `lambda-gpu.yml` mode `stacks-full`, and changes nothing in 
   tower) at 1, 10 and 100 copies with the card inside, repetitions 5, 3 and 2 by size (`hil_profile` `standard`), native
   against Omni-Compass on native at the factory tune (the dial at the max), paired within each repetition, the card's
   firmware limit as it ships in both arms and no operator's cap;
-- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stands (omni-v23);
+- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stood when it was declared (omni-v23);
 - the reading: per organism and size, the card's requests served (work), its energy, its energy per request served, its
   95th percentile and its time over the line, and the stacks' own gauges, each by the one key (`tools/readings.py`); the
   bill of each arm is the rental of its own window at the price the launch printed, so the bill reads the same in both
@@ -14781,7 +14641,7 @@ Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`;
 
 
 
-What the newest three-run tables (omni-v11's; omni-v23, the engine that stands since 31 October, runs every benchmark again)
+What the newest three-run tables (omni-v11's; omni-v24, the engine that stands since 1 November, runs every benchmark again)
 can and cannot support, written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
 and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
@@ -15127,13 +14987,14 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
+- **The engine on this checkout:** omni-v24, fingerprint 66c8f2d94b3e4725 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
+- **The four arms** (`results/TWO_BILLS.md`): **A**, the chip native, and **B**, the chip with Omni-Compass on native (omni-v23, three runs): B against A, the bill STEADY, under the floor (the three runs' mean 0.01%), the work done the runs disagree, work per dollar the runs disagree; **C**, the cloud native, and **D**, the cloud with Omni-Compass on native (omni-v18, 98 paired repetitions on Azure): D against C, the bill up 1.21%, inside the noise; Google and Amazon wired, not yet run.
 - The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.0% GAIN on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), 12.9% GAIN on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: 5.2% GAIN. Source: results/OMNI_INDEX.md.
   - Real Kubernetes (GitHub): 28.0% GAIN
   - Real database (PostgreSQL behind PgBouncer, GitHub): 4.2% GAIN
@@ -15142,7 +15003,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - Real database cache (MongoDB under YCSB, GitHub): 0.5% LOSS
   - Real messaging (Apache Kafka, GitHub): 1.2% power given
 
-**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v24): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
@@ -15179,7 +15040,17 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ### 75.1 The engine that stands
 
-**omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`), on main from 31 October: omni-v22 with one
+**omni-v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`), on main from 1 November: omni-v23 with the heartbeat
+it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that
+it is found and then locked. With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the
+owner's own machines) it decides every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that
+fails keeps 60 s, and a beat set by hand always wins. The rule that picked the two beats was frozen before any reading was seen
+(`docs/PACE_PREREGISTRATION.md`, amendments 4 to 6): on site 10 s was the one beat no other dominated; through a cloud no beat kept the
+bill from rising, so 60 s stays and those rows are on the next version's list. 64 of its 65 files are omni-v23's bytes; the model gate
+against omni-v23 (`results/model_gate/V24_VS_V23.md`, class S): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. Every benchmark runs again on it from 01:30 UTC on 2 November
+(`scripts/reruns.txt`); the omni-v23 runs started before run to their end as omni-v23's record.
+
+**omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`), on main from 31 October to 1 November: omni-v22 with one
 guard in the Kubernetes governor's pod muscle of its own, on the founder's order of that day that Omni direct keeps every muscle
 Omni-Compass cannot be. A write of a workload's own scale that the cluster refuses is recorded and the decision goes on; at three
 refusals in a row the knob goes back to native's own pod autoscaler, made from the operator's target and range recorded on the
@@ -15380,13 +15251,15 @@ and the other as power given in all three of our runs, because that is what happ
 ### 76.5 Where the evidence stands today, read honestly
 
 Every number below is from a three-run table, each row naming the engine its table ran on; the evidence class of each is in
-the table it points to. The engine that stands is **omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files;
-`docs/OMNI_V22.md`, on main since 30 October): the five data stores' wires at the max, each spend gated on the store's own account
-of what a miss costs and on the host's room, never below native (`tools/store_brain.py`); every table below is omni-v21's or an
-earlier engine's own record until omni-v22's three runs of each benchmark land. omni-v21 (`docs/OMNI_V21.md`, 25 to 30 October):
-the immune system knows itself, knob by knob (a knob redlining past its line
-that Omni-Compass's own pushing cannot bring back goes to native where native's twin reads it lower, and stays with
-Omni-Compass where native is not stronger). What each earlier version changed is in section 76.6 and on its own page
+the table it points to. The engine that stands is **omni-v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files;
+`docs/OMNI_V24.md`, on main since 1 November): the factory beat for its place, a decision every 10 s on site and every 60 s
+through a cloud, read from the cluster's own nodes at its start; every table below is an earlier engine's own record, named in its
+row, until omni-v24's three runs of each benchmark land. Before it: omni-v23 (`docs/OMNI_V23.md`, 31 October to 1 November), a
+knob whose own-scale writes the cluster refuses handed back to native's own autoscaler; omni-v22 (`docs/OMNI_V22.md`, 30 to 31
+October), the five data stores' wires at the max, each spend gated on the store's own account of what a miss costs and on the
+host's room, never below native (`tools/store_brain.py`); omni-v21 (`docs/OMNI_V21.md`, 25 to 30 October), the immune system
+knowing itself, knob by knob (a knob redlining past its line that Omni-Compass's own pushing cannot bring back goes to native
+where native's twin reads it lower, and stays with Omni-Compass where native is not stronger). What each earlier version changed is in section 76.6 and on its own page
 (`docs/OMNI_V<n>.md`). Every benchmark runs again on the engine that stands; a row still on an older engine names it and stands
 as that engine's record until its three runs on the engine that stands land. Results are never read across engines.
 
@@ -15450,9 +15323,11 @@ reading with no machine in service, proven in a unit test that reproduces the fa
 version through the model gate, a raise the cluster refuses held and the swarm's reflex at once (**v12**), the limits handed back
 on a shared host at its top (**v13**), a knob that leaves any muscle native (**v14**), the power cap's request through the line's
 own clear time and every wire in the fingerprint (**v15**), every clock of the governor in seconds (**v16**), the heartbeat a dial
-with the main engine at 60 s (**v17**), Omni direct taken into the engine (**v18**), a pod muscle of its own (**v19**), the five
-data stores' wires fixed at their causes (**v20**), and, as **v21**, the engine that stands since 25 October, the immune system
-knowing itself, knob by knob (`docs/OMNI_V1.md`, `OMNI_V2.md`, `OMNI_V3.md`, `OMNI_V5.md` to `OMNI_V21.md`). From v11 on, a version's bookkeeping lands in one command (`tools/land_engine.py`), and the check
+with the factory's 60 s (**v17**), Omni direct taken into the engine (**v18**), a pod muscle of its own (**v19**), the five
+data stores' wires fixed at their causes (**v20**), the immune system knowing itself, knob by knob (**v21**), the data stores'
+wires at the max (**v22**), a knob whose own writes are refused handed back to native's controller (**v23**), and, as **v24**,
+the engine that stands since 1 November, the factory beat for its place, 10 s on site and 60 s through a cloud (`docs/OMNI_V1.md`,
+`OMNI_V2.md`, `OMNI_V3.md`, `OMNI_V5.md` to `OMNI_V24.md`). From v11 on, a version's bookkeeping lands in one command (`tools/land_engine.py`), and the check
 it adds to `verify.py` refuses a push in which any place still names an older engine as the one that stands. Earlier engines, among them an
 allocation law that gave back about a third of the machines at the cost of response time and a compass law without the
 verdict, produced the numbered sets kept in `docs/history/`; their results are history, labelled as the engine that produced
@@ -15463,7 +15338,7 @@ is published as Omni-Compass 1.0, with the older fingerprints kept as the road t
 "Versioned" has a precise meaning here. The engine is a fixed set of files (63 on v21), and `OMNI_V21.json` holds one
 SHA-256 for each of them and one digest over all of them; `OMNI_V20.json` back to `OMNI_V5.json`, `OMNI_V3.json`, `OMNI_V2.json`
 and `OMNI_V1.json` do the same for the earlier sets. `python3 tools/omni_version.py` hashes the files in a checkout and prints
-which fingerprint they match (for this edition, `omni-v23 (digest c96ea4105d8747db, 65 files)`), or, when they match none,
+which fingerprint they match (for this edition, `omni-v24 (digest 66c8f2d94b3e4725, 65 files)`), or, when they match none,
 which files differ from the nearest; with `--commit <sha>` it asks the same of any pushed commit, which is how every
 three-run table checks that its runs A, B and C were on the same engine before it combines them, and refuses if they were
 not. The versions differ in exactly the ways their records name, and a reader can check that from the fingerprints rather
@@ -15505,9 +15380,11 @@ machinery that supplies workloads, executes comparisons, checks requirements and
 the complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, the
 decision interval and every other default. A **candidate profile** is a proposed combination of settings under evaluation; the
 **active profile** is the settings actually governing the current run; a **custom profile** is an identifiable configuration
-that differs from the released factory profile. The released factory profile is omni-v23's (`OMNI_V23.json`): the governor's
-full decision every 60 s, the fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`) and on
-the engine's own setting otherwise; it is the profile every published result ran on. The physiological words of this book
+that differs from the released factory profile. The released factory profile is omni-v24's (`OMNI_V24.json`): the governor's
+full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start (a beat set by
+hand always kept), the fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`) and on the
+engine's own setting otherwise; every result on the engine that stands runs on it, and every earlier result on its own engine's
+profile. The physiological words of this book
 (muscle, organism, nervous system, defensive system, health) are engineering analogies, each pointing to concrete code, signals,
 actuators and checks (`docs/FACTORY_PROFILE.md`, section 2).
 
@@ -16252,7 +16129,7 @@ are sourced.
 4. **Aim the chip at about 5% more finished work on the same bill**, cap unchanged and temperature never behind, or at
    fewer joules for the same work. The buyer chooses, and the receipt prints which.
 
-## 88. The Road to the Engine That Stands: Omni v5, v6, v7, v8, v9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 and 22
+## 88. The Road to the Engine That Stands: Omni v5, v6, v7, v8, v9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 and 23
 
 ### 88.1 Omni v5 — the engine fingerprint
 
@@ -18387,6 +18264,87 @@ Every benchmark runs again on omni-v22 from the moment it reaches main; nothing 
 first, every table at the counted 30 s a notch (`scripts/reruns.txt`).
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 88.19 Omni v23: Omni direct keeps every muscle Omni-Compass cannot be: a knob whose writes are refused goes back to native's own controller
+
+
+
+Omni v23 (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files) stood on main from 31 October, evening, to 1 November, night,
+when omni-v24 (`docs/OMNI_V24.md`, the factory beat for its place) landed on it; its runs stand as its own record. It is omni-v22 with one guard in the Kubernetes governor's pod muscle of its
+own (`omni_controller/controller.py`, `_own_pods` and `_own_refused`), on the founder's order of 31 October, given on reading that
+the arm by itself had read like native:
+
+> "Omni direct is directly to muscles, but Omni direct still might need an autoscaler like Kubernetes ... we still might need a
+> muscle or two we're using. We're going straight into all the muscles as the brain and orchestrator, scheduler and all that, but
+> what Omni-Compass can't do and needs the muscle for has to be achieved even in direct, so that it can work and do everything else
+> ... Don't just embed some shit and fail the whole system because we don't have the muscle to do something ... any muscle that we
+> don't have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever."
+
+64 of its 65 files are omni-v22's bytes. No gain, preset, card or law moves; do no harm keeps its strictest form.
+
+**What "direct" can and cannot mean** (the founder's analysis, the same day: "Omni-Compass would have to become the Kubernetes
+mechanism to be what's considered direct"). On a Kubernetes stack Omni-Compass is a brain with no organs: Kubernetes' scheduler
+places every pod and the kubelet runs every container, in every arm. The arm by itself there is Omni-Compass's own pod rule in place
+of the autoscaler's arithmetic and nothing else, so it is never called direct; it is a mechanism test kept in the record, not a
+product arm, and the product has two sides, native and Omni-Compass on native (the founder's order of 25 October). The one test
+where the word holds is the orchestrator showing without Kubernetes (`docs/OMNI_ORCHESTRATOR.md`), where Omni-Compass's own small
+orchestrator is the organs; its three arms read, run by run: Omni-Compass on native the strongest in all three (the most work, the
+fastest response in two, fewer machines in all), native the weakest, the arm by itself between them (level with Omni-Compass on
+native in run A, behind it in B and C). This guard serves every arm: wherever Omni-Compass's own rule cannot move a knob, the organ
+that can gets it back.
+
+#### 88.19.1 What was found
+
+Every arm by itself run on kind from omni-v19 (24 October) to omni-v22 had the governor's pod writes refused by the rig's own
+identity: `kubectl scale` patches the scale subresource, `deployments/scale`, a resource of its own under Kubernetes' RBAC, and the
+rig's role granted `patch` on `deployments` by name and never the subresource. Fifteen of fifteen decisions a window ended
+Forbidden, in every repetition; the workload stayed at the operator's count; the machine and conveyance muscles wrote as always, so
+the window's no-write check never fired. omni-v21's three runs of the entry were admitted and are read in no table; omni-v22's two
+were marked invalid by a second rig fault. Both rig faults are fixed (`docs/SOLO_PREREGISTRATION.md`, amendment 1). What the engine
+lacked is this version: when Omni-Compass cannot be a knob's muscle, the knob must go back to the muscle that can, so the organism
+never runs with a knob nobody moves (amendment 2, the founder's order above).
+
+#### 88.19.2 What changes in the engine
+
+- A write of a workload's own scale that the cluster refuses (its permission, its admission, its API) is recorded in the audit
+  (`own_replicas`, `refused` n, the cluster's words) and the decision goes on; the cluster keeps the last count that landed. Before
+  omni-v23 the exception ended the decision (`decision failed (n in a row)`) and nothing else happened, decision after decision.
+- At `OWN_REFUSALS` (3) refusals in a row Omni-Compass cannot be that knob's muscle: it makes native's own pod autoscaler from the
+  operator's own target and range recorded on the workload (`kubectl autoscale deployment NAME --cpu-percent=T --min=lo --max=hi`;
+  with no range recorded, from one to ten times the operator's count), audits the hand-back (`handed_back`, `after_refusals`,
+  `target`, `range`), and leaves the workload to it for the rest of the run: the snapshot's governed set holds it from the next
+  decision on, and the reset leaves native's autoscaler standing. A hand-back the cluster refuses too is audited
+  (`hand_back_refused`) and tried at the next refusal.
+- A write that lands ends the run of refusals.
+- Every other arm is untouched: Omni-Compass on native never removes native's controller, so a refused write there leaves native's
+  own controller moving the knob as before; the machines, the conveyance, the power cap and the batch muscles are omni-v22's bytes.
+
+#### 88.19.3 What changes in the rig, not the engine
+
+The kind identity (`deploy/kind/rbac-omni.yaml`) gains `create` on `horizontalpodautoscalers` in the default namespace, for the
+hand-back alone, and the preflight proves it; a window of the arm by itself in which the knob was handed back is refused as a
+result of that arm (the organism was kept whole, but Omni-Compass did not run the arm by itself): `INVALID RUN: by itself, the knob
+... was handed back to native's own autoscaler`. `tests/test_kind_rig_rbac.py` fails a rig without either.
+
+#### 88.19.4 The model gate
+
+`results/model_gate/V23_VS_V22.md` (class S, our own models; `tools/model_gate.py`, seeds 1 to 8, the engine that stood, omni-v22,
+the candidate omni-v23): every one of the 95 gauge rows of the 11 models reads identical on every seed, the counts identical, no LOSS. No model refuses a write of the cluster, so the guard never fires in the models and the
+candidate reads identical to omni-v22 on every gauge; its proof is the tests below and the arm's own files when the entry runs again.
+
+#### 88.19.5 The tests
+
+`tests/test_own_replicas.py`, `HandBack`: a cluster that refuses the scale write three times in a row gets native's own autoscaler
+at the operator's 50% target and 1 to 10 range, the muscle writes nothing more to that workload, the count the cluster kept stands
+(never a knob nobody moves); a write that lands after two refusals ends the run of refusals and no autoscaler is made; with no range
+recorded the autoscaler's ceiling is ten times the operator's count. The unit-test suite, the function tests and the release check
+pass on the tree; no C++ twin changes (the Kubernetes governor has none).
+
+#### 88.19.6 What is run again
+
+Every benchmark runs again on omni-v23 from 20:00 UTC on 31 October 2026 (`scripts/reruns.txt`, A of every entry, then B, then C; the conductor's
+campaign, `scripts/dispatch_grid.py`). The omni-v22 runs started before that moment run to their end as omni-v22's record; nothing is
+cancelled. The entry `kubernetes by itself` runs on the rig as amended, three arms, its table kept in the record and not carried on
+the front page (the founder's order of 25 October).
 
 ## 89. History
 
@@ -19110,7 +19068,7 @@ This chapter lists all 1107 muscles of the v5 catalog (`realms/catalog_v5.csv`);
 | `motion_axis` | a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor | its tracking error and its load | its speed and effort share, or its power share |
 | `process_loop` | a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint | how far the process sits from its band | its setpoint within its safe band, its actuator range, or its power share |
 
-**Every muscle its own card.** The brain is one, its settings each muscle's own. A muscle's card holds the settings the max uses for that muscle (a machine pool: how full it runs on its forecast before it calls for more, and how many decisions of history it reads; a battery: how many wobbles of margin it keeps under its line, and, wired by its power, how long it reads its line before it holds and how much of it it keeps clear). The cards were found by an automatic search over every muscle on the development seeds, today's global setting always one of the choices, and kept only where the card beat the global setting beyond the noise on two separate sets of seeds and on no seed under any load fell behind native: never over its line more often, never less work, never its line cleared later (`tools/tune_cards.py`, `realms/muscle_cards_v5.csv`, `results/cards_v5/`). Inside a body, a battery wired by its power keeps the body's own margins on its line. 364 muscles carry a card of their own; every other muscle runs the global setting (machines started at 95% full, the last 20 decisions read, 3.09 wobbles of margin on a battery's line, 5% of it kept clear). Each muscle's card is in the last column of its family's table.
+**Every muscle its own card.** The brain is one, its settings each muscle's own. A muscle's card holds the settings the max uses for that muscle (a machine pool: how full it runs on its forecast before it calls for more, and how many decisions of history it reads; a battery: how many wobbles of margin it keeps under its line, and, wired by its power, how long it reads its line before it holds and how much of it it keeps clear). The cards were found by an automatic search over every muscle on the development seeds, today's global setting always one of the choices, and kept only where the card beat the global setting beyond the noise on two separate sets of seeds and on no seed under any load fell behind native: never over its line more often, never less work, never its line cleared later (`tools/tune_cards.py`, `realms/muscle_cards_v5.csv`, `results/cards_v5/`). Inside a body, a battery wired by its power keeps the body's own margins on its line. 364 muscles carry a card of their own; every other muscle runs the global setting (machines started at 95% full, the last 20 decisions read, 3.09 wobbles of margin on a battery's line, 5% of it kept clear). Each muscle's card is in the last column of its realm's table.
 
 
 **The organisms.** The 1107 muscles build seven organisms: the spine (267 muscles, every muscle that sits in all four realms: the base every stack runs on, as an operating system is the base of every program), each of the four realms (every muscle whose realm list includes it, the spine among them), the four stacked with every duplicate kept (1,908), and the whole tower with every muscle once (1107). Each is run native and with Omni-Compass on top of native (`docs/THE_SPINE.md`, `docs/REALMS.md`).
@@ -19175,2193 +19133,1916 @@ Wires marked *modelled only* exist as plants in the benchmark and are not built 
 
 **How to wire any muscle on your own stack (the plug, chapter 4).** Every muscle below is wired the same way: Omni-Compass never replaces the native controller; it reads the controller's own meters (the wire out) and writes the one setting the controller already accepts (the wire in), through a plug that (1) reads the setting once before the first write and records it, (2) reads back every write and stops writing if another writer moved the setting, (3) renews a lease every decision so a dead governor's settings walk back to native by themselves, and (4) restores the recorded setting at the end. Each family's entry says which native controller owns its muscles, where the reading is tapped, where the setting is written, how it is restored, and whether that wire has run live in this repository or only on a model (`docs/wiring_recipes.csv`). The muscle's name is the setting's own name on that controller. Where the entry says *modelled only*, the plant exists in the benchmark and the wire is written against the controller's documented interface, not yet run on the machine.
 
-### G.2 The spine: 267 muscles in all four realms, an organism of its own
-
-The machines every realm stands on: servers, machines, GPUs and CPUs, network, storage, observability, security, cooling and electrical distribution. The spine is the seventh organism (`spine`, the base every stack runs on, run native and with Omni-Compass on top like the other six; `docs/THE_SPINE.md`), and each spine muscle is also part of every realm's organism, counted once in the tower and four times in the stack.
-
-#### G.2.1 Cloud VM & Capacity (21 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the cloud's autoscaling group or scale set: AWS Auto Scaling, Azure VMSS, GCP MIG.
-- **Wire out (read):** group size, instance states, the target-tracking metric (the cloud's API and monitoring).
-- **Wire in (write):** desired capacity, min and max, the target-tracking policy's target, through the cloud CLI or SDK.
-- **Restore:** the group's desired, min, max and policy recorded once; restored from it.
-- **Run live?** live on AKS through the node pool (family 5); the cloud SDK path itself is written, not yet run live.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 97 | vm count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 98 | vm size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 99 | vm start stop | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 100 | vm migrate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 101 | instance family | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 102 | asg min | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 103 | asg max | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 104 | spot mix | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 105 | reservation mix | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 106 | zone selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 107 | region selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 108 | architecture selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 109 | accelerator selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 110 | boot disk class | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 111 | placement group | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 112 | interruption response | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1038 | target tracking policy | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1039 | scaling cooldown warmup | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1114 | vm cpu cap by priority | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1120 | predictive scaling | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1121 | instance refresh | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-
-#### G.2.2 Container Resources (25 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the pod's own resource requests and limits (the Deployment template) and, where it runs, the VPA, Goldilocks or CruiseKube recommender.
-- **Wire out (read):** each pod's CPU use (kubectl top), its request and limit, the node's allocatable CPU (Kubernetes API).
-- **Wire in (write):** the running pod's CPU limit in place through pods/resize (no restart); the template is never changed, so no rollout.
-- **Restore:** the operator's limit recorded in an annotation before the first write; every pod returned to it.
-- **Run live?** live: omni_controller/muscles.py convey() (conveyance); KEDA and Goldilocks tables.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 33 | cpu request | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 34 | cpu limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 35 | memory request | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 36 | memory limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 37 | ephemeral storage | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 38 | hugepages | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 39 | io weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 40 | pids limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 41 | memory high | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 42 | memory reclaim | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 43 | swap limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 44 | cgroup io max | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 45 | cpu weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 46 | cpu quota | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 47 | cpuset | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 48 | runtime class | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1017 | in place resize | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1019 | namespace quota | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1020 | default limits | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1022 | memory hard limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1023 | memory protection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1024 | io latency target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1025 | freeze | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 2176 | cruisekube request rightsizing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 2177 | goldilocks vpa request recommendation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-
-#### G.2.3 Host CPU & Memory (26 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the Linux kernel's own governors: cpufreq (schedutil or the processor driver), RAPL, cpuidle, the memory manager.
-- **Wire out (read):** /sys/devices/system/cpu/cpufreq (frequencies and governor), /sys/class/powercap intel-rapl energy counters, /proc/stat busy share, /proc/pressure.
-- **Wire in (write):** scaling_max_freq per policy and the RAPL package power limit through sysfs (root); on Kubernetes through the Kubernetes Power Manager's PowerProfile or EAR's policy.
-- **Restore:** the governor's files snapshotted once and restored byte for byte (tools/run_cpu_power.py --restore).
-- **Run live?** written and tested on the modelled machine (tools/run_cpu_power.py, cpu-power.yml); GitHub's machines are virtual and cannot write the governor: the live run needs a real Linux machine.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 113 | cpufreq min | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 114 | cpufreq max | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 115 | rapl package power | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 116 | uncore frequency | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 117 | energy perf preference | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 118 | cpu idle policy | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 119 | memory bandwidth | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 120 | numa balance | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 121 | irq affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 122 | llc allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 123 | memory pressure gate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 124 | page reclaim rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 125 | transparent hugepages | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 126 | core online offline | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 127 | thermal throttle policy | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 128 | host power profile | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1040 | frequency governor | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1041 | turbo boost | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1042 | dram power limit | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1043 | swappiness reclaim | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1112 | core packing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1115 | per pod cpu frequency range and c state access | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1116 | uncore frequency per node | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 2174 | ear cpu frequency policy | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 2175 | ear global energy budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 2178 | k8s power manager core profile | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-
-#### G.2.4 Kubernetes Placement & Scheduling (21 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** kube-scheduler and its profiles, the descheduler, PriorityClasses, scheduling gates.
-- **Wire out (read):** pods pending and their reasons, node fill, topology spread (Kubernetes API).
-- **Wire in (write):** a pod's or deployment's placement fields (nodeSelector, affinity, topologySpreadConstraints, priorityClassName, schedulingGates) by kubectl patch, or the scheduler's profile.
-- **Restore:** the fields as they stood before the first write, restored field by field.
-- **Run live?** modelled; the API path is the same kubectl patch the live controller uses for the HPA.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 49 | node selector | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 85% full; reads the last 10 decisions |
-| 50 | node affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 51 | pod anti affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 52 | topology spread | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 53 | numa placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 54 | gpu topology | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 55 | storage locality | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 56 | network locality | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 57 | taint toleration | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 58 | priority class | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 59 | preemption policy | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 60 | device claim | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 61 | failure domain spread | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 62 | scheduler backoff | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 63 | gang admission | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 64 | deschedule | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1026 | scheduler scoring strategy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1027 | scheduler plugin weights | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 1028 | scheduling gates | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1029 | cpu manager | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 2179 | peaks power aware placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-
-#### G.2.5 Kubernetes Workload Scaling (32 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the HorizontalPodAutoscaler, KEDA ScaledObject or VPA that owns the workload's scale.
-- **Wire out (read):** the HPA's current and desired replicas, the Deployment's ready replicas (Kubernetes API, metrics-server), the service's response time from the probe.
-- **Wire in (write):** the HPA's target (spec.metrics averageUtilization) and floor (minReplicas) by kubectl patch; KEDA through its ScaledObject, so the add-on keeps its own loop.
-- **Restore:** the operator's target and range recorded in an annotation before the first write, restored from it, annotation removed.
-- **Run live?** live: scripts/kind_bench.sh and omni_controller (HPA target, KEDA, Goldilocks, CruiseKube), three-run tables in results/live.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 17 | replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 18 | hpa cpu target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 19 | hpa memory target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 20 | hpa custom target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 21 | vpa apply | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 22 | scale to zero | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 80% full; reads the last 40 decisions |
-| 23 | keda threshold | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 24 | rollout rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 25 | max surge | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 26 | max unavailable | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 27 | deployment pause resume | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 28 | rollout abort | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 29 | pod eviction | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 30 | pdb policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 31 | scheduler queue priority | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 32 | api priority fairness | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1001 | hpa min replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1002 | hpa max replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 1003 | hpa scale down stabilisation window | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1004 | hpa scale up stabilisation window | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1005 | hpa scaling rate policies | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1006 | hpa policy selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1007 | hpa tolerance | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1008 | hpa sync period | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1009 | vpa minmax allowed resources | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1010 | keda polling interval | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1011 | rollout progress deadline | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1012 | rollout readiness delay | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1014 | unhealthy pod eviction policy | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1015 | graceful termination | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1016 | probes | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 2172 | kepler energy target autoscaling | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.2.6 GPU Hardware (22 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the card's own firmware limits through NVML and nvidia-smi (power limit, application clocks, MIG, compute mode).
-- **Wire out (read):** nvidia-smi --query-gpu (clocks, power draw, temperature, utilisation, memory), the serving response time from the probe.
-- **Wire in (write):** nvidia-smi -pl (power limit), -lgc/-rgc (clock ceiling and reset), -ac (application clocks), -mig and -c (modes), per card.
-- **Restore:** every limit read once at start (the snapshot line in the GPU audit) and restored by the same commands at the end or on the lease.
-- **Run live?** live: omni_controller/gpu_governor.py and scripts/gpu_paired.sh on a rented A10 (results/gpu); the new card runs wait on Lambda by the founder's order.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 129 | gpu allocate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 130 | gpu power limit | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 131 | gpu sm clock | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 132 | gpu memory clock | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 133 | gpu persistence mode | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 134 | gpu compute mode | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 135 | mig mode | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 136 | mig geometry | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 85% full; reads the last 10 decisions |
-| 137 | gpu timeslice | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 138 | gpu mps | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 139 | gpu quarantine | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 140 | gpu reset | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 141 | gpu thermal limit | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 142 | gpu ecc response | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 143 | gpu job power budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1044 | application clocks | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1045 | gpu temperature target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1117 | sync boost | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 1118 | target clocks | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 2173 | climatik inference power cap | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 2180 | adaptive gpu power cap | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 2181 | nvidia platform power budget | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-
-#### G.2.7 Node Fleet & Karpenter-Class Control (24 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the cluster's own node autoscaler: Karpenter (NodePool), the Cluster Autoscaler, a MachineSet, a cloud node pool.
-- **Wire out (read):** ready and schedulable workers, pending pods, allocatable and used CPU (Kubernetes API), the autoscaler's status ConfigMap.
-- **Wire in (write):** the pool's size through the operator's own command (--node-scale-cmd: az aks nodepool scale, gcloud container clusters resize, eksctl scale nodegroup, kubectl scale machineset, a Karpenter NodePool limit); a machine parked by taint and drain, never deleted by Omni-Compass.
-- **Restore:** the pool's starting count recorded once; every parked machine untainted and the pool restored to it at the end or on the lease.
-- **Run live?** live: omni_controller nodepool mode on kind and on AKS (results/live/V1_AKS_*, the capacity and steady tables).
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 65 | node desired | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 66 | node pool min | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 67 | node pool max | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 68 | node provision | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 60 decisions |
-| 69 | node cordon | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 70 | node drain | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 71 | node consolidate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 72 | node replace | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 73 | node shutdown | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 74 | node power on | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 75 | nodepool weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 76 | disruption budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 77 | consolidation policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 78 | consolidate after | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 90% full; reads the last 20 decisions |
-| 79 | expire after | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 80 | capacity class | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1030 | scale down utilisation threshold | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1031 | scale down unneeded time | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1032 | scale down delay after add | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 1033 | expander | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 1034 | node pool limits | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1035 | kubelet eviction thresholds | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1036 | kubelet reserved resources | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1037 | max pods per node | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 40 decisions |
-
-#### G.2.8 Network Routing & Switching (19 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `network` (network routing and switching), reached through the network controller (SDN, routing API). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the network controller: the load balancer's weights, the SDN controller, the NIC's ethtool and tc settings.
-- **Wire out (read):** link utilisation, drops, queue latency (SNMP, the controller's API, ethtool -S).
-- **Wire in (write):** LB and route weights through the controller's API; rate limits and queue disciplines through tc; NIC queues through ethtool.
-- **Restore:** every weight and setting recorded; restored with the same commands.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 225 | lb weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 226 | route weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 227 | rate limit | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 228 | bandwidth limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 229 | qos class | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 230 | connection limit | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 231 | failover route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 232 | nic rate limit | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 233 | nic queue count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 234 | queue discipline | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 235 | congestion control | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 236 | egress budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 237 | ingress budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 238 | ecmp weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 239 | path selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 240 | network isolation | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1046 | nic interrupt coalescing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1047 | nic ring size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 1048 | port link power | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-
-#### G.2.9 Observability & Telemetry (9 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the collector's own configuration: the OpenTelemetry Collector, Prometheus scrape and remote-write settings.
-- **Wire out (read):** dropped samples, queue depth, memory, cardinality (the collector's self-metrics).
-- **Wire in (write):** the collector's batch, queue and memory limits and scrape intervals through its config reload.
-- **Restore:** the config recorded; reloaded from it.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 373 | collector memory limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 374 | export concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 376 | cardinality budget | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 377 | retention window | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 85% full; reads the last 40 decisions |
-| 378 | remote write queue | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 379 | telemetry shed | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1053 | metric scrape interval | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1054 | batching | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 1119 | per pod energy attribution | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 60 decisions |
-
-#### G.2.10 Reliability, Security & Recovery (12 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the platform's own recovery and security controls: rollout and rollback, PodDisruptionBudgets, the security hold, a kill switch.
-- **Wire out (read):** error rate, rollout status, the security hold (a ConfigMap key), the kill file.
-- **Wire in (write):** rollout pause and undo by kubectl; the security hold read, never written; the kill switch (tools/omni_switch.py) is a human's.
-- **Restore:** every write recorded and undone on the lease.
-- **Run live?** live in part: the security hold and kill switch run in every Kubernetes benchmark (omnicompass/master.py).
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 385 | restart | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 386 | rollback | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 388 | traffic divert recovery | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 389 | degraded mode | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 390 | actuator freeze | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 391 | workload isolate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 393 | credential rotation gate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 394 | policy enforcement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 395 | rate abuse gate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 396 | fault domain isolate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 397 | backup trigger | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 400 | kill switch | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-
-#### G.2.11 Storage Block/File/Object (20 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `storage` (block, file or object storage), reached through the storage system's QoS and tiering API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the storage system's QoS and tiering: Ceph (ceph osd pool set, QoS), a cloud volume's IOPS class, S3 lifecycle.
-- **Wire out (read):** IOPS, throughput, latency and queue depth from the storage system's metrics.
-- **Wire in (write):** volume IOPS and throughput limits, replica counts and tiering through the storage API or CSI VolumeAttributesClass.
-- **Restore:** the volume's class and limits recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 257 | volume size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 258 | iops limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 259 | throughput limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 260 | replica count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 261 | storage tier | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 262 | volume placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 263 | snapshot trigger | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 264 | rebalance | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 265 | recovery rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 266 | backfill rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 267 | compaction pressure | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 268 | cache allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 269 | object replication | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 270 | erasure code profile | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 271 | storage admission | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 272 | degraded storage gate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1049 | scrub schedule | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1050 | io scheduler | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-| 1051 | disk power spin down | power | at its limit on native (the full clock): read and left native | the spine; all four realms; stack; tower | global |
-| 1052 | lifecycle tiering | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | the spine; all four realms; stack; tower | global |
-
-#### G.2.12 Cooling, Chillers & Thermodynamics (18 muscles)
-
-Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `data_hall` (a data hall cooling plant), reached through the building management system (BACnet, Modbus) or its command line. Omni-Compass reads its temperature against its limit. It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the building management system and the chiller plant's own supervisory controller (BACnet, Modbus).
-- **Wire out (read):** supply and return temperatures, chiller load, fan and pump speeds, rack inlet temperatures (BACnet reads).
-- **Wire in (write):** supply-air and chilled-water setpoints, fan and pump speeds within their safe bands by BACnet write; the plant's own staging keeps control.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled (the data-hall plant); the BACnet path is written.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 545 | supply air temperature | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 546 | return air target | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 547 | coolant supply temperature | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 548 | coolant flow | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 549 | pump speed | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 550 | fan speed | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 551 | chiller setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 552 | compressor authority | power | at its limit on native (the site envelope at full): read and left native | the spine; all four realms; stack; tower | global |
-| 553 | cooling tower fan | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 554 | cooling capacity | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 555 | rack thermal budget | power | at its limit on native (the site envelope at full): read and left native | the spine; all four realms; stack; tower | global |
-| 556 | gpu thermal envelope | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 557 | cpu thermal envelope | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | the spine; all four realms; stack; tower | global |
-| 558 | thermal workload migrate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 559 | thermal load shed | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1055 | server fan speed | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 1056 | economiser | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-| 1122 | chiller plant supervisory control rl with safety layer | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | the spine; all four realms; stack; tower | global |
-
-#### G.2.13 PDU, UPS & Electrical Distribution (18 muscles)
-
-Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `ups` (an uninterruptible power supply), reached through the UPS and PDU management interface (SNMP, Modbus). Omni-Compass reads its draw on the grid connection and its reserve. It belongs to every organism.
-
-**Wire it on your stack.**
-
-- **Native controller:** the UPS and PDU management interfaces (SNMP, Modbus) and the servers' BMC power caps (IPMI DCMI, Redfish).
-- **Wire out (read):** load per branch, UPS mode and charge, power per server (SNMP, Redfish).
-- **Wire in (write):** server and rack power caps through Redfish or DCMI; UPS charge rate and mode through SNMP; breakers never written.
-- **Restore:** every cap and mode read once and restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 529 | server power cap | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 530 | rack power cap | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 531 | pdu branch power limit | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 532 | pdu outlet control | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 534 | ups operating mode | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 535 | ups charge rate | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 536 | ups discharge rate | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 537 | phase balance | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 538 | load transfer | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 539 | reactive power target | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 540 | voltage target | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0.25 wobbles of margin on its line |
-| 541 | generator dispatch | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 542 | electrical isolation | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 543 | breaker trip gate | admission | at its limit on native (nothing paced or turned away): read and left native | the spine; all four realms; stack; tower | global |
-| 1057 | ups shutdown battery test | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | the spine; all four realms; stack; tower | 0 wobbles of margin on its line |
-| 1110 | hierarchical power budget row pdu switchboard controllers | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 1111 | priority aware capping throttle low priority first | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-| 1113 | power oversubscription with prediction | power | at its limit on native (full battery power): read and left native | the spine; all four realms; stack; tower | global |
-
-### G.3 Realm: Compute / AI / Cloud (273 muscles of its own, 540 in its organism with the spine)
-
-#### G.3.1 AI Inference Serving (24 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the serving engine's own autoscaler and batcher (vLLM, Triton, KServe, Ray Serve): replicas, batch size, concurrency, KV cache.
-- **Wire out (read):** queue depth, tokens per second, p95 latency, KV-cache use from the server's /metrics.
-- **Wire in (write):** the server's replica count or KServe/Knative autoscaling target, max_num_seqs and KV-cache budget through its API or its ConfigMap.
-- **Restore:** the serving spec recorded once; restored to it.
-- **Run live?** live in part: GPU serving under the card governor (results/gpu); the vLLM run is ready and waits on Lambda.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 161 | model replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 162 | model route weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 163 | model load | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 164 | model unload | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 165 | model instance count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 166 | continuous batching | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 167 | max batch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 168 | batch queue delay | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 169 | inference concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 170 | inference max tokens | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 60 decisions |
-| 171 | kv cache budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 172 | prefix cache budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 173 | speculative decode budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 174 | model precision | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| 175 | inference priority | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 176 | inference slo gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1058 | autoscaling target concurrency qps | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1059 | scale to zero panic window | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 1060 | request priority levels | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1061 | kv cache swap space | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1062 | chunked prefill | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 1063 | tensor parallel degree | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 40 decisions |
-| 1064 | disaggregated prefill decode | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1065 | lora adapter load | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.3.2 AI Training (18 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu_batch` (GPU training and batch work), reached through nvidia-smi, the job scheduler's pause and resume. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the training job's launcher and scheduler (Kubeflow, Ray Train, Slurm, torchrun).
-- **Wire out (read):** step time, GPU utilisation, checkpoint cadence, stragglers (the job's metrics).
-- **Wire in (write):** the job's worker count (elastic training), batch sizes and checkpoint interval through the launcher's API or the job spec.
-- **Restore:** the job spec recorded; the next run launched from it.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 177 | training workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 178 | global batch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 10 decisions |
-| 179 | microbatch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 90% full; reads the last 10 decisions |
-| 180 | gradient accumulation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 181 | data parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 182 | tensor parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 183 | pipeline parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 184 | expert parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 20 decisions |
-| 185 | checkpoint interval | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 186 | checkpoint trigger | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 187 | training preempt | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 188 | training gang size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 189 | elastic worker count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 90% full; reads the last 10 decisions |
-| 190 | straggler mitigation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 191 | training precision | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| 192 | compute comm overlap | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 40 decisions |
-| 1066 | activation checkpointing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 1067 | dataloader workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-
-#### G.3.3 Cross-Cluster, Multi-Region & Edge (18 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the global load balancer and the fleet manager (Karmada, Fleet, the cloud's global LB).
-- **Wire out (read):** per-region latency, capacity and cost, pending work (the global LB's and clusters' metrics).
-- **Wire in (write):** region and cluster weights and quotas through the global controller's API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 609 | multi cluster dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 610 | region dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 611 | zone dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 612 | edge dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 613 | cloud capacity class | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 614 | workload migrate region | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 615 | data residency gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 616 | latency region gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 617 | cost region gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 618 | carbon region gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 619 | global failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 620 | federation quota | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 621 | cross cluster replication | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 622 | edge offload | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 623 | global admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5128 | edge site node pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| V5-5129 | edge inference gpu clocks | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5130 | edge sync interval | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-
-#### G.3.4 DPU SmartNIC & Programmable IO (12 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `fabric` (a high-speed fabric (RDMA, DPU, SmartNIC)), reached through the fabric manager's API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the DPU's own management (NVIDIA DOCA, the SmartNIC's SDK) and SR-IOV.
-- **Wire out (read):** per-function rates, flow-steering hits, DPU CPU and memory (the DPU's counters).
-- **Wire in (write):** rate limits, QoS groups and VF counts through the DPU management API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| AUDIT-0021 | dpu pf tx rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0022 | dpu vf tx rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0023 | dpu sf tx rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0024 | dpu bandwidth share | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0025 | dpu qos group | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0026 | sriov vf count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0027 | smartnic flow steering | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| AUDIT-0028 | smartnic offload enable | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0029 | dpu cpu budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| AUDIT-0030 | dpu memory budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| AUDIT-0031 | dpu service placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| AUDIT-0032 | dpu failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-
-#### G.3.5 Distributed Cluster Managers (15 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the cluster manager's scheduler: YARN, Mesos, Nomad, Ray.
-- **Wire out (read):** queue lengths, resource reservations, preemptions (the manager's API).
-- **Wire in (write):** quotas, reservations and preemption settings through the manager's API.
-- **Restore:** recorded once, restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 209 | task admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 210 | task priority | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 211 | resource reservation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 212 | cluster quota | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 213 | task preemption | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 214 | binpack pressure | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 10 decisions |
-| 215 | spread pressure | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| 216 | gang schedule | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 90% full; reads the last 60 decisions |
-| 217 | worker allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 218 | maintenance evacuation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 90% full; reads the last 10 decisions |
-| 219 | oversubscription | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 220 | resource reclaim | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 20 decisions |
-| 221 | queue fairness | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 222 | deadline pressure | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 223 | scheduler retry | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-
-#### G.3.6 GPU Fabric & RDMA (18 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `fabric` (a high-speed fabric (RDMA, DPU, SmartNIC)), reached through the fabric manager's API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the fabric manager and the collective library (NVIDIA Fabric Manager, NCCL settings, RDMA CM).
-- **Wire out (read):** link and NVSwitch counters (nvidia-smi nvlink, DCGM), collective time per step from the training job.
-- **Wire in (write):** NCCL environment and the job's rank placement at launch; RDMA QoS through the fabric manager's API.
-- **Restore:** the launch settings recorded; the next job launched with the originals.
-- **Run live?** modelled; written against NCCL and Fabric Manager documentation.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 145 | nvlink placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 146 | nvswitch route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 147 | gpu fabric quarantine | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 148 | rdma bandwidth | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 149 | rdma route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 150 | nic affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 151 | collective concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 152 | collective algorithm | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 153 | collective chunk size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 154 | rank placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 155 | gpudirect policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 156 | congestion response | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 157 | rail selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 158 | fabric failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 159 | communication priority | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 160 | fabric isolation | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1068 | collective protocol | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 1069 | nic hca selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-
-#### G.3.7 HPC & Distributed Compute (19 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the batch scheduler: Slurm (scontrol, sacctmgr), PBS, LSF.
-- **Wire out (read):** queue depth, node states, job wait times, power per node (sacct, sinfo, the power plugin).
-- **Wire in (write):** partition limits, job priority and fair-share factors, node power-saving settings through scontrol and the scheduler config.
-- **Restore:** the scheduler's settings recorded; restored with the same commands.
-- **Run live?** modelled; EAR (family 8) is the live energy path on HPC.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 193 | job slots | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 194 | mpi ranks | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 195 | rank mapping | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 196 | node allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 197 | job walltime | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 198 | job priority | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 199 | job preemption | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 200 | checkpoint restart | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 201 | parallel io budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 202 | collective budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 203 | accelerator share | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 204 | cpu gpu ratio | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 205 | memory per rank | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 206 | scratch budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 207 | scheduler fair share | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 208 | backfill policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 1070 | node power saving | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| 1071 | cpu frequency per job | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| 1072 | partition limits | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.3.8 Kubernetes Dynamic Device Allocation (8 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** Kubernetes DRA: DeviceClass, ResourceClaim, ResourceSlice.
-- **Wire out (read):** claims pending, devices allocated and tainted (the Kubernetes API).
-- **Wire in (write):** DeviceClass selectors and claim capacity by kubectl apply; devices tainted, never removed.
-- **Restore:** the objects recorded; restored.
-- **Run live?** modelled; the API path is kubectl.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| AUDIT-0001 | dra device class selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 40 decisions |
-| AUDIT-0002 | dra claim capacity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| AUDIT-0003 | dra claim sharing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| AUDIT-0004 | dra device taint | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| AUDIT-0005 | dra device eviction | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| AUDIT-0006 | dra binding readiness | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 20 decisions |
-| AUDIT-0007 | dra binding failure response | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| AUDIT-0008 | dra device configuration | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.3.9 OpenShift & Machine API (9 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** OpenShift's Machine API operators: MachineHealthCheck, MachineConfigPool, the Cluster Version Operator.
-- **Wire out (read):** machine phases, MCP status and pause, degraded counts (the OpenShift API).
-- **Wire in (write):** MachineHealthCheck maxUnhealthy, MachineConfigPool paused and maxUnavailable by oc patch.
-- **Restore:** the fields recorded before the first write, restored from the record.
-- **Run live?** modelled; written against the documented OpenShift API, not yet run live.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 85 | machine remediation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 88 | machine health gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 89 | mcp pause | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 90 | mcp max unavailable | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 91 | node config rollout | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 92 | operator reconcile budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 93 | cluster version pacing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 94 | infra machine admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 95 | machine failure domain | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.3.10 Quantum Computing Control Simulation (16 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `qpu` (a quantum or specialised accelerator queue), reached through the accelerator's job queue. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the quantum control stack's job queue and pulse schedules (Qiskit Runtime, the vendor's control software).
-- **Wire out (read):** queue depth, calibration drift, error rates (the stack's metrics).
-- **Wire in (write):** shot allocation, circuit admission and scheduling through the stack's API; pulse parameters never written live.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 593 | qubit mapping | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 594 | circuit admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 595 | shot allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 596 | circuit scheduling | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 597 | gate scheduling | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 598 | pulse amplitude | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 599 | pulse duration | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 600 | pulse phase | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 601 | pulse frequency | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| 602 | coupling control | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 603 | reset scheduling | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 604 | measurement scheduling | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 605 | dynamical decoupling | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 606 | noise aware routing | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| 607 | error mitigation budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 608 | quantum queue priority | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-
-#### G.3.11 Work Admission & Demand Shaping (19 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the service's own admission layer: its API gateway, queue or admission controller (Envoy, NGINX, Kong, a job queue's concurrency setting).
-- **Wire out (read):** queue depth, requests in flight and the response-time line from the gateway's or queue's metrics (Prometheus, the admin API).
-- **Wire in (write):** the gateway's or queue's concurrency and rate settings (the limit named by the muscle) through its admin API or its config object.
-- **Restore:** snapshot of each limit once before the first write; every limit restored from it.
-- **Run live?** at its limit on native: read and left native in every run (nothing is paced or turned away); the wire is read-only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 1 | api concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 2 | queue concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 3 | queue backpressure | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 4 | job admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 5 | batch admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 6 | inference admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 7 | load shed | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 8 | priority gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 9 | tenant admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 10 | burst limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 11 | deadline admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 12 | work budget | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 13 | request queue limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 14 | retry admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 15 | background work gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 16 | maintenance work gate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1074 | request concurrency limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1123 | adaptive concurrency limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| 1124 | priority request queue under limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-
-#### G.3.12 Linux Kernel & OS Control (20 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the Linux kernel's own tunables: cgroup v2 files, /proc/sys/vm and net, the cpufreq and cpuidle governors, the I/O scheduler.
-- **Wire out (read):** /sys/fs/cgroup, /proc/pressure, /proc/vmstat, /sys/block queue stats, the frequency files.
-- **Wire in (write):** cgroup cpu.weight, cpu.max and memory.high; sysctl vm and net keys; scaling_max_freq, through sysfs and sysctl (root).
-- **Restore:** every file snapshotted once and restored byte for byte.
-- **Run live?** the CPU frequency path is written (tools/run_cpu_power.py); the other knobs are registered and queued, they need a real Linux machine.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5001 | cgroup cpu weight | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5002 | cgroup cpu quota | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5003 | cgroup memory high | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| V5-5004 | cfs scheduler latency | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5005 | cpufreq dvfs governor | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5006 | transparent hugepages | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5007 | io scheduler depth | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5008 | numa auto balancing | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5009 | dirty ratio writeback | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5010 | vm swappiness | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5011 | tcp buffer autotune | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| V5-5012 | block nr requests | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5013 | ksm memory dedup | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5014 | net rx coalesce | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5015 | cpu cstate governor | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5016 | zswap pool fraction | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5017 | page cache reclaim | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5018 | irqbalance affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 60 decisions |
-| V5-5019 | net qdisc codel target | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5020 | hugepage pool reserve | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 20 decisions |
-
-#### G.3.13 Serverless & Functions (FaaS) (9 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the function platform's concurrency settings (Knative autoscaling annotations, AWS Lambda concurrency, OpenFaaS).
-- **Wire out (read):** concurrency, cold starts, queue waits (the platform's metrics).
-- **Wire in (write):** provisioned and reserved concurrency, scale-to-zero windows through the platform's API or annotations.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5021 | fn concurrency limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5022 | fn provisioned concurrency | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5023 | fn scale to zero idle | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5024 | fn memory size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5025 | fn prewarm pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5026 | fn reserved concurrency | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5027 | fn burst admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5028 | fn snapstart restore | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| V5-5029 | fn timeout budget | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-
-#### G.3.14 Virtualization & Hypervisor (9 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the hypervisor's management API (libvirt, vSphere, Hyper-V).
-- **Wire out (read):** vCPU steal, balloon state, migration load (the hypervisor's metrics).
-- **Wire in (write):** vCPU allocation, ballooning and migration pacing through the management API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5030 | vcpu allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5031 | memory ballooning | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5032 | vm overcommit density | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| V5-5033 | live migration pacing | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5034 | numa vcpu pinning | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5035 | sriov vf allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5036 | vgpu partition | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5037 | vm memory dedup ksm | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5038 | hypervisor cpu pinning | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.3.15 Gut: Data-plane Intake & Waste (8 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band. Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the data plane's own intake pacing and compaction settings (the ingress, the queue, the store's compactor).
-- **Wire out (read):** intake rate, backpressure, compaction debt, dead-letter depth (the components' metrics).
-- **Wire in (write):** pacing, drain rates and compaction budgets through each component's settings API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5045 | ingress intake pacing | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5046 | dead letter retry cap | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5047 | gc compaction pacing | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5048 | ttl eviction waste | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5049 | backpressure threshold | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5050 | queue drain rate | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5051 | retry budget window | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5052 | compaction debt drain | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-
-#### G.3.16 Skin: Perimeter & Admission (5 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the perimeter's own controls: the WAF, the DDoS shield, the TLS terminator.
-- **Wire out (read):** request admission, inspection sampling, session cache hit rate (the perimeter's metrics).
-- **Wire in (write):** token-bucket rates, sampling and session cache size through the perimeter's API; blocking rules never loosened.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5053 | rate limit token bucket | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5054 | connection admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5055 | waf inspection sampling | capacity | at its limit on native (the full actuator): read and left native | Compute; stack; tower | global |
-| V5-5056 | tls session cache | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5057 | ddos shield admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-
-#### G.3.17 Media Streaming & CDN (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band. Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the streaming stack's transcoder pools, packager and CDN settings.
-- **Wire out (read):** transcode queue, GPU clocks, buffer health, origin load (the stack's metrics).
-- **Wire in (write):** worker pools, bitrate-ladder cap and cache TTLs through the stack's API; GPU clocks through nvidia-smi (family 9).
-- **Restore:** recorded; restored.
-- **Run live?** modelled; the GPU path is live (family 9).
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5072 | abr bitrate ladder cap | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5073 | player buffer target | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5074 | transcoder worker pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5075 | live transcode gpu clocks | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5076 | vod transcode batch power | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5077 | packager workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 60 decisions |
-| V5-5078 | origin shield cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5079 | edge cache ttl | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5080 | segment duration target | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5081 | cdn request coalescing | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5082 | drm license server pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 85% full; reads the last 40 decisions |
-| V5-5083 | thumbnail sprite batch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| V5-5084 | media ingest admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5085 | encoder lookahead frames | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-
-#### G.3.18 Game Servers & Real-Time Interactive (12 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** Agones Fleets and the matchmaker, the game node pool.
-- **Wire out (read):** allocated and ready servers, matchmaking waits, tick rate (Agones and the matchmaker's metrics).
-- **Wire in (write):** Fleet replicas and buffer sizes by kubectl patch; matchmaking admission through its API.
-- **Restore:** the Fleet spec recorded; restored.
-- **Run live?** modelled; the API path is kubectl patch.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5086 | agones fleet buffer size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5087 | agones fleet min replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| V5-5088 | agones fleet max replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| V5-5089 | game server tick rate | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5090 | players per server cap | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5091 | matchmaking admission rate | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5092 | matchmaking wait window | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5093 | relay server pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5094 | voice chat mixer pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5095 | game node pool autoscaler | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5096 | replay render batch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5097 | cloud gaming gpu clocks | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-
-#### G.3.19 Blockchain & Ledger Nodes (10 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `storage` (block, file or object storage), reached through the storage system's QoS and tiering API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the node's configuration (cache sizes, peer limits, mempool) and its host's power profile.
-- **Wire out (read):** block relay latency, mempool size, peer counts, validation backlog (the node's RPC).
-- **Wire in (write):** cache and pool sizes through the node's config and RPC; the host's power profile through family 8.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5098 | node db cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5099 | mempool max size | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5100 | max peer connections | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5101 | script validation threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5102 | block relay admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5103 | rpc work queue depth | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5104 | utxo cache flush interval | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5105 | indexer batch workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5106 | archive node storage tier | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5107 | validator host power profile | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-
-#### G.3.20 CI/CD & Build Farms (10 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Compute / AI / Cloud.
-
-**Wire it on your stack.**
-
-- **Native controller:** the runner scale set (actions-runner-controller, GitLab runners) and the build cache.
-- **Wire out (read):** jobs queued, runners busy, cache hit rate (the controller's metrics).
-- **Wire in (write):** min and max runners, build concurrency and cache size by kubectl patch of the scale set.
-- **Restore:** the scale set spec recorded; restored.
-- **Run live?** modelled; the API path is kubectl patch.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5108 | runner scale set min runners | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5109 | runner scale set max runners | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| V5-5110 | build concurrency limit | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5111 | build cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | global |
-| V5-5112 | test shard parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5113 | job queue admission | admission | at its limit on native (nothing paced or turned away): read and left native | Compute; stack; tower | global |
-| V5-5114 | artifact retention ttl | setpoint | left native: native already holds it inside its band (nothing to win) | Compute; stack; tower | global |
-| V5-5115 | build node cpu frequency | power | at its limit on native (the full clock): read and left native | Compute; stack; tower | global |
-| V5-5116 | remote execution workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5117 | warm runner pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute; stack; tower | machines started at 75% full; reads the last 40 decisions |
-
-### G.4 Realm: Physics / Robotics / Autonomous (137 muscles of its own, 404 in its organism with the spine)
-
-#### G.4.1 Automotive EV & Mobile Powertrain (14 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `ev_traction` (an electric vehicle traction motor), reached through the vehicle's motor controller (CAN; modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the vehicle's motor and battery controllers (CAN, the OEM's diagnostic interface).
-- **Wire out (read):** torque, speed, state of charge, temperatures (CAN signals).
-- **Wire in (write):** torque, regeneration and charge limits within the OEM's envelope.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 1083 | state of charge limits | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 1084 | smart charging schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| AUDIT-0045 | traction torque limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0046 | regen braking level | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0047 | battery charge limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0048 | battery discharge limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0049 | battery thermal target | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0050 | motor thermal limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0051 | vehicle speed envelope | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| AUDIT-0052 | energy recovery target | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0053 | auxiliary power budget | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0054 | fast charge current | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0055 | fast charge voltage | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| AUDIT-0056 | vehicle safe state | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-
-#### G.4.2 Aviation & Autonomous Flight (28 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `flight_axis` (a flight-control axis), reached through the flight controller (modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the flight controller's own parameters: PX4 (MPC_XY_VEL_MAX, MPC_Z_VEL_MAX_UP, MPC_ACC_HOR, MC_ROLLRATE_MAX) and ArduPilot (WPNAV_SPEED, ATC_ACCEL_R_MAX), the battery failsafe.
-- **Wire out (read):** mission progress, battery state, tracking error and near-miss distance over MAVLink telemetry.
-- **Wire in (write):** the speed, acceleration and rate parameters over MAVLink PARAM_SET within the autopilot's own limits; failsafes and geofence never loosened.
-- **Restore:** every parameter read (PARAM_REQUEST_READ) once and written back at the end.
-- **Run live?** modelled: the swarm cells (results/live/V3_SWARM.md); the MAVLink path is written, not yet flown.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 481 | throttle envelope | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 482 | attitude target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 483 | attitude rate target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 484 | velocity target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 485 | altitude target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 486 | waypoint authority | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 487 | flight hold | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 488 | return to home | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 489 | land action | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 490 | mission admission | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 491 | geofence response | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 492 | failsafe selection | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 493 | battery reserve threshold | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 494 | actuator saturation envelope | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 495 | flight mode transition | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 496 | flight termination safe state | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 1079 | attitude rate gains | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 1080 | horizontal speed limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 1081 | vertical speed limits | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 1082 | acceleration jerk limits | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| V5-5143 | px4 mpc xy vel max | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5144 | px4 mpc z vel max up | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5145 | px4 mpc acc hor | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5146 | px4 mc rollrate max | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5147 | ardupilot wpnav speed | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5148 | ardupilot atc accel r max | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| V5-5149 | drone battery failsafe reserve | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Physics; stack; tower | 1.5 wobbles of margin on its line |
-| V5-5150 | swarm formation spacing | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-
-#### G.4.3 Robotics Fleet & Warehouse Automation (17 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `robot_fleet` (a fleet of robots or vehicles taking tasks), reached through the fleet manager's dispatch API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the fleet manager's dispatch and charging rules (Open-RMF, the vendor fleet manager).
-- **Wire out (read):** tasks waiting, robots active and charging, battery states (the fleet API).
-- **Wire in (write):** active robot count, charge thresholds and zone admission through the fleet API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 449 | robot dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 450 | task assignment | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 451 | traffic reservation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 452 | robot route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 453 | charging dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 454 | battery reserve | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 455 | elevator request | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 456 | door request | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 457 | conveyor speed | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 458 | agv speed | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 459 | warehouse zone admission | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 460 | robot quarantine | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 461 | fleet failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 462 | human safe stop | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-| 463 | fleet concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| V5-5151 | amr fleet charge threshold | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Physics; stack; tower | 1.5 wobbles of margin on its line |
-| V5-5152 | amr fleet active robots | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | global |
-
-#### G.4.4 Robotics Motion Control (26 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `robot_joint` (a robot joint servo), reached through the robot controller (ROS 2, EtherCAT, the drive's fieldbus). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
+### G.2 The 1,107 muscles, heaviest hitters first, in the four realms they live in
+
+**Heaviest hitters first** (the founder's order of 1 November): every list of the muscles is ordered by what Omni-Compass did for each muscle against native in the record of every muscle alone (`results/realms_v5/REALMS_V5.json`; our own models, evidence class S; omni-v8, run 2026-10-17 15:39 UTC, 10 seeds, both loads). First the muscles that take decisions back under their line, the largest share of all their decisions first (a decision over the line is a muscle past its own limit, the first harm do no harm names); then the muscles that clear the work waiting in line sooner, the most first; then the muscles that only add work; then the muscles the same as native; last the muscles at their limit on native, where Omni-Compass writes nothing; equal hits by the catalog's number. The four lists are the four realms, each muscle under its home realm, every muscle once (`tools/heavy_hitters.py`).
+
+Each realm's table lists its home muscles (Compute / AI / Cloud 444, Physics / Robotics / Autonomous 137, Energy / Facility / Industrial 249, Distribution / Specialized 277; 1,107 in all), heaviest hitter first and down to its last. A muscle of the spine sits in all four realms: it is part of every realm's organism, counted once in the tower and four times in the stack, and listed once here, under its home realm. Its hit is the record's own reading of that muscle alone (omni-v8, class S): a model's reading of what the engine did there, never a benchmark result. How each family is wired on a real stack (its native controller, where the reading is tapped, where the setting is written, how it is restored) follows the four tables, the family with the heaviest hitter first.
+
+#### G.2.1 Compute / AI / Cloud: 444 muscles, heaviest hitter first
+
+| Rank | # | Muscle (the setting's own name) | Family | Knob | Its hit | What Omni-Compass does with it | Realms | Its own card |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 108 | architecture selection | Cloud VM & Capacity | capacity | GAIN +3.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 2 | AUDIT-0002 | dra claim capacity | Kubernetes Dynamic Device Allocation | capacity | GAIN +3.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 3 | 619 | global failover | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +3.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 40 decisions |
+| 4 | 1065 | lora adapter load | AI Inference Serving | capacity | GAIN +3.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 5 | 109 | accelerator selection | Cloud VM & Capacity | capacity | GAIN +2.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 6 | 1117 | sync boost | GPU Hardware | capacity | GAIN +2.95% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 7 | 1121 | instance refresh | Cloud VM & Capacity | capacity | GAIN +2.95% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 8 | 166 | continuous batching | AI Inference Serving | capacity | GAIN +2.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 9 | 75 | nodepool weight | Node Fleet & Karpenter-Class Control | setpoint | GAIN +2.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 10 | V5-5032 | vm overcommit density | Virtualization & Hypervisor | capacity | GAIN +2.78% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 11 | V5-5128 | edge site node pool | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.58% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 12 | 622 | edge offload | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.58% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 13 | AUDIT-0006 | dra binding readiness | Kubernetes Dynamic Device Allocation | capacity | GAIN +2.56% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 20 decisions |
+| 14 | AUDIT-0007 | dra binding failure response | Kubernetes Dynamic Device Allocation | capacity | GAIN +2.53% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 15 | 611 | zone dispatch | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.51% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 16 | 161 | model replicas | AI Inference Serving | capacity | GAIN +2.51% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 17 | 165 | model instance count | AI Inference Serving | capacity | GAIN +2.50% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 18 | 167 | max batch size | AI Inference Serving | capacity | GAIN +2.49% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 19 | 99 | vm start stop | Cloud VM & Capacity | capacity | GAIN +2.47% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 20 | V5-5088 | agones fleet max replicas | Game Servers & Real-Time Interactive | capacity | GAIN +2.47% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 21 | 73 | node shutdown | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.45% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 22 | 1037 | max pods per node | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.43% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 23 | 68 | node provision | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.42% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 60 decisions |
+| 24 | 71 | node consolidate | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.40% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 25 | 66 | node pool min | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 26 | V5-5117 | warm runner pool | CI/CD & Build Farms | capacity | GAIN +2.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 40 decisions |
+| 27 | 91 | node config rollout | OpenShift & Machine API | capacity | GAIN +2.36% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 28 | 613 | cloud capacity class | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.34% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 29 | 614 | workload migrate region | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 30 | V5-5109 | runner scale set max runners | CI/CD & Build Farms | capacity | GAIN +2.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 60 decisions |
+| 31 | 107 | region selection | Cloud VM & Capacity | capacity | GAIN +2.30% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 32 | 610 | region dispatch | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.29% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 40 decisions |
+| 33 | 111 | placement group | Cloud VM & Capacity | capacity | GAIN +2.28% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 34 | 100 | vm migrate | Cloud VM & Capacity | capacity | GAIN +2.27% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 35 | 1063 | tensor parallel degree | AI Inference Serving | capacity | GAIN +2.26% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 40 decisions |
+| 36 | 67 | node pool max | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.25% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 37 | 612 | edge dispatch | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.25% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 38 | 103 | asg max | Cloud VM & Capacity | capacity | GAIN +2.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 39 | 106 | zone selection | Cloud VM & Capacity | capacity | GAIN +2.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 40 | 609 | multi cluster dispatch | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 60 decisions |
+| 41 | V5-5095 | game node pool autoscaler | Game Servers & Real-Time Interactive | capacity | GAIN +2.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 42 | 168 | batch queue delay | AI Inference Serving | capacity | GAIN +2.21% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 43 | 133 | gpu persistence mode | GPU Hardware | capacity | GAIN +2.20% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 44 | 135 | mig mode | GPU Hardware | capacity | GAIN +2.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 45 | 162 | model route weight | AI Inference Serving | setpoint | GAIN +2.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 46 | V5-5036 | vgpu partition | Virtualization & Hypervisor | capacity | GAIN +2.16% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 47 | 1033 | expander | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.15% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 80% full; reads the last 10 decisions |
+| 48 | 85 | machine remediation | OpenShift & Machine API | capacity | GAIN +2.13% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 49 | 621 | cross cluster replication | Cross-Cluster, Multi-Region & Edge | capacity | GAIN +2.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 50 | AUDIT-0001 | dra device class selection | Kubernetes Dynamic Device Allocation | capacity | GAIN +2.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 40 decisions |
+| 51 | 112 | interruption response | Cloud VM & Capacity | capacity | GAIN +2.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 52 | 80 | capacity class | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 53 | 98 | vm size | Cloud VM & Capacity | capacity | GAIN +2.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 54 | 1038 | target tracking policy | Cloud VM & Capacity | setpoint | GAIN +2.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 55 | 78 | consolidate after | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 90% full; reads the last 20 decisions |
+| 56 | 1031 | scale down unneeded time | Node Fleet & Karpenter-Class Control | capacity | GAIN +2.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 57 | 104 | spot mix | Cloud VM & Capacity | capacity | GAIN +2.05% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 58 | 600 | pulse phase | Quantum Computing Control Simulation | capacity | GAIN +2.02% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 59 | 90 | mcp max unavailable | OpenShift & Machine API | capacity | GAIN +2.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 60 | 1062 | chunked prefill | AI Inference Serving | capacity | GAIN +2.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 20 decisions |
+| 61 | AUDIT-0008 | dra device configuration | Kubernetes Dynamic Device Allocation | setpoint | GAIN +2.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 62 | 72 | node replace | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.99% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 63 | 1061 | kv cache swap space | AI Inference Serving | capacity | GAIN +1.99% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 64 | 65 | node desired | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 65 | 604 | measurement scheduling | Quantum Computing Control Simulation | capacity | GAIN +1.93% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 66 | 1036 | kubelet reserved resources | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.93% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 67 | 101 | instance family | Cloud VM & Capacity | capacity | GAIN +1.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 68 | 77 | consolidation policy | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.91% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 20 decisions |
+| 69 | 93 | cluster version pacing | OpenShift & Machine API | capacity | GAIN +1.89% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 70 | 110 | boot disk class | Cloud VM & Capacity | capacity | GAIN +1.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 71 | 1039 | scaling cooldown warmup | Cloud VM & Capacity | capacity | GAIN +1.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 72 | 138 | gpu mps | GPU Hardware | capacity | GAIN +1.84% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 73 | 74 | node power on | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 74 | 137 | gpu timeslice | GPU Hardware | capacity | GAIN +1.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 75 | 1034 | node pool limits | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 76 | AUDIT-0003 | dra claim sharing | Kubernetes Dynamic Device Allocation | capacity | GAIN +1.80% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 20 decisions |
+| 77 | 170 | inference max tokens | AI Inference Serving | capacity | GAIN +1.78% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 60 decisions |
+| 78 | 129 | gpu allocate | GPU Hardware | capacity | GAIN +1.77% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 79 | 136 | mig geometry | GPU Hardware | capacity | GAIN +1.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 85% full; reads the last 10 decisions |
+| 80 | 142 | gpu ecc response | GPU Hardware | capacity | GAIN +1.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 81 | 79 | expire after | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.70% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 82 | 97 | vm count | Cloud VM & Capacity | capacity | GAIN +1.70% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 83 | 134 | gpu compute mode | GPU Hardware | capacity | GAIN +1.67% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 84 | AUDIT-0004 | dra device taint | Kubernetes Dynamic Device Allocation | capacity | GAIN +1.66% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 85 | 1064 | disaggregated prefill decode | AI Inference Serving | capacity | GAIN +1.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 86 | 163 | model load | AI Inference Serving | capacity | GAIN +1.62% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 87 | 1120 | predictive scaling | Cloud VM & Capacity | capacity | GAIN +1.56% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 88 | 1045 | gpu temperature target | GPU Hardware | setpoint | GAIN +1.53% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 89 | V5-5038 | hypervisor cpu pinning | Virtualization & Hypervisor | capacity | GAIN +1.49% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 90 | 1032 | scale down delay after add | Node Fleet & Karpenter-Class Control | capacity | GAIN +1.49% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 20 decisions |
+| 91 | 102 | asg min | Cloud VM & Capacity | capacity | GAIN +1.48% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 92 | 95 | machine failure domain | OpenShift & Machine API | capacity | GAIN +1.42% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 93 | 164 | model unload | AI Inference Serving | capacity | GAIN +1.40% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 94 | V5-5028 | fn snapstart restore | Serverless & Functions (FaaS) | capacity | GAIN +1.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 95 | 64 | deschedule | Kubernetes Placement & Scheduling | capacity | GAIN +1.35% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 96 | 1029 | cpu manager | Kubernetes Placement & Scheduling | capacity | GAIN +1.35% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 97 | 1009 | vpa minmax allowed resources | Kubernetes Workload Scaling | capacity | GAIN +1.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 98 | 18 | hpa cpu target | Kubernetes Workload Scaling | setpoint | GAIN +1.32% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 99 | 140 | gpu reset | GPU Hardware | capacity | GAIN +1.31% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 100 | 2179 | peaks power aware placement | Kubernetes Placement & Scheduling | capacity | GAIN +1.28% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 101 | 1059 | scale to zero panic window | AI Inference Serving | setpoint | GAIN +1.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 102 | 1020 | default limits | Container Resources | capacity | GAIN +1.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 103 | V5-5018 | irqbalance affinity | Linux Kernel & OS Control | capacity | GAIN +1.23% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 60 decisions |
+| 104 | 24 | rollout rate | Kubernetes Workload Scaling | capacity | GAIN +1.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 105 | 1026 | scheduler scoring strategy | Kubernetes Placement & Scheduling | capacity | GAIN +1.21% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 106 | 52 | topology spread | Kubernetes Placement & Scheduling | capacity | GAIN +1.20% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 107 | 20 | hpa custom target | Kubernetes Workload Scaling | setpoint | GAIN +1.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 108 | 1003 | hpa scale down stabilisation window | Kubernetes Workload Scaling | setpoint | GAIN +1.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 109 | 1024 | io latency target | Container Resources | setpoint | GAIN +1.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 110 | 105 | reservation mix | Cloud VM & Capacity | capacity | GAIN +1.18% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 111 | 25 | max surge | Kubernetes Workload Scaling | capacity | GAIN +1.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 112 | 47 | cpuset | Container Resources | capacity | GAIN +1.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 113 | 41 | memory high | Container Resources | capacity | GAIN +1.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 114 | 45 | cpu weight | Container Resources | setpoint | GAIN +1.16% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 115 | 1043 | swappiness reclaim | Host CPU & Memory | capacity | GAIN +1.15% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 116 | V5-5020 | hugepage pool reserve | Linux Kernel & OS Control | capacity | GAIN +1.15% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 20 decisions |
+| 117 | 21 | vpa apply | Kubernetes Workload Scaling | capacity | GAIN +1.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 118 | 40 | pids limit | Container Resources | capacity | GAIN +1.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 119 | 36 | memory limit | Container Resources | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 120 | 51 | pod anti affinity | Kubernetes Placement & Scheduling | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 121 | 1022 | memory hard limit | Container Resources | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 122 | 2177 | goldilocks vpa request recommendation | Container Resources | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 123 | V5-5022 | fn provisioned concurrency | Serverless & Functions (FaaS) | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 124 | 48 | runtime class | Container Resources | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 125 | 17 | replicas | Kubernetes Workload Scaling | capacity | GAIN +1.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 126 | 57 | taint toleration | Kubernetes Placement & Scheduling | setpoint | GAIN +1.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 127 | 60 | device claim | Kubernetes Placement & Scheduling | capacity | GAIN +1.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 128 | V5-5025 | fn prewarm pool | Serverless & Functions (FaaS) | capacity | GAIN +1.08% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 129 | V5-5026 | fn reserved concurrency | Serverless & Functions (FaaS) | capacity | GAIN +1.08% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 130 | 1010 | keda polling interval | Kubernetes Workload Scaling | setpoint | GAIN +1.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 131 | 1015 | graceful termination | Kubernetes Workload Scaling | capacity | GAIN +1.04% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 132 | V5-5082 | drm license server pool | Media Streaming & CDN | capacity | GAIN +1.04% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 40 decisions |
+| 133 | 1112 | core packing | Host CPU & Memory | capacity | GAIN +1.02% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 134 | 1017 | in place resize | Container Resources | capacity | GAIN +1.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 135 | V5-5001 | cgroup cpu weight | Linux Kernel & OS Control | capacity | GAIN +1.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 136 | 121 | irq affinity | Host CPU & Memory | capacity | GAIN +1.00% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 137 | 22 | scale to zero | Kubernetes Workload Scaling | capacity | GAIN +0.99% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 80% full; reads the last 40 decisions |
+| 138 | 2176 | cruisekube request rightsizing | Container Resources | capacity | GAIN +0.98% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 139 | 119 | memory bandwidth | Host CPU & Memory | capacity | GAIN +0.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 140 | 1027 | scheduler plugin weights | Kubernetes Placement & Scheduling | setpoint | GAIN +0.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 40 decisions |
+| 141 | 53 | numa placement | Kubernetes Placement & Scheduling | capacity | GAIN +0.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 142 | V5-5030 | vcpu allocation | Virtualization & Hypervisor | capacity | GAIN +0.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 143 | 122 | llc allocation | Host CPU & Memory | capacity | GAIN +0.96% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 144 | 1004 | hpa scale up stabilisation window | Kubernetes Workload Scaling | setpoint | GAIN +0.95% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 145 | V5-5024 | fn memory size | Serverless & Functions (FaaS) | capacity | GAIN +0.94% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 146 | 44 | cgroup io max | Container Resources | capacity | GAIN +0.93% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 147 | 56 | network locality | Kubernetes Placement & Scheduling | capacity | GAIN +0.93% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 148 | 1012 | rollout readiness delay | Kubernetes Workload Scaling | capacity | GAIN +0.93% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 149 | 19 | hpa memory target | Kubernetes Workload Scaling | setpoint | GAIN +0.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 150 | 124 | page reclaim rate | Host CPU & Memory | capacity | GAIN +0.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 151 | V5-5077 | packager workers | Media Streaming & CDN | capacity | GAIN +0.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 60 decisions |
+| 152 | 34 | cpu limit | Container Resources | capacity | GAIN +0.91% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 40 decisions |
+| 153 | 1023 | memory protection | Container Resources | capacity | GAIN +0.90% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 154 | 1016 | probes | Kubernetes Workload Scaling | capacity | GAIN +0.89% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 155 | 43 | swap limit | Container Resources | capacity | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 156 | 39 | io weight | Container Resources | setpoint | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 157 | 1005 | hpa scaling rate policies | Kubernetes Workload Scaling | capacity | GAIN +0.87% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 158 | V5-5094 | voice chat mixer pool | Game Servers & Real-Time Interactive | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 159 | 33 | cpu request | Container Resources | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 160 | 37 | ephemeral storage | Container Resources | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 161 | 1002 | hpa max replicas | Kubernetes Workload Scaling | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 162 | V5-5086 | agones fleet buffer size | Game Servers & Real-Time Interactive | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 163 | 603 | reset scheduling | Quantum Computing Control Simulation | capacity | GAIN +0.84% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 164 | 30 | pdb policy | Kubernetes Workload Scaling | capacity | GAIN +0.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 165 | V5-5087 | agones fleet min replicas | Game Servers & Real-Time Interactive | capacity | GAIN +0.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 60 decisions |
+| 166 | V5-5031 | memory ballooning | Virtualization & Hypervisor | capacity | GAIN +0.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 167 | 597 | gate scheduling | Quantum Computing Control Simulation | capacity | GAIN +0.82% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 168 | 38 | hugepages | Container Resources | capacity | GAIN +0.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 169 | 54 | gpu topology | Kubernetes Placement & Scheduling | capacity | GAIN +0.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 20 decisions |
+| 170 | 1001 | hpa min replicas | Kubernetes Workload Scaling | capacity | GAIN +0.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 171 | 2172 | kepler energy target autoscaling | Kubernetes Workload Scaling | setpoint | GAIN +0.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 172 | 1041 | turbo boost | Host CPU & Memory | capacity | GAIN +0.80% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 173 | V5-5002 | cgroup cpu quota | Linux Kernel & OS Control | capacity | GAIN +0.80% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 174 | V5-5003 | cgroup memory high | Linux Kernel & OS Control | capacity | GAIN +0.79% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 175 | 55 | storage locality | Kubernetes Placement & Scheduling | capacity | GAIN +0.78% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 176 | 49 | node selector | Kubernetes Placement & Scheduling | capacity | GAIN +0.78% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 85% full; reads the last 10 decisions |
+| 177 | 1006 | hpa policy selection | Kubernetes Workload Scaling | capacity | GAIN +0.77% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 178 | 42 | memory reclaim | Container Resources | capacity | GAIN +0.76% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 179 | V5-5101 | script validation threads | Blockchain & Ledger Nodes | capacity | GAIN +0.76% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 180 | 1007 | hpa tolerance | Kubernetes Workload Scaling | capacity | GAIN +0.75% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 181 | 599 | pulse duration | Quantum Computing Control Simulation | setpoint | GAIN +0.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 182 | 61 | failure domain spread | Kubernetes Placement & Scheduling | capacity | GAIN +0.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 183 | 125 | transparent hugepages | Host CPU & Memory | capacity | GAIN +0.72% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 184 | 35 | memory request | Container Resources | capacity | GAIN +0.72% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 185 | 120 | numa balance | Host CPU & Memory | capacity | GAIN +0.71% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 186 | V5-5021 | fn concurrency limit | Serverless & Functions (FaaS) | capacity | GAIN +0.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 187 | 126 | core online offline | Host CPU & Memory | capacity | GAIN +0.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 188 | 593 | qubit mapping | Quantum Computing Control Simulation | capacity | GAIN +0.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 189 | 1008 | hpa sync period | Kubernetes Workload Scaling | capacity | GAIN +0.63% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 190 | 26 | max unavailable | Kubernetes Workload Scaling | capacity | GAIN +0.61% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 191 | V5-5078 | origin shield cache size | Media Streaming & CDN | capacity | GAIN +0.61% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 192 | V5-5056 | tls session cache | Skin: Perimeter & Admission | capacity | GAIN +0.59% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 193 | 605 | dynamical decoupling | Quantum Computing Control Simulation | capacity | GAIN +0.55% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 194 | 595 | shot allocation | Quantum Computing Control Simulation | capacity | GAIN +0.54% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 195 | V5-5011 | tcp buffer autotune | Linux Kernel & OS Control | capacity | GAIN +0.53% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 60 decisions |
+| 196 | 606 | noise aware routing | Quantum Computing Control Simulation | capacity | GAIN +0.51% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 197 | 50 | node affinity | Kubernetes Placement & Scheduling | capacity | GAIN +0.50% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 198 | V5-5093 | relay server pool | Game Servers & Real-Time Interactive | capacity | GAIN +0.43% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 199 | V5-5007 | io scheduler depth | Linux Kernel & OS Control | capacity | GAIN +0.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 200 | V5-5012 | block nr requests | Linux Kernel & OS Control | capacity | GAIN +0.34% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 201 | 602 | coupling control | Quantum Computing Control Simulation | capacity | GAIN +0.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 202 | V5-5014 | net rx coalesce | Linux Kernel & OS Control | capacity | GAIN +0.32% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 203 | V5-5106 | archive node storage tier | Blockchain & Ledger Nodes | capacity | GAIN +0.31% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 204 | V5-5098 | node db cache size | Blockchain & Ledger Nodes | capacity | GAIN +0.31% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 205 | 148 | rdma bandwidth | GPU Fabric & RDMA | capacity | GAIN +0.26% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 206 | AUDIT-0023 | dpu sf tx rate | DPU SmartNIC & Programmable IO | capacity | GAIN +0.26% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 207 | 150 | nic affinity | GPU Fabric & RDMA | capacity | GAIN +0.25% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 208 | AUDIT-0027 | smartnic flow steering | DPU SmartNIC & Programmable IO | capacity | GAIN +0.25% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 10 decisions |
+| 209 | AUDIT-0031 | dpu service placement | DPU SmartNIC & Programmable IO | capacity | GAIN +0.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 210 | V5-5100 | max peer connections | Blockchain & Ledger Nodes | capacity | GAIN +0.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 211 | 598 | pulse amplitude | Quantum Computing Control Simulation | capacity | GAIN +0.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 212 | V5-5035 | sriov vf allocation | Virtualization & Hypervisor | capacity | GAIN +0.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 213 | 156 | congestion response | GPU Fabric & RDMA | capacity | GAIN +0.22% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 214 | V5-5111 | build cache size | CI/CD & Build Farms | capacity | GAIN +0.21% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 215 | 145 | nvlink placement | GPU Fabric & RDMA | capacity | GAIN +0.20% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 216 | AUDIT-0026 | sriov vf count | DPU SmartNIC & Programmable IO | capacity | GAIN +0.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 217 | AUDIT-0028 | smartnic offload enable | DPU SmartNIC & Programmable IO | capacity | GAIN +0.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 218 | 146 | nvswitch route | GPU Fabric & RDMA | capacity | GAIN +0.18% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 219 | 157 | rail selection | GPU Fabric & RDMA | capacity | GAIN +0.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 220 | 1068 | collective protocol | GPU Fabric & RDMA | capacity | GAIN +0.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 221 | 154 | rank placement | GPU Fabric & RDMA | capacity | GAIN +0.16% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 222 | 155 | gpudirect policy | GPU Fabric & RDMA | capacity | GAIN +0.15% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 223 | AUDIT-0021 | dpu pf tx rate | DPU SmartNIC & Programmable IO | capacity | GAIN +0.13% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 224 | 1069 | nic hca selection | GPU Fabric & RDMA | capacity | GAIN +0.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 225 | AUDIT-0022 | dpu vf tx rate | DPU SmartNIC & Programmable IO | capacity | GAIN +0.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 226 | AUDIT-0024 | dpu bandwidth share | DPU SmartNIC & Programmable IO | capacity | GAIN +0.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 227 | AUDIT-0025 | dpu qos group | DPU SmartNIC & Programmable IO | capacity | GAIN +0.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 228 | 152 | collective algorithm | GPU Fabric & RDMA | capacity | GAIN +0.11% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 229 | 158 | fabric failover | GPU Fabric & RDMA | capacity | GAIN +0.08% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 230 | 149 | rdma route | GPU Fabric & RDMA | capacity | GAIN +0.07% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 231 | AUDIT-0032 | dpu failover | DPU SmartNIC & Programmable IO | capacity | GAIN +0.07% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 232 | 153 | collective chunk size | GPU Fabric & RDMA | capacity | GAIN +0.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 233 | V5-5074 | transcoder worker pool | Media Streaming & CDN | capacity | GAIN +56.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 234 | 186 | checkpoint trigger | AI Training | capacity | GAIN +54.5%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 235 | 190 | straggler mitigation | AI Training | capacity | GAIN +53.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 20 decisions |
+| 236 | 195 | rank mapping | HPC & Distributed Compute | capacity | GAIN +53.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 237 | 217 | worker allocation | Distributed Cluster Managers | capacity | GAIN +52.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 10 decisions |
+| 238 | 208 | backfill policy | HPC & Distributed Compute | capacity | GAIN +52.0%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 239 | 177 | training workers | AI Training | capacity | GAIN +51.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 240 | 181 | data parallelism | AI Training | capacity | GAIN +51.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 60 decisions |
+| 241 | 193 | job slots | HPC & Distributed Compute | capacity | GAIN +50.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 242 | 180 | gradient accumulation | AI Training | capacity | GAIN +50.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 243 | 211 | resource reservation | Distributed Cluster Managers | capacity | GAIN +50.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 10 decisions |
+| 244 | 197 | job walltime | HPC & Distributed Compute | capacity | GAIN +50.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 245 | 200 | checkpoint restart | HPC & Distributed Compute | capacity | GAIN +49.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 20 decisions |
+| 246 | 185 | checkpoint interval | AI Training | setpoint | GAIN +49.8%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 247 | 194 | mpi ranks | HPC & Distributed Compute | capacity | GAIN +49.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 20 decisions |
+| 248 | V5-5083 | thumbnail sprite batch | Media Streaming & CDN | capacity | GAIN +48.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 10 decisions |
+| 249 | 196 | node allocation | HPC & Distributed Compute | capacity | GAIN +48.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 250 | V5-5105 | indexer batch workers | Blockchain & Ledger Nodes | capacity | GAIN +48.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 251 | 203 | accelerator share | HPC & Distributed Compute | capacity | GAIN +47.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 20 decisions |
+| 252 | 183 | pipeline parallelism | AI Training | capacity | GAIN +47.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 253 | 219 | oversubscription | Distributed Cluster Managers | capacity | GAIN +47.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 254 | 184 | expert parallelism | AI Training | capacity | GAIN +47.5%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 20 decisions |
+| 255 | 182 | tensor parallelism | AI Training | capacity | GAIN +47.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 75% full; reads the last 10 decisions |
+| 256 | 178 | global batch size | AI Training | capacity | GAIN +47.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 10 decisions |
+| 257 | 220 | resource reclaim | Distributed Cluster Managers | capacity | GAIN +46.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 20 decisions |
+| 258 | V5-5112 | test shard parallelism | CI/CD & Build Farms | capacity | GAIN +46.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 259 | V5-5108 | runner scale set min runners | CI/CD & Build Farms | capacity | GAIN +46.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 260 | 204 | cpu gpu ratio | HPC & Distributed Compute | setpoint | GAIN +45.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 261 | 216 | gang schedule | Distributed Cluster Managers | capacity | GAIN +45.8%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 90% full; reads the last 60 decisions |
+| 262 | V5-5116 | remote execution workers | CI/CD & Build Farms | capacity | GAIN +45.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 263 | 1072 | partition limits | HPC & Distributed Compute | capacity | GAIN +45.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 20 decisions |
+| 264 | 214 | binpack pressure | Distributed Cluster Managers | capacity | GAIN +45.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 85% full; reads the last 10 decisions |
+| 265 | 189 | elastic worker count | AI Training | capacity | GAIN +45.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 90% full; reads the last 10 decisions |
+| 266 | 215 | spread pressure | Distributed Cluster Managers | capacity | GAIN +45.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 10 decisions |
+| 267 | 218 | maintenance evacuation | Distributed Cluster Managers | capacity | GAIN +45.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 90% full; reads the last 10 decisions |
+| 268 | V5-5096 | replay render batch | Game Servers & Real-Time Interactive | capacity | GAIN +44.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 269 | 179 | microbatch size | AI Training | capacity | GAIN +44.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 90% full; reads the last 10 decisions |
+| 270 | 1067 | dataloader workers | AI Training | capacity | GAIN +44.0%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 70% full; reads the last 40 decisions |
+| 271 | 188 | training gang size | AI Training | capacity | GAIN +43.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 10 decisions |
+| 272 | 192 | compute comm overlap | AI Training | capacity | GAIN +42.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | machines started at 80% full; reads the last 40 decisions |
+| 273 | 1066 | activation checkpointing | AI Training | capacity | GAIN +41.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 274 | 205 | memory per rank | HPC & Distributed Compute | capacity | GAIN +41.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Compute | global |
+| 275 | V5-5004 | cfs scheduler latency | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 276 | V5-5006 | transparent hugepages | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 277 | V5-5008 | numa auto balancing | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 278 | V5-5009 | dirty ratio writeback | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 279 | V5-5010 | vm swappiness | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 280 | V5-5016 | zswap pool fraction | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 281 | V5-5017 | page cache reclaim | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 282 | V5-5019 | net qdisc codel target | Linux Kernel & OS Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 283 | V5-5029 | fn timeout budget | Serverless & Functions (FaaS) | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 284 | V5-5034 | numa vcpu pinning | Virtualization & Hypervisor | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 285 | V5-5046 | dead letter retry cap | Gut: Data-plane Intake & Waste | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 286 | V5-5048 | ttl eviction waste | Gut: Data-plane Intake & Waste | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 287 | V5-5051 | retry budget window | Gut: Data-plane Intake & Waste | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 288 | V5-5072 | abr bitrate ladder cap | Media Streaming & CDN | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 289 | V5-5073 | player buffer target | Media Streaming & CDN | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 290 | V5-5079 | edge cache ttl | Media Streaming & CDN | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 291 | V5-5080 | segment duration target | Media Streaming & CDN | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 292 | V5-5085 | encoder lookahead frames | Media Streaming & CDN | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 293 | V5-5089 | game server tick rate | Game Servers & Real-Time Interactive | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 294 | V5-5092 | matchmaking wait window | Game Servers & Real-Time Interactive | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 295 | V5-5099 | mempool max size | Blockchain & Ledger Nodes | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 296 | V5-5104 | utxo cache flush interval | Blockchain & Ledger Nodes | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 297 | V5-5114 | artifact retention ttl | CI/CD & Build Farms | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 298 | V5-5130 | edge sync interval | Cross-Cluster, Multi-Region & Edge | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Compute | global |
+| 299 | 1 | api concurrency | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 300 | 2 | queue concurrency | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 301 | 3 | queue backpressure | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 302 | 4 | job admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 303 | 5 | batch admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 304 | 6 | inference admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 305 | 7 | load shed | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 306 | 8 | priority gate | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 307 | 9 | tenant admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 308 | 10 | burst limit | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 309 | 11 | deadline admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 310 | 12 | work budget | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 311 | 13 | request queue limit | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 312 | 14 | retry admission | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 313 | 15 | background work gate | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 314 | 16 | maintenance work gate | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 315 | 23 | keda threshold | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 316 | 27 | deployment pause resume | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 317 | 28 | rollout abort | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 318 | 29 | pod eviction | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 319 | 31 | scheduler queue priority | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 320 | 32 | api priority fairness | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 321 | 46 | cpu quota | Container Resources | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 322 | 58 | priority class | Kubernetes Placement & Scheduling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 323 | 59 | preemption policy | Kubernetes Placement & Scheduling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 324 | 62 | scheduler backoff | Kubernetes Placement & Scheduling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 325 | 63 | gang admission | Kubernetes Placement & Scheduling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 326 | 69 | node cordon | Node Fleet & Karpenter-Class Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 327 | 70 | node drain | Node Fleet & Karpenter-Class Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 328 | 76 | disruption budget | Node Fleet & Karpenter-Class Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 329 | 88 | machine health gate | OpenShift & Machine API | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 330 | 89 | mcp pause | OpenShift & Machine API | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 331 | 92 | operator reconcile budget | OpenShift & Machine API | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 332 | 94 | infra machine admission | OpenShift & Machine API | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 333 | 113 | cpufreq min | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 334 | 114 | cpufreq max | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 335 | 115 | rapl package power | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 336 | 116 | uncore frequency | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 337 | 117 | energy perf preference | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 338 | 118 | cpu idle policy | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 339 | 123 | memory pressure gate | Host CPU & Memory | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 340 | 127 | thermal throttle policy | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 341 | 128 | host power profile | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 342 | 130 | gpu power limit | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 343 | 131 | gpu sm clock | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 344 | 132 | gpu memory clock | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 345 | 139 | gpu quarantine | GPU Hardware | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 346 | 141 | gpu thermal limit | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 347 | 143 | gpu job power budget | GPU Hardware | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 348 | 147 | gpu fabric quarantine | GPU Fabric & RDMA | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 349 | 151 | collective concurrency | GPU Fabric & RDMA | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 350 | 159 | communication priority | GPU Fabric & RDMA | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 351 | 160 | fabric isolation | GPU Fabric & RDMA | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 352 | 169 | inference concurrency | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 353 | 171 | kv cache budget | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 354 | 172 | prefix cache budget | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 355 | 173 | speculative decode budget | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 356 | 174 | model precision | AI Inference Serving | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 357 | 175 | inference priority | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 358 | 176 | inference slo gate | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 359 | 187 | training preempt | AI Training | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 360 | 191 | training precision | AI Training | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 361 | 198 | job priority | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 362 | 199 | job preemption | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 363 | 201 | parallel io budget | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 364 | 202 | collective budget | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 365 | 206 | scratch budget | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 366 | 207 | scheduler fair share | HPC & Distributed Compute | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 367 | 209 | task admission | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 368 | 210 | task priority | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 369 | 212 | cluster quota | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 370 | 213 | task preemption | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 371 | 221 | queue fairness | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 372 | 222 | deadline pressure | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 373 | 223 | scheduler retry | Distributed Cluster Managers | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 374 | 594 | circuit admission | Quantum Computing Control Simulation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 375 | 596 | circuit scheduling | Quantum Computing Control Simulation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 376 | 601 | pulse frequency | Quantum Computing Control Simulation | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 377 | 607 | error mitigation budget | Quantum Computing Control Simulation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 378 | 608 | quantum queue priority | Quantum Computing Control Simulation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 379 | 615 | data residency gate | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 380 | 616 | latency region gate | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 381 | 617 | cost region gate | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 382 | 618 | carbon region gate | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 383 | 620 | federation quota | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 384 | 623 | global admission | Cross-Cluster, Multi-Region & Edge | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 385 | 1011 | rollout progress deadline | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 386 | 1014 | unhealthy pod eviction policy | Kubernetes Workload Scaling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 387 | 1019 | namespace quota | Container Resources | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 388 | 1025 | freeze | Container Resources | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 389 | 1028 | scheduling gates | Kubernetes Placement & Scheduling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 390 | 1030 | scale down utilisation threshold | Node Fleet & Karpenter-Class Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 391 | 1035 | kubelet eviction thresholds | Node Fleet & Karpenter-Class Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 392 | 1040 | frequency governor | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 393 | 1042 | dram power limit | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 394 | 1044 | application clocks | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 395 | 1058 | autoscaling target concurrency qps | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 396 | 1060 | request priority levels | AI Inference Serving | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 397 | 1070 | node power saving | HPC & Distributed Compute | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 398 | 1071 | cpu frequency per job | HPC & Distributed Compute | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 399 | 1074 | request concurrency limit | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 400 | 1114 | vm cpu cap by priority | Cloud VM & Capacity | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 401 | 1115 | per pod cpu frequency range and c state access | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 402 | 1116 | uncore frequency per node | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 403 | 1118 | target clocks | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 404 | 1123 | adaptive concurrency limit | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 405 | 1124 | priority request queue under limit | Work Admission & Demand Shaping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 406 | 2173 | climatik inference power cap | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 407 | 2174 | ear cpu frequency policy | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 408 | 2175 | ear global energy budget | Host CPU & Memory | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 409 | 2178 | k8s power manager core profile | Host CPU & Memory | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 410 | 2180 | adaptive gpu power cap | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 411 | 2181 | nvidia platform power budget | GPU Hardware | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 412 | AUDIT-0005 | dra device eviction | Kubernetes Dynamic Device Allocation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 413 | AUDIT-0029 | dpu cpu budget | DPU SmartNIC & Programmable IO | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 414 | AUDIT-0030 | dpu memory budget | DPU SmartNIC & Programmable IO | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 415 | V5-5005 | cpufreq dvfs governor | Linux Kernel & OS Control | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 416 | V5-5013 | ksm memory dedup | Linux Kernel & OS Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 417 | V5-5015 | cpu cstate governor | Linux Kernel & OS Control | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 418 | V5-5023 | fn scale to zero idle | Serverless & Functions (FaaS) | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 419 | V5-5027 | fn burst admission | Serverless & Functions (FaaS) | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 420 | V5-5033 | live migration pacing | Virtualization & Hypervisor | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 421 | V5-5037 | vm memory dedup ksm | Virtualization & Hypervisor | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 422 | V5-5045 | ingress intake pacing | Gut: Data-plane Intake & Waste | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 423 | V5-5047 | gc compaction pacing | Gut: Data-plane Intake & Waste | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 424 | V5-5049 | backpressure threshold | Gut: Data-plane Intake & Waste | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 425 | V5-5050 | queue drain rate | Gut: Data-plane Intake & Waste | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 426 | V5-5052 | compaction debt drain | Gut: Data-plane Intake & Waste | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 427 | V5-5053 | rate limit token bucket | Skin: Perimeter & Admission | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 428 | V5-5054 | connection admission | Skin: Perimeter & Admission | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 429 | V5-5055 | waf inspection sampling | Skin: Perimeter & Admission | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Compute | global |
+| 430 | V5-5057 | ddos shield admission | Skin: Perimeter & Admission | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 431 | V5-5075 | live transcode gpu clocks | Media Streaming & CDN | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 432 | V5-5076 | vod transcode batch power | Media Streaming & CDN | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 433 | V5-5081 | cdn request coalescing | Media Streaming & CDN | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 434 | V5-5084 | media ingest admission | Media Streaming & CDN | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 435 | V5-5090 | players per server cap | Game Servers & Real-Time Interactive | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 436 | V5-5091 | matchmaking admission rate | Game Servers & Real-Time Interactive | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 437 | V5-5097 | cloud gaming gpu clocks | Game Servers & Real-Time Interactive | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 438 | V5-5102 | block relay admission | Blockchain & Ledger Nodes | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 439 | V5-5103 | rpc work queue depth | Blockchain & Ledger Nodes | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 440 | V5-5107 | validator host power profile | Blockchain & Ledger Nodes | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 441 | V5-5110 | build concurrency limit | CI/CD & Build Farms | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 442 | V5-5113 | job queue admission | CI/CD & Build Farms | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Compute | global |
+| 443 | V5-5115 | build node cpu frequency | CI/CD & Build Farms | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+| 444 | V5-5129 | edge inference gpu clocks | Cross-Cluster, Multi-Region & Edge | power | at its limit on native | at its limit on native (the full clock): read and left native | Compute | global |
+
+#### G.2.2 Physics / Robotics / Autonomous: 137 muscles, heaviest hitter first
+
+| Rank | # | Muscle (the setting's own name) | Family | Knob | Its hit | What Omni-Compass does with it | Realms | Its own card |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 1078 | controller update rate | Robotics Motion Control | capacity | GAIN +12.97% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 2 | V5-5139 | humanoid gait speed | Robotics Motion Control | capacity | GAIN +12.65% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 3 | 440 | jerk limit | Robotics Motion Control | capacity | GAIN +12.10% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 4 | AUDIT-0051 | vehicle speed envelope | Automotive EV & Mobile Powertrain | capacity | GAIN +10.86% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 5 | 1077 | velocity acceleration scaling | Robotics Motion Control | capacity | GAIN +9.33% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 6 | 434 | joint velocity | Robotics Motion Control | capacity | GAIN +7.81% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 7 | 433 | joint position | Robotics Motion Control | capacity | GAIN +7.71% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 8 | 447 | balance correction | Robotics Motion Control | capacity | GAIN +5.00% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 9 | V5-5149 | drone battery failsafe reserve | Aviation & Autonomous Flight | setpoint | GAIN +3.74% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Physics | 1.5 wobbles of margin on its line |
+| 10 | V5-5141 | humanoid step height | Robotics Motion Control | capacity | GAIN +3.65% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 11 | V5-5151 | amr fleet charge threshold | Robotics Fleet & Warehouse Automation | setpoint | GAIN +3.53% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Physics | 1.5 wobbles of margin on its line |
+| 12 | 444 | locomotion speed | Robotics Motion Control | capacity | GAIN +3.44% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 13 | 1076 | trajectory tolerances | Robotics Motion Control | capacity | GAIN +3.12% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 14 | 435 | joint acceleration | Robotics Motion Control | capacity | GAIN +3.04% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 15 | V5-5142 | manipulator payload speed scaling | Robotics Motion Control | capacity | GAIN +2.08% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 16 | V5-5138 | humanoid balance margin | Robotics Motion Control | capacity | GAIN +1.82% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 17 | V5-5150 | swarm formation spacing | Aviation & Autonomous Flight | capacity | GAIN +1.51% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 18 | 441 | collision margin | Robotics Motion Control | capacity | GAIN +1.40% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 19 | 2068 | shaft speed target | Marine Propulsion & Vessel Automation | capacity | GAIN +1.40% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 20 | V5-5135 | ros2 executor threads | Robotics Motion Control | capacity | GAIN +1.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | machines started at 70% full; reads the last 40 decisions |
+| 21 | V5-5147 | ardupilot wpnav speed | Aviation & Autonomous Flight | capacity | GAIN +1.15% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 22 | 437 | cartesian velocity | Robotics Motion Control | capacity | GAIN +1.04% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 23 | 438 | trajectory speed | Robotics Motion Control | capacity | GAIN +1.00% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 24 | 439 | trajectory acceleration | Robotics Motion Control | capacity | GAIN +0.89% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 25 | V5-5143 | px4 mpc xy vel max | Aviation & Autonomous Flight | capacity | GAIN +0.74% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 26 | 445 | steering angle | Robotics Motion Control | capacity | GAIN +0.57% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 27 | 2073 | engine load sharing setpoint | Marine Propulsion & Vessel Automation | capacity | GAIN +0.46% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 28 | 2078 | trim target | Marine Propulsion & Vessel Automation | capacity | GAIN +0.40% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 29 | 2075 | auxiliary engine staging | Marine Propulsion & Vessel Automation | capacity | GAIN +0.28% of decisions back under the line | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 30 | 458 | agv speed | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.18% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 31 | 457 | conveyor speed | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 32 | 450 | task assignment | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 33 | 451 | traffic reservation | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 34 | 455 | elevator request | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 35 | V5-5152 | amr fleet active robots | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 36 | 452 | robot route | Robotics Fleet & Warehouse Automation | capacity | GAIN +0.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 37 | V5-5145 | px4 mpc acc hor | Aviation & Autonomous Flight | capacity | GAIN +10.5%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 38 | 485 | altitude target | Aviation & Autonomous Flight | capacity | GAIN +10.5%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 39 | 486 | waypoint authority | Aviation & Autonomous Flight | capacity | GAIN +10.3%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 40 | V5-5146 | px4 mc rollrate max | Aviation & Autonomous Flight | capacity | GAIN +10.0%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 41 | 494 | actuator saturation envelope | Aviation & Autonomous Flight | capacity | GAIN +9.9%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 42 | V5-5144 | px4 mpc z vel max up | Aviation & Autonomous Flight | capacity | GAIN +9.9%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 43 | 484 | velocity target | Aviation & Autonomous Flight | capacity | GAIN +9.8%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 44 | 483 | attitude rate target | Aviation & Autonomous Flight | capacity | GAIN +9.8%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 45 | 482 | attitude target | Aviation & Autonomous Flight | capacity | GAIN +9.6%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 46 | 1079 | attitude rate gains | Aviation & Autonomous Flight | capacity | GAIN +9.5%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 47 | 454 | battery reserve | Robotics Fleet & Warehouse Automation | capacity | GAIN +7.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 48 | 449 | robot dispatch | Robotics Fleet & Warehouse Automation | capacity | GAIN +7.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 49 | 2074 | slow steaming speed target | Marine Propulsion & Vessel Automation | capacity | GAIN +6.0%, the line cleared sooner | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics | global |
+| 50 | 462 | human safe stop | Robotics Fleet & Warehouse Automation | capacity | GAIN +4.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 51 | 456 | door request | Robotics Fleet & Warehouse Automation | capacity | GAIN +4.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 52 | 453 | charging dispatch | Robotics Fleet & Warehouse Automation | capacity | GAIN +3.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 53 | 461 | fleet failover | Robotics Fleet & Warehouse Automation | capacity | GAIN +3.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics | global |
+| 54 | V5-5136 | ros2 qos history depth | Robotics Motion Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Physics | global |
+| 55 | V5-5137 | ros2 control loop rate | Robotics Motion Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Physics | global |
+| 56 | 436 | joint effort | Robotics Motion Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 57 | 442 | force limit | Robotics Motion Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 58 | 443 | gripper force | Robotics Motion Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 59 | 446 | braking force | Robotics Motion Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 60 | 459 | warehouse zone admission | Robotics Fleet & Warehouse Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 61 | 460 | robot quarantine | Robotics Fleet & Warehouse Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 62 | 463 | fleet concurrency | Robotics Fleet & Warehouse Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 63 | 481 | throttle envelope | Aviation & Autonomous Flight | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 64 | 487 | flight hold | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 65 | 488 | return to home | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 66 | 489 | land action | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 67 | 490 | mission admission | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 68 | 491 | geofence response | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 69 | 492 | failsafe selection | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 70 | 493 | battery reserve threshold | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 71 | 495 | flight mode transition | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 72 | 496 | flight termination safe state | Aviation & Autonomous Flight | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 73 | 497 | space command admission | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 74 | 499 | flight task schedule | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 75 | 500 | space mode transition | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 76 | 501 | payload duty cycle | Spacecraft & Flight Software | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 77 | 502 | communication allocation | Spacecraft & Flight Software | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 78 | 503 | space power budget | Spacecraft & Flight Software | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 79 | 504 | space thermal command | Spacecraft & Flight Software | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 80 | 505 | attitude command envelope | Spacecraft & Flight Software | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 81 | 506 | reaction wheel allocation | Spacecraft & Flight Software | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 82 | 507 | rcs authority | Spacecraft & Flight Software | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 83 | 508 | safe mode transition | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 84 | 509 | watchdog recovery | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 85 | 510 | instrument activation | Spacecraft & Flight Software | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 86 | 511 | fault isolation | Spacecraft & Flight Software | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 87 | 1080 | horizontal speed limit | Aviation & Autonomous Flight | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 88 | 1081 | vertical speed limits | Aviation & Autonomous Flight | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 89 | 1082 | acceleration jerk limits | Aviation & Autonomous Flight | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 90 | 1083 | state of charge limits | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 91 | 1084 | smart charging schedule | Automotive EV & Mobile Powertrain | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 92 | 2054 | traction effort limit | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 93 | 2055 | regenerative braking share | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 94 | 2056 | coasting speed target | Rail Traction & Train Control | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 95 | 2057 | dwell time schedule | Rail Traction & Train Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 96 | 2058 | hvac duty cycle | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 97 | 2059 | train auxiliary power budget | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 98 | 2060 | platform approach speed | Rail Traction & Train Control | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 99 | 2061 | acceleration rate setpoint | Rail Traction & Train Control | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 100 | 2062 | wheel slip protection mode | Rail Traction & Train Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 101 | 2063 | traction motor thermal derate | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 102 | 2064 | catenary voltage limit | Rail Traction & Train Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 103 | 2065 | timetable recovery margin | Rail Traction & Train Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 104 | 2066 | headway target | Rail Traction & Train Control | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 105 | 2067 | door release hold | Rail Traction & Train Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 106 | 2069 | propeller pitch limit | Marine Propulsion & Vessel Automation | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 107 | 2070 | shaft power limit | Marine Propulsion & Vessel Automation | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 108 | 2071 | bow thruster duty | Marine Propulsion & Vessel Automation | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 109 | 2072 | ballast pump mode | Marine Propulsion & Vessel Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 110 | 2076 | shore power mode | Marine Propulsion & Vessel Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 111 | 2077 | hotel load budget | Marine Propulsion & Vessel Automation | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 112 | 2079 | rudder rate limit | Marine Propulsion & Vessel Automation | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 113 | 2146 | hoist speed target | Elevators & Vertical Transport | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 114 | 2147 | acceleration limit | Elevators & Vertical Transport | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 115 | 2148 | regen drive mode | Elevators & Vertical Transport | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 116 | 2149 | standby power mode | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 117 | 2150 | destination dispatch schedule | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 118 | 2151 | car parking mode | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 119 | 2152 | door dwell hold | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 120 | 2153 | escalator speed target | Elevators & Vertical Transport | capacity | at its limit on native | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics | global |
+| 121 | 2154 | group capacity mode | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 122 | 2155 | motor thermal derate | Elevators & Vertical Transport | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 123 | 2156 | brake test schedule | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 124 | 2157 | fire recall mode | Elevators & Vertical Transport | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 125 | AUDIT-0045 | traction torque limit | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 126 | AUDIT-0046 | regen braking level | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 127 | AUDIT-0047 | battery charge limit | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 128 | AUDIT-0048 | battery discharge limit | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 129 | AUDIT-0049 | battery thermal target | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 130 | AUDIT-0050 | motor thermal limit | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 131 | AUDIT-0052 | energy recovery target | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 132 | AUDIT-0053 | auxiliary power budget | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 133 | AUDIT-0054 | fast charge current | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 134 | AUDIT-0055 | fast charge voltage | Automotive EV & Mobile Powertrain | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 135 | AUDIT-0056 | vehicle safe state | Automotive EV & Mobile Powertrain | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Physics | global |
+| 136 | V5-5140 | humanoid joint torque limit | Robotics Motion Control | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+| 137 | V5-5148 | ardupilot atc accel r max | Aviation & Autonomous Flight | power | at its limit on native | at its limit on native (full torque): read and left native | Physics | global |
+
+#### G.2.3 Energy / Facility / Industrial: 249 muscles, heaviest hitter first
+
+| Rank | # | Muscle (the setting's own name) | Family | Knob | Its hit | What Omni-Compass does with it | Realms | Its own card |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 568 | site battery dispatch | Facility & Grid Optimization | capacity | GAIN +9.97% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 2 | 566 | renewable dispatch | Facility & Grid Optimization | capacity | GAIN +9.21% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 3 | 567 | generator start stop | Facility & Grid Optimization | capacity | GAIN +8.83% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 4 | 573 | facility peak guard | Facility & Grid Optimization | capacity | GAIN +8.67% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 5 | 1085 | volt var | Energy Storage & Microgrid | capacity | GAIN +8.64% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 6 | 527 | storage dispatch | Energy Storage & Microgrid | capacity | GAIN +7.62% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 7 | 1086 | volt watt | Energy Storage & Microgrid | capacity | GAIN +7.36% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 8 | 523 | peak shaving | Energy Storage & Microgrid | capacity | GAIN +7.28% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0 wobbles of margin on its line |
+| 9 | 569 | pue target | Facility & Grid Optimization | setpoint | GAIN +4.10% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 1 wobbles of margin on its line |
+| 10 | 528 | microgrid emergency reserve | Energy Storage & Microgrid | setpoint | GAIN +3.90% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 1 wobbles of margin on its line |
+| 11 | 524 | time of use schedule | Energy Storage & Microgrid | setpoint | GAIN +3.69% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 1 wobbles of margin on its line |
+| 12 | 515 | battery soc reserve | Energy Storage & Microgrid | setpoint | GAIN +3.67% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy | 0.75 wobbles of margin on its line |
+| 13 | 521 | electrolyzer power | Energy Storage & Microgrid | power | GAIN +2.85% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 5 decisions before it holds; keeps 0% of its line clear |
+| 14 | 520 | heat pump power | Energy Storage & Microgrid | power | GAIN +2.14% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 15 | 518 | pv curtailment | Energy Storage & Microgrid | power | GAIN +2.05% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 16 | 514 | battery discharge power | Energy Storage & Microgrid | power | GAIN +1.74% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 17 | 532 | pdu outlet control | PDU, UPS & Electrical Distribution | capacity | GAIN +1.71% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 18 | 513 | battery charge power | Energy Storage & Microgrid | power | GAIN +1.61% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 10 decisions before it holds; keeps 0% of its line clear |
+| 19 | 537 | phase balance | PDU, UPS & Electrical Distribution | capacity | GAIN +1.53% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 20 | 541 | generator dispatch | PDU, UPS & Electrical Distribution | capacity | GAIN +1.49% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 21 | 570 | cooling power budget | Facility & Grid Optimization | power | GAIN +1.19% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 22 | 1057 | ups shutdown battery test | PDU, UPS & Electrical Distribution | capacity | GAIN +1.12% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 23 | 534 | ups operating mode | PDU, UPS & Electrical Distribution | capacity | GAIN +1.10% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 24 | 539 | reactive power target | PDU, UPS & Electrical Distribution | setpoint | GAIN +1.06% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0 wobbles of margin on its line |
+| 25 | 517 | grid export limit | Energy Storage & Microgrid | power | GAIN +0.95% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 5% of its line clear |
+| 26 | 540 | voltage target | PDU, UPS & Electrical Distribution | setpoint | GAIN +0.90% of decisions back under the line | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | all four: the spine | 0.25 wobbles of margin on its line |
+| 27 | 519 | ev charge power | Energy Storage & Microgrid | power | GAIN +0.74% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | global |
+| 28 | 516 | grid import limit | Energy Storage & Microgrid | power | GAIN +0.51% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | global |
+| 29 | 1087 | constant power factor reactive power | Energy Storage & Microgrid | power | GAIN +0.51% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | global |
+| 30 | 561 | facility power budget | Facility & Grid Optimization | power | GAIN +0.48% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 31 | 562 | utility demand limit | Facility & Grid Optimization | power | GAIN +0.38% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 32 | 571 | it power budget | Facility & Grid Optimization | power | GAIN +0.35% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
+| 33 | 522 | microgrid demand limit | Energy Storage & Microgrid | power | GAIN +0.26% of decisions back under the line | at its limit on native (full battery power): read and left native | Energy | global |
+| 34 | 467 | valve position | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 35 | 471 | furnace setpoint | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 36 | 472 | pressure setpoint | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 37 | 473 | temperature setpoint | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 38 | 474 | mass flow setpoint | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 39 | 475 | tank level target | Industrial PLC & Process Automation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 40 | 529 | server power cap | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 41 | 530 | rack power cap | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 42 | 531 | pdu branch power limit | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 43 | 535 | ups charge rate | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 44 | 536 | ups discharge rate | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 45 | 545 | supply air temperature | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 46 | 546 | return air target | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 47 | 547 | coolant supply temperature | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 48 | 548 | coolant flow | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 49 | 549 | pump speed | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 50 | 550 | fan speed | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 51 | 551 | chiller setpoint | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 52 | 553 | cooling tower fan | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 53 | 554 | cooling capacity | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 54 | 556 | gpu thermal envelope | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 55 | 557 | cpu thermal envelope | Cooling, Chillers & Thermodynamics | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | all four: the spine | global |
+| 56 | 572 | rack power allocation | Facility & Grid Optimization | power | STEADY | at its limit on native (full battery power): read and left native | Energy | global |
+| 57 | 1055 | server fan speed | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 58 | 1056 | economiser | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 59 | 1094 | setpoint reset trim and respond | Building & Critical Environment HVAC | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 60 | 1095 | duct static pressure setpoint | Building & Critical Environment HVAC | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 61 | 1096 | optimal start stop | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 62 | 1110 | hierarchical power budget row pdu switchboard controllers | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 63 | 1111 | priority aware capping throttle low priority first | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 64 | 1113 | power oversubscription with prediction | PDU, UPS & Electrical Distribution | power | STEADY | at its limit on native (full battery power): read and left native | all four: the spine | global |
+| 65 | 1122 | chiller plant supervisory control rl with safety layer | Cooling, Chillers & Thermodynamics | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | all four: the spine | global |
+| 66 | 2001 | operating room air change setpoint | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 67 | 2002 | isolation room pressure target | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 68 | 2003 | patient room temperature setpoint | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 69 | 2004 | surgical suite humidity target | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 70 | 2005 | ahu supply air temperature | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 71 | 2006 | pharmacy cold room setpoint | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 72 | 2007 | sterile storage humidity setpoint | Healthcare Critical Environments | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 73 | 2008 | imaging suite cooling capacity | Healthcare Critical Environments | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 74 | 2009 | chiller plant staging | Healthcare Critical Environments | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 75 | 2010 | exhaust fan capacity | Healthcare Critical Environments | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 76 | 2027 | mainline pressure setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 77 | 2028 | soil moisture target | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 78 | 2029 | pivot speed setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 79 | 2031 | greenhouse temperature setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 80 | 2032 | greenhouse co2 target | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 81 | 2033 | vent position setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 82 | 2034 | grain dryer temperature setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 83 | 2035 | cold storage temperature setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 84 | 2037 | milking vacuum level setpoint | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 85 | 2038 | well drawdown level target | Agriculture & Irrigation | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 86 | 2040 | compressor discharge pressure setpoint | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 87 | 2041 | pump station suction pressure target | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 88 | 2042 | line pack target | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 89 | 2043 | pipeline flow setpoint | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 90 | 2046 | terminal tank level target | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 91 | 2049 | heater outlet temperature setpoint | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 92 | 2051 | valve position target | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 93 | 2052 | cathodic protection voltage | Oil & Gas Pipelines | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 94 | 2092 | sag mill load setpoint | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 95 | 2093 | mill speed target | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 96 | 2094 | crusher gap setpoint | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 97 | 2096 | cyclone feed pressure target | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 98 | 2097 | thickener underflow density target | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 99 | 2099 | conveyor speed setpoint | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 100 | 2100 | dewatering pump level target | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 101 | 2102 | stockpile level target | Mining & Mineral Processing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 102 | 2106 | supply temperature setpoint | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 103 | 2107 | return temperature target | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 104 | 2108 | differential pressure setpoint | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 105 | 2112 | thermal storage level target | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 106 | 2116 | outdoor reset setpoint | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 107 | 2117 | cooling network supply temperature | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 108 | 2118 | cooling storage level target | District Heating & Cooling | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 109 | 2119 | turbine speed droop setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 110 | 2120 | unit load setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 111 | 2121 | boiler steam pressure setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 112 | 2122 | feedwater level target | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 113 | 2124 | excitation voltage setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 114 | 2125 | hydro gate position target | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 115 | 2126 | combustion air ratio setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 116 | 2127 | cooling water flow setpoint | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 117 | 2128 | inlet guide vane position | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 118 | 2132 | nuclear rod position target | Power Generation & Turbine Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 119 | 2133 | inverter volt var setpoint | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 120 | 2134 | inverter volt watt setpoint | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 121 | 2136 | plant reactive power target | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 122 | 2139 | rotor speed setpoint | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 123 | 2140 | inverter frequency droop setpoint | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 124 | 2143 | string mppt voltage setpoint | Renewable Generation & Inverter Control | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 125 | 2158 | reactor temperature setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 126 | 2159 | agitator speed setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 127 | 2160 | fermenter dissolved oxygen target | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 128 | 2161 | ph setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 129 | 2162 | pasteurizer holding temperature setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 130 | 2163 | freezer tunnel temperature setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 131 | 2165 | cleanroom pressure cascade setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 132 | 2166 | lyophilizer shelf temperature setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 133 | 2167 | chromatography flow setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 134 | 2169 | oven zone temperature setpoint | Pharmaceutical & Food Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 135 | AUDIT-0034 | voltage regulator tap | Grid Transmission & Distribution | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 136 | AUDIT-0035 | transformer tap | Grid Transmission & Distribution | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 137 | AUDIT-0038 | feeder voltage target | Grid Transmission & Distribution | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 138 | AUDIT-0042 | frequency droop setpoint | Grid Transmission & Distribution | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 139 | AUDIT-0060 | chamber temperature | Semiconductor Fab & Precision Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 140 | AUDIT-0061 | chamber pressure | Semiconductor Fab & Precision Manufacturing | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 141 | AUDIT-0070 | valve position water | Water Wastewater & Pumping | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 142 | AUDIT-0071 | reservoir level target | Water Wastewater & Pumping | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 143 | AUDIT-0072 | line pressure target | Water Wastewater & Pumping | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 144 | AUDIT-0073 | flow target water | Water Wastewater & Pumping | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Energy | global |
+| 145 | AUDIT-0081 | zone temperature target | Building & Critical Environment HVAC | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 146 | AUDIT-0082 | zone airflow | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 147 | AUDIT-0083 | ahu fan speed | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 148 | AUDIT-0084 | damper position | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 149 | AUDIT-0085 | economizer position | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 150 | AUDIT-0086 | boiler setpoint | Building & Critical Environment HVAC | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 151 | AUDIT-0088 | humidity target | Building & Critical Environment HVAC | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy | global |
+| 152 | AUDIT-0091 | thermal storage dispatch | Building & Critical Environment HVAC | capacity | STEADY | left to its own staging (native already has the cooling it needs: nothing to win) | Energy | global |
+| 153 | 465 | plc cycle authority | Industrial PLC & Process Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 154 | 466 | machine cell admission | Industrial PLC & Process Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 155 | 468 | pump flow | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 156 | 469 | compressor speed | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 157 | 470 | heater power | Industrial PLC & Process Automation | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 158 | 476 | conveyor rate | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 159 | 477 | feed rate | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 160 | 478 | purge vent action | Industrial PLC & Process Automation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 161 | 525 | energy load shed | Energy Storage & Microgrid | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 162 | 526 | flex load admission | Energy Storage & Microgrid | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 163 | 538 | load transfer | PDU, UPS & Electrical Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 164 | 542 | electrical isolation | PDU, UPS & Electrical Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 165 | 543 | breaker trip gate | PDU, UPS & Electrical Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 166 | 552 | compressor authority | Cooling, Chillers & Thermodynamics | power | at its limit on native | at its limit on native (the site envelope at full): read and left native | all four: the spine | global |
+| 167 | 555 | rack thermal budget | Cooling, Chillers & Thermodynamics | power | at its limit on native | at its limit on native (the site envelope at full): read and left native | all four: the spine | global |
+| 168 | 558 | thermal workload migrate | Cooling, Chillers & Thermodynamics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 169 | 559 | thermal load shed | Cooling, Chillers & Thermodynamics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 170 | 563 | demand response | Facility & Grid Optimization | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 171 | 564 | electricity price gate | Facility & Grid Optimization | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 172 | 565 | carbon intensity gate | Facility & Grid Optimization | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 173 | 574 | grid frequency response | Facility & Grid Optimization | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 174 | 575 | facility islanding | Facility & Grid Optimization | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 175 | 1088 | controller mode | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 176 | 1089 | alarm limits | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 177 | 1090 | safety interlock trip | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 178 | 1091 | opc ua writes | Industrial PLC & Process Automation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 179 | 1092 | run to run control | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 180 | 1093 | idle sleep mode | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 181 | 2011 | ward night setback mode | Healthcare Critical Environments | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 182 | 2012 | medical gas plant demand limit | Healthcare Critical Environments | power | at its limit on native | at its limit on native (the site envelope at full): read and left native | Energy | global |
+| 183 | 2013 | emergency power load shed | Healthcare Critical Environments | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 184 | 2026 | irrigation pump speed | Agriculture & Irrigation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 185 | 2030 | fertigation dose | Agriculture & Irrigation | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 186 | 2036 | barn ventilation rate | Agriculture & Irrigation | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 187 | 2039 | drip zone dispatch | Agriculture & Irrigation | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 188 | 2044 | compressor unit staging | Oil & Gas Pipelines | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 189 | 2045 | vfd pump speed | Oil & Gas Pipelines | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 190 | 2047 | leak detection shutdown | Oil & Gas Pipelines | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 191 | 2048 | batch interface dispatch | Oil & Gas Pipelines | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 192 | 2050 | drag reducing agent dose | Oil & Gas Pipelines | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 193 | 2053 | pressure protection priority | Oil & Gas Pipelines | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 194 | 2095 | flotation aeration rate | Mining & Mineral Processing | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 195 | 2098 | reagent dose | Mining & Mineral Processing | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 196 | 2101 | ventilation on demand airflow | Mining & Mineral Processing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 197 | 2103 | slurry pump speed | Mining & Mineral Processing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 198 | 2104 | tailings discharge shutdown | Mining & Mineral Processing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 199 | 2105 | ore blend dispatch | Mining & Mineral Processing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 200 | 2109 | network pump speed | District Heating & Cooling | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 201 | 2110 | heat pump staging | District Heating & Cooling | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 202 | 2111 | chp dispatch | District Heating & Cooling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 203 | 2113 | peak boiler heater output | District Heating & Cooling | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 204 | 2114 | substation flow limit | District Heating & Cooling | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 205 | 2115 | peak demand shed | District Heating & Cooling | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 206 | 2123 | agc participation limit | Power Generation & Turbine Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 207 | 2129 | reserve dispatch priority | Power Generation & Turbine Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 208 | 2130 | turbine ramp rate limit | Power Generation & Turbine Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 209 | 2131 | emissions shutdown | Power Generation & Turbine Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 210 | 2135 | active power curtailment | Renewable Generation & Inverter Control | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 211 | 2137 | wind turbine yaw offset | Renewable Generation & Inverter Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 212 | 2138 | pitch angle limit | Renewable Generation & Inverter Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 213 | 2141 | ramp rate limit | Renewable Generation & Inverter Control | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 214 | 2142 | tracker stow mode | Renewable Generation & Inverter Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 215 | 2144 | noise mode schedule | Renewable Generation & Inverter Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 216 | 2145 | ice detection shutdown | Renewable Generation & Inverter Control | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 217 | 2164 | cip cycle dispatch | Pharmaceutical & Food Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 218 | 2168 | steam sterilizer cycle priority | Pharmaceutical & Food Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 219 | 2170 | refrigerant compressor authority | Pharmaceutical & Food Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 220 | 2171 | batch hold quarantine | Pharmaceutical & Food Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 221 | AUDIT-0033 | capacitor bank switch | Grid Transmission & Distribution | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 222 | AUDIT-0036 | inverter real power | Grid Transmission & Distribution | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 223 | AUDIT-0037 | inverter reactive power | Grid Transmission & Distribution | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 224 | AUDIT-0039 | feeder load transfer | Grid Transmission & Distribution | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 225 | AUDIT-0040 | distribution storage dispatch | Grid Transmission & Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 226 | AUDIT-0041 | demand response dispatch | Grid Transmission & Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 227 | AUDIT-0043 | grid protection mode | Grid Transmission & Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 228 | AUDIT-0044 | grid restoration sequence | Grid Transmission & Distribution | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 229 | AUDIT-0057 | tool job dispatch | Semiconductor Fab & Precision Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 230 | AUDIT-0058 | wafer route | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 231 | AUDIT-0059 | chamber recipe selection | Semiconductor Fab & Precision Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 232 | AUDIT-0062 | gas flow | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 233 | AUDIT-0063 | rf power | Semiconductor Fab & Precision Manufacturing | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 234 | AUDIT-0064 | vacuum pump speed | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 235 | AUDIT-0065 | robot transfer rate | Semiconductor Fab & Precision Manufacturing | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 236 | AUDIT-0066 | lot priority | Semiconductor Fab & Precision Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 237 | AUDIT-0068 | tool quarantine | Semiconductor Fab & Precision Manufacturing | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 238 | AUDIT-0069 | pump speed water | Water Wastewater & Pumping | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 239 | AUDIT-0074 | aeration rate | Water Wastewater & Pumping | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 240 | AUDIT-0075 | chemical dose rate | Water Wastewater & Pumping | power | at its limit on native | at its limit on native (the full actuator): read and left native | Energy | global |
+| 241 | AUDIT-0076 | filtration backwash | Water Wastewater & Pumping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 242 | AUDIT-0077 | lift station dispatch | Water Wastewater & Pumping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 243 | AUDIT-0078 | leak isolation | Water Wastewater & Pumping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 244 | AUDIT-0079 | water demand shed | Water Wastewater & Pumping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 245 | AUDIT-0080 | water emergency shutdown | Water Wastewater & Pumping | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 246 | AUDIT-0087 | heat pump mode | Building & Critical Environment HVAC | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 247 | AUDIT-0089 | occupancy ventilation | Building & Critical Environment HVAC | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+| 248 | AUDIT-0090 | building demand limit | Building & Critical Environment HVAC | power | at its limit on native | at its limit on native (the site envelope at full): read and left native | Energy | global |
+| 249 | AUDIT-0092 | hvac emergency mode | Building & Critical Environment HVAC | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Energy | global |
+
+#### G.2.4 Distribution / Specialized: 277 muscles, heaviest hitter first
+
+| Rank | # | Muscle (the setting's own name) | Family | Knob | Its hit | What Omni-Compass does with it | Realms | Its own card |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | 1103 | io capacity | Database & Transactions | capacity | GAIN +6.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 2 | 287 | vacuum compaction rate | Database & Transactions | capacity | GAIN +6.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 3 | 278 | read route | Database & Transactions | capacity | GAIN +6.07% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 4 | 280 | db failover | Database & Transactions | capacity | GAIN +5.90% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 5 | 276 | db cache | Database & Transactions | capacity | GAIN +5.82% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 90% full; reads the last 40 decisions |
+| 6 | 415 | payment failover | Commerce & Payment Systems | capacity | GAIN +5.53% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 7 | 283 | db pool resize | Database & Transactions | capacity | GAIN +5.28% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 40 decisions |
+| 8 | 279 | shard placement | Database & Transactions | capacity | GAIN +5.21% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 40 decisions |
+| 9 | 273 | db replicas | Database & Transactions | capacity | GAIN +5.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 10 | 275 | db memory | Database & Transactions | capacity | GAIN +5.11% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 11 | 286 | checkpoint rate | Database & Transactions | capacity | GAIN +5.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 12 | 414 | settlement batch | Commerce & Payment Systems | capacity | GAIN +4.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 13 | 410 | order reservation | Commerce & Payment Systems | capacity | GAIN +4.71% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 14 | 406 | authorization route | Commerce & Payment Systems | capacity | GAIN +4.62% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 15 | 407 | processor route weight | Commerce & Payment Systems | setpoint | GAIN +4.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 16 | 1102 | buffer pool | Database & Transactions | capacity | GAIN +3.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 40 decisions |
+| 17 | 1100 | background writer | Database & Transactions | capacity | GAIN +3.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 18 | 1101 | synchronous replication | Database & Transactions | capacity | GAIN +3.82% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 19 | 1099 | parallel workers | Database & Transactions | capacity | GAIN +3.75% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 20 | 409 | idempotency window | Commerce & Payment Systems | setpoint | GAIN +3.45% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 21 | 413 | refund queue rate | Commerce & Payment Systems | capacity | GAIN +3.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 22 | 2016 | ehr application replicas | Medical Imaging & Clinical Systems | capacity | GAIN +2.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 23 | V5-5070 | backtest grid nodes | Financial Markets & Trading Systems | capacity | GAIN +2.54% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 24 | 2014 | pacs archive tier target | Medical Imaging & Clinical Systems | setpoint | GAIN +2.52% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 25 | V5-5127 | broker cluster nodes | Messaging & Streaming | capacity | GAIN +2.31% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 26 | 2019 | reconstruction gpu workers | Medical Imaging & Clinical Systems | capacity | GAIN +2.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 27 | 255 | service failover | Service Mesh & API Reliability | capacity | GAIN +1.96% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 28 | 364 | background workers | Runtime & Application | capacity | GAIN +1.57% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 29 | 359 | runtime memory | Runtime & Application | capacity | GAIN +1.46% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 30 | 354 | thread pool | Runtime & Application | capacity | GAIN +1.44% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 31 | 298 | fetch batch size | Messaging & Streaming | capacity | GAIN +1.42% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 32 | 373 | collector memory limit | Observability & Telemetry | capacity | GAIN +1.35% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 33 | 389 | degraded mode | Reliability, Security & Recovery | capacity | GAIN +1.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 34 | 1108 | go runtime | Runtime & Application | capacity | GAIN +1.32% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 35 | 305 | cache size | Cache & Memory Services | capacity | GAIN +1.30% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 10 decisions |
+| 36 | 361 | event loop workers | Runtime & Application | capacity | GAIN +1.28% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 20 decisions |
+| 37 | 321 | index workers | Search, Indexing & Vector DB | capacity | GAIN +1.24% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 20 decisions |
+| 38 | 318 | cache failover | Cache & Memory Services | capacity | GAIN +1.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 39 | 1119 | per pod energy attribution | Observability & Telemetry | capacity | GAIN +1.19% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 60 decisions |
+| 40 | 248 | canary weight | Service Mesh & API Reliability | setpoint | GAIN +1.18% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 41 | 251 | dns traffic weight | Service Mesh & API Reliability | setpoint | GAIN +1.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 42 | 309 | cache sharding | Cache & Memory Services | capacity | GAIN +1.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 43 | 331 | embedding workers | Search, Indexing & Vector DB | capacity | GAIN +1.16% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 44 | AUDIT-0014 | ran scheduler weight | Telecom RAN & Edge Radio | setpoint | GAIN +1.15% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 45 | 308 | cache replicas | Cache & Memory Services | capacity | GAIN +1.13% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 46 | 397 | backup trigger | Reliability, Security & Recovery | capacity | GAIN +1.12% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 47 | 299 | rebalance rate | Messaging & Streaming | capacity | GAIN +1.11% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 48 | 323 | segment merge rate | Search, Indexing & Vector DB | capacity | GAIN +1.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 49 | 1097 | load balancing policy | Service Mesh & API Reliability | capacity | GAIN +1.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 50 | 304 | broker failover | Messaging & Streaming | capacity | GAIN +1.06% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 51 | 311 | cache writeback rate | Cache & Memory Services | capacity | GAIN +1.05% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 52 | 355 | jvm heap | Runtime & Application | capacity | GAIN +1.05% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 53 | 377 | retention window | Observability & Telemetry | setpoint | GAIN +1.04% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 85% full; reads the last 40 decisions |
+| 54 | 302 | dead letter divert | Messaging & Streaming | capacity | GAIN +1.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 55 | 362 | process count | Runtime & Application | capacity | GAIN +1.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 56 | 1109 | keepalive connection reuse | Runtime & Application | capacity | GAIN +1.03% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 57 | 306 | cache ttl | Cache & Memory Services | setpoint | GAIN +1.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 58 | 358 | application cache size | Runtime & Application | capacity | GAIN +1.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 59 | V5-5121 | waf inspection workers | Reliability, Security & Recovery | capacity | GAIN +1.01% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 60 | 330 | vector batch size | Search, Indexing & Vector DB | capacity | GAIN +1.00% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 61 | 1106 | memory size threads | Cache & Memory Services | capacity | GAIN +1.00% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 62 | 247 | traffic mirror | Service Mesh & API Reliability | capacity | GAIN +0.99% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 63 | 326 | shard count | Search, Indexing & Vector DB | capacity | GAIN +0.99% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 64 | 327 | shard replication | Search, Indexing & Vector DB | capacity | GAIN +0.98% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 65 | 310 | cache prefetch | Cache & Memory Services | capacity | GAIN +0.97% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 66 | 252 | session affinity | Service Mesh & API Reliability | capacity | GAIN +0.95% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 67 | V5-5059 | order gateway sessions | Financial Markets & Trading Systems | capacity | GAIN +0.94% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 68 | 246 | traffic divert | Service Mesh & API Reliability | capacity | GAIN +0.94% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 69 | 300 | replication factor | Messaging & Streaming | capacity | GAIN +0.94% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 10 decisions |
+| 70 | 388 | traffic divert recovery | Reliability, Security & Recovery | capacity | GAIN +0.94% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 71 | 289 | partition count | Messaging & Streaming | capacity | GAIN +0.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 72 | 333 | query route | Search, Indexing & Vector DB | capacity | GAIN +0.92% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 60 decisions |
+| 73 | 386 | rollback | Reliability, Security & Recovery | capacity | GAIN +0.91% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 74 | 297 | producer batch size | Messaging & Streaming | capacity | GAIN +0.90% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 75 | 328 | shard rebalance | Search, Indexing & Vector DB | capacity | GAIN +0.90% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 76 | AUDIT-0010 | ran ue handover | Telecom RAN & Edge Radio | capacity | GAIN +0.89% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 77 | AUDIT-0016 | ran antenna tilt | Telecom RAN & Edge Radio | capacity | GAIN +0.89% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 78 | 294 | message retention | Messaging & Streaming | capacity | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 79 | 329 | vector search k | Search, Indexing & Vector DB | capacity | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 80 | V5-5061 | pre trade risk check workers | Financial Markets & Trading Systems | capacity | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 81 | V5-5058 | matching engine threads | Financial Markets & Trading Systems | capacity | GAIN +0.88% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 82 | 378 | remote write queue | Observability & Telemetry | capacity | GAIN +0.86% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 83 | 394 | policy enforcement | Reliability, Security & Recovery | capacity | GAIN +0.86% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 84 | AUDIT-0017 | ran carrier enable | Telecom RAN & Edge Radio | capacity | GAIN +0.85% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 85 | AUDIT-0018 | ran cell sleep | Telecom RAN & Edge Radio | capacity | GAIN +0.84% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 86 | 315 | cache memory limit | Cache & Memory Services | capacity | GAIN +0.83% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 87 | 322 | index refresh rate | Search, Indexing & Vector DB | capacity | GAIN +0.82% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 88 | 253 | request hedging | Service Mesh & API Reliability | capacity | GAIN +0.81% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 89 | 353 | worker count | Runtime & Application | capacity | GAIN +0.79% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 10 decisions |
+| 90 | 1053 | metric scrape interval | Observability & Telemetry | setpoint | GAIN +0.79% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 91 | AUDIT-0013 | ran prb allocation | Telecom RAN & Edge Radio | capacity | GAIN +0.77% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 92 | 290 | partition placement | Messaging & Streaming | capacity | GAIN +0.76% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 93 | 367 | runtime restart | Runtime & Application | capacity | GAIN +0.74% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 94 | 316 | cache compression | Cache & Memory Services | capacity | GAIN +0.72% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 95 | 357 | connection pool runtime | Runtime & Application | capacity | GAIN +0.71% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 96 | 317 | cache warmup | Cache & Memory Services | capacity | GAIN +0.69% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 97 | 1052 | lifecycle tiering | Storage Block/File/Object | capacity | GAIN +0.69% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 98 | 319 | cache flush rate | Cache & Memory Services | capacity | GAIN +0.69% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 99 | 270 | erasure code profile | Storage Block/File/Object | capacity | GAIN +0.67% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 100 | AUDIT-0019 | ran du cu placement | Telecom RAN & Edge Radio | capacity | GAIN +0.65% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 101 | 385 | restart | Reliability, Security & Recovery | capacity | GAIN +0.63% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 10 decisions |
+| 102 | 1054 | batching | Observability & Telemetry | capacity | GAIN +0.61% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 80% full; reads the last 10 decisions |
+| 103 | 1104 | prefetch | Messaging & Streaming | capacity | GAIN +0.59% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 104 | 259 | throughput limit | Storage Block/File/Object | capacity | GAIN +0.58% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 105 | AUDIT-0011 | ran cell traffic steering | Telecom RAN & Edge Radio | capacity | GAIN +0.58% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 106 | 1049 | scrub schedule | Storage Block/File/Object | capacity | GAIN +0.54% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 70% full; reads the last 20 decisions |
+| 107 | 1105 | memory disk alarm | Messaging & Streaming | capacity | GAIN +0.53% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 108 | 228 | bandwidth limit | Network Routing & Switching | capacity | GAIN +0.51% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 109 | 262 | volume placement | Storage Block/File/Object | capacity | GAIN +0.51% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 110 | V5-5124 | mqtt broker max connections | Messaging & Streaming | capacity | GAIN +0.50% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 111 | 257 | volume size | Storage Block/File/Object | capacity | GAIN +0.49% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 112 | 1046 | nic interrupt coalescing | Network Routing & Switching | capacity | GAIN +0.47% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 113 | 233 | nic queue count | Network Routing & Switching | capacity | GAIN +0.46% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 114 | V5-5041 | origin shield concurrency | Content Delivery & Edge Cache | capacity | GAIN +0.46% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 115 | 226 | route weight | Network Routing & Switching | setpoint | GAIN +0.45% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 116 | 268 | cache allocation | Storage Block/File/Object | capacity | GAIN +0.45% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 117 | 229 | qos class | Network Routing & Switching | capacity | GAIN +0.44% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 118 | 269 | object replication | Storage Block/File/Object | capacity | GAIN +0.44% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 119 | 261 | storage tier | Storage Block/File/Object | capacity | GAIN +0.43% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 120 | 266 | backfill rate | Storage Block/File/Object | capacity | GAIN +0.43% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 121 | 1047 | nic ring size | Network Routing & Switching | capacity | GAIN +0.42% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 80% full; reads the last 10 decisions |
+| 122 | V5-5040 | edge cache size | Content Delivery & Edge Cache | capacity | GAIN +0.41% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 123 | V5-5131 | dns resolver cache size | Runtime & Application | capacity | GAIN +0.41% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 124 | V5-5062 | market data fanout threads | Financial Markets & Trading Systems | capacity | GAIN +0.39% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 125 | 225 | lb weight | Network Routing & Switching | setpoint | GAIN +0.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 126 | 234 | queue discipline | Network Routing & Switching | capacity | GAIN +0.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 127 | V5-5118 | ids capture threads | Reliability, Security & Recovery | capacity | GAIN +0.38% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 128 | 260 | replica count | Storage Block/File/Object | capacity | GAIN +0.37% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 129 | 265 | recovery rate | Storage Block/File/Object | capacity | GAIN +0.36% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 130 | 245 | connection pool | Service Mesh & API Reliability | capacity | GAIN +0.35% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 131 | 264 | rebalance | Storage Block/File/Object | capacity | GAIN +0.35% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 132 | 1050 | io scheduler | Storage Block/File/Object | capacity | GAIN +0.34% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 133 | 263 | snapshot trigger | Storage Block/File/Object | capacity | GAIN +0.33% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | machines started at 75% full; reads the last 10 decisions |
+| 134 | 267 | compaction pressure | Storage Block/File/Object | capacity | GAIN +0.32% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 135 | 235 | congestion control | Network Routing & Switching | capacity | GAIN +0.31% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 136 | 239 | path selection | Network Routing & Switching | capacity | GAIN +0.28% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 137 | 231 | failover route | Network Routing & Switching | capacity | GAIN +0.26% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 138 | 238 | ecmp weight | Network Routing & Switching | setpoint | GAIN +0.26% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 139 | V5-5133 | mail queue concurrency | Runtime & Application | capacity | GAIN +0.18% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 140 | 258 | iops limit | Storage Block/File/Object | capacity | GAIN +0.17% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | all four: the spine | global |
+| 141 | 429 | route replan | Workflow, Logistics & Fulfillment | capacity | GAIN +0.10% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 142 | 431 | compensation action | Workflow, Logistics & Fulfillment | capacity | GAIN +0.09% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 40 decisions |
+| 143 | 428 | shipment batch | Workflow, Logistics & Fulfillment | capacity | GAIN +0.04% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 144 | V5-5071 | surveillance alert queue workers | Financial Markets & Trading Systems | capacity | GAIN +0.04% of decisions back under the line | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 145 | 344 | stage parallelism | Data Analytics & ETL | capacity | GAIN +54.0%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 146 | 338 | executor size | Data Analytics & ETL | capacity | GAIN +52.5%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 147 | 342 | shuffle bandwidth | Data Analytics & ETL | capacity | GAIN +51.8%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 148 | V5-5122 | siem ingest pipeline workers | Reliability, Security & Recovery | capacity | GAIN +51.8%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 10 decisions |
+| 149 | 347 | cache fraction | Data Analytics & ETL | setpoint | GAIN +51.5%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 20 decisions |
+| 150 | 341 | shuffle partitions | Data Analytics & ETL | capacity | GAIN +50.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 151 | 340 | dynamic allocation max | Data Analytics & ETL | capacity | GAIN +50.2%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 20 decisions |
+| 152 | 351 | speculation policy | Data Analytics & ETL | capacity | GAIN +50.0%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 75% full; reads the last 10 decisions |
+| 153 | 348 | batch interval | Data Analytics & ETL | setpoint | GAIN +49.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 20 decisions |
+| 154 | 425 | warehouse queue | Workflow, Logistics & Fulfillment | capacity | GAIN +46.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 155 | 339 | dynamic allocation min | Data Analytics & ETL | capacity | GAIN +46.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 156 | 345 | query slots | Data Analytics & ETL | capacity | GAIN +43.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 85% full; reads the last 10 decisions |
+| 157 | V5-5067 | post trade settlement workers | Financial Markets & Trading Systems | capacity | GAIN +42.9%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 20 decisions |
+| 158 | 350 | data locality wait | Data Analytics & ETL | capacity | GAIN +42.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 80% full; reads the last 20 decisions |
+| 159 | 418 | workflow worker rate | Workflow, Logistics & Fulfillment | capacity | GAIN +38.0%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | machines started at 70% full; reads the last 10 decisions |
+| 160 | 423 | inventory allocation | Workflow, Logistics & Fulfillment | capacity | GAIN +35.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 161 | 424 | fulfillment route | Workflow, Logistics & Fulfillment | capacity | GAIN +35.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 162 | 426 | carrier selection | Workflow, Logistics & Fulfillment | capacity | GAIN +31.8%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 163 | 419 | task queue rate | Workflow, Logistics & Fulfillment | capacity | GAIN +29.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 164 | 430 | sla escalation | Workflow, Logistics & Fulfillment | capacity | GAIN +24.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 165 | 2087 | rail mounted gantry dispatch | Ports & Maritime Logistics | capacity | GAIN +13.5%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 166 | 2080 | quay crane allocation | Ports & Maritime Logistics | capacity | GAIN +11.6%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 167 | 2090 | stacking height target | Ports & Maritime Logistics | setpoint | GAIN +10.7%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 168 | 2084 | horizontal transport fleet size | Ports & Maritime Logistics | capacity | GAIN +8.3%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 169 | 2081 | yard crane fleet size | Ports & Maritime Logistics | capacity | GAIN +8.1%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 170 | 2086 | shore power connection capacity | Ports & Maritime Logistics | capacity | GAIN +6.4%, the line cleared sooner | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution | global |
+| 171 | V5-5039 | cdn cache ttl | Content Delivery & Edge Cache | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 172 | V5-5042 | prefetch aggressiveness | Content Delivery & Edge Cache | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 173 | V5-5063 | market data conflation interval | Financial Markets & Trading Systems | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 174 | V5-5064 | fix session heartbeat interval | Financial Markets & Trading Systems | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 175 | V5-5066 | tick store write batch | Financial Markets & Trading Systems | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 176 | V5-5069 | colocation rack cooling setpoint | Financial Markets & Trading Systems | setpoint | STEADY | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Distribution | global |
+| 177 | V5-5119 | ids ring buffer size | Reliability, Security & Recovery | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 178 | V5-5125 | mqtt max inflight messages | Messaging & Streaming | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 179 | V5-5126 | mqtt session expiry | Messaging & Streaming | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 180 | V5-5132 | dns negative cache ttl | Runtime & Application | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 181 | V5-5134 | mail retry interval | Runtime & Application | setpoint | STEADY | left native: native already holds it inside its band (nothing to win) | Distribution | global |
+| 182 | 227 | rate limit | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 183 | 230 | connection limit | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 184 | 232 | nic rate limit | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 185 | 236 | egress budget | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 186 | 237 | ingress budget | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 187 | 240 | network isolation | Network Routing & Switching | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 188 | 241 | circuit breaker | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 189 | 242 | retry budget | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 190 | 243 | service timeout | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 191 | 244 | service concurrency | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 192 | 249 | outlier ejection | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 193 | 250 | health threshold | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 194 | 254 | fault injection gate | Service Mesh & API Reliability | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 195 | 271 | storage admission | Storage Block/File/Object | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 196 | 272 | degraded storage gate | Storage Block/File/Object | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 197 | 277 | query concurrency | Database & Transactions | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 198 | 281 | replication lag gate | Database & Transactions | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 199 | 282 | db write throttle | Database & Transactions | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 200 | 284 | transaction concurrency | Database & Transactions | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 201 | 285 | lock timeout | Database & Transactions | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 202 | 291 | producer quota | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 203 | 292 | consumer quota | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 204 | 293 | broker io quota | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 205 | 295 | queue depth limit | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 206 | 296 | consumer concurrency | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 207 | 301 | retry backoff | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 208 | 303 | stream priority | Messaging & Streaming | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 209 | 307 | cache eviction policy | Cache & Memory Services | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 210 | 312 | cache admission | Cache & Memory Services | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 211 | 313 | hot key isolation | Cache & Memory Services | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 212 | 314 | cache connection limit | Cache & Memory Services | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 213 | 324 | search concurrency | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 214 | 325 | search timeout | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 215 | 332 | index memory budget | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 216 | 334 | hot shard isolation | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 217 | 335 | search admission | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 218 | 343 | etl concurrency | Data Analytics & ETL | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 219 | 346 | spill threshold | Data Analytics & ETL | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 220 | 349 | stream backpressure | Data Analytics & ETL | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 221 | 352 | analytics admission | Data Analytics & ETL | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 222 | 356 | gc budget | Runtime & Application | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 223 | 360 | async concurrency | Runtime & Application | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 224 | 363 | request timeout | Runtime & Application | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 225 | 365 | runtime cpu budget | Runtime & Application | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 226 | 366 | runtime io budget | Runtime & Application | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 227 | 374 | export concurrency | Observability & Telemetry | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 228 | 376 | cardinality budget | Observability & Telemetry | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 229 | 379 | telemetry shed | Observability & Telemetry | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 230 | 390 | actuator freeze | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 231 | 391 | workload isolate | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 232 | 393 | credential rotation gate | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 233 | 395 | rate abuse gate | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 234 | 396 | fault domain isolate | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 235 | 400 | kill switch | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | all four: the spine | global |
+| 236 | 401 | payment admission | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 237 | 402 | payment concurrency | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 238 | 403 | payment retry | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 239 | 404 | payment timeout | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 240 | 405 | fraud review gate | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 241 | 408 | transaction queue limit | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 242 | 411 | inventory hold | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 243 | 412 | checkout load shed | Commerce & Payment Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 244 | 417 | workflow admission | Workflow, Logistics & Fulfillment | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 245 | 420 | workflow retry | Workflow, Logistics & Fulfillment | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 246 | 421 | workflow backoff | Workflow, Logistics & Fulfillment | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 247 | 422 | workflow timeout | Workflow, Logistics & Fulfillment | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 248 | 427 | dispatch priority | Workflow, Logistics & Fulfillment | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 249 | 1048 | port link power | Network Routing & Switching | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 250 | 1051 | disk power spin down | Storage Block/File/Object | power | at its limit on native | at its limit on native (the full clock): read and left native | all four: the spine | global |
+| 251 | 1107 | circuit breakers | Search, Indexing & Vector DB | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 252 | 2015 | dicom router concurrency | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 253 | 2017 | hl7 interface queue limit | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 254 | 2018 | fhir api rate limit | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 255 | 2020 | modality worklist timeout | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 256 | 2021 | patient monitoring gateway capacity | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 257 | 2022 | lab analyzer batch window | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 258 | 2023 | telehealth session admission | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 259 | 2024 | clinical backup window | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 260 | 2025 | imaging prefetch priority | Medical Imaging & Clinical Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 261 | 2082 | berth window admission | Ports & Maritime Logistics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 262 | 2083 | truck gate rate limit | Ports & Maritime Logistics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 263 | 2085 | reefer plug power budget | Ports & Maritime Logistics | power | at its limit on native | at its limit on native (the full clock): read and left native | Distribution | global |
+| 264 | 2088 | container dwell priority | Ports & Maritime Logistics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 265 | 2089 | vessel arrival pacing | Ports & Maritime Logistics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 266 | 2091 | equipment charging window | Ports & Maritime Logistics | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 267 | AUDIT-0009 | ran connection admission | Telecom RAN & Edge Radio | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 268 | AUDIT-0012 | ran slice resource budget | Telecom RAN & Edge Radio | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 269 | AUDIT-0015 | ran tx power | Telecom RAN & Edge Radio | power | at its limit on native | at its limit on native (the full clock): read and left native | Distribution | global |
+| 270 | AUDIT-0020 | ran fronthaul budget | Telecom RAN & Edge Radio | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 271 | V5-5043 | tiered cache promotion | Content Delivery & Edge Cache | capacity | at its limit on native | at its limit on native (the full actuator): read and left native | Distribution | global |
+| 272 | V5-5044 | edge pop admission | Content Delivery & Edge Cache | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 273 | V5-5060 | order admission rate limit | Financial Markets & Trading Systems | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 274 | V5-5065 | kernel bypass poll cores | Financial Markets & Trading Systems | power | at its limit on native | at its limit on native (the full clock): read and left native | Distribution | global |
+| 275 | V5-5068 | end of day risk batch power | Financial Markets & Trading Systems | power | at its limit on native | at its limit on native (the full clock): read and left native | Distribution | global |
+| 276 | V5-5120 | ids rule group admission | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+| 277 | V5-5123 | endpoint scan scheduling | Reliability, Security & Recovery | admission | at its limit on native | at its limit on native (nothing paced or turned away): read and left native | Distribution | global |
+
+### G.3 How each family is wired, the family with the heaviest hitter first
+
+Every family's muscles are wired the same way on a real stack; its muscles are named after its wire, heaviest hitter first, with each one's rank in its realm's table above.
+
+##### G.3.1 Robotics Motion Control (26 muscles)
+
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `robot_joint` (a robot joint servo), reached through the robot controller (ROS 2, EtherCAT, the drive's fieldbus). Omni-Compass reads its tracking error and its load.
 
 - **Native controller:** the robot's own controller: ros2_control and MoveIt parameters, the drive's limits over EtherCAT or the vendor fieldbus.
 - **Wire out (read):** joint tracking error, effort, temperature, cycle time (joint_states, the drive's registers).
 - **Wire in (write):** velocity and acceleration scaling, trajectory tolerances and controller rates through ROS 2 parameters (ros2 param set) or the drive's limit registers; never past the manufacturer's limits.
 - **Restore:** every parameter read once (ros2 param get) and restored (ros2 param set).
 - **Run live?** modelled: MuJoCo (results/live/V3_MUJOCO.md); the ROS 2 path is written, not yet run on a physical arm.
+- **Its muscles, heaviest hitter first:** controller update rate (Physics 1), humanoid gait speed (Physics 2), jerk limit (Physics 3), velocity acceleration scaling (Physics 5), joint velocity (Physics 6), joint position (Physics 7), balance correction (Physics 8), humanoid step height (Physics 10), locomotion speed (Physics 12), trajectory tolerances (Physics 13), joint acceleration (Physics 14), manipulator payload speed scaling (Physics 15), humanoid balance margin (Physics 16), collision margin (Physics 18), ros2 executor threads (Physics 20), cartesian velocity (Physics 22), trajectory speed (Physics 23), trajectory acceleration (Physics 24), steering angle (Physics 26), ros2 qos history depth (Physics 54), ros2 control loop rate (Physics 55), joint effort (Physics 56), force limit (Physics 57), gripper force (Physics 58), braking force (Physics 59), humanoid joint torque limit (Physics 136).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 433 | joint position | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 434 | joint velocity | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 435 | joint acceleration | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 436 | joint effort | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 437 | cartesian velocity | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 438 | trajectory speed | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 439 | trajectory acceleration | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 440 | jerk limit | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 441 | collision margin | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 442 | force limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 443 | gripper force | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 444 | locomotion speed | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 445 | steering angle | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 446 | braking force | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 447 | balance correction | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 1076 | trajectory tolerances | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 1077 | velocity acceleration scaling | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 1078 | controller update rate | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5135 | ros2 executor threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Physics; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| V5-5136 | ros2 qos history depth | setpoint | left native: native already holds it inside its band (nothing to win) | Physics; stack; tower | global |
-| V5-5137 | ros2 control loop rate | setpoint | left native: native already holds it inside its band (nothing to win) | Physics; stack; tower | global |
-| V5-5138 | humanoid balance margin | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5139 | humanoid gait speed | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5140 | humanoid joint torque limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| V5-5141 | humanoid step height | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| V5-5142 | manipulator payload speed scaling | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
+##### G.3.2 Automotive EV & Mobile Powertrain (14 muscles)
 
-#### G.4.5 Spacecraft & Flight Software (14 muscles)
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `ev_traction` (an electric vehicle traction motor), reached through the vehicle's motor controller (CAN; modelled only). Omni-Compass reads its tracking error and its load.
 
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `reaction_wheel` (a spacecraft reaction wheel), reached through the attitude controller (modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the flight software's command and mode tables (cFS, F Prime).
-- **Wire out (read):** attitude error, wheel speeds, power and thermal state from telemetry.
-- **Wire in (write):** payload duty cycle, communication allocation and wheel allocation through commands; safe modes never commanded.
-- **Restore:** the command table recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 497 | space command admission | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 499 | flight task schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 500 | space mode transition | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 501 | payload duty cycle | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 502 | communication allocation | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 503 | space power budget | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 504 | space thermal command | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 505 | attitude command envelope | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 506 | reaction wheel allocation | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 507 | rcs authority | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 508 | safe mode transition | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 509 | watchdog recovery | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 510 | instrument activation | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 511 | fault isolation | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-
-#### G.4.6 Rail Traction & Train Control (14 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `rail_traction` (a train's traction and auxiliary systems), reached through the train control and management system and ATO (modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the train control and management system and ATO.
-- **Wire out (read):** speed, traction effort, timetable margin, auxiliary power (TCMS telemetry).
-- **Wire in (write):** traction and coasting targets within the ATO's envelope.
+- **Native controller:** the vehicle's motor and battery controllers (CAN, the OEM's diagnostic interface).
+- **Wire out (read):** torque, speed, state of charge, temperatures (CAN signals).
+- **Wire in (write):** torque, regeneration and charge limits within the OEM's envelope.
 - **Restore:** recorded; restored.
 - **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** vehicle speed envelope (Physics 4), state of charge limits (Physics 90), smart charging schedule (Physics 91), traction torque limit (Physics 125), regen braking level (Physics 126), battery charge limit (Physics 127), battery discharge limit (Physics 128), battery thermal target (Physics 129), motor thermal limit (Physics 130), energy recovery target (Physics 131), auxiliary power budget (Physics 132), fast charge current (Physics 133), fast charge voltage (Physics 134), vehicle safe state (Physics 135).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2054 | traction effort limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2055 | regenerative braking share | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2056 | coasting speed target | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2057 | dwell time schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2058 | hvac duty cycle | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2059 | train auxiliary power budget | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2060 | platform approach speed | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2061 | acceleration rate setpoint | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2062 | wheel slip protection mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2063 | traction motor thermal derate | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2064 | catenary voltage limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2065 | timetable recovery margin | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2066 | headway target | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2067 | door release hold | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
+##### G.3.3 Facility & Grid Optimization (15 muscles)
 
-#### G.4.7 Marine Propulsion & Vessel Automation (12 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `marine_propulsion` (a ship's propulsion shaft and power plant), reached through the vessel automation and power management system (modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the vessel's automation and power management system.
-- **Wire out (read):** shaft speed and power, fuel rate, engine load (the automation system).
-- **Wire in (write):** shaft speed and power limits, engine staging within the manufacturer's envelope.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2068 | shaft speed target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 2069 | propeller pitch limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2070 | shaft power limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2071 | bow thruster duty | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2072 | ballast pump mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2073 | engine load sharing setpoint | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 2074 | slow steaming speed target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 2075 | auxiliary engine staging | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 2076 | shore power mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2077 | hotel load budget | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2078 | trim target | capacity | its own peak speed while tasks wait, back to its everyday speed near its heat limit or when its tracking strains (alone; inside a body, its everyday speed) | Physics; stack; tower | global |
-| 2079 | rudder rate limit | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-
-#### G.4.8 Elevators & Vertical Transport (12 muscles)
-
-Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `elevator_hoist` (an elevator or escalator drive and its group control), reached through the lift controller and destination dispatch (modelled only). Omni-Compass reads its tracking error and its load. Its home realm is Physics / Robotics / Autonomous.
-
-**Wire it on your stack.**
-
-- **Native controller:** the lift controller and destination dispatch.
-- **Wire out (read):** calls waiting, car positions, drive temperature (the controller).
-- **Wire in (write):** speed and dispatch modes within the manufacturer's limits; safety modes never written.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2146 | hoist speed target | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2147 | acceleration limit | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2148 | regen drive mode | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2149 | standby power mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2150 | destination dispatch schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2151 | car parking mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2152 | door dwell hold | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2153 | escalator speed target | capacity | at its limit on native (its everyday speed is the machine's limit): read and left native | Physics; stack; tower | global |
-| 2154 | group capacity mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2155 | motor thermal derate | power | at its limit on native (full torque): read and left native | Physics; stack; tower | global |
-| 2156 | brake test schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-| 2157 | fire recall mode | admission | at its limit on native (nothing paced or turned away): read and left native | Physics; stack; tower | global |
-
-### G.5 Realm: Energy / Facility / Industrial (213 muscles of its own, 480 in its organism with the spine)
-
-#### G.5.1 Building & Critical Environment HVAC (15 muscles)
-
-Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `building` (a building zone), reached through the building management system. Omni-Compass reads its temperature against its limit. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the building management system (BACnet) and the AHU and zone controllers.
-- **Wire out (read):** zone temperatures, airflows, duct static pressure, occupancy (BACnet reads).
-- **Wire in (write):** zone setpoints, fan speeds and damper positions within their bands by BACnet write; the BMS's own sequences keep control.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled: CityLearn districts (results/live/V3_CITYLEARN.md); the BACnet path is written.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 1094 | setpoint reset trim and respond | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 1095 | duct static pressure setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 1096 | optimal start stop | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0081 | zone temperature target | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| AUDIT-0082 | zone airflow | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0083 | ahu fan speed | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0084 | damper position | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0085 | economizer position | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0086 | boiler setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| AUDIT-0087 | heat pump mode | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0088 | humidity target | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| AUDIT-0089 | occupancy ventilation | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0090 | building demand limit | power | at its limit on native (the site envelope at full): read and left native | Energy; stack; tower | global |
-| AUDIT-0091 | thermal storage dispatch | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| AUDIT-0092 | hvac emergency mode | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.2 Energy Storage & Microgrid (19 muscles)
-
-Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `microgrid` (a microgrid battery and loads), reached through the inverter or energy management system (IEEE 2030.5, SunSpec, OpenADR). Omni-Compass reads its draw on the grid connection and its reserve. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the battery's or site's energy management system and inverter (SunSpec, IEEE 2030.5, OpenADR, Modbus).
-- **Wire out (read):** state of charge, grid import and export, PV output, load (the EMS or inverter registers).
-- **Wire in (write):** the reserve setpoint, charge and discharge limits, import limit and curtailment through SunSpec or Modbus registers.
-- **Restore:** registers read once and restored.
-- **Run live?** modelled: CityLearn (results/live/V3_CITYLEARN.md) for the districts; the register path is written.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 513 | battery charge power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 10 decisions before it holds; keeps 0% of its line clear |
-| 514 | battery discharge power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 515 | battery soc reserve | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0.75 wobbles of margin on its line |
-| 516 | grid import limit | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | global |
-| 517 | grid export limit | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 5% of its line clear |
-| 518 | pv curtailment | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 519 | ev charge power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | global |
-| 520 | heat pump power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 521 | electrolyzer power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 5 decisions before it holds; keeps 0% of its line clear |
-| 522 | microgrid demand limit | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | global |
-| 523 | peak shaving | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 524 | time of use schedule | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 1 wobbles of margin on its line |
-| 525 | energy load shed | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 526 | flex load admission | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 527 | storage dispatch | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 528 | microgrid emergency reserve | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 1 wobbles of margin on its line |
-| 1085 | volt var | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 1086 | volt watt | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 1087 | constant power factor reactive power | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | global |
-
-#### G.5.3 Facility & Grid Optimization (15 muscles)
-
-Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `facility` (a facility battery behind the meter), reached through the energy management system. Omni-Compass reads its draw on the grid connection and its reserve. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
+Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `facility` (a facility battery behind the meter), reached through the energy management system. Omni-Compass reads its draw on the grid connection and its reserve.
 
 - **Native controller:** the facility's energy management system and demand-response gateway (OpenADR).
 - **Wire out (read):** site power, utility signals, PUE, carbon intensity (the EMS and the utility's feed).
 - **Wire in (write):** the site power budget, demand limit and battery dispatch through the EMS.
 - **Restore:** recorded; restored.
 - **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** site battery dispatch (Energy 1), renewable dispatch (Energy 2), generator start stop (Energy 3), facility peak guard (Energy 4), pue target (Energy 9), cooling power budget (Energy 21), facility power budget (Energy 30), utility demand limit (Energy 31), it power budget (Energy 32), rack power allocation (Energy 56), demand response (Energy 170), electricity price gate (Energy 171), carbon intensity gate (Energy 172), grid frequency response (Energy 173), facility islanding (Energy 174).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 561 | facility power budget | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 562 | utility demand limit | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 563 | demand response | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 564 | electricity price gate | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 565 | carbon intensity gate | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 566 | renewable dispatch | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 567 | generator start stop | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 568 | site battery dispatch | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 569 | pue target | setpoint | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 1 wobbles of margin on its line |
-| 570 | cooling power budget | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 571 | it power budget | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | 0 wobbles of margin on its line; reads its line 3 decisions before it holds; keeps 0% of its line clear |
-| 572 | rack power allocation | power | at its limit on native (full battery power): read and left native | Energy; stack; tower | global |
-| 573 | facility peak guard | capacity | holds the charge for the line and clips only the draw that would cross it; a UPS lends only the charge above its outage floor | Energy; stack; tower | 0 wobbles of margin on its line |
-| 574 | grid frequency response | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 575 | facility islanding | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
+##### G.3.4 Energy Storage & Microgrid (19 muscles)
 
-#### G.5.4 Grid Transmission & Distribution (12 muscles)
+Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `microgrid` (a microgrid battery and loads), reached through the inverter or energy management system (IEEE 2030.5, SunSpec, OpenADR). Omni-Compass reads its draw on the grid connection and its reserve.
 
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `feeder_voltage` (a distribution feeder's voltage), reached through the distribution management system (IEC 61850, DNP3; modelled only). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the distribution management system and the devices' own controllers (IEC 61850, DNP3): regulators, capacitor banks, inverters.
-- **Wire out (read):** feeder voltages, loads, tap positions, inverter output (the DMS).
-- **Wire in (write):** regulator and transformer taps, capacitor switching and inverter reactive power within the planning envelope; protection never written.
-- **Restore:** every setting read once and restored.
-- **Run live?** modelled: SimBench grids (results/live/V3_PANDAPOWER.md).
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| AUDIT-0033 | capacitor bank switch | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0034 | voltage regulator tap | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0035 | transformer tap | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0036 | inverter real power | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0037 | inverter reactive power | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0038 | feeder voltage target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0039 | feeder load transfer | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0040 | distribution storage dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0041 | demand response dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0042 | frequency droop setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0043 | grid protection mode | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0044 | grid restoration sequence | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.5 Industrial PLC & Process Automation (18 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the PLC or DCS loop (OPC UA, EtherNet/IP, PROFINET): the setpoint and the mode of each loop.
-- **Wire out (read):** the process value, setpoint, output and alarm state of each loop (OPC UA reads).
-- **Wire in (write):** the loop's setpoint within its safe band and its actuator range by OPC UA write; safety interlocks are never written.
-- **Restore:** every setpoint read once and restored; a value outside the band is refused by the plug.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 465 | plc cycle authority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 466 | machine cell admission | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 467 | valve position | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 468 | pump flow | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 469 | compressor speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 470 | heater power | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 471 | furnace setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 472 | pressure setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 473 | temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 474 | mass flow setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 475 | tank level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 476 | conveyor rate | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 477 | feed rate | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 478 | purge vent action | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 1088 | controller mode | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 1089 | alarm limits | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 1090 | safety interlock trip | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 1091 | opc ua writes | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-
-#### G.5.6 Semiconductor Fab & Precision Manufacturing (13 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `chamber` (a controlled chamber (clean room, kiln, reactor)), reached through the PLC or DCS. Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the fab's MES and each tool's controller (SECS/GEM).
-- **Wire out (read):** tool queues, chamber states, process values (MES and GEM).
-- **Wire in (write):** lot dispatch and tool admission through the MES; chamber recipes and parameters never written outside the qualified window.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 1092 | run to run control | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 1093 | idle sleep mode | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0057 | tool job dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0058 | wafer route | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0059 | chamber recipe selection | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0060 | chamber temperature | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0061 | chamber pressure | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0062 | gas flow | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0063 | rf power | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0064 | vacuum pump speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0065 | robot transfer rate | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0066 | lot priority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0068 | tool quarantine | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.7 Water Wastewater & Pumping (12 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `water` (a water or pumping process), reached through the SCADA system (Modbus, DNP3). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the utility's SCADA (Modbus, DNP3) and the pump station controllers.
-- **Wire out (read):** levels, pressures, flows, aeration and dosing (SCADA reads).
-- **Wire in (write):** pump speeds, level and pressure targets, aeration and dosing within their bands by SCADA write; emergency shutdowns never written.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| AUDIT-0069 | pump speed water | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0070 | valve position water | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0071 | reservoir level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0072 | line pressure target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0073 | flow target water | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| AUDIT-0074 | aeration rate | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0075 | chemical dose rate | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| AUDIT-0076 | filtration backwash | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0077 | lift station dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0078 | leak isolation | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0079 | water demand shed | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| AUDIT-0080 | water emergency shutdown | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.8 Healthcare Critical Environments (13 muscles)
-
-Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `hospital` (a hospital's critical rooms (operating rooms, isolation, pharmacy, imaging suites)), reached through the hospital's building management system (BACnet). Omni-Compass reads its temperature against its limit. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the hospital's building management system (BACnet) with its clinical limits.
-- **Wire out (read):** room pressures, air changes, temperatures and humidity (BACnet reads).
-- **Wire in (write):** setpoints within the clinical envelope by BACnet write; pressure cascades and alarms never loosened.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2001 | operating room air change setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2002 | isolation room pressure target | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2003 | patient room temperature setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2004 | surgical suite humidity target | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2005 | ahu supply air temperature | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2006 | pharmacy cold room setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2007 | sterile storage humidity setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Energy; stack; tower | global |
-| 2008 | imaging suite cooling capacity | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| 2009 | chiller plant staging | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| 2010 | exhaust fan capacity | capacity | left to its own staging (native already has the cooling it needs: nothing to win) | Energy; stack; tower | global |
-| 2011 | ward night setback mode | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2012 | medical gas plant demand limit | power | at its limit on native (the site envelope at full): read and left native | Energy; stack; tower | global |
-| 2013 | emergency power load shed | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.9 Agriculture & Irrigation (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `irrigation` (pumps, pressure and climate on a farm or in a greenhouse), reached through the pump station controller, the pivot panel or the climate computer (Modbus, the vendor cloud). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the pump station controller, pivot panel or climate computer (Modbus, the vendor cloud).
-- **Wire out (read):** pressure, soil moisture, temperature, flow (the controller's registers).
-- **Wire in (write):** pump speed and climate setpoints within their bands by Modbus write.
+- **Native controller:** the battery's or site's energy management system and inverter (SunSpec, IEEE 2030.5, OpenADR, Modbus).
+- **Wire out (read):** state of charge, grid import and export, PV output, load (the EMS or inverter registers).
+- **Wire in (write):** the reserve setpoint, charge and discharge limits, import limit and curtailment through SunSpec or Modbus registers.
 - **Restore:** registers read once and restored.
-- **Run live?** modelled only.
+- **Run live?** modelled: CityLearn (results/live/V3_CITYLEARN.md) for the districts; the register path is written.
+- **Its muscles, heaviest hitter first:** volt var (Energy 5), storage dispatch (Energy 6), volt watt (Energy 7), peak shaving (Energy 8), microgrid emergency reserve (Energy 10), time of use schedule (Energy 11), battery soc reserve (Energy 12), electrolyzer power (Energy 13), heat pump power (Energy 14), pv curtailment (Energy 15), battery discharge power (Energy 16), battery charge power (Energy 18), grid export limit (Energy 25), ev charge power (Energy 27), grid import limit (Energy 28), constant power factor reactive power (Energy 29), microgrid demand limit (Energy 33), energy load shed (Energy 161), flex load admission (Energy 162).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2026 | irrigation pump speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2027 | mainline pressure setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2028 | soil moisture target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2029 | pivot speed setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2030 | fertigation dose | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2031 | greenhouse temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2032 | greenhouse co2 target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2033 | vent position setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2034 | grain dryer temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2035 | cold storage temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2036 | barn ventilation rate | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2037 | milking vacuum level setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2038 | well drawdown level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2039 | drip zone dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
+##### G.3.5 Database & Transactions (19 muscles)
 
-#### G.5.10 Oil & Gas Pipelines (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `pipeline` (a pipeline segment with its compressors, pumps and valves), reached through pipeline SCADA (DNP3, Modbus, OPC UA). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** pipeline SCADA (DNP3, Modbus, OPC UA).
-- **Wire out (read):** pressures, flows, line pack, compressor states (SCADA reads).
-- **Wire in (write):** pressure and flow setpoints and unit staging within the safe envelope; protection never written.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2040 | compressor discharge pressure setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2041 | pump station suction pressure target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2042 | line pack target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2043 | pipeline flow setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2044 | compressor unit staging | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2045 | vfd pump speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2046 | terminal tank level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2047 | leak detection shutdown | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2048 | batch interface dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2049 | heater outlet temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2050 | drag reducing agent dose | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2051 | valve position target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2052 | cathodic protection voltage | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2053 | pressure protection priority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.11 Mining & Mineral Processing (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `mill` (a grinding, flotation or materials-handling circuit), reached through the plant DCS or PLC (OPC UA). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the plant DCS or PLC (OPC UA).
-- **Wire out (read):** mill load, speed, pressures, densities, power (OPC UA reads).
-- **Wire in (write):** loop setpoints within their bands by OPC UA write; shutdowns never written.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2092 | sag mill load setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2093 | mill speed target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2094 | crusher gap setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2095 | flotation aeration rate | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2096 | cyclone feed pressure target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2097 | thickener underflow density target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2098 | reagent dose | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2099 | conveyor speed setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2100 | dewatering pump level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2101 | ventilation on demand airflow | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2102 | stockpile level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2103 | slurry pump speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2104 | tailings discharge shutdown | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2105 | ore blend dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.12 District Heating & Cooling (13 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `district_heat` (a district heating or cooling network), reached through the network control system and substation controllers (Modbus, M-Bus). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the network control system and substation controllers (Modbus, M-Bus).
-- **Wire out (read):** supply and return temperatures, differential pressure, storage level (the controllers).
-- **Wire in (write):** supply temperature and pressure setpoints, pump speed and staging within their bands.
-- **Restore:** registers read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2106 | supply temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2107 | return temperature target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2108 | differential pressure setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2109 | network pump speed | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2110 | heat pump staging | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2111 | chp dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2112 | thermal storage level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2113 | peak boiler heater output | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2114 | substation flow limit | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2115 | peak demand shed | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2116 | outdoor reset setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2117 | cooling network supply temperature | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2118 | cooling storage level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-
-#### G.5.13 Power Generation & Turbine Control (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `turbine` (a generating unit's governor, boiler or excitation loop), reached through the plant DCS and governor (OPC UA, IEC 61850; modelled only). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the plant DCS and the unit's governor (OPC UA, IEC 61850).
-- **Wire out (read):** unit load, frequency, pressures, temperatures (the DCS).
-- **Wire in (write):** load setpoints and ramp limits within the dispatch envelope; protection and rod positions never written.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2119 | turbine speed droop setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2120 | unit load setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2121 | boiler steam pressure setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2122 | feedwater level target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2123 | agc participation limit | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2124 | excitation voltage setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2125 | hydro gate position target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2126 | combustion air ratio setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2127 | cooling water flow setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2128 | inlet guide vane position | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2129 | reserve dispatch priority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2130 | turbine ramp rate limit | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2131 | emissions shutdown | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2132 | nuclear rod position target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-
-#### G.5.14 Renewable Generation & Inverter Control (13 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `inverter` (a plant of grid-support inverters or wind turbines), reached through the plant controller and inverter settings (SunSpec, IEC 61850, IEEE 1547). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the plant controller and inverter settings (SunSpec, IEC 61850, IEEE 1547).
-- **Wire out (read):** active and reactive power, voltage, curtailment state (SunSpec registers).
-- **Wire in (write):** volt-var and volt-watt setpoints, curtailment and ramp limits by SunSpec write within the interconnection agreement.
-- **Restore:** registers read once and restored.
-- **Run live?** modelled: SimBench grids solved by pandapower (results/live/V3_PANDAPOWER.md); the register path is written.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2133 | inverter volt var setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2134 | inverter volt watt setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2135 | active power curtailment | power | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2136 | plant reactive power target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2137 | wind turbine yaw offset | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2138 | pitch angle limit | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2139 | rotor speed setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2140 | inverter frequency droop setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2141 | ramp rate limit | capacity | at its limit on native (the full actuator): read and left native | Energy; stack; tower | global |
-| 2142 | tracker stow mode | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2143 | string mppt voltage setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2144 | noise mode schedule | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2145 | ice detection shutdown | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-#### G.5.15 Pharmaceutical & Food Manufacturing (14 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `batch_reactor` (a GMP batch reactor, fermenter or food process), reached through the batch control system (ISA-88, OPC UA). Omni-Compass reads how far the process sits from its band. Its home realm is Energy / Facility / Industrial.
-
-**Wire it on your stack.**
-
-- **Native controller:** the batch control system (ISA-88, OPC UA) with the validated recipe limits.
-- **Wire out (read):** process values and phase states (OPC UA reads).
-- **Wire in (write):** setpoints within the validated recipe band only; a value outside it is refused by the plug.
-- **Restore:** every setpoint read once and restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2158 | reactor temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2159 | agitator speed setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2160 | fermenter dissolved oxygen target | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2161 | ph setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2162 | pasteurizer holding temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2163 | freezer tunnel temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2164 | cip cycle dispatch | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2165 | cleanroom pressure cascade setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2166 | lyophilizer shelf temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2167 | chromatography flow setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2168 | steam sterilizer cycle priority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2169 | oven zone temperature setpoint | setpoint | left native: native already holds it inside its band (nothing to win) | Energy; stack; tower | global |
-| 2170 | refrigerant compressor authority | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-| 2171 | batch hold quarantine | admission | at its limit on native (nothing paced or turned away): read and left native | Energy; stack; tower | global |
-
-### G.6 Realm: Distribution / Specialized (217 muscles of its own, 484 in its organism with the spine)
-
-#### G.6.1 Cache & Memory Services (16 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the cache's own configuration: Redis CONFIG SET, Memcached runtime settings.
-- **Wire out (read):** hit rate, evictions, used memory, p95 (INFO, the cache's stats).
-- **Wire in (write):** maxmemory and eviction policy by CONFIG SET; replicas and shards through the operator.
-- **Restore:** the setting read once (CONFIG GET) before the first write and restored (CONFIG SET).
-- **Run live?** live: tools/run_redis.py, V3_REDIS.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 305 | cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 306 | cache ttl | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 307 | cache eviction policy | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 308 | cache replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 309 | cache sharding | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 310 | cache prefetch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 311 | cache writeback rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 312 | cache admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 313 | hot key isolation | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 314 | cache connection limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 315 | cache memory limit | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 316 | cache compression | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 317 | cache warmup | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 318 | cache failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 319 | cache flush rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1106 | memory size threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.6.2 Commerce & Payment Systems (15 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `commerce` (a customer-facing service with bursts), reached through the Kubernetes API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the payment platform's gateway and its routing rules.
-- **Wire out (read):** authorisation latency, decline and retry rates, queue depth (the platform's metrics).
-- **Wire in (write):** concurrency, timeout and route weights through the platform's admin API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 401 | payment admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 402 | payment concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 403 | payment retry | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 404 | payment timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 405 | fraud review gate | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 406 | authorization route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 407 | processor route weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 408 | transaction queue limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 409 | idempotency window | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 410 | order reservation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 411 | inventory hold | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 412 | checkout load shed | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 413 | refund queue rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 414 | settlement batch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 415 | payment failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-
-#### G.6.3 Data Analytics & ETL (15 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** Spark's dynamic allocation and the SQL engine's slots (spark.dynamicAllocation, Flink's parallelism, warehouse slots).
-- **Wire out (read):** executor count, task backlog, shuffle spill, stage times (the engine's metrics).
-- **Wire in (write):** dynamic allocation min and max, parallelism and slots through the engine's config at submit or its REST API.
-- **Restore:** the submit settings recorded; the next job launched from them.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 338 | executor size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 339 | dynamic allocation min | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 340 | dynamic allocation max | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 341 | shuffle partitions | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 342 | shuffle bandwidth | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 343 | etl concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 344 | stage parallelism | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 345 | query slots | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 85% full; reads the last 10 decisions |
-| 346 | spill threshold | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 347 | cache fraction | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 348 | batch interval | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 349 | stream backpressure | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 350 | data locality wait | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 351 | speculation policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 352 | analytics admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-
-#### G.6.4 Database & Transactions (19 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `database` (a database cluster), reached through the database operator (replicas, connection pools). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `database` (a database cluster), reached through the database operator (replicas, connection pools). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
 - **Native controller:** the database's own pooler and server settings: PgBouncer's admin console, MySQL SET GLOBAL, MongoDB setParameter, the database operator.
 - **Wire out (read):** pool waits and active connections (SHOW POOLS), buffer-pool size and hit rate, cache size and evictions, p95 per statement.
 - **Wire in (write):** PgBouncer default_pool_size through its console; MySQL innodb_buffer_pool_size by SET GLOBAL; MongoDB wiredTigerEngineRuntimeConfig cache_size by setParameter; replicas through the operator.
 - **Restore:** the setting read once before the first write and restored; a failed read-back stops the writer.
 - **Run live?** live: tools/run_pgbench.py, run_sysbench.py, run_ycsb.py, three-run tables V3_PGBENCH, V3_SYSBENCH, V3_YCSB.
+- **Its muscles, heaviest hitter first:** io capacity (Distribution 1), vacuum compaction rate (Distribution 2), read route (Distribution 3), db failover (Distribution 4), db cache (Distribution 5), db pool resize (Distribution 7), shard placement (Distribution 8), db replicas (Distribution 9), db memory (Distribution 10), checkpoint rate (Distribution 11), buffer pool (Distribution 16), background writer (Distribution 17), synchronous replication (Distribution 18), parallel workers (Distribution 19), query concurrency (Distribution 197), replication lag gate (Distribution 198), db write throttle (Distribution 199), transaction concurrency (Distribution 200), lock timeout (Distribution 201).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 273 | db replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 275 | db memory | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 276 | db cache | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 90% full; reads the last 40 decisions |
-| 277 | query concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 278 | read route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 279 | shard placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 280 | db failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 281 | replication lag gate | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 282 | db write throttle | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 283 | db pool resize | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 284 | transaction concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 285 | lock timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 286 | checkpoint rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 287 | vacuum compaction rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 1099 | parallel workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 1100 | background writer | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1101 | synchronous replication | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1102 | buffer pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 40 decisions |
-| 1103 | io capacity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
+##### G.3.6 Commerce & Payment Systems (15 muscles)
 
-#### G.6.5 Messaging & Streaming (22 muscles)
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `commerce` (a customer-facing service with bursts), reached through the Kubernetes API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the broker's own controls: Kafka's admin API and consumer group, RabbitMQ policies, MQTT broker settings.
-- **Wire out (read):** consumer lag, messages per second, p95 end to end, broker CPU (the broker's metrics, the consumer group's offsets).
-- **Wire in (write):** the consumer group's size (consumers running), quotas and partition counts through the admin API.
-- **Restore:** the group's size recorded; restored at the end.
-- **Run live?** live: tools/run_kafka.py, V3_KAFKA.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 289 | partition count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 290 | partition placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 291 | producer quota | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 292 | consumer quota | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 293 | broker io quota | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 294 | message retention | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 295 | queue depth limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 296 | consumer concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 297 | producer batch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 298 | fetch batch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 299 | rebalance rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 300 | replication factor | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 301 | retry backoff | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 302 | dead letter divert | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 303 | stream priority | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 304 | broker failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 1104 | prefetch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 1105 | memory disk alarm | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5124 | mqtt broker max connections | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5125 | mqtt max inflight messages | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5126 | mqtt session expiry | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5127 | broker cluster nodes | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.6.6 Runtime & Application (21 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the application runtime's own settings: thread pools, JVM heap and GC, worker counts, connection pools.
-- **Wire out (read):** queue waits, GC pauses, worker busy share, p95 from the application's metrics.
-- **Wire in (write):** worker and pool sizes through the application's admin endpoint, environment or config reload; JVM flags at restart only.
-- **Restore:** the settings recorded; restored (a restart-bound setting is left native).
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 353 | worker count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 10 decisions |
-| 354 | thread pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 355 | jvm heap | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 356 | gc budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 357 | connection pool runtime | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 358 | application cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 359 | runtime memory | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 360 | async concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 361 | event loop workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| 362 | process count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 363 | request timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 364 | background workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 365 | runtime cpu budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 366 | runtime io budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 367 | runtime restart | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 1108 | go runtime | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 1109 | keepalive connection reuse | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| V5-5131 | dns resolver cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| V5-5132 | dns negative cache ttl | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5133 | mail queue concurrency | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5134 | mail retry interval | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-
-#### G.6.7 Search, Indexing & Vector DB (16 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the search engine's settings API: OpenSearch/Elasticsearch cluster and index settings, the vector database's config.
-- **Wire out (read):** indexing and search latency, queue rejections, merge pressure (the engine's stats API).
-- **Wire in (write):** index refresh interval, merge throttling, shard counts and search thread pools through the settings API.
-- **Restore:** settings recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 321 | index workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 75% full; reads the last 20 decisions |
-| 322 | index refresh rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 323 | segment merge rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 324 | search concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 325 | search timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 326 | shard count | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 327 | shard replication | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 328 | shard rebalance | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 329 | vector search k | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 330 | vector batch size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 331 | embedding workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 332 | index memory budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 333 | query route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 60 decisions |
-| 334 | hot shard isolation | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 335 | search admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 1107 | circuit breakers | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-
-#### G.6.8 Service Mesh & API Reliability (16 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the mesh's own policies: Istio DestinationRule and VirtualService, Linkerd ServiceProfile, Envoy filters.
-- **Wire out (read):** request rate, error rate, p95 and outlier ejections from the mesh's telemetry.
-- **Wire in (write):** connection pool, outlier detection, retry budget and traffic weights by kubectl patch of the policy objects.
-- **Restore:** the policy objects recorded; restored.
-- **Run live?** modelled; the API path is kubectl patch.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 241 | circuit breaker | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 242 | retry budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 243 | service timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 244 | service concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 245 | connection pool | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 246 | traffic divert | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 247 | traffic mirror | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 248 | canary weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 249 | outlier ejection | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 250 | health threshold | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 251 | dns traffic weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 252 | session affinity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
-| 253 | request hedging | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 254 | fault injection gate | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 255 | service failover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 1097 | load balancing policy | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-
-#### G.6.9 Telecom RAN & Edge Radio (12 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `ran` (a radio access network cell or site), reached through the RAN controller (O-RAN interfaces). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the RAN's near-real-time RIC and O-RAN interfaces (E2, O1).
-- **Wire out (read):** PRB use, connected UEs, cell load, handover rates (the RIC's KPIs).
-- **Wire in (write):** scheduler weights, slice budgets and traffic steering through the RIC's xApps; transmit power within the licence.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| AUDIT-0009 | ran connection admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| AUDIT-0010 | ran ue handover | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0011 | ran cell traffic steering | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0012 | ran slice resource budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| AUDIT-0013 | ran prb allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0014 | ran scheduler weight | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0015 | ran tx power | power | at its limit on native (the full clock): read and left native | Distribution; stack; tower | global |
-| AUDIT-0016 | ran antenna tilt | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0017 | ran carrier enable | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0018 | ran cell sleep | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0019 | ran du cu placement | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| AUDIT-0020 | ran fronthaul budget | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-
-#### G.6.10 Workflow, Logistics & Fulfillment (15 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `workflow` (a workflow or pipeline engine), reached through the workflow engine's concurrency settings. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the workflow engine (Temporal, Airflow, Camunda) and the fulfilment system's dispatch rules.
-- **Wire out (read):** task queue depth, worker utilisation, SLA misses (the engine's metrics).
-- **Wire in (write):** worker rates, concurrency and retry policies through the engine's API.
+- **Native controller:** the payment platform's gateway and its routing rules.
+- **Wire out (read):** authorisation latency, decline and retry rates, queue depth (the platform's metrics).
+- **Wire in (write):** concurrency, timeout and route weights through the platform's admin API.
 - **Restore:** recorded; restored.
 - **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** payment failover (Distribution 6), settlement batch (Distribution 12), order reservation (Distribution 13), authorization route (Distribution 14), processor route weight (Distribution 15), idempotency window (Distribution 20), refund queue rate (Distribution 21), payment admission (Distribution 236), payment concurrency (Distribution 237), payment retry (Distribution 238), payment timeout (Distribution 239), fraud review gate (Distribution 240), transaction queue limit (Distribution 241), inventory hold (Distribution 242), checkout load shed (Distribution 243).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 417 | workflow admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 418 | workflow worker rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 419 | task queue rate | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 420 | workflow retry | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 421 | workflow backoff | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 422 | workflow timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 423 | inventory allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 424 | fulfillment route | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 425 | warehouse queue | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 426 | carrier selection | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 427 | dispatch priority | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 428 | shipment batch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 429 | route replan | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 430 | sla escalation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 431 | compensation action | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 40 decisions |
+##### G.3.7 Aviation & Autonomous Flight (28 muscles)
 
-#### G.6.11 Medical Imaging & Clinical Systems (12 muscles)
+Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `microgrid` (a microgrid battery and loads), reached through the inverter or energy management system (IEEE 2030.5, SunSpec, OpenADR). Omni-Compass reads its draw on the grid connection and its reserve.
 
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `clinical` (clinical systems: imaging archives, records, interface engines, monitoring gateways), reached through the application's own scaling and admission settings (Kubernetes, the vendor console). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
+- **Native controller:** the flight controller's own parameters: PX4 (MPC_XY_VEL_MAX, MPC_Z_VEL_MAX_UP, MPC_ACC_HOR, MC_ROLLRATE_MAX) and ArduPilot (WPNAV_SPEED, ATC_ACCEL_R_MAX), the battery failsafe.
+- **Wire out (read):** mission progress, battery state, tracking error and near-miss distance over MAVLink telemetry.
+- **Wire in (write):** the speed, acceleration and rate parameters over MAVLink PARAM_SET within the autopilot's own limits; failsafes and geofence never loosened.
+- **Restore:** every parameter read (PARAM_REQUEST_READ) once and written back at the end.
+- **Run live?** modelled: the swarm cells (results/live/V3_SWARM.md); the MAVLink path is written, not yet flown.
+- **Its muscles, heaviest hitter first:** drone battery failsafe reserve (Physics 9), swarm formation spacing (Physics 17), ardupilot wpnav speed (Physics 21), px4 mpc xy vel max (Physics 25), px4 mpc acc hor (Physics 37), altitude target (Physics 38), waypoint authority (Physics 39), px4 mc rollrate max (Physics 40), actuator saturation envelope (Physics 41), px4 mpc z vel max up (Physics 42), velocity target (Physics 43), attitude rate target (Physics 44), attitude target (Physics 45), attitude rate gains (Physics 46), throttle envelope (Physics 63), flight hold (Physics 64), return to home (Physics 65), land action (Physics 66), mission admission (Physics 67), geofence response (Physics 68), failsafe selection (Physics 69), battery reserve threshold (Physics 70), flight mode transition (Physics 71), flight termination safe state (Physics 72), horizontal speed limit (Physics 87), vertical speed limits (Physics 88), acceleration jerk limits (Physics 89), ardupilot atc accel r max (Physics 137).
 
-**Wire it on your stack.**
+##### G.3.8 Robotics Fleet & Warehouse Automation (17 muscles)
+
+Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `microgrid` (a microgrid battery and loads), reached through the inverter or energy management system (IEEE 2030.5, SunSpec, OpenADR). Omni-Compass reads its draw on the grid connection and its reserve.
+
+- **Native controller:** the fleet manager's dispatch and charging rules (Open-RMF, the vendor fleet manager).
+- **Wire out (read):** tasks waiting, robots active and charging, battery states (the fleet API).
+- **Wire in (write):** active robot count, charge thresholds and zone admission through the fleet API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** amr fleet charge threshold (Physics 11), agv speed (Physics 30), conveyor speed (Physics 31), task assignment (Physics 32), traffic reservation (Physics 33), elevator request (Physics 34), amr fleet active robots (Physics 35), robot route (Physics 36), battery reserve (Physics 47), robot dispatch (Physics 48), human safe stop (Physics 50), door request (Physics 51), charging dispatch (Physics 52), fleet failover (Physics 53), warehouse zone admission (Physics 60), robot quarantine (Physics 61), fleet concurrency (Physics 62).
+
+##### G.3.9 Cloud VM & Capacity (21 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the cloud's autoscaling group or scale set: AWS Auto Scaling, Azure VMSS, GCP MIG.
+- **Wire out (read):** group size, instance states, the target-tracking metric (the cloud's API and monitoring).
+- **Wire in (write):** desired capacity, min and max, the target-tracking policy's target, through the cloud CLI or SDK.
+- **Restore:** the group's desired, min, max and policy recorded once; restored from it.
+- **Run live?** live on AKS through the node pool (family 5); the cloud SDK path itself is written, not yet run live.
+- **Its muscles, heaviest hitter first:** architecture selection (Compute 1), accelerator selection (Compute 5), instance refresh (Compute 7), vm start stop (Compute 19), region selection (Compute 31), placement group (Compute 33), vm migrate (Compute 34), asg max (Compute 38), zone selection (Compute 39), interruption response (Compute 51), vm size (Compute 53), target tracking policy (Compute 54), spot mix (Compute 57), instance family (Compute 67), boot disk class (Compute 70), scaling cooldown warmup (Compute 71), vm count (Compute 82), predictive scaling (Compute 87), asg min (Compute 91), reservation mix (Compute 110), vm cpu cap by priority (Compute 400).
+
+##### G.3.10 Kubernetes Dynamic Device Allocation (8 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** Kubernetes DRA: DeviceClass, ResourceClaim, ResourceSlice.
+- **Wire out (read):** claims pending, devices allocated and tainted (the Kubernetes API).
+- **Wire in (write):** DeviceClass selectors and claim capacity by kubectl apply; devices tainted, never removed.
+- **Restore:** the objects recorded; restored.
+- **Run live?** modelled; the API path is kubectl.
+- **Its muscles, heaviest hitter first:** dra claim capacity (Compute 2), dra binding readiness (Compute 13), dra binding failure response (Compute 14), dra device class selection (Compute 50), dra device configuration (Compute 61), dra claim sharing (Compute 76), dra device taint (Compute 84), dra device eviction (Compute 412).
+
+##### G.3.11 Cross-Cluster, Multi-Region & Edge (18 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the global load balancer and the fleet manager (Karmada, Fleet, the cloud's global LB).
+- **Wire out (read):** per-region latency, capacity and cost, pending work (the global LB's and clusters' metrics).
+- **Wire in (write):** region and cluster weights and quotas through the global controller's API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** global failover (Compute 3), edge site node pool (Compute 11), edge offload (Compute 12), zone dispatch (Compute 15), cloud capacity class (Compute 28), workload migrate region (Compute 29), region dispatch (Compute 32), edge dispatch (Compute 37), multi cluster dispatch (Compute 40), cross cluster replication (Compute 49), edge sync interval (Compute 298), data residency gate (Compute 379), latency region gate (Compute 380), cost region gate (Compute 381), carbon region gate (Compute 382), federation quota (Compute 383), global admission (Compute 384), edge inference gpu clocks (Compute 444).
+
+##### G.3.12 AI Inference Serving (24 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the serving engine's own autoscaler and batcher (vLLM, Triton, KServe, Ray Serve): replicas, batch size, concurrency, KV cache.
+- **Wire out (read):** queue depth, tokens per second, p95 latency, KV-cache use from the server's /metrics.
+- **Wire in (write):** the server's replica count or KServe/Knative autoscaling target, max_num_seqs and KV-cache budget through its API or its ConfigMap.
+- **Restore:** the serving spec recorded once; restored to it.
+- **Run live?** live in part: GPU serving under the card governor (results/gpu); the vLLM run is ready and waits on Lambda.
+- **Its muscles, heaviest hitter first:** lora adapter load (Compute 4), continuous batching (Compute 8), model replicas (Compute 16), model instance count (Compute 17), max batch size (Compute 18), tensor parallel degree (Compute 35), batch queue delay (Compute 42), model route weight (Compute 45), chunked prefill (Compute 60), kv cache swap space (Compute 63), inference max tokens (Compute 77), disaggregated prefill decode (Compute 85), model load (Compute 86), model unload (Compute 93), scale to zero panic window (Compute 101), inference concurrency (Compute 352), kv cache budget (Compute 353), prefix cache budget (Compute 354), speculative decode budget (Compute 355), model precision (Compute 356), inference priority (Compute 357), inference slo gate (Compute 358), autoscaling target concurrency qps (Compute 395), request priority levels (Compute 396).
+
+##### G.3.13 GPU Hardware (22 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu` (GPU serving with a response-time target), reached through nvidia-smi (clock ceiling and power limit) or the serving autoscaler. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the card's own firmware limits through NVML and nvidia-smi (power limit, application clocks, MIG, compute mode).
+- **Wire out (read):** nvidia-smi --query-gpu (clocks, power draw, temperature, utilisation, memory), the serving response time from the probe.
+- **Wire in (write):** nvidia-smi -pl (power limit), -lgc/-rgc (clock ceiling and reset), -ac (application clocks), -mig and -c (modes), per card.
+- **Restore:** every limit read once at start (the snapshot line in the GPU audit) and restored by the same commands at the end or on the lease.
+- **Run live?** live: omni_controller/gpu_governor.py and scripts/gpu_paired.sh on a rented A10 (results/gpu); the new card runs wait on Lambda by the founder's order.
+- **Its muscles, heaviest hitter first:** sync boost (Compute 6), gpu persistence mode (Compute 43), mig mode (Compute 44), gpu mps (Compute 72), gpu timeslice (Compute 74), gpu allocate (Compute 78), mig geometry (Compute 79), gpu ecc response (Compute 80), gpu compute mode (Compute 83), gpu temperature target (Compute 88), gpu reset (Compute 99), gpu power limit (Compute 342), gpu sm clock (Compute 343), gpu memory clock (Compute 344), gpu quarantine (Compute 345), gpu thermal limit (Compute 346), gpu job power budget (Compute 347), application clocks (Compute 394), target clocks (Compute 403), climatik inference power cap (Compute 406), adaptive gpu power cap (Compute 410), nvidia platform power budget (Compute 411).
+
+##### G.3.14 Node Fleet & Karpenter-Class Control (24 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the cluster's own node autoscaler: Karpenter (NodePool), the Cluster Autoscaler, a MachineSet, a cloud node pool.
+- **Wire out (read):** ready and schedulable workers, pending pods, allocatable and used CPU (Kubernetes API), the autoscaler's status ConfigMap.
+- **Wire in (write):** the pool's size through the operator's own command (--node-scale-cmd: az aks nodepool scale, gcloud container clusters resize, eksctl scale nodegroup, kubectl scale machineset, a Karpenter NodePool limit); a machine parked by taint and drain, never deleted by Omni-Compass.
+- **Restore:** the pool's starting count recorded once; every parked machine untainted and the pool restored to it at the end or on the lease.
+- **Run live?** live: omni_controller nodepool mode on kind and on AKS (results/live/V1_AKS_*, the capacity and steady tables).
+- **Its muscles, heaviest hitter first:** nodepool weight (Compute 9), node shutdown (Compute 21), max pods per node (Compute 22), node provision (Compute 23), node consolidate (Compute 24), node pool min (Compute 25), node pool max (Compute 36), expander (Compute 47), capacity class (Compute 52), consolidate after (Compute 55), scale down unneeded time (Compute 56), node replace (Compute 62), node desired (Compute 64), kubelet reserved resources (Compute 66), consolidation policy (Compute 68), node power on (Compute 73), node pool limits (Compute 75), expire after (Compute 81), scale down delay after add (Compute 90), node cordon (Compute 326), node drain (Compute 327), disruption budget (Compute 328), scale down utilisation threshold (Compute 390), kubelet eviction thresholds (Compute 391).
+
+##### G.3.15 Virtualization & Hypervisor (9 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the hypervisor's management API (libvirt, vSphere, Hyper-V).
+- **Wire out (read):** vCPU steal, balloon state, migration load (the hypervisor's metrics).
+- **Wire in (write):** vCPU allocation, ballooning and migration pacing through the management API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** vm overcommit density (Compute 10), vgpu partition (Compute 46), hypervisor cpu pinning (Compute 89), vcpu allocation (Compute 142), memory ballooning (Compute 166), sriov vf allocation (Compute 212), numa vcpu pinning (Compute 284), live migration pacing (Compute 420), vm memory dedup ksm (Compute 421).
+
+##### G.3.16 Medical Imaging & Clinical Systems (12 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `clinical` (clinical systems: imaging archives, records, interface engines, monitoring gateways), reached through the application's own scaling and admission settings (Kubernetes, the vendor console). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
 - **Native controller:** the clinical application's own scaling and admission settings (Kubernetes, the vendor console).
 - **Wire out (read):** queue depths, interface backlog, reconstruction wait (the application's metrics).
 - **Wire in (write):** replicas, concurrency and rate limits through the Kubernetes API or the vendor console.
 - **Restore:** recorded; restored.
 - **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** ehr application replicas (Distribution 22), pacs archive tier target (Distribution 24), reconstruction gpu workers (Distribution 26), dicom router concurrency (Distribution 252), hl7 interface queue limit (Distribution 253), fhir api rate limit (Distribution 254), modality worklist timeout (Distribution 255), patient monitoring gateway capacity (Distribution 256), lab analyzer batch window (Distribution 257), telehealth session admission (Distribution 258), clinical backup window (Distribution 259), imaging prefetch priority (Distribution 260).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2014 | pacs archive tier target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| 2015 | dicom router concurrency | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2016 | ehr application replicas | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 2017 | hl7 interface queue limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2018 | fhir api rate limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2019 | reconstruction gpu workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| 2020 | modality worklist timeout | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2021 | patient monitoring gateway capacity | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2022 | lab analyzer batch window | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2023 | telehealth session admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2024 | clinical backup window | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2025 | imaging prefetch priority | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
+##### G.3.17 Financial Markets & Trading Systems (14 muscles)
 
-#### G.6.12 Ports & Maritime Logistics (12 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `port` (a container terminal's cranes and vehicles taking moves), reached through the terminal operating system and fleet controllers. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the terminal operating system and the equipment fleet controllers.
-- **Wire out (read):** moves waiting, cranes active, gate queue, equipment charge (the TOS).
-- **Wire in (write):** crane and vehicle allocation, gate rate and charging windows through the TOS.
-- **Restore:** recorded; restored.
-- **Run live?** modelled only.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| 2080 | quay crane allocation | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2081 | yard crane fleet size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2082 | berth window admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2083 | truck gate rate limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2084 | horizontal transport fleet size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2085 | reefer plug power budget | power | at its limit on native (the full clock): read and left native | Distribution; stack; tower | global |
-| 2086 | shore power connection capacity | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2087 | rail mounted gantry dispatch | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2088 | container dwell priority | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2089 | vessel arrival pacing | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| 2090 | stacking height target | setpoint | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| 2091 | equipment charging window | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-
-#### G.6.13 Content Delivery & Edge Cache (6 muscles)
-
-Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band. Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
-
-- **Native controller:** the CDN's configuration API and the edge cache's settings.
-- **Wire out (read):** hit ratio, origin load, TTLs (the CDN's metrics).
-- **Wire in (write):** cache TTLs, origin-shield concurrency and prefetch through the CDN API.
-- **Restore:** recorded; restored.
-- **Run live?** modelled.
-
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5039 | cdn cache ttl | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5040 | edge cache size | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| V5-5041 | origin shield concurrency | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| V5-5042 | prefetch aggressiveness | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5043 | tiered cache promotion | capacity | at its limit on native (the full actuator): read and left native | Distribution; stack; tower | global |
-| V5-5044 | edge pop admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-
-#### G.6.14 Financial Markets & Trading Systems (14 muscles)
-
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
-
-**Wire it on your stack.**
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
 - **Native controller:** the trading platform's gateway, matching engine and risk settings, the colocation BMS.
 - **Wire out (read):** order latency, session counts, risk-check backlog, market-data fanout (the platform's metrics).
 - **Wire in (write):** thread and session pools, conflation intervals and batch sizes through the platform's configuration; risk checks never relaxed.
 - **Restore:** recorded; restored.
 - **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** backtest grid nodes (Distribution 23), order gateway sessions (Distribution 67), pre trade risk check workers (Distribution 80), matching engine threads (Distribution 81), market data fanout threads (Distribution 124), surveillance alert queue workers (Distribution 144), post trade settlement workers (Distribution 157), market data conflation interval (Distribution 173), fix session heartbeat interval (Distribution 174), tick store write batch (Distribution 175), colocation rack cooling setpoint (Distribution 176), order admission rate limit (Distribution 273), kernel bypass poll cores (Distribution 274), end of day risk batch power (Distribution 275).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5058 | matching engine threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5059 | order gateway sessions | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5060 | order admission rate limit | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| V5-5061 | pre trade risk check workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| V5-5062 | market data fanout threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 10 decisions |
-| V5-5063 | market data conflation interval | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5064 | fix session heartbeat interval | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5065 | kernel bypass poll cores | power | at its limit on native (the full clock): read and left native | Distribution; stack; tower | global |
-| V5-5066 | tick store write batch | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5067 | post trade settlement workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 20 decisions |
-| V5-5068 | end of day risk batch power | power | at its limit on native (the full clock): read and left native | Distribution; stack; tower | global |
-| V5-5069 | colocation rack cooling setpoint | setpoint | cools the room ahead of the heat as it nears its limit or its cooling nears flat out; never warmer than native | Distribution; stack; tower | global |
-| V5-5070 | backtest grid nodes | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5071 | surveillance alert queue workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
+##### G.3.18 Game Servers & Real-Time Interactive (12 muscles)
 
-#### G.6.15 Reliability, Security & Recovery (6 muscles)
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
-Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `network` (network routing and switching), reached through the network controller (SDN, routing API). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half). Its home realm is Distribution / Specialized.
+- **Native controller:** Agones Fleets and the matchmaker, the game node pool.
+- **Wire out (read):** allocated and ready servers, matchmaking waits, tick rate (Agones and the matchmaker's metrics).
+- **Wire in (write):** Fleet replicas and buffer sizes by kubectl patch; matchmaking admission through its API.
+- **Restore:** the Fleet spec recorded; restored.
+- **Run live?** modelled; the API path is kubectl patch.
+- **Its muscles, heaviest hitter first:** agones fleet max replicas (Compute 20), game node pool autoscaler (Compute 41), voice chat mixer pool (Compute 158), agones fleet buffer size (Compute 162), agones fleet min replicas (Compute 165), relay server pool (Compute 198), replay render batch (Compute 268), game server tick rate (Compute 293), matchmaking wait window (Compute 294), players per server cap (Compute 435), matchmaking admission rate (Compute 436), cloud gaming gpu clocks (Compute 437).
 
-**Wire it on your stack.**
+##### G.3.19 CI/CD & Build Farms (10 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the runner scale set (actions-runner-controller, GitLab runners) and the build cache.
+- **Wire out (read):** jobs queued, runners busy, cache hit rate (the controller's metrics).
+- **Wire in (write):** min and max runners, build concurrency and cache size by kubectl patch of the scale set.
+- **Restore:** the scale set spec recorded; restored.
+- **Run live?** modelled; the API path is kubectl patch.
+- **Its muscles, heaviest hitter first:** warm runner pool (Compute 26), runner scale set max runners (Compute 30), build cache size (Compute 214), test shard parallelism (Compute 258), runner scale set min runners (Compute 259), remote execution workers (Compute 262), artifact retention ttl (Compute 297), build concurrency limit (Compute 441), job queue admission (Compute 442), build node cpu frequency (Compute 443).
+
+##### G.3.20 OpenShift & Machine API (9 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** OpenShift's Machine API operators: MachineHealthCheck, MachineConfigPool, the Cluster Version Operator.
+- **Wire out (read):** machine phases, MCP status and pause, degraded counts (the OpenShift API).
+- **Wire in (write):** MachineHealthCheck maxUnhealthy, MachineConfigPool paused and maxUnavailable by oc patch.
+- **Restore:** the fields recorded before the first write, restored from the record.
+- **Run live?** modelled; written against the documented OpenShift API, not yet run live.
+- **Its muscles, heaviest hitter first:** node config rollout (Compute 27), machine remediation (Compute 48), mcp max unavailable (Compute 59), cluster version pacing (Compute 69), machine failure domain (Compute 92), machine health gate (Compute 329), mcp pause (Compute 330), operator reconcile budget (Compute 331), infra machine admission (Compute 332).
+
+##### G.3.21 Messaging & Streaming (22 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `node` (a fleet of machines or VMs that boot in minutes), reached through the node pool's size command (Karpenter, Cluster Autoscaler, MachineSet, cloud ASG). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the broker's own controls: Kafka's admin API and consumer group, RabbitMQ policies, MQTT broker settings.
+- **Wire out (read):** consumer lag, messages per second, p95 end to end, broker CPU (the broker's metrics, the consumer group's offsets).
+- **Wire in (write):** the consumer group's size (consumers running), quotas and partition counts through the admin API.
+- **Restore:** the group's size recorded; restored at the end.
+- **Run live?** live: tools/run_kafka.py, V3_KAFKA.
+- **Its muscles, heaviest hitter first:** broker cluster nodes (Distribution 25), fetch batch size (Distribution 31), rebalance rate (Distribution 47), broker failover (Distribution 50), dead letter divert (Distribution 54), replication factor (Distribution 69), partition count (Distribution 71), producer batch size (Distribution 74), message retention (Distribution 78), partition placement (Distribution 92), prefetch (Distribution 103), memory disk alarm (Distribution 107), mqtt broker max connections (Distribution 110), mqtt max inflight messages (Distribution 178), mqtt session expiry (Distribution 179), producer quota (Distribution 202), consumer quota (Distribution 203), broker io quota (Distribution 204), queue depth limit (Distribution 205), consumer concurrency (Distribution 206), retry backoff (Distribution 207), stream priority (Distribution 208).
+
+##### G.3.22 Quantum Computing Control Simulation (16 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `qpu` (a quantum or specialised accelerator queue), reached through the accelerator's job queue. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the quantum control stack's job queue and pulse schedules (Qiskit Runtime, the vendor's control software).
+- **Wire out (read):** queue depth, calibration drift, error rates (the stack's metrics).
+- **Wire in (write):** shot allocation, circuit admission and scheduling through the stack's API; pulse parameters never written live.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** pulse phase (Compute 58), measurement scheduling (Compute 65), reset scheduling (Compute 163), gate scheduling (Compute 167), pulse duration (Compute 181), qubit mapping (Compute 188), dynamical decoupling (Compute 193), shot allocation (Compute 194), noise aware routing (Compute 196), coupling control (Compute 201), pulse amplitude (Compute 211), circuit admission (Compute 374), circuit scheduling (Compute 375), pulse frequency (Compute 376), error mitigation budget (Compute 377), quantum queue priority (Compute 378).
+
+##### G.3.23 Service Mesh & API Reliability (16 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the mesh's own policies: Istio DestinationRule and VirtualService, Linkerd ServiceProfile, Envoy filters.
+- **Wire out (read):** request rate, error rate, p95 and outlier ejections from the mesh's telemetry.
+- **Wire in (write):** connection pool, outlier detection, retry budget and traffic weights by kubectl patch of the policy objects.
+- **Restore:** the policy objects recorded; restored.
+- **Run live?** modelled; the API path is kubectl patch.
+- **Its muscles, heaviest hitter first:** service failover (Distribution 27), canary weight (Distribution 40), dns traffic weight (Distribution 41), load balancing policy (Distribution 49), traffic mirror (Distribution 62), session affinity (Distribution 66), traffic divert (Distribution 68), request hedging (Distribution 88), connection pool (Distribution 130), circuit breaker (Distribution 188), retry budget (Distribution 189), service timeout (Distribution 190), service concurrency (Distribution 191), outlier ejection (Distribution 192), health threshold (Distribution 193), fault injection gate (Distribution 194).
+
+##### G.3.24 PDU, UPS & Electrical Distribution (18 muscles)
+
+Each is a battery, UPS or microgrid store with a load and a grid connection; its class is `ups` (an uninterruptible power supply), reached through the UPS and PDU management interface (SNMP, Modbus). Omni-Compass reads its draw on the grid connection and its reserve.
+
+- **Native controller:** the UPS and PDU management interfaces (SNMP, Modbus) and the servers' BMC power caps (IPMI DCMI, Redfish).
+- **Wire out (read):** load per branch, UPS mode and charge, power per server (SNMP, Redfish).
+- **Wire in (write):** server and rack power caps through Redfish or DCMI; UPS charge rate and mode through SNMP; breakers never written.
+- **Restore:** every cap and mode read once and restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** pdu outlet control (Energy 17), phase balance (Energy 19), generator dispatch (Energy 20), ups shutdown battery test (Energy 22), ups operating mode (Energy 23), reactive power target (Energy 24), voltage target (Energy 26), server power cap (Energy 40), rack power cap (Energy 41), pdu branch power limit (Energy 42), ups charge rate (Energy 43), ups discharge rate (Energy 44), hierarchical power budget row pdu switchboard controllers (Energy 62), priority aware capping throttle low priority first (Energy 63), power oversubscription with prediction (Energy 64), load transfer (Energy 163), electrical isolation (Energy 164), breaker trip gate (Energy 165).
+
+##### G.3.25 Runtime & Application (21 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the application runtime's own settings: thread pools, JVM heap and GC, worker counts, connection pools.
+- **Wire out (read):** queue waits, GC pauses, worker busy share, p95 from the application's metrics.
+- **Wire in (write):** worker and pool sizes through the application's admin endpoint, environment or config reload; JVM flags at restart only.
+- **Restore:** the settings recorded; restored (a restart-bound setting is left native).
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** background workers (Distribution 28), runtime memory (Distribution 29), thread pool (Distribution 30), go runtime (Distribution 34), event loop workers (Distribution 36), jvm heap (Distribution 52), process count (Distribution 55), keepalive connection reuse (Distribution 56), application cache size (Distribution 58), worker count (Distribution 89), runtime restart (Distribution 93), connection pool runtime (Distribution 95), dns resolver cache size (Distribution 123), mail queue concurrency (Distribution 139), dns negative cache ttl (Distribution 180), mail retry interval (Distribution 181), gc budget (Distribution 222), async concurrency (Distribution 223), request timeout (Distribution 224), runtime cpu budget (Distribution 225), runtime io budget (Distribution 226).
+
+##### G.3.26 Marine Propulsion & Vessel Automation (12 muscles)
+
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `marine_propulsion` (a ship's propulsion shaft and power plant), reached through the vessel automation and power management system (modelled only). Omni-Compass reads its tracking error and its load.
+
+- **Native controller:** the vessel's automation and power management system.
+- **Wire out (read):** shaft speed and power, fuel rate, engine load (the automation system).
+- **Wire in (write):** shaft speed and power limits, engine staging within the manufacturer's envelope.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** shaft speed target (Physics 19), engine load sharing setpoint (Physics 27), trim target (Physics 28), auxiliary engine staging (Physics 29), slow steaming speed target (Physics 49), propeller pitch limit (Physics 106), shaft power limit (Physics 107), bow thruster duty (Physics 108), ballast pump mode (Physics 109), shore power mode (Physics 110), hotel load budget (Physics 111), rudder rate limit (Physics 112).
+
+##### G.3.27 Serverless & Functions (FaaS) (9 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the function platform's concurrency settings (Knative autoscaling annotations, AWS Lambda concurrency, OpenFaaS).
+- **Wire out (read):** concurrency, cold starts, queue waits (the platform's metrics).
+- **Wire in (write):** provisioned and reserved concurrency, scale-to-zero windows through the platform's API or annotations.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** fn snapstart restore (Compute 94), fn provisioned concurrency (Compute 123), fn prewarm pool (Compute 128), fn reserved concurrency (Compute 129), fn memory size (Compute 145), fn concurrency limit (Compute 186), fn timeout budget (Compute 283), fn scale to zero idle (Compute 418), fn burst admission (Compute 419).
+
+##### G.3.28 Kubernetes Placement & Scheduling (21 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** kube-scheduler and its profiles, the descheduler, PriorityClasses, scheduling gates.
+- **Wire out (read):** pods pending and their reasons, node fill, topology spread (Kubernetes API).
+- **Wire in (write):** a pod's or deployment's placement fields (nodeSelector, affinity, topologySpreadConstraints, priorityClassName, schedulingGates) by kubectl patch, or the scheduler's profile.
+- **Restore:** the fields as they stood before the first write, restored field by field.
+- **Run live?** modelled; the API path is the same kubectl patch the live controller uses for the HPA.
+- **Its muscles, heaviest hitter first:** deschedule (Compute 95), cpu manager (Compute 96), peaks power aware placement (Compute 100), scheduler scoring strategy (Compute 105), topology spread (Compute 106), pod anti affinity (Compute 120), taint toleration (Compute 126), device claim (Compute 127), scheduler plugin weights (Compute 140), numa placement (Compute 141), network locality (Compute 147), gpu topology (Compute 169), storage locality (Compute 175), node selector (Compute 176), failure domain spread (Compute 182), node affinity (Compute 197), priority class (Compute 322), preemption policy (Compute 323), scheduler backoff (Compute 324), gang admission (Compute 325), scheduling gates (Compute 389).
+
+##### G.3.29 Observability & Telemetry (9 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the collector's own configuration: the OpenTelemetry Collector, Prometheus scrape and remote-write settings.
+- **Wire out (read):** dropped samples, queue depth, memory, cardinality (the collector's self-metrics).
+- **Wire in (write):** the collector's batch, queue and memory limits and scrape intervals through its config reload.
+- **Restore:** the config recorded; reloaded from it.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** collector memory limit (Distribution 32), per pod energy attribution (Distribution 39), retention window (Distribution 53), remote write queue (Distribution 82), metric scrape interval (Distribution 90), batching (Distribution 102), export concurrency (Distribution 227), cardinality budget (Distribution 228), telemetry shed (Distribution 229).
+
+##### G.3.30 Reliability, Security & Recovery (18 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
 
 - **Native controller:** the platform's own recovery and security controls: rollout and rollback, PodDisruptionBudgets, the security hold, a kill switch.
 - **Wire out (read):** error rate, rollout status, the security hold (a ConfigMap key), the kill file.
 - **Wire in (write):** rollout pause and undo by kubectl; the security hold read, never written; the kill switch (tools/omni_switch.py) is a human's.
 - **Restore:** every write recorded and undone on the lease.
 - **Run live?** live in part: the security hold and kill switch run in every Kubernetes benchmark (omnicompass/master.py).
+- **Its muscles, heaviest hitter first:** degraded mode (Distribution 33), backup trigger (Distribution 46), waf inspection workers (Distribution 59), traffic divert recovery (Distribution 70), rollback (Distribution 73), policy enforcement (Distribution 83), restart (Distribution 101), ids capture threads (Distribution 127), siem ingest pipeline workers (Distribution 148), ids ring buffer size (Distribution 177), actuator freeze (Distribution 230), workload isolate (Distribution 231), credential rotation gate (Distribution 232), rate abuse gate (Distribution 233), fault domain isolate (Distribution 234), kill switch (Distribution 235), ids rule group admission (Distribution 276), endpoint scan scheduling (Distribution 277).
 
-| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |
-|---:|---|---|---|---|---|
-| V5-5118 | ids capture threads | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | global |
-| V5-5119 | ids ring buffer size | setpoint | left native: native already holds it inside its band (nothing to win) | Distribution; stack; tower | global |
-| V5-5120 | ids rule group admission | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
-| V5-5121 | waf inspection workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 70% full; reads the last 20 decisions |
-| V5-5122 | siem ingest pipeline workers | capacity | starts the machines the forecast needs before the rush lands and clears work waiting in line within one machine start, never fewer than native runs; hands back what it no longer needs at once | Distribution; stack; tower | machines started at 80% full; reads the last 10 decisions |
-| V5-5123 | endpoint scan scheduling | admission | at its limit on native (nothing paced or turned away): read and left native | Distribution; stack; tower | global |
+##### G.3.31 Kubernetes Workload Scaling (32 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the HorizontalPodAutoscaler, KEDA ScaledObject or VPA that owns the workload's scale.
+- **Wire out (read):** the HPA's current and desired replicas, the Deployment's ready replicas (Kubernetes API, metrics-server), the service's response time from the probe.
+- **Wire in (write):** the HPA's target (spec.metrics averageUtilization) and floor (minReplicas) by kubectl patch; KEDA through its ScaledObject, so the add-on keeps its own loop.
+- **Restore:** the operator's target and range recorded in an annotation before the first write, restored from it, annotation removed.
+- **Run live?** live: scripts/kind_bench.sh and omni_controller (HPA target, KEDA, Goldilocks, CruiseKube), three-run tables in results/live.
+- **Its muscles, heaviest hitter first:** vpa minmax allowed resources (Compute 97), hpa cpu target (Compute 98), rollout rate (Compute 104), hpa custom target (Compute 107), hpa scale down stabilisation window (Compute 108), max surge (Compute 111), vpa apply (Compute 117), replicas (Compute 125), keda polling interval (Compute 130), graceful termination (Compute 131), scale to zero (Compute 137), hpa scale up stabilisation window (Compute 144), rollout readiness delay (Compute 148), hpa memory target (Compute 149), probes (Compute 154), hpa scaling rate policies (Compute 157), hpa max replicas (Compute 161), pdb policy (Compute 164), hpa min replicas (Compute 170), kepler energy target autoscaling (Compute 171), hpa policy selection (Compute 177), hpa tolerance (Compute 180), hpa sync period (Compute 189), max unavailable (Compute 190), keda threshold (Compute 315), deployment pause resume (Compute 316), rollout abort (Compute 317), pod eviction (Compute 318), scheduler queue priority (Compute 319), api priority fairness (Compute 320), rollout progress deadline (Compute 385), unhealthy pod eviction policy (Compute 386).
+
+##### G.3.32 Cache & Memory Services (16 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the cache's own configuration: Redis CONFIG SET, Memcached runtime settings.
+- **Wire out (read):** hit rate, evictions, used memory, p95 (INFO, the cache's stats).
+- **Wire in (write):** maxmemory and eviction policy by CONFIG SET; replicas and shards through the operator.
+- **Restore:** the setting read once (CONFIG GET) before the first write and restored (CONFIG SET).
+- **Run live?** live: tools/run_redis.py, V3_REDIS.
+- **Its muscles, heaviest hitter first:** cache size (Distribution 35), cache failover (Distribution 38), cache sharding (Distribution 42), cache replicas (Distribution 45), cache writeback rate (Distribution 51), cache ttl (Distribution 57), memory size threads (Distribution 61), cache prefetch (Distribution 65), cache memory limit (Distribution 86), cache compression (Distribution 94), cache warmup (Distribution 96), cache flush rate (Distribution 98), cache eviction policy (Distribution 209), cache admission (Distribution 210), hot key isolation (Distribution 211), cache connection limit (Distribution 212).
+
+##### G.3.33 Search, Indexing & Vector DB (16 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the search engine's settings API: OpenSearch/Elasticsearch cluster and index settings, the vector database's config.
+- **Wire out (read):** indexing and search latency, queue rejections, merge pressure (the engine's stats API).
+- **Wire in (write):** index refresh interval, merge throttling, shard counts and search thread pools through the settings API.
+- **Restore:** settings recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** index workers (Distribution 37), embedding workers (Distribution 43), segment merge rate (Distribution 48), vector batch size (Distribution 60), shard count (Distribution 63), shard replication (Distribution 64), query route (Distribution 72), shard rebalance (Distribution 75), vector search k (Distribution 79), index refresh rate (Distribution 87), search concurrency (Distribution 213), search timeout (Distribution 214), index memory budget (Distribution 215), hot shard isolation (Distribution 216), search admission (Distribution 217), circuit breakers (Distribution 251).
+
+##### G.3.34 Container Resources (25 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the pod's own resource requests and limits (the Deployment template) and, where it runs, the VPA, Goldilocks or CruiseKube recommender.
+- **Wire out (read):** each pod's CPU use (kubectl top), its request and limit, the node's allocatable CPU (Kubernetes API).
+- **Wire in (write):** the running pod's CPU limit in place through pods/resize (no restart); the template is never changed, so no rollout.
+- **Restore:** the operator's limit recorded in an annotation before the first write; every pod returned to it.
+- **Run live?** live: omni_controller/muscles.py convey() (conveyance); KEDA and Goldilocks tables.
+- **Its muscles, heaviest hitter first:** default limits (Compute 102), io latency target (Compute 109), cpuset (Compute 112), memory high (Compute 113), cpu weight (Compute 114), pids limit (Compute 118), memory limit (Compute 119), memory hard limit (Compute 121), goldilocks vpa request recommendation (Compute 122), runtime class (Compute 124), in place resize (Compute 134), cruisekube request rightsizing (Compute 138), cgroup io max (Compute 146), cpu limit (Compute 152), memory protection (Compute 153), swap limit (Compute 155), io weight (Compute 156), cpu request (Compute 159), ephemeral storage (Compute 160), hugepages (Compute 168), memory reclaim (Compute 178), memory request (Compute 184), cpu quota (Compute 321), namespace quota (Compute 387), freeze (Compute 388).
+
+##### G.3.35 Linux Kernel & OS Control (20 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the Linux kernel's own tunables: cgroup v2 files, /proc/sys/vm and net, the cpufreq and cpuidle governors, the I/O scheduler.
+- **Wire out (read):** /sys/fs/cgroup, /proc/pressure, /proc/vmstat, /sys/block queue stats, the frequency files.
+- **Wire in (write):** cgroup cpu.weight, cpu.max and memory.high; sysctl vm and net keys; scaling_max_freq, through sysfs and sysctl (root).
+- **Restore:** every file snapshotted once and restored byte for byte.
+- **Run live?** the CPU frequency path is written (tools/run_cpu_power.py); the other knobs are registered and queued, they need a real Linux machine.
+- **Its muscles, heaviest hitter first:** irqbalance affinity (Compute 103), hugepage pool reserve (Compute 116), cgroup cpu weight (Compute 135), cgroup cpu quota (Compute 173), cgroup memory high (Compute 174), tcp buffer autotune (Compute 195), io scheduler depth (Compute 199), block nr requests (Compute 200), net rx coalesce (Compute 202), cfs scheduler latency (Compute 275), transparent hugepages (Compute 276), numa auto balancing (Compute 277), dirty ratio writeback (Compute 278), vm swappiness (Compute 279), zswap pool fraction (Compute 280), page cache reclaim (Compute 281), net qdisc codel target (Compute 282), cpufreq dvfs governor (Compute 415), ksm memory dedup (Compute 416), cpu cstate governor (Compute 417).
+
+##### G.3.36 Telecom RAN & Edge Radio (12 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `ran` (a radio access network cell or site), reached through the RAN controller (O-RAN interfaces). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the RAN's near-real-time RIC and O-RAN interfaces (E2, O1).
+- **Wire out (read):** PRB use, connected UEs, cell load, handover rates (the RIC's KPIs).
+- **Wire in (write):** scheduler weights, slice budgets and traffic steering through the RIC's xApps; transmit power within the licence.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** ran scheduler weight (Distribution 44), ran ue handover (Distribution 76), ran antenna tilt (Distribution 77), ran carrier enable (Distribution 84), ran cell sleep (Distribution 85), ran prb allocation (Distribution 91), ran du cu placement (Distribution 100), ran cell traffic steering (Distribution 105), ran connection admission (Distribution 267), ran slice resource budget (Distribution 268), ran tx power (Distribution 269), ran fronthaul budget (Distribution 270).
+
+##### G.3.37 Host CPU & Memory (26 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the Linux kernel's own governors: cpufreq (schedutil or the processor driver), RAPL, cpuidle, the memory manager.
+- **Wire out (read):** /sys/devices/system/cpu/cpufreq (frequencies and governor), /sys/class/powercap intel-rapl energy counters, /proc/stat busy share, /proc/pressure.
+- **Wire in (write):** scaling_max_freq per policy and the RAPL package power limit through sysfs (root); on Kubernetes through the Kubernetes Power Manager's PowerProfile or EAR's policy.
+- **Restore:** the governor's files snapshotted once and restored byte for byte (tools/run_cpu_power.py --restore).
+- **Run live?** written and tested on the modelled machine (tools/run_cpu_power.py, cpu-power.yml); GitHub's machines are virtual and cannot write the governor: the live run needs a real Linux machine.
+- **Its muscles, heaviest hitter first:** swappiness reclaim (Compute 115), core packing (Compute 133), irq affinity (Compute 136), memory bandwidth (Compute 139), llc allocation (Compute 143), page reclaim rate (Compute 150), turbo boost (Compute 172), transparent hugepages (Compute 183), numa balance (Compute 185), core online offline (Compute 187), cpufreq min (Compute 333), cpufreq max (Compute 334), rapl package power (Compute 335), uncore frequency (Compute 336), energy perf preference (Compute 337), cpu idle policy (Compute 338), memory pressure gate (Compute 339), thermal throttle policy (Compute 340), host power profile (Compute 341), frequency governor (Compute 392), dram power limit (Compute 393), per pod cpu frequency range and c state access (Compute 401), uncore frequency per node (Compute 402), ear cpu frequency policy (Compute 407), ear global energy budget (Compute 408), k8s power manager core profile (Compute 409).
+
+##### G.3.38 Media Streaming & CDN (14 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the streaming stack's transcoder pools, packager and CDN settings.
+- **Wire out (read):** transcode queue, GPU clocks, buffer health, origin load (the stack's metrics).
+- **Wire in (write):** worker pools, bitrate-ladder cap and cache TTLs through the stack's API; GPU clocks through nvidia-smi (family 9).
+- **Restore:** recorded; restored.
+- **Run live?** modelled; the GPU path is live (family 9).
+- **Its muscles, heaviest hitter first:** drm license server pool (Compute 132), packager workers (Compute 151), origin shield cache size (Compute 191), transcoder worker pool (Compute 233), thumbnail sprite batch (Compute 248), abr bitrate ladder cap (Compute 288), player buffer target (Compute 289), edge cache ttl (Compute 290), segment duration target (Compute 291), encoder lookahead frames (Compute 292), live transcode gpu clocks (Compute 431), vod transcode batch power (Compute 432), cdn request coalescing (Compute 433), media ingest admission (Compute 434).
+
+##### G.3.39 Blockchain & Ledger Nodes (10 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `cpu_host` (a CPU host whose clock and power can be set), reached through Linux cpufreq and RAPL. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the node's configuration (cache sizes, peer limits, mempool) and its host's power profile.
+- **Wire out (read):** block relay latency, mempool size, peer counts, validation backlog (the node's RPC).
+- **Wire in (write):** cache and pool sizes through the node's config and RPC; the host's power profile through family 8.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** script validation threads (Compute 179), archive node storage tier (Compute 203), node db cache size (Compute 204), max peer connections (Compute 210), indexer batch workers (Compute 250), mempool max size (Compute 295), utxo cache flush interval (Compute 296), block relay admission (Compute 438), rpc work queue depth (Compute 439), validator host power profile (Compute 440).
+
+##### G.3.40 Storage Block/File/Object (20 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `storage` (block, file or object storage), reached through the storage system's QoS and tiering API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the storage system's QoS and tiering: Ceph (ceph osd pool set, QoS), a cloud volume's IOPS class, S3 lifecycle.
+- **Wire out (read):** IOPS, throughput, latency and queue depth from the storage system's metrics.
+- **Wire in (write):** volume IOPS and throughput limits, replica counts and tiering through the storage API or CSI VolumeAttributesClass.
+- **Restore:** the volume's class and limits recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** lifecycle tiering (Distribution 97), erasure code profile (Distribution 99), throughput limit (Distribution 104), scrub schedule (Distribution 106), volume placement (Distribution 109), volume size (Distribution 111), cache allocation (Distribution 116), object replication (Distribution 118), storage tier (Distribution 119), backfill rate (Distribution 120), replica count (Distribution 128), recovery rate (Distribution 129), rebalance (Distribution 131), io scheduler (Distribution 132), snapshot trigger (Distribution 133), compaction pressure (Distribution 134), iops limit (Distribution 140), storage admission (Distribution 195), degraded storage gate (Distribution 196), disk power spin down (Distribution 250).
+
+##### G.3.41 Skin: Perimeter & Admission (5 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `network` (network routing and switching), reached through the network controller (SDN, routing API). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the perimeter's own controls: the WAF, the DDoS shield, the TLS terminator.
+- **Wire out (read):** request admission, inspection sampling, session cache hit rate (the perimeter's metrics).
+- **Wire in (write):** token-bucket rates, sampling and session cache size through the perimeter's API; blocking rules never loosened.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** tls session cache (Compute 192), rate limit token bucket (Compute 427), connection admission (Compute 428), waf inspection sampling (Compute 429), ddos shield admission (Compute 430).
+
+##### G.3.42 Network Routing & Switching (19 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `network` (network routing and switching), reached through the network controller (SDN, routing API). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the network controller: the load balancer's weights, the SDN controller, the NIC's ethtool and tc settings.
+- **Wire out (read):** link utilisation, drops, queue latency (SNMP, the controller's API, ethtool -S).
+- **Wire in (write):** LB and route weights through the controller's API; rate limits and queue disciplines through tc; NIC queues through ethtool.
+- **Restore:** every weight and setting recorded; restored with the same commands.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** bandwidth limit (Distribution 108), nic interrupt coalescing (Distribution 112), nic queue count (Distribution 113), route weight (Distribution 115), qos class (Distribution 117), nic ring size (Distribution 121), lb weight (Distribution 125), queue discipline (Distribution 126), congestion control (Distribution 135), path selection (Distribution 136), failover route (Distribution 137), ecmp weight (Distribution 138), rate limit (Distribution 182), connection limit (Distribution 183), nic rate limit (Distribution 184), egress budget (Distribution 185), ingress budget (Distribution 186), network isolation (Distribution 187), port link power (Distribution 249).
+
+##### G.3.43 Content Delivery & Edge Cache (6 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `network` (network routing and switching), reached through the network controller (SDN, routing API). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the CDN's configuration API and the edge cache's settings.
+- **Wire out (read):** hit ratio, origin load, TTLs (the CDN's metrics).
+- **Wire in (write):** cache TTLs, origin-shield concurrency and prefetch through the CDN API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** origin shield concurrency (Distribution 114), edge cache size (Distribution 122), cdn cache ttl (Distribution 171), prefetch aggressiveness (Distribution 172), tiered cache promotion (Distribution 271), edge pop admission (Distribution 272).
+
+##### G.3.44 GPU Fabric & RDMA (18 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `fabric` (a high-speed fabric (RDMA, DPU, SmartNIC)), reached through the fabric manager's API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the fabric manager and the collective library (NVIDIA Fabric Manager, NCCL settings, RDMA CM).
+- **Wire out (read):** link and NVSwitch counters (nvidia-smi nvlink, DCGM), collective time per step from the training job.
+- **Wire in (write):** NCCL environment and the job's rank placement at launch; RDMA QoS through the fabric manager's API.
+- **Restore:** the launch settings recorded; the next job launched with the originals.
+- **Run live?** modelled; written against NCCL and Fabric Manager documentation.
+- **Its muscles, heaviest hitter first:** rdma bandwidth (Compute 205), nic affinity (Compute 207), congestion response (Compute 213), nvlink placement (Compute 215), nvswitch route (Compute 218), rail selection (Compute 219), collective protocol (Compute 220), rank placement (Compute 221), gpudirect policy (Compute 222), nic hca selection (Compute 224), collective algorithm (Compute 228), fabric failover (Compute 229), rdma route (Compute 230), collective chunk size (Compute 232), gpu fabric quarantine (Compute 348), collective concurrency (Compute 349), communication priority (Compute 350), fabric isolation (Compute 351).
+
+##### G.3.45 DPU SmartNIC & Programmable IO (12 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `fabric` (a high-speed fabric (RDMA, DPU, SmartNIC)), reached through the fabric manager's API. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the DPU's own management (NVIDIA DOCA, the SmartNIC's SDK) and SR-IOV.
+- **Wire out (read):** per-function rates, flow-steering hits, DPU CPU and memory (the DPU's counters).
+- **Wire in (write):** rate limits, QoS groups and VF counts through the DPU management API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** dpu sf tx rate (Compute 206), smartnic flow steering (Compute 208), dpu service placement (Compute 209), sriov vf count (Compute 216), smartnic offload enable (Compute 217), dpu pf tx rate (Compute 223), dpu vf tx rate (Compute 225), dpu bandwidth share (Compute 226), dpu qos group (Compute 227), dpu failover (Compute 231), dpu cpu budget (Compute 413), dpu memory budget (Compute 414).
+
+##### G.3.46 Workflow, Logistics & Fulfillment (15 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `workflow` (a workflow or pipeline engine), reached through the workflow engine's concurrency settings. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the workflow engine (Temporal, Airflow, Camunda) and the fulfilment system's dispatch rules.
+- **Wire out (read):** task queue depth, worker utilisation, SLA misses (the engine's metrics).
+- **Wire in (write):** worker rates, concurrency and retry policies through the engine's API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** route replan (Distribution 141), compensation action (Distribution 142), shipment batch (Distribution 143), warehouse queue (Distribution 154), workflow worker rate (Distribution 159), inventory allocation (Distribution 160), fulfillment route (Distribution 161), carrier selection (Distribution 162), task queue rate (Distribution 163), sla escalation (Distribution 164), workflow admission (Distribution 244), workflow retry (Distribution 245), workflow backoff (Distribution 246), workflow timeout (Distribution 247), dispatch priority (Distribution 248).
+
+##### G.3.47 AI Training (18 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `gpu_batch` (GPU training and batch work), reached through nvidia-smi, the job scheduler's pause and resume. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the training job's launcher and scheduler (Kubeflow, Ray Train, Slurm, torchrun).
+- **Wire out (read):** step time, GPU utilisation, checkpoint cadence, stragglers (the job's metrics).
+- **Wire in (write):** the job's worker count (elastic training), batch sizes and checkpoint interval through the launcher's API or the job spec.
+- **Restore:** the job spec recorded; the next run launched from it.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** checkpoint trigger (Compute 234), straggler mitigation (Compute 235), training workers (Compute 239), data parallelism (Compute 240), gradient accumulation (Compute 242), checkpoint interval (Compute 246), pipeline parallelism (Compute 252), expert parallelism (Compute 254), tensor parallelism (Compute 255), global batch size (Compute 256), elastic worker count (Compute 265), microbatch size (Compute 269), dataloader workers (Compute 270), training gang size (Compute 271), compute comm overlap (Compute 272), activation checkpointing (Compute 273), training preempt (Compute 359), training precision (Compute 360).
+
+##### G.3.48 Data Analytics & ETL (15 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** Spark's dynamic allocation and the SQL engine's slots (spark.dynamicAllocation, Flink's parallelism, warehouse slots).
+- **Wire out (read):** executor count, task backlog, shuffle spill, stage times (the engine's metrics).
+- **Wire in (write):** dynamic allocation min and max, parallelism and slots through the engine's config at submit or its REST API.
+- **Restore:** the submit settings recorded; the next job launched from them.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** stage parallelism (Distribution 145), executor size (Distribution 146), shuffle bandwidth (Distribution 147), cache fraction (Distribution 149), shuffle partitions (Distribution 150), dynamic allocation max (Distribution 151), speculation policy (Distribution 152), batch interval (Distribution 153), dynamic allocation min (Distribution 155), query slots (Distribution 156), data locality wait (Distribution 158), etl concurrency (Distribution 218), spill threshold (Distribution 219), stream backpressure (Distribution 220), analytics admission (Distribution 221).
+
+##### G.3.49 HPC & Distributed Compute (19 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the batch scheduler: Slurm (scontrol, sacctmgr), PBS, LSF.
+- **Wire out (read):** queue depth, node states, job wait times, power per node (sacct, sinfo, the power plugin).
+- **Wire in (write):** partition limits, job priority and fair-share factors, node power-saving settings through scontrol and the scheduler config.
+- **Restore:** the scheduler's settings recorded; restored with the same commands.
+- **Run live?** modelled; EAR (family 8) is the live energy path on HPC.
+- **Its muscles, heaviest hitter first:** rank mapping (Compute 236), backfill policy (Compute 238), job slots (Compute 241), job walltime (Compute 244), checkpoint restart (Compute 245), mpi ranks (Compute 247), node allocation (Compute 249), accelerator share (Compute 251), cpu gpu ratio (Compute 260), partition limits (Compute 263), memory per rank (Compute 274), job priority (Compute 361), job preemption (Compute 362), parallel io budget (Compute 363), collective budget (Compute 364), scratch budget (Compute 365), scheduler fair share (Compute 366), node power saving (Compute 397), cpu frequency per job (Compute 398).
+
+##### G.3.50 Distributed Cluster Managers (15 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `batch` (batch and queued jobs), reached through the job queue (Kubernetes Jobs, Slurm, Spark). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the cluster manager's scheduler: YARN, Mesos, Nomad, Ray.
+- **Wire out (read):** queue lengths, resource reservations, preemptions (the manager's API).
+- **Wire in (write):** quotas, reservations and preemption settings through the manager's API.
+- **Restore:** recorded once, restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** worker allocation (Compute 237), resource reservation (Compute 243), oversubscription (Compute 253), resource reclaim (Compute 257), gang schedule (Compute 261), binpack pressure (Compute 264), spread pressure (Compute 266), maintenance evacuation (Compute 267), task admission (Compute 367), task priority (Compute 368), cluster quota (Compute 369), task preemption (Compute 370), queue fairness (Compute 371), deadline pressure (Compute 372), scheduler retry (Compute 373).
+
+##### G.3.51 Ports & Maritime Logistics (12 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `port` (a container terminal's cranes and vehicles taking moves), reached through the terminal operating system and fleet controllers. Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the terminal operating system and the equipment fleet controllers.
+- **Wire out (read):** moves waiting, cranes active, gate queue, equipment charge (the TOS).
+- **Wire in (write):** crane and vehicle allocation, gate rate and charging windows through the TOS.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** rail mounted gantry dispatch (Distribution 165), quay crane allocation (Distribution 166), stacking height target (Distribution 167), horizontal transport fleet size (Distribution 168), yard crane fleet size (Distribution 169), shore power connection capacity (Distribution 170), berth window admission (Distribution 261), truck gate rate limit (Distribution 262), reefer plug power budget (Distribution 263), container dwell priority (Distribution 264), vessel arrival pacing (Distribution 265), equipment charging window (Distribution 266).
+
+##### G.3.52 Industrial PLC & Process Automation (18 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the PLC or DCS loop (OPC UA, EtherNet/IP, PROFINET): the setpoint and the mode of each loop.
+- **Wire out (read):** the process value, setpoint, output and alarm state of each loop (OPC UA reads).
+- **Wire in (write):** the loop's setpoint within its safe band and its actuator range by OPC UA write; safety interlocks are never written.
+- **Restore:** every setpoint read once and restored; a value outside the band is refused by the plug.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** valve position (Energy 34), furnace setpoint (Energy 35), pressure setpoint (Energy 36), temperature setpoint (Energy 37), mass flow setpoint (Energy 38), tank level target (Energy 39), plc cycle authority (Energy 153), machine cell admission (Energy 154), pump flow (Energy 155), compressor speed (Energy 156), heater power (Energy 157), conveyor rate (Energy 158), feed rate (Energy 159), purge vent action (Energy 160), controller mode (Energy 175), alarm limits (Energy 176), safety interlock trip (Energy 177), opc ua writes (Energy 178).
+
+##### G.3.53 Cooling, Chillers & Thermodynamics (18 muscles)
+
+Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `data_hall` (a data hall cooling plant), reached through the building management system (BACnet, Modbus) or its command line. Omni-Compass reads its temperature against its limit.
+
+- **Native controller:** the building management system and the chiller plant's own supervisory controller (BACnet, Modbus).
+- **Wire out (read):** supply and return temperatures, chiller load, fan and pump speeds, rack inlet temperatures (BACnet reads).
+- **Wire in (write):** supply-air and chilled-water setpoints, fan and pump speeds within their safe bands by BACnet write; the plant's own staging keeps control.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled (the data-hall plant); the BACnet path is written.
+- **Its muscles, heaviest hitter first:** supply air temperature (Energy 45), return air target (Energy 46), coolant supply temperature (Energy 47), coolant flow (Energy 48), pump speed (Energy 49), fan speed (Energy 50), chiller setpoint (Energy 51), cooling tower fan (Energy 52), cooling capacity (Energy 53), gpu thermal envelope (Energy 54), cpu thermal envelope (Energy 55), server fan speed (Energy 57), economiser (Energy 58), chiller plant supervisory control rl with safety layer (Energy 65), compressor authority (Energy 166), rack thermal budget (Energy 167), thermal workload migrate (Energy 168), thermal load shed (Energy 169).
+
+##### G.3.54 Building & Critical Environment HVAC (15 muscles)
+
+Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `building` (a building zone), reached through the building management system. Omni-Compass reads its temperature against its limit.
+
+- **Native controller:** the building management system (BACnet) and the AHU and zone controllers.
+- **Wire out (read):** zone temperatures, airflows, duct static pressure, occupancy (BACnet reads).
+- **Wire in (write):** zone setpoints, fan speeds and damper positions within their bands by BACnet write; the BMS's own sequences keep control.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled: CityLearn districts (results/live/V3_CITYLEARN.md); the BACnet path is written.
+- **Its muscles, heaviest hitter first:** setpoint reset trim and respond (Energy 59), duct static pressure setpoint (Energy 60), optimal start stop (Energy 61), zone temperature target (Energy 145), zone airflow (Energy 146), ahu fan speed (Energy 147), damper position (Energy 148), economizer position (Energy 149), boiler setpoint (Energy 150), humidity target (Energy 151), thermal storage dispatch (Energy 152), heat pump mode (Energy 246), occupancy ventilation (Energy 247), building demand limit (Energy 248), hvac emergency mode (Energy 249).
+
+##### G.3.55 Healthcare Critical Environments (13 muscles)
+
+Each is a data hall or building zone cooled by chillers, air handlers or fans; its class is `hospital` (a hospital's critical rooms (operating rooms, isolation, pharmacy, imaging suites)), reached through the hospital's building management system (BACnet). Omni-Compass reads its temperature against its limit.
+
+- **Native controller:** the hospital's building management system (BACnet) with its clinical limits.
+- **Wire out (read):** room pressures, air changes, temperatures and humidity (BACnet reads).
+- **Wire in (write):** setpoints within the clinical envelope by BACnet write; pressure cascades and alarms never loosened.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** operating room air change setpoint (Energy 66), isolation room pressure target (Energy 67), patient room temperature setpoint (Energy 68), surgical suite humidity target (Energy 69), ahu supply air temperature (Energy 70), pharmacy cold room setpoint (Energy 71), sterile storage humidity setpoint (Energy 72), imaging suite cooling capacity (Energy 73), chiller plant staging (Energy 74), exhaust fan capacity (Energy 75), ward night setback mode (Energy 181), medical gas plant demand limit (Energy 182), emergency power load shed (Energy 183).
+
+##### G.3.56 Agriculture & Irrigation (14 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `irrigation` (pumps, pressure and climate on a farm or in a greenhouse), reached through the pump station controller, the pivot panel or the climate computer (Modbus, the vendor cloud). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the pump station controller, pivot panel or climate computer (Modbus, the vendor cloud).
+- **Wire out (read):** pressure, soil moisture, temperature, flow (the controller's registers).
+- **Wire in (write):** pump speed and climate setpoints within their bands by Modbus write.
+- **Restore:** registers read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** mainline pressure setpoint (Energy 76), soil moisture target (Energy 77), pivot speed setpoint (Energy 78), greenhouse temperature setpoint (Energy 79), greenhouse co2 target (Energy 80), vent position setpoint (Energy 81), grain dryer temperature setpoint (Energy 82), cold storage temperature setpoint (Energy 83), milking vacuum level setpoint (Energy 84), well drawdown level target (Energy 85), irrigation pump speed (Energy 184), fertigation dose (Energy 185), barn ventilation rate (Energy 186), drip zone dispatch (Energy 187).
+
+##### G.3.57 Oil & Gas Pipelines (14 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `pipeline` (a pipeline segment with its compressors, pumps and valves), reached through pipeline SCADA (DNP3, Modbus, OPC UA). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** pipeline SCADA (DNP3, Modbus, OPC UA).
+- **Wire out (read):** pressures, flows, line pack, compressor states (SCADA reads).
+- **Wire in (write):** pressure and flow setpoints and unit staging within the safe envelope; protection never written.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** compressor discharge pressure setpoint (Energy 86), pump station suction pressure target (Energy 87), line pack target (Energy 88), pipeline flow setpoint (Energy 89), terminal tank level target (Energy 90), heater outlet temperature setpoint (Energy 91), valve position target (Energy 92), cathodic protection voltage (Energy 93), compressor unit staging (Energy 188), vfd pump speed (Energy 189), leak detection shutdown (Energy 190), batch interface dispatch (Energy 191), drag reducing agent dose (Energy 192), pressure protection priority (Energy 193).
+
+##### G.3.58 Mining & Mineral Processing (14 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `mill` (a grinding, flotation or materials-handling circuit), reached through the plant DCS or PLC (OPC UA). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the plant DCS or PLC (OPC UA).
+- **Wire out (read):** mill load, speed, pressures, densities, power (OPC UA reads).
+- **Wire in (write):** loop setpoints within their bands by OPC UA write; shutdowns never written.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** sag mill load setpoint (Energy 94), mill speed target (Energy 95), crusher gap setpoint (Energy 96), cyclone feed pressure target (Energy 97), thickener underflow density target (Energy 98), conveyor speed setpoint (Energy 99), dewatering pump level target (Energy 100), stockpile level target (Energy 101), flotation aeration rate (Energy 194), reagent dose (Energy 195), ventilation on demand airflow (Energy 196), slurry pump speed (Energy 197), tailings discharge shutdown (Energy 198), ore blend dispatch (Energy 199).
+
+##### G.3.59 District Heating & Cooling (13 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `district_heat` (a district heating or cooling network), reached through the network control system and substation controllers (Modbus, M-Bus). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the network control system and substation controllers (Modbus, M-Bus).
+- **Wire out (read):** supply and return temperatures, differential pressure, storage level (the controllers).
+- **Wire in (write):** supply temperature and pressure setpoints, pump speed and staging within their bands.
+- **Restore:** registers read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** supply temperature setpoint (Energy 102), return temperature target (Energy 103), differential pressure setpoint (Energy 104), thermal storage level target (Energy 105), outdoor reset setpoint (Energy 106), cooling network supply temperature (Energy 107), cooling storage level target (Energy 108), network pump speed (Energy 200), heat pump staging (Energy 201), chp dispatch (Energy 202), peak boiler heater output (Energy 203), substation flow limit (Energy 204), peak demand shed (Energy 205).
+
+##### G.3.60 Power Generation & Turbine Control (14 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `turbine` (a generating unit's governor, boiler or excitation loop), reached through the plant DCS and governor (OPC UA, IEC 61850; modelled only). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the plant DCS and the unit's governor (OPC UA, IEC 61850).
+- **Wire out (read):** unit load, frequency, pressures, temperatures (the DCS).
+- **Wire in (write):** load setpoints and ramp limits within the dispatch envelope; protection and rod positions never written.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** turbine speed droop setpoint (Energy 109), unit load setpoint (Energy 110), boiler steam pressure setpoint (Energy 111), feedwater level target (Energy 112), excitation voltage setpoint (Energy 113), hydro gate position target (Energy 114), combustion air ratio setpoint (Energy 115), cooling water flow setpoint (Energy 116), inlet guide vane position (Energy 117), nuclear rod position target (Energy 118), agc participation limit (Energy 206), reserve dispatch priority (Energy 207), turbine ramp rate limit (Energy 208), emissions shutdown (Energy 209).
+
+##### G.3.61 Renewable Generation & Inverter Control (13 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `inverter` (a plant of grid-support inverters or wind turbines), reached through the plant controller and inverter settings (SunSpec, IEC 61850, IEEE 1547). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the plant controller and inverter settings (SunSpec, IEC 61850, IEEE 1547).
+- **Wire out (read):** active and reactive power, voltage, curtailment state (SunSpec registers).
+- **Wire in (write):** volt-var and volt-watt setpoints, curtailment and ramp limits by SunSpec write within the interconnection agreement.
+- **Restore:** registers read once and restored.
+- **Run live?** modelled: SimBench grids solved by pandapower (results/live/V3_PANDAPOWER.md); the register path is written.
+- **Its muscles, heaviest hitter first:** inverter volt var setpoint (Energy 119), inverter volt watt setpoint (Energy 120), plant reactive power target (Energy 121), rotor speed setpoint (Energy 122), inverter frequency droop setpoint (Energy 123), string mppt voltage setpoint (Energy 124), active power curtailment (Energy 210), wind turbine yaw offset (Energy 211), pitch angle limit (Energy 212), ramp rate limit (Energy 213), tracker stow mode (Energy 214), noise mode schedule (Energy 215), ice detection shutdown (Energy 216).
+
+##### G.3.62 Pharmaceutical & Food Manufacturing (14 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `batch_reactor` (a GMP batch reactor, fermenter or food process), reached through the batch control system (ISA-88, OPC UA). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the batch control system (ISA-88, OPC UA) with the validated recipe limits.
+- **Wire out (read):** process values and phase states (OPC UA reads).
+- **Wire in (write):** setpoints within the validated recipe band only; a value outside it is refused by the plug.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** reactor temperature setpoint (Energy 125), agitator speed setpoint (Energy 126), fermenter dissolved oxygen target (Energy 127), ph setpoint (Energy 128), pasteurizer holding temperature setpoint (Energy 129), freezer tunnel temperature setpoint (Energy 130), cleanroom pressure cascade setpoint (Energy 131), lyophilizer shelf temperature setpoint (Energy 132), chromatography flow setpoint (Energy 133), oven zone temperature setpoint (Energy 134), cip cycle dispatch (Energy 217), steam sterilizer cycle priority (Energy 218), refrigerant compressor authority (Energy 219), batch hold quarantine (Energy 220).
+
+##### G.3.63 Grid Transmission & Distribution (12 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `feeder_voltage` (a distribution feeder's voltage), reached through the distribution management system (IEC 61850, DNP3; modelled only). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the distribution management system and the devices' own controllers (IEC 61850, DNP3): regulators, capacitor banks, inverters.
+- **Wire out (read):** feeder voltages, loads, tap positions, inverter output (the DMS).
+- **Wire in (write):** regulator and transformer taps, capacitor switching and inverter reactive power within the planning envelope; protection never written.
+- **Restore:** every setting read once and restored.
+- **Run live?** modelled: SimBench grids (results/live/V3_PANDAPOWER.md).
+- **Its muscles, heaviest hitter first:** voltage regulator tap (Energy 135), transformer tap (Energy 136), feeder voltage target (Energy 137), frequency droop setpoint (Energy 138), capacitor bank switch (Energy 221), inverter real power (Energy 222), inverter reactive power (Energy 223), feeder load transfer (Energy 224), distribution storage dispatch (Energy 225), demand response dispatch (Energy 226), grid protection mode (Energy 227), grid restoration sequence (Energy 228).
+
+##### G.3.64 Semiconductor Fab & Precision Manufacturing (13 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `chamber` (a controlled chamber (clean room, kiln, reactor)), reached through the PLC or DCS. Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the fab's MES and each tool's controller (SECS/GEM).
+- **Wire out (read):** tool queues, chamber states, process values (MES and GEM).
+- **Wire in (write):** lot dispatch and tool admission through the MES; chamber recipes and parameters never written outside the qualified window.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** chamber temperature (Energy 139), chamber pressure (Energy 140), run to run control (Energy 179), idle sleep mode (Energy 180), tool job dispatch (Energy 229), wafer route (Energy 230), chamber recipe selection (Energy 231), gas flow (Energy 232), rf power (Energy 233), vacuum pump speed (Energy 234), robot transfer rate (Energy 235), lot priority (Energy 236), tool quarantine (Energy 237).
+
+##### G.3.65 Water Wastewater & Pumping (12 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `water` (a water or pumping process), reached through the SCADA system (Modbus, DNP3). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the utility's SCADA (Modbus, DNP3) and the pump station controllers.
+- **Wire out (read):** levels, pressures, flows, aeration and dosing (SCADA reads).
+- **Wire in (write):** pump speeds, level and pressure targets, aeration and dosing within their bands by SCADA write; emergency shutdowns never written.
+- **Restore:** every setpoint read once and restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** valve position water (Energy 141), reservoir level target (Energy 142), line pressure target (Energy 143), flow target water (Energy 144), pump speed water (Energy 238), aeration rate (Energy 239), chemical dose rate (Energy 240), filtration backwash (Energy 241), lift station dispatch (Energy 242), leak isolation (Energy 243), water demand shed (Energy 244), water emergency shutdown (Energy 245).
+
+##### G.3.66 Gut: Data-plane Intake & Waste (8 muscles)
+
+Each is a regulated process: a temperature, pressure, flow, level, voltage or composition held at a setpoint; its class is `process` (an industrial process loop), reached through the PLC or DCS (OPC UA, EtherNet/IP, PROFINET). Omni-Compass reads how far the process sits from its band.
+
+- **Native controller:** the data plane's own intake pacing and compaction settings (the ingress, the queue, the store's compactor).
+- **Wire out (read):** intake rate, backpressure, compaction debt, dead-letter depth (the components' metrics).
+- **Wire in (write):** pacing, drain rates and compaction budgets through each component's settings API.
+- **Restore:** recorded; restored.
+- **Run live?** modelled.
+- **Its muscles, heaviest hitter first:** dead letter retry cap (Compute 285), ttl eviction waste (Compute 286), retry budget window (Compute 287), ingress intake pacing (Compute 422), gc compaction pacing (Compute 423), backpressure threshold (Compute 424), queue drain rate (Compute 425), compaction debt drain (Compute 426).
+
+##### G.3.67 Work Admission & Demand Shaping (19 muscles)
+
+Each is a pool of servers, pods, GPUs, links or disks serving a stream of requests or jobs; its class is `server` (an application service on servers or pods), reached through the Kubernetes API (HPA target and floor, pod resize). Omni-Compass reads how far its queue and its load sit toward the service line (queue or lateness, and load above half).
+
+- **Native controller:** the service's own admission layer: its API gateway, queue or admission controller (Envoy, NGINX, Kong, a job queue's concurrency setting).
+- **Wire out (read):** queue depth, requests in flight and the response-time line from the gateway's or queue's metrics (Prometheus, the admin API).
+- **Wire in (write):** the gateway's or queue's concurrency and rate settings (the limit named by the muscle) through its admin API or its config object.
+- **Restore:** snapshot of each limit once before the first write; every limit restored from it.
+- **Run live?** at its limit on native: read and left native in every run (nothing is paced or turned away); the wire is read-only.
+- **Its muscles, heaviest hitter first:** api concurrency (Compute 299), queue concurrency (Compute 300), queue backpressure (Compute 301), job admission (Compute 302), batch admission (Compute 303), inference admission (Compute 304), load shed (Compute 305), priority gate (Compute 306), tenant admission (Compute 307), burst limit (Compute 308), deadline admission (Compute 309), work budget (Compute 310), request queue limit (Compute 311), retry admission (Compute 312), background work gate (Compute 313), maintenance work gate (Compute 314), request concurrency limit (Compute 399), adaptive concurrency limit (Compute 404), priority request queue under limit (Compute 405).
+
+##### G.3.68 Spacecraft & Flight Software (14 muscles)
+
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `reaction_wheel` (a spacecraft reaction wheel), reached through the attitude controller (modelled only). Omni-Compass reads its tracking error and its load.
+
+- **Native controller:** the flight software's command and mode tables (cFS, F Prime).
+- **Wire out (read):** attitude error, wheel speeds, power and thermal state from telemetry.
+- **Wire in (write):** payload duty cycle, communication allocation and wheel allocation through commands; safe modes never commanded.
+- **Restore:** the command table recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** space command admission (Physics 73), flight task schedule (Physics 74), space mode transition (Physics 75), payload duty cycle (Physics 76), communication allocation (Physics 77), space power budget (Physics 78), space thermal command (Physics 79), attitude command envelope (Physics 80), reaction wheel allocation (Physics 81), rcs authority (Physics 82), safe mode transition (Physics 83), watchdog recovery (Physics 84), instrument activation (Physics 85), fault isolation (Physics 86).
+
+##### G.3.69 Rail Traction & Train Control (14 muscles)
+
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `rail_traction` (a train's traction and auxiliary systems), reached through the train control and management system and ATO (modelled only). Omni-Compass reads its tracking error and its load.
+
+- **Native controller:** the train control and management system and ATO.
+- **Wire out (read):** speed, traction effort, timetable margin, auxiliary power (TCMS telemetry).
+- **Wire in (write):** traction and coasting targets within the ATO's envelope.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** traction effort limit (Physics 92), regenerative braking share (Physics 93), coasting speed target (Physics 94), dwell time schedule (Physics 95), hvac duty cycle (Physics 96), train auxiliary power budget (Physics 97), platform approach speed (Physics 98), acceleration rate setpoint (Physics 99), wheel slip protection mode (Physics 100), traction motor thermal derate (Physics 101), catenary voltage limit (Physics 102), timetable recovery margin (Physics 103), headway target (Physics 104), door release hold (Physics 105).
+
+##### G.3.70 Elevators & Vertical Transport (12 muscles)
+
+Each is a motor-driven axis: a robot joint, a flight-control surface, a reaction wheel, a traction motor; its class is `elevator_hoist` (an elevator or escalator drive and its group control), reached through the lift controller and destination dispatch (modelled only). Omni-Compass reads its tracking error and its load.
+
+- **Native controller:** the lift controller and destination dispatch.
+- **Wire out (read):** calls waiting, car positions, drive temperature (the controller).
+- **Wire in (write):** speed and dispatch modes within the manufacturer's limits; safety modes never written.
+- **Restore:** recorded; restored.
+- **Run live?** modelled only.
+- **Its muscles, heaviest hitter first:** hoist speed target (Physics 113), acceleration limit (Physics 114), regen drive mode (Physics 115), standby power mode (Physics 116), destination dispatch schedule (Physics 117), car parking mode (Physics 118), door dwell hold (Physics 119), escalator speed target (Physics 120), group capacity mode (Physics 121), motor thermal derate (Physics 122), brake test schedule (Physics 123), fire recall mode (Physics 124).
 
 ## Appendix H. Source of the Engine
 
-The full source of every Python file of the engine that stands, omni-v23 (`OMNI_V23.json`, digest c96ea4105d8747db), 60 files, as the printed book carries it: `omni_controller/__init__.py`, `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/gpu_compass.py`, `omni_controller/gpu_governor.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omni_orchestrator/__init__.py`, `omni_orchestrator/agent.py`, `omni_orchestrator/brain.py`, `omni_orchestrator/cgroup.py`, `omni_orchestrator/control.py`, `omni_orchestrator/front.py`, `omni_orchestrator/scheduler.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/authority_contract.py`, `omnicompass/ce_score.py`, `omnicompass/closure.py`, `omnicompass/compass.py`, `omnicompass/compass_law.py`, `omnicompass/configurations.py`, `omnicompass/conveyance.py`, `omnicompass/core.py`, `omnicompass/disruption_budget.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/mathdrive.py`, `omnicompass/muscle_sdk.py`, `omnicompass/muscles.py`, `omnicompass/nervous.py`, `omnicompass/nervous_system.py`, `omnicompass/pools.py`, `omnicompass/shield.py`, `omnicompass/speed.py`, `omnicompass/stack_sim.py`, `omnicompass/storage.py`, `omnicompass/student_t.py`, `omnicompass/verdict.py`, `realms/__init__.py`, `realms/compass_arm.py`, `realms/compass_arm_v5.py`, `realms/gpu_card.py`, `realms/harness.py`, `realms/plants.py`, `realms/presets.py`, `tools/knob_verdict.py`, `tools/run_citylearn.py`, `tools/run_cpu_power.py`, `tools/run_kafka.py`, `tools/run_kil.py`, `tools/run_mujoco.py`, `tools/run_pandapower.py`, `tools/run_pgbench.py`, `tools/run_redis.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`, `tools/store_brain.py`.
+The full source of every Python file of the engine that stands, omni-v24 (`OMNI_V24.json`, digest 66c8f2d94b3e4725), 60 files, as the printed book carries it: `omni_controller/__init__.py`, `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/gpu_compass.py`, `omni_controller/gpu_governor.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omni_orchestrator/__init__.py`, `omni_orchestrator/agent.py`, `omni_orchestrator/brain.py`, `omni_orchestrator/cgroup.py`, `omni_orchestrator/control.py`, `omni_orchestrator/front.py`, `omni_orchestrator/scheduler.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/authority_contract.py`, `omnicompass/ce_score.py`, `omnicompass/closure.py`, `omnicompass/compass.py`, `omnicompass/compass_law.py`, `omnicompass/configurations.py`, `omnicompass/conveyance.py`, `omnicompass/core.py`, `omnicompass/disruption_budget.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/mathdrive.py`, `omnicompass/muscle_sdk.py`, `omnicompass/muscles.py`, `omnicompass/nervous.py`, `omnicompass/nervous_system.py`, `omnicompass/pools.py`, `omnicompass/shield.py`, `omnicompass/speed.py`, `omnicompass/stack_sim.py`, `omnicompass/storage.py`, `omnicompass/student_t.py`, `omnicompass/verdict.py`, `realms/__init__.py`, `realms/compass_arm.py`, `realms/compass_arm_v5.py`, `realms/gpu_card.py`, `realms/harness.py`, `realms/plants.py`, `realms/presets.py`, `tools/knob_verdict.py`, `tools/run_citylearn.py`, `tools/run_cpu_power.py`, `tools/run_kafka.py`, `tools/run_kil.py`, `tools/run_mujoco.py`, `tools/run_pandapower.py`, `tools/run_pgbench.py`, `tools/run_redis.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`, `tools/store_brain.py`.
 
 ## Appendix I. The License
 

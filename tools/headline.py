@@ -358,10 +358,13 @@ def places_block(m) -> list:
     else:
         cnat = con = f"not yet read on {stands}"
         cread = f"work per dollar: not yet read on {stands}"
+    if chip.get("per_run") and eng and eng != stands:
+        bare_read += f"; runs of {eng}, never read as {stands}'s"
+    # the four arms by their letters in every cell (the founder's order of 1 November: "I should see A, B, C, and D everywhere")
     L += ["| | Bare metal: the chip, its bill and its work | Through the cloud: the cloud's bill and its work |", "|---|---|---|",
-          f"| **A and C: native** | {nat} | {cnat} |",
-          f"| **B and D: Omni-Compass on top of native** | {on} | {con} |",
-          f"| **Omni-Compass on native against native** | {bare_read} | {cread} |", ""]
+          f"| **Native** | **A**, the chip native: {nat} | **C**, the cloud native: {cnat} |",
+          f"| **Omni-Compass on top of native** | **B**, the chip with Omni-Compass on native: {on} | **D**, the cloud with Omni-Compass on native: {con} |",
+          f"| **Omni-Compass on native against native** | **B against A**: {bare_read} | **D against C**: {cread} |", ""]
     cap = _card(stands, "cap")
     if cap:
         f, d = cap

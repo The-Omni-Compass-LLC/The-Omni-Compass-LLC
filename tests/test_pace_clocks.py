@@ -102,19 +102,43 @@ class EdgePace(unittest.TestCase):
 
 
 class ControllerClocks(unittest.TestCase):
-    def test_the_heartbeat_is_60_s(self):
-        """The founder's word of 22 October, afternoon: the main engine decides every 60 s by default, the beat a dial any
-        value can be set on (5, 15, 30, 60, 75, 90, 120 s), the fast checks every 5 s at every beat, in the governor and in
-        every place that starts it (the rigs, the install files and the alert rules' staleness bound)."""
+    def test_the_factory_beat_is_the_places(self):
+        """omni-v24 (the founder's order of 23 October: the factory beat is the best beat the sweeps read): unset, the engine
+        decides every 10 s on site and every 60 s through a cloud, the place read from the cluster's own nodes; the beat a
+        dial any value can be set on (5, 15, 30, 60, 75, 90, 120 s), the fast checks every 5 s at every beat, in the governor
+        and in every place that starts it (the rigs ask the engine, the install files set none, the alert rules' staleness
+        bound counts beats)."""
         a = parser().parse_args(["--audit", ""])
-        self.assertEqual((a.interval, a.floor_interval), (60.0, 5.0))
-        self.assertIn('OMNI_INTERVAL="${OMNI_INTERVAL:-60}"', (ROOT / "scripts" / "kind_bench.sh").read_text())
+        self.assertEqual((a.interval, a.floor_interval), (None, 5.0))
+        from omni_controller.controller import FACTORY_BEAT, factory_beat
+        self.assertEqual(FACTORY_BEAT, {"on site": 10.0, "through the cloud": 60.0})
+
+        class K:
+            def __init__(self, ids, fail=False):
+                self.ids, self.fail = ids, fail
+
+            def get(self, *args):
+                if self.fail:
+                    raise RuntimeError("no cluster")
+                return {"items": [{"metadata": {"name": f"n{i}"}, "spec": {"providerID": p} if p else {}} for i, p in enumerate(self.ids)]}
+
+        self.assertEqual(factory_beat(K(["kind://docker/omni/omni-worker", "kind://docker/omni/omni-worker2"]))[:2], (10.0, "on site"))
+        self.assertEqual(factory_beat(K(["", ""]))[:2], (10.0, "on site"))                          # the owner's own machines
+        self.assertEqual(factory_beat(K(["azure:///subscriptions/x/vm/0"]))[:2], (60.0, "through the cloud"))
+        self.assertEqual(factory_beat(K(["gce://p/us-central1-a/n0"]))[:2], (60.0, "through the cloud"))
+        self.assertEqual(factory_beat(K(["aws:///us-east-1a/i-0"]))[:2], (60.0, "through the cloud"))
+        self.assertEqual(factory_beat(K([], fail=True))[:2], (60.0, "unread"))                       # blind: the longer beat
+        self.assertEqual(factory_beat(K([]))[:2], (60.0, "unread"))
+        c = controller("--law", "compass", "--floor-interval", "5")                                  # unset, on a model cluster
+        self.assertIn(c.g.period_s, (10.0, 60.0))
+        self.assertIn('OMNI_INTERVAL="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"', (ROOT / "scripts" / "kind_bench.sh").read_text())
+        self.assertIn("--print-factory-beat", (ROOT / "scripts" / "factory_beat.sh").read_text())
         shadow = (ROOT / "scripts" / "pilot_shadow.sh").read_text()             # the pilot's shadow kit decides at the same beat
-        self.assertIn('IV="${OMNI_INTERVAL:-60}"', shadow)
+        self.assertIn('IV="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"', shadow)
         self.assertIn('--interval "$IV"', shadow)
         self.assertNotIn("--interval 15", shadow)
         for f in ("deploy/install/omni-compass.yaml", "deploy/install/omni-compass-cloud.yaml", "deploy/controller.yaml"):
-            self.assertIn('"--interval", "60"', (ROOT / f).read_text(), f)
+            self.assertNotIn('"--interval"', (ROOT / f).read_text(), f)                               # the engine reads its place
         # the staleness bound follows the beat: three of the beats the exporter measures, at any setting of the dial
         self.assertIn("omni_last_decision_timestamp_seconds > 3 * clamp_min(omni_heartbeat_seconds, 5)",
                       (ROOT / "deploy/prometheus/omni-compass-rules.yaml").read_text())
@@ -210,7 +234,7 @@ class PaceArms(unittest.TestCase):
     def test_the_runner_sets_the_pace_from_the_arm(self):
         text = (ROOT / "scripts" / "kind_paired.sh").read_text()
         self.assertIn('if [[ "$base" =~ ^compass([0-9]+)$ ]]; then pace="${BASH_REMATCH[1]}"; base=compass; fi', text)
-        self.assertIn('OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-60}}" ARM="$base"', text)
+        self.assertIn('OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-}}" ARM="$base"', text)       # unset: the rig asks the engine
 
     def test_the_receipt_pairs_each_pace(self):
         import json

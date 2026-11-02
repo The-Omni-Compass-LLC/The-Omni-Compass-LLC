@@ -94,6 +94,31 @@ class RawArchive(unittest.TestCase):
         self.assertEqual((raw / "run-5" / "SHA256SUMS_ALL.txt").read_text(), "five\n")   # 18 October: it stayed absent
         self.assertEqual((raw / "run-1" / "SHA256SUMS_ALL.txt").read_text(), "one\n")
 
+    def test_a_file_over_githubs_cap_goes_up_in_parts_and_comes_back_whole(self):
+        """2 November: the eight-card runs' result tarballs (393 MB and 195 MB) were over GitHub's 100 MB a file, and every
+        attempt of every pass was refused, so their runs never reached the branch."""
+        self.run_("sweep")
+        d = self.repo / "results" / "live" / "raw" / "run-8"
+        d.mkdir(parents=True)
+        body = bytes(range(256)) * 10 + b"end"                              # 2,563 bytes
+        (d / "pack.tar.gz").write_bytes(body)
+        (d / "small.txt").write_text("kept as it is\n")
+        out = self.run_("save", "run-8", "run 8", RAW_FILE_BYTES="1000")
+        self.assertEqual(out.returncode, 0, out.stderr)
+        names = git(self.bare, "ls-tree", "--name-only", "raw:run-8").split()
+        self.assertEqual(names, ["pack.tar.gz.part-000", "pack.tar.gz.part-001", "pack.tar.gz.part-002", "pack.tar.gz.parts", "small.txt"])
+        self.assertNotIn("pack.tar.gz", names)                               # no file on the branch over the cap
+        shutil.rmtree(self.repo / "results" / "live" / "raw")
+        out = self.run_("open", "/run-8/")
+        self.assertEqual(out.returncode, 0, out.stderr)
+        raw = self.repo / "results" / "live" / "raw" / "run-8"
+        self.assertEqual((raw / "pack.tar.gz").read_bytes(), body)          # put back whole, checked against its SHA-256
+        self.assertEqual((raw / "small.txt").read_text(), "kept as it is\n")
+        (raw / "pack.tar.gz").unlink()
+        (raw / "pack.tar.gz.part-001").write_bytes(b"tampered")
+        self.assertNotEqual(self.run_("join", "run-8").returncode, 0)       # parts that do not make the file are refused
+        self.assertFalse((raw / "pack.tar.gz").exists())
+
     def test_a_run_over_one_push_goes_up_in_parts_and_is_named_only_whole(self):
         """1 November: run 40649651196 handed in 2.9 GB, over GitHub's 2 GB a push, and every pass was refused six times."""
         self.run_("sweep")

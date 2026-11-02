@@ -673,12 +673,13 @@ if [ "$PLATFORM" != aks ]; then
 fi
 omni_pid=""
 # the governor's full decision every OMNI_INTERVAL seconds and its fast checks (the scheduling floor, the pod reflex, and
-# the conveyance every 15 s) every OMNI_FLOOR_INTERVAL seconds: 60 and 5 by default (omni-v17, the founder's word of 22
-# October, afternoon: the main engine at 60 s, the heartbeat a dial). Every clock of the governor counts seconds, so the
+# the conveyance every 15 s) every OMNI_FLOOR_INTERVAL seconds: by default the factory beat for the cluster's place, read by
+# the engine itself (omni-v24, scripts/factory_beat.sh: 10 s on site, 60 s through a cloud), and 5 s (the heartbeat a dial,
+# the founder's word of 22 October). Every clock of the governor counts seconds, so the
 # decision period changes only how often it looks (docs/PACE_PREREGISTRATION.md; the pace arms compass5 to compass120 of
 # scripts/kind_paired.sh set it); the fast checks' period stays under the decision's. The period is written beside the
 # run's files, so a receipt reads each run at its own (tools/live_reps.py)
-export OMNI_INTERVAL="${OMNI_INTERVAL:-60}" OMNI_FLOOR_INTERVAL="${OMNI_FLOOR_INTERVAL:-5}"
+export OMNI_INTERVAL="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}" OMNI_FLOOR_INTERVAL="${OMNI_FLOOR_INTERVAL:-5}"
 mkdir -p "$OUT_DIR" && printf '%s\n' "$OMNI_INTERVAL" > "$OUT_DIR/omni_interval.txt"
 # the governor's command line, once, so the robustness test (below) can start a second governor with the same wiring
 start_controller() {   # $1 decisions to make, $2 log file

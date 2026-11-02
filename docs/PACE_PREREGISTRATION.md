@@ -210,6 +210,15 @@ Written while the run was under way (started at 20:27 UTC on the corrected tree)
 and so had readings at 10 s and 20 s taken on the same corrected model by the tune study (`docs/THE_TUNE.md`); the rule was frozen
 before any of them, and none of it changes.
 
+**The picks, read and landed (2 November).** By amendment 4's rule on the corrected model: on site every beat was admissible and
+10 s the one no other dominated; through a cloud no beat was admissible (every beat raised the machine-hours against native, every
+beat but 90 s the pods waiting), so the cloud's factory beat stays 60 s (rule 4). The on-site pick was read on the untouched seeds
+1 to 8 against omni-v23 at its shipped 60 s (`results/model_gate/V24_VS_V23.md`, the model `onsite_shipped`: the same seeds, plant
+and beats as `--pace-periods 60,10`): no LOSS against native or against 60 s (against 60 s the minutes over the line down 60.7%, the
+95th percentile down 8.2%, the autoscaler's shortfall down 5.1%, GAIN; the machines the same). It landed as omni-v24
+(`docs/OMNI_V24.md`): the factory beat for its place, read from the cluster's own nodes. The real runs of this preregistration read
+it from omni-v24's campaign on: the compass arm on kind at the factory's 10 s, 60 s one of the dial's arms.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
