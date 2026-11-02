@@ -44,9 +44,20 @@ people".
 | "13% faster on bare metal"; "13% fewer cloud hours"; "$423 a month saved" | no such measurement; the A10's runs disagree and no cut of a cloud's hours has been measured |
 | "shut the meter off early"; data "pipelined into the chip's cache"; "1 hour instead of 4" | Omni-Compass works in the control plane: it reads native controllers' meters and writes the settings they accept; no byte of the workload passes through it |
 | "deterministic SLAs"; "deterministic behaviour across the system" | never claimed |
+| "data centers waste 30% to 40% of their compute" | not a measurement in the record; the front matter names the problem (capacity held idle, late reaction, loops at cross purposes) without a number |
+| "+13.1% on bare metal"; "+5.3% through the full cloud path" | no such readings: the only bare-metal receipt's three runs disagree, the cloud's work is not yet counted; 5.3% appears only in unrelated rows (one run of a three-run table; an omni-v3 organisms row) |
+| "standard schedulers have no closed-circle state guarantee"; "every cluster is ungoverned" | not the record's words; Omni-Compass sits on top of those schedulers and needs them |
+| other companies' products (cloud cost tools, chip makers, Kubernetes, Kafka) called "band-aids"; Omni-Compass "the lone exception", "the only unified law" | never claimed; Omni-Compass is never a competitor to the native controllers and products it sits on top of, and no outside party has reviewed the results |
 | "eliminates" or "bypasses" Kubernetes or the orchestration layer | the opposite: Omni-Compass always sits on top of a system's native controllers and orchestrator (Kubernetes, its scheduler and kubelet stay in every arm) and never replaces them |
 | "zero oversight", "zero manual maintenance", "no engineers needed" | never measured; what is measured is fewer alert minutes, and the governor's own audit (every change logged with its reason, read back, handed back to native after a crash) is there for people to read |
 | "native = code with no controller" | native is the system's own controllers (the Kubernetes autoscaler among them), which stay in every arm |
+
+## The manuals on the website
+
+The website should carry the repository's own manuals as they are built (`docs/OMNI_COMPASS_MANUAL.pdf`,
+`docs/OMNI_COMPASS_OWNERS_MANUAL.pdf`, `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.pdf`), never a rewritten page under their names: numbers
+attributed to "the Owner's Manual" by outside readers (30% to 40% waste, +13.1% on bare metal, +5.3% through the cloud) are in none
+of them.
 
 ## On every page
 
