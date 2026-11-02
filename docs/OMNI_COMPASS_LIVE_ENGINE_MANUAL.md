@@ -1334,7 +1334,7 @@ whole workload (a model of measurements, class S of class L and P; chapter 28). 
 as no change, because the machine's own layer is not yet run and the card's one run, made on a controller since replaced,
 stands outside the headline scope; so both bills are the software end's and, through the cloud, the wire's, and the cloud's own
 bill is not counted (its tests are one run each, and by the index's rule a table of one run enters as exactly 1), as the
-cloud-is-a-wire box explains (the page's section 4d, chapter 21). The two bills follow the whole
+page's section 4d explains (chapter 21). The two bills follow the whole
 organism's two knobs in the page's section 5d, the reading and the chip's one run in or out. The index here is a composition's
 one number, not a price; each route's bill as a sum of costs is the control panel's (section 2.10).
 
@@ -2113,9 +2113,12 @@ every table `results/STEERING.json` holds, each on its own engine, beside native
 
 This chapter reads the page's section 4d, **Cloud Providers** (`#s-cloud`).
 
-### 21.1 The cloud is a wire
+### 21.1 The cloud's wire and the two ends
 
-The cloud providers' section (the page's section 4d) opens with a box: "THE CLOUD IS A WIRE. A CLOUD RUN ALONE CAN SHOW ONLY A LITTLE." A
+The cloud providers' section (the page's section 4d, **Cloud Wire and the Two Ends**) opens with the readings of each place, gauge by
+gauge, composed by our own code (class S) from the layers measured in it (class L and P), the chip and the cloud's wire entered as
+exactly 1 by the founder's order of 31 October; through the cloud the one number a receipt must prove is work for the bill, native
+against Omni-Compass on native in the same cloud (`docs/WORK_PER_BILL.md`). A
 cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and
 autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site
 or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. On the
@@ -2128,7 +2131,7 @@ show the energy and throughput gained at the bare metal, because the provider's 
 back end, so the page claims that benefit only as the same mechanism measured on hardware the repository can meter (the page's
 section 4f), never as a measurement of the provider's machines.
 
-The box then gives the company's own expectation, not a measured result (24 October): about 3 to 4%
+Appendix B, under 4d, gives the company's own expectation, not a measured result (24 October): about 3 to 4%
 from the front end, 2 to 3% from the back end, about 5% from the two ends together, and 1 to 2% from the wire alone, as a smaller
 bill or more work for the same bill. Under it a table reads the measured readings of each place, gauge by gauge (work, speed,
 machines, energy, the bill): the software end, the bare metal, the cloud's wire alone, on site with the two ends together, and
@@ -2556,7 +2559,7 @@ Inside the chip or the provider's own code nothing can be measured from outside,
 
 ### 28.1 The two places a system runs
 
-The whole organism (the page's section 5d, `#s-whole`) opens with the same box as the clouds' section, the cloud is a wire,
+The whole organism (the page's section 5d, `#s-whole`) opens with a box, "WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS",
 and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
 two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
 carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
