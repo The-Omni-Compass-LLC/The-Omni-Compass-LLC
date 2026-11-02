@@ -74,12 +74,12 @@ TERMS = (
      "the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof "
      "of no harm in its place; the benefit is shown where it lives and explained for the rest."),
     ("Work for the bill",
-     "The one number every receipt is read for: the work done for each dollar of the bill, Y = W / B, in each place native "
-     "against Omni-Compass on native, G = Y(Omni-Compass on native) / Y(native) − 1 = (1 + w) / (1 + b) − 1 ≈ w − b, w the change "
-     "in the work done and b the change in the bill. A bill that rises is power given; there is more work for "
-     "the bill when the work rises more than the bill (w > b, G > 0). Both arms pay the same prices, so a place's price level "
+     "The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in "
+     "`results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) "
+     "− 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises "
+     "is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level "
      "cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by "
-     "its own native spend S(p), G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`)."),
+     "its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`)."),
     ("One mechanism, in one place, felt along the whole path",
      "Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the "
      "chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the "

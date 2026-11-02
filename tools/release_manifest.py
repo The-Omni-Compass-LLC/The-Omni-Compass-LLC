@@ -142,6 +142,9 @@ GROUPS = {
     "muscle_catalog": ["docs/MUSCLE_CATALOG.md", "tools/muscle_catalog.py", "tools/heavy_hitters.py", "tests/test_heavy_hitters.py",
                        "docs/REALM_MUSCLES.md", "tools/realm_muscles.py"],
     "site_audit": ["tools/site_audit.py", "tests/test_site_audit.py", "docs/SITE_AUDIT.md", "results/SITE_AUDIT.json"],
+    "index_words": ["tools/index_words.py", "docs/OMNI_COMPASS_OWNERS_MANUAL.md", "docs/AUDIT_2026-11-02.md"],
+    "book_faces": ["tests/test_book_faces.py", "docs/book/build_book.py", "docs/OMNI_COMPASS_MANUAL.pdf",
+                   "docs/OMNI_COMPASS_OWNERS_MANUAL.pdf", "docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.pdf"],
     "realms": ["realms/catalog.csv", "realms/plants.py", "realms/presets.py", "realms/harness.py",
                "tools/realms_catalog.py", "tools/run_realms.py", "docs/REALMS_PREREGISTRATION.md"],
 }

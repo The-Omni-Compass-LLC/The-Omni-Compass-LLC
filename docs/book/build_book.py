@@ -113,6 +113,23 @@ pdfmetrics.registerFont(RLFont("Sym", DJV + "DejaVuSans.ttf"))
 pdfmetrics.registerFontFamily("Serif", normal="Serif", bold="Serif-Bold", italic="Serif-Italic", boldItalic="Serif-BoldItalic")
 pdfmetrics.registerFontFamily("Sans", normal="Sans", bold="Sans-Bold", italic="Sans", boldItalic="Sans-Bold")
 pdfmetrics.registerFontFamily("Mono", normal="Mono", bold="Mono-Bold", italic="Mono", boldItalic="Mono-Bold")
+# every face in the book is one of the four registered above (the audit of 2 November): the page's opening font, a figure
+# string that names no face of its own, and an SVG family the figure reader cannot find take the book's own faces, never the
+# PDF's base-14 Helvetica or Times-Roman
+from reportlab import rl_config as _rl_config                      # noqa: E402
+import reportlab.graphics.shapes as _shapes                       # noqa: E402
+import reportlab.platypus.tables as _tables                       # noqa: E402
+from reportlab.lib.styles import ParagraphStyle as _ParagraphStyle  # noqa: E402
+_rl_config.canvas_basefontname = "Sans"                           # Helvetica's like-for-like (Liberation Sans, the same widths)
+_tables.CellStyle.fontname = "Sans"                               # a table cell opens with it before its paragraph sets its own
+_ParagraphStyle.defaults["fontName"] = _ParagraphStyle.defaults["bulletFontName"] = "Sans"
+_shapes.STATE_DEFAULTS["fontName"] = "Serif"                      # Times-Roman's like-for-like (Liberation Serif, the same widths)
+try:
+    import svglib.fonts as _svgfonts                              # noqa: E402
+    import svglib.svglib as _svglib                               # noqa: E402
+    _svgfonts.DEFAULT_FONT_NAME = _svglib.DEFAULT_FONT_NAME = "Sans"
+except Exception:                                                 # the figure reader absent: nothing to map
+    pass
 SERIF_CMAP = set(TTFont(LIB + "LiberationSerif-Regular.ttf").getBestCmap())
 MONO_CMAP = set(TTFont(DJV + "DejaVuSansMono.ttf").getBestCmap())
 SYM_CMAP = set(TTFont(DJV + "DejaVuSans.ttf").getBestCmap())
@@ -574,13 +591,26 @@ class BookTable(Table):
     row is then split inside it. Split at the row's end, the rest started lower on the same page under its header again
     (21 October: the header printed twice on one page, the problem and the solution's table, rows of eight lines)."""
     GAP = 4 * LEAD
+    TAIL = 3 * LEAD   # the part carried to the next page is never under three lines: a table's tail is never left alone on a page
+
+    def _tail(self, parts, availWidth):
+        """The height the second part carries below its repeated header."""
+        h2 = parts[1].wrap(availWidth, 10 ** 6)[1]
+        return h2 - (parts[1]._rowHeights[0] if self.repeatRows else 0)
 
     def split(self, availWidth, availHeight):
         parts = super().split(availWidth, availHeight)
         if len(parts) == 2 and self.splitInRow and availHeight - parts[0].wrap(availWidth, availHeight)[1] > self.GAP:
             inrow = self._splitRows(availHeight, doInRowSplit=True)
-            if len(inrow) == 2:
+            if len(inrow) == 2 and self._tail(inrow, availWidth) >= self.TAIL:
                 return inrow
+        h = availHeight
+        while len(parts) == 2 and self._tail(parts, availWidth) < self.TAIL:
+            rows = parts[0]._rowHeights
+            if len(rows) - (self.repeatRows or 0) <= 1:
+                return []                       # a single row would stand above the break: the whole table moves on
+            h = sum(rows[:-1]) - 0.01           # one row fewer above the break, so the tail carries more
+            parts = super().split(availWidth, h)
         return parts
 
 
