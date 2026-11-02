@@ -98,7 +98,7 @@ Read in this order. Every page here is current; dated records are in [`history/`
 | [`HISTORY.md`](HISTORY.md) | Earlier states, failures and chronology, kept whole |
 
 Folders: [`specs/`](specs) (contracts and specifications), [`realm_study/`](realm_study) (the primary sources of the
-656), [`book/`](book) (the printable book's sources), [`source/`](source) (the source code as PDF),
+656), [`book/`](book) (the printable book's sources; `tools/source_book.py` prints the source code as a PDF on demand),
 [`figures/`](figures), [`dossier/`](dossier), [`plate/`](plate), [`handoff/`](handoff) (the engine's mathematics).
 
 ---

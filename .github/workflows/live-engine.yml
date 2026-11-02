@@ -92,6 +92,13 @@ jobs:
           GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           python docs/engine/build_live_engine.py | tee -a "$GITHUB_STEP_SUMMARY"
+          # the two bills and work for the bill first (tools/two_bills.py, tools/work_per_bill.py): a new chip or cloud receipt
+          # reaches the one number, the README and the page by itself (the founder's words of 2 November)
+          python tools/two_bills.py && python tools/work_per_bill.py && python tools/work_today.py
+          python tools/headline.py | tee -a "$GITHUB_STEP_SUMMARY"
+          # the website's one-file copy follows every rebuild (the founder's words of 1 November: "people need to click updated new
+          # shit and it needs to keep on updating"): docs/live/index.html is rebuilt from the page each time, never left behind it
+          python docs/engine/build_standalone.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The page's engine against the Python and the C++; every record against the repository's own runs
         # the check reads with the access the build had (1 November: without GitHub's token the check's own rebuild read a run's
         # engine from CHANGELOG.md where the build had read it from GitHub's run record, and the two words differed)
@@ -109,7 +116,7 @@ jobs:
           # every file the rebuild writes goes in with the page (the page, its appraisal, the wall's Grafana dashboard, the GitHub
           # ledger): on 24 October a file the rebuild had rewritten was left out, and every push attempt stopped on it ("cannot pull
           # with rebase: You have unstaged changes", run 40074924675)
-          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json; do
+          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json; do
             [ -e "$f" ] && git add -- "$f"
           done
           git commit -q -m "Live benchmark engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"

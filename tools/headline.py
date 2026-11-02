@@ -312,6 +312,33 @@ def _switch(name: str) -> str:
 NOT_RENTED = "not yet run; every rental on the founder's word"
 
 
+def work_for_the_bill() -> list:
+    """The one number the receipts must prove (the founder's words of 2 November: "we get more work for the bill"), as
+    docs/WORK_PER_BILL.md writes it from results/WORK_PER_BILL.json (tools/work_per_bill.py): the equation, then each place's G."""
+    f = ROOT / "results" / "WORK_PER_BILL.json"
+    if not f.exists():
+        return []
+    d = json.loads(f.read_text(encoding="utf-8"))
+    pct = lambda x: ("±0.00%" if abs(x) < 5e-5 else f"{x * 100:+.2f}%".replace("-", "−"))
+    word = lambda g: "GAIN" if g >= 0.005 else "LOSS" if g <= -0.005 else "STEADY, under the floor"
+    L = ["**Each place, and an owner's whole spend.** A system that runs in one place reads that place's G alone; an owner who runs "
+         "work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1, never by the "
+         "benchmark windows. Both arms of a place pay the same prices, so a place's price level (a cloud's markup over bare metal) "
+         "cancels in its G. Every term, where it lives, the bill line by line and a $100 M budget read the same way: "
+         "[`docs/WORK_PER_BILL.md`](docs/WORK_PER_BILL.md) (`tools/work_per_bill.py`).", ""]
+    bm, cl, t = d["places"].get("bare_metal"), d["places"].get("cloud"), d.get("total") or {}
+    items = []
+    if bm:
+        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G " + ", ".join(f"run {r['run']} {pct(r['G'])} {word(r['G'])}" for r in bm["runs"])
+                     + f"; the three runs by the one key **{bm['reading']}** (their mean {pct(bm['mean_G'])})")
+    if cl:
+        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): b {pct(cl['b'])}, inside the noise, the work not counted in that set, so G(cloud) not yet read"
+                     if cl.get("G") is None else f"through the cloud, {cl['engine']}: G {pct(cl['G'])}")
+    items.append("both places together: read only for an owner's own spend in each, once the cloud's G is read")
+    L += ["Today: " + "; ".join(items) + ".", ""]
+    return L
+
+
 def places_block(m) -> list:
     stands = m["stands"]
     tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
@@ -330,6 +357,17 @@ def places_block(m) -> list:
          "E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1: more work inside the bill (ΔW), a smaller bill for the same work (ΔB), or both; "
          "G(chip) = E(B) / E(A) − 1 and G(cloud) = E(D) / E(C) − 1, the places never added "
          "([`results/TWO_BILLS.md`](results/TWO_BILLS.md), \"The one equation\").", ""]
+    L += work_for_the_bill()
+    wt = ROOT / "results" / "WORK_TODAY.json"
+    if wt.exists():
+        d = json.loads(wt.read_text(encoding="utf-8"))
+        c, t = d["counted"], d["tally"]
+        L += [f"**More work at the end of the day, test by test** (the founder's words of 2 November: \"that's all that matters when "
+              f"we're governing\"): more work in {t.get('GAIN', 0)} of the {len(c)} tests that counted their work, less work in "
+              f"{t.get('LOSS', 0) or 'none'}; the work held in {t.get('STEADY', 0)}, each offering its load at a fixed rate; in "
+              f"{t.get('the runs disagree', 0)} the runs disagree; {len(d['blind'])} tests sent a fixed load or did not count the work, "
+              "so they could not show more work. Every row and its record: [`results/WORK_TODAY.md`](results/WORK_TODAY.md) "
+              "(`tools/work_today.py`).", ""]
     money = lambda x: f"${x:.4f}"
     if chip.get("per_run"):
         pr = chip["per_run"]
@@ -341,7 +379,8 @@ def places_block(m) -> list:
         on = f"the same runs: {arm('omni')}"
         reads = []
         for key, name in (("bill ($, the rental for the arm's window)", "the bill"), ("work done (requests served)", "the work done"),
-                          ("work per dollar (requests served per $)", "work per dollar"), ("energy per served request (J)", "the chip's energy for each request served")):
+                          ("work per dollar (requests served per $)", "work per dollar"), ("energy per served request (J)", "the chip's energy for each request served"),
+                          ("response time, 95th percentile (ms)", "the 95th-percentile response")):
             r = (chip.get("rows") or {}).get(key)
             if r:
                 reads.append(f"{name} **{(r.get('reading') or '').replace('**', '')}** (raw {_raws(r)})")
@@ -415,6 +454,42 @@ def places_block(m) -> list:
           f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, its switch ' + _switch('azure') + '; not yet read on ' + stands} |",
           f"| Through the cloud: Azure, the seven organisms | one rented Azure machine, each organism with the real cluster inside, 100 copies | {org_place('results/live/V23_AZURE_ORGANISMS_ABC.json', 'not yet run on ' + stands)} |",
           f"| Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}; not yet run |", ""]
+    # the seven organisms in the four arms (the founder's words of 1 November: "seven organisms ... ran native and with Omni-Compass on
+    # them ... each in each arm ... A, B, C and D"): each organism's state in each arm, read from the newest organisms-on-the-card table
+    # and the cloud's records; nothing typed
+    ORG = (("spine", "The spine"), ("compute_ai_cloud", "Compute, AI and cloud"), ("physics_robotics_autonomous", "Physics, robotics and autonomous"),
+           ("energy_facility_industrial", "Energy, facility and industrial"), ("distribution_specialized", "Distribution and specialized"),
+           ("stack", "The four realms stacked"), ("tower", "The whole catalog (the tower)"))
+    by_org = {}
+    if stacks:
+        for r in sd.get("rows") or []:
+            o = by_org.setdefault(r.get("organism"), {"words": {}, "copies": set()})
+            t = str(r.get("reading", "")).replace("**", "")
+            w = next((x for x in (K.STEADY, K.GAIN, K.LOSS, K.GIVEN, "the runs disagree") if t.startswith(x)), None)
+            if w:
+                o["words"][w] = o["words"].get(w, 0) + 1
+            o["copies"].add(r.get("copies"))
+    seng = (sd.get("engine") or "").split(" (")[0] if stacks else ""
+    org_cloud = sorted(ROOT.glob(f"results/live/V{v}_*ORGANISM*.json"))
+    cloud_cell = (f"read in `{org_cloud[-1].relative_to(ROOT).as_posix()}`" if org_cloud else
+                  f"not yet run (Azure queued, its switch {_switch('azure')}; Google's switch {_switch('google')}, Amazon's {_switch('amazon')}, each behind its $0 check)")
+    L += ["**The seven organisms in the four arms.** Each organism runs native and with Omni-Compass on native, in each place: fourteen "
+          "runs on bare metal (A and B) and fourteen through the cloud (C and D), each read by its bill and the work inside it. On bare "
+          "metal each organism runs with one card inside at 1, 10 and 100 copies, and on the eight-card machine at 1, 10 and 100 copies "
+          f"({NOT_RENTED.replace('not yet run; ', '')}).", "",
+          "| Organism | A: bare metal, native | B: bare metal, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |",
+          "|---|---|---|---|---|"]
+    for key, name in ORG:
+        o = by_org.get(key)
+        if o:
+            cps = ", ".join(str(c) for c in sorted(x for x in o["copies"] if x is not None))
+            a = f"run with one A10 inside at {cps} copies, on {seng}" + (f"; not yet on {stands}" if seng != stands else "")
+            b = (", ".join(f"{n} row{'' if n == 1 else 's'} {w}" for w, n in sorted(o["words"].items(), key=lambda kv: -kv[1]))
+                 + f" against A (`{stacks[-1].relative_to(ROOT).as_posix()}`)")
+        else:
+            a = b = "not yet run"
+        L.append(f"| {name} | {a} | {b} | {cloud_cell} | {cloud_cell} |")
+    L.append("")
     ix = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8"))
     h, sv = float(ix["headline_pct"]), float(ix.get("service_headline_pct") or 0)
     idx_eng = (m["standing"]["index"] or {}).get("engine", "its tables' engines")
@@ -523,7 +598,7 @@ def markdown(m) -> str:
               "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
               "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read it STEADY); the chip's own receipt on "
               f"{stands} is the bare-metal box above. What the benefit "
-              "cost the chip, the energy and the wire is listed row by row in section 3b of the same page. A composition across engines "
+              "cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. A composition across engines "
               f"(class S over {cls} tables), never read as one engine's result; each total follows its tables as every benchmark runs again "
               f"on {stands}."]
     L += ["", "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", "", END]

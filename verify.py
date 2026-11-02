@@ -405,6 +405,9 @@ def main():
     check("the two bills (A the chip native, B the chip with Omni-Compass, C the cloud native, D the cloud with Omni-Compass): "
           "results/TWO_BILLS.md is what the tables give (tools/two_bills.py)", r.returncode == 0,
           (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "index_words.py"), "--check"], capture_output=True, text=True)
+    check("the Owner's Manual's index, bottom line, three arms and routes are what the records give (tools/index_words.py)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "engine_coverage.py"), "--check"], capture_output=True, text=True)
     check("how much of the engine the tests run: docs/ENGINE_COVERAGE.md is what its record gives (tools/engine_coverage.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])

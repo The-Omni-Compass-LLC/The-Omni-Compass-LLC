@@ -32,6 +32,7 @@ height, headings scaled up from it; only the running heads and footers are small
 from __future__ import annotations
 
 import json
+import os
 import csv
 import re
 import sys
@@ -112,6 +113,23 @@ pdfmetrics.registerFont(RLFont("Sym", DJV + "DejaVuSans.ttf"))
 pdfmetrics.registerFontFamily("Serif", normal="Serif", bold="Serif-Bold", italic="Serif-Italic", boldItalic="Serif-BoldItalic")
 pdfmetrics.registerFontFamily("Sans", normal="Sans", bold="Sans-Bold", italic="Sans", boldItalic="Sans-Bold")
 pdfmetrics.registerFontFamily("Mono", normal="Mono", bold="Mono-Bold", italic="Mono", boldItalic="Mono-Bold")
+# every face in the book is one of the four registered above (the audit of 2 November): the page's opening font, a figure
+# string that names no face of its own, and an SVG family the figure reader cannot find take the book's own faces, never the
+# PDF's base-14 Helvetica or Times-Roman
+from reportlab import rl_config as _rl_config                      # noqa: E402
+import reportlab.graphics.shapes as _shapes                       # noqa: E402
+import reportlab.platypus.tables as _tables                       # noqa: E402
+from reportlab.lib.styles import ParagraphStyle as _ParagraphStyle  # noqa: E402
+_rl_config.canvas_basefontname = "Sans"                           # Helvetica's like-for-like (Liberation Sans, the same widths)
+_tables.CellStyle.fontname = "Sans"                               # a table cell opens with it before its paragraph sets its own
+_ParagraphStyle.defaults["fontName"] = _ParagraphStyle.defaults["bulletFontName"] = "Sans"
+_shapes.STATE_DEFAULTS["fontName"] = "Serif"                      # Times-Roman's like-for-like (Liberation Serif, the same widths)
+try:
+    import svglib.fonts as _svgfonts                              # noqa: E402
+    import svglib.svglib as _svglib                               # noqa: E402
+    _svgfonts.DEFAULT_FONT_NAME = _svglib.DEFAULT_FONT_NAME = "Sans"
+except Exception:                                                 # the figure reader absent: nothing to map
+    pass
 SERIF_CMAP = set(TTFont(LIB + "LiberationSerif-Regular.ttf").getBestCmap())
 MONO_CMAP = set(TTFont(DJV + "DejaVuSansMono.ttf").getBestCmap())
 SYM_CMAP = set(TTFont(DJV + "DejaVuSans.ttf").getBestCmap())
@@ -310,8 +328,25 @@ def esc_txt(x: str) -> str:
 MATH = re.compile(r"\$\$(.+?)\$\$|(?<![\\\w$])\$(?=\S)((?:\\\$|[^$\n])+?)(?<=\S)(?<!\\)\$(?![\w$])")
 
 
+def book_links(md: str) -> str:
+    """The one-file text lives in docs/book/; a relative link its chapters carry is written from docs/ (or the root, for the
+    README's), so each is rewritten to reach the same file from docs/book/ (1 November: '../LICENSE' reached nothing)."""
+    def fix(m):
+        text, url = m.group(1), m.group(2)
+        if re.match(r"(?:[a-z]+:|#|/)", url):
+            return m.group(0)
+        path, sep, frag = url.partition("#")
+        for base in (ROOT / "docs", ROOT):
+            tgt = (base / path).resolve()
+            if path and tgt.exists():
+                return f"[{text}]({os.path.relpath(tgt, BOOK).replace(os.sep, '/')}{sep}{frag})"
+        return m.group(0)
+    return re.sub(r"(?<!\\)\[([^\]\n]*)\]\(([^)\s]+)\)", fix, md)
+
+
 def inline(t: str) -> str:
     t = t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    t = t.replace("\\[", "\x02").replace("\\]", "\x03")     # Markdown's escaped brackets: a formula's u[req](k), never a link
     codes = []
 
     def keep(m):
@@ -329,6 +364,7 @@ def inline(t: str) -> str:
     t = re.sub(r"(?<![\w_])_(?![\s_])([^_]+?)(?<![\s_])_(?![\w_])", r"<i>\1</i>", t)
     t = glyphs(t, SERIF_CMAP)
     t = re.sub(r"\x01(\d+)\x01", lambda m: maths[int(m.group(1))], t)
+    t = t.replace("\x02", "[").replace("\x03", "]")
     return re.sub(r"\x00(\d+)\x00", lambda m: f'<font name="Mono" size="{PT}">' + glyphs(codes[int(m.group(1))], MONO_CMAP) + "</font>", t)
 
 
@@ -555,13 +591,26 @@ class BookTable(Table):
     row is then split inside it. Split at the row's end, the rest started lower on the same page under its header again
     (21 October: the header printed twice on one page, the problem and the solution's table, rows of eight lines)."""
     GAP = 4 * LEAD
+    TAIL = 3 * LEAD   # the part carried to the next page is never under three lines: a table's tail is never left alone on a page
+
+    def _tail(self, parts, availWidth):
+        """The height the second part carries below its repeated header."""
+        h2 = parts[1].wrap(availWidth, 10 ** 6)[1]
+        return h2 - (parts[1]._rowHeights[0] if self.repeatRows else 0)
 
     def split(self, availWidth, availHeight):
         parts = super().split(availWidth, availHeight)
         if len(parts) == 2 and self.splitInRow and availHeight - parts[0].wrap(availWidth, availHeight)[1] > self.GAP:
             inrow = self._splitRows(availHeight, doInRowSplit=True)
-            if len(inrow) == 2:
+            if len(inrow) == 2 and self._tail(inrow, availWidth) >= self.TAIL:
                 return inrow
+        h = availHeight
+        while len(parts) == 2 and self._tail(parts, availWidth) < self.TAIL:
+            rows = parts[0]._rowHeights
+            if len(rows) - (self.repeatRows or 0) <= 1:
+                return []                       # a single row would stand above the break: the whole table moves on
+            h = sum(rows[:-1]) - 0.01           # one row fewer above the break, so the tail carries more
+            parts = super().split(availWidth, h)
         return parts
 
 
@@ -1420,6 +1469,12 @@ class Book(BaseDocTemplate):
                 return
             anchor = getattr(f, "_anchor", False) or (isinstance(f, KeepTogether)
                                                       and any(getattr(x, "_anchor", False) for x in getattr(f, "_content", ())))
+            if not anchor and isinstance(f, Heading):
+                # a heading opens the paragraph under it: when that paragraph names the next figure, the heading goes
+                # with it, so it never stands alone at a page's foot while its text waits behind a floating figure
+                nxt = next((x for x in flowables[1:6] if not isinstance(x, (Spacer, Heading))), None)
+                anchor = bool(nxt is not None and (getattr(nxt, "_anchor", False) or (isinstance(nxt, KeepTogether) and any(
+                    getattr(x, "_anchor", False) for x in getattr(nxt, "_content", ())))))
             share = avail / frame._aH
             if anchor and not frame._atTop and (share <= 1 - FILL or len(self._floats) >= 2 and share <= 0.45):
                 # the paragraph that names the next figure (with the heading it opens under, if any) does not start
@@ -1833,7 +1888,7 @@ def build():
     story += [FlushFloats(), Spacer(1, 8), KeepTogether([GoldRule(FW, 1.2, 10),
               Paragraph(inline(BANNER_MD[2:]), ParagraphStyle("end", parent=BODY, alignment=TA_LEFT))])]
     doc.multiBuild(story, canvasmaker=INDEX.getCanvasMaker())
-    OUT_MD.write_text(normalize_markdown("\n".join(md_parts) + "\n")[0], encoding="utf-8")   # the notice on top and at the end
+    OUT_MD.write_text(book_links(normalize_markdown("\n".join(md_parts) + "\n")[0]), encoding="utf-8")   # the notice on top and at the end
     seen = sorted(set(UNRESOLVED))
     print(f"references not resolved to the book's numbering: {len(seen)}" + "".join("\n  " + s for s in seen))
     print(OUT_PDF, doc.page, "pages")
@@ -1864,6 +1919,9 @@ def report_fill(pdf):
             short.append(f"p{n} {reach:.0%}")
     print(f"page fill: {len(book) - len(short)} of {len(book)} pages at least {FILL:.0%} used; under it: "
           + (", ".join(short) if short else "none"))
+    # every word inside its cell and no figure under its type (the founder's orders of 16 October and 2 November)
+    print("figures shrunk below their 9 pt type: " + (", ".join(f"{k} ×{f}" for k, f in SCH.SCALED) or "none")
+          + "; labels wider than their box: " + (", ".join(f"{t[:40]!r}" for t, _ in SCH.OVERFLOWS) or "none"))
 
 
 def md_text(src, nb):
