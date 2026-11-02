@@ -1350,7 +1350,7 @@ This chapter reads the page's section 2b, **Benefit Against Native** (`#s-answer
 
 ### 5.1 Two places, two arms: the bill and the work
 
-The section opens on **Two Places, Two Arms: the Bill and the Work**, written by `tools/headline.py` from
+The section opens on **Four Arms, A, B, C and D: the Bill and the Work Done Inside It**, written by `tools/headline.py` from
 `results/TWO_BILLS.md` (`tools/two_bills.py`), never by hand. A system runs Omni-Compass in one of two places, on bare metal or
 through the cloud, and in each place there are two arms, native and Omni-Compass on top of native (the founder's order of
 1 November): A and B on bare metal, C and D in the cloud. The table has a column for each place and a row for each arm: each box

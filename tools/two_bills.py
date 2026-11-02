@@ -141,6 +141,92 @@ def pct(x):
     return f"{100 * x:.2f}%"
 
 
+def equation(c: dict, k: dict) -> list:
+    """The one equation (the founder's words of 2 November: "the only thing we need to prove is that we get more work for
+    the bill"): the work for each dollar in each place, its benefit split into the work it added and the bill it moved, and the
+    four arms' cells as the tables read them today."""
+    L = ["## The one equation: work for the bill", "",
+         "The founder's words of 2 November: what the receipts of the chips and the clouds show in the end is how much work is done "
+         "inside the bill natively and how much with Omni-Compass on native, and the one thing to prove is more work for the bill. "
+         "For a place p (the chip, run directly; or the cloud) and an arm a (native, or Omni-Compass on native), on the same offered "
+         "load over the same window:", "",
+         "- W(p, a): the work done (the requests served, the jobs finished);",
+         "- B(p, a) = Σₖ c(p, a, k): the bill, every cost component k inside the place's own boundary (on the chip, the rental for "
+         "the arm's window; in the cloud, every machine it bills at the cloud's own price);",
+         "- E(p, a) = W(p, a) / B(p, a): the work for each dollar.", "",
+         "The benefit in a place is", "",
+         "    G(p) = E(p, Omni-Compass) / E(p, native) − 1 = (1 + ΔW(p)) / (1 + ΔB(p)) − 1,", "",
+         "where ΔW(p) = W(p, Omni-Compass) / W(p, native) − 1 is the work Omni-Compass added and ΔB(p) = B(p, Omni-Compass) / "
+         "B(p, native) − 1 is the bill it moved. In logarithms the two sides add:", "",
+         "    ln(1 + G) = ln(1 + ΔW) − ln(1 + ΔB),", "",
+         "so every benefit lives on one side or both: more work inside the bill (ΔW above zero), or the same work for a smaller bill "
+         "(ΔB below zero). A bill that rises is power given, and the place gains only where the work rises more (G above zero).", "",
+         "**The four arms.** A is the chip native, B the chip with Omni-Compass on native, C the cloud native, D the cloud with "
+         "Omni-Compass on native, so G(chip) = E(B) / E(A) − 1 and G(cloud) = E(D) / E(C) − 1.", "",
+         "**Where each place's benefit can live.**", "",
+         "- **On the chip** (a card rented directly): the price of an hour is fixed and both arms rent the same window, so ΔB is "
+         "near zero and G(chip) is near ΔW: the benefit is the work the card does in the time already paid for.",
+         "- **Through the cloud**: B is the sum over the machines it bills of machine-hours times the cloud's price for each, with the "
+         "cloud's own services inside that price; Omni-Compass moves the machines kept in service (a machine parked while idle leaves "
+         "the bill) and the work each machine does, so both sides can move.",
+         "- **The places are never added or set against each other.** The same work carries a different bill in each place (a "
+         "cloud's price holds its own services and margin over the silicon), so each G is a ratio inside its own place, read the "
+         "same way in both, and one place's price never enters another's reading.", "",
+         "**Layers inside one place.** Where Omni-Compass governs two layers of one stack (the software end on top of the chip it "
+         "runs on), the work for the bill composes, 1 + G(stack) = (1 + G(software end)) × (1 + G(chip)), when the two layers' "
+         "effects do not overlap. That product is a composition of two measurements and is written as one; the stack's own run is "
+         "the measurement.", "",
+         "**The bill's line items** (the founder's checklist of 2 November: build each place's receipt line by line, so the two bills "
+         "compare like for like). B is the sum of the place's own line items for the window; what each place charges for each, and "
+         "what these runs meter:", "",
+         "| Line item k | On the chip, run directly (a rented card) | Through the cloud | Metered in these runs |",
+         "|---|---|---|---|",
+         "| the machine (compute) | a flat rate for the hours rented, the same whether the card runs full or idle | an hourly rate for "
+         "every hour each machine is on, billed by the second | yes: the rental for each arm's window; the machine-hours at the cloud's "
+         "list price |",
+         "| data out (egress) | a large allowance or a flat port in the rental | a fee for every gigabyte that leaves the cloud | not "
+         "metered: both arms serve the same offered load, so the same data leaves in both |",
+         "| storage and its speed (IOPS) | the drives inside the rented machine, in its rate | a fee a gigabyte stored, and one for the "
+         "speed provisioned | not metered: both arms hold the same data on the same disks |",
+         "| the labor to run it | the operator's own staff | much of it inside the cloud's price | not counted; Omni-Compass's own "
+         "processor is counted, as power given, beside each run |", "",
+         "A line item the same in both arms adds the same dollars to both bills: it leaves ΔW as it is and draws ΔB toward zero, so "
+         "a receipt drawn inside a wider boundary reads a smaller bill change for the same work change. Each table names its "
+         "boundary; a line item not metered stays written as not metered, never filled with a guessed price.", "",
+         "**How a G is judged.** Each run's G is read by the one key across the three runs (`tools/readings.py`): from 0.5% up, GAIN "
+         "where the work for the bill rose and LOSS where it fell, in all three runs or by their mean; STEADY under the floor; the "
+         "runs disagree where clear runs point opposite ways.", "",
+         "**The equation's cells today**, each read from its place's own table on its own engine:", "",
+         "| Place and arms | Run | W, native → Omni-Compass | ΔW | B ($), native → Omni-Compass | ΔB | E (work per $), native → Omni-Compass | G |",
+         "|---|---|---|---|---|---|---|---|"]
+    sign = lambda x: "±0.00%" if abs(100 * x) < 0.005 else f"{'+' if x > 0 else '−'}{abs(100 * x):.2f}%"
+    for i, r in enumerate(c.get("per_run") or [], 1):
+        n, o = r["native"], r["omni"]
+        dw, db = o["work"] / n["work"] - 1, o["bill"] / n["bill"] - 1
+        g = (1 + dw) / (1 + db) - 1
+        L.append(f"| the chip, A against B ({c['engine'].split(' (')[0]}) | {i} | {n['work']:,.0f} → {o['work']:,.0f} | {sign(dw)} | "
+                 f"{n['bill']:.4f} → {o['bill']:.4f} | {sign(db)} | {n['per_dollar']:,.0f} → {o['per_dollar']:,.0f} | {sign(g)} |")
+    b = k.get("bill") or {}
+    if b:
+        db = b["diff"] / b["native"]
+        if k.get("work_key"):
+            wn, wo = k["work"][k["work_key"]]
+            dw = wo / wn - 1
+            g = (1 + dw) / (1 + db) - 1
+            L.append(f"| the cloud, C against D ({k['engine']}) | one set | {wn:,.1f} → {wo:,.1f} | {sign(dw)} | {b['native']:.5f} → "
+                     f"{b['omni']:.5f} | {sign(db)} | | {sign(g)} |")
+        else:
+            L.append(f"| the cloud, C against D ({k['engine']}, Azure) | one set of {k.get('repetitions')} | not counted in that set | | "
+                     f"{b['native']:.5f} → {b['omni']:.5f} | {sign(db)}, inside the noise | not read | not read |")
+    L += ["| the cloud, C against D (Google, Amazon) | | not yet run | | | | | |", ""]
+    w = (c.get("rows") or {}).get("work per dollar (requests served per $)", {}).get("reading", "")
+    L += [f"**What it reads today.** On the chip the three runs' G read **{w.replace('**', '')}**: the work for the bill has not "
+          "yet been shown to rise. In the cloud the work was not counted in the set that stands, so G is not read. The runs that "
+          "read it next are started or queued: the card fully loaded with the seven organisms, the eight-card machine, and the "
+          "cloud at the max with its work meter, each read by this equation as it lands.", ""]
+    return L
+
+
 def page(c: dict, k: dict, organisms_: list) -> str:
     L = ["# The two bills: four arms, the bill and the work done inside it", "",
          "The founder's design of 1 November 2026: the same work measured against what it cost, on the two bills a customer "
@@ -149,6 +235,7 @@ def page(c: dict, k: dict, organisms_: list) -> str:
          "machines, its bill Azure's own at list price. The question for each bill: is it the same, and is more work done inside "
          "it. Each arm's runs are labelled run 1, 2 and 3 so the run letters never meet the arm letters. Every number is read from "
          "a table the repository already holds, each place on its own engine; nothing here is a new measurement.", "",
+         *equation(c, k),
          f"## The chip: A against B (an NVIDIA A10 on Lambda, {c['engine'].split(' (')[0]}, three runs)", "",
          f"From `results/gpu/V23_A10_CAP_FULL_ABC.md` (runs {', '.join(c['runs'])}): the full load, more requests offered than the "
          "card serves in its window, so the work done can rise inside the same rented time. The bill is the rental for each arm's "

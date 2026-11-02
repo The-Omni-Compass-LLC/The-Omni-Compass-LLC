@@ -445,6 +445,23 @@ the founder overrides one in the conversation.
   `results/model_gate/` and never presented as a benchmark result. The model's regime is set from a real run's own files
   (the host's busy share, the response time, the replicas), never guessed.
 
+## Orders of 2 November
+
+- **The one thing to prove: more work for the bill** (the founder's words: "what you're looking at in the receipts of the GPU and
+  clouds is how much work is being done in the bill natively, and how much is being done with Omni-Compass on it ... the only thing
+  we need to in the end prove is that we get more work for the bill ... formalize this equation ... its whole total benefit and how
+  it is and where it does and lives"). Written once, in `results/TWO_BILLS.md` ("The one equation", `tools/two_bills.py`) and on the
+  front page: in each place the work for each dollar, E = W / B (the work done over the bill, B = Σₖ c(p, a, k) inside the place's
+  boundary), and the benefit G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1, so ln(1 + G) = ln(1 + ΔW) −
+  ln(1 + ΔB): more work inside the bill, a smaller bill for the same work, or both. G(chip) = E(B) / E(A) − 1, G(cloud) = E(D) /
+  E(C) − 1; on the chip the hour's price is fixed and the benefit lives in the work; in the cloud both sides move. The places are
+  never added or set against each other (the same work carries a different bill in each); layers inside one stack compose by
+  product, written as a composition, never as a measurement. Every G is judged by the one key; a G not yet read says so.
+- **No number on any page that no table carries** (the founder's question of 2 November on the website's lead figures). A
+  headline is the figure of record on its engine (the Omni index on the engine its tables stand on), its second reading named as
+  such; a figure that traces to no three-run table (the website's 47.2% and 49.9%, which match only two single modelled muscles of
+  the catalog) is never a headline.
+
 ## Orders of 1 November
 
 - **Four arms, the seven organisms in every one** (the founder's words: "There is to be an A, B, C, and D arm ... seven organisms
