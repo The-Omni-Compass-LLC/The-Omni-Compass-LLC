@@ -736,13 +736,11 @@ it, read back, and the record removed.
 **Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
-**What the letters of the number mean.** Read in order, DEX-YLL-1 is the way the engine runs:
+**What the letters of the number mean.** Read in order, DEX-YLL-1 is one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1).
 
 | DEX | YLL | 1 |
 |---|---|---|
-| **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and still spring back unharmed; past it, the damage is permanent. Omni-Compass runs every muscle up to its own yield limit line, read live, and never past it. | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here it is one closed loop: one body, one brain, every result read back and the next step decided from it. |
-
-Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1). Science and software people read each part on sight.
+| **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and spring back unharmed; past it the damage is permanent. Omni-Compass runs every muscle up to its own line, read live, never past it. | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here: one closed loop, one body, one brain, every result read back and the next step decided from it. |
 
 ## Executive Summary
 
