@@ -52,6 +52,7 @@ import realms.plants as plants  # noqa: E402
 import tools.run_realms_v5 as RR  # noqa: E402
 from tools.run_orchestra import bodies, ORCHESTRA  # noqa: E402
 from tools.governors_page import GOVERNORS  # noqa: E402
+from tools import heavy_hitters as HH  # noqa: E402  (heaviest hitters first, the founder's order of 1 November)
 
 CATALOG = ROOT / "realms" / "catalog_v5.csv"
 RECIPES = ROOT / "docs" / "wiring_recipes.csv"
@@ -136,25 +137,23 @@ def is_spine(r) -> bool:
 
 
 def groups(rows) -> list[dict]:
-    """The catalog bulked by its realms (the founder's words): the spine's families first, then each realm's own families,
-    every muscle once, in the order docs/MUSCLE_CATALOG.md lists them."""
+    """The catalog bulked by its realms (the founder's words), heaviest hitter first (the founder's order of 1 November,
+    tools/heavy_hitters.py): the four realms, each muscle under its home realm, every muscle once. Each realm carries its
+    muscles ranked heaviest hitter first (`ranked`), and its families in the order of their heaviest hitter, each family's
+    muscles heaviest hitter first, so a page that shows the families keeps the order too."""
+    h = HH.hits()
     out = []
-
-    def fams(rs):
+    for k, rs in HH.by_realm(rows, h).items():
         f = OrderedDict()
-        for r in rs:
+        for r in rs:                                   # the ranked order: a family appears where its heaviest hitter stands
             f.setdefault(r["family_id"], []).append(r)
-        return [{"id": fid, "name": v[0]["family"], "muscles": [r["muscle_id"] for r in sorted(v, key=sort_key)]}
-                for fid, v in f.items()]
-
-    spine = [r for r in rows if is_spine(r)]
-    out.append({"key": RR.SPINE, "title": "Spine", "note": f"{len(spine)} muscles in all four realms; an organism of its own",
-                "families": fams(spine)})
-    for k in REALM_KEYS:
-        own = [r for r in rows if r["realm"] == k and not is_spine(r)]
+        fams = [{"id": fid, "name": v[0]["family"], "muscles": [r["muscle_id"] for r in v]} for fid, v in f.items()]
         n = sum(1 for r in rows if k in r["realms"].split(";"))
-        out.append({"key": k, "title": REALM_NAMES[k], "note": f"{len(own)} muscles of its own; {n} in its organism with the spine",
-                    "families": fams(own)})
+        sp = sum(1 for r in rs if is_spine(r))
+        out.append({"key": k, "title": REALM_NAMES[k],
+                    "note": f"{len(rs)} muscles live here, heaviest hitter first ({sp} of them the spine's, which sits in all four "
+                            f"realms); {n} in its organism with the spine",
+                    "ranked": [r["muscle_id"] for r in rs], "families": fams})
     return out
 
 
@@ -1279,7 +1278,9 @@ def build_core() -> dict:
     tpl, kn = templates(), knobs()
     mem = memberships(rows)
     grp = groups(rows)
-    order = {mid: i for i, mid in enumerate(m for g in grp for f in g["families"] for m in f["muscles"])}
+    order = {mid: i for i, mid in enumerate(m for g in grp for m in g["ranked"])}
+    rank = {mid: n for g in grp for n, mid in enumerate(g["ranked"], 1)}
+    hh = HH.hits()
     fams = OrderedDict()
     for r in sorted(rows, key=lambda r: int(r["family_id"])):
         if r["family_id"] in fams:
@@ -1300,7 +1301,7 @@ def build_core() -> dict:
         rec = {"id": r["muscle_id"], "name": r["muscle"], "family": r["family_id"], "realms": r["realms"].split(";"),
                "template": t, "preset": p, "knob": k, "meaning": f"The {nice(r['muscle'])} setting of {pw[0]}, a {k} knob.",
                "does": does_list.index(dz), "card": card_text(cards.get(r["muscle_id"])),
-               "organisms": m["organisms"]}
+               "organisms": m["organisms"], "rank": rank[r["muscle_id"]], "hit": HH.short(hh.get(r["muscle_id"], HH.NONE))}
         if m["governors"]:
             rec["governors"] = m["governors"]
         if m["part"]:
@@ -1407,38 +1408,45 @@ def to_md(d: dict) -> str:
           "| Scenario | What runs |", "|---|---|"]
     for s in d["scenarios"]:
         L.append(f"| {md_cell(s['name'])} | {md_cell(s['what'])} |")
-    L += ["", "## 5. The muscles, bulked by their realms", "",
-          "Every muscle of `realms/catalog_v5.csv` once: the spine's families first, then each realm's own. Each family names its "
-          "plant, its class of machine, the native controller that runs it and how it is reached; each muscle its knob, what "
-          "Omni-Compass does with it (the max, the default) and the organisms it belongs to (spine; the realms; stack; tower; "
-          "orchestra, with its governors; the live benchmark engine's sixty, with its body part).", "",
+    L += ["", "## 5. The muscles, bulked by their realms, heaviest hitter first", "",
+          "Every muscle of `realms/catalog_v5.csv` once, in the four realms they live in, each under its home realm, heaviest "
+          "hitter first and down to its last. " + HH.rule_words(), "",
+          "Each muscle names its family, its knob, its hit, what Omni-Compass does with it (the max, the default) and the "
+          "organisms it belongs to (spine; the realms; stack; tower; orchestra, with its governors; the live benchmark engine's "
+          "sixty, with its body part); each realm's families follow its table, the family with the heaviest hitter first, each "
+          "with its plant, its class of machine, the native controller that runs it and how it is reached.", "",
           "**The four kinds of knob.** " + " ".join(f"**{k}**: {v['full']}" for k, v in d["knobs"].items()), "",
           "**The five plants.** " + " ".join(f"`{k}`: {v['what']}; native: {v['native']}." for k, v in d["templates"].items()), ""]
     mus = {m["id"]: m for m in d["muscles"]}
     short = {"spine": "spine", "compute_ai_cloud": "Compute", "physics_robotics_autonomous": "Physics",
              "energy_facility_industrial": "Energy", "distribution_specialized": "Distribution", "stack": "stack",
              "tower": "tower", "orchestra": "orchestra", "sixty": "the sixty"}
+
+    def orgs_of(m):
+        out = []
+        for o in m["organisms"]:
+            if o == "orchestra" and m.get("governors"):
+                out.append("orchestra (" + ", ".join(m["governors"]) + ")")
+            elif o == "sixty":
+                out.append(f"the sixty ({m.get('part')})")
+            else:
+                out.append(short.get(o, o))
+        return "; ".join(out)
     for g in d["groups"]:
-        L += [f"### {g['title']}", ""]
+        L += [f"### {g['title']}: {len(g['ranked'])} muscles, heaviest hitter first", "", g["note"] + ".", "",
+              "| Rank | # | Muscle | Family | Knob | Its hit | What Omni-Compass does with it | Organisms |",
+              "|---:|---|---|---|---|---|---|---|"]
+        for n, mid in enumerate(g["ranked"], 1):
+            m = mus[mid]
+            L.append(f"| {n} | {m['id']} | {md_cell(nice(m['name']))} | {md_cell(d['families'][m['family']]['name'])} | {m['knob']} | "
+                     f"{md_cell(m['hit'])} | {md_cell(d['does'][m['does']])} | {orgs_of(m)} |")
+        L += ["", f"**Its families, the family with the heaviest hitter first.**", ""]
         for f in g["families"]:
             fm = d["families"][f["id"]]
             pw = d["presets"].get(fm["preset"], {"what": fm["preset"], "wire": ""})
-            L += [f"#### {f['name']} ({len(f['muscles'])} muscles)", "",
-                  f"Plant `{fm['template']}`, {d['templates'][fm['template']]['what']}; class `{fm['preset']}`, {pw['what']}, "
-                  f"reached through {pw['wire']}. Native: {fm['native']}. Run live? {fm['live']}.", "",
-                  "| # | Muscle | Knob | What Omni-Compass does with it | Organisms |", "|---:|---|---|---|---|"]
-            for mid in f["muscles"]:
-                m = mus[mid]
-                orgs = []
-                for o in m["organisms"]:
-                    if o == "orchestra" and m.get("governors"):
-                        orgs.append("orchestra (" + ", ".join(m["governors"]) + ")")
-                    elif o == "sixty":
-                        orgs.append(f"the sixty ({m.get('part')})")
-                    else:
-                        orgs.append(short.get(o, o))
-                L.append(f"| {m['id']} | {md_cell(nice(m['name']))} | {m['knob']} | {md_cell(d['does'][m['does']])} | {'; '.join(orgs)} |")
-            L.append("")
+            L.append(f"- **{f['name']}** ({len(f['muscles'])} here): plant `{fm['template']}`, {d['templates'][fm['template']]['what']}; "
+                     f"class `{fm['preset']}`, {pw['what']}, reached through {pw['wire']}. Native: {fm['native']}. Run live? {fm['live']}.")
+        L.append("")
     L += ["## 6. The index", "",
           "Every term, organism and arm with the sections of the page that print it, by the section's number and anchor (the "
           "page's address followed by the anchor opens the section). The sections, in the page's order:", "",

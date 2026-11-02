@@ -5,7 +5,8 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The catalog of the muscles, explained: what each is for, what Omni-Compass reads and writes on it, how it is
-wired, and which organisms it belongs to. Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v23, carries: the v5 law at its
+wired, and which organisms it belongs to, listed heaviest hitter first in the four realms they live in (tools/heavy_hitters.py,
+the founder's order of 1 November). Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v24, carries: the v5 law at its
 default, the max); writes docs/MUSCLE_CATALOG.md.
 
     python3 tools/muscle_catalog.py
@@ -26,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from realms.presets import PRESETS  # noqa: E402  (an axis's own peak speed, s_peak)
 from realms.compass_arm_v5 import load_cards, V5CFG  # noqa: E402  (every muscle's own card)
+from tools import heavy_hitters as HH  # noqa: E402  (heaviest hitters first, the founder's order of 1 November)
 OUT = ROOT / "docs" / "MUSCLE_CATALOG.md"
 REALMS = OrderedDict([("compute_ai_cloud", "Compute / AI / Cloud"), ("physics_robotics_autonomous", "Physics / Robotics / Autonomous"),
                       ("energy_facility_industrial", "Energy / Facility / Industrial"), ("distribution_specialized", "Distribution / Specialized")])
@@ -195,7 +197,7 @@ def main():
           f"{len(cards)} muscles carry a card of their own; every other muscle runs the global setting (machines started "
           f"at {g.edge_util * 100:.0f}% full, the last {g.window} decisions read, {g.line_z:g} wobbles of margin on a "
           f"battery's line, {g.hold_margin * 100:.0f}% of it kept clear). Each muscle's card is in the last column of its "
-          "family's table.", ""]
+          "realm's table.", ""]
     L += ["", f"**The organisms.** The {len(rows)} muscles build seven organisms: the spine ({len(spine)} muscles, every muscle that sits "
           "in all four realms: the base every stack runs on, as an operating system is the base of every program), each of the four "
           f"realms (every muscle whose realm list includes it, the spine among them), the four stacked with every duplicate kept "
@@ -227,45 +229,54 @@ def main():
           "controller. Where the entry says *modelled only*, the plant exists in the benchmark and the wire is written against "
           "the controller's documented interface, not yet run on the machine.", ""]
 
-    def family_tables(group, home_note):
-        fams = OrderedDict()
-        for r in group:
-            fams.setdefault(r["family"], []).append(r)
-        out = []
-        for fam, rs in fams.items():
-            t, p = rs[0]["template"], rs[0]["preset"]
-            what = TEMPLATE[t][0]
-            pw = PRESET.get(p, (p, "see the manual"))
-            rc = recipes[fam]
-            out += [f"### {fam} ({len(rs)} muscles)", "",
-                    f"Each is {what}; its class is `{p}` ({pw[0]}), reached through {pw[1]}. Omni-Compass reads "
-                    f"{TEMPLATE[t][1]}. {home_note}", "",
-                    "**Wire it on your stack.**", "",
-                    f"- **Native controller:** {rc['native_controller']}.",
-                    f"- **Wire out (read):** {rc['read']}.",
-                    f"- **Wire in (write):** {rc['write']}.",
-                    f"- **Restore:** {rc['restore']}.",
-                    f"- **Run live?** {rc['live']}.", "",
-                    "| # | Muscle (the setting's own name) | Knob | What Omni-Compass does with it | Organisms | Its own card |",
-                    "|---:|---|---|---|---|---|"]
-            for r in sorted(rs, key=lambda r: (not r["muscle_id"].isdigit(), int("".join(c for c in r["muscle_id"] if c.isdigit()) or 0))):
-                k = r["knob"]
-                org = "the spine; all four realms" if len(r["realms"].split(";")) == 4 else ", ".join(REALMS[x].split(" / ")[0] for x in r["realms"].split(";"))
-                out.append(f"| {r['muscle_id']} | {nice(r['muscle'])} | {k} | {does(r)} | {org}; stack; tower | "
-                           f"{card_text(cards.get(r['muscle_id']))} |")
-            out.append("")
-        return out
+    h = HH.hits()
+    ranked = HH.by_realm(rows, h)
+    run = HH.record_run()
 
-    L += [f"## The spine: {len(spine)} muscles in all four realms, an organism of its own", "",
-          "The machines every realm stands on: servers, machines, GPUs and CPUs, network, storage, observability, security, "
-          "cooling and electrical distribution. The spine is the seventh organism (`spine`, the base every stack runs on, run "
-          "native and with Omni-Compass on top like the other six; `docs/THE_SPINE.md`), and each spine muscle is also part of "
-          "every realm's organism, counted once in the tower and four times in the stack.", ""]
-    L += family_tables(spine, "It belongs to every organism.")
-    for k, n in REALMS.items():
-        own = [r for r in rows if r["realm"] == k and len(r["realms"].split(";")) < 4]
-        L += [f"## Realm: {n} ({len(own)} muscles of its own, {counts[k]} in its organism with the spine)", ""]
-        L += family_tables(own, f"Its home realm is {n}.")
+    def realms_of(r):
+        rs = r["realms"].split(";")
+        return "all four: the spine" if len(rs) == 4 else ", ".join(REALMS[x].split(" / ")[0] for x in rs)
+
+    L += [f"## The {len(rows):,} muscles, heaviest hitters first, in the four realms they live in", "", HH.rule_words(), "",
+          f"Each realm's table lists its home muscles ({', '.join(f'{REALMS[k]} {len(v)}' for k, v in ranked.items())}; "
+          f"{len(rows):,} in all), heaviest hitter first and down to its last. A muscle of the spine sits in all four realms: it is "
+          "part of every realm's organism, counted once in the tower and four times in the stack, and listed once here, under its "
+          "home realm. Its hit is the record's own reading of that muscle alone "
+          f"({run['engine']}, class S): a model's reading of what the engine did there, never a benchmark result. How each family "
+          "is wired on a real stack (its native controller, where the reading is tapped, where the setting is written, how it is "
+          "restored) follows the four tables, the family with the heaviest hitter first.", ""]
+    for k, rs in ranked.items():
+        L += [f"### {REALMS[k]}: {len(rs)} muscles, heaviest hitter first", "",
+              "| Rank | # | Muscle (the setting's own name) | Family | Knob | Its hit | What Omni-Compass does with it | Realms | Its own card |",
+              "|---:|---|---|---|---|---|---|---|---|"]
+        for n, r in enumerate(rs, 1):
+            L.append(f"| {n} | {r['muscle_id']} | {nice(r['muscle'])} | {r['family']} | {r['knob']} | "
+                     f"{HH.short(h.get(r['muscle_id'], HH.NONE))} | {does(r)} | {realms_of(r)} | {card_text(cards.get(r['muscle_id']))} |")
+        L.append("")
+
+    best = {}
+    for k, rs in ranked.items():
+        for n, r in enumerate(rs):
+            best.setdefault(r["family"], (HH.key(r, h), []))[1].append(r)
+    L += ["## How each family is wired, the family with the heaviest hitter first", "",
+          "Every family's muscles are wired the same way on a real stack; its muscles are named after its wire, heaviest hitter "
+          "first, with each one's rank in its realm's table above.", ""]
+    rank = {r["muscle_id"]: (REALMS[k].split(" / ")[0], n) for k, rs in ranked.items() for n, r in enumerate(rs, 1)}
+    for fam, (_, rs) in sorted(best.items(), key=lambda kv: kv[1][0]):
+        rs = HH.order(rs, h)
+        t, pr = rs[0]["template"], rs[0]["preset"]
+        pw = PRESET.get(pr, (pr, "see the manual"))
+        rc = recipes[fam]
+        L += [f"#### {fam} ({len(rs)} muscles)", "",
+              f"Each is {TEMPLATE[t][0]}; its class is `{pr}` ({pw[0]}), reached through {pw[1]}. Omni-Compass reads "
+              f"{TEMPLATE[t][1]}.", "",
+              f"- **Native controller:** {rc['native_controller']}.",
+              f"- **Wire out (read):** {rc['read']}.",
+              f"- **Wire in (write):** {rc['write']}.",
+              f"- **Restore:** {rc['restore']}.",
+              f"- **Run live?** {rc['live']}.",
+              "- **Its muscles, heaviest hitter first:** " + ", ".join(
+                  f"{nice(r['muscle'])} ({rank[r['muscle_id']][0]} {rank[r['muscle_id']][1]})" for r in rs) + ".", ""]
     OUT.write_text("\n".join(_legal_stamp(L)) + "\n", encoding="utf-8")
     print(OUT, len(rows), "muscles")
 

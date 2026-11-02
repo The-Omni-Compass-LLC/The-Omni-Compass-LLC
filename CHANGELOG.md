@@ -2,6 +2,29 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-01: omni-v24 stands: the factory beat for its place; the four arms; the live engine keeps itself current
+- **omni-v24** (`OMNI_V24.json`, fingerprint `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`): omni-v23 with the heartbeat it ships
+  with read from the place it runs in (`omni_controller/controller.py`, `factory_beat`), on the founder's orders that the
+  factory beat is the best beat the sweeps read and is found and then locked. With no beat set the Kubernetes governor reads the
+  cluster's nodes once at its start: on site (kind, the owner's own machines, a node with no providerID) a decision every 10 s;
+  through a cloud (a node whose providerID names a public cloud's machine) every 60 s; a reading that fails keeps 60 s; a beat set
+  by hand always wins; the audit names the place, the beat and why; every rig asks the engine (`--print-factory-beat`,
+  `scripts/factory_beat.sh`) and the install files set no beat. The pick by the rule frozen before any reading
+  (`docs/PACE_PREREGISTRATION.md`, amendments 4 to 6, the corrected model, seeds 101 to 108): on site 10 s the one beat no other
+  dominated; through a cloud no beat kept the bill from rising, so 60 s stays. The model gate against omni-v23
+  (`results/model_gate/V24_VS_V23.md`, class S): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. Every benchmark runs again on it from 01:30 UTC on 2 November.
+- **The four arms** (the founder's order of 1 November): A, the chip native; B, the chip with Omni-Compass on native; C, the
+  cloud native; D, the cloud with Omni-Compass on native; each read by its bill, the work done inside it and the work per
+  dollar, and the seven organisms in every arm (`tools/two_bills.py`, `results/TWO_BILLS.md`; the card's bill and work per dollar
+  in `tools/hil_abc.py`). The stacks with the card fully loaded preregistered and started on omni-v23
+  (`docs/GPU_PREREGISTRATION.md`, amendment 16; `lambda-gpu` mode `1card:stacks-full`), beside the eight-card machine's
+  organisms and Azure's; Google and Amazon wired and shown as not yet run. The A10's fast table on omni-v23
+  (`results/gpu/V23_A10_FAST_ABC.md`): every row STEADY, the 95th percentile the runs disagree.
+- **The live engine keeps itself current wherever it is shown** (the founder's order of 1 November): the page is rebuilt on
+  GitHub every three hours and after every result, and every copy of it, the company's website's included, reads the newest
+  build's stamp from the repository when it opens and every 24 hours after, and loads the newer build in place
+  (`docs/engine/build_live_engine.py`, `docs/engine/LIVE_ENGINE_VERSION.json`, `tests/test_live_self_update.py`).
+
 ## 2026-10-31: the cloud at the max; no hard rule; the factory beat read again
 - **The cloud's rule of 14 October is struck** (the founder's words of 31 October: "Why is there any hard rule written ...
   Whatever the math does and falls out is whatever happens ... when it falls out wrong, the tuning is wrong"; "make the cloud

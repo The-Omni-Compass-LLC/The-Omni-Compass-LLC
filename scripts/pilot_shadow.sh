@@ -16,7 +16,7 @@
 set -euo pipefail
 OUT_DIR="${OUT_DIR:-shadow_out}"; DURATION="${DURATION:-3600}"; IDLE_W="${IDLE_W:-100}"; DYN_W="${DYN_W:-150}"
 LAW="${LAW:-tuning/GLOBAL_LEAGUE_PREREGISTRATION.json}"; mkdir -p "$OUT_DIR"
-IV="${OMNI_INTERVAL:-60}"   # the factory beat (omni-v17 on), the same default as the governor's own
+IV="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"   # the factory beat for this cluster's place, the governor's own (omni-v24)
 kubectl apply -f deploy/pilot/rbac-shadow.yaml >/dev/null
 SA="system:serviceaccount:omni-shadow:omni-shadow"; can() { kubectl auth can-i "$@" --as="$SA"; }
 {

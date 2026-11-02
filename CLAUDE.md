@@ -46,9 +46,25 @@ the founder overrides one in the conversation.
 - Scaling: floor of 2 machines, no ceiling, every machine usable. Traffic tests step by one (1 2 3 2 3 4 …).
 - Nothing is hardwired. Anything that doesn't work is removed, not just switched off.
 
-## The engine: Omni v23 stands (v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
+## The engine: Omni v24 stands (v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`) stands on main from 31 October, evening (its campaign from 20:00 UTC), on the
+- **Omni v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`) stands on main from 1 November, night (its campaign
+  from 01:30 UTC on 2 November), on the founder's orders that the factory beat is the best beat the sweeps read (23 October), that 60 s is a
+  disadvantage and the basic setting is found and locked (31 October; "You pick and find out", that night), and his word of 1 November
+  ("give me my new version engine"): omni-v23 with the heartbeat it ships with read from the place it runs in
+  (`omni_controller/controller.py`, `factory_beat`, `FACTORY_BEAT`): with no `--interval` set the governor reads the cluster's nodes
+  once at its start; a node whose providerID names a public cloud's machine makes it "through the cloud", a decision every 60 s; any
+  other node (kind, the owner's own machines, no providerID) "on site", a decision every 10 s; a reading that fails keeps 60 s; a beat
+  set by hand always wins; the audit names the place, the beat and why; `--print-factory-beat` lets every rig ask the engine
+  (`scripts/factory_beat.sh`), and the install files set no beat. 64 of its 65 files are omni-v23's bytes. The pick (amendments 4
+  to 6 of `docs/PACE_PREREGISTRATION.md`, the rule frozen before any reading, the corrected model, seeds 101 to 108): on site every
+  beat admissible and 10 s the one no other dominates (against 60 s the minutes over the line down 65.5%, the 95th percentile down
+  9.9%, the autoscaler's shortfall down 6.2%, all GAIN, the machines identical; the reads of the cluster and the governor's own
+  processor power given); through a cloud no beat admissible (every beat raised the machine-hours against native, every beat but
+  90 s the pods waiting), so 60 s stays and those rows are on the next version's list. The model gate against omni-v23
+  (`results/model_gate/V24_VS_V23.md`, seeds 1 to 8): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. Every benchmark runs again on it from 01:30 UTC on 2 November; on kind
+  (on site) the compass arm decides every 10 s, on Azure every 60 s.
+- **Omni v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`) stood on main from 31 October, evening (its campaign from 20:00 UTC), to 1 November, night, on the
   founder's order of that day (Orders of 31 October: Omni direct keeps every muscle Omni-Compass cannot be; "any muscle that we don't
   have, Omni-Compass cannot be it: it has to be there, if that's Kubernetes or whatever") and the standing order that every fix lands as
   the next version, told, not asked: omni-v22 with one guard in the Kubernetes governor's pod muscle of its own
@@ -428,6 +444,57 @@ the founder overrides one in the conversation.
   goes to its GitHub trials; nothing is dispatched before. The gate's readings are models (class S), recorded in
   `results/model_gate/` and never presented as a benchmark result. The model's regime is set from a real run's own files
   (the host's busy share, the response time, the replicas), never guessed.
+
+## Orders of 2 November
+
+- **The one thing to prove: more work for the bill** (the founder's words: "what you're looking at in the receipts of the GPU and
+  clouds is how much work is being done in the bill natively, and how much is being done with Omni-Compass on it ... the only thing
+  we need to in the end prove is that we get more work for the bill ... formalize this equation ... its whole total benefit and how
+  it is and where it does and lives"). Written once, in `results/TWO_BILLS.md` ("The one equation", `tools/two_bills.py`) and on the
+  front page: in each place the work for each dollar, E = W / B (the work done over the bill, B = Σₖ c(p, a, k) inside the place's
+  boundary), and the benefit G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1, so ln(1 + G) = ln(1 + ΔW) −
+  ln(1 + ΔB): more work inside the bill, a smaller bill for the same work, or both. G(chip) = E(B) / E(A) − 1, G(cloud) = E(D) /
+  E(C) − 1; on the chip the hour's price is fixed and the benefit lives in the work; in the cloud both sides move. The places are
+  never added or set against each other (the same work carries a different bill in each); layers inside one stack compose by
+  product, written as a composition, never as a measurement. Every G is judged by the one key; a G not yet read says so.
+- **No number on any page that no table carries** (the founder's question of 2 November on the website's lead figures). A
+  headline is the figure of record on its engine (the Omni index on the engine its tables stand on), its second reading named as
+  such; a figure that traces to no three-run table (the website's 47.2% and 49.9%, which match only two single modelled muscles of
+  the catalog) is never a headline.
+
+## Orders of 1 November
+
+- **Four arms, the seven organisms in every one** (the founder's words: "There is to be an A, B, C, and D arm ... seven organisms
+  that are ran native and with OmniCompass on them. That's 14. Then each 14 have to be in each arm"): A, the chip native; B, the
+  chip with Omni-Compass on native; C, the cloud native; D, the cloud with Omni-Compass on native; each read by its bill, the work
+  done inside it and the work per dollar (`tools/two_bills.py`, `results/TWO_BILLS.md`; the card's bill in `tools/hil_abc.py`); on
+  the chips the one card, the one card fully loaded (`docs/GPU_PREREGISTRATION.md`, amendment 16) and the eight-card machine; in the
+  clouds Azure, with Google and Amazon wired and shown as not yet run. A place not yet read says so; no number is written before
+  its runs land.
+- **The live engine keeps itself current wherever it is shown** (the founder's words: "Somewhere this engine needs to know to
+  update itself every 24 hours to the GitHub. And stay in line with all new versions and updates and add-ons"): the page is
+  rebuilt on GitHub every three hours and after every result, and every copy of it, the company's website's included, reads the
+  newest build's stamp from the repository when it opens and every 24 hours after, and loads the newer build in place
+  (`docs/engine/build_live_engine.py`, `docs/engine/LIVE_ENGINE_VERSION.json`, `tests/test_live_self_update.py`).
+- **The new version engine** (the founder's words: "update, push, build, wire, and give me my new version engine and
+  everything"): omni-v24, the factory beat for its place, 10 s on site and 60 s through a cloud, landed through the model gate
+  (the engine list above, `docs/OMNI_V24.md`).
+- **Heaviest hitters first, on every list of the muscles** (the founder's words: "wherever my 1,107 catalog of the muscle and node
+  lists exists, in any shape or form, a list or condensed, it is always the most heaviest hitters first ... down to the 1107,
+  broken into the four categories they live"). One rule, written once (`tools/heavy_hitters.py`): the four realms, each muscle
+  under its home realm, every muscle once; inside each, the muscles that take decisions back under their line first, the largest
+  share of all their decisions first (a decision over the line is a muscle past its own limit, the first harm do no harm names),
+  then the muscles that clear the work waiting in line sooner, then those that only add work, then those the same as native, last
+  those at their limit on native, where Omni-Compass writes nothing; read from the newest record of every muscle alone
+  (`results/realms_v5/REALMS_V5.json`, class S, the engine it ran on named on every page). The catalog page
+  (`docs/MUSCLE_CATALOG.md`, both manuals' muscle appendix), the organism page (`docs/REALM_MUSCLES.md`) and the live engine's
+  glossary (`docs/engine/glossary.json`, `GLOSSARY.md`) list in it, and `tests/test_heavy_hitters.py` fails a list out of order.
+  The catalog file itself keeps the order the runners read it in, so no seed or result moves.
+- **A graded audit of the whole website** (the founder's words: "a grading audit ... across this whole website, every domain,
+  every file, every sub file ... every page, every landing page, every text, every tone, every document that's in their links,
+  and make sure links are great"): every page of www.omni-compass.com and every link and linked document on it is read, graded
+  and written down with its fix; what lives in this repository is fixed and pushed, and what lives only in the website's own
+  build is reported with the exact change to make there.
 
 ## Orders of 31 October
 
@@ -1111,8 +1178,8 @@ the founder overrides one in the conversation.
 ## Repository
 
 - Referee and underwriter level. Only finals up front; old material goes to `docs/history` / `archive/` or is removed.
-  One version is always the main one; `main` and the working branch, `v23` (the engine that stands, 31 October), stay in
-  sync, and `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v23`,
+  One version is always the main one; `main` and the working branch, `v24` (the engine that stands, 1 November), stay in
+  sync, and `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v24` (made at omni-v24's push; the runs started from `gpu-omni-v23` stay omni-v23's record),
   levelled with main at every landing, its head the one exact commit the founder's next GPU rental starts from (the last rental ran
   7770532ed5, omni-v21 with the GPU rig's readiness barrier, 30 October). `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
   is history** (the founder's order of 17 October: "We won long past 5"): it is never merged into `main` and `main` is

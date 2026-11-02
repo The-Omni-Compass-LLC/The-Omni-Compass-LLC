@@ -1256,7 +1256,7 @@ def t_trial():
     ax.text(18, 0.3, wrap("a phase past its limit (Kubernetes 1,200 s; a card 30 decisions), or out of calm, is abandoned: the knob goes back, "
                           "the step neither allowed nor refused", 100), ha="center", va="center", color=GREY, fontsize=PT)
     ax.set_xlim(0, 36); ax.set_ylim(0, 3.7); ax.set_yticks([]); ax.spines["left"].set_visible(False)
-    ax.set_xlabel("decisions (one every 60 s on Kubernetes, the main engine's beat, its rules counted in seconds; one every 2 s on a card)")
+    ax.set_xlabel("decisions (on Kubernetes one every 60 s through a cloud, every 10 s on site, its rules counted in seconds; one every 2 s on a card)")
     return fig_svg(fig)
 
 
