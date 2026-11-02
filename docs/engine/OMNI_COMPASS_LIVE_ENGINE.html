@@ -6588,7 +6588,7 @@ const DASH_DRAW = {
     const G = REALMS.map((Rm, ri) => ({name: Rm.label, ids: (W.muscles || []).map((m, i) => m.realm === ri ? i : -1).filter(i => i >= 0)}));
     out.push(dashPanel(2, 300, 994, 40 + G.length*30, "Mean Load Against the Line by Body Part"), dashTxt(984, 318, "shown, one decision", {fill: css.muted, size: 10, anchor: "end"}));
     G.forEach((g, i) => { const y = 330 + i*30; out.push(dashTxt(14, y + 14, g.name, {fill: css.ink, size: 11}));
-      A.forEach((a, j) => { const p = dashMean(a.a, g.ids), bw = Math.min(1.2, p)/1.2*560; out.push(`<rect x="300" y="${y + j*12}" width="${bw.toFixed(1)}" height="10" fill="${a.col}"/>`, dashTxt(870, y + 9 + j*12, `${(100*p).toFixed(0)}%`, {fill: a.col, size: 10})); });
+      A.forEach((a, j) => { const p = dashMean(a.a, g.ids), bw = Math.max(0, Math.min(1.2, p))/1.2*560; out.push(`<rect x="300" y="${y + j*12}" width="${bw.toFixed(1)}" height="10" fill="${a.col}"/>`, dashTxt(870, y + 9 + j*12, `${(100*p).toFixed(0)}%`, {fill: a.col, size: 10})); });
       dashRd(`${g.name}: mean load against the line now`, `${(100*dashMean(A[0].a, g.ids)).toFixed(0)}%`, `${(100*dashMean(A[1].a, g.ids)).toFixed(0)}%`, "", "shown, one decision");
       out.push(`<line x1="${300 + 560/1.2}" y1="${y - 2}" x2="${300 + 560/1.2}" y2="${y + 24}" stroke="${css.bad}" stroke-dasharray="3 3"/>`); });
     return dashSvg(W0, 350 + G.length*30, out.join(""), "a board of panels, native beside Omni-Compass"); },
@@ -6657,7 +6657,7 @@ const DASH_DRAW = {
     const win = () => { const hs = A.map(a => dashHist(a.a, "cap").slice(-R)); if (W.killed) hs[1] = hs[0].slice(); return {hs, n: mean(hs[0]), o: mean(hs[1]), j: dashJudge("paired", "spent", mean(hs[0]), mean(hs[1]), hs[0], hs[1])}; };
     if (dashH()) { const kw = a => { const h = dashHist(a, "cap"); return h.length ? h[h.length - 1] : null; }, v = A.map(a => kw(a.a)), out = [], mx = Math.max(1e-9, ...v.filter(Number.isFinite)), wn = win();
       out.push(dashTxt(0, 26, "the whole organism, this decision", {size: 11}));
-      A.forEach((a, j) => { const x = v[j]; out.push(Number.isFinite(x) ? `<rect x="260" y="${10 + j*16}" width="${(x/mx*560).toFixed(1)}" height="13" fill="${a.col}"/>` : "", dashTxt(830, 21 + j*16, Number.isFinite(x) ? `${dashInt(x)} kW` : "—", {size: 10, fill: a.col})); });
+      A.forEach((a, j) => { const x = v[j]; out.push(Number.isFinite(x) ? `<rect x="260" y="${10 + j*16}" width="${Math.max(0, x/mx*560).toFixed(1)}" height="13" fill="${a.col}"/>` : "", dashTxt(830, 21 + j*16, Number.isFinite(x) ? `${dashInt(x)} kW` : "—", {size: 10, fill: a.col})); });
       out.push(dashTxt(1000, 28, "shown, one decision", {anchor: "end", size: 11, fill: css.muted}));
       dashRd("the whole organism, electrical power this decision", Number.isFinite(v[0]) ? `${dashInt(v[0])} kW` : "—", Number.isFinite(v[1]) ? `${dashInt(v[1])} kW` : "—", "", "shown, one decision");
       out.push(dashTxt(0, 62, `the whole organism, the mean over the last ${wn.hs[0].length} decisions: native ${Number.isFinite(wn.n) ? dashInt(wn.n) : "—"} kW, ${dashSideName()} ${Number.isFinite(wn.o) ? dashInt(wn.o) : "—"} kW`, {size: 11}), dashTxt(1000, 80, dashJT(wn.j), {anchor: "end", size: 11, fill: dashCol(wn.j.w)}));
@@ -6669,7 +6669,7 @@ const DASH_DRAW = {
     const groups = DASH.level === "organism" ? [{name: "the whole organism", ids: (W.muscles || []).map((m, i) => i)}] : REALMS.map((Rm, ri) => ({name: Rm.label, ids: (W.muscles || []).map((m, i) => m.realm === ri ? i : -1).filter(i => i >= 0)}));
     const cap = (a, ids) => ids.reduce((s, i) => s + (a.m[i].c != null ? a.m[i].c : a.m[i].L || 0), 0), vals = groups.map(g => A.map(a => cap(a.a, g.ids))), mx = Math.max(1e-9, ...vals.flat()), out = [], wn = win();
     groups.forEach((g, k) => { const y = 10 + k*44; out.push(dashTxt(0, y + 16, g.name, {size: 11}));
-      A.forEach((a, j) => { const v = vals[k][j]; out.push(`<rect x="260" y="${y + j*16}" width="${(v/mx*560).toFixed(1)}" height="13" fill="${a.col}"/>`, dashTxt(830, y + 11 + j*16, v.toFixed(1), {size: 10, fill: a.col})); });
+      A.forEach((a, j) => { const v = vals[k][j]; out.push(`<rect x="260" y="${y + j*16}" width="${Math.max(0, v/mx*560).toFixed(1)}" height="13" fill="${a.col}"/>`, dashTxt(830, y + 11 + j*16, v.toFixed(1), {size: 10, fill: a.col})); });
       out.push(dashTxt(1000, y + 18, "shown, one decision", {anchor: "end", size: 11, fill: css.muted}));
       dashRd(`${g.name}: capacity held this decision`, vals[k][0].toFixed(1), vals[k][1].toFixed(1), "", "shown, one decision"); });
     const yw = 22 + groups.length*44;
