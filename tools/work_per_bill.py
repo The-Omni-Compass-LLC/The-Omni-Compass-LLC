@@ -199,6 +199,14 @@ def markdown(d: dict) -> str:
          "M + L on bare metal (so b = 0 there and G = w). The place sets C, Vₒ and the prices; Omni-Compass moves U and, in a cloud, H. "
          "Which place costs less for the same work (a cloud for a few hours a month, bare metal for a box busy all day) is the owner's "
          "choice of place, not a benefit of Omni-Compass.", "",
+         "**How Omni-Compass can lower a cloud's bill, and what it does not do.** A cloud bills every hour a machine is on, busy or "
+         "idle. Omni-Compass's levers there are the ones the Kubernetes API already accepts (the Operator's Manual, 14.5): it closes to "
+         "new work and parks machines the cloud's own autoscaler made but the work does not need, so the autoscaler can remove them "
+         "and the idle hours stop being billed (b falls); it moves the autoscalers' targets so pods are ready ahead of the load, and it "
+         "gives a pod the processor its machine can spare, so less work waits and more is answered inside the line (w rises). It holds "
+         "no cloud credential and asks the cloud for no machine. It does not reorder data in memory, fill a chip's cache, change a "
+         "network or make silicon faster; and no cut of a cloud's hours has been measured yet (the one set read so far moved its "
+         "machine-hours up 1.21%, inside the noise).", "",
          "## The bill, line by line", "",
          "The bill is the sum of its line items, B = Σₖ cₖ, and each item's change counts by its share of native's bill, b = Σₖ sₖ·bₖ. "
          "Which items Omni-Compass can move, and which the receipts read so far have priced:", "",
