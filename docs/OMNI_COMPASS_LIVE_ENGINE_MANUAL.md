@@ -2152,7 +2152,8 @@ until then every cloud set ran at the tune-down on the machines alone, `OMNI_MAC
 autoscaler's cover, conveys the processor, and parks a machine the cloud already made, after its own trial, waking it on a
 breach; it asks the cloud for no machine itself. Every gauge is read against native by the one key, and the cloud's judged
 number is the work per dollar: the bill may rise where the work rises more (the founder's words of 31 October: "anybody will pay
-1% more for 10% more product"), a rise shown beside the work it bought, and a tune whose work per dollar falls against native is
+1% more for 10% more product", the aim the cloud is judged by, not a measurement: no cloud set read so far has counted its work), a
+rise shown beside the work it bought, and a tune whose work per dollar falls against native is
 the tune falling out wrong, fixed in our models. From 31 October, night, every cloud set carries the load whose work grows with the
 speed (the work meter), so each receipt reads the work per dollar; Azure's queue runs a tuning case first, once, to freeze the
 counted rates. Azure runs first and is the measure of the other two (Google Cloud, Amazon
