@@ -574,13 +574,26 @@ class BookTable(Table):
     row is then split inside it. Split at the row's end, the rest started lower on the same page under its header again
     (21 October: the header printed twice on one page, the problem and the solution's table, rows of eight lines)."""
     GAP = 4 * LEAD
+    TAIL = 3 * LEAD   # the part carried to the next page is never under three lines: a table's tail is never left alone on a page
+
+    def _tail(self, parts, availWidth):
+        """The height the second part carries below its repeated header."""
+        h2 = parts[1].wrap(availWidth, 10 ** 6)[1]
+        return h2 - (parts[1]._rowHeights[0] if self.repeatRows else 0)
 
     def split(self, availWidth, availHeight):
         parts = super().split(availWidth, availHeight)
         if len(parts) == 2 and self.splitInRow and availHeight - parts[0].wrap(availWidth, availHeight)[1] > self.GAP:
             inrow = self._splitRows(availHeight, doInRowSplit=True)
-            if len(inrow) == 2:
+            if len(inrow) == 2 and self._tail(inrow, availWidth) >= self.TAIL:
                 return inrow
+        h = availHeight
+        while len(parts) == 2 and self._tail(parts, availWidth) < self.TAIL:
+            rows = parts[0]._rowHeights
+            if len(rows) - (self.repeatRows or 0) <= 1:
+                return []                       # a single row would stand above the break: the whole table moves on
+            h = sum(rows[:-1]) - 0.01           # one row fewer above the break, so the tail carries more
+            parts = super().split(availWidth, h)
         return parts
 
 

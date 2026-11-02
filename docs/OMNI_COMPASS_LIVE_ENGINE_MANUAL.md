@@ -33,7 +33,7 @@ for it. The usual answer is to add: more machines, more power, more people watch
 controllers is not an answer most operators will take: they are proven, often certified, and the people on call know them.
 
 **What Omni-Compass does about it.** Omni-Compass is a supervisory governor. It sits on top of those native controllers and
-never replaces them. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
+never replaces them. It never touches the data: no request, packet, file or byte of the work passes through it. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
 reading; one wire out, the setting), takes a snapshot of every setting before its first write, and governs the whole stack as
 one body, the organism: every muscle driven as far as its own limit and never past it, and, on the engine that stands, never
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
@@ -119,7 +119,7 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, each place on its own, since a system runs in one or the other; an owner who runs work in both may weigh them only by its own spend, through G(total) (`results/TWO_BILLS.md`, `docs/WORK_PER_BILL.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
-- **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, Y = W / B, in each place native against Omni-Compass on native, G = Y(Omni-Compass on native) / Y(native) − 1 = (1 + w) / (1 + b) − 1 ≈ w − b, w the change in the work done and b the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (w > b, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`).
+- **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
 - **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
@@ -2122,7 +2122,7 @@ exactly 1 by the founder's order of 31 October; through the cloud the one number
 against Omni-Compass on native in the same cloud (`docs/WORK_PER_BILL.md`). A
 cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source orchestrators, managers and
 autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux racks, the data center, on-site
-or off-site). Omni-Compass can live in all three places: on the software end, on the cloud's wire, and on the bare metal. On the
+or off-site). Omni-Compass can be wired in at all three: at the software end, through the cloud's own Kubernetes, and on bare metal, where it also reaches the chip's own knobs through the card's published interface; in each it acts in one place, the software end, on top of the controllers already there. On the
 wire alone (every cloud run on the page so far: Omni-Compass at the tune-down on the machines only, the pods exactly native's,
 the cloud's rule until 31 October), all it could do was park machines the cloud's own autoscaler already made, after its own
 trial, so the most those runs can show is a small cut in the bill of the wire: the wire makes no benefit of its own. From 31
@@ -2132,9 +2132,8 @@ show the energy and throughput gained at the bare metal, because the provider's 
 back end, so the page claims that benefit only as the same mechanism measured on hardware the repository can meter (the page's
 section 4f), never as a measurement of the provider's machines.
 
-Appendix B, under 4d, gives the company's own expectation, not a measured result (24 October): about 3 to 4%
-from the front end, 2 to 3% from the back end, about 5% from the two ends together, and 1 to 2% from the wire alone, as a smaller
-bill or more work for the same bill. Under it a table reads the measured readings of each place, gauge by gauge (work, speed,
+Appendix B, under 4d, says that no place carries a figure before its runs read it (the founder's order of 2 November: no
+number on any page that no table carries). Under it a table reads the measured readings of each place, gauge by gauge (work, speed,
 machines, energy, the bill): the software end, the bare metal, the cloud's wire alone, on site with the two ends together, and
 through the cloud with all three, each cell its word and its number with its interval, composed by our own code (class S) from the layers measured in it
 (class L and P), and the cloud's wire, one run each, reading "not read";
@@ -3465,6 +3464,12 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | F | `#s-glossary` | Glossary and Index | 40 |
 | G | `#s-disclose` | Disclosures, Law and Contact | 41, 46 |
 | — | `#notice-end` | Closing legal notice | Notice and Disclaimer |
+| Data path | the route the work's own data takes (requests, packets, files, bytes); Omni-Compass is never in it: it reads the gauges (one wire in) and writes the settings native controllers already accept (one wire out) |
+| The seat | where Omni-Compass sits: in one place, the software end, on top of every controller the stack runs, as one body; it changes nothing in the silicon or the cloud's back end, and its effect is carried along the whole path the work travels |
+| The three layers | the chip, the cloud and the software, where the industry attacks the cost of computing; each layer's own answer moves its own terms of the one equation, and Omni-Compass's gain is read on top of it (`docs/INDUSTRY_LANDSCAPE.md`) |
+| Work for the bill, E | the work done over the bill, E = W / B; the gain G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 (`results/TWO_BILLS.md`) |
+| Four arms | A and B, native and Omni-Compass on native on bare metal; C and D, the same through the cloud; each read by its bill, the work done inside it and the work per dollar |
+| Alert minutes | whole minutes whose 95th percentile, failed requests counted over, was over the response line: the minutes an on-call page would be open, native beside Omni-Compass; the oversight the record measures, never people |
 
 ## Appendix B - Every Control
 

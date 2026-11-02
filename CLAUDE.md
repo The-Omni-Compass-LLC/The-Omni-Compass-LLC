@@ -461,6 +461,24 @@ the founder overrides one in the conversation.
   headline is the figure of record on its engine (the Omni index on the engine its tables stand on), its second reading named as
   such; a figure that traces to no three-run table (the website's 47.2% and 49.9%, which match only two single modelled muscles of
   the catalog) is never a headline.
+- **The industry landscape, the budget, the work and the website's remove list** (the founder's orders of 2 November: a page
+  "that positions Omni-Compass against the industry's three-layer attack"; "this hypothetical ... the floor license ... the 100
+  million dollar IT operational cost"; "we need to see if we're doing more work at the end of the day. That's all that matters
+  when we're governing"). On main from the live-engine session: `docs/INDUSTRY_LANDSCAPE.md` (the chip, the cloud and the software
+  side by side, the seat, the three benefits; no product benchmarked, no "only approach"), `docs/WORK_PER_BILL.md` (a $100 M budget
+  read by the equation, 2.9% of revenue the example's own figure, every number from a receipt or labelled an example),
+  `results/WORK_TODAY.md` (every test's work row, native against Omni-Compass on native) and `docs/WEBSITE_CLAIMS.md` (every
+  outside reading the record does not support, on the remove list with why). Nothing an outside AI wrote (a 2.9% "stack tax",
+  13.1% on bare metal, $16 M saved, 112 or 113 units, a "20% drain", "data admissibility") is written anywhere.
+- **The referee audit of 2 November** (the founder's words: "a referee audit, consensus, structural audit of pagination ... tone
+  ... literature ... documentation, editorial audit of every structure. Nothing better be garbage ... nothing better wrap outside
+  its cell"; `docs/AUDIT_2026-11-02.md`). Every headline figure a manual prints is written from its record, never typed: the
+  Owner's Manual's index, bottom line, three arms and routes by `tools/index_words.py`, checked by `verify.py`. No unmeasured
+  figure stands anywhere (the "company's expectation" of 24 October is struck from every page). The seat is said in the places'
+  own words on every page (one mechanism, in one place, the software end; it can be wired in at all three places and acts in
+  each from the software end). **Never in the data path** is declared on the front page, in the disclosures, in all three
+  manuals' openings, on the live page and in every AI instruction file. The one equation has one notation everywhere: E = W / B,
+  G = (1 + ΔW) / (1 + ΔB) − 1. A table's carried part is never under three lines (`BookTable`, `docs/book/build_book.py`).
 
 ## Orders of 1 November
 
