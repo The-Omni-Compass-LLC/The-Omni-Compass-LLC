@@ -442,12 +442,11 @@ def s_k8s_cluster():
 def s_cloud_machines():
     return wiring_schematic(
         senses=["p95, the probe's feed", "pending pods", "nodes in service", "the HPA's target and replicas"],
-        motors=["the HPA's target, floor and cap", "pods/resize: processor conveyed", "park: taint PreferNoSchedule", "wake: remove the taint", "pod-deletion-cost"],
+        motors=["the HPA's target, floor and cap", "pods/resize: processor conveyed", "park and wake: the taint PreferNoSchedule", "pod-deletion-cost"],
         adapter_lines=["--mode nodepool --law compass --dial max --sensed ns/svc --cap-deployments ns/svc",
-                       "--node-scale-cmd \"bash /app/scripts/kind_nodepool.sh {n}\"",
-                       "--min-nodes 2 --max-node-step 1 --interval 60 --floor-interval 5"],
+                       "--node-scale-cmd \"bash /app/scripts/kind_nodepool.sh {n}\" --min-nodes 2 --max-node-step 1"],
         native="the cloud's cluster autoscaler, which alone adds machines, and the service's HPA, its range and cap the operator's",
-        muscle="the work pool's machines (omni-role=work)", cover="cover: [2, the pools' autoscaler maxima]; one machine a decision; never asks the cloud for one",
+        muscle="the work pool's machines (omni-role=work)", cover="cover: [2, the pools' autoscaler maxima]; one machine a decision",
         meters=["the probe: real requests every 5 s → latency.csv", "the API: pods pending (every 5 s)", "the bill: every machine that exists, every 15 s"],
         notes_text=["The target moves inside the HPA's cover and the processor is conveyed in place; a machine is parked only after its",
                     "own trial (the response time holds within 2%) and woken on a breach: at the next decision (60 s), or at the next fast check (5 s).",
