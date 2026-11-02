@@ -72,6 +72,12 @@ TERMS = (
      "own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and "
      "the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof "
      "of no harm in its place; the benefit is shown where it lives and explained for the rest."),
+    ("Work for the bill",
+     "The one number every receipt is read for: the work done for each dollar of the bill, Y = W / B, in each place native "
+     "against Omni-Compass on native, G = Y(Omni-Compass on native) / Y(native) − 1 = (1 + w) / (1 + b) − 1 ≈ w − b, w the change "
+     "in the work done and b the change in the bill. More work for the bill is G > 0; a bill that rises is power given when the "
+     "work rises more. A system that runs in one place reads that place's G alone; an owner who runs work in both places reads "
+     "them together in dollars, G(total) = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`)."),
     ("One mechanism, in one place, felt along the whole path",
      "Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the "
      "chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the "

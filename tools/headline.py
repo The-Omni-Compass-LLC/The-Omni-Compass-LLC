@@ -312,6 +312,36 @@ def _switch(name: str) -> str:
 NOT_RENTED = "not yet run; every rental on the founder's word"
 
 
+def work_for_the_bill() -> list:
+    """The one number the receipts must prove (the founder's words of 2 November: "we get more work for the bill"), as
+    docs/WORK_PER_BILL.md writes it from results/WORK_PER_BILL.json (tools/work_per_bill.py): the equation, then each place's G."""
+    f = ROOT / "results" / "WORK_PER_BILL.json"
+    if not f.exists():
+        return []
+    d = json.loads(f.read_text(encoding="utf-8"))
+    pct = lambda x: ("±0.00%" if abs(x) < 5e-5 else f"{x * 100:+.2f}%".replace("-", "−"))
+    word = lambda g: "GAIN" if g >= 0.005 else "LOSS" if g <= -0.005 else "STEADY, under the floor"
+    L = ["**Work for the bill, the one number.** In each place p the receipt is read as the work done for each dollar of the bill, "
+         "Y(p, a) = W(p, a) / B(p, a), and the benefit is G(p) = Y(p, Omni-Compass on native) / Y(p, native) − 1 = (1 + w) / (1 + b) − 1 "
+         "≈ w − b, with w the change in the work done and b the change in the bill: more work for the bill when G > 0, a bill that rises "
+         "read as power given beside the work it bought. A system that runs in one place reads that place's G alone; an owner who runs "
+         "work in both reads them together in dollars, G(total) = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1, each place's work valued "
+         "at what native's own receipt charged for it. Omni-Compass makes the benefit at the software end; the "
+         "receipt counts it where the bill is paid. The equation, every term and where it lives: "
+         "[`docs/WORK_PER_BILL.md`](docs/WORK_PER_BILL.md) (`tools/work_per_bill.py`).", ""]
+    bm, cl, t = d["places"].get("bare_metal"), d["places"].get("cloud"), d.get("total") or {}
+    items = []
+    if bm:
+        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G " + ", ".join(f"run {r['run']} {pct(r['G'])} {word(r['G'])}" for r in bm["runs"])
+                     + f"; the three runs by the one key **{bm['reading']}** (their mean {pct(bm['mean_G'])})")
+    if cl:
+        items.append(f"through the cloud, {cl['engine']}: b {pct(cl['b'])}, the work not counted in that set, so G(cloud) not yet read"
+                     if cl.get("G") is None else f"through the cloud, {cl['engine']}: G {pct(cl['G'])}")
+    items.append("both places, for an owner who runs work in both: " + (pct(t["G"]) if t.get("G") is not None else "not yet read, the cloud's G not yet read"))
+    L += ["Today: " + "; ".join(items) + ".", ""]
+    return L
+
+
 def places_block(m) -> list:
     stands = m["stands"]
     tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
@@ -324,6 +354,7 @@ def places_block(m) -> list:
          "reading is the work for each dollar. The bill should hold; the benefit is the work inside it. The two places are never added "
          "together: a system runs in one or the other. The four arms, A and B on the chip, C and D in the cloud, are written once in "
          "[`results/TWO_BILLS.md`](results/TWO_BILLS.md) (`tools/two_bills.py`); these boxes read it.", ""]
+    L += work_for_the_bill()
     money = lambda x: f"${x:.4f}"
     if chip.get("per_run"):
         pr = chip["per_run"]
