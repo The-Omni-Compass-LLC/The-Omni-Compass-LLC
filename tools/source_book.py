@@ -125,7 +125,8 @@ def build(book):
 
     for _ in range(2):          # pass 1 finds each file's page; pass 2 prints them in the contents
         doc = Doc(str(out), pagesize=letter, leftMargin=0.6 * inch, rightMargin=0.6 * inch, topMargin=0.6 * inch, bottomMargin=0.6 * inch,
-                  title=cfg["title"], author=OWNER, subject=f"source code, version {ver}")
+                  title=cfg["title"], author=OWNER, subject=f"source code, version {ver}",
+                  initialFontName="Sans")   # the page's opening font: its own, never the base-14 Helvetica
         doc.addPageTemplates([PageTemplate(frames=[Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height)], onPageEnd=footer)])
         found = dict(pages); pages.clear(); state["file"] = ""
         doc.build(story(found))

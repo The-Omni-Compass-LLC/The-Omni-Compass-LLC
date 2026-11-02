@@ -310,7 +310,7 @@ def whole_organism() -> dict:
                     "native. It has layers, not catalog muscles."),
         "sources": [{"file": "DISCLOSURES.md", "quote": "composes each layer's own measured ratio, native against Omni-Compass on top of native, into one benefit for a whole stack"},
                     {"file": "tools/whole_system.py", "quote": "the cloud is the wire between the chip at one end and the software at the other"},
-                    {"file": "DISCLOSURES.md", "quote": "and the whole organism in its three places (the software end, the cloud's wire, the bare metal) composed above: ten organisms"}],
+                    {"file": "DISCLOSURES.md", "quote": "and the whole organism in its three pieces (the software end, the cloud's wire, the bare metal) composed above: ten organisms"}],
         "aka": ["the whole organism", "whole system"]}
 
 
@@ -728,9 +728,11 @@ TERMS = [
       [("omnicompass/master.py", "one switch in a human hand turns Omni-Compass's governing off everywhere at once")],
       aka=["kill switch", "master switch"]),
     T("the heartbeat", D, "The governor's full decision, one turn of its loop: read, decide, write, renew the lease. The main "
-      "engine takes it every 60 s (omni-v17 on); the controller takes any beat from 5 to 120 s (--interval), and the page offers "
-      "five, 15, 30, 60, 90 and 120 s, each shown beside native with what it buys and what it costs.",
-      [(CL, "the main engine takes its full decision every 60 s"),
+      "engine takes it at the factory beat for its place, every 10 s on site and every 60 s through a cloud, read from the "
+      "cluster's own nodes (omni-v24; 60 s everywhere from omni-v17 to omni-v23); the controller takes any beat from 5 to 120 s "
+      "(--interval), and the page offers seven, 10, 15, 20, 30, 60, 90 and 120 s, each shown beside native with what it buys and "
+      "what it costs.",
+      [("docs/OMNI_V24.md", "a decision every 10 s on site and every 60 s through a cloud"),
        (MAN, "One turn of the governor's loop: read, decide, write, renew the lease.")], aka=["heartbeat", "beat", "the heart"]),
     T("the fast checks", D, "The governor's checks between its beats, every 5 s at every beat: the scheduling floor, the pod "
       "reflex, and the conveyance every 15 s. Native's pod autoscaler checks every 15 s.",
@@ -975,7 +977,7 @@ TERMS = [
       [(PAGE_F, "the sides: --brass is Omni-Compass (blue), --steel is Native (orange; red is only LOSS and the alarm)"),
        (MAN, "| Orange | native |")], aka=["orange"]),
     T("the heartbeat's seven buttons", D, "On the page the governor's full decision comes at one of seven beats, 10, 15, 20, 30, 60, 90 or "
-      "120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (60 s on omni-v19). The page's "
+      "120 s; 10 s shows a beat below the 15 s standard. The factory's beat is the engine's own (on omni-v24 10 s on site and 60 s through a cloud). The page's "
       "live model steps every 15 s, so at 10 s two full decisions land in every other step, both on that step's reading.",
       [(PAGE_F, "the heartbeat (10, 15, 20, 30, 60, 90 or 120 s)"), (FP, "Δ ∈ {10, 15, 20, 30, 60, 90, 120} s")],
       aka=["heartbeat buttons", "the seven beats", "the six beats", "the five beats"]),
@@ -1034,6 +1036,26 @@ TERMS = [
       "writes through a two-way plug, reads each write back, audits, hands back gradually and stops at the kill switch, on top of "
       "every native controller.", [(FP, "| Supervisory governor | reads the whole body every beat, decides with one law across every muscle")],
       aka=["supervisory governor", "governor"]),
+    T("cascade: inner and outer loops", W, "How Omni-Compass sits on a stack, in the terms of control engineering: every native "
+      "controller (the card's firmware, the cloud's node autoscaler, the pod autoscaler, a database's pool) is an inner loop that "
+      "closes on its own signal at its own clock; Omni-Compass is the supervisory outer loop on top of them, reading the whole body "
+      "and moving the setpoints the inner loops already accept. The inner loops stay in charge of their own actuation and are never "
+      "removed.", [("docs/INDUSTRY_LANDSCAPE.md", "the native controllers stay the inner loops, in charge of their own actuation; Omni-Compass is the outer loop")],
+      aka=["cascade", "inner loop", "outer loop", "inner loops", "outer loops"]),
+    T("setpoint", W, "The value a native controller steers toward and already accepts from outside: the pod autoscaler's target, a "
+      "replica count, a pod's processor limit, a card's power limit, a pool's size. What Omni-Compass writes, one at a time, through "
+      "the two-way plug, read back after every write and restored at the end.",
+      [("docs/INDUSTRY_LANDSCAPE.md", "moves the **setpoints** those inner loops already accept")], aka=["setpoints"]),
+    T("control plane and data plane", W, "The data plane is the road the work travels (requests, packets, bytes, from the "
+      "application through the network to the chip); the control plane is where the controllers that set that road live. Omni-Compass "
+      "works in the control plane only: no request or byte of the workload passes through it, and it touches no data, cache, network or "
+      "silicon.", [("docs/INDUSTRY_LANDSCAPE.md", "It works in the **control plane** only, never the data plane")], aka=["control plane", "data plane"]),
+    T("the industry's three layers", W, "The chip, the cloud and the software, where the cost of computing is being attacked at "
+      "once; each layer's tools act on their own layer's actuator (the silicon and the card's controls; the machine fleet and its "
+      "price; placement, replicas and each service's setting). Omni-Compass acts on the setpoints of the native controllers in all "
+      "three, on top of them; no product of anyone else was benchmarked here (appendix C, docs/INDUSTRY_LANDSCAPE.md).",
+      [("docs/INDUSTRY_LANDSCAPE.md", "The cost of computing is being attacked in three layers at once: the chip, the cloud and the software")],
+      aka=["three layers", "the three layers"]),
     T("the dashboards", W, "The page's section 3i: the live benchmark engine in nine forms an operations team reads (a board of panels, a host "
       "map, a graph, an event stream, a cluster console, a one-line diagram, a wall of numbers, the cost by body part, and "
       "Omni-Compass's own two-way pipeline), by muscle, body part or the whole organism.",
@@ -1144,6 +1166,8 @@ def source_texts(path: str) -> list[str]:
         if path.endswith(".html"):
             raw = strip_glossary(raw)
         out = [_norm(raw)]
+        if path.endswith(".md"):                     # as it reads: Markdown's escaped brackets (a formula's u[req](k)) unescaped
+            out.append(_norm(raw.replace("\\[", "[").replace("\\]", "]")))
         if path.endswith(".html"):
             vis = html.unescape(raw)
             out += [_norm(re.sub(r"<[^>]+>", "", vis)), _norm(re.sub(r"<[^>]+>", " ", vis))]
@@ -1458,7 +1482,28 @@ def to_md(d: dict) -> str:
     if d["unindexed"]:
         L += ["", "Not printed in the page's own words at this build (defined above, not yet on the page): "
               + "; ".join(e["term"] for e in d["unindexed"]) + "."]
-    return "\n".join(stamp(L)) + "\n"
+    return md_brackets("\n".join(stamp(L)) + "\n")
+
+
+_FORMULA = re.compile(r"([\wΠθΦΣ])\[([^\]\s]{1,16})\]\(")
+
+
+def md_brackets(md: str) -> str:
+    """A formula's brackets escaped wherever a parenthesis follows them (u[req](k) = Π[C](...)), outside code: on GitHub
+    and in the printed books such a pair otherwise reads as a link and the formula prints garbled (1 November)."""
+    out, code = [], False
+    for ln in md.split("\n"):
+        if ln.startswith("```"):
+            code = not code
+        elif not code and not ln.startswith(("    ", "\t")):
+            parts = re.split(r"(`[^`]*`)", ln)
+            for i in range(0, len(parts), 2):
+                prev = None
+                while prev != parts[i]:
+                    prev, parts[i] = parts[i], _FORMULA.sub(lambda m: f"{m.group(1)}\\[{m.group(2)}\\](", parts[i])
+            ln = "".join(parts)
+        out.append(ln)
+    return "\n".join(out)
 
 
 def main(argv=None) -> int:
