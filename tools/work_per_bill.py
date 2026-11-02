@@ -178,6 +178,15 @@ def markdown(d: dict) -> str:
          "| The bill B | the card's rental for the window (the same hours in both arms) | the cloud's own bill at list price |",
          "| The work W | requests served in the window (the card's own receipt; no response line) | requests answered inside the line (the work meter) |",
          "| The second receipt | the card's own meter: energy for each request served | the machine-hours beside the bill |", "",
+         "**What a place sets and what Omni-Compass moves.** Write the work as W = C·(1 − Vₒ)·U·t: C the chip's raw capacity, Vₒ the "
+         "share a place's own software layer takes (0 on bare metal; a hypervisor's and an orchestrator's share in a cloud), U how much "
+         "of what is left becomes served work, t the time. Write the cloud's bill as B = R·H + E·Rₑ + S·Rₛ + I (the hourly rate × the "
+         "hours on, egress × its rate, storage × its rate, the metered extras) and bare metal's as B = M + L (the lease and the "
+         "owner's own staff). Inside one place C, Vₒ, t and every rate are the same in both arms, so they cancel: w = U(omni)/U(native) − 1, "
+         "and b moves only through the quantities Omni-Compass changes, the hours H in a cloud (E only as the work grows) and nothing of "
+         "M + L on bare metal (so b = 0 there and G = w). The place sets C, Vₒ and the prices; Omni-Compass moves U and, in a cloud, H. "
+         "Which place costs less for the same work (a cloud for a few hours a month, bare metal for a box busy all day) is the owner's "
+         "choice of place, not a benefit of Omni-Compass.", "",
          "## The bill, line by line", "",
          "The bill is the sum of its line items, B = Σₖ cₖ, and each item's change counts by its share of native's bill, b = Σₖ sₖ·bₖ. "
          "Which items Omni-Compass can move, and which the receipts read so far have priced:", "",
