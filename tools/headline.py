@@ -358,6 +358,16 @@ def places_block(m) -> list:
          "G(chip) = E(B) / E(A) − 1 and G(cloud) = E(D) / E(C) − 1, the places never added "
          "([`results/TWO_BILLS.md`](results/TWO_BILLS.md), \"The one equation\").", ""]
     L += work_for_the_bill()
+    wt = ROOT / "results" / "WORK_TODAY.json"
+    if wt.exists():
+        d = json.loads(wt.read_text(encoding="utf-8"))
+        c, t = d["counted"], d["tally"]
+        L += [f"**More work at the end of the day, test by test** (the founder's words of 2 November: \"that's all that matters when "
+              f"we're governing\"): more work in {t.get('GAIN', 0)} of the {len(c)} tests that counted their work, less work in "
+              f"{t.get('LOSS', 0) or 'none'}; the work held in {t.get('STEADY', 0)}, each offering its load at a fixed rate; in "
+              f"{t.get('the runs disagree', 0)} the runs disagree; {len(d['blind'])} tests sent a fixed load or did not count the work, "
+              "so they could not show more work. Every row and its record: [`results/WORK_TODAY.md`](results/WORK_TODAY.md) "
+              "(`tools/work_today.py`).", ""]
     money = lambda x: f"${x:.4f}"
     if chip.get("per_run"):
         pr = chip["per_run"]

@@ -23,6 +23,8 @@ On the engine that stands (omni-v24), Omni-Compass runs in one of two places: **
 
 Today: bare metal, omni-v23: G run 1 +1.46% GAIN, run 2 +0.73% GAIN, run 3 −0.69% LOSS; the three runs by the one key **the runs disagree** (their mean +0.50%); through the cloud, omni-v18 at the tune-down on the machines alone (97 paired repetitions): b +1.21%, inside the noise, the work not counted in that set, so G(cloud) not yet read; both places together: read only for an owner's own spend in each, once the cloud's G is read.
 
+**More work at the end of the day, test by test** (the founder's words of 2 November: "that's all that matters when we're governing"): more work in 4 of the 20 tests that counted their work, less work in none; the work held in 14, each offering its load at a fixed rate; in 2 the runs disagree; 9 tests sent a fixed load or did not count the work, so they could not show more work. Every row and its record: [`results/WORK_TODAY.md`](results/WORK_TODAY.md) (`tools/work_today.py`).
+
 | | Bare metal: the chip, its bill and its work | Through the cloud: the cloud's bill and its work |
 |---|---|---|
 | **Native** | **A**, the chip native: one A10 card on Lambda, omni-v23, an operator's power cap underneath, fully loaded: the bill $0.1194, $0.1189, $0.1189; the work done 2,616, 2,270, 2,255 requests served (runs 1, 2, 3) | **C**, the cloud native: Kubernetes on Azure's AKS, omni-v18, 97 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`): the bill $0.0563 a window at list price, 0.586 machine-hours; the work done not counted in that set |
