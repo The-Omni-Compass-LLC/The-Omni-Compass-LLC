@@ -323,11 +323,12 @@ def work_for_the_bill() -> list:
     word = lambda g: "GAIN" if g >= 0.005 else "LOSS" if g <= -0.005 else "STEADY, under the floor"
     L = ["**Work for the bill, the one number.** In each place p the receipt is read as the work done for each dollar of the bill, "
          "Y(p, a) = W(p, a) / B(p, a), and the benefit is G(p) = Y(p, Omni-Compass on native) / Y(p, native) − 1 = (1 + w) / (1 + b) − 1 "
-         "≈ w − b, with w the change in the work done and b the change in the bill: more work for the bill when G > 0, a bill that rises "
-         "read as power given beside the work it bought. A system that runs in one place reads that place's G alone; an owner who runs "
-         "work in both reads them together in dollars, G(total) = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1, each place's work valued "
-         "at what native's own receipt charged for it. Omni-Compass makes the benefit at the software end; the "
-         "receipt counts it where the bill is paid. The equation, every term and where it lives: "
+         "≈ w − b, with w the change in the work done and b the change in the bill. A bill that rises is power given; there is more work "
+         "for the bill when the work rises more than the bill (w > b, G > 0). Both arms pay the same prices, so a place's price level "
+         "(a cloud's markup over bare metal) cancels in its G. A system that runs in one place reads that place's G alone; an owner who "
+         "runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1, never by the "
+         "benchmark windows. The receipt counts the benefit where the bill is paid, and what Omni-Compass wrote in each run is named with "
+         "it (on the A10 the card's own power limit and clock ceiling; in the cloud set read so far the machines alone, at the tune-down). The equation, every term and where it lives: "
          "[`docs/WORK_PER_BILL.md`](docs/WORK_PER_BILL.md) (`tools/work_per_bill.py`).", ""]
     bm, cl, t = d["places"].get("bare_metal"), d["places"].get("cloud"), d.get("total") or {}
     items = []
@@ -335,9 +336,9 @@ def work_for_the_bill() -> list:
         items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G " + ", ".join(f"run {r['run']} {pct(r['G'])} {word(r['G'])}" for r in bm["runs"])
                      + f"; the three runs by the one key **{bm['reading']}** (their mean {pct(bm['mean_G'])})")
     if cl:
-        items.append(f"through the cloud, {cl['engine']}: b {pct(cl['b'])}, the work not counted in that set, so G(cloud) not yet read"
+        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): b {pct(cl['b'])}, inside the noise, the work not counted in that set, so G(cloud) not yet read"
                      if cl.get("G") is None else f"through the cloud, {cl['engine']}: G {pct(cl['G'])}")
-    items.append("both places, for an owner who runs work in both: " + (pct(t["G"]) if t.get("G") is not None else "not yet read, the cloud's G not yet read"))
+    items.append("both places together: read only for an owner's own spend in each, once the cloud's G is read")
     L += ["Today: " + "; ".join(items) + ".", ""]
     return L
 

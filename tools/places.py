@@ -57,8 +57,9 @@ TERMS = (
      "test, and it is not claimed."),
     ("The four arms",
      "Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through "
-     "the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, the "
-     "two places never added together, since a system runs in one or the other (`results/TWO_BILLS.md`). The software end's "
+     "the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, "
+     "each place on its own, since a system runs in one or the other; an owner who runs work in both may weigh them only by its "
+     "own spend, through G(total) (`results/TWO_BILLS.md`, `docs/WORK_PER_BILL.md`). The software end's "
      "tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the "
      "layers composed): they never add together, and none of them is either place's bill."),
     ("Hold",
@@ -75,9 +76,10 @@ TERMS = (
     ("Work for the bill",
      "The one number every receipt is read for: the work done for each dollar of the bill, Y = W / B, in each place native "
      "against Omni-Compass on native, G = Y(Omni-Compass on native) / Y(native) − 1 = (1 + w) / (1 + b) − 1 ≈ w − b, w the change "
-     "in the work done and b the change in the bill. More work for the bill is G > 0; a bill that rises is power given when the "
-     "work rises more. A system that runs in one place reads that place's G alone; an owner who runs work in both places reads "
-     "them together in dollars, G(total) = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`)."),
+     "in the work done and b the change in the bill. A bill that rises is power given; there is more work for "
+     "the bill when the work rises more than the bill (w > b, G > 0). Both arms pay the same prices, so a place's price level "
+     "cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by "
+     "its own native spend S(p), G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1 (`docs/WORK_PER_BILL.md`)."),
     ("One mechanism, in one place, felt along the whole path",
      "Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the "
      "chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the "

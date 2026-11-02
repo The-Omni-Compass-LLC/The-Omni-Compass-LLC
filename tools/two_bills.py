@@ -109,7 +109,7 @@ def chip() -> dict:
         out = []
         for r in runs:
             n, o = r["native"][key], r["omni"][key]
-            out.append({"native": n, "omni": o, "diff": o - n, "significant": abs(o - n) > 1e-12 * max(1.0, abs(n))})
+            out.append({"native": n, "omni": o, "diff": o - n})   # no interval is carried for these, so none is claimed beyond the noise
         return out
     rows_out = {
         "bill ($, the rental for the arm's window)": (paired("bill"), SPENT),
@@ -132,7 +132,7 @@ def cloud() -> dict:
     bill = p["compute bill at list price ($)"]
     mh = p["machines billed, machine-hours"]
     work_keys = [k for k in t["means"]["native"] if "requests served" in k or "work done" in k]
-    return {"engine": CLOUD_ENGINE, "page": CLOUD_PAGE, "repetitions": len(t["repetitions"]["native"]),
+    return {"engine": CLOUD_ENGINE, "page": CLOUD_PAGE, "repetitions": len(set(t["repetitions"]["native"]) & set(t["repetitions"]["compass"])),   # the pairs: present in both arms
             "bill": bill, "machine_hours": mh, "work_key": work_keys[0] if work_keys else None,
             "work": {k: (t["means"]["native"][k], t["means"]["compass"][k]) for k in work_keys}}
 

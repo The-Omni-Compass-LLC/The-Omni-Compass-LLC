@@ -2121,7 +2121,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | through the cloud | term | 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | the tower | term | 1 (#s-health); 2b (#s-answer); B (#s-guide) |
 | the traffic signal | term | 0 (#s-wall); 2a (#s-bottom); B (#s-guide) |
-| the tune-down | term | 3c (#s-desk); 3e (#s-decision); 5b (#s-cpp); 5h (#s-math); B (#s-guide); G (#s-disclose) |
+| the tune-down | term | 2b (#s-answer); 3c (#s-desk); 3e (#s-decision); 5b (#s-cpp); 5h (#s-math); B (#s-guide); G (#s-disclose) |
 | the twin | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
 | the two antagonist forces | term | 3a (#s-engines); 3e (#s-decision) |
 | the two-way plug | term | 3a (#s-engines); 3e (#s-decision); 3i (#s-dash); 4a (#s-ops); 4c (#s-live); 5a (#s-proof); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |

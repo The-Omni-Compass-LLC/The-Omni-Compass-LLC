@@ -15,21 +15,25 @@ The equation, one line per place and one for the two together, every term read f
     G(p)      = Y(p, omni) / Y(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0
               = (1 + w(p)) / (1 + b(p)) − 1             w = the change in the work done, b = the change in the bill
               ≈ w(p) − b(p)                             for small changes (exactly: ln(1 + G) = ln(1 + w) − ln(1 + b))
-    G(total)  = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1
-                                                        for an owner who runs work in both places: each place's work valued
-                                                        at what native's own receipt charged for it, so the places add in
-                                                        dollars (a system that runs in one place reads that place's G alone)
+    G(total)  = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1
+                                                        for an owner who runs work in both places, S(p) the owner's own native
+                                                        spend in place p over one period (never the benchmark windows, whose
+                                                        lengths are arbitrary); a system that runs in one place reads that
+                                                        place's G alone
 
-    W  the work done inside the line, as the place's own receipt counts it (requests served)
-    B  the bill: on bare metal the rental of the card for the arm's window (hours × the hourly price); through the cloud the
-       cloud's own bill at list price (machine-hours × the price); B = Σₖ cₖ over the bill's components, b = Σₖ sₖ·bₖ with
-       sₖ each component's share of native's bill
+    W  the work done, as each place's own receipt counts it: on the chip the requests served within the arm's fixed window (the
+       card's receipt counts no response line); through the cloud the requests answered inside the response line (the work meter)
+    B  the bill: on bare metal the card's metered window at the launch price (seconds × $1.29 an hour, tools/two_bills.py, not a
+       billing statement); through the cloud the cloud's own bill at list price (machine-hours × the price); B = Σₖ cₖ over the
+       bill's components, b = Σₖ sₖ·bₖ with sₖ each component's share of native's bill
 
 Each run is read on its own (G of run 1, 2 and 3, each with its own word) and the three together by the one key
 (tools/readings.py: the mean of the runs' changes from 0.5% up reads GAIN or LOSS; runs that move 0.5% or more in opposite
 directions read "the runs disagree"). A place whose receipt counts no work, or that is not yet run, has no G and says so;
-G(total) is read only when every place has its G. Omni-Compass acts at the software end alone (where the benefit is made);
-the bill is read where it is paid (the chip's rental and meter, the cloud's own bill).
+G(total) is read only for an owner's stated spend and only when every place's G is read on the engine that stands. The bill is
+read where it is paid (the chip's rental and meter, the cloud's own bill); what Omni-Compass wrote in each receipt's run is named
+beside it (on the A10 the card's own power limit and clock ceiling under the operator's cap; in the cloud set read so far the
+machines alone, at the tune-down).
 
     python3 tools/work_per_bill.py           write results/WORK_PER_BILL.json and docs/WORK_PER_BILL.md
     python3 tools/work_per_bill.py --check   exit 1 when they are not what the receipts give
@@ -58,7 +62,7 @@ def _pct(x: float) -> str:
 
 
 def run_g(native: dict, omni: dict) -> dict:
-    """One run: w, b, G by the identity, and G read straight off the receipt's work per dollar, which must agree."""
+    """One run: w, b and G = (1 + w)/(1 + b) − 1 (the ratio of the two arms' work per dollar, the same arithmetic, checked)."""
     w = omni["work"] / native["work"] - 1
     b = omni["bill"] / native["bill"] - 1
     g = (1 + w) / (1 + b) - 1
@@ -79,8 +83,8 @@ def places() -> dict:
         g = run_g(pr["native"], pr["omni"])
         runs.append({"run": i, "id": (chip.get("runs") or [None] * 9)[i - 1], **g})
     if runs:
-        rd = three_run_reading([{"native": r["Y_native"], "omni": r["Y_omni"], "diff": r["Y_omni"] - r["Y_native"], "significant": True}
-                                for r in runs], HIGHER)
+        # no interval is carried for a run's work per dollar, so no run is counted beyond the noise (the key then reads by the mean)
+        rd = three_run_reading([{"native": r["Y_native"], "omni": r["Y_omni"], "diff": r["Y_omni"] - r["Y_native"]} for r in runs], HIGHER)
         out["bare_metal"] = {"label": "Bare metal: the chip's own bill (the card's rental) and the work it served", "engine": chip.get("engine"),
                              "title": chip.get("title"), "source": "results/TWO_BILLS.json chip (results/gpu/V23_A10_CAP_FULL_ABC.json)",
                              "runs": runs, "mean_G": sum(r["G"] for r in runs) / len(runs), "reading": (rd if isinstance(rd, str) else rd[0] if isinstance(rd, (list, tuple)) else str(rd)).replace("**", ""),
@@ -90,6 +94,8 @@ def places() -> dict:
         bn, bo = (cl.get("bill") or {}).get("native"), (cl.get("bill") or {}).get("omni")
         has_work = bool(cl.get("work_key")) and bool(cl.get("work"))
         out["cloud"] = {"label": "Through the cloud: the cloud's own bill and the work answered inside the line", "engine": cl.get("engine"),
+                        "conditions": cl.get("conditions") or ("Omni-Compass on top of native at the tune-down (dial save) on the machines alone "
+                                                               "(OMNI_MACHINES_ONLY=1), the rule of 14 October struck on 31 October"),
                         "source": f"results/TWO_BILLS.json cloud ({cl.get('page')})",
                         "b": (bo / bn - 1) if bn and bo else None, "bill": [bn, bo], "repetitions": cl.get("repetitions"),
                         "w": None, "G": None,
@@ -99,27 +105,34 @@ def places() -> dict:
                                  "meter (scripts/azure_queue.txt), on the engine that stands")}
     for o in tb.get("organisms") or []:
         key = "organisms_" + ("chip" if o.get("where") == "chip" else "cloud") + "_" + (o.get("table") or o.get("label") or "x").split("/")[-1].split(".")[0]
-        out[key] = {"label": o.get("label"), "status": o.get("status"), "runs": o.get("runs"), "table": o.get("table"), "G": None}
+        out[key] = {"label": o.get("label"), "status": o.get("status"), "runs": o.get("runs"), "table": o.get("table"), "G": None,
+                    "reader": "tools/two_bills.py reads its card rows (requests served, energy) as the A10's" if o.get("where") == "chip"
+                              else "no reader yet writes its W and B: tools/two_bills.py reads card rows only"}
     return out
 
 
+def total_for(spend: dict, wb: dict) -> float:
+    """G(total) for an owner's own native spend S(p) in each place over one period: Σ S(p)(1 + w(p)) / Σ S(p)(1 + b(p)) − 1.
+    It equals the change in total work per dollar with each place's work valued at native's own price per unit of work there,
+    and it always lies between the places' own G (it is their mean weighted by Omni-Compass's spend)."""
+    num = sum(spend[p] * (1 + wb[p][0]) for p in spend)
+    den = sum(spend[p] * (1 + wb[p][1]) for p in spend)
+    return num / den - 1
+
+
 def total(pl: dict) -> dict:
-    """G(total), the two places in dollars: read only when both places have their G."""
-    bm, cl = pl.get("bare_metal"), pl.get("cloud")
-    if not bm or not cl or cl.get("G") is None:
-        return {"G": None, "status": "not yet read: the cloud's receipt has no work counted yet, so its G(cloud) is not read"}
-    rows = []
-    for r in bm["runs"]:
-        num = r["B"][0] * (1 + r["w"]) + cl["bill"][0] * (1 + cl["w"])
-        den = r["B"][0] * (1 + r["b"]) + cl["bill"][0] * (1 + cl["b"])
-        rows.append(num / den - 1)
-    return {"G": sum(rows) / len(rows), "runs": rows, "status": "read"}
+    """G(total) is never read from the benchmark receipts (their windows' lengths are arbitrary): it is read for an owner's own
+    spend in each place (total_for), once every place's G is read on the engine that stands."""
+    cl = pl.get("cloud") or {}
+    why = ("read only for an owner's stated native spend in each place, never from the benchmark windows; and only once every "
+           "place's G is read on the engine that stands (the cloud's work is not yet counted)")
+    return {"G": None, "status": why if cl.get("G") is None else "read only for an owner's stated native spend in each place"}
 
 
 def build() -> dict:
     pl = places()
     return {"equation": {"Y": "Y(p, a) = W(p, a) / B(p, a)", "G": "G(p) = Y(p, omni) / Y(p, native) − 1 = (1 + w(p)) / (1 + b(p)) − 1 ≈ w(p) − b(p)",
-                         "total": "G(total) = Σₚ Bₙ(p)(1 + w(p)) / Σₚ Bₙ(p)(1 + b(p)) − 1",
+                         "total": "G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1, S(p) the owner's native spend in place p",
                          "bill": "B = Σₖ cₖ, b = Σₖ sₖ·bₖ, sₖ = cₖ(native) / B(native)"},
             "places": pl, "total": total(pl), "source": "results/TWO_BILLS.json (tools/two_bills.py)"}
 
@@ -135,23 +148,35 @@ def markdown(d: dict) -> str:
          "    G(p)     = Y(p, omni) / Y(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0",
          "             = (1 + w(p)) / (1 + b(p)) − 1             w: the change in the work done; b: the change in the bill",
          "             ≈ w(p) − b(p)                             for small changes; exactly ln(1 + G) = ln(1 + w) − ln(1 + b)",
-         "    G(total) = Σₚ Bₙ(p)·(1 + w(p)) / Σₚ Bₙ(p)·(1 + b(p)) − 1",
-         "                                                       for an owner who runs work in both places, each place's work",
-         "                                                       valued at what native's own receipt charged for it, so the places",
-         "                                                       add in dollars; a system in one place reads that place's G alone",
+         "    G(total) = Σₚ S(p)·(1 + w(p)) / Σₚ S(p)·(1 + b(p)) − 1",
+         "                                                       for an owner who runs work in both places: S(p) the owner's own",
+         "                                                       native spend in place p over one period, never the benchmark",
+         "                                                       windows; a system in one place reads that place's G alone",
          "    B        = Σₖ cₖ,   b = Σₖ sₖ·bₖ,   sₖ = cₖ(native) / B(native)   the bill as the sum of its components", "",
-         "W is the work done inside the line, as the place's own receipt counts it (requests served). B is the bill: on bare metal "
-         "the card's rental for the arm's window (hours × the hourly price, so the same window bills the same: b ≈ 0 and G ≈ w); "
-         "through the cloud the cloud's own bill at list price (machine-hours × the price: a bill that rises is power given, and "
-         "G > 0 exactly when the work rises more than the bill, w > b).", "",
+         "W is the work done as each place's own receipt counts it: on the chip the requests served within the arm's fixed window "
+         "(the card's receipt counts no response line); through the cloud the requests answered inside the response line (the work "
+         "meter). B is the bill: on bare metal the card's metered window at Lambda's launch price, $1.29 an hour (seconds × the price, "
+         "computed by `tools/two_bills.py`, not a billing statement; the same window bills nearly the same, so b ≈ 0 and G ≈ w); through "
+         "the cloud the cloud's own bill at list price (machine-hours × the price). A bill that rises is power given; there is more "
+         "work for the bill when the work rises more than the bill (w > b, G > 0). G(total) is the places' own G weighted by the "
+         "owner's spend, so it always lies between them.", "",
+         "**Why the places' prices do not move G.** A cloud usually bills far more than bare metal for the same work on the same "
+         "silicon (its margin, the software it wraps around the machine, egress and storage fees, paying only for the hours used). "
+         "Inside one place both arms pay the same prices, so the price level cancels in G(p): with the bill B = Σₖ πₖ·qₖ (prices πₖ, "
+         "quantities qₖ), b = Σₖ sₖ·(qₖ(omni)/qₖ(native) − 1) depends on the quantities alone. A component Omni-Compass does not move "
+         "(egress, storage, a managed service's fee) has bₖ = 0 and only dilutes b toward 0; the cloud receipt read so far prices the "
+         "machine-hours alone, at list price, so its b is the compute bill's. The places' price levels enter only G(total), through "
+         "the owner's spend S(p), and the owner's choice of place, which Omni-Compass does not make.", "",
          "## Where the benefit lives and where it is counted", "",
          "| | Bare metal (arms A and B) | Through the cloud (arms C and D) |", "|---|---|---|",
-         "| Where Omni-Compass acts | the software end: the service on the card (its power cap, its queue) | the software end: the "
-         "cluster's pods, their room and the cloud's own autoscaler under it |",
-         "| Where the benefit is made | the work the card serves inside the line, faster | the work answered inside the line, on the "
-         "machines the cloud bills |",
+         "| What Omni-Compass writes in the receipts read so far | the card's own power limit and clock ceiling, under the operator's "
+         "cap, through the card's published interface (the service's queue is its signal, not a knob it writes) | the machines alone, at "
+         "the tune-down (the omni-v18 set); the sets at the max add the cluster's pods and their room, with the cloud's own autoscaler "
+         "under them |",
+         "| Where the benefit shows | the requests the card completes in the same metered window | the requests answered inside the "
+         "line, on the machines the cloud bills |",
          "| The bill B | the card's rental for the window (the same hours in both arms) | the cloud's own bill at list price |",
-         "| The work W | requests served (the card's own receipt) | requests answered inside the line (the work meter) |",
+         "| The work W | requests served in the window (the card's own receipt; no response line) | requests answered inside the line (the work meter) |",
          "| The second receipt | the card's own meter: energy for each request served | the machine-hours beside the bill |", "",
          "## What the receipts say today", ""]
     bm = pl.get("bare_metal")
@@ -163,21 +188,22 @@ def markdown(d: dict) -> str:
             word = "GAIN" if r["G"] >= 0.005 else "LOSS" if r["G"] <= -0.005 else "STEADY, under the floor"
             L.append(f"| run {r['run']} | {r['W'][0]:,.1f} → {r['W'][1]:,.1f} requests | {_pct(r['w'])} | ${r['B'][0]:.4f} → ${r['B'][1]:.4f} | "
                      f"{_pct(r['b'])} | {r['Y_native']:,.0f} → {r['Y_omni']:,.0f} | {_pct(r['G'])} {word} |")
-        L += ["", f"The three runs together, by the one key: **{bm['reading']}** (the mean of the three G {_pct(bm['mean_G'])}). Each run's G "
-              "is read two ways that agree to the last digit: from the receipt's own work per dollar, and from (1 + w)/(1 + b) − 1.", ""]
+        L += ["", f"The three runs together, by the one key: **{bm['reading']}** (the mean of the three G {_pct(bm['mean_G'])}). No interval "
+              "is carried for a run's work per dollar, so no run is counted beyond the noise; each run's word is its own size against the "
+              "0.5% floor.", ""]
     cl = pl.get("cloud")
     if cl:
-        L += [f"**Through the cloud** ({cl['engine']}, {cl['repetitions']} paired repetitions; `{cl['source']}`): the bill "
+        L += [f"**Through the cloud** ({cl['engine']}, {cl['repetitions']} paired repetitions, {cl['conditions']}; `{cl['source']}`): the bill "
               f"${cl['bill'][0]:.4f} → ${cl['bill'][1]:.4f} a window, b {_pct(cl['b'])}, inside the noise; the work done "
               f"was not counted, so G(cloud) is not read: {cl['note']}.", ""]
     rest = [v for k, v in pl.items() if k.startswith("organisms_")]
     if rest:
-        L += ["**Not yet read** (their receipts will carry W and B, and G is read the same way):", ""]
+        L += ["**Not yet read:**", ""]
         for v in rest:
-            L.append(f"- {v['label']}: {v['status']}" + (f" ({v['runs']})" if v.get("runs") else ""))
+            L.append(f"- {v['label']}: {v['status']}" + (f" ({v['runs']})" if v.get("runs") else "") + f"; {v['reader']}")
         L.append("")
     t = d["total"]
-    L += ["**Both places, for an owner who runs work in both**, G(total): " + (f"{_pct(t['G'])}" if t["G"] is not None else t["status"]) + ".", "",
+    L += ["**Both places, for an owner who runs work in both**, G(total): " + t["status"] + ".", "",
           "## Is it proven", "",
           "Not yet, said plainly. On bare metal two runs of three gave more work for the bill and the third gave less, so the "
           "three runs disagree; the card's energy for each request served fell in all three (GAIN in all three of our runs). Through "

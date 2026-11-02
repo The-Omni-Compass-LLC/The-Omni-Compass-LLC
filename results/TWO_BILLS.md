@@ -26,7 +26,7 @@ From `results/gpu/V23_A10_CAP_FULL_ABC.md` (runs 41243352339, 41243355485, 41243
 | 3 | A, native | 331.9 | 0.1189 | 2,255 | 18,963.8 |
 | 3 | B, Omni-Compass on native | 331.8 | 0.1189 | 2,239 | 18,832.8 |
 
-## The cloud: C against D (Kubernetes on Azure's AKS, omni-v18, one set of 98 paired repetitions)
+## The cloud: C against D (Kubernetes on Azure's AKS, omni-v18, one set of 97 paired repetitions)
 
 From `results/live/AKS_STEADY_100_OMNI_V18.md`, the newest cloud set with a metered bill. The engine that stands has not yet run in the cloud: its set starts when Azure's current long set ends, and this row is then read again on it.
 
