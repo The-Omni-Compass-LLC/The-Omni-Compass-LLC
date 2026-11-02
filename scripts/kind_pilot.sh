@@ -19,14 +19,15 @@ kubectl run load-generator --image=busybox:1.36 --restart=Never -- /bin/sh -c \
   "while true; do for i in \$(seq 1 20); do wget -q -O- http://php-apache >/dev/null; done; sleep \$((RANDOM % 3)); done"
 for i in $(seq 1 30); do kubectl top nodes >/dev/null 2>&1 && break; sleep 10; done
 
+IV="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"   # the factory beat for this cluster's place (omni-v24)
 echo "== Phase A: baseline (HPA alone, Omni observing)"
-python -m omni_controller.controller --mode observe --interval 60 --iterations $((PHASE_S / 60)) \
+python -m omni_controller.controller --mode observe --interval "$IV" --iterations $((PHASE_S / IV)) \
   --audit "$OUT_DIR/audit_observe.jsonl" --kill-file "$OUT_DIR/kill" &
 OUT="$OUT_DIR/baseline.csv" INTERVAL=15 DURATION="$PHASE_S" bash fleet/capture/kube_capture.sh
 wait
 
 echo "== Phase B: Omni target mode (writes the HPA target)"
-python -m omni_controller.controller --mode target --interval 60 --iterations $((PHASE_S / 60)) \
+python -m omni_controller.controller --mode target --interval "$IV" --iterations $((PHASE_S / IV)) \
   --audit "$OUT_DIR/audit_target.jsonl" --kill-file "$OUT_DIR/kill" &
 OUT="$OUT_DIR/omni.csv" INTERVAL=15 DURATION="$PHASE_S" bash fleet/capture/kube_capture.sh
 wait

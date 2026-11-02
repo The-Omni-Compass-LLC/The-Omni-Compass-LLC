@@ -762,9 +762,12 @@ def capacity_table(root, cols):
 
 
 def engine_default_s():
-    """The engine's own default decision period (omni_controller/controller.py, --interval: 60 s since omni-v17)."""
+    """The beat of a run that wrote none beside its files: every run since omni-v16 writes it (omni_interval.txt), and from
+    omni-v24 the engine's own default is the factory beat for its place, read from the cluster (no fixed number), so a run
+    without the file is older than omni-v16 and decided every 60 s, the default it ran at."""
     from omni_controller.controller import parser
-    return float(parser().get_default("interval"))
+    d = parser().get_default("interval")
+    return float(d) if d is not None else 60.0
 
 
 def main(root):

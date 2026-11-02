@@ -1399,6 +1399,19 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
   var meta = document.querySelector('meta[name="omni-live-source"]');
   if (!meta || !window.fetch || !window.JSON) return;
   var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0;
+  function fresh(html) {
+    /* the newest build opens as a document of its own, in a fresh script realm; the few links beside the page are made
+       absolute, so they still reach the repository's files */
+    html = html.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+    location.replace(URL.createObjectURL(new Blob([html], { type: "text/html" })));
+  }
+  if (typeof MON !== "undefined" && window.Blob && window.URL && URL.createObjectURL) {
+    /* this build was written over an older copy in place (the self-update of 1 November, before this one): the older
+       page's script is still loaded, so this build's own would stop on its declarations; it opens itself fresh instead */
+    fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (html) { if (html) fresh(html); }).catch(function () {});
+    return;
+  }
   function own() {
     var el = document.getElementById("build");
     try { return (JSON.parse(el.textContent) || {}).built_at || ""; } catch (e) { return ""; }
@@ -1420,7 +1433,9 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
         if (!v || !v.built_at || !mine || v.built_at <= mine) return;
         return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
           .then(function (html) {
-            if (html && html.indexOf('id="omniSelfUpdate"') > 0) { document.open(); document.write(html); document.close(); }
+            /* written over this one in place, the newer build's script met this page's own declarations again and
+               stopped (1 November): it opens as a document of its own */
+            if (html && html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
             else { note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); }
           });
       })

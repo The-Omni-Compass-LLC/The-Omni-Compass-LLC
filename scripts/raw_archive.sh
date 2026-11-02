@@ -15,6 +15,7 @@
 #   scripts/raw_archive.sh open [PATTERN...]   results/live/raw/ as a worktree of the branch with only these folders
 #                                              checked out (run-<id>/, or a pattern such as /*/redis-*/); none: nothing
 #   scripts/raw_archive.sh has DIR             exit 0 when the branch holds DIR (run-<id>), from trees only
+#   scripts/raw_archive.sh join DIR            put back every file a save split into parts (open does it for what it opens)
 #   scripts/raw_archive.sh save DIR MESSAGE    commit results/live/raw/DIR to the branch and push it (built from trees on
 #                                              the branch's newest tip, so a branch that moved is never a conflict)
 #   scripts/raw_archive.sh sweep               move every folder main's HEAD still carries under results/live/raw/ to the
@@ -63,6 +64,8 @@ open() {
   fi
   if [ "$#" -gt 0 ]; then
     git -C "$W" sparse-checkout add "$@"
+    local d
+    for d in "$W"/*/; do [ -d "$d" ] && join "$(basename "$d")"; done
   fi
 }
 
@@ -95,9 +98,43 @@ push_entry() {   # NAME TREE MESSAGE [DROP]
   return 1
 }
 
+# a file GitHub accepts: under its limit of 100 MB a file (2 November: the eight-card runs' result tarballs, 393 MB and 195 MB,
+# were refused at every attempt of every pass, so their runs never reached the branch). A bigger file is kept as parts,
+# <file>.part-000, -001 ..., each under the cap, beside <file>.parts, which names the whole file's SHA-256 and its parts in
+# order; join puts the file back and checks it against that SHA-256, so the run's own SHA256SUMS lists read as written
+FILE_BYTES="${RAW_FILE_BYTES:-95000000}"
+
+split_big() {   # DIR: every file over the cap split into parts, its manifest written, the whole file removed
+  local dir="$1" f
+  while IFS= read -r -d '' f; do
+    case "$f" in *.part-[0-9][0-9][0-9]|*.parts) continue ;; esac
+    split -b "$FILE_BYTES" -d -a 3 "$f" "$f.part-"
+    { sha256sum "$f" | cut -d' ' -f1; (cd "$(dirname "$f")" && ls -1 "$(basename "$f").part-"[0-9][0-9][0-9]); } > "$f.parts"
+    rm -f "$f"
+    echo "raw archive: ${f#"$W"/} kept as $(($(wc -l < "$f.parts") - 1)) parts (over GitHub's 100 MB a file)"
+  done < <(find "$W/$dir" -type f -size +"$FILE_BYTES"c -print0)
+}
+
+join() {   # DIR: every file kept as parts put back whole and checked; the parts stay where they are
+  local dir="$1" m f want got
+  [ -d "$W/$dir" ] || return 0
+  while IFS= read -r -d '' m; do
+    f="${m%.parts}"
+    [ -f "$f" ] && continue
+    want=$(head -n 1 "$m")
+    tail -n +2 "$m" | (cd "$(dirname "$m")" && while IFS= read -r part; do cat "$part"; done) > "$f.joining"
+    got=$(sha256sum "$f.joining" | cut -d' ' -f1)
+    if [ "$got" != "$want" ]; then
+      rm -f "$f.joining"; echo "raw archive: ${f#"$W"/}: its parts do not make the file the manifest names" >&2; return 1
+    fi
+    mv "$f.joining" "$f"
+  done < <(find "$W/$dir" -type f -name '*.parts' -print0)
+}
+
 save() {
   local dir="$1" msg="$2" idx dir_tree bytes n part tree f
   [ -d "$W/$dir" ] || { echo "raw archive: $W/$dir does not exist" >&2; return 1; }
+  split_big "$dir"
   # the folder's own tree, from a private index over results/live/raw/ (main's index and sparse rules untouched)
   idx=$(mktemp); rm -f "$idx"
   GIT_INDEX_FILE="$idx" git -c core.sparseCheckout=false --work-tree="$W" add -f -- "$dir"
@@ -176,6 +213,7 @@ case "$cmd" in
   fetch) fetch ;;
   open) open "$@" ;;
   has) has "$1" ;;
+  join) join "$1" ;;
   save) save "$1" "$2" ;;
   sweep) sweep ;;
   *) sed -n '7,25p' "$0"; exit 2 ;;

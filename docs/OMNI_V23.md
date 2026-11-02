@@ -2,7 +2,8 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Omni v23 (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files) is omni-v22 with one guard in the Kubernetes governor's pod muscle of its
+Omni v23 (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files) stood on main from 31 October, evening, to 1 November, night,
+when omni-v24 (`docs/OMNI_V24.md`, the factory beat for its place) landed on it; its runs stand as its own record. It is omni-v22 with one guard in the Kubernetes governor's pod muscle of its
 own (`omni_controller/controller.py`, `_own_pods` and `_own_refused`), on the founder's order of 31 October, given on reading that
 the arm by itself had read like native:
 
