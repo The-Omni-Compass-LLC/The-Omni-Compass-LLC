@@ -113,6 +113,23 @@ pdfmetrics.registerFont(RLFont("Sym", DJV + "DejaVuSans.ttf"))
 pdfmetrics.registerFontFamily("Serif", normal="Serif", bold="Serif-Bold", italic="Serif-Italic", boldItalic="Serif-BoldItalic")
 pdfmetrics.registerFontFamily("Sans", normal="Sans", bold="Sans-Bold", italic="Sans", boldItalic="Sans-Bold")
 pdfmetrics.registerFontFamily("Mono", normal="Mono", bold="Mono-Bold", italic="Mono", boldItalic="Mono-Bold")
+# every face in the book is one of the four registered above (the audit of 2 November): the page's opening font, a figure
+# string that names no face of its own, and an SVG family the figure reader cannot find take the book's own faces, never the
+# PDF's base-14 Helvetica or Times-Roman
+from reportlab import rl_config as _rl_config                      # noqa: E402
+import reportlab.graphics.shapes as _shapes                       # noqa: E402
+import reportlab.platypus.tables as _tables                       # noqa: E402
+from reportlab.lib.styles import ParagraphStyle as _ParagraphStyle  # noqa: E402
+_rl_config.canvas_basefontname = "Sans"                           # Helvetica's like-for-like (Liberation Sans, the same widths)
+_tables.CellStyle.fontname = "Sans"                               # a table cell opens with it before its paragraph sets its own
+_ParagraphStyle.defaults["fontName"] = _ParagraphStyle.defaults["bulletFontName"] = "Sans"
+_shapes.STATE_DEFAULTS["fontName"] = "Serif"                      # Times-Roman's like-for-like (Liberation Serif, the same widths)
+try:
+    import svglib.fonts as _svgfonts                              # noqa: E402
+    import svglib.svglib as _svglib                               # noqa: E402
+    _svgfonts.DEFAULT_FONT_NAME = _svglib.DEFAULT_FONT_NAME = "Sans"
+except Exception:                                                 # the figure reader absent: nothing to map
+    pass
 SERIF_CMAP = set(TTFont(LIB + "LiberationSerif-Regular.ttf").getBestCmap())
 MONO_CMAP = set(TTFont(DJV + "DejaVuSansMono.ttf").getBestCmap())
 SYM_CMAP = set(TTFont(DJV + "DejaVuSans.ttf").getBestCmap())

@@ -478,7 +478,9 @@ the founder overrides one in the conversation.
   own words on every page (one mechanism, in one place, the software end; it can be wired in at all three places and acts in
   each from the software end). **Never in the data path** is declared on the front page, in the disclosures, in all three
   manuals' openings, on the live page and in every AI instruction file. The one equation has one notation everywhere: E = W / B,
-  G = (1 + ΔW) / (1 + ΔB) − 1. A table's carried part is never under three lines (`BookTable`, `docs/book/build_book.py`).
+  G = (1 + ΔW) / (1 + ΔB) − 1. A table's carried part is never under three lines (`BookTable`, `docs/book/build_book.py`). Every
+  face in the three books is one of the book's own, embedded: Liberation Serif and Sans, DejaVu Sans and Sans Mono, never a
+  base-14 Helvetica or Times-Roman (`tests/test_book_faces.py`).
 
 ## Orders of 1 November
 
