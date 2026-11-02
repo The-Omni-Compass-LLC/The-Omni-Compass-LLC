@@ -1348,7 +1348,7 @@ def records(runs: bool) -> dict:
         reg["grafana"] = XGF.main(str(t / "wall.json")) if CHECKING else XGF.main()
     name, digest = engine()
     from tools.readings import SIZE_FLOOR
-    build = {"engine": name, "digest": digest, "commit": git("rev-parse", "HEAD"), "floor": SIZE_FLOOR, "factory_beat": factory_beat(),
+    build = {"engine": name, "digest": digest, "commit": git("rev-parse", "HEAD"), "floor": SIZE_FLOOR, "factory_beat": factory_beat()[0], "factory_beat_cloud": factory_beat()[1],
              "built_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
              "realms_engine": s["realms"]["run"]["engine"], "receipts_engines": sorted({r["engine"] for r in s["receipts"]}),
              # GitHub's running and queued runs, with the moment they were read; None where this build did not read them (no token)
@@ -1470,16 +1470,20 @@ def write_version(build: dict) -> None:
                        encoding="utf-8")
 
 
-def factory_beat() -> int | float:
-    """The factory's heartbeat, in seconds: the governor's own default --interval (omni_controller/controller.py), so the page
-    follows each engine as it lands (its default is 60 s from omni-v17 to omni-v23 and 20 s from omni-v24) and is never written
-    by hand."""
+def factory_beat() -> tuple:
+    """The factory's heartbeat, in seconds, on site and through a cloud: the governor's own FACTORY_BEAT
+    (omni_controller/controller.py; omni-v24 reads its place from the cluster's nodes, 10 s on site and 60 s through a cloud), or,
+    on an engine before omni-v24, its one default --interval in both places (60 s from omni-v17 to omni-v23), so the page follows
+    each engine as it lands and is never written by hand."""
     src = (ROOT / "omni_controller" / "controller.py").read_text(encoding="utf-8")
+    num = lambda x: int(float(x)) if float(x).is_integer() else float(x)
+    m = re.search(r'FACTORY_BEAT\s*=\s*\{\s*"on site"\s*:\s*([0-9.]+)\s*,\s*"through the cloud"\s*:\s*([0-9.]+)\s*\}', src)
+    if m:
+        return num(m.group(1)), num(m.group(2))
     m = re.search(r'add_argument\(\s*"--interval"\s*,[^)]*?default\s*=\s*([0-9.]+)', src, re.S)
     if not m:
-        raise SystemExit("omni_controller/controller.py: no --interval default to read the factory's beat from")
-    v = float(m.group(1))
-    return int(v) if v.is_integer() else v
+        raise SystemExit("omni_controller/controller.py: no FACTORY_BEAT and no --interval default to read the factory's beat from")
+    return num(m.group(1)), num(m.group(1))
 
 
 def stamp_fallbacks(page: str, build: dict) -> str:
@@ -1492,7 +1496,7 @@ def stamp_fallbacks(page: str, build: dict) -> str:
     cut = page.find("<script", body if body >= 0 else 0)          # the body's first script: the head's self-update (1 November)
     cut = len(page) if cut < 0 else cut                            # sits before the body and must not end the markup read here
     head, tail = page[:cut], page[cut:]
-    head = re.sub(r'(<[^<>]*\bdata-rec="build\.(engine|digest|factory_beat)"[^<>]*>)[^<]*(?=<)',
+    head = re.sub(r'(<[^<>]*\bdata-rec="build\.(engine|digest|factory_beat_cloud|factory_beat)"[^<>]*>)[^<]*(?=<)',
                   lambda m: m.group(1) + _html.escape(str(build.get(m.group(2)) if build.get(m.group(2)) is not None else "")), head)
     n = str(build.get("engine") or "").rsplit("v", 1)[-1]
     if n.isdigit():
@@ -1639,7 +1643,7 @@ def main() -> int:
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
         # the ledger, the commit and the time) is a reading with its own read time, not rebuilt by a check
-        pb, keep = embedded(page, "build") or {}, ("engine", "digest", "factory_beat", "realms_engine", "receipts_engines")
+        pb, keep = embedded(page, "build") or {}, ("engine", "digest", "factory_beat", "factory_beat_cloud", "realms_engine", "receipts_engines")
         strip = lambda bd: [{k: v for k, v in x.items() if k not in ("now", "abc")} for x in (bd or [])]
         if any(pb.get(k) != rec["build"][k] for k in keep) or strip(pb.get("board")) != strip(rec["build"]["board"]):
             bad.append("build")

@@ -16,13 +16,14 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v23, fingerprint c96ea4105d8747db (65 files).
+- **The engine on this checkout:** omni-v24, fingerprint 66c8f2d94b3e4725 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
   - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
+- **The four arms** (`results/TWO_BILLS.md`): **A**, the chip native, and **B**, the chip with Omni-Compass on native (omni-v23, three runs): B against A, the bill STEADY, under the floor (the three runs' mean 0.01%), the work done the runs disagree, work per dollar the runs disagree; **C**, the cloud native, and **D**, the cloud with Omni-Compass on native (omni-v18, 97 paired repetitions on Azure): D against C, the bill up 1.21%, inside the noise; Google and Amazon wired, not yet run.
 - The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v21, each named in its table): 5.0% GAIN on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), 12.9% GAIN on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: 5.2% GAIN. Source: results/OMNI_INDEX.md.
   - Real Kubernetes (GitHub): 28.0% GAIN
   - Real database (PostgreSQL behind PgBouncer, GitHub): 4.2% GAIN
@@ -31,7 +32,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - Real database cache (MongoDB under YCSB, GitHub): 0.5% LOSS
   - Real messaging (Apache Kafka, GitHub): 1.2% power given
 
-**On the engine that stands (omni-v23): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v24): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
@@ -68,7 +69,17 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ## The engine that stands
 
-**omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`), on main from 31 October: omni-v22 with one
+**omni-v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`), on main from 1 November: omni-v23 with the heartbeat
+it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that
+it is found and then locked. With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the
+owner's own machines) it decides every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that
+fails keeps 60 s, and a beat set by hand always wins. The rule that picked the two beats was frozen before any reading was seen
+(`docs/PACE_PREREGISTRATION.md`, amendments 4 to 6): on site 10 s was the one beat no other dominated; through a cloud no beat kept the
+bill from rising, so 60 s stays and those rows are on the next version's list. 64 of its 65 files are omni-v23's bytes; the model gate
+against omni-v23 (`results/model_gate/V24_VS_V23.md`, class S): no LOSS against omni-v23; eleven of its twelve models identical on every gauge and seed; on site, at its 10 s against omni-v23's 60 s, the minutes over the response line down 60.7%, the 95th percentile down 8.2% and the autoscaler's shortfall down 5.1% (fewer and faster, GAIN), the machines the same, the reads of the cluster and its own processor power given. Every benchmark runs again on it from 01:30 UTC on 2 November
+(`scripts/reruns.txt`); the omni-v23 runs started before run to their end as omni-v23's record.
+
+**omni-v23** (`OMNI_V23.json`, digest `c96ea4105d8747db`, 65 files; `docs/OMNI_V23.md`), on main from 31 October to 1 November: omni-v22 with one
 guard in the Kubernetes governor's pod muscle of its own, on the founder's order of that day that Omni direct keeps every muscle
 Omni-Compass cannot be. A write of a workload's own scale that the cluster refuses is recorded and the decision goes on; at three
 refusals in a row the knob goes back to native's own pod autoscaler, made from the operator's target and range recorded on the

@@ -25,7 +25,7 @@ purposes, and demand outrunning power and hardware.
 Omni-Compass is a **supervisory controller** in a **cascade**: the native controllers stay the inner loops, in charge of their own
 actuation; Omni-Compass is the outer loop that reads the whole body and moves the **setpoints** those inner loops already accept.
 It works in the **control plane** only, never the data plane: through a two-way plug it reads each controller's own meters (one
-wire out) and writes the one setting that controller accepts (one wire in), recording the setting before its first write, reading
+wire in) and writes the one setting that controller accepts (one wire out), recording the setting before its first write, reading
 back every write, and restoring the setting at the end; a lease walks every setting back to native if it stops. No request or byte
 of the workload passes through it, and it removes no controller: on Kubernetes the scheduler, the kubelet and the autoscalers stay
 in every arm.

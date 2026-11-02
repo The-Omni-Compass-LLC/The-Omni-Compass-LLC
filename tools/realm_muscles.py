@@ -8,9 +8,10 @@
 The seven organisms (the founder's order of 16 October): the spine first, the muscles every real stack runs on and an
 organism of its own; then each realm's organism (its own families with the spine under them); then the two whole-catalog
 organisms, the four stacked (every realm's organism on one clock, every duplicate of the spine kept) and the tower (every
-muscle once). Each muscle is followed by the one knob Omni-Compass may hold on it; what the engine does with that knob, how
-it is wired and its own card are in docs/MUSCLE_CATALOG.md (tools/muscle_catalog.py), family by family. What the spine is
-and why it is an organism is docs/THE_SPINE.md.
+muscle once). Every list is heaviest hitter first (tools/heavy_hitters.py, the founder's order of 1 November): the 1,107 in
+the four realms they live in, each muscle under its home realm, then the spine's and each realm's own. Each muscle is followed
+by the one knob Omni-Compass may hold on it; what the engine does with that knob, how it is wired and its own card are in
+docs/MUSCLE_CATALOG.md (tools/muscle_catalog.py). What the spine is and why it is an organism is docs/THE_SPINE.md.
 
     python3 tools/realm_muscles.py
 """
@@ -25,6 +26,9 @@ try:                                                       # the legal notice ev
 except ImportError:
     import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parents[1])); from tools.legal import stamp as _legal_stamp, TOP as _LEGAL_TOP
 ROOT = Path(__file__).resolve().parents[1]
+import sys as _sys  # noqa: E402
+_sys.path.insert(0, str(ROOT))
+from tools import heavy_hitters as HH  # noqa: E402  (heaviest hitters first, the founder's order of 1 November)
 CATALOG = ROOT / "realms" / "catalog_v5.csv"
 OUT = ROOT / "docs" / "REALM_MUSCLES.md"
 REALMS = OrderedDict([("compute_ai_cloud", "Compute / AI / Cloud"), ("physics_robotics_autonomous", "Physics / Robotics / Autonomous"),
@@ -46,6 +50,13 @@ def families(rows):
     for r in sorted(rows, key=key):
         out.setdefault(r["family"], []).append(r)
     return out
+
+
+def ranked(rows, h, mark_spine=True):
+    """A condensed list, heaviest hitter first (tools/heavy_hitters.py): each muscle with its rank, its knob in brackets and,
+    for a muscle of the spine listed under its home realm, the mark (spine)."""
+    return "; ".join(f"{n} {r['muscle']} [{r['knob']}]" + (" (spine)" if mark_spine and is_spine(r) else "")
+                     for n, r in enumerate(HH.order(rows, h), 1)) + "."
 
 
 def section(fams):
@@ -81,14 +92,25 @@ def build(rows):
         L.append(f"| {name} | `{k}` ({i}) | {len(in_realm[k]):,} | its {len(own[k])} own muscles on the spine of {len(spine)} |")
     L += [f"| The four stacked | `stack` (5) | {stack:,} | the four realms' organisms on one clock, every duplicate of the spine kept |",
           f"| The whole tower | `tower` (6) | {len(rows):,} | every muscle of the catalog once |", "",
-          f"## The spine: {len(spine)} muscles, in all four realms, an organism of its own", "",
-          "The thirteen families below are the computers every realm's work runs on and the power and cooling they need: Kubernetes "
-          "workloads, containers, placement, node fleets, cloud capacity, hosts, GPUs, network, storage, observability, reliability "
-          "and security, electrical distribution and cooling. Run alone, the spine is a data center with nothing of any one trade in "
-          "it; under a realm, it is what that realm's own muscles stand on.", ""] + section(families(spine))
+          f"## The {len(rows):,} muscles in the four realms they live in, heaviest hitter first", "",
+          HH.rule_words(), "",
+          "Each realm below lists its home muscles, every muscle once, heaviest hitter first and down to its last; a muscle of the "
+          "spine (it sits in all four realms) is listed under its home realm and marked (spine). Each name is followed by its rank "
+          "in its realm and the one knob Omni-Compass may hold on it, in brackets.", ""]
+    h = HH.hits()
+    home = HH.by_realm(rows, h)
+    for k, name in REALMS.items():
+        L += [f"### {name}: {len(home[k])} muscles, heaviest hitter first", "", ranked(home[k], h), ""]
+    L += [f"## The spine: {len(spine)} muscles, in all four realms, an organism of its own, heaviest hitter first", "",
+          "The thirteen families of the spine are the computers every realm's work runs on and the power and cooling they need: "
+          "Kubernetes workloads, containers, placement, node fleets, cloud capacity, hosts, GPUs, network, storage, observability, "
+          "reliability and security, electrical distribution and cooling. Run alone, the spine is a data center with nothing of any "
+          "one trade in it; under a realm, it is what that realm's own muscles stand on. Its muscles, heaviest hitter first:", "",
+          ranked(spine, h, mark_spine=False), ""]
     for i, (k, name) in enumerate(REALMS.items(), 1):
         L += [f"## Organism {i}: {name}: {len(own[k])} own muscles on the spine of {len(spine)} = {len(in_realm[k]):,} in its organism", "",
-              "The spine above, and these families of its own.", ""] + section(families(own[k]))
+              f"The spine above, and its {len(own[k])} own muscles (every muscle whose realms include it and that is not the spine's), "
+              "heaviest hitter first:", "", ranked(own[k], h, mark_spine=False), ""]
     L += [f"## Organism 5: the four stacked, every duplicate kept, {stack:,} muscles", "",
           "The four realms' organisms above, run on one clock as one body (`stack`; the older name `stack_1226` is read as an alias): "
           f"every muscle listed under organisms 1 to 4, the spine counted once in each, {stack:,} in all.", "",

@@ -6,9 +6,9 @@ What the receipts of the chip and of the clouds must show is how much work is do
 
 ## The equation
 
-    Y(p, a)  = W(p, a) / B(p, a)                       work done for each dollar of the bill, in place p, arm a
-    G(p)     = Y(p, omni) / Y(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0
-             = (1 + w(p)) / (1 + b(p)) − 1             w: the change in the work done; b: the change in the bill
+    E(p, a)  = W(p, a) / B(p, a)                       work done for each dollar of the bill, in place p, arm a
+    G(p)     = E(p, omni) / E(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0
+             = (1 + w(p)) / (1 + b(p)) − 1             w = ΔW(p): the change in the work done; b = ΔB(p): in the bill
              ≈ w(p) − b(p)                             for small changes; exactly ln(1 + G) = ln(1 + w) − ln(1 + b)
     G(total) = Σₚ S(p)·(1 + w(p)) / Σₚ S(p)·(1 + b(p)) − 1
                                                        for an owner who runs work in both places: S(p) the owner's own
@@ -16,7 +16,7 @@ What the receipts of the chip and of the clouds must show is how much work is do
                                                        windows; a system in one place reads that place's G alone
     B        = Σₖ cₖ,   b = Σₖ sₖ·bₖ,   sₖ = cₖ(native) / B(native)   the bill as the sum of its components
 
-W is the work done as each place's own receipt counts it: on the chip the requests served within the arm's fixed window (the card's receipt counts no response line); through the cloud the requests answered inside the response line (the work meter). B is the bill: on bare metal the card's metered window at Lambda's launch price, $1.29 an hour (seconds × the price, computed by `tools/two_bills.py`, not a billing statement; the same window bills nearly the same, so b ≈ 0 and G ≈ w); through the cloud the cloud's own bill at list price (machine-hours × the price). A bill that rises is power given; there is more work for the bill when the work rises more than the bill (w > b, G > 0). G(total) is the places' own G weighted by the owner's spend, so it always lies between them.
+The letters are those of `results/TWO_BILLS.md` ("The one equation"), with w and b short for ΔW and ΔB. W is the work done as each place's own receipt counts it: on the chip the requests served within the arm's fixed window (the card's receipt counts no response line); through the cloud the requests answered inside the response line (the work meter). B is the bill: on bare metal the card's metered window at Lambda's launch price, $1.29 an hour (seconds × the price, computed by `tools/two_bills.py`, not a billing statement; the same window bills nearly the same, so b ≈ 0 and G ≈ w); through the cloud the cloud's own bill at list price (machine-hours × the price). A bill that rises is power given; there is more work for the bill when the work rises more than the bill (w > b, G > 0). G(total) is the places' own G weighted by the owner's spend, so it always lies between them.
 
 **Why the places' prices do not move G.** A cloud usually bills far more than bare metal for the same work on the same silicon (its margin, the software it wraps around the machine, egress and storage fees, paying only for the hours used). Inside one place both arms pay the same prices, so the price level cancels in G(p): with the bill B = Σₖ πₖ·qₖ (prices πₖ, quantities qₖ), b = Σₖ sₖ·(qₖ(omni)/qₖ(native) − 1) depends on the quantities alone. A component Omni-Compass does not move (egress, storage, a managed service's fee) has bₖ = 0 and only dilutes b toward 0; the cloud receipt read so far prices the machine-hours alone, at list price, so its b is the compute bill's. The places' price levels enter only G(total), through the owner's spend S(p), and the owner's choice of place, which Omni-Compass does not make.
 
@@ -70,6 +70,8 @@ An owner's budget is read the same way, place by place, from the receipts and no
 |---|---|---|---|
 | Bare metal (a lease of $100 M) | the same $100 M: the same boxes in both arms, b = 0 | w, the work the same boxes serve | the A10 receipt's own ratios applied to the spend (arithmetic, not a measurement of a fleet): +$1.51 M, +$0.73 M, −$0.70 M of work at native's price per unit of work, out of the same $100 M; the three runs disagree, so no figure is claimed |
 | Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, the work answered inside the line (the work meter) | the one set read so far moved the compute bill +1.21% (inside the noise) and did not count its work; our own model at the max reads the machine-hours up 9% to 35% (class S): the cloud's bill may rise where the work rises more, so a smaller cloud bill is not what the record points to |
+
+**The arithmetic at the founder's aim, an example and not a result.** The founder's words of 31 October state the aim the cloud is judged by: "We're pushing 1% more bill, but we're getting ~12% more work." Put through the equation on the example's $100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +10.9%; the work for each dollar up 10.9%, which is $10.9 M more work a year at native's price per unit of work, for a bill of $101 M; or, read the other way, native's work for $100 M / 1.109 = $90.2 M. On bare metal the bill holds (ΔB = 0), so G = ΔW: each 1% more work from the same boxes is $1 M of work a year on the example's $100 M. These are the equation's arithmetic on an aim; the receipts above are what has been measured, and a page that shows the example says so beside it.
 
 **What no budget may show.** Three limits come from the engine and from physics, not from the receipts:
 

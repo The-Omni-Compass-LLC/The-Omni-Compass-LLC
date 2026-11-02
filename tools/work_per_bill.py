@@ -11,8 +11,8 @@ and how it is and where it does and lives").
 The equation, one line per place and one for the two together, every term read from a receipt the repository holds
 (results/TWO_BILLS.json, written by tools/two_bills.py from each place's own table); nothing here is a new measurement:
 
-    Y(p, a)   = W(p, a) / B(p, a)                       the work done for each dollar of the bill, place p, arm a
-    G(p)      = Y(p, omni) / Y(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0
+    E(p, a)   = W(p, a) / B(p, a)                       the work done for each dollar of the bill, place p, arm a
+    G(p)      = E(p, omni) / E(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0
               = (1 + w(p)) / (1 + b(p)) − 1             w = the change in the work done, b = the change in the bill
               ≈ w(p) − b(p)                             for small changes (exactly: ln(1 + G) = ln(1 + w) − ln(1 + b))
     G(total)  = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1
@@ -139,7 +139,7 @@ def total(pl: dict) -> dict:
 
 def build() -> dict:
     pl = places()
-    return {"equation": {"Y": "Y(p, a) = W(p, a) / B(p, a)", "G": "G(p) = Y(p, omni) / Y(p, native) − 1 = (1 + w(p)) / (1 + b(p)) − 1 ≈ w(p) − b(p)",
+    return {"equation": {"E": "E(p, a) = W(p, a) / B(p, a)", "G": "G(p) = E(p, omni) / E(p, native) − 1 = (1 + w(p)) / (1 + b(p)) − 1 ≈ w(p) − b(p)",
                          "total": "G(total) = Σₚ S(p)(1 + w(p)) / Σₚ S(p)(1 + b(p)) − 1, S(p) the owner's native spend in place p",
                          "bill": "B = Σₖ cₖ, b = Σₖ sₖ·bₖ, sₖ = cₖ(native) / B(native)"},
             "places": pl, "total": total(pl), "source": "results/TWO_BILLS.json (tools/two_bills.py)"}
@@ -157,16 +157,16 @@ def markdown(d: dict) -> str:
          "Omni-Compass on native (the founder's words of 2 November). This page writes it as one equation, reads every term from a "
          "receipt the repository holds, and says where the benefit lives and where it is counted. Nothing here is a new measurement.", "",
          "## The equation", "",
-         "    Y(p, a)  = W(p, a) / B(p, a)                       work done for each dollar of the bill, in place p, arm a",
-         "    G(p)     = Y(p, omni) / Y(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0",
-         "             = (1 + w(p)) / (1 + b(p)) − 1             w: the change in the work done; b: the change in the bill",
+         "    E(p, a)  = W(p, a) / B(p, a)                       work done for each dollar of the bill, in place p, arm a",
+         "    G(p)     = E(p, omni) / E(p, native) − 1           the benefit in place p: more work for the bill when G(p) > 0",
+         "             = (1 + w(p)) / (1 + b(p)) − 1             w = ΔW(p): the change in the work done; b = ΔB(p): in the bill",
          "             ≈ w(p) − b(p)                             for small changes; exactly ln(1 + G) = ln(1 + w) − ln(1 + b)",
          "    G(total) = Σₚ S(p)·(1 + w(p)) / Σₚ S(p)·(1 + b(p)) − 1",
          "                                                       for an owner who runs work in both places: S(p) the owner's own",
          "                                                       native spend in place p over one period, never the benchmark",
          "                                                       windows; a system in one place reads that place's G alone",
          "    B        = Σₖ cₖ,   b = Σₖ sₖ·bₖ,   sₖ = cₖ(native) / B(native)   the bill as the sum of its components", "",
-         "W is the work done as each place's own receipt counts it: on the chip the requests served within the arm's fixed window "
+         "The letters are those of `results/TWO_BILLS.md` (\"The one equation\"), with w and b short for ΔW and ΔB. " + "W is the work done as each place's own receipt counts it: on the chip the requests served within the arm's fixed window "
          "(the card's receipt counts no response line); through the cloud the requests answered inside the response line (the work "
          "meter). B is the bill: on bare metal the card's metered window at Lambda's launch price, $1.29 an hour (seconds × the price, "
          "computed by `tools/two_bills.py`, not a billing statement; the same window bills nearly the same, so b ≈ 0 and G ≈ w); through "
@@ -263,6 +263,13 @@ def markdown(d: dict) -> str:
          "the work answered inside the line (the work meter) | the one set read so far moved the compute bill " + cloud_b + " (inside "
          "the noise) and did not count its work; our own model at the max reads the machine-hours up 9% to 35% (class S): the cloud's "
          "bill may rise where the work rises more, so a smaller cloud bill is not what the record points to |", "",
+         "**The arithmetic at the founder's aim, an example and not a result.** The founder's words of 31 October state the aim the "
+         "cloud is judged by: \"We're pushing 1% more bill, but we're getting ~12% more work.\" Put through the equation on the example's "
+         "$100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +10.9%; the work for each dollar up 10.9%, which is "
+         "$10.9 M more work a year at native's price per unit of work, for a bill of $101 M; or, read the other way, native's work "
+         "for $100 M / 1.109 = $90.2 M. On bare metal the bill holds (ΔB = 0), so G = ΔW: each 1% more work from the same boxes is "
+         "$1 M of work a year on the example's $100 M. These are the equation's arithmetic on an aim; the receipts above are what has "
+         "been measured, and a page that shows the example says so beside it.", "",
          "**What no budget may show.** Three limits come from the engine and from physics, not from the receipts:", "",
          "- No line item called a \"stack tax\" falls to zero. The share a place's own software layer takes (Vₒ above: a "
          "hypervisor's, an orchestrator's) is the same in both arms, because Omni-Compass sits on top of that layer and removes "

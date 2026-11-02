@@ -31,6 +31,16 @@ Sources: `results/live/V21_TRACE_GOOGLE2011.md`, `results/live/V21_KEDA_REQUESTS
 Not to be said, because it was never measured: "your operations team shrinks", "it replaces the human in the loop", "you need fewer
 people".
 
+## An example budget, as it may be shown
+
+A page may show the founder's $100 M example (an IT budget of 2.9% of a revenue of about $3.45 B) as the equation's arithmetic,
+labelled beside it "an example at the founder's aim, not a result": through a cloud, at the aim of 31 October (the bill +1%, the
+work +12%), the work for each dollar up 10.9%, $10.9 M more work a year at native's price per unit of work for a bill of $101 M;
+on bare metal the bill holds and each 1% more work from the same boxes is $1 M a year. It is written once, in
+`docs/WORK_PER_BILL.md` ("A $100 million budget, read by the equation"), with what the receipts have measured beside it. An
+example never describes the mechanism differently from the record: Omni-Compass moves the settings native controllers accept
+and touches no data, cache or network.
+
 ## Numbers that must come off (no record supports them)
 
 | Seen on the site or in an outside AI's reading | What the record says |
