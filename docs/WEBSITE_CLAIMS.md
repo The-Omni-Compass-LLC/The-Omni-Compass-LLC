@@ -43,7 +43,9 @@ people".
 | "unit cost $5.00 → $4.42" | no such measurement |
 | "13% faster on bare metal"; "13% fewer cloud hours"; "$423 a month saved" | no such measurement; the A10's runs disagree and no cut of a cloud's hours has been measured |
 | "shut the meter off early"; data "pipelined into the chip's cache"; "1 hour instead of 4" | Omni-Compass works in the control plane: it reads native controllers' meters and writes the settings they accept; no byte of the workload passes through it |
-| "deterministic SLAs" | never claimed |
+| "deterministic SLAs"; "deterministic behaviour across the system" | never claimed |
+| "eliminates" or "bypasses" Kubernetes or the orchestration layer | the opposite: Omni-Compass always sits on top of a system's native controllers and orchestrator (Kubernetes, its scheduler and kubelet stay in every arm) and never replaces them |
+| "zero oversight", "zero manual maintenance", "no engineers needed" | never measured; what is measured is fewer alert minutes, and the governor's own audit (every change logged with its reason, read back, handed back to native after a crash) is there for people to read |
 | "native = code with no controller" | native is the system's own controllers (the Kubernetes autoscaler among them), which stay in every arm |
 
 ## On every page
