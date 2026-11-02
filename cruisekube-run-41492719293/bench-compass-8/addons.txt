@@ -1,0 +1,18 @@
+addons=keda profile=http
+keda=2.21.0 sha256=b43c89ffeef81722d7e2dd2c079d74789767a0f89cae1336cff784994814f6d7
+keda_http_add_on=0.16.0 sha256=eea0e57bb2ede0ab712a918a24df09b1fa0e8948880773b16920c3fbf05d3953
+autoscaler: ScaledObject php-apache owns HPA php-apache; triggers: [{"type":"external-push","metricType":null,"metadata":{"interceptorRoute":"php-apache","scalerAddress":"keda-add-ons-http-external-scaler.keda:9090"}}]
+hpa metrics: [{"external":{"metric":{"name":"s0-http_php-apache_concurrency","selector":{"matchLabels":{"scaledobject.keda.sh/name":"php-apache"}}},"target":{"averageValue":"1","type":"AverageValue"}},"type":"External"}]
+hpa range: 1,10
+interceptor route: {"rules":[{"hosts":["*"]}],"scalingMetric":{"concurrency":{"targetValue":1}},"target":{"port":80,"service":"php-apache"}}
+keda pods (namespace keda, all on the control plane):
+  keda-add-ons-http-interceptor-78c5c9fc7c-fn5zt Running node=omni-bench-control-plane
+  keda-add-ons-http-operator-565587fc44-pkskt Running node=omni-bench-control-plane
+  keda-add-ons-http-scaler-74c678647f-cp2t2 Running node=omni-bench-control-plane
+  keda-admission-77795f5dc5-vksx7 Running node=omni-bench-control-plane
+  keda-metrics-apiserver-5c55d7c467-vjg6b Running node=omni-bench-control-plane
+  keda-operator-545c6957b5-b6dxp Running node=omni-bench-control-plane
+cruisekube=0.3.4 chart_sha256=a3c7fa8914d4c29f6c04999fea1fbbe83a6045270ac739ee02a357d14c034ecf kube_state_metrics=v2.20.0
+cruisekube_new_workload_hours=1 (shipped) shakedown=0
+cruise mode on for Deployment:default:php-apache after 0 s
+cruisekube applied a change to the service; learning 4502 s
