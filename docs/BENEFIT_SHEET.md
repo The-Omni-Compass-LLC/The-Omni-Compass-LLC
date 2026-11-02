@@ -12,6 +12,8 @@ The founder's orders of 9 and 13 October 2026: next to every benchmark, say whet
 
 The result tables (the files in the last column) keep every change with its raw sign: a response time that fell reads "-65%" there, and the Reading column beside it says GAIN.
 
+**The four arms** (the founder's order of 1 November; `results/TWO_BILLS.md`, `tools/two_bills.py`): **A**, the chip native; **B**, the chip with Omni-Compass on native; **C**, the cloud native; **D**, the cloud with Omni-Compass on native, each read by its bill, the work done inside it and the work per dollar. Every row below is one place's native against Omni-Compass on native (B against A on a chip, D against C through a cloud, the software end's own pairs elsewhere), on the engine it names.
+
 The number is the Omni index's rule (`results/OMNI_INDEX.md`): each judged gauge becomes a ratio oriented so that above one is a GAIN; it counts only where judged across our three runs, anything else counts as exactly one; the number is the geometric mean of the ratios, minus one, in percent. For the tests inside the index the number is the index's own resource reading of that test; for a stack with several workloads it is the stack's index category; for the simulators and the organisms the same arithmetic runs over every judged gauge of their tables. Built from the tables by `tools/benefit_sheet.py`, checked by `verify.py`.
 
 **Benefit?** reads **GAIN** (gauges GAIN across our three runs, none LOSS or power given), **GAIN, power given** (a GAIN bought with a resource put in, named beside it), **GAIN AND LOSS** (both; the number says which way the trade nets by this scoring, and the wiring page `docs/WIRING_VERDICTS.md` says what pays for what), **LOSS** (a LOSS and no GAIN), **power given** (a resource put in and nothing gained) or **STEADY** (nothing moved 0.5% or more across our three runs). LOSS should never appear: where it does, the row stands and its cause is found and fixed.
@@ -20,7 +22,7 @@ Every row names the engine its table ran on (read from the table). Results are n
 
 | Date | Benchmark | Engine | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---|---|---:|---|---|
-| 2026-10-31 | Every real test together: the Omni index | omni-v21 | **GAIN AND LOSS** | **5.0% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| 2026-11-02 | Every real test together: the Omni index | omni-v21 | **GAIN AND LOSS** | **5.0% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
 | 2026-10-31 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | **GAIN, power given** | **5.3% GAIN** | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
 | 2026-10-31 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | **GAIN** | **155% GAIN** | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
 | 2026-10-31 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | **GAIN** | **0.3% GAIN** | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |

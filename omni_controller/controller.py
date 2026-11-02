@@ -106,6 +106,33 @@ def milli_cpu(q):
     return f"{int(float(q) * 1000)}m"
 
 
+# The factory beat for its place (omni-v24; the founder's order of 23 October: the factory beat is the best beat the sweeps
+# read). The corrected model's ladder of 31 October (results/model_gate/V23_LADDER.md, class S, amendment 4's frozen rule)
+# read a decision every 10 s undominated on site and no faster beat admissible through a cloud, where 60 s stands. The place
+# is read from the cluster itself, once at the start: a node whose providerID names a public cloud's machine makes the
+# cluster a cloud's; any other node (kind, the owner's own machines, a private cloud of the owner's, no providerID) is on
+# site. A reading that fails, or finds no node, keeps the longer beat. --interval set by hand always wins.
+CLOUD_PROVIDERS = ("azure://", "gce://", "aws://", "oci://", "digitalocean://", "linode://", "ibm://", "alicloud://",
+                   "hcloud://", "scaleway://", "vultr://")
+FACTORY_BEAT = {"on site": 10.0, "through the cloud": 60.0}
+
+
+def factory_beat(kube) -> tuple:
+    """(seconds, place, why): the factory beat for the place the cluster's own nodes name."""
+    try:
+        got = kube.get("get", "nodes", "-o", "json")
+        items = [n for n in (got.get("items") or []) if isinstance(n, dict)] if isinstance(got, dict) else []
+    except Exception as e:                                   # a blind reading decides nothing (omni-v11): the longer beat
+        return FACTORY_BEAT["through the cloud"], "unread", f"the cluster's nodes could not be read ({type(e).__name__}): the longer beat"
+    if not items:
+        return FACTORY_BEAT["through the cloud"], "unread", "no node read: the longer beat"
+    ids = [str((n.get("spec") or {}).get("providerID") or "") for n in items]
+    clouds = sorted({i.split("://")[0] for i in ids if i.lower().startswith(CLOUD_PROVIDERS)})
+    if clouds:
+        return FACTORY_BEAT["through the cloud"], "through the cloud", f"the nodes are a cloud's machines ({', '.join(clouds)})"
+    return FACTORY_BEAT["on site"], "on site", "no node is a public cloud's machine"
+
+
 class Kube:
     def __init__(self, kubectl: str = "kubectl", dry_run: bool = False, audit=None, proxy: bool = False):
         self.kubectl, self.dry_run, self.audit = kubectl, dry_run, audit
@@ -349,6 +376,8 @@ class Controller:
         # v7: every rule of the governor counts in seconds; its count of decisions follows from the decision period, so
         # the period can change without changing any rule's time (at --interval 60 every count is the one v6 used)
         # --interval 0 is a model's or a test's loop that does not sleep: each call is one decision of the shipped minute
+        if getattr(a, "interval", None) is None:              # omni-v24: no beat set, the factory beat for its place
+            a.interval, a.place, a.place_why = factory_beat(kube or Kube(a.kubectl, a.dry_run))
         period = float(a.interval) if float(a.interval) > 0 else 60.0
         per = lambda sec: max(1, int(round(float(sec) / period)))
         pick = lambda n, sec: int(n) if n is not None else per(sec)
@@ -387,6 +416,8 @@ class Controller:
         self.log = open(a.audit, "a") if a.audit else None
         self.k = kube or Kube(a.kubectl, a.dry_run, self.audit, proxy=not getattr(a, "no_api_proxy", False))
         self.k.audit = self.audit
+        if getattr(a, "place_why", None):
+            self.audit({"factory_beat": {"place": a.place, "seconds": a.interval, "why": a.place_why}})
         # shared-host signal for kind (None means no scale-out proof), the busy share over the last minute (omni-v16)
         self.host_cpu = HostCpuSampler(span=per(60.0))
         self.g = Governor(law=mode_law("fleet"), period_s=period); self.g.set_mode(OBSERVE)
@@ -1570,10 +1601,15 @@ class Controller:
 def parser():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mode", choices=["observe", "target", "nodepool"], default="observe")
-    # the heartbeat, a dial (omni-v17, the founder's word of 22 October, afternoon): the main engine decides every 60 s, and any
-    # beat can be set (5, 15, 30, 60, 75, 90, 120 s and every value between), each shown beside native; the fast checks run
-    # every 5 s at every beat. Every rule counts seconds (omni-v16), so either can be turned alone
-    ap.add_argument("--interval", type=float, default=60.0, help="seconds between governor decisions (the heartbeat, a dial; the main engine 60 s)")
+    # the heartbeat, a dial (omni-v17, the founder's word of 22 October, afternoon): any beat can be set (5, 15, 30, 60, 75, 90,
+    # 120 s and every value between), each shown beside native; the fast checks run every 5 s at every beat. Every rule counts
+    # seconds (omni-v16), so either can be turned alone. The factory beat is the best the sweeps read for the place (omni-v24)
+    # omni-v24: unset, the factory beat for the cluster's place, read from its nodes (10 s on site, 60 s through a cloud)
+    ap.add_argument("--interval", type=float, default=None,
+                    help="seconds between governor decisions (the heartbeat, a dial); unset: the factory beat for the cluster's "
+                         "place, 10 s on site and 60 s through a cloud, read from its nodes at the start")
+    ap.add_argument("--print-factory-beat", action="store_true",
+                    help="print the factory beat for this cluster's place (seconds) and exit; the rigs read it (scripts/factory_beat.sh)")
     ap.add_argument("--floor-interval", type=float, default=5.0, help="seconds between the fast checks: the scheduling floor, the pod reflex, the conveyance's clock (nodepool mode)")
     ap.add_argument("--convey-every-s", type=float, default=15.0,
                     help="seconds between conveyance passes, counted on the checks (a fast check or a decision; omni-v16)")
@@ -1682,6 +1718,12 @@ def safe_step(c, fails):
 
 def main(argv=None):
     a = parser().parse_args(argv)
+    if getattr(a, "print_factory_beat", False):
+        # the rigs ask the engine its own beat for the cluster they run on (scripts/factory_beat.sh), so the rule is kept once
+        sec, place, why = factory_beat(Kube(a.kubectl, a.dry_run))
+        print(f"{sec:g}")
+        print(f"the factory beat {sec:g} s: {place}, {why}", file=sys.stderr)
+        return 0
     if a.restore_only:
         # the watchdog's way back for a controller that died: every setting back to the operator's, from the records
         # kept on the objects themselves (annotations), then exit

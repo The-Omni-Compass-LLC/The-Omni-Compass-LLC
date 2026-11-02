@@ -138,7 +138,8 @@ class LiveGlossary(unittest.TestCase):
         self.assertIn(CLOSE, md.split("\n## ", 1)[0], "the notice opens the page")
         self.assertIn(self.d["notice"], self.raw)
         muscles = md.split("\n## 5. ", 1)[1].split("\n## 6. ", 1)[0]
-        rows_in_md = Counter(re.findall(r"^\| ([0-9A-Z][0-9A-Z-]*) \| ", muscles, re.M))
+        # each realm's table is ranked heaviest hitter first (tools/heavy_hitters.py): the rank, then the muscle's own number
+        rows_in_md = Counter(re.findall(r"^\| \d+ \| ([0-9A-Z][0-9A-Z-]*) \| ", muscles, re.M))
         self.assertEqual([k for k, n in rows_in_md.items() if n > 1], [], "GLOSSARY.md lists a muscle twice")
         self.assertEqual(set(rows_in_md), {r["muscle_id"] for r in self.rows}, "GLOSSARY.md does not list every muscle")
 

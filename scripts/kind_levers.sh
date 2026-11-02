@@ -59,7 +59,9 @@ BMS="$OUT_DIR/bms_setpoints.log"
 # back (rightsize, coldstart) wait for the brain's calm, its contraction authority, which comes after about a minute. The
 # phases are the 3, 2 and 3 minutes the checks were written for (three, two and three decisions of a brain minute each before
 # omni-v16); the first omni-v16 run at three decisions of 5 s gave the brain 15 s and failed those two checks (22 October).
-# At the main engine's 60 s (omni-v17) the phases are three, two and three decisions again
+# At the main engine's 60 s (omni-v17) the phases are three, two and three decisions again. From omni-v24 the factory beat is
+# read from the cluster's place (10 s on kind, which is on site); this proof of the levers' mechanism keeps the 60 s beat its
+# checks were written and passed at, set here by hand as any operator may set the dial, and is no benchmark of any beat
 IV="${OMNI_INTERVAL:-60}"
 run() {  # run the controller for SEC seconds of decisions (never fewer than one) with extra arguments
   local n=$(( $1 / IV )); shift; [ "$n" -ge 1 ] || n=1

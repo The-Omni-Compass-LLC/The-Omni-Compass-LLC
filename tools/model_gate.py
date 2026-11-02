@@ -24,7 +24,10 @@ its own code, so the two never share a module.
              the Cluster Autoscaler on the same demand.
   cluster15  the same with a decision every 15 s: each rule's time at a shorter period.
   cluster_shipped  the same with each checkout at its own default decision period, as an install file that sets none
-             runs it (omni-v16: 15 s, the founder's word of 22 October; every engine before it: 60 s).
+             runs it (omni-v16: 15 s, the founder's word of 22 October; every engine before it: 60 s; omni-v24: 60 s through
+             a cloud, the model's nodes named as a cloud's machines).
+  onsite_shipped   each checkout at its own default decision period on site (the static setting: the kind rig's own fixed
+             machines, no cluster autoscaler), where omni-v24's factory beat by place reads 10 s; on the 5 s plant.
   cluster_blink  the cluster model with every machine out of service in the governor's reading for two minutes every six
              hours while the cluster serves on (the kind cluster of the CruiseKube test, 18 October): a decision or a
              check that fails is recorded and skipped, as the shipped loop does.
@@ -101,7 +104,7 @@ def cap_wear(caps):
 
 
 # ---- the worker: one arm, one seed, run inside one checkout --------------------------------------------------------
-def gate_kube(sim, blink=False):
+def gate_kube(sim, blink=False, provider=""):
     """The model cluster as the governor reads it through kubectl: the gate's one stand-in (1 November 2026). The live page's
     controller trace (docs/engine/export_controller_trace.py) kept its own copy, which missed the fixes of 24 October (a
     node's allocatable as the scheduler places pods, the running pods on their machines, the autoscaler's CPU reading); while
@@ -118,11 +121,14 @@ def gate_kube(sim, blink=False):
             Kube.reads += 1
             if args[:2] == ("get", "nodes"):                    # in service, then parked (marked idle) until deleted
                 p = self.sim.c.pool
+                # each node's providerID names its machine as a real cluster's does (omni-v24 reads its place from it: a public
+                # cloud's machine through the cloud, any other on site); the worker gives the cloud setting a cloud's
                 node = lambda i, taints: {"metadata": {"name": f"n{i}", "labels": {}},
                                           # a node's allocatable as the scheduler places pods on it (the plant's ALLOC of its
                                           # cores, fleet/sim.py), as a real cluster reports it (24 October: the model said all of
                                           # its cores, so the governor's floor counted room the plant did not place pods in)
-                                          "spec": {"taints": taints}, "status": {"allocatable": {"cpu": f"{int(round(p.cores * ALLOC * 1000))}m"},
+                                          "spec": {"taints": taints, **({"providerID": f"{provider}n{i}"} if provider else {})},
+                                          "status": {"allocatable": {"cpu": f"{int(round(p.cores * ALLOC * 1000))}m"},
                                           "conditions": [{"type": "Ready", "status": "True"}]}}
                 # the blink (omni-v11): four times a day every machine in service leaves service for two minutes in the
                 # governor's reading, while the model cluster serves on, as the kind cluster of the CruiseKube test did on 18
@@ -341,9 +347,11 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
                 "--active-nodes-only", "--max-node-step", "1", *shlex.split(ctl)]
         p = parser()
         a = p.parse_args(argv)
-        period = period if period > 0 else float(a.interval)
-        k = gate_kube(sim, blink)
+        k = gate_kube(sim, blink, provider="azure:///omni-gate/" if setting == "cloud" else "kind://docker/omni-gate/")
         ctl = Controller(a, kube=k)
+        # the period read after the governor starts: from omni-v24 an unset beat is the factory beat for the place the
+        # model's nodes name, which the governor reads from them at its start
+        period = period if period > 0 else float(a.interval)
         real_run = subprocess.run
 
         def standin_run(cmd, *kw_a, **kw):
@@ -1006,7 +1014,7 @@ def main(argv=None):
     ap.add_argument("--cand", help="checkout of the candidate")
     ap.add_argument("--seeds", default="1-8")
     ap.add_argument("--days", type=float, default=1.0)
-    ap.add_argument("--models", default="cluster,cluster15,cluster_blink,cluster_shipped,convey,convey_unreadable_quota,convey_refused,convey_batch,card,card_floor,verdict")
+    ap.add_argument("--models", default="cluster,cluster15,cluster_blink,cluster_shipped,onsite_shipped,convey,convey_unreadable_quota,convey_refused,convey_batch,card,card_floor,verdict")
     ap.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     ap.add_argument("--out", default="")
     ap.add_argument("--worker", help=argparse.SUPPRESS)
@@ -1040,14 +1048,21 @@ def main(argv=None):
     from concurrent.futures import ThreadPoolExecutor
     report = {"seeds": seeds, "days": a.days, "base": str(base), "cand": str(cand), "models": {}}
     models = a.models.split(",")
-    for model, period in (("cluster", 60.0), ("cluster15", 15.0), ("cluster_blink", 60.0), ("cluster_shipped", 0.0)):
+    # onsite_shipped (omni-v24): each checkout at its own default beat on site, the kind rig's own fixed machines with no
+    # cluster autoscaler (the static setting of amendment 5), where the factory beat by place reads 10 s; on the 5 s plant,
+    # as the pace models read a beat under the cluster plant's 15 s step (amendment 6), so a 10 s beat is a decision every
+    # other plant step and never rounded up to one a step
+    for model, period, setting, fine in (("cluster", 60.0, "cloud", False), ("cluster15", 15.0, "cloud", False),
+                                         ("cluster_blink", 60.0, "cloud", False), ("cluster_shipped", 0.0, "cloud", False),
+                                         ("onsite_shipped", 0.0, "static", True)):
         if model not in models:
             continue
         jobs = [(arm, tree, s) for s in seeds for arm, tree in (("native", cand), ("base", base), ("cand", cand))]
         blink = ["--blink"] if model == "cluster_blink" else []
+        place = (["--setting", setting] if setting != "cloud" else []) + (["--fine"] if fine else [])
         with ThreadPoolExecutor(a.jobs) as ex:
             got = list(ex.map(lambda j: run(j[1], ["--worker", "native" if j[0] == "native" else "omni", "--seed", str(j[2]),
-                                                    "--days", str(a.days), "--period", str(period), *blink,
+                                                    "--days", str(a.days), "--period", str(period), *blink, *place,
                                                     "--dir", str(work / model / f"{j[0]}-{j[2]}")]), jobs))
         res = {}
         for (arm, _, s), r in zip(jobs, got):
