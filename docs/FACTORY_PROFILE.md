@@ -79,10 +79,10 @@ and Δ the full governing decision interval. The public interval choices on the 
 (the controller itself takes any value from 5 to 120 s, `--interval`). At decision k, with tₖ₊₁ = tₖ + Δ, the general contract is
 
   y(k) = h(x(tₖ)) + ε(k)                        the observation, with its sensing delay and noise ε
-  (u[req](k), z(k+1)) = G[θ](z(k), y(k), A(k))    the decision: the requested settings, inside the authority A(k)
-  u[cmd](k) = Π[C](u[req](k))                       the constraints C(k): every muscle's own limits, the cover, never below native at the max
-  u[ack](k) = R(u[cmd](k))                         the setting that actually landed, read back by the adapter
-  x(tₖ₊₁) = Φ(x(tₖ), u[ack](k), w(k))             the system moves with the command that landed, under the workload and disturbances w
+  (u\[req\](k), z(k+1)) = G\[θ\](z(k), y(k), A(k))    the decision: the requested settings, inside the authority A(k)
+  u\[cmd\](k) = Π\[C\](u\[req\](k))                       the constraints C(k): every muscle's own limits, the cover, never below native at the max
+  u\[ack\](k) = R(u\[cmd\](k))                         the setting that actually landed, read back by the adapter
+  x(tₖ₊₁) = Φ(x(tₖ), u\[ack\](k), w(k))             the system moves with the command that landed, under the workload and disturbances w
 
 G[θ] is the governing engine at profile θ; A supplies the governing authority; C enforces the applicable constraints and holds the
 operating limits; w is the workload. The system evolves with the command that actually landed, so the requested, the commanded and

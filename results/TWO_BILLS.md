@@ -54,7 +54,7 @@ A line item the same in both arms adds the same dollars to both bills: it leaves
 | the chip, A against B (omni-v23) | 1 | 2,616 → 2,656 | +1.51% | 0.1194 → 0.1195 | +0.04% | 21,909 → 22,229 | +1.46% |
 | the chip, A against B (omni-v23) | 2 | 2,270 → 2,286 | +0.73% | 0.1189 → 0.1189 | ±0.00% | 19,089 → 19,229 | +0.73% |
 | the chip, A against B (omni-v23) | 3 | 2,255 → 2,239 | −0.70% | 0.1189 → 0.1189 | −0.01% | 18,964 → 18,833 | −0.69% |
-| the cloud, C against D (omni-v18, Azure) | one set of 98 | not counted in that set | | 0.05626 → 0.05694 | +1.21%, inside the noise | not read | not read |
+| the cloud, C against D (omni-v18, Azure) | one set of 97 | not counted in that set | | 0.05626 → 0.05694 | +1.21%, inside the noise | not read | not read |
 | the cloud, C against D (Google, Amazon) | | not yet run | | | | | |
 
 **What it reads today.** On the chip the three runs' G read **the runs disagree**: the work for the bill has not yet been shown to rise. In the cloud the work was not counted in the set that stands, so G is not read. The runs that read it next are started or queued: the card fully loaded with the seven organisms, the eight-card machine, and the cloud at the max with its work meter, each read by this equation as it lands.
@@ -81,7 +81,7 @@ From `results/gpu/V23_A10_CAP_FULL_ABC.md` (runs 41243352339, 41243355485, 41243
 | 3 | A, native | 331.9 | 0.1189 | 2,255 | 18,963.8 |
 | 3 | B, Omni-Compass on native | 331.8 | 0.1189 | 2,239 | 18,832.8 |
 
-## The cloud: C against D (Kubernetes on Azure's AKS, omni-v18, one set of 98 paired repetitions)
+## The cloud: C against D (Kubernetes on Azure's AKS, omni-v18, one set of 97 paired repetitions)
 
 From `results/live/AKS_STEADY_100_OMNI_V18.md`, the newest cloud set with a metered bill. The engine that stands has not yet run in the cloud: its set starts when Azure's current long set ends, and this row is then read again on it.
 

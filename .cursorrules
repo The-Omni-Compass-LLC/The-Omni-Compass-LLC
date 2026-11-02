@@ -35,6 +35,11 @@ across engine versions.
 - Never present a modelled result as a measurement: class **P** is a physical meter, class **L** is live software (the real
   thing), class **S** is our own model.
 - Never leave out a row that went against Omni-Compass when you summarize a result.
+- Never place Omni-Compass in the data path: no request, packet, file or byte of the work passes through it; it reads
+  gauges and writes the settings native controllers already accept. Never call it a pipeline, a packet scheduler, a
+  compressor or a replacement for any layer (`DISCLOSURES.md`, section 10; `docs/INDUSTRY_LANDSCAPE.md`).
+- Never quote a number about Omni-Compass that no table in this repository carries, and never state a bill saving, a
+  staffing cut or a bare-metal figure the tables do not show.
 - The notice closes with the filing sentence and the website, and nothing after it: "All patents, copyrights and
   trademarks filed in the USA. www.omni-compass.com"
 

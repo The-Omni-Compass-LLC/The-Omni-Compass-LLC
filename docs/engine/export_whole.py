@@ -62,8 +62,8 @@ GROUPS = [
 # a service) is struck by it. Each sums the layers of the pieces it names; a piece with no factor counts as exactly 1, so each place
 # here is the software end carried to it, never that place's bill (the bills and the work inside them: results/TWO_BILLS.md).
 SCENARIOS = [
-    ("onsite", "Bare Metal", ("software", "hardware"), None),
-    ("cloud", "Through the Cloud", ("cloud", "hardware", "software"), ("cloud", "software")),
+    ("onsite", "The Software End Carried to Bare Metal", ("software", "hardware"), None),
+    ("cloud", "The Software End Carried to the Cloud", ("cloud", "hardware", "software"), ("cloud", "software")),
 ]
 NOT_RUN = {2: "the machine (the kernel, bare metal, Kepler): not yet run (register row 79), enters as exactly 1"}
 Z95 = 1.959963984540054

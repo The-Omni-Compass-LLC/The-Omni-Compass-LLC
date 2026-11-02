@@ -186,7 +186,8 @@ def sd_svg(d: schemdraw.Drawing) -> str:
     return out
 
 
-MAX_H = 500.0                                    # the tallest drawing: with its caption it still follows a few lines of text (the frame is 659 pt)
+MAX_H = 530.0                                    # the tallest drawing: with its caption (cut at a sentence end) it fits the 659 pt frame
+SCALED: list = []                                # (key, factor): a drawing shrunk to fit, its type below 9 pt; must be empty
 
 
 def svg_to_drawing(svg: str, width: float = FW, height: float = MAX_H):
@@ -200,6 +201,7 @@ def svg_to_drawing(svg: str, width: float = FW, height: float = MAX_H):
         dr.scale(s, s)
         dr.width, dr.height = dr.width * s, dr.height * s
     dr.hAlign = "CENTER"
+    dr._omni_scale = s
     return dr
 
 
@@ -440,12 +442,11 @@ def s_k8s_cluster():
 def s_cloud_machines():
     return wiring_schematic(
         senses=["p95, the probe's feed", "pending pods", "nodes in service", "the HPA's target and replicas"],
-        motors=["the HPA's target, floor and cap", "pods/resize: processor conveyed", "park: taint PreferNoSchedule", "wake: remove the taint", "pod-deletion-cost"],
+        motors=["the HPA's target, floor and cap", "pods/resize: processor conveyed", "park and wake: the taint PreferNoSchedule", "pod-deletion-cost"],
         adapter_lines=["--mode nodepool --law compass --dial max --sensed ns/svc --cap-deployments ns/svc",
-                       "--node-scale-cmd \"bash /app/scripts/kind_nodepool.sh {n}\"",
-                       "--min-nodes 2 --max-node-step 1 --interval 60 --floor-interval 5"],
+                       "--node-scale-cmd \"bash /app/scripts/kind_nodepool.sh {n}\" --min-nodes 2 --max-node-step 1"],
         native="the cloud's cluster autoscaler, which alone adds machines, and the service's HPA, its range and cap the operator's",
-        muscle="the work pool's machines (omni-role=work)", cover="cover: [2, the pools' autoscaler maxima]; one machine a decision; never asks the cloud for one",
+        muscle="the work pool's machines (omni-role=work)", cover="cover: [2, the pools' autoscaler maxima]; one machine a decision",
         meters=["the probe: real requests every 5 s → latency.csv", "the API: pods pending (every 5 s)", "the bill: every machine that exists, every 15 s"],
         notes_text=["The target moves inside the HPA's cover and the processor is conveyed in place; a machine is parked only after its",
                     "own trial (the response time holds within 2%) and woken on a breach: at the next decision (60 s), or at the next fast check (5 s).",
@@ -970,12 +971,12 @@ RELEASE_GATE = ([("start", "the compass law asks for one machine back: F < −0.
 
 def f_release_gate():
     (a, da), _ = _split(*RELEASE_GATE, at=6)
-    return chart(a, decisions=da, side_w=3.4)
+    return chart(a, decisions=da, side_w=3.4, w=7.6)       # wide enough that its text keeps the drawing under MAX_H at 9 pt
 
 
 def f_release_gate_b():
     _, (b, db) = _split(*RELEASE_GATE, at=6)
-    return chart(b, decisions=db, side_w=3.4)
+    return chart(b, decisions=db, side_w=3.4, w=7.6)
 
 
 def f_stops():
@@ -1083,7 +1084,7 @@ def f_cache_rule():
                                        "again the next second while still past"),
                             2: ("yes", "grow by ⌈F / 0.1⌉ notches, at least one (8 MB; 64 MB; one 128 MB chunk)"),
                             3: ("yes", "give one notch back")},
-                 w=6.2, side_w=4.4)
+                 w=7.6, side_w=4.4)
 
 
 # ---------------------------------------------------------------- timing diagrams and modelled traces
@@ -1256,7 +1257,7 @@ def t_trial():
     ax.text(18, 0.3, wrap("a phase past its limit (Kubernetes 1,200 s; a card 30 decisions), or out of calm, is abandoned: the knob goes back, "
                           "the step neither allowed nor refused", 100), ha="center", va="center", color=GREY, fontsize=PT)
     ax.set_xlim(0, 36); ax.set_ylim(0, 3.7); ax.set_yticks([]); ax.spines["left"].set_visible(False)
-    ax.set_xlabel("decisions (on Kubernetes one every 60 s through a cloud, every 10 s on site, its rules counted in seconds; one every 2 s on a card)")
+    ax.set_xlabel("decisions (on Kubernetes one every 60 s through a cloud, every 10 s on site,\nits rules counted in seconds; one every 2 s on a card)")
     return fig_svg(fig)
 
 
@@ -1865,7 +1866,10 @@ def svg(key: str) -> str:
 
 
 def drawing(key: str, width: float = FW):
-    return svg_to_drawing(svg(key), width)
+    dr = svg_to_drawing(svg(key), width)
+    if dr._omni_scale < 0.999 and (key, round(dr._omni_scale, 3)) not in SCALED:
+        SCALED.append((key, round(dr._omni_scale, 3)))   # the type would print below 9 pt: the drawing is redrawn, never shrunk
+    return dr
 
 
 NOTICE = ("© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. Any commercial use, "

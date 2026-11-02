@@ -323,7 +323,8 @@ def cloud_tests():
     if p100.exists():
         d = json.loads(p100.read_text())
         rows = (d.get("paired") or {}).get("compass") or {}
-        n = len((d.get("repetitions") or {}).get("compass") or []) or None
+        reps = d.get("repetitions") or {}
+        n = len(set(reps.get("native") or []) & set(reps.get("compass") or [])) or None   # the pairs: present in both arms
         t = {"test": (f"Azure Kubernetes Service, Azure's own cluster autoscaler underneath, the steady set, {n} paired repetitions in one run "
                       "(Omni-Compass at the tune-down on the machines alone)"),
              "source": "results/live/AKS_STEADY_100_OMNI_V18.md", "runs": ["40069633316"], "engine": "omni-v18", "pairs": [n], "gauges": {}}
