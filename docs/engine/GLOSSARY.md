@@ -2057,7 +2057,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the jump generator | term | 1 (#s-health); 5a (#s-proof); 5b (#s-cpp); B (#s-guide) |
 | k[d] | term | 5h (#s-math); B (#s-guide) |
 | k[p] | term | 5h (#s-math) |
-| the key | term | 2a (#s-bottom); 2e (#s-status); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4d (#s-cloud); 4f (#s-stacks); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read) |
+| the key | term | 2a (#s-bottom); 2b (#s-answer); 2e (#s-status); 3d (#s-dial); 3i (#s-dash); 4a (#s-ops); 4d (#s-cloud); 4f (#s-stacks); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read) |
 | the kill switch | term | 1 (#s-health); 2c (#s-board); 3b (#s-feed); 3c (#s-desk); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 5g (#s-master); 5h (#s-math); B (#s-guide) |
 | knob | term | 1 (#s-health); 2d (#s-loss); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4f (#s-stacks); 5a (#s-proof); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); B (#s-guide); D (#s-read); E (#s-monlist); G (#s-disclose) |
 | the lease | term | 1 (#s-health); 3a (#s-engines); 3f (#s-plane); 4a (#s-ops); 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
