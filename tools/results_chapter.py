@@ -34,6 +34,8 @@ if str(ROOT) not in sys.path:
 from tools import organism_words as OW  # noqa: E402
 
 MANUAL = ROOT / "docs" / "OMNI_COMPASS_OWNERS_MANUAL.md"
+REFEREE = ROOT / "docs" / "REFEREE_SUMMARY.md"
+FILES = (MANUAL, REFEREE)
 SHEET = ROOT / "results" / "BENEFIT_SHEET.json"
 CLOUD = ROOT / "results" / "live" / "AKS_STEADY_100_OMNI_V18.md"
 
@@ -122,6 +124,97 @@ def verdicts_block() -> list:
                    f"by `tools/wiring_verdicts.py` from the tables that stand): \"{said}\"")
 
 
+def entries(words: str) -> tuple:
+    """A row's words split into what it gained and what it cost (power given) or lost, each as the table reads it."""
+    es = [e.strip() for e in words.split(";") if e.strip()]
+    return ([e[: -len(" (GAIN)")] for e in es if e.endswith("(GAIN)")],
+            [e for e in es if e.endswith("(power given)") or e.endswith("(LOSS)")])
+
+
+def chip_row(path: str, gauge: str) -> tuple:
+    """A three-run chip table's reading of one gauge: the reading and the three runs' cells."""
+    for ln in (ROOT / path).read_text(encoding="utf-8").splitlines():
+        if ln.startswith(f"| {gauge} |"):
+            c = [x.strip() for x in ln.strip().strip("|").split("|")]
+            return c[1].replace("**", ""), c[2:5]
+    return "not in the table", []
+
+
+def three_word(changes: list) -> str:
+    """The key's word for three runs' changes in percent (tools/readings.py): under the 0.5% floor STEADY, opposite runs disagree."""
+    if max(changes) >= 0.5 and min(changes) <= -0.5:
+        return "the runs disagree"
+    m = sum(changes) / len(changes)
+    return "STEADY" if abs(m) < 0.5 else ("GAIN" if m > 0 else "LOSS")
+
+
+def referee_claims_block() -> list:
+    rs = rows()
+    by = {r["benchmark"]: r for r in rs}
+    k8s = [r for r in rs if GROUPS["kubernetes"](r["benchmark"]) or GROUPS["addons"](r["benchmark"])]
+    a4 = by["Real Kubernetes, all four at once"]
+    m = re.search(r"work inside the line up ([\d.]+)% to ([\d.]+)%", a4["words"])
+    p95 = sum(1 for r in k8s if "p95 cut" in r["words"])
+    stores = [r for r in rs if GROUPS["stores"](r["benchmark"])]
+    fewer = [r for r in rs if re.search(r"(?<!pod )machines cut", r["words"])]
+    ledger = (ROOT / "docs" / "LOSS_LEDGER.md").read_text(encoding="utf-8")
+    own = re.search(r"Against my own native, the readings do no harm is judged by: \*\*(\d+)\*\*", ledger)
+    t = CLOUD.read_text(encoding="utf-8")
+    bill = re.search(r"the compute bill at list price (up|down) ([\d.]+)% by the mean of the (\d+) pairs", t)
+    a10e, a10e_runs = chip_row("results/gpu/V23_A10_CAP_FULL_ABC.md", "energy per served request (J)")
+    a100e, _ = chip_row("results/gpu/V21_A100_CAP_ABC.md", "energy per served request (J)")
+    bills = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8"))
+    wpd = [100.0 * (x["omni"] / x["native"] - 1.0) for x in bills["chip"]["rows"]["work per dollar (requests served per $)"]["runs"]]
+    mus = OW.muscles()
+    proofs = json.loads((ROOT / "results" / "ENGINE_PROOFS.json").read_text(encoding="utf-8"))["summary"]
+    eng = a4["engine"]
+    def cell(x):
+        return x.replace("|", "/")
+    L = OW.wrap("Every standing below is written from its record by `python3 tools/results_chapter.py`, and `verify.py` fails a push "
+                "where it differs.") + ["",
+         "| Claim | Standing | Evidence |", "|---|---|---|",
+         "| It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the "
+         "same native; the setting is read back at native's value at the end of every arm |",
+         f"| It does no harm: never a LOSS against native | **Not shown**: {own.group(1) if own else 'uncounted'} rows read LOSS against "
+         "its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |",
+         f"| More work, faster, on real Kubernetes | **Shown** (L, {eng}) | All four at once: work inside the response line up "
+         f"{m.group(1)}% to {m.group(2)}% (`{a4['file']}`); the 95th percentile cut in {p95} of {len(k8s)} Kubernetes tests (section 3) |",
+         f"| More work, faster, on databases and caches | **Small** (L, {stores[0]['engine'] if stores else eng}) | "
+         + "; ".join(f"{cell(r['benchmark'])}: {r['benefit']}, {how_much(r['pct'])}" for r in stores) + " (`docs/BENEFIT_SHEET.md`) |",
+         ("| Fewer machines | **Shown in " + (f"{len(fewer)} test" if len(fewer) == 1 else f"{len(fewer)} tests") + f"** (L, {eng}) | "
+          + "; ".join(f"{cell(re.sub(r'^Real Kubernetes, ', '', r['benchmark']))}: "
+                      + ", ".join(x.replace(' (GAIN)', '') for x in r['words'].split('; ') if 'machine' in x and x.endswith('(GAIN)'))
+                      for r in fewer) + " |") if fewer else "| Fewer machines | **Not shown** on the tables that stand | — |",
+         f"| A smaller cloud bill | **Not shown** | Azure, omni-v18, {bill.group(3) if bill else '?'} paired repetitions: the bill "
+         f"{bill.group(1) if bill else '?'} {bill.group(2) if bill else '?'}%, inside the noise, and the work not counted "
+         f"(`{CLOUD.relative_to(ROOT)}`); Google and Amazon wired and not yet run |",
+         f"| Less energy for the work, on the chip | **{a10e}** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: "
+         f"energy per served request in runs A, B and C {'; '.join(a10e_runs)} (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: {a100e} "
+         "(`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |",
+         f"| More work for the bill on a GPU | **{three_word(wpd)}** (P, omni-v23) | The A10's work for each dollar, its three runs "
+         + ", ".join(f"{'up' if x > 0 else 'down'} {abs(x):.2f}%" for x in wpd) + " (`results/TWO_BILLS.md`) |",
+         f"| One governor over every muscle and organism | **Modelled** (S) | {mus['total']:,} muscles in our own models: {mus['gain']} "
+         f"GAIN, {mus['limit'] + mus['same']} STEADY, {mus['loss']} LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real "
+         "systems |",
+         f"| Its mathematics | **Machine-checked where stated** | {proofs['proved']} of {proofs['of']} theorems proved by SMT and "
+         "interval arithmetic on the engine as it executes: the compass law, the plug's clip, the verdict, the invariance of E, I and "
+         "S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: "
+         "CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |"]
+    return L
+
+
+def referee_tests_block() -> list:
+    rs = [r for r in rows() if GROUPS["kubernetes"](r["benchmark"]) or GROUPS["addons"](r["benchmark"])]
+    L = OW.wrap("Each test's newest three-run table (the benefit sheet's record, `results/BENEFIT_SHEET.json`), written by "
+                "`python3 tools/results_chapter.py`: what it gained and what it cost or lost, in the table's own words, each the "
+                "span of the three runs' changes.") + ["", "| Test (engine) | Gain | What it cost, or read LOSS |", "|---|---|---|"]
+    for r in rs:
+        g, c = entries(r["words"])
+        name = re.sub(r"^Real Kubernetes, ", "", r["benchmark"])
+        L.append(f"| {name[0].upper() + name[1:]} ({r['engine']}) | {'; '.join(g) if g else 'none'} | {'; '.join(c) if c else '—'} |")
+    return L
+
+
 def worked_block() -> list:
     """Section 3.4's worked examples of S = G / (1 + G), from the newest tables: the all-four test's work and the pooler's connections."""
     rs = {r["benchmark"]: r for r in rows()}
@@ -147,6 +240,7 @@ def worked_block() -> list:
 
 BLOCKS = {**{k: (lambda k=k: group_block(k)) for k in GROUPS},
           "sheet": sheet_block, "cloud": cloud_block, "worked": worked_block, "verdicts": verdicts_block,
+          "referee_claims": referee_claims_block, "referee_tests": referee_tests_block,
           "realms": lambda: OW.realms_lines("../"), "grid": lambda: OW.grid_lines("../"),
           "scenarios": lambda: OW.scenarios_lines("../")}
 
@@ -166,20 +260,25 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
-    t = MANUAL.read_text(encoding="utf-8")
-    missing = [n for n in BLOCKS if begin(n) not in t]
-    new = put(t)
+    bad = []
+    for f in FILES:
+        t = f.read_text(encoding="utf-8")
+        new = put(t)
+        if a.check:
+            if new != t:
+                bad.append(str(f.relative_to(ROOT)))
+        elif new != t:
+            f.write_text(new, encoding="utf-8")
+    present = {n for f in FILES for n in BLOCKS if begin(n) in f.read_text(encoding="utf-8")}
+    missing = sorted(set(BLOCKS) - present)
     if a.check:
-        if missing:
-            print("the Owner's Manual lacks the results blocks: " + ", ".join(missing))
+        if missing or bad:
+            print("results blocks " + (f"missing: {', '.join(missing)}; " if missing else "")
+                  + (f"differing from their records: {', '.join(bad)} (python3 tools/results_chapter.py)" if bad else ""))
             return 1
-        if new != t:
-            print("the Owner's Manual's chapter 16 differs from its records (python3 tools/results_chapter.py)")
-            return 1
-        print("the Owner's Manual's chapter 16: in line with its records")
+        print("the Owner's Manual's chapter 16 and the referee's summary: in line with their records")
         return 0
-    MANUAL.write_text(new, encoding="utf-8")
-    print("docs/OMNI_COMPASS_OWNERS_MANUAL.md: chapter 16 written from its records" + (f" (no markers yet: {', '.join(missing)})" if missing else ""))
+    print("chapter 16 and the referee's summary written from their records" + (f" (no markers yet: {', '.join(missing)})" if missing else ""))
     return 0
 
 
