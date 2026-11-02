@@ -516,7 +516,7 @@ adds a second form, `lambda-gpu.yml` mode `stacks-full`, and changes nothing in 
   tower) at 1, 10 and 100 copies with the card inside, repetitions 5, 3 and 2 by size (`hil_profile` `standard`), native
   against Omni-Compass on native at the factory tune (the dial at the max), paired within each repetition, the card's
   firmware limit as it ships in both arms and no operator's cap;
-- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stands (omni-v23);
+- three runs, A, B and C, each on its own rented A10, on one commit that carries the engine that stood when it was declared (omni-v23);
 - the reading: per organism and size, the card's requests served (work), its energy, its energy per request served, its
   95th percentile and its time over the line, and the stacks' own gauges, each by the one key (`tools/readings.py`); the
   bill of each arm is the rental of its own window at the price the launch printed, so the bill reads the same in both

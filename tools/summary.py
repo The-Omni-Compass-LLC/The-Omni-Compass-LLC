@@ -244,6 +244,31 @@ BLOCK_END = "<!-- end of where things stand -->"
 BLOCK_PAGES = ("docs/STATE_OF_PLAY.md", "docs/OMNI_COMPASS_OWNERS_MANUAL.md")
 
 
+def four_arms_part():
+    """The four arms (the founder's order of 1 November): A, the chip native; B, the chip with Omni-Compass on native; C, the
+    cloud native; D, the cloud with Omni-Compass on native; each pair read from results/TWO_BILLS.json (tools/two_bills.py)."""
+    d = load("results/TWO_BILLS.json") or {}
+    chip, cl = d.get("chip") or {}, d.get("cloud") or {}
+    clean = lambda x: str(x or "").replace("**", "")
+    if chip.get("rows"):
+        r = chip["rows"]
+        get = lambda k: clean((r.get(k) or {}).get("reading"))
+        ab = (f"**A**, the chip native, and **B**, the chip with Omni-Compass on native ({chip.get('engine', '').split(' (')[0]}, "
+              f"three runs): B against A, the bill {get('bill ($, the rental for the arm' + chr(39) + 's window)')}, the work done "
+              f"{get('work done (requests served)')}, work per dollar {get('work per dollar (requests served per $)')}")
+    else:
+        ab = "**A**, the chip native, and **B**, the chip with Omni-Compass on native: not yet read"
+    if cl.get("bill"):
+        b = cl["bill"]
+        pct = 100 * b["diff"] / b["native"] if b.get("native") else 0.0
+        cd = (f"**C**, the cloud native, and **D**, the cloud with Omni-Compass on native ({cl.get('engine', '')}, "
+              f"{cl.get('repetitions')} paired repetitions on Azure): D against C, the bill {'up' if pct > 0 else 'down'} "
+              f"{abs(pct):.2f}%, {'beyond' if b.get('significant') else 'inside'} the noise; Google and Amazon wired, not yet run")
+    else:
+        cd = "**C**, the cloud native, and **D**, the cloud with Omni-Compass on native: not yet read; Google and Amazon wired, not yet run"
+    return f"**The four arms** (`results/TWO_BILLS.md`): {ab}; {cd}."
+
+
 def standing_block():
     """The block's Markdown: the engine, the modelled muscles and organisms, the grid, the index and every benchmark's
     one number with its word and class, each read from its own file."""
@@ -259,6 +284,7 @@ def standing_block():
     gp = grid_part()
     if gp:
         L.append("- " + gp[0])
+    L.append("- " + four_arms_part())
     ip = index_part()
     L.append("- " + ip[0])
     L += ["  - " + x.strip() for x in ip[1:]]

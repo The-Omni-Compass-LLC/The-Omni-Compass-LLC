@@ -316,14 +316,20 @@ def places_block(m) -> list:
     stands = m["stands"]
     tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
     chip, cl = tb.get("chip") or {}, tb.get("cloud") or {}
-    L = ["### Two Places, Two Arms: the Bill and the Work", "",
+    L = ["### Four Arms, A, B, C and D: the Bill and the Work Done Inside It", "",
          f"On the engine that stands ({stands}), Omni-Compass runs in one of two places: **on bare metal**, a chip run directly, its bill the machine's own (here the rental, "
          "the chip's own meter beside it); or **through a cloud**, its bill the cloud's, the cloud's chips and back end inside its price "
-         "and out of Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). In each place two arms "
-         "only: **native**, and **Omni-Compass on top of native**. Each box is that place's bill beside the work done inside it; the "
+         "and out of Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). Four arms in all: on "
+         "the chip **A**, native, and **B**, Omni-Compass on top of native; through the cloud **C**, native, and **D**, Omni-Compass on "
+         "top of native. Each box is that arm's bill beside the work done inside it; the "
          "reading is the work for each dollar. The bill should hold; the benefit is the work inside it. The two places are never added "
          "together: a system runs in one or the other. The four arms, A and B on the chip, C and D in the cloud, are written once in "
-         "[`results/TWO_BILLS.md`](results/TWO_BILLS.md) (`tools/two_bills.py`); these boxes read it.", ""]
+         "[`results/TWO_BILLS.md`](results/TWO_BILLS.md) (`tools/two_bills.py`); these boxes read it.", "",
+         "**The one equation** (the founder's words of 2 November: the one thing to prove is more work for the bill): in each place "
+         "the work for each dollar, E = W / B, the work done over the bill, and the benefit G = E(Omni-Compass on native) / "
+         "E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1: more work inside the bill (ΔW), a smaller bill for the same work (ΔB), or both; "
+         "G(chip) = E(B) / E(A) − 1 and G(cloud) = E(D) / E(C) − 1, the places never added "
+         "([`results/TWO_BILLS.md`](results/TWO_BILLS.md), \"The one equation\").", ""]
     money = lambda x: f"${x:.4f}"
     if chip.get("per_run"):
         pr = chip["per_run"]
@@ -358,10 +364,13 @@ def places_block(m) -> list:
     else:
         cnat = con = f"not yet read on {stands}"
         cread = f"work per dollar: not yet read on {stands}"
+    if chip.get("per_run") and eng and eng != stands:
+        bare_read += f"; runs of {eng}, never read as {stands}'s"
+    # the four arms by their letters in every cell (the founder's order of 1 November: "I should see A, B, C, and D everywhere")
     L += ["| | Bare metal: the chip, its bill and its work | Through the cloud: the cloud's bill and its work |", "|---|---|---|",
-          f"| **A and C: native** | {nat} | {cnat} |",
-          f"| **B and D: Omni-Compass on top of native** | {on} | {con} |",
-          f"| **Omni-Compass on native against native** | {bare_read} | {cread} |", ""]
+          f"| **Native** | **A**, the chip native: {nat} | **C**, the cloud native: {cnat} |",
+          f"| **Omni-Compass on top of native** | **B**, the chip with Omni-Compass on native: {on} | **D**, the cloud with Omni-Compass on native: {con} |",
+          f"| **Omni-Compass on native against native** | **B against A**: {bare_read} | **D against C**: {cread} |", ""]
     cap = _card(stands, "cap")
     if cap:
         f, d = cap

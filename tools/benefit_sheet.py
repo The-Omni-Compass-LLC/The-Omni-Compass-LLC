@@ -606,6 +606,10 @@ def main(check=False):
          "held up 215% (power given)\". An operator whose aims differ reads the same numbers the other way.", "",
          "The result tables (the files in the last column) keep every change with its raw sign: a response time that fell reads \"-65%\" "
          "there, and the Reading column beside it says GAIN.", "",
+         "**The four arms** (the founder's order of 1 November; `results/TWO_BILLS.md`, `tools/two_bills.py`): **A**, the chip native; "
+         "**B**, the chip with Omni-Compass on native; **C**, the cloud native; **D**, the cloud with Omni-Compass on native, each read "
+         "by its bill, the work done inside it and the work per dollar. Every row below is one place's native against Omni-Compass on "
+         "native (B against A on a chip, D against C through a cloud, the software end's own pairs elsewhere), on the engine it names.", "",
          "The number is the Omni index's rule (`results/OMNI_INDEX.md`): each judged gauge becomes a ratio oriented so that above one is "
          "a GAIN; it counts only where judged across our three runs, anything else counts as exactly one; the number "
          "is the geometric mean of the ratios, minus one, in percent. For the tests inside the index the number is the index's own "
