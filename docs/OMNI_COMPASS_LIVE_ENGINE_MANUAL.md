@@ -1703,7 +1703,31 @@ The dock at the foot of the screen keeps the console in reach from anywhere on t
 state of the switch, the scorecard's number against native (Omni-Compass on native's change in work in the real three-run
 test), the wall's worst signal with its counts, the decision, the
 muscles past the line on each side, the frame time, demand and noise, a surge, a lost pool, pause, a way to the control panel
-(`#s-health`) and the console, and a button that folds it.
+(`#s-health`) and the console, a **Tour** button that starts the guided tour at the section in view (section 11.7), and a
+button that folds it.
+
+### 11.7 The guided tour
+
+A tab on the right edge of the screen, **Guided tour** (`#tourTab`; on a phone a round button above the dock), and the dock's
+**Tour** button start a narrated walk through the page. The tour has one stop for every section, in the page's own order, from
+the monitor wall to the glossary, with an opening and a close that carry the legal notice. At each stop the section is outlined
+and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the section shows in this book's own
+words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
+own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page. The
+card's buttons are Back, Next, Play (the tour steps on by itself when a stop's words end), Voice on or off, Close and, where the
+page runs inside Claude, Explain simply (Claude restates the stop in plain words from the stop's own text alone, adding nothing).
+The arrow keys step back and forth and Escape ends the tour. The tab starts the tour at its opening, narrated and stepping on by
+itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
+in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
+Play starts it.
+
+The voice is recorded. Every stop was read once by a neural text-to-speech model, Kokoro-82M v1.0 (Apache-2.0), in its American
+English female voice *Heart*, and kept beside the page as a small MP3 (`docs/engine/tour/`, made by `tools/tour_voice.py`; the
+words are written once, in `tools/tour_script.py`). Each clip is stored with the SHA-256 of the exact words it reads, and the page
+plays a clip only while those words are the stop's words today; a stop whose words changed after its clip was read is spoken by
+the browser's own voice (its most natural English voice, a woman's where it has one) until the clip is read again, which the
+page's build on GitHub does by itself. So the voice never says what this book and the page do not. The card's last line names the
+voice that is speaking.
 
 ## 12. Heartbeat Dial
 
@@ -3480,6 +3504,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Control | Where | Acts on | Leaves alone |
 |---|---|---|---|
 | Kill switch | the control panel; the head of the page's section 1; every section's controls; every monitor's strip; the console; the dock | every lever of every governor on the page, to native at once; shades every time axis red; a second press releases it | the records: nothing recorded is modified |
+| Guided tour | the tab on the right edge of the screen (on a phone, above the dock); the dock's Tour button | the page's scroll, one outlined section at a time, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
 | Return to native (the reset) | the fuse box's profile row; the variation switchboard's native arm | the same hand-back, named the reset; the switch reads "OFF by the reset" | the records: nothing recorded is modified |
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |
