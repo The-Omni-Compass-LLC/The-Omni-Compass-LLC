@@ -25,7 +25,7 @@ differs.
 |---|---|---|
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
 | It does no harm: never a LOSS against native | **Not shown**: 163 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
-| More work, faster, on real Kubernetes | **Shown** (L, omni-v21) | All four at once: work inside the response line up 30% to 52% (`results/live/V21_ALL_FOUR.md`); the 95th percentile cut in 10 of 11 Kubernetes tests (section 3) |
+| More work, faster, on real Kubernetes | **Shown** (L, omni-v21) | All four at once: work inside the response line up 30% to 52% (`results/live/V21_ALL_FOUR.md`); the 95th percentile cut in 10 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
 | More work, faster, on databases and caches | **Small** (L, omni-v21) | Redis, the cache's memory ceiling: GAIN AND LOSS, 0.1% GAIN; PostgreSQL, the pooler's pool size: GAIN, power given, 4.2% GAIN; MySQL, the buffer pool's size: GAIN, power given, 2.2% GAIN; MongoDB, the storage engine's cache size: GAIN AND LOSS, 0.5% LOSS; Kafka, the consumer group's size: GAIN AND LOSS, 1.2% LOSS (`docs/BENEFIT_SHEET.md`) |
 | Fewer machines | **Shown in 1 test** (L, omni-v21) | a queue of jobs: machines cut 13% to 15%, machine-hours cut 13% to 15%, machines after the queue cut 19% to 22% |
 | A smaller cloud bill | **Not shown** | Azure, omni-v18, 97 paired repetitions: the bill up 1.2%, inside the noise, and the work not counted (`results/live/AKS_STEADY_100_OMNI_V18.md`); Google and Amazon wired and not yet run |

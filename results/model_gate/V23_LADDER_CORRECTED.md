@@ -240,7 +240,7 @@ Counts over all seeds, by beat: decisions 5 s 138,240, 10 s 69,120, 15 s 46,080,
 
 ## On site
 
-On site: the kind rig's own machines, made at the start, no cluster autoscaler, the compass law at the max (docs/PACE_PREREGISTRATION.md amendment 6, the corrected model)).
+On site: the kind rig's own machines, made at the start, no cluster autoscaler, the compass law at the max (docs/PACE_PREREGISTRATION.md amendment 6, the corrected model).
 
 What each beat buys and what it costs, against native (the value, then the word):
 

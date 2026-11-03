@@ -128,7 +128,8 @@ its objective and its exact profile.
 
 The result is called **the best validated factory profile for the declared operating conditions**, which gives "optimal" an
 assessable meaning. Today the repository is at step 1 and step 2 for the next profile (the heartbeat sweep and the beat ladder,
-`results/model_gate/HEARTBEAT_SWEEP.md`, `results/model_gate/V17_LADDER.md`, class S); steps 3 to 8 come after the founder confirms the
+`results/model_gate/HEARTBEAT_SWEEP.md`; the newest ladder, on the corrected model, `results/model_gate/V23_LADDER_CORRECTED.md`,
+class S, from which omni-v24's beat for each place was picked by a rule frozen before the reading); steps 3 to 8 come after the founder confirms the
 mechanisms. Every engine version already passes the model gate (`tools/model_gate.py`) and the three-run rule before its results stand.
 
 ## 6. Carrying it into C++ and every other implementation

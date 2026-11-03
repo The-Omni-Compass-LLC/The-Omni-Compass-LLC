@@ -35,9 +35,14 @@ from tools import organism_words as OW  # noqa: E402
 
 MANUAL = ROOT / "docs" / "OMNI_COMPASS_OWNERS_MANUAL.md"
 REFEREE = ROOT / "docs" / "REFEREE_SUMMARY.md"
-FILES = (MANUAL, REFEREE)
+RECEIPTS = ROOT / "docs" / "THE_RECEIPTS.md"
+FILES = (MANUAL, REFEREE, RECEIPTS)
 SHEET = ROOT / "results" / "BENEFIT_SHEET.json"
 CLOUD = ROOT / "results" / "live" / "AKS_STEADY_100_OMNI_V18.md"
+GPU = ROOT / "results" / "gpu"
+CHIP_HEAD = ("energy per served request (J)", "requests served", "response time, 95th percentile (ms)")
+CHIP_PARTS = {"card": "the card (its own meter, class P)", "sim": "the stacks (our own models, class S)", "all": "both together"}
+WORDS = ("GAIN", "power given", "STEADY", "LOSS", "the runs disagree", "shown, not judged")
 
 ADDONS = ("Goldilocks", "CruiseKube", "add-ons")
 STORES = ("PostgreSQL", "MySQL", "MongoDB", "Kafka", "Redis")
@@ -93,12 +98,18 @@ def group_block(name: str) -> list:
 
 def sheet_block() -> list:
     L = OW.wrap("Every test's newest table in one place, written from the same record (`results/BENEFIT_SHEET.json`) by "
-                "`python3 tools/results_chapter.py`; the words beside each number are in each test's own line above and in "
+                "`python3 tools/results_chapter.py`; the gauges behind each reading, in the table's own words, are in "
                 "`docs/BENEFIT_SHEET.md`.") + ["",
-         "| Test | Engine | Reading | By the index's rule | Table |", "|---|---|---|---:|---|"]
+         "| Test | Class | Engine | Reading | By the index's rule | Table |", "|---|---|---|---|---:|---|"]
     for r in rows():
-        L.append(f"| {r['benchmark']} | {r['engine']} | **{r['benefit']}** | {how_much(r['pct'])} | `{r['file']}` |")
+        L.append(f"| {r['benchmark']} | {klass(r)} | {r['engine']} | **{r['benefit']}** | {how_much(r['pct'])} | `{r['file']}` |")
     return L
+
+
+def klass(r: dict) -> str:
+    """A benefit-sheet row's evidence class: the independent simulators and the modelled muscles are our own models (S), every other
+    row real software (L)."""
+    return "S" if GROUPS["simulators"](r["benchmark"]) or "modelled" in r["benchmark"] else "L"
 
 
 def cloud_block() -> list:
@@ -113,6 +124,47 @@ def cloud_block() -> list:
             f"{eng.group(1) if eng else 'not named'}, {pairs.group(1) if pairs else 'not counted'} paired repetitions read). The "
             f"record's own reading, quoted from it by `python3 tools/results_chapter.py`: \"{said}\"")
     return OW.wrap(text)
+
+
+def word_of(reading: str) -> str:
+    """The key's word a three-run reading opens with."""
+    c = reading.replace("**", "").strip()
+    if c.endswith("shown, not judged"):   # one repetition in a run: the table shows it and judges nothing
+        return "shown, not judged"
+    return next((w for w in WORDS if c.startswith(w)), "other")
+
+
+def counted(readings: list) -> str:
+    n = {}
+    for x in readings:
+        n[word_of(x)] = n.get(word_of(x), 0) + 1
+    return ", ".join(f"{n[w]} {w}" for w in WORDS + ("other",) if n.get(w))
+
+
+def chips_block() -> list:
+    """Every three-run table of a card's own meter (results/gpu/V<n>_*_ABC.json), newest engine first: its headline gauges in the
+    table's own words and how all its rows read by the one key."""
+    L = OW.wrap("Every three-run table of a card's own meter (class P) in `results/gpu/`, written from the tables by "
+                "`python3 tools/results_chapter.py`, newest engine first: the headline gauges in the table's own words, then how "
+                "all its rows read by the one key; every row stands in the table. Run and scored by The Omni-Compass LLC's own code. "
+                "No outside party has reviewed or approved these results.") + [""]
+    files = sorted(GPU.glob("V*_ABC.json"), key=lambda f: (-int(re.match(r"V(\d+)", f.stem).group(1)), f.stem))
+    for f in files:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        m = re.search(r"omni-v\d+", str(d.get("engine")))
+        eng, rel, rs = m.group(0) if m else "its engine not named", f.with_suffix(".md").relative_to(ROOT), d.get("rows") or {}
+        if isinstance(rs, dict):
+            head = "; ".join(f"{g} {rs[g]['reading']}" for g in CHIP_HEAD if g in rs)
+            text = f"- **{d['title']}** (`{rel}`, {eng}): {head}. Its {len(rs)} gauges: {counted([r['reading'] for r in rs.values()])}."
+        else:
+            parts = {}
+            for r in rs:
+                parts.setdefault(r.get("part"), []).append(r["reading"])
+            text = (f"- **{d['title']}** (`{rel}`, {eng}): {len(rs)} rows, "
+                    + "; ".join(f"{CHIP_PARTS.get(k, k)}: {counted(v)}" for k, v in parts.items()) + ".")
+        w = OW.wrap(text)
+        L += [w[0]] + ["  " + x for x in w[1:]]
+    return L
 
 
 def verdicts_block() -> list:
@@ -178,7 +230,7 @@ def referee_claims_block() -> list:
          f"| It does no harm: never a LOSS against native | **Not shown**: {own.group(1) if own else 'uncounted'} rows read LOSS against "
          "its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |",
          f"| More work, faster, on real Kubernetes | **Shown** (L, {eng}) | All four at once: work inside the response line up "
-         f"{m.group(1)}% to {m.group(2)}% (`{a4['file']}`); the 95th percentile cut in {p95} of {len(k8s)} Kubernetes tests (section 3) |",
+         f"{m.group(1)}% to {m.group(2)}% (`{a4['file']}`); the 95th percentile cut in {p95} of {len(k8s)} Kubernetes tests (`docs/BENEFIT_SHEET.md`) |",
          f"| More work, faster, on databases and caches | **Small** (L, {stores[0]['engine'] if stores else eng}) | "
          + "; ".join(f"{cell(r['benchmark'])}: {r['benefit']}, {how_much(r['pct'])}" for r in stores) + " (`docs/BENEFIT_SHEET.md`) |",
          ("| Fewer machines | **Shown in " + (f"{len(fewer)} test" if len(fewer) == 1 else f"{len(fewer)} tests") + f"** (L, {eng}) | "
@@ -239,7 +291,7 @@ def worked_block() -> list:
 
 
 BLOCKS = {**{k: (lambda k=k: group_block(k)) for k in GROUPS},
-          "sheet": sheet_block, "cloud": cloud_block, "worked": worked_block, "verdicts": verdicts_block,
+          "sheet": sheet_block, "cloud": cloud_block, "chips": chips_block, "worked": worked_block, "verdicts": verdicts_block,
           "referee_claims": referee_claims_block, "referee_tests": referee_tests_block,
           "realms": lambda: OW.realms_lines("../"), "grid": lambda: OW.grid_lines("../"),
           "scenarios": lambda: OW.scenarios_lines("../")}
@@ -251,7 +303,7 @@ def put(text: str) -> str:
         if a < 0 and z < 0:
             continue
         if a < 0 or z < 0 or z < a:
-            raise SystemExit(f"the Owner's Manual carries a broken marker pair for results: {name}")
+            raise SystemExit(f"a page carries a broken marker pair for results: {name}")
         text = text[:a] + "\n".join([begin(name)] + make() + [end(name)]) + text[z + len(end(name)):]
     return text
 
@@ -276,9 +328,9 @@ def main(argv=None) -> int:
             print("results blocks " + (f"missing: {', '.join(missing)}; " if missing else "")
                   + (f"differing from their records: {', '.join(bad)} (python3 tools/results_chapter.py)" if bad else ""))
             return 1
-        print("the Owner's Manual's chapter 16 and the referee's summary: in line with their records")
+        print("the Owner's Manual's chapter 16, the referee's summary and the receipts: in line with their records")
         return 0
-    print("chapter 16 and the referee's summary written from their records" + (f" (no markers yet: {', '.join(missing)})" if missing else ""))
+    print("chapter 16, the referee's summary and the receipts written from their records" + (f" (no markers yet: {', '.join(missing)})" if missing else ""))
     return 0
 
 
