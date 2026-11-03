@@ -13,7 +13,7 @@ No outside party has reviewed or approved these results.
 
 ## 1. Two things, never one
 
-**The main engine** is the engine that stands (omni-v24, `OMNI_V24.json`, `python3 tools/omni_version.py`) at its factory tune:
+**The main engine** is the engine that stands (omni-v25, `OMNI_V25.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
 at the factory beat for its place, every 10 s on site and every 60 s through a cloud (omni-v24), with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
 a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds
@@ -120,7 +120,8 @@ preregistered seeds were never read by either search.
   The beats 5 and 10 s were read in the ladder (`results/model_gate/V17_LADDER.md`): in the kind setting they read the minutes
   over the line 18.4% lower than 60 s and the autoscaler's shortfall 5.8% and 6.0% lower (GAIN) for 3.5 and 2.2 times its
   processor, and the pods waiting for a place LOSS against native as every beat does; in the cloud's setting no service gauge
-  reads GAIN against 60 s. They are left out of this first grid for its running time (a modelled day at 5 s takes about three
+  reads GAIN against 60 s (that ladder ran on the model's faulty stand-in, corrected by amendment 6 of
+  `docs/PACE_PREREGISTRATION.md` on 31 October; the corrected reading is `results/model_gate/V23_LADDER_CORRECTED.md`). They are left out of this first grid for its running time (a modelled day at 5 s takes about three
   times as long as at 60 s) and join the second search.
 - **Seeds.** 101 to 108, one day each, native on the same seeds; the gate's seeds 1 to 8 are kept for the reading on untouched seeds.
 - **Gauges.** The model's: machine-hours, energy per core-hour, the pods waiting for a place, the autoscaler's shortfall, the 95th

@@ -107,7 +107,7 @@ def milli_cpu(q):
 
 
 # The factory beat for its place (omni-v24; the founder's order of 23 October: the factory beat is the best beat the sweeps
-# read). The corrected model's ladder of 31 October (results/model_gate/V23_LADDER.md, class S, amendment 4's frozen rule)
+# read). The corrected model's ladder of 31 October (results/model_gate/V23_LADDER_CORRECTED.md, class S, amendment 4's frozen rule)
 # read a decision every 10 s undominated on site and no faster beat admissible through a cloud, where 60 s stands. The place
 # is read from the cluster itself, once at the start: a node whose providerID names a public cloud's machine makes the
 # cluster a cloud's; any other node (kind, the owner's own machines, a private cloud of the owner's, no providerID) is on

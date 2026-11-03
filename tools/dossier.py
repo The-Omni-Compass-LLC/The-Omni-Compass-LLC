@@ -145,7 +145,7 @@ def main():
           f"| Python and C++20 twins of every law, proven equal and sealed | {seal} | `results/SEAL.json` |",
           f"| The mechanism's identity against the code | {' '.join(ident)} | `results/MECHANISM_IDENTITY.json` |",
           "| The engine's convergence to its pole under the bounded command | proved | `docs/TRACKING_THEOREM.md` |",
-          "| Safety shield: 2,000,000 adversarial cases | 0 violations | `tests/test_shield_properties.py` |",
+          "| Safety shield: its four properties over 2,000,000 random and adversarial cases run on their own (3 November 2026), 100,000 on every push and 1,000,000 in a full check | 0 violations | `tests/test_shield_properties.py`, `verify.py` |",
           "| The compass law (push and pull, 5% cushions, fail up, plug contract) on every muscle, the card and Kubernetes | one law, one file | `omnicompass/compass_law.py` |",
           "| Every file the results depend on, by fingerprint | written after the check passes | `RELEASE_MANIFEST.json` |", "",
           "The engine is the founder's eight-line equation, integrated by RK4 with the bounded command held across all four "

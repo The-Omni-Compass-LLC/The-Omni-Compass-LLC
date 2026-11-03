@@ -27,7 +27,7 @@ becomes a new factory configuration only after validation and a new release decl
 Every result identifies the engine version, the configuration, the hardware or model, the workload and the measurement boundary that
 produced it.
 
-**Where it stands today.** The released factory profile is omni-v24's (`OMNI_V24.json`, `python3 tools/omni_version.py`): the
+**Where it stands today.** The released factory profile is omni-v25's (`OMNI_V25.json`, `python3 tools/omni_version.py`): the
 governor's full decision at the factory beat for its place, every 10 s on site and every 60 s through a cloud, read from the
 cluster's own nodes at its start (`omni_controller/controller.py`, `factory_beat`; a beat set with `--interval` always kept), the
 fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`, kept only where it won twice and never
@@ -128,7 +128,8 @@ its objective and its exact profile.
 
 The result is called **the best validated factory profile for the declared operating conditions**, which gives "optimal" an
 assessable meaning. Today the repository is at step 1 and step 2 for the next profile (the heartbeat sweep and the beat ladder,
-`results/model_gate/HEARTBEAT_SWEEP.md`, `results/model_gate/V17_LADDER.md`, class S); steps 3 to 8 come after the founder confirms the
+`results/model_gate/HEARTBEAT_SWEEP.md`; the newest ladder, on the corrected model, `results/model_gate/V23_LADDER_CORRECTED.md`,
+class S, from which omni-v24's beat for each place was picked by a rule frozen before the reading); steps 3 to 8 come after the founder confirms the
 mechanisms. Every engine version already passes the model gate (`tools/model_gate.py`) and the three-run rule before its results stand.
 
 ## 6. Carrying it into C++ and every other implementation

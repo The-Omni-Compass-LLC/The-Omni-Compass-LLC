@@ -29,7 +29,7 @@ for it. The usual answer is to add: more machines, more power, more people watch
 controllers is not an answer most operators will take: they are proven, often certified, and the people on call know them.
 
 **What Omni-Compass does about it.** Omni-Compass is a supervisory governor. It sits on top of those native controllers and
-never replaces them. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
+never replaces them. It never touches the data: no request, packet, file or byte of the work passes through it. It plugs into each setting a native controller already exposes, through a two-way plug (one wire in, the
 reading; one wire out, the setting), takes a snapshot of every setting before its first write, and governs the whole stack as
 one body, the organism: every muscle driven as far as its own limit and never past it, and, on the engine that stands, never
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
@@ -55,7 +55,7 @@ installation's own (section 4.8). The words are written once, with their exact m
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site), and Omni-Compass can live in all three places. The wire makes no benefit of its
+racks, the data center, on site or off site), and Omni-Compass can be wired in at all three, and in each it acts in one place, the software end, on top of the controllers already there. The wire makes no benefit of its
 own: the benefit is made where Omni-Compass sits, at the software end and at the chip, and what a cloud run must show is that
 the engine holds the same on a cloud's machines as on site (no judged gauge LOSS against native), the work per dollar read
 beside the bill (Part Six, chapter 20; `DISCLOSURES.md`, sections 9 and 10; the founder's words of 31 October, night: "We just need to show we hold").
@@ -544,11 +544,13 @@ it, read back, and the record removed.
 **Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
-**What the letters of the number mean.** Read in order, DEX-YLL-1 is one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1).
+**What the letters of the number mean.** Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1); science and software people read each part on sight. Read in order, DEX-YLL-1 is the way the engine runs:
 
-| DEX | YLL | 1 |
-|---|---|---|
-| **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and spring back unharmed; past it the damage is permanent. Omni-Compass runs every muscle up to its own line, read live, never past it. | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here: one closed loop, one body, one brain, every result read back and the next step decided from it. |
+| Letters | What they mean |
+|---|---|
+| DEX | **Data Exchange**: the input. In software, data exchange is how one system's readings reach another. Here it is the two-way plug, one wire in and one wire out: the system's own readings come in, Omni-Compass's settings go out. |
+| YLL | **Yield Limit Line**: the boundary. In engineering science, the yield limit is the most load a material can carry and still spring back unharmed; past it, the damage is permanent. Omni-Compass runs every muscle up to its own yield limit line, read live, and never past it. |
+| 1 | **1**: the output. In code, 1 is true, the finished state; in science, 1 is unity, the whole. Here it is one closed loop: one body, one brain, every result read back and the next step decided from it. |
 
 
 
@@ -921,7 +923,7 @@ the engine's own setting for every other muscle. The whole tune is fixed and fin
 (`python3 tools/omni_version.py`), so an installation can always tell whether it is running the factory tune or a tune of
 its own. Every published result is the factory tune of the engine its table names (`python3 tools/omni_version.py`), and is run again on each engine that stands.
 In the words of `docs/FACTORY_PROFILE.md`, the factory tune is the **factory profile**: the complete, versioned set of
-Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v24's. The best validated
+Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v25's. The best validated
 factory profile for the declared operating conditions has not yet been established: it is chosen only after every mechanism
 is verified and the settings are tuned and validated together (`docs/FACTORY_PROFILE.md`, section 5), and until then the
 released profile stands and no other is locked as the baseline.
@@ -1406,8 +1408,8 @@ respect a limit the wires do not carry.
 
 ### 6.5 The rules of the engine that stands, as an operator meets them
 
-The engine that stands in this edition is **omni-v24** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
-quoted here ran on omni-v7, whose rules omni-v24 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
+The engine that stands in this edition is **omni-v25** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
+quoted here ran on omni-v7, whose rules omni-v25 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
 and the interval table; omni-v11 added one guard to the Kubernetes governor; omni-v12 holds a raise the cluster's admission
 refused until something changes, and the swarm's wire acts on a neighbour at once; omni-v13 hands the CPU limits it gave back to
 the operator's on a shared host at its top while another workload there has room of its own, and counts every other pod by its
@@ -1593,7 +1595,7 @@ python3 tools/run_gpu_card.py results/sim/gpu_two_wire/eval                  # t
 ```
 
 Pass: `VERIFICATION: PASS`. Nothing in your systems is touched.
-What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v24 (digest 66c8f2d94b3e4725, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
+What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v25 (digest cf56fc0a7b707452, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
 
 **Level 1 - Watch (read-only).**
 
@@ -2466,15 +2468,15 @@ not, it is written once here or in chapters 15, 19, 20 and 21.
 
 **The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
 orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
-racks, the data center, on site or off site). Omni-Compass can live in all three places: on the software end (the cluster and
+racks, the data center, on site or off site). Omni-Compass can be wired in at all three places, and in each it acts in one place, the software end, on top of the controllers already there: on the software end (the cluster and
 its services, chapters 7 and 8), on the bare metal (the card and the machine, chapter 22 and section 8.9) and on the wire
 itself, the cloud of this part. The wire makes no benefit of its own (chapter 20): on a managed cluster the governor runs the
 whole engine on the cluster and its services, the software end, so a cloud receipt shows that the engine holds there as on
 site and how much of that end's gain comes through the wire as work per dollar. It cannot show the energy and the
 throughput gained at the bare metal, because the provider's chips are not under it. An installation that wants the whole benefit installs Omni-Compass at each place
 it owns, receipts each one where it sits, and composes them into one organism and one bill (`DISCLOSURES.md`, section 9; the
-bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far,
-and the company's expectation for each place, are in the Owner's Manual; neither is your receipt.
+bill as the sum of the costs inside a declared boundary, `docs/FACTORY_PROFILE.md`, section 8). The numbers measured so far
+are in the Owner's Manual; they are not your receipt.
 
 ### 14.1 What the implementer delivers
 
@@ -5309,6 +5311,12 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | System pool | the pool of machines that carries the cluster's add-ons and the governor, tainted so no workload lands there, never governed |
 | Work pool | a pool labelled `omni-role=work`, under the cloud's autoscaler, whose machines the governor may park |
 | OFF switch of record | the form of the OFF switch the runbook names for a cluster: scaling the governor to zero, or a commit to Git where continuous delivery reconciles it (sections 21.3 and 28.4) |
+| Data path | the route the work's own data takes (requests, packets, files, bytes); Omni-Compass is never in it: it reads the gauges (one wire in) and writes the settings native controllers already accept (one wire out) |
+| The seat | where Omni-Compass sits: in one place, the software end, on top of every controller the stack runs, as one body; it changes nothing in the silicon or the cloud's back end, and its effect is carried along the whole path the work travels |
+| The three layers | the chip, the cloud and the software, where the industry attacks the cost of computing; each layer's own answer moves its own terms of the one equation, and Omni-Compass's gain is read on top of it (`docs/INDUSTRY_LANDSCAPE.md`) |
+| Work for the bill, E | the work done over the bill, E = W / B; the gain G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 (`results/TWO_BILLS.md`) |
+| Four arms | A and B, native and Omni-Compass on native on bare metal; C and D, the same through the cloud; each read by its bill, the work done inside it and the work per dollar |
+| Alert minutes | whole minutes whose 95th percentile, failed requests counted over, was over the response line: the minutes an on-call page would be open, native beside Omni-Compass; the oversight the record measures, never people |
 
 
 ## Appendix A. Command Reference

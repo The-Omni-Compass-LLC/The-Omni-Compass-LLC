@@ -192,7 +192,7 @@ files, the raw files GitHub archived with their SHA-256 lists, the two other man
 ## Notice and Disclaimer
 
 This manual describes the live benchmark engine page as `docs/engine/build_live_engine.py` builds it on the engine that stands
-(omni-v24, `OMNI_V24.json`). The page names its engine on its own `<html>` element (`data-engine`), and the engine its words
+(omni-v25, `OMNI_V25.json`). The page names its engine on its own `<html>` element (`data-engine`), and the engine its words
 were written for (`data-prose`); where the records stand on a newer engine than the words, a banner under the wall says so
 (`#engBanner`). The build stamps the engine that stands on the page and rebuilds every record, and `--check` fails a page whose
 engine differs; where the page you are reading names a newer engine, the page is right and this manual is realigned with it in
@@ -362,7 +362,7 @@ played back.
 **What this manual covers.** Every section of the page in the page's own order; every gauge, with its side, its aim and its
 word; every control, with its backend, its effects and its limits; the factory profile against the active one; the two tickers
 that show the mechanism of action; the trace from any tile to the record it came from; and what to do when a tile reads LOSS.
-It covers the page as built on omni-v24; a later engine renames itself on the page's title block and this book is realigned in
+It covers the page as built on omni-v25; a later engine renames itself on the page's title block and this book is realigned in
 the same push.
 
 **What this manual does not cover.** How the engine is built, its equations beyond the ones the page itself prints, the
@@ -679,7 +679,7 @@ The **profile** group holds three buttons, and the profile box (`#fuseProfile`) 
   candidate**, the dial's buttons and the muscles' own switches (the card's, the panel's and the cluster console's) refuse a press with
   a line in the log, and the request line reads "none sent". The note reads "HELD at decision n: the heartbeat … s, the dial on …,
   every muscle driven (or so many left native) and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
-  factory profile is the released one (omni-v24: the heartbeat 60 s, every muscle on its card); no other profile is released".
+  factory profile is the released one (omni-v25: the heartbeat 10 s on site and 60 s through a cloud, every muscle on its card); no other profile is released".
 - **Return to native** hands governance back: the reset, the operator's control (`tools/omni_control.py`, `POST /v1/reset`).
   On the page every setting goes to native's own controller and every Omni-Compass side follows native, as with the kill switch,
   but the switch then reads "OFF by the reset · native alone · press to turn ON" and the event log names the reset. A second
@@ -1225,7 +1225,7 @@ introduction stands there under the section's number and title, so the sections 
 Native is orange everywhere and Omni-Compass blue, and every monitor, section and part carries its signal and its word: red
 REDLINING, yellow STEADY, green GAINING.
 
-### 3.2 The sections, as built on omni-v24
+### 3.2 The sections, as built on omni-v25
 
 Appendix A lists every section with its anchor and the chapter of this book that reads it. In the page's order:
 
@@ -1734,22 +1734,24 @@ This chapter reads the page's section 3d, **Heartbeat Dial** (`#s-dial`).
 ### 12.1 The dial
 
 The governor's heartbeat, its full decision, is a dial from omni-v17 on (the page's section 3d, `#s-dial`): the main engine, the
-factory profile, decides every 60 s, and on the page any of seven beats can be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
+factory profile, decides every 10 s on site and every 60 s through a cloud (omni-v24: the factory beat for its place, read from the
+cluster's own nodes when `--interval` is unset; 60 s everywhere from omni-v17 to omni-v23), and on the page any of seven beats can
+be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
 checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor
 counts seconds (omni-v16), so turning the dial changes only how often it looks. Each beat stands beside native with what it buys
 (the reads of the cluster a day) and what it costs (the governor's own processor, and every service row read against native and
-against the main engine's 60 s), because an operator may want a fast beat for its reads and accept what it costs, or a slow one.
+against the 60 s beat, the ladder's zero line), because an operator may want a fast beat for its reads and accept what it costs, or a slow one.
 At each beat the other knobs may want their own combination; that tuning is the next study, in our own models first.
 
 ### 12.2 Beat Ladder: the two tables
 
-Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the models read (**Cloud Setting as Read
-22 and 23 October: the Tune-Down, Machines Alone (Struck 31 October)**: the compass law at the tune-down, the machines alone,
-the cloud's rule when these records were read; **kind Benchmark at the Max, Autoscalers Sensed**: the compass law at the max,
-every autoscaler sensed). The first, **Against Native**, gives each beat's value and its
+Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the ladder read, each setting described
+under its heading in the ladder's own words (today **Cloud Setting**: the compass law on top of the cloud's own autoscaler, at the
+max from 31 October; and **On-Site Setting**: the kind rig's own machines, made at the start, no cluster autoscaler, the compass
+law at the max). The first, **Against Native**, gives each beat's value and its
 word against native: the reads of the cluster a day, the governor's own processor, the pods waiting for a place, the 95th
 percentile, the minutes over the line, the autoscaler short of its target, the machine-hours and the energy per core-hour; native
-has no governor, so its reads and processor are blank, and the main engine's row is set in bold. The second, **Against the Main Engine's 60 s**,
+has no governor, so its reads and processor are blank, and the 60 s row, the main engine's beat on the engine the ladder read, is set in bold. The second, **Against the 60 s Beat**,
 gives each other beat's change against it, with its word. The reads are what a beat spends to look more often, shown as the
 key reads a resource spent: power given.
 
@@ -1757,10 +1759,12 @@ key reads a resource spent: power given.
 
 Read a row across: a beat whose service words read GAIN or STEADY against native and whose cost columns the operator accepts is a
 beat that can be set. A word of LOSS against native is the engine's at that beat and is listed with every other LOSS row
-(the page's section 2d, chapter 7). The values are our own models (class S, `results/model_gate/V17_LADDER.json`, `tools/beat_ladder.py`),
-each beat's mean over seeded days on a plant that moves every 5 s, paired by seed; the real runs at every beat
+(the page's section 2d, chapter 7). The values are our own models (class S, `tools/beat_ladder.py`): the newest engine's ladder,
+of one engine's the corrected one first, today `results/model_gate/V23_LADDER_CORRECTED.json` (omni-v23's rules on the model that
+amendment 6 of `docs/PACE_PREREGISTRATION.md` corrected; the ladders read before that correction, `V17_LADDER` and `V23_LADDER`,
+ran on the model's faulty stand-in and stand only as their own records), each beat's mean over seeded days on a plant that moves every 5 s, paired by seed; the real runs at every beat
 (`docs/PACE_PREREGISTRATION.md`, amendment 3) take their place in the note above the tables when their three runs land. The dial
-is the tuning bench's own example: the factory profile runs the main engine at 60 s; any other beat is the engine's range on the
+is the tuning bench's own example: the factory profile runs the main engine at 10 s on site and 60 s through a cloud; any other beat is the engine's range on the
 page, never a benchmark result, until its own three runs land on that beat and are read as that beat's. A beat set on a live
 system is the operator's own custom profile, and its results are its own.
 
@@ -2896,7 +2900,7 @@ under the same rule, the engine's setting for the rest (`realms/muscle_cards_v5.
 
 In the words of `docs/FACTORY_PROFILE.md`, the page is the **live tuning bench**: the interface that operates the engine's
 controls and displays their effects through the connected backend. The **factory profile** is the complete, versioned set of
-Omni-Compass default settings shipped together; on the engine that stands it is omni-v24's (`OMNI_V24.json`): the governor's
+Omni-Compass default settings shipped together; on the engine that stands it is omni-v25's (`OMNI_V25.json`): the governor's
 full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start, the fast checks
 every 5 s, every muscle on the card found for it and on the engine's own setting
 otherwise. The **active profile** is the settings actually governing the current run. An adjustment on the bench produces an
@@ -3018,7 +3022,7 @@ the hold doubling for each hand-back in a row up to 160; it takes the muscle bac
 than native's by 5%. Where native is not stronger it stays, because redlining less than native is still a benefit against native.
 The red is still wired on its side, so that if a muscle does redline there (a fault, a bug), it is seen at once. That is the kill
 switch's purpose: when something redlines that Omni-Compass itself cannot stop, one press hands every muscle back to native in the
-same instant. The engine that stands, omni-v24, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
+same instant. The engine that stands, omni-v25, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
 C++ twin `cpp/src/immune.cpp`, proven alike on 200 seeded scripts, and the nervous system's `native_hold`; on Kubernetes each
 service's autoscaler target, native's twin the operator's own target), beside the SLO reflex and the pod reflex of the Kubernetes
 governor (`omni_controller/controller.py`); the page's live model (class S) applies the same rule, with the engine's own numbers, to
@@ -3209,7 +3213,7 @@ Every number on the wall can be walked back to the file it came from.
 ### 43.2 The engine's name and the profile
 
 Every table and every monitor names the engine it ran on; the page's title block names the engine
-the page stands on (omni-v24). A table on an older engine stands only until its runs on the engine that stands land, and the
+the page stands on (omni-v25). A table on an older engine stands only until its runs on the engine that stands land, and the
 board says which it is. Nothing is read across engines. Every result the page plays ran the factory profile of the engine its
 table names; the control panel names the profile governing the live model now, with its fingerprint (section 2.7), and a
 candidate or custom profile there is never a result of record.
@@ -3383,9 +3387,9 @@ A copy whose page, engine or records differ from what these print is not a copy 
   the lease's walk back, the kill switch.
 - **Dial.** The max (every muscle to its own limit, never below native; the default) or the tune-down (never more than native).
 - **Engine that stands.** The engine version on main, named on the page's title block and in `python3 tools/omni_version.py`;
-  omni-v24 for this edition.
+  omni-v25 for this edition.
 - **Factory profile.** The complete, versioned set of Omni-Compass default settings shipped together; on the engine that
-  stands, omni-v24's, the heartbeat 10 s on site and 60 s through a cloud (60 s on the page's own model), every muscle on its card.
+  stands, omni-v25's, the heartbeat 10 s on site and 60 s through a cloud (60 s on the page's own model), every muscle on its card.
   Every result on the engine that stands is this profile's; every earlier result is its own engine's.
 - **Fingerprint (of a profile).** The page's FNV-1a hash of every setting of the mechanism, the heartbeat and every muscle's body
   included, with the dial and the muscles left native once either leaves the factory's: one identity for one set of settings.

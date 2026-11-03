@@ -75,6 +75,8 @@ IDLE_S = 1.0              # store fix of 25 October: a consumer is idle only aft
                           # empty 200 ms poll), and a consumer starts busy: the omni-v16 runs read a momentary empty poll as idle, which made a
                           # 2 -> 1 -> 2 give-back trial and its fail-up (two rebalances) in the first 11 seconds of every omni arm, and with 8
                           # partitions keyed round-robin no consumer above the operator's count was ever idle, so none was ever given back
+PRODUCER_GRACE_S = 120.0  # a producer still running this long past its own schedule is stopped and the workload fails, loudly,
+                          # never left to hold the job to its time limit (omni-v25)
 STEPS = "1 2 3 2 3 4 5 6 5 4 3 2 1 2 1"
 BURST = "1 6 1 8 1 6"
 PEAK_SHARE = 0.9          # the peak notch offers nine tenths of native's measured capacity
@@ -634,11 +636,17 @@ def run_arm(arm, wl_dir: Path, rep, service_ms, payload, steps, step_s, base, li
     time.sleep(8)                                              # the group forms and settles (both arms)
     sampler = Sampler(grp, produced); sampler.start()
     omni = None
+    cpu0 = cpu_times(); t0 = time.time()
+    # The producer is forked before the governor's thread starts (omni-v25). A fork copies only the thread that calls it, so a
+    # lock another thread holds at that instant stays held in the child for ever. From omni-v22 the governor's thread opened its
+    # own Kafka client at its start (the arrivals' reader, Offsets) while this thread forked the producer: the producer inherited
+    # a lock that thread held, blocked on it before it sent a message, and every omni arm on GitHub waited on it to the job's
+    # limit (reproduced on Kafka 3.9.1: the child single-threaded, waiting on a futex, the governor's audit reading no arrivals).
+    prod = mp.Process(target=producer_proc, args=(topic, rates, step_s, payload, produced, stop_prod, str(d / "producer.log")))
+    prod.start()
     if arm == "omni":
         omni = Omni(grp, produced, d / "audit.jsonl", line_ms, objective, topic=topic); omni.start()
-    cpu0 = cpu_times(); t0 = time.time()
-    prod = mp.Process(target=producer_proc, args=(topic, rates, step_s, payload, produced, stop_prod, str(d / "producer.log")))
-    prod.start(); prod.join()
+    join_producer(prod, len(rates) * step_s, f"{wl_dir.name} rep {rep} {arm}")
     # drain: up to 30 s for the group to catch up, then stop
     t_drain = time.time()
     while grp.consumed.value < produced.value and time.time() - t_drain < 30:
@@ -681,6 +689,16 @@ def run_arm(arm, wl_dir: Path, rep, service_ms, payload, steps, step_s, base, li
     return g
 
 
+def join_producer(prod, schedule_s, what):
+    """Waits for the producer through its schedule and PRODUCER_GRACE_S more; a producer still running then is stopped and the
+    workload fails with the reason, so a stalled child can never hold the job to its time limit."""
+    prod.join(timeout=schedule_s + PRODUCER_GRACE_S)
+    if prod.is_alive():
+        prod.terminate(); prod.join(timeout=5)
+        raise RuntimeError(f"{what}: the producer did not finish its {schedule_s:.0f} s schedule within {PRODUCER_GRACE_S:.0f} s more; "
+                           "stopped, and this workload fails rather than wait")
+
+
 def capacity(wl_dir: Path, service_ms, payload, calib_s):
     """Native's unlimited capacity: the operator's consumers fed faster than they can take for calib_s seconds."""
     d = wl_dir / "capacity"; d.mkdir(parents=True, exist_ok=True)
@@ -692,7 +710,7 @@ def capacity(wl_dir: Path, service_ms, payload, calib_s):
     time.sleep(8)
     c0 = grp.consumed.value
     prod = mp.Process(target=producer_proc, args=(topic, [5000.0], calib_s, payload, produced, stop_prod, str(d / "producer.log")))
-    prod.start(); t0 = time.time(); prod.join(); t1 = time.time()
+    prod.start(); t0 = time.time(); join_producer(prod, calib_s, f"{wl_dir.name} capacity"); t1 = time.time()
     rate = (grp.consumed.value - c0) / (t1 - t0)
     grp.stop_all(); delete_topic(topic)
     return rate
@@ -743,6 +761,7 @@ def engine():
 
 def run_workload(name, out: Path, reps, step_s, calib_s, line_ms, objective=DEFAULT_OBJECTIVE):
     service_ms, payload, steps, tuning = WORKLOADS[name]
+    import kafka  # noqa: F401  (the client loaded once here, in the main thread, before any thread or child starts: run_arm)
     wl_dir = out / f"kafka-{name}"; wl_dir.mkdir(parents=True, exist_ok=True)
     print(f"== {name}: {service_ms} ms of work a message, {payload} B, steps {steps}, {step_s} s a notch, the verdict's objective {objective}", flush=True)
     cap = capacity(wl_dir, service_ms, payload, calib_s)
