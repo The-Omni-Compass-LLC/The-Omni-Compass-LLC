@@ -1637,7 +1637,9 @@ words (the first paragraphs of the chapter that reads that section, cut at a sen
 own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page. The
 card's buttons are Back, Next, Play (the tour steps on by itself when a stop's words end), Voice on or off, Close and, where the
 The arrow keys step back and forth and Escape ends the tour. The tab starts the tour at its opening, narrated and stepping on by
-itself; the dock's button starts it at the section in view; a second press of either ends it.
+itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
+in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
+Play starts it.
 
 The voice is recorded. Every stop was read once by a neural text-to-speech model, Kokoro-82M v1.0 (Apache-2.0), in its American
 English female voice *Heart*, and kept beside the page as a small MP3 (`docs/engine/tour/`, made by `tools/tour_voice.py`; the
@@ -3940,7 +3942,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-03 16:28 UTC on omni-v25 (digest cf56fc0a7b707452) from commit 52a4affc692d.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-03 22:28 UTC on omni-v25 (digest cf56fc0a7b707452) from commit e2c640de9383.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.

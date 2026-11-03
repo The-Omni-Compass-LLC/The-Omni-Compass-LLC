@@ -1717,7 +1717,9 @@ own controls line); under **Try these** each button of the section is named, and
 card's buttons are Back, Next, Play (the tour steps on by itself when a stop's words end), Voice on or off, Close and, where the
 page runs inside Claude, Explain simply (Claude restates the stop in plain words from the stop's own text alone, adding nothing).
 The arrow keys step back and forth and Escape ends the tour. The tab starts the tour at its opening, narrated and stepping on by
-itself; the dock's button starts it at the section in view; a second press of either ends it.
+itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
+in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
+Play starts it.
 
 The voice is recorded. Every stop was read once by a neural text-to-speech model, Kokoro-82M v1.0 (Apache-2.0), in its American
 English female voice *Heart*, and kept beside the page as a small MP3 (`docs/engine/tour/`, made by `tools/tour_voice.py`; the
