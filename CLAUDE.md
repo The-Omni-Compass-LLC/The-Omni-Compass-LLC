@@ -46,9 +46,21 @@ the founder overrides one in the conversation.
 - Scaling: floor of 2 machines, no ceiling, every machine usable. Traffic tests step by one (1 2 3 2 3 4 …).
 - Nothing is hardwired. Anything that doesn't work is removed, not just switched off.
 
-## The engine: Omni v24 stands (v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
+## The engine: Omni v25 stands (v24, v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`) stands on main from 1 November, night (its campaign
+- **Omni v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`) stands on main from 3 November, night, under the founder's
+  standing order that every fault found is fixed and lands as the next version, told, not asked, and his order of 3 November ("go into
+  the GitHub ... grade and see where it's at ... keep pushing"): omni-v24 with one fault fixed in the Kafka wire (`tools/run_kafka.py`).
+  From omni-v22 the governor's thread opened its own Kafka client (the arrivals' reader) at its start while the main thread forked the
+  producer; a fork copies only the calling thread, so the producer inherited a lock that thread held and never sent a message, and every
+  Kafka run on GitHub from 30 October stopped at the job's 150-minute limit with nothing handed in (16 runs in a row from 2 November,
+  20:03 UTC; reproduced on Kafka 3.9.1, the producer single-threaded on a futex). The producer is now forked before the governor's
+  thread starts, the client loaded once in the main thread first, and a producer still running 120 s past its schedule stops its
+  workload with the reason; the workflow prints the runner's progress into the job's log. The governor's decisions are byte for byte
+  omni-v24's (53 of the wire's 58 definitions identical, the brain, its twin and the decision rule among them); a comment in the
+  Kubernetes governor names the corrected ladder's file. The model gate against omni-v24: `results/model_gate/V25_VS_V24.md`. Every
+  benchmark runs again on it from 21:00 UTC on 3 November, Kafka among them for the first time since omni-v21.
+- **Omni v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`) stood on main from 1 November, night, to 3 November (its campaign
   from 01:30 UTC on 2 November), on the founder's orders that the factory beat is the best beat the sweeps read (23 October), that 60 s is a
   disadvantage and the basic setting is found and locked (31 October; "You pick and find out", that night), and his word of 1 November
   ("give me my new version engine"): omni-v23 with the heartbeat it ships with read from the place it runs in
@@ -1198,8 +1210,8 @@ the founder overrides one in the conversation.
 ## Repository
 
 - Referee and underwriter level. Only finals up front; old material goes to `docs/history` / `archive/` or is removed.
-  One version is always the main one; `main` and the working branch, `v24` (the engine that stands, 1 November), stay in
-  sync, and `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v24` (made at omni-v24's push; the runs started from `gpu-omni-v23` stay omni-v23's record),
+  One version is always the main one; `main` and the working branch, `v25` (the engine that stands, 3 November), stay in
+  sync, and `v24`, `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v25` (made at omni-v25's push; the runs started from `gpu-omni-v24` stay omni-v24's record),
   levelled with main at every landing, its head the one exact commit the founder's next GPU rental starts from (the last rental ran
   7770532ed5, omni-v21 with the GPU rig's readiness barrier, 30 October). `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
   is history** (the founder's order of 17 October: "We won long past 5"): it is never merged into `main` and `main` is
