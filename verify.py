@@ -411,6 +411,9 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "organism_words.py"), "--check"], capture_output=True, text=True)
     check("the front page's muscles, seven organisms, grid and twenty scenarios are what their records give (tools/organism_words.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "results_chapter.py"), "--check"], capture_output=True, text=True)
+    check("the Owner's Manual's chapter 16, Results to Date, is each test's newest table (tools/results_chapter.py)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "engine_coverage.py"), "--check"], capture_output=True, text=True)
     check("how much of the engine the tests run: docs/ENGINE_COVERAGE.md is what its record gives (tools/engine_coverage.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])

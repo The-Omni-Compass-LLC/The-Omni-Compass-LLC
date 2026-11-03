@@ -7,6 +7,11 @@ receipts themselves. Every number is read from omni-v11's three-run tables (the 
 files of their runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these
 results.
 
+**Read with the tables that stand.** This page reads omni-v11's tables of 19 October. On the newest tables (omni-v21) a tail
+does read LOSS in three tests, each named with its cause in `docs/LOSS_LEDGER.md`: CruiseKube's 95th percentile (Omni-Compass
+wrote nothing in any of its repetitions), the Redis small workload's 99th percentile, and MySQL as shipped, its burst's 95th
+percentile (one repetition of one run).
+
 ## 1. No tail reads LOSS
 
 By the preregistered rule (a gauge reads LOSS only when it moves away from its aim in all three of our runs, every 95%

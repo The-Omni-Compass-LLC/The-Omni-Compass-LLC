@@ -111,6 +111,39 @@ def places() -> dict:
     return out
 
 
+LADDER = ROOT / "results" / "model_gate" / "V23_LADDER_CORRECTED.json"
+LADDER_PAGE = "results/model_gate/V23_LADDER_CORRECTED.md"
+
+
+def ladder_cloud() -> dict | None:
+    """The machine-hours our own model reads against native at every beat in the cloud's setting at the max (class S, the work
+    fixed by the model's own load), from the corrected ladder's record; None when the record is absent."""
+    try:
+        d = json.loads(LADDER.read_text())
+        rel = {int(b): r["machine_hours"]["vs_native"]["relative"] for b, r in d["models"]["pace_cloud"]["rows"].items()}
+    except (OSError, KeyError, ValueError, TypeError):
+        return None
+    main = int(d.get("main_s") or 60)
+    return {"lo": min(rel.values()), "hi": max(rel.values()), "main": rel.get(main), "main_s": main}
+
+
+def ladder_words() -> str:
+    lc = ladder_cloud()
+    if not lc:
+        return "our own model of the cloud at the max is not read here (its record is absent)"
+    at = f", {100 * lc['main']:.0f}% at the main engine's {lc['main_s']} s" if lc.get("main") is not None else ""
+    return (f"our own model at the max reads the machine-hours up {100 * lc['lo']:.0f}% to {100 * lc['hi']:.0f}% across the beats"
+            f"{at}, with the work fixed by the model's own load (`{LADDER_PAGE}`, class S)")
+
+
+def aim(db: float = 0.01, dw: float = 0.12, spend: float = 100.0) -> dict:
+    """The founder's aim of 31 October put through the equation on an example spend ($ M a year): the bill up db, the work up dw.
+    Every dollar figure is at native's price per unit of work, p0 = native's bill / native's work."""
+    g = (1 + dw) / (1 + db) - 1
+    return {"G": g, "work_x": 1 + dw, "bill": spend * (1 + db), "work_value": spend * (1 + dw), "more_work": spend * dw, "more_bill": spend * db,
+            "per_spend": spend * g, "native_work_cost": spend / (1 + g)}
+
+
 def owner_bill(items: dict, moved: dict) -> dict:
     """An owner's own bill read through the equation: items {line: dollars a period, native}, moved {line: change in that line's
     quantity with Omni-Compass on native, as a fraction}. Returns B native, B with Omni-Compass, b and each line's share."""
@@ -152,6 +185,10 @@ def markdown(d: dict) -> str:
     chip_usd = ", ".join(("$" if r["w"] >= 0 else "−$") + f"{abs(500 * r['w']):.2f}" for r in bm0.get("runs", [])) or "not yet read"
     cloud_b = _pct(cl0["b"]) if cl0.get("b") is not None else "not read"
     chip_100m = ", ".join(("+$" if r["w"] >= 0 else "−$") + f"{abs(100 * r['w']):.2f} M" for r in bm0.get("runs", [])) or "not yet read"
+    on_items = {"compute": 720 * 4.50, "egress": 500 * 0.08, "storage": 30.0}
+    we_items = {"compute": 40 * 4.50, "egress": 50 * 0.08, "storage": 30.0}
+    on, we = owner_bill(on_items, {}), owner_bill(we_items, {})
+    a = aim()
     L = ["# Work for the Bill: the One Number the Receipts Prove", "",
          "What the receipts of the chip and of the clouds must show is how much work is done for the bill, native against "
          "Omni-Compass on native (the founder's words of 2 November). This page writes it as one equation, reads every term from a "
@@ -235,12 +272,15 @@ def markdown(d: dict) -> str:
          "| Bare metal, always on | the lease $500 a month (egress and storage inside the box) | none of the bill: the same boxes in "
          "both arms, b = 0 | G = w, the work the same boxes serve: on the A10's receipts w was " + chip_w + "; at native's price per "
          "unit of work that is " + chip_usd + " of work a month out of the same $500, and the three runs disagree |",
-         "| Through the cloud, always on | compute 720 h × $4.50 = $3,240, egress 500 GB × $0.08 = $40, storage $30: $3,310 | the "
-         "hours (the machines it parks and wakes), 97.9% of this bill; egress only as the work grows; storage not at all | b ≈ 0.979 × "
-         "the change in machine-hours; the one cloud set read so far moved its machine-hours " + cloud_b + " (inside the noise, at the "
-         "tune-down on the machines alone) and did not count its work, so G is not read |",
-         "| Through the cloud, weekends only (40 h) | compute $180, egress $4, storage $30: $214 | the hours, 84.1% of this bill | the same "
-         "reading: b ≈ 0.841 × the change in machine-hours |", "",
+         f"| Through the cloud, always on | compute 720 h × $4.50 = ${on_items['compute']:,.0f}, egress 500 GB × $0.08 = "
+         f"${on_items['egress']:,.0f}, storage ${on_items['storage']:,.0f}: ${on['B_native']:,.0f} | the hours (the machines it parks "
+         f"and wakes), {100 * on['shares']['compute']:.1f}% of this bill; egress only as the work grows; storage not at all | b ≈ "
+         f"{on['shares']['compute']:.3f} × the change in machine-hours; the one cloud set read so far moved its machine-hours " + cloud_b +
+         " (inside the noise, at the tune-down on the machines alone) and did not count its work, so G is not read |",
+         f"| Through the cloud, weekends only (40 h) | compute 40 h × $4.50 = ${we_items['compute']:,.0f}, egress 50 GB × $0.08 = "
+         f"${we_items['egress']:,.0f}, storage ${we_items['storage']:,.0f}: ${we['B_native']:,.0f} | the hours, "
+         f"{100 * we['shares']['compute']:.1f}% of this bill | the same reading: b ≈ {we['shares']['compute']:.3f} × the change in "
+         "machine-hours |", "",
          "Which place is cheaper for the same work (the weekend cluster in a cloud, the always-on one on bare metal) is the owner's "
          "choice of place, and a cloud's hypervisor share is the same in both arms: neither is a benefit of Omni-Compass. What "
          "Omni-Compass changes is the work the same machines serve and, in a cloud, the hours billed (`owner_bill` in "
@@ -261,13 +301,17 @@ def markdown(d: dict) -> str:
          "native's price per unit of work, out of the same $100 M; the three runs disagree, so no figure is claimed |",
          "| Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, "
          "the work answered inside the line (the work meter) | the one set read so far moved the compute bill " + cloud_b + " (inside "
-         "the noise) and did not count its work; our own model at the max reads the machine-hours up 9% to 35% (class S): the cloud's "
-         "bill may rise where the work rises more, so a smaller cloud bill is not what the record points to |", "",
+         "the noise) and did not count its work; " + ladder_words() + ": the cloud's bill may rise where the work rises more, so a "
+         "smaller cloud bill is not what the record points to |", "",
          "**The arithmetic at the founder's aim, an example and not a result.** The founder's words of 31 October state the aim the "
          "cloud is judged by: \"We're pushing 1% more bill, but we're getting ~12% more work.\" Put through the equation on the example's "
-         "$100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +10.9%; the work for each dollar up 10.9%, which is "
-         "$10.9 M more work a year at native's price per unit of work, for a bill of $101 M; or, read the other way, native's work "
-         "for $100 M / 1.109 = $90.2 M. On bare metal the bill holds (ΔB = 0), so G = ΔW: each 1% more work from the same boxes is "
+         f"$100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +{100 * a['G']:.1f}%, the work for each dollar up "
+         f"{100 * a['G']:.1f}%. In dollars, each at native's price per unit of work (native's $100 M bill for native's year of work): "
+         f"the bill is ${a['bill']:.0f} M and the work {a['work_x']:.2f} times native's, worth ${a['work_value']:.0f} M, so "
+         f"${a['more_work']:.0f} M more work for ${a['more_bill']:.0f} M more bill; at that work for each dollar, $100 M of bill buys "
+         f"${a['per_spend']:.1f} M more work than native's $100 M did; read the other way, native's year of work costs $100 M / "
+         f"{1 + a['G']:.3f} = ${a['native_work_cost']:.1f} M. On bare metal the bill holds (ΔB = 0), so G = ΔW: each 1% more work "
+         "from the same boxes is "
          "$1 M of work a year on the example's $100 M. These are the equation's arithmetic on an aim; the receipts above are what has "
          "been measured, and a page that shows the example says so beside it.", "",
          "**What no budget may show.** Three limits come from the engine and from physics, not from the receipts:", "",
