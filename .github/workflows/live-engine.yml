@@ -87,6 +87,15 @@ jobs:
           python docs/engine/export_runs.py --dirs > raw_dirs.txt
           wc -l < raw_dirs.txt
           bash scripts/raw_archive.sh open $(sed 's#^/results/live/raw/#/#' raw_dirs.txt)
+      - name: The guided tour's recorded voice, read again for any stop whose words changed
+        # tools/tour_voice.py: the Kokoro-82M voice (Apache-2.0) reads a stop again only when the Live Engine Manual's words for
+        # it or the section's controls line changed; the page plays a clip only while it reads the stop's words today, so a
+        # voice that could not be read leaves those stops to the browser's own voice and never stops the build
+        continue-on-error: true
+        run: |
+          python tools/tour_voice.py --status || {
+            python -m venv "$RUNNER_TEMP/voice" && "$RUNNER_TEMP/voice/bin/pip" install -q kokoro-onnx==0.6.1 soundfile==0.14.0 &&
+            "$RUNNER_TEMP/voice/bin/python" tools/tour_voice.py | tee -a "$GITHUB_STEP_SUMMARY"; }
       - name: Rebuild the page from the engine that stands and the repository's own results
         env:
           GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -116,7 +125,7 @@ jobs:
           # every file the rebuild writes goes in with the page (the page, its appraisal, the wall's Grafana dashboard, the GitHub
           # ledger): on 24 October a file the rebuild had rewritten was left out, and every push attempt stopped on it ("cannot pull
           # with rebase: You have unstaged changes", run 40074924675)
-          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json; do
+          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html docs/engine/tour README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json; do
             [ -e "$f" ] && git add -- "$f"
           done
           git commit -q -m "Live benchmark engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"

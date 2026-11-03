@@ -1233,6 +1233,31 @@ def glossary() -> dict:
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
+def tour() -> dict:
+    """The guided tour (tools/tour_script.py): every section of the page in the page's order, in the words the Live Engine
+    Manual prints for it, with the section's own controls line, an opening and a close that carry the notice. A stop carries
+    its recorded clip (docs/engine/tour/, tools/tour_voice.py) only while the clip's words are the stop's words today; any other
+    stop is read by the browser's own voice."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import tour_script  # noqa: E402
+    vf = HERE / "tour" / "TOUR_VOICE.json"
+    v = json.loads(vf.read_text(encoding="utf-8")) if vf.exists() else {}
+    clips, steps = v.get("clips") or {}, []
+    for st in tour_script.steps():
+        c = clips.get(st["id"]) or {}
+        ok = bool(c) and c.get("sha") == st["sha"] and (HERE / "tour" / c.get("file", "")).exists()
+        steps.append({k: st[k] for k in ("id", "label", "title", "text", "controls", "notice", "say", "sha")}
+                     | {"clip": c["file"] if ok else "", "seconds": c.get("seconds") if ok else None})
+    about = None
+    if v:
+        about = {"voice": v.get("voice"), "voice_name": "Heart" if v.get("voice") == "af_heart" else v.get("voice"),
+                 "model_short": "Kokoro-82M v1.0", "model": v.get("model"), "model_license": v.get("model_license"),
+                 "runtime": v.get("runtime"), "encoder": v.get("encoder"), "made_with": v.get("made_with"),
+                 "clips": sum(1 for x in steps if x["clip"]), "stops": len(steps),
+                 "minutes": round(sum(x["seconds"] or 0 for x in steps) / 60, 1)}
+    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps}
+
+
 def field() -> dict:
     """The ones that compete, as docs/THE_FIELD.md ranks them (section 3i's table, the referee of 31 October: never typed into the
     page): the five it names to run first, each with the ranked table's reason, rig and cost as that file reads them, the day the
@@ -1382,7 +1407,7 @@ def records(runs: bool) -> dict:
     return {"harness": h, "ctlrec": pack_controller(c), "scen": s, "runs": rr, "fleet": fleet(), "build": build, "whole": wh,
             "gpurun": gpu, "cpuhost": cpu, "monitors": reg, "engineruns": eruns, "heldout": ho, "cpptwin": x,
             "beatsweep": beat_sweep(), "dial": dial(), "coremc": core_mc(), "onnative": on_native_abc(), "scenarios": scenarios20(), "injgrid": injection_grid(), "audit": verdict_audit(), "glossary": glossary(),
-            "lawwires": law_wires(), "field": field(), "bills": bills()}
+            "lawwires": law_wires(), "field": field(), "bills": bills(), "tour": tour()}
 
 
 def embedded(page: str, key: str):
@@ -1662,7 +1687,7 @@ def main() -> int:
               "the prose stays as written for the older engine until it is realigned, and the page says so")
     if a.check:
         bad = [k for k in ("harness", "ctlrec", "scen", "runs", "fleet", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills")
+                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills", "tour")
                if embedded(page, k) != rec[k]]
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
