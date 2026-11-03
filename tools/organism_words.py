@@ -138,20 +138,15 @@ def whole_index(w: dict) -> str | None:
     return None
 
 
-def build() -> str:
+def realms_lines(link_prefix: str = "") -> list:
+    """The 1,107 muscles and the seven organisms: the muscles counted by their reading, each organism under each load."""
     d = json.loads(REALMS.read_text(encoding="utf-8"))
     run = d["run"]
     m = muscles()
     rows = organisms(d)
-    gsum, geng, sent = grid()
-    sc = scenarios()
     seeds = run["seeds"]
-    L = [BEGIN,
-         "Every number in this section is computed from its record by `python3 tools/organism_words.py`, and `verify.py` fails a",
-         "push where any of them differs from what the records give. Evidence class **S**: our own models of the plants, not",
-         "meters; a plant written by the people who wrote the law is not an independent test.",
-         "",
-         *wrap(f"**The 1,107 muscles and the seven organisms** ([`results/realms_v5/REALMS_V5.md`](results/realms_v5/REALMS_V5.md)). "
+    L = [
+         *wrap(f"**The 1,107 muscles and the seven organisms** ([`results/realms_v5/REALMS_V5.md`]({link_prefix}results/realms_v5/REALMS_V5.md)). "
                f"The newest record is engine {run['engine']}'s: run {run['started']}, commit `{run['commit'][:12]}`, preregistered seeds "
                f"{seeds[0]} to {seeds[-1]} (ten paired runs per muscle, per organism and per load), read again by the 0.5% rule on 24 "
                f"October 2026. It runs again on the engine that stands; until its table lands, this one is {run['engine']}'s."),
@@ -180,15 +175,28 @@ def build() -> str:
               else said("GAIN" if work > 0 else "LOSS", work, 2))
         pw = said("power given", power, 2) if power >= 0 else said("GAIN", power, 2, "power")
         L.append(f"| {name} ({n:,}) | " + " | ".join(cell) + f" | {wk} | {pw} |")
-    L += [""]
+    return L
+
+
+def grid_lines(link_prefix: str = "") -> list:
+    """The grid: its one written report quoted, and every later engine it was sent on with no report written."""
+    gsum, geng, sent = grid()
+    L = []
     if gsum:
         g = (f"**The grid** (the seven organisms at 1, 10 and 100 copies, each at 1, 10 and 100 runs). Its one written report is "
-             f"engine {geng}'s ([`results/grid_v5/GRID.md`](results/grid_v5/GRID.md)); its modelled squares read, in the report's own "
+             f"engine {geng}'s ([`results/grid_v5/GRID.md`]({link_prefix}results/grid_v5/GRID.md)); its modelled squares read, in the report's own "
              f"words: \"{gsum}\". The squares with the real cluster inside are read gauge by gauge in the same report.")
         if sent:
             g += (f" The grid has been sent on every engine since, omni-v{sent[0]} to omni-v{sent[-1]} (`results/grid_v*/DISPATCHED.json`), "
                   f"and no report of those runs has been written yet; until one is, the grid is read only on {geng}.")
-        L += wrap(g) + [""]
+        L += wrap(g)
+    return L
+
+
+def scenarios_lines(link_prefix: str = "") -> list:
+    """The twenty scenarios: the nine modelled organisms' words and the whole organism's composed index, as the record gives them."""
+    sc = scenarios()
+    L = []
     r = sc["run"]
     nine = sc["rows"]
     over = sorted(nine, key=lambda x: abs(x[1]["over"][1]))
@@ -200,7 +208,7 @@ def build() -> str:
     nm = lambda x: x.lower() if x.startswith("The ") else x
     para = (f"**The twenty scenarios** (ten organisms, each native and with Omni-Compass on native; engine {r['engine']}, run "
             f"{r['started']}, three runs, seeds {r['seeds'][0]} to {r['seeds'][-1]}; "
-            f"[`results/scenarios/SCENARIOS_20.md`](results/scenarios/SCENARIOS_20.md)). In the {len(nine)} modelled organisms the muscles "
+            f"[`results/scenarios/SCENARIOS_20.md`]({link_prefix}results/scenarios/SCENARIOS_20.md)). In the {len(nine)} modelled organisms the muscles "
             "over the line read " + ", ".join(f"{w} in {n}" for w, n in words.most_common())
             + f" (from {said(lo[1]['over'][0], lo[1]['over'][1], 2)} in {nm(lo[0])} to {said(hi[1]['over'][0], hi[1]['over'][1], 2)} "
             f"in {nm(hi[0])}); the work " + ", ".join(f"{w} in {n}" for w, n in work_words.most_common()) + "; the power STEADY in "
@@ -213,7 +221,20 @@ def build() -> str:
                  f"measurements), reads {wi} by the index's rule; its tables come from {len(w['engines'])} engines "
                  f"({', '.join(w['engines'])}), so it is a composition across engines, never one engine's reading.")
     L += wrap(para)
-    L += [END]
+    return L
+
+
+def build() -> str:
+    L = [BEGIN,
+         "Every number in this section is computed from its record by `python3 tools/organism_words.py`, and `verify.py` fails a",
+         "push where any of them differs from what the records give. Evidence class **S**: our own models of the plants, not",
+         "meters; a plant written by the people who wrote the law is not an independent test.",
+         ""]
+    L += realms_lines() + [""]
+    g = grid_lines()
+    if g:
+        L += g + [""]
+    L += scenarios_lines() + [END]
     return "\n".join(L) + "\n"
 
 

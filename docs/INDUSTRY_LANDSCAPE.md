@@ -59,13 +59,13 @@ antagonist forces, a smooth response, every muscle driven toward its own limit a
 |---|---|---|---|
 | **More work** | replicas ready ahead of the load, the processor a machine can spare given to its pods, every muscle driven to its own limit | shown at the software end: the Omni index **5.0% GAIN** (work, speed and machines), **12.9% GAIN** on work and speed alone, on real software on GitHub's own machines | `results/OMNI_INDEX.md` |
 | **More work for the bill** | idle machines parked for the cloud's own autoscaler to remove; the same lease doing more work on bare metal | **being measured**: on one A10 card the three runs disagree (+1.46%, +0.73%, −0.69%); in the cloud the work is not yet counted. No bill saving is claimed yet | `docs/WORK_PER_BILL.md` |
-| **Less oversight** | it acts as a reading nears its line, not after; every change logged with its reason and read back; a hand-back to native on a crash | shown as **fewer alert minutes** (the minutes an on-call page would be open) in the Kubernetes tests on GitHub's machines: a public day of demand −61% to −72%, faults −14% to −22%, the governor killed mid-run −18% to −25%, each in all three runs; one batch test mixed | `results/live/V21_TRACE_GOOGLE2011.md`, `results/live/V21_FAULTS.md`, `results/live/V21_ROBUST_KILL.md`, `results/live/V21_BATCH.md` |
+| **Less oversight** | it acts as a reading nears its line, not after; every change logged with its reason and read back; a hand-back to native on a crash | shown as **fewer alert minutes** (the minutes an on-call page would be open) in the Kubernetes tests on GitHub's machines (omni-v21's tables, the newest of each test): down 61% to 72% on a public day of demand, down 14% to 22% under faults, down 18% to 25% with the governor killed mid-run, each GAIN in all three runs; one batch test mixed (the runs disagree) | `results/live/V21_TRACE_GOOGLE2011.md`, `results/live/V21_FAULTS.md`, `results/live/V21_ROBUST_KILL.md`, `results/live/V21_BATCH.md` |
 
 **On trade-offs.** The engine that stands keeps do no harm in its strictest form: every muscle judged on itself, never below native
 on a judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures). A resource it spends
 to get there is shown beside the work it bought as power given, never hidden: in our own model of the cloud at the max the
-machine-hours rise 9% to 35% across the beats with the work held by the model's own load (`results/model_gate/V23_LADDER.md`, class
-S). That is why the cloud is judged by work for the bill, and why no "no trade-off" claim is made.
+machine-hours rise 8% to 34% across the beats, 15% at 60 s, with the work held by the model's own load (omni-v23's rules on the
+corrected model, `results/model_gate/V23_LADDER_CORRECTED.md`, class S). That is why the cloud is judged by work for the bill, and why no "no trade-off" claim is made.
 
 ## What this page does not claim
 
