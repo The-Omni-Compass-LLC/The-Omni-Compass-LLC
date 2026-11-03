@@ -32,6 +32,8 @@ GROUPS = {
                             "tools/omni_switch.py", "scripts/kind_faults.sh", "tests/test_faults_extended.py",
                             "tests/test_switch_trust.py", "verify.py"],
     "engine_v8_citylearn": ["OMNI_V8.json", "tools/run_citylearn.py", "docs/OMNI_V8.md", "docs/CITYLEARN_PREREGISTRATION.md"],
+    "engine_v25": ["OMNI_V25.json", "tools/omni_version.py", "docs/OMNI_V25.md", "tools/run_kafka.py", "omni_controller/controller.py",
+                   ".github/workflows/kafka.yml", "results/model_gate/V25_VS_V24.md"],   # the Kafka wire's producer before the governor's thread
     "engine_v24": ["OMNI_V24.json", "tools/omni_version.py", "docs/OMNI_V24.md", "omni_controller/controller.py",
                    "scripts/factory_beat.sh", "tests/test_pace_clocks.py", "tests/test_cloud_cadence.py", "tools/model_gate.py",
                    "results/model_gate/V24_VS_V23.md", "results/model_gate/V24_VS_V23.json", "docs/PACE_PREREGISTRATION.md",
