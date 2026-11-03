@@ -29,7 +29,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | Unit test cases collected under `tests/` | 789 |
 | Function-test files (`tools/function_tests.py --list`) | 68 |
 | C++ parity test files (the sealed twins) | 14 |
-| Checks in `verify.py --quick` at the receipt's commit (f5a1e07ca4ad) | 150 PASS, 0 FAIL |
+| Checks in `verify.py --quick` at the receipt's commit (903c5043869f) | 150 PASS, 0 FAIL |
 | GitHub workflows (`.github/workflows/`) | 71 |
 | Three-run tables in `results/live/`, all engines | 250 |
 | Of them, by engine, newest first | omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13; omni-v14: 4 |
