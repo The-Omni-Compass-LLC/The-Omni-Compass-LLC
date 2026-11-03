@@ -1635,22 +1635,24 @@ This chapter reads the page's section 3d, **Heartbeat Dial** (`#s-dial`).
 ### 12.1 The dial
 
 The governor's heartbeat, its full decision, is a dial from omni-v17 on (the page's section 3d, `#s-dial`): the main engine, the
-factory profile, decides every 60 s, and on the page any of seven beats can be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
+factory profile, decides every 10 s on site and every 60 s through a cloud (omni-v24: the factory beat for its place, read from the
+cluster's own nodes when `--interval` is unset; 60 s everywhere from omni-v17 to omni-v23), and on the page any of seven beats can
+be set, 10, 15, 20, 30, 60, 90 or 120 s, with the fast
 checks (the scheduling floor, the pod reflex, the conveyance every 15 s) every 5 s at every beat. Every clock of the governor
 counts seconds (omni-v16), so turning the dial changes only how often it looks. Each beat stands beside native with what it buys
 (the reads of the cluster a day) and what it costs (the governor's own processor, and every service row read against native and
-against the main engine's 60 s), because an operator may want a fast beat for its reads and accept what it costs, or a slow one.
+against the 60 s beat, the ladder's zero line), because an operator may want a fast beat for its reads and accept what it costs, or a slow one.
 At each beat the other knobs may want their own combination; that tuning is the next study, in our own models first.
 
 ### 12.2 Beat Ladder: the two tables
 
-Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the models read (**Cloud Setting as Read
-22 and 23 October: the Tune-Down, Machines Alone (Struck 31 October)**: the compass law at the tune-down, the machines alone,
-the cloud's rule when these records were read; **kind Benchmark at the Max, Autoscalers Sensed**: the compass law at the max,
-every autoscaler sensed). The first, **Against Native**, gives each beat's value and its
+Its panel, **Beat Ladder · Class S**, gives every beat in two tables for each setting the ladder read, each setting described
+under its heading in the ladder's own words (today **Cloud Setting**: the compass law on top of the cloud's own autoscaler, at the
+max from 31 October; and **On-Site Setting**: the kind rig's own machines, made at the start, no cluster autoscaler, the compass
+law at the max). The first, **Against Native**, gives each beat's value and its
 word against native: the reads of the cluster a day, the governor's own processor, the pods waiting for a place, the 95th
 percentile, the minutes over the line, the autoscaler short of its target, the machine-hours and the energy per core-hour; native
-has no governor, so its reads and processor are blank, and the main engine's row is set in bold. The second, **Against the Main Engine's 60 s**,
+has no governor, so its reads and processor are blank, and the 60 s row, the main engine's beat on the engine the ladder read, is set in bold. The second, **Against the 60 s Beat**,
 gives each other beat's change against it, with its word. The reads are what a beat spends to look more often, shown as the
 key reads a resource spent: power given.
 
@@ -1658,10 +1660,12 @@ key reads a resource spent: power given.
 
 Read a row across: a beat whose service words read GAIN or STEADY against native and whose cost columns the operator accepts is a
 beat that can be set. A word of LOSS against native is the engine's at that beat and is listed with every other LOSS row
-(the page's section 2d, chapter 7). The values are our own models (class S, `results/model_gate/V17_LADDER.json`, `tools/beat_ladder.py`),
-each beat's mean over seeded days on a plant that moves every 5 s, paired by seed; the real runs at every beat
+(the page's section 2d, chapter 7). The values are our own models (class S, `tools/beat_ladder.py`): the newest engine's ladder,
+of one engine's the corrected one first, today `results/model_gate/V23_LADDER_CORRECTED.json` (omni-v23's rules on the model that
+amendment 6 of `docs/PACE_PREREGISTRATION.md` corrected; the ladders read before that correction, `V17_LADDER` and `V23_LADDER`,
+ran on the model's faulty stand-in and stand only as their own records), each beat's mean over seeded days on a plant that moves every 5 s, paired by seed; the real runs at every beat
 (`docs/PACE_PREREGISTRATION.md`, amendment 3) take their place in the note above the tables when their three runs land. The dial
-is the tuning bench's own example: the factory profile runs the main engine at 60 s; any other beat is the engine's range on the
+is the tuning bench's own example: the factory profile runs the main engine at 10 s on site and 60 s through a cloud; any other beat is the engine's range on the
 page, never a benchmark result, until its own three runs land on that beat and are read as that beat's. A beat set on a live
 system is the operator's own custom profile, and its results are its own.
 
@@ -3913,7 +3917,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-02 09:34 UTC on omni-v24 (digest 66c8f2d94b3e4725) from commit 7f74bd306bf6.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-03 16:28 UTC on omni-v24 (digest 66c8f2d94b3e4725) from commit 52a4affc692d.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.
@@ -4272,7 +4276,7 @@ The time between frames of this page against its line under the frame load knob.
 
 ### L.13 Heartbeat Dial
 
-**Controls.** Recorded data: every beat of the Kubernetes governor read in our own models (class S, results/model_gate/V17_LADDER.json, tools/beat_ladder.py); the real runs at every beat (`docs/PACE_PREREGISTRATION.md`, amendment 3) join their place when their three runs land. The beat itself is set on the governor's command line (--interval) or with the control panel's heartbeat button (POST /v1/beat, tools/omni_control.py: one button for each stop of the dial), which hands every setting back and starts the governor again at the new beat.
+**Controls.** Recorded data: every beat of the Kubernetes governor read in our own models (class S, the newest engine's ladder, of one engine's the corrected one first: results/model_gate/V23_LADDER_CORRECTED.json, tools/beat_ladder.py); the real runs at every beat (`docs/PACE_PREREGISTRATION.md`, amendment 3) join their place when their three runs land. The beat itself is set on the governor's command line (--interval) or with the control panel's heartbeat button (POST /v1/beat, tools/omni_control.py: one button for each stop of the dial), which hands every setting back and starts the governor again at the new beat.
 
 **The page, in its own words.**
 
@@ -5831,7 +5835,7 @@ DISCLOSURE: REAL RUNS, A REAL ENGINE, NOTHING HARDWIRED. Every run played back o
 - **Omni-Compass against native.** Goldilocks (omni-v21, `results/live/V21_GOLDILOCKS.md`): pod start wait, mean (s), A B C 1.408 → 1.681; raw +19.4% (95%: −6.1% to +44.9%); LOSS · 1.267 → 1.673; raw +32.1% (95%: +7.0% to +57.2%); LOSS · 1.425 → 1.584; raw +11.2% (95%: −27.5% to +49.8%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
 - **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): response time (ms), 99th percentile, A B C 484.3 → 487.6; raw +0.7% (95%: −3.4% to +4.7%); LOSS · 519.6 → 569.8; raw +9.7% (95%: −2.4% to +21.7%); LOSS · 565.6 → 598.1; raw +5.7% (95%: −11.8% to +23.3%); LOSS. Cause: Amendment 5: the governor's own core (written before any run on it, 20 October 2026) (`docs/BATCH_QUEUE_PREREGISTRATION.md`). The knob: the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack.
 - **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): time over the response line (% of samples), A B C 1.003 → 1.091; raw +8.8% (95%: −24.7% to +42.4%); LOSS · 1.527 → 2.172; raw +42.3% (95%: −9.2% to +93.8%); LOSS · 2.335 → 2.487; raw +6.5% (95%: −47.1% to +60.1%); LOSS. Cause: Every page that reads A (`docs/SITE_AUDIT.md`). The knob: the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack.
-- **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line), A B C 1.4 → 1.8; raw +28.6% (95%: −74.2% to +131.3%); LOSS · 1.8 → 2.9; raw +61.1% (95%: −21.5% to +143.7%); LOSS · 3.5 → 3.5; raw ±0.0% (95%: −46.2% to +46.2%); STEADY. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
+- **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line), A B C 1.4 → 1.8; raw +28.6% (95%: −74.2% to +131.3%); LOSS · 1.8 → 2.9; raw +61.1% (95%: −21.5% to +143.7%); LOSS · 3.5 → 3.5; raw ±0.0% (95%: −46.2% to +46.2%); STEADY. Cause: Numbers that must come off (no record supports them) (`docs/WEBSITE_CLAIMS.md`). The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
 - **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): queue: job wait, submitted to its first pod running, 95th percentile (s), A B C 1 → 1; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY · 1 → 1; raw ±0.0% (95%: ±0.0% to ±0.0%); STEADY · 1 → 1.2; raw +20.0% (95%: −10.2% to +50.2%); LOSS. Cause: Amendment 5: the governor's own core (written before any run on it, 20 October 2026) (`docs/BATCH_QUEUE_PREREGISTRATION.md`). The knob: the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack.
 - **Omni-Compass against native.** The KAI scheduler under the batch stream (omni-v12, `results/live/V12_KAI.md`): queue: job turnaround, submitted to done, mean (s), A B C 29.85 → 30.29; raw +1.5% (95%: +0.4% to +2.5%); LOSS · 30.8 → 32.45; raw +5.3% (95%: −2.4% to +13.1%); LOSS · 32.25 → 32.97; raw +2.2% (95%: −5.4% to +9.9%); LOSS. Cause: Amendment 5: the governor's own core (written before any run on it, 20 October 2026) (`docs/BATCH_QUEUE_PREREGISTRATION.md`). The knob: the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack.
 - **Omni-Compass against native.** The KAI scheduler under the batch stream, the four ways (omni-v12, `results/live/V12_KAI_4W_BARE.md`): response time (ms), 95th percentile, A B C 1070 → 1095; raw +2.3% (95%: −4.4% to +9.1%); LOSS · 1366 → 1450; raw +6.2% (95%: −4.2% to +16.5%); LOSS · 1135 → 1150; raw +1.3% (95%: −8.6% to +11.2%); LOSS. The knob: the compass band's upper cushion on this muscle or the give-back trial's tolerance; where no setting brings the row STEADY in the model gate, the muscle stays native on this stack.
