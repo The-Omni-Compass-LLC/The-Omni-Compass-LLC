@@ -1,0 +1,329 @@
+Omni-Compass: evaluation and Simulation use only. Commercial use requires a signed, paid Omni-Compass Enterprise License (LICENSE, NOTICE).
+calibration: {"organism": "stack", "scale": 100, "steps": 6, "step_s_mean": 6.389711379497991, "step_s_max": 6.546222128003137, "steps_in_window": 240}; window needed 1980 s, given 2880 s
+kind cluster configuration: deploy/kind/cluster-full.yaml
+repetition 2, order: compass native
+Creating cluster "omni-bench" ...
+ • Ensuring node image (kindest/node:v1.35.0) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.35.0) 🖼
+ • Preparing nodes 📦 📦 📦 📦 📦 📦 📦   ...
+ ✓ Preparing nodes 📦 📦 📦 📦 📦 📦 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Joining worker nodes 🚜  ...
+ ✓ Joining worker nodes 🚜
+ • Waiting ≤ 2m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 2m0s for control-plane = Ready ⏳
+ • Ready after 11s 💚
+Set kubectl context to "kind-omni-bench"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-omni-bench
+
+Thanks for using kind! 😊
+######## ARM compass (repetition 2)
+date_utc=2026-11-02T03:01:27Z
+arm=compass
+git_commit=501d230193c06f696890f400dc3c18582e6cf0e9
+docker=Docker version 29.1.3, build 29.1.3-0ubuntu3~22.04.2
+kind=kind v0.31.0 go1.25.5 linux/amd64
+kubectl=v1.35.0
+server=v1.35.0
+python=Python 3.10.12
+metrics_server=v0.9.0 sha256=1cec29a5267809306a2c6ec74a3e449abbb705b4a8beed0c8a1963910f72c79b
+workers=6
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+deployment.apps/coredns patched
+Waiting for deployment "metrics-server" rollout to finish: 0 of 1 updated replicas are available...
+deployment "metrics-server" successfully rolled out
+deployment "coredns" successfully rolled out
+busybox: not loaded from the runner; the nodes pull it themselves
+Waiting for daemon set "rig-prepull" rollout to finish: 0 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 1 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 2 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 3 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 4 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 5 of 6 updated pods are available...
+daemon set "rig-prepull" successfully rolled out
+images=pre-pulled on every worker before the arm (deploy/kind/prepull.yaml)
+image_ids= 6 registry.k8s.io/hpa-example@sha256:581697a37f0e136db86d6b30392f0db40ce99c8248a7044c770012f4e8491544 
+deployment.apps/php-apache created
+service/php-apache created
+horizontalpodautoscaler.autoscaling/php-apache created
+service/php-apache-edge created
+poddisruptionbudget.policy/php-apache created
+Waiting for deployment "php-apache" rollout to finish: 0 of 1 updated replicas are available...
+deployment "php-apache" successfully rolled out
+curl: (7) Failed to connect to 172.18.0.6 port 30080 after 0 ms: Connection refused
+probe_url=http://172.18.0.6:30080/ (Service via kube-proxy on the control plane)
+configmap/omni-security created
+deployment.apps/load-generator created
+loadgen=open
+Waiting for deployment "load-generator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "load-generator" successfully rolled out
+namespace/omni-compass created
+serviceaccount/omni-compass created
+clusterrole.rbac.authorization.k8s.io/omni-compass-sense created
+clusterrole.rbac.authorization.k8s.io/omni-compass-nodes created
+clusterrolebinding.rbac.authorization.k8s.io/omni-compass-sense created
+clusterrolebinding.rbac.authorization.k8s.io/omni-compass-nodes created
+role.rbac.authorization.k8s.io/omni-compass-app created
+rolebinding.rbac.authorization.k8s.io/omni-compass-app created
+== can (each muscle's push)
+patch hpa/php-apache (hpa): yes
+create hpa (omni-v23: the hand-back of a knob Omni-Compass cannot move to native's own autoscaler): yes
+Warning: resource 'nodes' is not namespace scoped
+
+patch nodes (node pool: idle mark): yes
+create pods/eviction (node pool: drain): yes
+patch pods/resize (power cap, in place): yes
+patch pods (make before break: which pods leave first): yes
+get pods/resize (power cap reads before it writes): yes
+patch deployment/php-apache (rollout guard, cap record): yes
+patch deployment/php-apache --subresource=scale (pod muscle of its own, --own-replicas: what kubectl scale writes): yes
+get configmap/omni-security (security afferent): yes
+== cannot
+Warning: resource 'nodes' is not namespace scoped
+
+delete nodes: no
+create pods: no
+delete pods: no
+delete deployments: no
+patch deployment/load-generator: no
+patch deployment/load-generator --subresource=scale (the pod muscle of its own writes the named workload alone): no
+patch deployments in kube-system: no
+patch hpa in kube-system: no
+get secrets (any namespace): no
+Warning: resource 'namespaces' is not namespace scoped
+
+create namespaces: no
+patch configmap/omni-security: no
+organism=stack load_max=6
+window=2880 calibration={"organism": "stack", "scale": 100, "steps": 6, "step_s_mean": 6.389711379497991, "step_s_max": 6.546222128003137, "steps_in_window": 240}
+cores: the organism on core 7, the 7 kind nodes on cores 0-6 (of 8)
+== warm-up 120s (both arms)
+organism built at epoch 1793589350, scale 100; window opens 1793589350
+== ARM compass: Omni-Compass driving HPA target + node pool + power sensing
+The four stacked, duplicates kept x100, arm compass: behind the window by 4 s; 190800 muscles, 240 steps of 12.00 s, replicas 1..6, simulated writes 2007638, handed back True
+== reset
+omni writes during the run: 16
+open workers: 6 (wanted 6)
+pod CPU limits after kill: 500m
+HPA replica range after kill: 1,10
+restored target: 50
+workers in service: 6 of 6
+Omni records left after kill: none
+rows captured: 177
+== controller: decisions inside the window 48 of 48 (one every 60.0 s; 48 in all), failed decisions or checks 0
+-- controller's own cost (CPU of the process and every command it ran): {"time": 1793592171.2044752, "overhead": {"cpu_s": 30.48, "wall_s": 2820.5, "cores_mean": 0.0108}}
+-- my writes by muscle (count, first words of why)
+      3 convey: omni-bench-worker6 idle CPU
+      3 convey: omni-bench-worker2 idle CPU
+      3 convey: omni-bench-worker idle CPU
+      2 convey: omni-bench-worker3 idle CPU
+      1 record original target: 
+      1 convey: record original CPU
+      1 convey: omni-bench-worker5 idle CPU
+      1 convey: omni-bench-worker4 idle CPU
+      1 HPA target to rho* = 75%: 
+-- conveyed CPU limits (last 8)
+convey: omni-bench-worker3 idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker2 idle CPU to its 1 serving pod(s), limit 7500m in place
+convey: omni-bench-worker idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker2 idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker2 idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker6 idle CPU to its 2 serving pod(s), limit 3750m in place
+convey: omni-bench-worker6 idle CPU to its 2 serving pod(s), limit 3750m in place
+-- pod reflex (last 8)
+-- controller.log (last 40 lines)
+-- audit errors (last 10)
+-- decision trail (nodes seen -> recommended | p95 ms | SLO clean | calm | node-view calm | node gate)
+  compass: Β >  90.0° Dispersion: peak extension, the turn | Ω: machine_fill below the floor, held | G·n≤0 yes | L 860.5549 | axle S 0.1646 (rest 2.3686) | circles 0
+  6 -> 6 | p95 None | clean False | calm 0.343 | node calm 0.546 | gate latency breached now; node organ has no contraction authority; a sense is blind | queue 0.0 | U 0.901 | blind ['latency'] | latency age 0.5 s | proprioception {}
+  compass: Α +   4.3° Expansion: rising through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 796.3101 -64.2448 | axle S 0.2624 (rest 2.3686) | circles 0
+  6 -> 6 | p95 207.6 | clean False | calm 0.566 | node calm 0.814 | gate release permitted | queue 0.0 | U 0.935 | blind [] | latency age 4.1 s | proprioception {}
+  compass: Α +   4.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 751.4948 -44.8153 | axle S 0.332 (rest 2.3686) | circles 0
+  6 -> 6 | p95 146.8 | clean True | calm 0.627 | node calm 0.887 | gate release permitted | queue 0.0 | U 0.944 | blind [] | latency age 2.7 s | proprioception {}
+  compass: Α +   5.6° Expansion: rising through rest | Ω held | G·n≤0 yes | L 720.1800 -31.3148 | axle S 0.3814 (rest 2.3686) | circles 0
+  6 -> 6 | p95 147.0 | clean True | calm 0.64 | node calm 0.906 | gate release permitted | queue 0.0 | U 0.946 | blind [] | latency age 0.8 s | proprioception {}
+  compass: Α +   7.5° Expansion: rising through rest | Ω held | G·n≤0 yes | L 697.6295 -22.5505 | axle S 0.4174 (rest 2.3686) | circles 0
+  6 -> 6 | p95 150.1 | clean True | calm 0.639 | node calm 0.911 | gate release permitted | queue 0.0 | U 0.946 | blind [] | latency age 4.4 s | proprioception {}
+  compass: Ε +  10.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 681.4562 -16.1733 | axle S 0.4434 (rest 2.3686) | circles 0
+  6 -> 6 | p95 158.8 | clean True | calm 0.636 | node calm 0.913 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 1.8 s | proprioception {}
+  compass: Ε +  20.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 670.6082 -10.8480 | axle S 0.4611 (rest 2.3686) | circles 0
+  6 -> 6 | p95 146.1 | clean True | calm 0.637 | node calm 0.914 | gate release permitted | queue 0.0 | U 0.946 | blind [] | latency age 0.1 s | proprioception {}
+  compass: Ε +  22.1° Expansion: rising through rest | Ω held | G·n≤0 yes | L 661.7792 -8.8290 | axle S 0.4755 (rest 2.3686) | circles 0
+  6 -> 6 | p95 161.8 | clean True | calm 0.633 | node calm 0.916 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 3.7 s | proprioception {}
+  compass: Η ⇄  60.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 655.8688 -5.9104 | axle S 0.4852 (rest 2.3686) | circles 0
+  6 -> 6 | p95 140.4 | clean True | calm 0.635 | node calm 0.918 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 2.4 s | proprioception {}
+  compass: Β >  85.3° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 651.2139 -4.6549 | axle S 0.4928 (rest 2.3686) | circles 0
+  6 -> 6 | p95 147.5 | clean True | calm 0.636 | node calm 0.92 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 0.5 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Κ ⊤ 118.1° Dispersion: dispersion, the ceiling holds | Ω held | G·n≤0 yes | L 647.5363 -3.6776 | axle S 0.4989 (rest 2.3686) | circles 0
+  6 -> 6 | p95 146.3 | clean True | calm 0.636 | node calm 0.922 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 4.3 s | proprioception {}
+  compass: Ι > 106.7° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 643.8867 -3.6496 | axle S 0.5049 (rest 2.3686) | circles 0
+  6 -> 6 | p95 145.1 | clean True | calm 0.635 | node calm 0.925 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 2.1 s | proprioception {}
+  compass: Λ ⊤ 135.4° Dispersion: dispersion, the ceiling holds | Ω held | G·n≤0 yes | L 640.7841 -3.1025 | axle S 0.51 (rest 2.3686) | circles 0
+  6 -> 6 | p95 159.5 | clean True | calm 0.635 | node calm 0.927 | gate release permitted | queue 0.0 | U 0.945 | blind [] | latency age 5.2 s | proprioception {}
+  compass: Μ ⊤ 155.2° Dispersion: dispersion, the ceiling holds | Ω held | G·n≤0 yes | L 638.4764 -2.3077 | axle S 0.5138 (rest 2.3686) | circles 0
+  6 -> 6 | p95 157.1 | clean True | calm 0.638 | node calm 0.93 | gate release permitted | queue 0.0 | U 0.946 | blind [] | latency age 2.9 s | proprioception {}
+  compass: Μ ⊤ 147.4° Dispersion: dispersion, the ceiling holds | Ω held | G·n≤0 yes | L 635.6947 -2.7817 | axle S 0.5184 (rest 2.3686) | circles 0
+  6 -> 6 | p95 239.7 | clean True | calm 0.637 | node calm 0.933 | gate release permitted | queue 0.0 | U 0.946 | blind [] | latency age 5.7 s | proprioception {}
+  compass: Ν − 169.1° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 635.0481 -0.6466 | axle S 0.5195 (rest 2.3686) | circles 0
+  6 -> 6 | p95 151.2 | clean True | calm 0.646 | node calm 0.936 | gate release permitted | queue 0.0 | U 0.947 | blind [] | latency age 3.5 s | proprioception {}
+  compass: Ν − 167.8° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 634.0857 -0.9625 | axle S 0.5211 (rest 2.3686) | circles 0
+  6 -> 6 | p95 153.0 | clean True | calm 0.651 | node calm 0.94 | gate release permitted | queue 0.0 | U 0.948 | blind [] | latency age 1.6 s | proprioception {}
+  compass: Ν − 167.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 632.7976 -1.2881 | axle S 0.5232 (rest 2.3686) | circles 0
+  6 -> 6 | p95 152.5 | clean True | calm 0.653 | node calm 0.943 | gate release permitted | queue 0.0 | U 0.948 | blind [] | latency age 4.7 s | proprioception {}
+  compass: Ν − 169.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 631.6706 -1.1271 | axle S 0.5251 (rest 2.3686) | circles 0
+  6 -> 6 | p95 159.1 | clean True | calm 0.657 | node calm 0.947 | gate release permitted | queue 0.0 | U 0.949 | blind [] | latency age 2.1 s | proprioception {}
+  compass: Ν − 170.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 630.5489 -1.1217 | axle S 0.5269 (rest 2.3686) | circles 0
+  6 -> 6 | p95 176.4 | clean True | calm 0.661 | node calm 0.951 | gate release permitted | queue 0.0 | U 0.949 | blind [] | latency age 4.8 s | proprioception {}
+  compass: Ω − 172.5° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 630.0094 -0.5395 | axle S 0.5278 (rest 2.3686) | circles 0
+  6 -> 6 | p95 165.1 | clean True | calm 0.668 | node calm 0.955 | gate release permitted | queue 0.0 | U 0.950 | blind [] | latency age 2.0 s | proprioception {}
+  compass: Ω − 173.6° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 629.9058 -0.1036 | axle S 0.528 (rest 2.3686) | circles 0
+  6 -> 6 | p95 154.6 | clean True | calm 0.676 | node calm 0.959 | gate release permitted | queue 0.0 | U 0.951 | blind [] | latency age 5.3 s | proprioception {}
+  compass: Ω − 174.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 630.0723 +0.1665 | axle S 0.5277 (rest 2.3686) | circles 0
+  6 -> 6 | p95 146.3 | clean True | calm 0.683 | node calm 0.963 | gate release permitted | queue 0.0 | U 0.953 | blind [] | latency age 3.5 s | proprioception {}
+  compass: Ω − 174.5° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 630.2003 +0.1280 | axle S 0.5275 (rest 2.3686) | circles 0
+  6 -> 6 | p95 146.9 | clean True | calm 0.69 | node calm 0.967 | gate release permitted | queue 0.0 | U 0.954 | blind [] | latency age 1.8 s | proprioception {}
+  compass: Ω − 173.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 629.3083 -0.8921 | axle S 0.529 (rest 2.3686) | circles 0
+  6 -> 6 | p95 149.3 | clean True | calm 0.693 | node calm 0.972 | gate release permitted | queue 0.0 | U 0.954 | blind [] | latency age 5.2 s | proprioception {}
+  compass: Ω − 174.5° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 628.6854 -0.6228 | axle S 0.53 (rest 2.3686) | circles 0
+  6 -> 6 | p95 162.6 | clean True | calm 0.699 | node calm 0.976 | gate release permitted | queue 0.0 | U 0.955 | blind [] | latency age 2.7 s | proprioception {}
+  compass: Ω − 175.1° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 628.2577 -0.4277 | axle S 0.5307 (rest 2.3686) | circles 0
+  6 -> 6 | p95 149.7 | clean True | calm 0.705 | node calm 0.981 | gate release permitted | queue 0.0 | U 0.956 | blind [] | latency age 0.3 s | proprioception {}
+  compass: Ω − 175.4° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 627.8484 -0.4094 | axle S 0.5314 (rest 2.3686) | circles 0
+  6 -> 6 | p95 163.2 | clean True | calm 0.712 | node calm 0.985 | gate release permitted | queue 0.0 | U 0.957 | blind [] | latency age 3.4 s | proprioception {}
+  compass: Ω − 175.7° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 627.5181 -0.3303 | axle S 0.532 (rest 2.3686) | circles 0
+  6 -> 6 | p95 151.8 | clean True | calm 0.719 | node calm 0.99 | gate release permitted | queue 0.0 | U 0.958 | blind [] | latency age 1.1 s | proprioception {}
+  compass: Ω − 176.0° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 627.2481 -0.2700 | axle S 0.5324 (rest 2.3686) | circles 0
+  6 -> 6 | p95 168.2 | clean True | calm 0.726 | node calm 0.995 | gate release permitted | queue 0.0 | U 0.959 | blind [] | latency age 4.3 s | proprioception {}
+  compass: Ω − 176.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 627.0879 -0.1602 | axle S 0.5327 (rest 2.3686) | circles 0
+  6 -> 6 | p95 200.7 | clean True | calm 0.733 | node calm 0.999 | gate release permitted | queue 0.0 | U 0.960 | blind [] | latency age 1.3 s | proprioception {}
+  compass: Ω − 176.4° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.8852 -0.2027 | axle S 0.533 (rest 2.3686) | circles 0
+  6 -> 6 | p95 184.2 | clean True | calm 0.74 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.961 | blind [] | latency age 4.1 s | proprioception {}
+  compass: Ω − 176.7° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.7803 -0.1049 | axle S 0.5332 (rest 2.3686) | circles 0
+  6 -> 6 | p95 153.4 | clean True | calm 0.747 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.962 | blind [] | latency age 1.9 s | proprioception {}
+  compass: Ω − 176.8° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.7491 -0.0312 | axle S 0.5332 (rest 2.3686) | circles 0
+  6 -> 6 | p95 160.1 | clean True | calm 0.754 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.963 | blind [] | latency age 5.1 s | proprioception {}
+  compass: Ω − 176.9° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.5864 -0.1628 | axle S 0.5335 (rest 2.3686) | circles 0
+  6 -> 6 | p95 169.7 | clean True | calm 0.761 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.964 | blind [] | latency age 2.6 s | proprioception {}
+  compass: Ω − 177.1° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.4556 -0.1308 | axle S 0.5337 (rest 2.3686) | circles 0
+  6 -> 6 | p95 152.9 | clean True | calm 0.767 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.965 | blind [] | latency age 0.4 s | proprioception {}
+  compass: Ω − 177.2° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.3490 -0.1066 | axle S 0.5339 (rest 2.3686) | circles 0
+  6 -> 6 | p95 182.0 | clean True | calm 0.774 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.966 | blind [] | latency age 3.2 s | proprioception {}
+  compass: Ω − 177.4° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.3240 -0.0250 | axle S 0.534 (rest 2.3686) | circles 0
+  6 -> 6 | p95 154.8 | clean True | calm 0.781 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.967 | blind [] | latency age 0.7 s | proprioception {}
+  compass: Ω − 177.5° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.1715 -0.1525 | axle S 0.5342 (rest 2.3686) | circles 0
+  6 -> 6 | p95 158.6 | clean True | calm 0.787 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.968 | blind [] | latency age 4.1 s | proprioception {}
+  compass: Ω − 177.7° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.3037 +0.1323 | axle S 0.534 (rest 2.3686) | circles 0
+  6 -> 6 | p95 145.5 | clean True | calm 0.795 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.969 | blind [] | latency age 1.8 s | proprioception {}
+  compass: Ω − 177.9° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.4565 +0.1528 | axle S 0.5337 (rest 2.3686) | circles 0
+  6 -> 6 | p95 165.9 | clean True | calm 0.802 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.970 | blind [] | latency age 5.1 s | proprioception {}
+  compass: Ω − 177.9° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.4389 -0.0176 | axle S 0.5338 (rest 2.3686) | circles 0
+  6 -> 6 | p95 155.9 | clean True | calm 0.807 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.971 | blind [] | latency age 2.9 s | proprioception {}
+  compass: Ω − 178.0° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.4873 +0.0484 | axle S 0.5337 (rest 2.3686) | circles 0
+  6 -> 6 | p95 153.5 | clean True | calm 0.814 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.972 | blind [] | latency age 0.6 s | proprioception {}
+  compass: Ω − 178.2° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.5214 +0.0341 | axle S 0.5336 (rest 2.3686) | circles 0
+  6 -> 6 | p95 150.0 | clean True | calm 0.819 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.973 | blind [] | latency age 4.0 s | proprioception {}
+  compass: Ω − 178.3° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.6087 +0.0873 | axle S 0.5335 (rest 2.3686) | circles 0
+  6 -> 6 | p95 151.8 | clean True | calm 0.825 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.974 | blind [] | latency age 1.9 s | proprioception {}
+  compass: Ω − 178.4° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.6099 +0.0012 | axle S 0.5335 (rest 2.3686) | circles 0
+  6 -> 6 | p95 155.1 | clean True | calm 0.83 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.975 | blind [] | latency age 5.2 s | proprioception {}
+  compass: Ω − 178.5° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.6116 +0.0018 | axle S 0.5335 (rest 2.3686) | circles 0
+  6 -> 6 | p95 168.7 | clean True | calm 0.836 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.975 | blind [] | latency age 2.9 s | proprioception {}
+  compass: Ω − 178.6° Dispersion: falling through rest | Ω held | G·n≤0 yes | L 626.6136 +0.0020 | axle S 0.5335 (rest 2.3686) | circles 0
+  6 -> 6 | p95 154.5 | clean True | calm 0.84 | node calm 1.0 | gate release permitted | queue 0.0 | U 0.976 | blind [] | latency age 0.6 s | proprioception {}
+Creating cluster "omni-bench" ...
+ • Ensuring node image (kindest/node:v1.35.0) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.35.0) 🖼
+ • Preparing nodes 📦 📦 📦 📦 📦 📦 📦   ...
+ ✓ Preparing nodes 📦 📦 📦 📦 📦 📦 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Joining worker nodes 🚜  ...
+ ✓ Joining worker nodes 🚜
+ • Waiting ≤ 2m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 2m0s for control-plane = Ready ⏳
+ • Ready after 10s 💚
+Set kubectl context to "kind-omni-bench"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-omni-bench
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+######## ARM native (repetition 2)
+date_utc=2026-11-02T04:05:31Z
+arm=native
+git_commit=501d230193c06f696890f400dc3c18582e6cf0e9
+docker=Docker version 29.1.3, build 29.1.3-0ubuntu3~22.04.2
+kind=kind v0.31.0 go1.25.5 linux/amd64
+kubectl=v1.35.0
+server=v1.35.0
+python=Python 3.10.12
+metrics_server=v0.9.0 sha256=1cec29a5267809306a2c6ec74a3e449abbb705b4a8beed0c8a1963910f72c79b
+workers=6
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+deployment.apps/coredns patched
+Waiting for deployment "metrics-server" rollout to finish: 0 of 1 updated replicas are available...
+deployment "metrics-server" successfully rolled out
+deployment "coredns" successfully rolled out
+busybox: not loaded from the runner; the nodes pull it themselves
+Waiting for daemon set "rig-prepull" rollout to finish: 0 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 1 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 2 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 4 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 5 of 6 updated pods are available...
+daemon set "rig-prepull" successfully rolled out
+images=pre-pulled on every worker before the arm (deploy/kind/prepull.yaml)
+image_ids= 6 registry.k8s.io/hpa-example@sha256:581697a37f0e136db86d6b30392f0db40ce99c8248a7044c770012f4e8491544 
+deployment.apps/php-apache created
+service/php-apache created
+horizontalpodautoscaler.autoscaling/php-apache created
+service/php-apache-edge created
+poddisruptionbudget.policy/php-apache created
+Waiting for deployment "php-apache" rollout to finish: 0 of 1 updated replicas are available...
+deployment "php-apache" successfully rolled out
+curl: (7) Failed to connect to 172.18.0.5 port 30080 after 0 ms: Connection refused
+probe_url=http://172.18.0.5:30080/ (Service via kube-proxy on the control plane)
+configmap/omni-security created
+deployment.apps/load-generator created
+loadgen=open
+Waiting for deployment "load-generator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "load-generator" successfully rolled out
+organism=stack load_max=6
+window=2880 calibration={"organism": "stack", "scale": 100, "steps": 6, "step_s_mean": 6.389711379497991, "step_s_max": 6.546222128003137, "steps_in_window": 240}
+cores: the organism on core 7, the 7 kind nodes on cores 0-6 (of 8)
+== warm-up 120s (both arms)
+organism built at epoch 1793593197, scale 100; window opens 1793593199
+== ARM native: Omni-Compass not running; Kubernetes alone
+The four stacked, duplicates kept x100, arm native: behind the window by 3 s; 190800 muscles, 240 steps of 12.00 s, replicas 1..6, simulated writes 0, handed back True
+rows captured: 176
