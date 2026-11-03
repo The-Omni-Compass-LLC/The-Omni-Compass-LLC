@@ -16,7 +16,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v24, fingerprint 66c8f2d94b3e4725 (65 files).
+- **The engine on this checkout:** omni-v25, fingerprint cf56fc0a7b707452 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
@@ -32,7 +32,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - Real database cache (MongoDB under YCSB, GitHub): 0.5% LOSS
   - Real messaging (Apache Kafka, GitHub): 1.2% power given
 
-**On the engine that stands (omni-v24): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v25): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
@@ -69,7 +69,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ## The engine that stands
 
-**omni-v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`), on main from 1 November: omni-v23 with the heartbeat
+**omni-v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`), on main from 3 November: omni-v24 with one fault fixed in the Kafka wire: the producer is started before the governor's thread, because from omni-v22 that thread opened its own Kafka client while the producer was forked, the producer inherited a lock the thread held and never sent a message, and every Kafka run on GitHub since 30 October stopped at the job's 150-minute limit with nothing handed in; a producer that overruns its schedule now stops its workload with the reason. The governor's decisions are byte for byte omni-v24's (53 of the wire's 58 definitions identical, the brain among them). Everything else it runs is omni-v24's (`docs/OMNI_V24.md`, on main from 1 to 3 November): omni-v23 with the heartbeat
 it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that
 it is found and then locked. With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the
 owner's own machines) it decides every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that

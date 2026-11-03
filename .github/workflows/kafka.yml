@@ -80,7 +80,8 @@ jobs:
       - name: Run the workload, native and omni
         run: |
           set +e
-          python tools/run_kafka.py --workloads "${{ matrix.workload }}" --reps "${{ github.event.inputs.reps }}" --step-s "${{ github.event.inputs.step_s }}" --out out --objective "${{ github.event.inputs.objective || 'resource' }}" > run.log 2>&1
+          set -o pipefail
+          python -u tools/run_kafka.py --workloads "${{ matrix.workload }}" --reps "${{ github.event.inputs.reps }}" --step-s "${{ github.event.inputs.step_s }}" --out out --objective "${{ github.event.inputs.objective || 'resource' }}" 2>&1 | tee run.log
           code=$?
           grep -v "Picked up" run.log | tail -40
           grep "^==\|^   " run.log | grep -v "Picked up" | tee -a "$GITHUB_STEP_SUMMARY"

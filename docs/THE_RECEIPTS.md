@@ -8,8 +8,8 @@ counted runs, the engine identified by its fingerprint (`tools/omni_version.py -
 included. A receipt is read in the class of evidence it is: **P** a physical meter, **L** real software (a real
 Kubernetes cluster, a real database), **S** our own models, **V** a property of the code. S is never presented as
 proof of a physical saving. A result belongs to the engine it ran on and is never read across engines. Each test is read
-from its own newest three-run table, and every line below names the engine its runs were on; omni-v24, the engine that
-stands since 1 November, runs every benchmark again, and its tables replace these as they land (what each version changed:
+from its own newest three-run table, and every line below names the engine its runs were on; omni-v25, the engine that
+stands since 3 November, runs every benchmark again, and its tables replace these as they land (what each version changed:
 `docs/CHANGE_CONTROL.md`). Every section below is written from its records by `python3 tools/results_chapter.py`, and
 `verify.py` fails a push where any of it differs from them.
 How to read a single table: `docs/HOW_TO_READ_THE_RESULTS.md`. The wording of every three-run row: `tools/readings.py`.
