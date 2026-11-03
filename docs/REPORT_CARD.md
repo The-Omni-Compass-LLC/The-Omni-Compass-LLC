@@ -5,8 +5,9 @@
 Graded again on 3 November 2026, evening, on the founder's order ("go into the GitHub ... grade and see where it's at, where
 we're at"), from the repository on main at the commit this page is pushed with and from GitHub's own run records of the day.
 The first grading (30 October, on omni-v22) and its update of 31 October are in this page's history. The engine that stands is
-**omni-v24** (`OMNI_V24.json`, digest `66c8f2d94b3e4725`, 65 files), on main since 2 November, 01:30 UTC; GitHub's verify on
-the last push to main (run 41478787399, 2 November) is green. Every count in section 1 is computed by
+**omni-v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files), landed with this grading on 3 November: omni-v24 with the Kafka fault
+of item 12 fixed (`docs/OMNI_V25.md`); GitHub's verify on the push before it (run 41704705283, the second batch of the number
+sweep) is the last one read here. Every count in section 1 is computed by
 `python3 tools/report_card.py` at that commit, never typed; every reading is the record's own, by the one key
 (`tools/readings.py`), and names the file that holds it. A grading is dated: its counts and readings are true at its commit, and
 the next grading replaces them. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
@@ -24,7 +25,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 <!-- the repository in numbers (tools/report_card.py) -->
 | Piece | Count |
 |---|---:|
-| Engine files in the fingerprint (omni-v24) | 65, 64 of them omni-v23's bytes |
+| Engine files in the fingerprint (omni-v25) | 65, 63 of them omni-v24's bytes |
 | Unit test cases collected under `tests/` | 789 |
 | Function-test files (`tools/function_tests.py --list`) | 68 |
 | C++ parity test files (the sealed twins) | 14 |
@@ -32,12 +33,12 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | GitHub workflows (`.github/workflows/`) | 71 |
 | Three-run tables in `results/live/`, all engines | 250 |
 | Of them, by engine, newest first | omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13; omni-v14: 4 |
-| Three-run tables on the engine that stands (omni-v24) | 0 (the newest are omni-v21's) |
-| Model gate pages (`results/model_gate/`) | 32 |
-| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 154, 30, 24, 92 |
+| Three-run tables on the engine that stands (omni-v25) | 0 (the newest are omni-v21's) |
+| Model gate pages (`results/model_gate/`) | 33 |
+| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 155, 30, 25, 92 |
 | Drawn figures (`docs/book/figures/`) | 77 |
-| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 660, 2,025, 320 |
-| Files carrying the legal notice (`tools/legal.py --check`) | 1,743 |
+| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 660, 2,028, 320 |
+| Files carrying the legal notice (`tools/legal.py --check`) | 1,745 |
 | Muscles in the catalog, in our own models: GAIN, STEADY, LOSS | 1,107: 530, 577, 0 (70 families) |
 | Benchmarks on the benefit board, by the engine of their newest table | 26: omni-v21 23, omni-v3 3 |
 | LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v21: 50, 0 without; omni-v12: 113, 101 without |
@@ -47,7 +48,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 
 | # | Piece | Where | Grade | The record now | What moves it up |
 |---:|---|---|---|---|---|
-| 1 | The engine on main, omni-v24 | `omnicompass/`, `omni_controller/`, `OMNI_V24.json`, `docs/OMNI_V24.md` | **A−** | 65 fingerprinted files, 64 of them omni-v23's bytes; the one change, the factory beat for its place (10 s on site, 60 s through a cloud), picked by a rule frozen before any reading; the model gate against omni-v23 reads no LOSS (`results/model_gate/V24_VS_V23.md`); the release check 0 FAIL; every page names it (`tools/land_engine.py --check`) | A comment in `omni_controller/controller.py` names the omni-v23 ladder's file where it means the corrected one (`V23_LADDER_CORRECTED.md`): a word in an engine file, corrected with the next version; its first three-run tables |
+| 1 | The engine on main, omni-v25 | `omnicompass/`, `omni_controller/`, `tools/run_kafka.py`, `OMNI_V25.json`, `docs/OMNI_V25.md` | **A−** | 65 fingerprinted files, 63 of them omni-v24's bytes; the Kafka wire's fault fixed (item 12) and a comment in the Kubernetes governor corrected to name the corrected ladder's file; the governor's decisions byte for byte omni-v24's; omni-v24's change, the factory beat for its place (10 s on site, 60 s through a cloud), carried; the model gate against omni-v24 (`results/model_gate/V25_VS_V24.md`); every page names it (`tools/land_engine.py --check`) | Its first three-run tables |
 | 2 | The C++ twin | `cpp/`, `results/SEAL.json` | **A−** | Every twin that exists proven equal to its Python by its parity test (14 parity test files) | The store brain (`tools/store_brain.py`, omni-v22) is Python only; its twin with a version |
 | 3 | The Kubernetes governor | `omni_controller/` | **A−** | On real Kubernetes the work and the 95th percentile read GAIN in all three of our runs (omni-v21); every LOSS row on its tables has its cause written (50 of 50, `docs/LOSS_LEDGER.md`) | Its omni-v24 tables; the pod start on a host at its top through the model gate |
 | 4 | Omni-Compass's own orchestrator, three arms | `omni_orchestrator/`, `results/orchestrator/V21_THREE_ARMS_ABC.md` | **A−** | Omni on native against native: work GAIN in all three of our runs (up 7.0% to 10.3%), the 95th percentile GAIN in all three (down 12.0% to 14.2%) | Omni direct against Omni on native reads work LOSS by the mean of our three runs (beyond the noise in 1 of 3) and the 95th percentile the runs disagree |
@@ -58,7 +59,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | 9 | PostgreSQL and MySQL | `results/live/V21_PGBENCH*.md`, `V21_SYSBENCH*.md` | **A−** | GAIN, power given: PostgreSQL 4.2%, MySQL 2.2% GAIN by the index's rule, no LOSS row in their main tables; MySQL as shipped 3 LOSS rows, each with its cause written | Their omni-v24 tables |
 | 10 | Redis | `results/live/V21_REDIS*.md` | **C+** | GAIN AND LOSS, 0.1% GAIN by the index's rule (under the floor); 1 LOSS row and 1 more in its service table, both with their cause written | Its omni-v24 tables |
 | 11 | MongoDB (YCSB) | `results/live/V21_YCSB*.md` | **C** | GAIN AND LOSS, 0.5% LOSS by the index's rule; 13 LOSS rows across its three tables, each with its cause written | Its omni-v24 tables |
-| 12 | Kafka | `results/live/V21_KAFKA*.md`, `.github/workflows/kafka.yml`, `tools/run_kafka.py` | **C, and a fault** | GAIN AND LOSS, 1.2% LOSS by the index's rule; 15 LOSS rows, each with its cause written. Since omni-v22's Kafka wire (30 October) no Kafka run has finished: every workload stops at the job's 150-minute limit inside "Run the workload" (8 runs on 3 November, among them 41601163807, whose four workloads each ran past 150 minutes), where omni-v21's took 14 to 32 minutes a workload (run 40400868003). The runner prints its progress only to a file the job uploads, so the job logs do not show where it stalls | The stall found on a runner here (Kafka 3.9.1 as the workflow installs it) and fixed: the runner is a fingerprinted wire, so its fix lands as the next version through the model gate; the workflow made to print the runner's progress into the job's log |
+| 12 | Kafka | `results/live/V21_KAFKA*.md`, `.github/workflows/kafka.yml`, `tools/run_kafka.py` | **C; the fault fixed in omni-v25** | GAIN AND LOSS, 1.2% LOSS by the index's rule; 15 LOSS rows, each with its cause written. Since omni-v22's Kafka wire (30 October) no Kafka run has finished: every workload stops at the job's 150-minute limit inside "Run the workload" (8 runs on 3 November, among them 41601163807, whose four workloads each ran past 150 minutes), where omni-v21's took 14 to 32 minutes a workload (run 40400868003). The runner prints its progress only to a file the job uploads, so the job logs do not show where it stalls | Found and fixed at this grading: reproduced on Kafka 3.9.1 as the workflow installs it, the omni arm's producer single-threaded and waiting on a lock it inherited when it was forked while the governor's thread opened its own Kafka client (from omni-v22); omni-v25 forks the producer first, and a producer that overruns its schedule stops its workload with the reason; the job's log now shows the runner's progress. Its first tables on omni-v25 |
 | 13 | The models: robots, swarms, buildings, grids | `results/live/V21_MUJOCO.md`, `V21_SWARM.md`, `V21_CITYLEARN.md`, `V21_PANDAPOWER.md` | **A−** | GAIN in each, no LOSS row (MuJoCo 3.8%, swarms 3.0%, CityLearn 1.5%, SimBench 5.8%); our own models and independent simulators, class S, never proof | Their omni-v24 runs |
 | 14 | The seven organisms with the real cluster inside (the grid) | `results/grid_v24/`, `scripts/dispatch_grid.py` | **Incomplete** | The benefit sheet still reads omni-v3 here. The omni-v24 grid runs on GitHub's machines: every grid run among GitHub's last 100 finished runs on 3 November passed but one (`six-kube x100`, the compute and physics realms) | The omni-v24 grid's table; that run's cause |
 | 15 | The orchestra and the governors live | `results/orchestra/ORCHESTRA.md`, `results/live/GOVERNORS.md` | **C** | Modelled (class S) and live on omni-v12; their four-ways tables carry 113 LOSS rows against Omni-Compass's own native, 101 of them without a cause written | Their runs on the engine that stands; a cause for every row |

@@ -2,6 +2,11 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-03: omni-v25 stands: the Kafka wire's producer started before the governor's thread
+- **omni-v25** (`OMNI_V25.json`, fingerprint `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`): omni-v24 with one fault fixed in the Kafka wire: the producer is started before the governor's thread, because from omni-v22 that thread opened its own Kafka client while the producer was forked, the producer inherited a lock the thread held and never sent a message, and every Kafka run on GitHub since 30 October stopped at the job's 150-minute limit with nothing handed in; a producer that overruns its schedule now stops its workload with the reason. The governor's decisions are byte for byte omni-v24's (53 of the wire's 58 definitions identical, the brain among them). A comment in the Kubernetes governor
+  names the corrected ladder's file. The Kafka workflow prints the runner's progress into the job's log. The model gate against omni-v24:
+  `results/model_gate/V25_VS_V24.md`. Every benchmark runs again on it from 21:00 UTC on 3 November.
+
 ## 2026-11-01: omni-v24 stands: the factory beat for its place; the four arms; the live engine keeps itself current
 - **omni-v24** (`OMNI_V24.json`, fingerprint `66c8f2d94b3e4725`, 65 files; `docs/OMNI_V24.md`): omni-v23 with the heartbeat it ships
   with read from the place it runs in (`omni_controller/controller.py`, `factory_beat`), on the founder's orders that the
