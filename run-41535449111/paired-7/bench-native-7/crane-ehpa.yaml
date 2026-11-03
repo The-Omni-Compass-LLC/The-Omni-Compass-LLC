@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The service's autoscaler handed to Crane (scripts/kind_addons_crane.sh; docs/CRANE_PREREGISTRATION.md): an Effective HPA in
+# Crane's auto mode with the operator's own settings of the service's HPA (deploy/kind/demo.yaml: one to 10
+# replicas, the processor at 50%) and Crane's forecast as its own documentation writes it (the DSP algorithm, a 60 s sample,
+# an hour ahead, seven days of history). Crane builds the HPA ehpa-php-apache from it and owns it.
+apiVersion: autoscaling.crane.io/v1alpha1
+kind: EffectiveHorizontalPodAutoscaler
+metadata:
+  name: php-apache
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  minReplicas: 1
+  maxReplicas: 10
+  scaleStrategy: Auto
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  prediction:
+    predictionWindowSeconds: 3600
+    predictionAlgorithm:
+      algorithmType: dsp
+      dsp:
+        sampleInterval: "60s"
+        historyLength: "7d"
+# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
