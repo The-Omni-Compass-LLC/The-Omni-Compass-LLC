@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# One job of the batch stream on Ray (scripts/kind_batch_queue.sh, BATCH_QUEUE=kuberay, PHASE=submit fills every name and
+# number; docs/BATCH_QUEUE_PREREGISTRATION.md, amendment 7): a RayJob sent to the one Ray cluster (omni-ray) by KubeRay's
+# operator over the cluster's own job API (HTTPMode: no submitter pod on the measured workers), its driver on the head, its
+# 10 tasks 5 at a time on the worker pods the Ray autoscaler adds, each hashing the same
+# 3000 MB as one pod of the Kubernetes stream.
+apiVersion: ray.io/v1
+kind: RayJob
+metadata:
+  name: omni-ray-024
+  namespace: default
+  labels: {app: omni-ray-stream}
+spec:
+  clusterSelector:
+    ray.io/cluster: omni-ray
+  submissionMode: HTTPMode
+  entrypoint: python /home/ray/omni/stream_job.py --tasks 10 --parallel 5 --mb 3000
+# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
