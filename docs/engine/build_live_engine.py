@@ -1124,6 +1124,30 @@ def scenarios20() -> dict:
     return {"file": str(f.relative_to(ROOT)), "title": d.get("title"), "run": d.get("run"), "gauges": d.get("gauges"), "organisms": orgs}
 
 
+def bills() -> dict:
+    """The one equation's inputs (results/TWO_BILLS.json, tools/two_bills.py; the reading by tools/work_per_bill.py): every
+    chip run's work and bill on both arms, and the cloud set's bill, so the page computes E = W / B, ΔW, ΔB and
+    G = (1 + ΔW) / (1 + ΔB) − 1 in its own code and checks each run's G against the Python's (the founder's words of 2
+    November: the one thing to prove is more work for the bill)."""
+    tb, wp = ROOT / "results" / "TWO_BILLS.json", ROOT / "results" / "WORK_PER_BILL.json"
+    if not tb.exists():
+        return {}
+    d = json.loads(tb.read_text(encoding="utf-8"))
+    w = json.loads(wp.read_text(encoding="utf-8")) if wp.exists() else {}
+    chip, cl = d.get("chip") or {}, d.get("cloud") or {}
+    bm = (w.get("places") or {}).get("bare_metal") or {}
+    g = {r.get("run"): r.get("G") for r in bm.get("runs", [])}
+    runs = [{"run": i + 1, "id": (chip.get("runs") or [None] * 3)[i] if i < len(chip.get("runs") or []) else None,
+             "native": {"work": r["native"]["work"], "bill": r["native"]["bill"]},
+             "omni": {"work": r["omni"]["work"], "bill": r["omni"]["bill"]}, "G_python": g.get(i + 1)}
+            for i, r in enumerate(chip.get("per_run") or [])]
+    bill = cl.get("bill") or {}
+    return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json",
+            "chip": {"engine": chip.get("engine"), "title": chip.get("title"), "runs": runs, "reading": bm.get("reading")},
+            "cloud": {"engine": cl.get("engine"), "page": cl.get("page"), "repetitions": cl.get("repetitions"),
+                      "bill": {k: bill.get(k) for k in ("native", "omni", "ci95")}, "work_counted": bool(cl.get("work"))}}
+
+
 def injection_grid() -> dict:
     """The injection grid (results/injection_grid/INJECTION_GRID_<base>.json, tools/injection_grid.py, class S): the Python's
     newest 500 injections through every organism, native and with Omni-Compass on native, and through every governor on each
@@ -1358,7 +1382,7 @@ def records(runs: bool) -> dict:
     return {"harness": h, "ctlrec": pack_controller(c), "scen": s, "runs": rr, "fleet": fleet(), "build": build, "whole": wh,
             "gpurun": gpu, "cpuhost": cpu, "monitors": reg, "engineruns": eruns, "heldout": ho, "cpptwin": x,
             "beatsweep": beat_sweep(), "dial": dial(), "coremc": core_mc(), "onnative": on_native_abc(), "scenarios": scenarios20(), "injgrid": injection_grid(), "audit": verdict_audit(), "glossary": glossary(),
-            "lawwires": law_wires(), "field": field()}
+            "lawwires": law_wires(), "field": field(), "bills": bills()}
 
 
 def embedded(page: str, key: str):
@@ -1638,7 +1662,7 @@ def main() -> int:
               "the prose stays as written for the older engine until it is realigned, and the page says so")
     if a.check:
         bad = [k for k in ("harness", "ctlrec", "scen", "runs", "fleet", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field")
+                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills")
                if embedded(page, k) != rec[k]]
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
