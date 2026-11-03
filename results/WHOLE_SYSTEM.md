@@ -262,7 +262,7 @@ Omni-Compass on the organism alone (compassbare against nativebare) and on top o
 ## 6. What is missing, and what replaces what
 
 - **The machine** (the kernel, bare metal, Kepler and the machine's own meter; register row 79): not yet run. It enters as exactly 1.
-- **The card on the engine that stands**: the omni-v24 runs on Lambda (one exact commit, on the founder's word) replace the omni-v21 rows; the chip enters as exactly 1 whatever they read, and they stand beside it.
+- **The card on the engine that stands**: the omni-v25 runs on Lambda (one exact commit, on the founder's word) replace the omni-v21 rows; the chip enters as exactly 1 whatever they read, and they stand beside it.
 - **The cloud at the tune-down**: the omni-v12 Azure sets (A, B and C of the steady set, the two bursts and the real day) give the bill its three-run reading; Google and Amazon follow on the same harness.
 - **Every cluster and service table on omni-v12**: the campaign (`scripts/reruns.txt`) reruns every benchmark; each row above is replaced by its omni-v12 table as it lands, and this page is rebuilt (`python3 tools/whole_system.py`).
 - **The stacked run**: Omni-Compass at every layer at once against native at every layer, the one measurement that makes the total class L and P instead of a composition. Preregistered before any run in `docs/WHOLE_SYSTEM_PREREGISTRATION.md` (three stacks: the cluster and its services on GitHub's machines; the cloud at the tune-down on Azure; the card beside the cluster on Lambda); its place is written here before its result exists.
