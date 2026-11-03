@@ -30,7 +30,8 @@ its pathways, which should have pushed a signal when something went into a negat
 order the engine is held to. Where a LOSS appears in a run of Omni-Compass on native or of Omni direct, the immune system
 missed a signal it should have answered, and that is a fault in the mechanism, fixed in the next version.
 
-One such gap stands on omni-v18, in our own models (class S, `results/model_gate/V17_LADDER.md`): in the kind benchmark's
+One such gap stood on omni-v18, in our own models (class S, `results/model_gate/V17_LADDER.md`, read on the model's stand-in
+before amendment 6 of `docs/PACE_PREREGISTRATION.md` corrected it): in the kind benchmark's
 setting, at every beat, Omni-Compass's pods wait for a place longer than native's, while the minutes over the line read
 GAIN. The mechanism: the compass lowers the pod autoscaler's target (more pods) on an up force, and it went on lowering it
 while pods it had already asked for were waiting for a machine. A pod with no machine serves nothing; it only waits. The
