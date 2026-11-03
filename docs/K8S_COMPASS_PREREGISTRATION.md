@@ -1401,7 +1401,10 @@ will pay 1% more for 10% more product"): the cloud is judged by its work per dol
 sends a fixed rate of requests (`LOADGEN=open`), so its work is the same in both arms by design and a set at the max could show
 only the bill beside a faster answer; the factory beat's ladder on omni-v23 reads the cloud setting at the max with the
 machine-hours up 9% to 35% across the beats, 14% at 60 s, on a plant whose work is fixed the same way
-(`results/model_gate/V23_LADDER.md`, our own models, class S). Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`)
+(`results/model_gate/V23_LADDER.md`, our own models, class S; a note of 2 November: that ladder ran on the model's faulty
+stand-in, which amendment 6 of `docs/PACE_PREREGISTRATION.md` corrected the same night, and on the corrected model the cloud's
+setting at the max reads the machine-hours up 8% to 34% across the beats, 15% at 60 s,
+`results/model_gate/V23_LADDER_CORRECTED.md`: the point stands, a bigger bill for work held fixed). Azure's queue is held (`scripts/azure_queue.txt`, `switch=off`)
 until its sets carry the load whose work grows with the speed (the work meter, `LOADGEN=meter`, `tools/capacity_report.py`, the
 completed work counted in each arm), written into this preregistration before the switch goes on; then its sets start as written
 here, on the engine that stands then.

@@ -935,10 +935,18 @@ def dial() -> dict:
     """The heartbeat dial (omni-v17): every beat of the Kubernetes governor read in our own models, from the newest ladder
     tools/beat_ladder.py wrote (results/model_gate/V<n>_LADDER.json), without its per-seed records; the real runs' place from
     the pace entry's three-run tables once they exist (results/live/V<n>_PACE*.md). Empty until a ladder exists."""
-    lads = sorted((ROOT / "results" / "model_gate").glob("V*_LADDER.json"), key=lambda f: int(re.sub(r"\D", "", f.stem) or 0))
+    # the newest engine's ladder; of one engine's, the corrected ladder (V<n>_LADDER_CORRECTED.json, docs/PACE_PREREGISTRATION.md
+    # amendment 6) before the one it corrects, which ran on the model's faulty stand-in and stands only as its own record
+    lads = sorted((f for f in (ROOT / "results" / "model_gate").glob("V*_LADDER*.json") if re.fullmatch(r"V\d+_LADDER(_CORRECTED)?", f.stem)),
+                  key=lambda f: (int(re.match(r"V(\d+)", f.stem).group(1)), f.stem.endswith("_CORRECTED")))
     if not lads:
         return {}
     lad = json.loads(lads[-1].read_text(encoding="utf-8"))
+    try:   # what each setting is, as tools/beat_ladder.py writes it on the ladder's own page
+        from tools.beat_ladder import SETTINGS as _LADDER_SETTINGS
+        about = {k: txt for k, _s, txt in _LADDER_SETTINGS}
+    except Exception:   # the page is still built from the record alone
+        about = {}
     pace = sorted((ROOT / "results" / "live").glob("V*_PACE*.md"))
     eng_of = _ladder_engines(lad)
     standing = engine()[0]
@@ -953,7 +961,7 @@ def dial() -> dict:
             "since": _engine_change(newest, standing, ("omni_controller/", "omnicompass/")) if newest else None,
             "newer_60": _newer_pace(lad),
             # the page's key is "models" (the editing seat of 24 October: the retired word is printed nowhere); the ladder file keeps its own
-            "models": _clean({k: {"setting": t["setting"], "beats": t["beats"], "native": t["native"], "rows": t["rows"]}
+            "models": _clean({k: {"setting": t["setting"], "about": about.get(k, ""), "beats": t["beats"], "native": t["native"], "rows": t["rows"]}
                               for k, t in (lad.get("models") or lad.get("models") or {}).items()})}   # a change against a zero (native's power cap) is NaN: null
 
 
@@ -964,15 +972,17 @@ def _ladder_engines(lad: dict) -> dict:
     out = {}
     for src in lad.get("sources") or []:
         eng, beats = None, set()
-        f = ROOT / src
-        if src.endswith(".json") and f.exists():
+        mp = re.search(r"(results/\S+\.json)\s*$", src)   # a source named in words that ends on its record's path
+        f = ROOT / (mp.group(1) if mp else src)
+        if f.suffix == ".json" and f.exists():
             r = json.loads(f.read_text(encoding="utf-8"))
             eng = r.get("cand_engine") if re.fullmatch(r"omni-v\d+", str(r.get("cand_engine") or "")) else None
             for t in (r.get("models") or {}).values():
                 beats |= {k for k in (t.get("per_seed") or {}) if k != "native"}
-        else:
-            m = re.search(r"\bon (omni-v\d+)", src)
-            eng = m.group(1) if m else None
+        if eng is None:
+            m = re.search(r"\bon (omni-v\d+)|\bthe (omni-v\d+) tree", src)
+            eng = (m.group(1) or m.group(2)) if m else None
+        if not beats:
             pm = re.search(r"--pace-periods ([\d,.]+)", src)
             beats = set(pm.group(1).split(",")) if pm else set()
         for b in beats:
