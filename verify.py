@@ -409,6 +409,10 @@ def main():
     check("the oversight line (the pages a person would answer, native against Omni-Compass on native): results/OVERSIGHT.md and "
           "the paragraph the README, the Owner's Manual and the state of play carry are what the tables give "
           "(tools/oversight.py)", r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "pages.py"), "--check"], capture_output=True, text=True)
+    check("the pages a person would have been sent, counted from the oversight line's raw files by the preregistered rule: "
+          "results/OVERSIGHT_PAGES.md is its record's (tools/pages.py)", r.returncode == 0,
+          (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "index_words.py"), "--check"], capture_output=True, text=True)
     check("the Owner's Manual's index, bottom line, three arms and routes are what the records give (tools/index_words.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
