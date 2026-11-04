@@ -30,6 +30,7 @@ import math
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -65,10 +66,15 @@ def raw_ref():
 class Git:
     """Raw files by path: from the working tree where checked out, else from git (main's tree or the branch raw) through
     one git cat-file process."""
+    TRIES = 5   # a file not yet on this machine is fetched from GitHub one request at a time; a dropped connection is retried
+
     def __init__(self):
-        self.p = subprocess.Popen(["git", "-C", str(ROOT), "cat-file", "--batch"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        self._start()
         self.tree = None
         self.ref, self.inside = raw_ref()
+
+    def _start(self):
+        self.p = subprocess.Popen(["git", "-C", str(ROOT), "cat-file", "--batch"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
     def spec(self, path: str) -> str:
         return f"{self.ref}:{self.inside}{path[len(RAW) + 1:]}" if path.startswith(RAW + "/") else f"HEAD:{path}"
@@ -77,12 +83,31 @@ class Git:
         f = ROOT / path
         if f.is_file():
             return f.read_bytes()
-        self.p.stdin.write(f"{self.spec(path)}\n".encode()); self.p.stdin.flush()
-        head = self.p.stdout.readline().decode().split()
-        if len(head) < 3 or head[1] == "missing":
-            return None
-        data = self.p.stdout.read(int(head[2])); self.p.stdout.read(1)
-        return data
+        # 4 November: a fetch from GitHub dropped mid-build ("GnuTLS recv error"), git cat-file stopped, and its empty answer was
+        # read as a missing file before the next request broke the pipe. An empty answer is the reader having stopped, never a
+        # missing file: the reader is started again and the same file asked for again, waiting longer each time.
+        for attempt in range(self.TRIES):
+            try:
+                self.p.stdin.write(f"{self.spec(path)}\n".encode()); self.p.stdin.flush()
+                line = self.p.stdout.readline()
+                if not line:
+                    raise BrokenPipeError("git cat-file stopped")
+                head = line.decode().split()
+                if len(head) < 3 or head[1] == "missing":
+                    return None
+                data = self.p.stdout.read(int(head[2])); self.p.stdout.read(1)
+                if len(data) != int(head[2]):
+                    raise BrokenPipeError("git cat-file stopped mid-file")
+                return data
+            except (BrokenPipeError, OSError):
+                if attempt == self.TRIES - 1:
+                    raise
+                try:
+                    self.p.kill()
+                except OSError:
+                    pass
+                time.sleep(2 ** (attempt + 1))
+                self._start()
 
     def files(self, prefix: str) -> list:
         if self.tree is None:
