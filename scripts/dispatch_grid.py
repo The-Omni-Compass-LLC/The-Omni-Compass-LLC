@@ -484,6 +484,10 @@ def waits_for_a_runner(path, jobs):
     open_ = [x for x in jobs if x["status"] in ("queued", "waiting", "pending", "requested")]
     if not open_ or any(x["status"] == "in_progress" for x in jobs):
         return False
+    if wf == "live-engine.yml":
+        # the page's rebuild holds the grid only while its job is queued for a runner, never while it waits on its own group
+        # behind another rebuild (3 November): holding the grid then would buy it nothing
+        return any(x["status"] == "queued" for x in open_)
     if wf in FIRST:
         return True
     return wf in ("six.yml", "six-kube.yml") and any((x.get("name") or "").startswith("report") for x in open_)

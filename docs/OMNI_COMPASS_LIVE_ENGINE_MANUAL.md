@@ -1713,10 +1713,19 @@ A tab on the right edge of the screen, **Guided tour** (`#tourTab`; on a phone a
 the monitor wall to the glossary, with an opening and a close that carry the legal notice. At each stop the section is outlined
 and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the section shows in this book's own
 words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
-own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page. The
-card's buttons are Back, Next, Play (the tour steps on by itself when a stop's words end), Voice on or off, Close and, where the
-page runs inside Claude, Explain simply (Claude restates the stop in plain words from the stop's own text alone, adding nothing).
-The arrow keys step back and forth and Escape ends the tour. The tab starts the tour at its opening, narrated and stepping on by
+own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
+
+The card is for the reader, not the narrator: everything heard can be heard again and checked against the words. The card reads
+along, the sentence being read lit (placed by each sentence's share of the voice, so it can sit a moment early or late), and a
+press on any sentence plays it again from there. The voice's own row holds **⏪ 10 s** (back ten seconds), **Pause** and **Play**
+(stop where it is, then go on from there), **↺ From the start** (the stop again from its first word), **10 s ⏩** (forward ten
+seconds), **■ Stop** (the voice stops and the tour stays on this stop) and the speed, **0.75×**, **1×** or **1.25×**; the bar under
+it shows where the voice is and drags back or forward. The stops' own row holds **◀ Previous stop**, **Next stop ▶**, **Step on by
+itself** (on or off: the next stop follows when this one ends), **Voice on** or **off**, **Close** and, where the page runs inside
+Claude, **Explain simply** (Claude restates the stop in plain words from the stop's own text alone, adding nothing). The keys
+follow the common players: **J** back ten seconds, **K** or the space bar pause and play, **L** forward ten seconds, **R** from the
+start, **S** stop, the arrow keys the stops and **Escape** ends the tour. On the browser's own voice, which cannot be wound, back
+and forward go one sentence. The tab starts the tour at its opening, narrated and stepping on by
 itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
 in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
 Play starts it.
@@ -1728,6 +1737,12 @@ plays a clip only while those words are the stop's words today; a stop whose wor
 the browser's own voice (its most natural English voice, a woman's where it has one) until the clip is read again, which the
 page's build on GitHub does by itself. So the voice never says what this book and the page do not. The card's last line names the
 voice that is speaking.
+
+Beside the engine chip at the head of the page a line says when this copy last asked GitHub, what it found and when it asks next
+(`#omniFresh`): every copy of the page reads the newest build's stamp when it opens and every 24 hours after, opens a newer build
+in place only when the page GitHub serves is itself newer than this copy, and says so when GitHub cannot be reached. The copy
+published inside Claude cannot open another build from inside Claude's frame: its line says when it was built and that it is
+checked against GitHub every 6 hours and republished whenever GitHub holds a newer build, at least once a day.
 
 ## 12. Heartbeat Dial
 

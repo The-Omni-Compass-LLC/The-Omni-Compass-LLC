@@ -208,6 +208,7 @@ class Conductor(unittest.TestCase):
         self.assertIn("archive-run.yml", g.FIRST)
         self.assertIn("live-engine.yml", g.FIRST)   # the page's rebuild waits for no benchmark (3 November)
         self.assertTrue(g.waits_for_a_runner(".github/workflows/live-engine.yml", [q]))
+        self.assertFalse(g.waits_for_a_runner(".github/workflows/live-engine.yml", [dict(q, status="waiting")]))   # behind another rebuild
 
     def test_reruns_released_a_then_b_then_c_never_twice(self):
         g = self.g
