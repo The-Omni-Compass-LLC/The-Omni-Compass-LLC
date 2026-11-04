@@ -1,0 +1,282 @@
+# Disclosures, Declarations and Disclaimers
+
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+This page is the one place every declaration about Omni-Compass is made. The README, the manual, the book, every guide
+and every report point here. Where any other page seems to say more than this page, this page governs.
+
+## 1. Rights
+
+1. Omni-Compass, its engine, its mathematics, its software and its documentation are the property of The Omni-Compass
+   LLC. All patents, copyrights and trademarks covering them have been filed in the
+   United States by The Omni-Compass LLC. No filing number is stated here, and no grant, registration or approval is
+   claimed.
+2. The software is licensed for evaluation and simulation only (`LICENSE`). Running it in production, on any system
+   beyond evaluation, or in any product or service, requires a signed, paid Omni-Compass Enterprise License.
+3. Names of other companies and products (NVIDIA, Kubernetes, Red Hat OpenShift, Amazon EKS, Google GKE, Microsoft
+   AKS, Karpenter, Lambda and others) are the property of their owners. They identify the systems Omni-Compass was
+   tested with or connects to. No affiliation, endorsement or certification by any of them is stated or implied.
+4. All rights reserved. The Omni-Compass LLC reserves the right to change the software, the documentation, the results
+   and the terms at any time, without notice. Every copy, fork, export, report, archive or printout of any part of
+   Omni-Compass carries the README's notice, `LICENSE`, `NOTICE` and this page unchanged. The Omni-Compass LLC,
+   www.omni-compass.com
+
+## 2. What a result is, and what it is not
+
+1. Every result carries its evidence class: **T** a theorem, **V** verified in code, **S** our own models (modelled),
+   **L** live software (real Kubernetes on GitHub's machines), **P** a physical meter (a real card's own power meter).
+   A model is a statement about the model. A software benchmark is a statement about the software and machine it ran
+   on. Only a meter speaks for hardware.
+2. The models were written by the same people who wrote the law. They show how the mechanism behaves; they are not an
+   independent test.
+3. On Kubernetes in kind every machine stays powered, so energy there is a declared model, not a meter; on the data stores it is
+   the host's processor seconds. Neither is scored in the Omni index: energy is scored only where a meter read it (the card's own
+   meter), and every benefit is claimed at the software end (the founder's order of 31 October, evening).
+4. Every comparison is paired: the same seed, load and clock with and without Omni-Compass, in an order rotated by
+   repetition. Intervals are 95% intervals over the paired repetitions. Ratios across seeds are summarised as geometric
+   means. Labels are assigned by code from rules written and committed before the run
+   (`docs/GPU_PREREGISTRATION.md`, `docs/REALMS_PREREGISTRATION.md`, `docs/K8S_COMPASS_PREREGISTRATION.md`), never by hand.
+5. Losses and failed runs are kept beside the wins (`docs/EVIDENCE_LEDGER.md`, `results/live/`, git history). The
+   first real-card run, for example, saved energy (+3.6% work per energy, proven) and made the slowest answers 58.5%
+   slower; it is published as it happened.
+6. No result is a promise of a saving on any other system. No dollar figure in this repository is a measured result.
+   Nothing here is a vendor certification, a safety certification, legal advice or investment advice.
+
+## 3. Do no harm, and the rule Omni-Compass keeps on every muscle
+
+**What "do no harm" means** (the founder's words of 19 October 2026; this is its meaning everywhere in Omni-Compass, and
+it has no other). Omni-Compass has one goal: to strengthen the organism it governs and keep it healthy, working at the
+best state its own muscles can carry. Whatever is fed into the organism (its work, its data, its energy: its nutrients)
+passes through its muscles and comes out as its output. Omni-Compass's brain drives the organism toward the most and the
+best output it can make from what it is fed (the most work, done fastest, with the fewest misses and failures) while it
+keeps every muscle healthy.
+
+- **Harm is judged at the organism.** Harm is the organism turning out less than its native controllers make it turn out
+  (less work done; more time waited, missed or failed), or the organism made less healthy: a muscle pushed past its own
+  limit, a service pushed over its own line, or anything made to fail. Omni-Compass does neither.
+- **Every muscle only as far as it can go.** Omni-Compass can push a muscle only as far as that muscle itself can be
+  pushed: its own limit, read live from the system, never past it. It finds the room each muscle already has and uses
+  all of it. Whether its mathematics can draw a little more out of a muscle than the muscle was built to give is an open
+  question; a measurement answers it before anything is claimed.
+- **The muscles work as one body.** Where one muscle's strength cannot be used without straining another, the brain
+  offsets and engages the muscles together to bring the whole organism to its best state. It may use one muscle less,
+  leave it native, or rest it, so that another can carry more, whenever the organism's whole output comes out ahead and
+  every muscle stays healthy. Which muscles to drive and which to leave native is the brain's live decision, at every
+  moment and in every run.
+- **Reactive and proactive.** Like an immune system, the brain answers a breach at once, and it acts before a line is
+  crossed.
+- **Every row is still shown.** Each muscle's and each gauge's reading stays in every table beside the organism's, LOSS
+  included. Nothing is cut.
+
+**How the engine that stands keeps it.** The engine that stands keeps do no harm in its strictest form. By default it moves each
+muscle's settings toward more work, faster, up to the muscle's own limit and never past it (the max); on the dial anyone
+can tune it down toward the same work with less (the tune-down). Either way it keeps a step only where the muscle is
+never behind native for it: a step that costs the muscle more for each piece of work, or loses more than **2%** in any
+measure (work done, response time at the median, p95 or p99, time over the service line, or the machine's own cost of
+running Omni-Compass), is undone. A resource spent that rose is **power given**, shown beside the work, the speed and the
+wear it bought, never called a loss. Where no move passes that test, Omni-Compass leaves the muscle exactly as it runs
+alone. It takes nothing from one muscle to give to another: that form never harms the organism, but it leaves
+unused any gain that needs one muscle to give way to another. Letting one muscle give way so that the organism's whole
+output comes out ahead, judged on the organism and on every muscle's health, is the next engine version's work. It is
+built and proven in our own models first (the model gate), every benchmark is run again on it, and no result claims it
+before its runs exist.
+
+**The factory tune: one tuned engine, and a tuning bench.** The engine in this repository is presented as The Omni-Compass LLC
+tuned and ships it: self-running, set at the factory. Every muscle in the catalog is wired and runs on the setting found for it
+(its own card where one was found on development seeds and kept under the strict rule, 364 muscles in
+`realms/muscle_cards_v5.csv`; the engine's own setting for every other), frozen and fingerprinted by version (`python3
+tools/omni_version.py`); no setting is presented as universal. **Every published benchmark result is one engine at its one
+factory tune**: the engine its table names (`python3 tools/omni_version.py`), run again on each engine that stands. From
+omni-v17 that tune is held to a declared rule (`docs/THE_TUNE.md`, `tools/tune_study.py`): of the tunes that harm no gauge against native, the
+one against which no other tune tried reads GAIN on one service gauge and LOSS on none, searched on development seeds and read
+again on untouched ones; the claim is non-dominance among the tunes searched, never a global optimum. The live benchmark engine page and the
+control panel are a live tuning engine: every knob, button and monitor turns in real time (the beat, the dial, the pedal, each
+muscle driven or left native, up or down, in or out, minus or plus) to show the mechanism of action with native alone, with
+Omni-Compass on top, or both side by side; what it shows at any other setting is the engine's range, never a benchmark result. As
+on any engine, where the mixture, the intake, the exhaust, the firing or the pistons change what it delivers, **turning any knob
+of Omni-Compass can change every metric, up or down, in any direction a tuner chooses**: one engine for many vessels, tuned many
+ways, for many outputs. A licensee may add on, retune, upgrade or tune down any muscle or combination (the dial, the cards, the
+bands and the service lines are exposed); a changed tune is the licensee's own, and so are its results. The factory tune is published only where it reads no LOSS: a LOSS found
+in The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
+published, never as a number to live with (the founder's order of 23 October 2026). The one place a LOSS is meant to be seen
+is the live benchmark engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
+to watch the system react and the brain hold or recover: that showing is the proof that the factory tune is the best state found, and that a turned knob never breaks the engine:
+it changes its mechanism of action, how its muscles and the organism share the work, toward the purpose the new setting asks for, and a
+changed tune's readings are the licensee's own.
+
+**The factory profile, and the profile that comes next.** The factory tune is one complete configuration profile, the factory
+profile: every governing rule, gain, margin, decision interval and default setting shipped together, versioned and fingerprinted.
+Today's is omni-v19's. The best validated factory profile for the declared operating conditions is not yet established: it is
+chosen only after every mechanism is verified, every knob combination is tested together on development workloads, and the choice
+is validated on fresh ones; then it is frozen, carried into every implementation (the C++ harness included) and released under its
+own identity. Until then no other profile is presented as the baseline; on the live benchmark engine a candidate is evaluated, never
+released, and a custom profile's readings are its own. The words, the mathematics and the bill's arithmetic are written once in
+`docs/FACTORY_PROFILE.md`.
+
+## 4. The wiring declaration
+
+**THE PUBLISHED BENCHMARKS ARE THE RECORD OF WHAT OMNI-COMPASS DID ON THE SYSTEMS, LOADS AND ENGINE THEY NAME, EACH WITH ITS EVIDENCE CLASS. WHERE A RESULT ON ANY OTHER SYSTEM DIFFERS FROM THEM, OR ANYTHING LOOKS WRONG, THE FIRST PRESUMPTION IS THE WIRING, THE SETTINGS, OR HOW OMNI-COMPASS WAS IMPLEMENTED OR READ, NOT THE LAW. CHECK THOSE FIRST (THE MANUAL'S "WIRED RIGHT OR WIRED WRONG") BEFORE DRAWING ANY CONCLUSION ABOUT OMNI-COMPASS.**
+
+**Omni-Compass acts only through the wires it is given.** It reads the meters it is pointed at and moves the settings
+it is allowed to move. If a reading is the wrong one, slow, or blind; if a lever is the wrong one, already owned by
+another controller, or given a range (cover) that is wrong for the machine; if a band or a service line is set for a
+different workload; then Omni-Compass will do exactly what its law says with the wrong information, and the result will
+not be the published one.
+
+Therefore:
+
+1. **It cannot be slapped on.** Every installation goes through the levels of the manual in order (chapter 6), starting
+   read-only, and every writing level begins with the wire check (manual, section 4.4) and a watch arm that must equal
+   native.
+2. **If your paired receipts differ from the published benchmarks in direction** (service LOSS, or no saving where one
+   was shown), **the first presumption is wiring, not the law.** Confirm the installation with the checks in the
+   manual's section 4.5 (*Wired right or wired wrong*) before drawing any conclusion about Omni-Compass.
+3. **This has happened to us, and is published.** On the first real card (NVIDIA A10, 2026-10-02) the governor read
+   being busy as trouble, set its power lid under the card's own working draw and allowed the clock under the card's own
+   working clock; the card served bursts more slowly and the slowest answers were 58.5% slower. The cause was found in
+   the card's own samples and corrected (`docs/GPU_PREREGISTRATION.md`, amendments 6 and 7). That is what a wiring
+   fault looks like, and how it is found.
+4. Omni-Compass never writes outside a lever's cover, never fights another writer (it stops and leaves that lever alone),
+   reads back every write, and returns every lever to the value it read before its first write when it stops or when the
+   OFF switch is used. These protect the machine; they do not make a wrong wiring right.
+
+## 5. Safety and responsibility
+
+1. Run watch mode first; run the wire check before any write; keep the master OFF switch (`python3 tools/omni_switch.py off`, the
+   whole harness at once) in reach at every level, and use it at the first sign of anything wrong, a suspected breach included.
+2. Omni-Compass is a supervisory governor. The machines' own controls (firmware, autoscalers, safety systems) stay in
+   place and keep their own protections; Omni-Compass sets only values they already accept.
+3. Do not connect Omni-Compass to safety-critical systems (vehicles, medical devices, grid protection, life safety)
+   except as a modelled study, and never without the qualified review those systems require.
+4. The software is provided "as is", without warranty of any kind, as stated in `LICENSE`. The operator is responsible
+   for its use on their systems.
+
+## 6. Changes to the work and to this page
+
+1. The software, the law's settings, the benchmarks, the results, the documents, the licensing terms and this page may
+   change at any time, without notice. The version in the repository's `main` branch at a given commit is the version
+   that commit describes; `RELEASE_MANIFEST.json` and `python3 verify.py` identify it.
+2. Statements about work in progress, planned features, expected results and future runs are expectations, not
+   promises. Where a result has not yet been measured, the documents say so (`docs/STATE_OF_PLAY.md`,
+   `docs/DOSSIER.md`, section 8).
+3. A signed Omni-Compass Enterprise License governs its own terms for its own term.
+
+## 7. Privacy and data
+
+Omni-Compass contains no telemetry. It sends nothing to The Omni-Compass LLC or anyone else, and makes no network
+connection of its own except to the systems an operator points it at. Its logs and receipts stay on the operator's
+machines.
+
+## 8. Where everything is
+
+| Question | Page |
+|---|---|
+| What has been measured, and how strongly | `docs/STATE_OF_PLAY.md`, `docs/DOSSIER.md`, `docs/EVIDENCE_LEDGER.md` |
+| The rules written before each run | `docs/GPU_PREREGISTRATION.md`, `docs/REALMS_PREREGISTRATION.md`, `docs/K8S_COMPASS_PREREGISTRATION.md` |
+| How to wire it, level by level, and how to confirm it is wired right | `docs/OMNI_COMPASS_MANUAL.md` (chapters 4 and 6), the book `docs/OMNI_COMPASS_MANUAL.pdf` |
+| The license, in plain answers, and third-party components | `LICENSE`, `LICENSING_FAQ.md`, `ENTERPRISE_LICENSE.md`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, `PATENTS.md`, `TRADEMARKS.md`, `SECURITY.md`, `.github/CLA.md` |
+| The muscles, what each is for and how it is wired | `docs/MUSCLE_CATALOG.md` |
+| Proof the code is the code that ran | `python3 verify.py`, `RELEASE_MANIFEST.json`, `results/SEAL.json` |
+| The live benchmark engine: every monitor, its feed and its knobs; the third manual, how to read and operate it | `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, `docs/engine/monitors.json`, `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md` and `.pdf` (the Live Benchmark Engine Manual's Appendix L, the page word for word: `docs/engine/PAGE_WORD_FOR_WORD.md`) |
+| The whole organism, composed every way it is bought | `results/WHOLE_SYSTEM.md`, `tools/whole_system.py`, `docs/engine/export_whole.py`, `docs/WHOLE_SYSTEM_PREREGISTRATION.md` |
+| The Python's runs that the live benchmark engine runs again | `tools/engine_runs.py`, `results/engine_runs/`, `results/heldout_seed_*/` |
+
+## 9. The whole organism, the cloud's back end, and the live benchmark engine
+
+**The composition is a model of measurements.** `results/WHOLE_SYSTEM.md` (`tools/whole_system.py`) composes each layer's own
+measured ratio, native against Omni-Compass on top of native, into one benefit for a whole stack: the product law
+R(g) = ∏ℓ Rℓ(g) gauge by gauge, its logarithm a sum with the variances added, each layer's runs A, B and C pooled by the
+inverse of their variances, and one index over the gauges with its 95% interval under two bounds (the gauges independent;
+perfectly correlated). No run here has stacked the layers: each factor is one layer's own run with the layers under it
+native, and the product assumes a layer's ratio does not change when the layers around it also carry Omni-Compass. That
+assumption is tested where the tables can test it (the governors' four ways), and the stacked run that replaces the
+composition is preregistered in `docs/WHOLE_SYSTEM_PREREGISTRATION.md`. Until it runs, the composition is class S of class P
+and L measurements, and every page that shows it says so.
+
+**The two places a system runs.** The same law is read in the two places a system runs Omni-Compass (the founder's order of
+1 November 2026; `docs/engine/export_whole.py`): the software end carried to bare metal (the software on the owner's own
+machines and chips), and the software end carried to the cloud (the cloud's build, its bare metal at the back end and the
+software; and the cloud as two pieces, the back end left to the provider). A piece with no measurement in the composition
+enters as exactly 1 and is named; neither place's composition is that place's bill. The bills themselves, and the work done
+inside them, native and Omni-Compass on native (the four arms: A and B on bare metal, C and D through the cloud), are read in
+`results/TWO_BILLS.md`.
+
+**The cloud's back end is not ours to meter.** Through the cloud, the bare metal belongs to the provider: no tenant can read
+its power meters or write its chips' limits, and no run here reaches it. The cloud piece's benefit is what the provider itself
+meters and bills, the machines counted every fifteen seconds and the bill at list price, read native against Omni-Compass on
+top of the cloud's own autoscaler. The bare-metal piece is gauged on hardware we can meter (a card's own power meter; a processor's energy counter)
+and is carried to the provider's bare metal only as the same mechanism on the same kind of part, a modelled factor, never as a
+measurement of the provider's machines.
+
+**The cloud is a wire.** A cloud is the wire between the software end (the owner's programs, Kubernetes and the open-source
+orchestrators, managers and autoscalers that carry the work) and the hardware end (the bare metal: the GPU chips, the Linux
+racks, the data center). Omni-Compass sits on all three pieces where a system lets it (the software end in either place, the chip only on bare metal); a system itself runs in one of two places, bare metal or the cloud (the founder's order of 1 November); the wire makes no benefit of its own. Until 31 October
+every cloud run here was set on the wire alone (the tune-down on the machines only), so it could at most park machines the
+cloud already made and cut the wire's bill a little. From 31 October (the founder's order of that day: no hard rule) every
+cloud set runs the whole engine at the max on the cloud's cluster, and what its receipt must show is that the engine holds there
+(section 10): no judged gauge LOSS against native, the work per dollar read beside the bill. The benefit is shown where it
+lives, at the software end, and explained through the wire, never claimed for the wire itself. The bare metal's
+energy and throughput are not under a tenant; they are measured where Omni-Compass sits on them (the card and the machine) and
+composed with the wire by the law above. A provider running Omni-Compass on its own back end would see that benefit on its own
+chips and racks; no tenant can meter it, so it is never claimed here as a measurement. No place carries a figure before its runs read it (the founder's
+order of 2 November: no number on any page that no table carries), and his word of 31 October sets the wire's own benefit at
+none: the wire carries the benefit, it does not make it.
+
+**What the record shows in each place so far** (the words for each place, and what each benchmark must show, are in section 10): at the software end the benefit, the Omni index over work, speed and machines (`results/OMNI_INDEX.md`; composed layer by layer in `results/WHOLE_SYSTEM.md`), with no bill in it; on bare metal, the A10's own bill and meter on omni-v23 (`results/TWO_BILLS.md`, `results/gpu/V23_A10_CAP_FULL_ABC.md`), fully loaded: the bill STEADY, the work done inside it the runs disagree (up in two runs, down in the third, that run's lost work on the next version's list), the chip's energy for each request served GAIN in all three of our runs (the A100's three runs on omni-v21 read work and energy STEADY, `results/gpu/V21_A100_CAP_ABC.md`); through the cloud, Azure's steady set on omni-v18, 97 paired repetitions (`results/live/AKS_STEADY_100_OMNI_V18.md`) reads the bill up 1.2%, inside the noise, and the 99th percentile GAIN: it holds. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. In the cloud the yardstick is the work per dollar: the work answered within the line divided by the bill, against native; a bill that rises is power given beside the work it bought, and the work must rise more.
+
+**The four arms** (the founder's order of 1 November): every place is read by its bill and the work done inside it, native against Omni-Compass on native: **A** and **B** on bare metal (the chip), **C** and **D** through the cloud; the seven organisms run both ways in each place, fourteen runs a place, every organism at every size in `results/TWO_BILLS.md`, a place not yet reported naming the runs that will fill it. On omni-v23 so far the A10's compute run at the usual load reads every gauge STEADY (`results/gpu/V23_A10_FAST_ABC.md`); Google Cloud and Amazon Web Services are not yet run (their keys are not in the repository's secrets).
+
+**The organisms.** The seven organisms of the catalog (the spine, the four realms, the four stacked, the tower), the orchestra
+beside them, the live benchmark engine's own sixty-muscle organism, and the whole organism in its three pieces (the software end, the
+cloud's wire, the bare metal) composed above: ten organisms. Each is read two ways, native and Omni-Compass on top of native
+(Omni-Compass is never by itself, the founder's order of 25 October): twenty scenarios, recorded in
+`results/scenarios/SCENARIOS_20.json` (class S, our own models, three runs), every cell with no run reading "not yet run".
+None is a product.
+
+**The live benchmark engine.** `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` is a monitor of the repository's records and of the engine's
+own mathematics running in the page, and the live tuning bench: a setting other than the factory profile shows a variation of
+the mechanism, never a result. Every monitor carries its evidence class (P a physical meter, L live software, S our own models)
+and its state: live (the engine's port, proven equal to the Python and the C++ on every build by
+`docs/engine/check_live_engine.py`), a replay of a recorded run from its own files, a reading of the repository's tables, or
+built and awaiting its run, with no invented number and the run that fills it named. The kill switch on the page acts on
+what runs in the page, and a recorded result changes its colour, never a value, a word or a row. Pointed at an owner's own
+Prometheus, the page only reads it: it writes to no system.
+
+**The three manuals.** The Operator's Manual wires and runs Omni-Compass, the Owner's holds the whole mechanism and every
+result, the Live Benchmark Engine Manual reads the page; each carries this notice, the `LICENSE`, the `NOTICE` and this page.
+
+## 10. Where Omni-Compass sits, and what each benchmark shows
+
+<!-- the places: where Omni-Compass sits and what each benchmark shows (tools/places.py) -->
+
+Omni-Compass is software. It always sits on top of a native controller. A system runs it in one of two places, on bare metal or through the cloud, and in each place there are two arms, native and Omni-Compass on top of native: four arms, each read by its bill and the work done inside it. These are the words for them, used the same way on every page.
+
+| Place | Its benchmark | What it must show | Its readings |
+|---|---|---|---|
+| The software end | Kubernetes and the data stores on GitHub's machines (kind), class L | the benefit, by the one key, and that it holds | `docs/BENEFIT_SHEET.md`, `results/OMNI_INDEX.md` |
+| Bare metal, the chip | a graphics card on Lambda run directly, its rental the bill and its own power meter beside it, class P | that it holds, and the work done inside its bill, A against B: the work per dollar and per joule | `results/TWO_BILLS.md`, `results/gpu/` |
+| Through the cloud | Kubernetes through Azure's AKS, the machines it bills, class L | that it holds, and the work done inside its bill, C against D: the work per dollar | `results/TWO_BILLS.md` and each set's `results/live/AKS_*.md` |
+| The whole organism | the places composed by the product law, class S of P and L | how the places add up, an explanation and never a measurement | `results/WHOLE_SYSTEM.md` |
+
+- **The software end.** The programs that carry the work: Kubernetes with its pod and cluster autoscalers, its schedulers and the orchestrators on it, the data stores (PostgreSQL, MySQL, Redis, MongoDB, Kafka) and the services they serve. Omni-Compass sits on top of their native controllers. This is where its benefit lives and where it is measured: real software on real computers (class L), on GitHub's own machines in kind clusters. Those machines are rented runners, never called bare metal and never called the chip.
+- **Bare metal.** The first of the two places a system runs (the founder's order of 1 November 2026): the owner's own machines, or a chip run directly, with the chip's own controllers under the software. Its bill is the machine's own: the hours it runs, and the energy the chip's own meter reads. The software end goes with Omni-Compass to it, and there Omni-Compass can reach the chip's own knobs too.
+- **Through the cloud.** The same software end on a cloud provider's rented machines: Kubernetes through the cloud (Azure's AKS today; Google's GKE and Amazon's EKS wired the same way, not yet run), the machines billed by the hour at list price and added or removed by the cloud's own autoscaler. Its bill is the cloud's own; the cloud's chips and back end are inside its price and out of Omni-Compass's reach: it governs what the cloud gives, through the cloud's own Kubernetes. The cloud is the wire between the software end and the provider's bare metal. The wire makes no benefit of its own, and no tenant can meter the provider's chips.
+- **The chip.** Bare metal's own part: the processor or graphics card under the software, with its own controllers (the power limit, the clocks, the heat), measured with the card's own power meter (class P) where Omni-Compass sets the card's knobs through the card's published interface. Omni-Compass built into the silicon, or into a battery's own controller, is not something any run here can test, and it is not claimed.
+- **The four arms.** Two places, two arms in each: A, native on bare metal; B, Omni-Compass on top of native on bare metal; C, native through the cloud; D, Omni-Compass on top of native through the cloud. Each is read by its bill and the work done inside it, each place on its own, since a system runs in one or the other; an owner who runs work in both may weigh them only by its own spend, through G(total) (`results/TWO_BILLS.md`, `docs/WORK_PER_BILL.md`). The software end's tests are one set read three ways (the Omni index on work, speed and machines; the same on work and speed alone; the layers composed): they never add together, and none of them is either place's bill.
+- **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
+- **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
+- **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+
+<!-- end of the places -->
+
+**Never in the data path.** Omni-Compass never touches the data a system serves: no request, packet, file or byte of the work
+passes through it, and it never opens, reorders, compresses or caches that data. It reads the system's gauges (one wire in) and
+writes the settings the native controllers already accept (one wire out). A description that puts it in front of the data, as
+a pipeline, a packet scheduler or a compressor, is not a description of Omni-Compass. Where it sits among the industry's
+answers at the chip, the cloud and the software is on `docs/INDUSTRY_LANDSCAPE.md`; no figure there or anywhere is
+Omni-Compass's unless one of this repository's tables carries it.
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
