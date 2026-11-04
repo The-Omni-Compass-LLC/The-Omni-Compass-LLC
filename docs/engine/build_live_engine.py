@@ -1160,7 +1160,10 @@ def bills() -> dict:
     people = {"source": "results/OVERSIGHT.json", "engine": o.get("engine"),
               "minutes": op.get("change"), "minutes_reading": op.get("reading"),
               "pages": pg.get("change"), "pages_reading": pg.get("reading"), "pages_record": pg.get("record")} if o else {}
+    sn = ROOT / "results" / "SITE_NUMBERS.json"   # the four arms, A, B, C and D, each from its receipt (tools/site_numbers.py)
+    arms = (json.loads(sn.read_text(encoding="utf-8")).get("four_arms") or {}) if sn.exists() else {}
     return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json", "people": people,
+            "arms_source": "results/SITE_NUMBERS.json", "arms": arms,
             "chip": {"engine": chip.get("engine"), "title": chip.get("title"), "runs": runs, "reading": bm.get("reading")},
             "cloud": {"engine": cl.get("engine"), "page": cl.get("page"), "repetitions": cl.get("repetitions"),
                       "bill": {k: bill.get(k) for k in ("native", "omni", "ci95")}, "work_counted": bool(cl.get("work"))}}
