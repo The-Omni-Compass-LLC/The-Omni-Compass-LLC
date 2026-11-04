@@ -112,7 +112,8 @@ def build() -> dict:
     pooled = (to / tn - 1) if tn else None
     per_run = by_run(found)
     people = SHARE_EXAMPLE * pooled if pooled is not None else None
-    return {"engine": f"omni-v{v}" if v else None, "question": "they don't need a 3 a.m. call and they don't need [anyone] to turn knobs "
+    pg = pages_counted()
+    return {"engine": f"omni-v{v}" if v else None, "pages": pg, "question": "they don't need a 3 a.m. call and they don't need [anyone] to turn knobs "
             "when OmniCompass is ... self-gauging", "said": "the founder, 3 November 2026", "rows": rows,
             "pooled": {"native": tn, "omni": to, "change": pooled, "runs": per_run["runs"], "reading": per_run["reading"]},
             "count": {"tests": len(rows), "fewer": sum(1 for r in rows if r["omni"] < r["native"]),
@@ -128,12 +129,53 @@ def build() -> dict:
             "sources": sorted(r["record"] for r in rows)}
 
 
+def pages_counted():
+    """The pages a person would have been sent, counted from the same runs' raw files by the preregistered rule
+    (tools/pages.py, results/OVERSIGHT_PAGES.json): the three runs' means, their change, the one key's reading, the minutes a
+    page stays open in each arm, and every declared rule's reading. None until that record exists."""
+    f = ROOT / "results" / "OVERSIGHT_PAGES.json"
+    if not f.exists():
+        return None
+    import pages as PG   # here, not at the top: tools/pages.py reads this module's tables
+    rec = json.loads(f.read_text(encoding="utf-8"))
+    prim = PG.reading(rec, tuple(rec["primary"]))
+    P = prim["pooled"]
+    nat, omn = sum(x["native"] for x in P) / len(P), sum(x["omni"] for x in P) / len(P)
+    mins = [(sum(t["runs"][k]["minutes_native"] for t in prim["tests"] if t["runs"][k]),
+             sum(t["runs"][k]["minutes_omni"] for t in prim["tests"] if t["runs"][k])) for k in range(3)]
+    runs = [r for t in rec["tests"] for r in t["runs"]]
+    return {"record": "results/OVERSIGHT_PAGES.md", "rule": rec["primary"], "native": nat, "omni": omn,
+            "change": (omn / nat - 1) if nat else None, "reading": prim["reading"].replace("**", ""),
+            "runs_read": sum(1 for r in runs if r["reps"]), "runs": len(runs),
+            "minutes_per_page": [[a / x["native"] if x["native"] else None, b / x["omni"] if x["omni"] else None]
+                                 for (a, b), x in zip(mins, P)],
+            "rules": [{"rule": list(r), "reading": PG.reading(rec, tuple(r))["reading"].replace("**", "")} for r in rec["rules"]],
+            "hours_per_page": rec["hours_per_page"]}
+
+
 def _pc(x: float) -> str:
     return f"{abs(x) * 100:.1f}%"
 
 
 def _raw(x: float) -> str:
     return f"{'+' if x > 0 else '−' if x < 0 else '±'}{abs(x):.2f}"
+
+
+def pages_section(d: dict) -> list:
+    """The pages counted, not only the minutes: the record tools/pages.py writes from the same runs' raw files."""
+    g = d.get("pages")
+    if not g or g.get("change") is None:
+        return []
+    mpp = "; ".join(f"{a:.1f} → {b:.1f} in run {t}" for t, (a, b) in zip("ABC", g["minutes_per_page"]) if a and b)
+    agree = sum(1 for r in g["rules"] if r["reading"].startswith("GAIN"))
+    return ["## Pages counted, not only minutes", "",
+            f"A person is paid by the page, not by the minute. Counted from the same runs' raw files by the rule written before the "
+            f"count (a page opens on a bad minute and closes after five clean ones; `docs/OVERSIGHT_PAGES_PREREGISTRATION.md`), and "
+            f"only from runs whose recount gives their table's own alert minutes ({g['runs_read']} of {g['runs']}), the pages a person "
+            f"would have been sent went from {g['native']:.2f} to {g['omni']:.2f} a repetition of every test together: "
+            f"**down {_pc(g['change'])}, {g['reading']}** (`{g['record']}`). A page stays open about as long in both arms "
+            f"(minutes a page, native → Omni-Compass: {mpp}): Omni-Compass sends fewer pages, not shorter ones. "
+            f"Every alert rule declared with it reads GAIN ({agree} of {len(g['rules'])}).", ""]
 
 
 def run_by_run(p: dict) -> list:
@@ -181,13 +223,23 @@ def markdown(d: dict) -> str:
           f"{p['omni']:.1f} with Omni-Compass on top: **down {_pc(p['change'])}** (our arithmetic over the tables, each test weighed by "
           f"its own minutes; the two-hour test holds {max(rows, key=lambda r: r['native'])['native'] / p['native'] * 100:.0f}% of "
           f"native's). Fewer pages in {c['fewer']} of the {c['tests']} tests, to none at all in {c['to_zero']}, the same in "
-          f"{c['same']}, more in {c['more']}. Each test's word is its own table's, by the one key.", ""] + run_by_run(p) + [
+          f"{c['same']}, more in {c['more']}. Each test's word is its own table's, by the one key.", ""] + run_by_run(p) + pages_section(d) + [
           "## The people line, through the one equation", "",
           "The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts by its share of native's bill, "
           "b = Σₖ sₖ·bₖ (`docs/WORK_PER_BILL.md`). The people who watch and tune a stack are one line, k = people, with its share "
           "s(people) of the owner's bill. The receipts give that line's change only where the time spent moves with the pages; "
           "stated as the assumption it is: b(people) = the change in alert minutes. The line then moves the whole bill by "
           "s(people)·b(people), and it enters the benefit only through the bill: G = (1 + ΔW) / (1 + ΔB) − 1.", "",
+          "**Priced by what calls a person.** The people line itself is priced by time-driven activity-based costing (Kaplan and "
+          "Anderson, *Harvard Business Review*, November 2004): P = w · Σⱼ Nⱼ · hⱼ + R, with Nⱼ the events a year of kind j (a page, a "
+          "hand-made change of a setting, a capacity review), hⱼ the person-hours each takes (a page's whole cycle about six hours by "
+          "Google's SRE book, chapter 11), w one person-hour fully loaded and R the fixed cost of an on-call rotation. The share of "
+          "the bill saved on it is S(people) = κ · p · β · r: p the people's share of the run cost, β the share of their time that "
+          "is answering pages and turning the knobs Omni-Compass governs (the SRE book holds on-call to at most 25% of an "
+          "engineer's time), r the fall in what calls a person (the counted pages, or the minutes), κ the share of the freed time "
+          "that becomes money (1 where a rotation or a head is released or the time goes to paid work, 0 where nothing changes). "
+          "Only r is measured; p, β and κ are an owner's (`results/OVERSIGHT_PAGES.md` prints the product on a $100 million run "
+          "cost for any of them).", "",
           f"**The example, not a result.** At the founder's example share, 7% of the bill (no receipt carries it; it plays the part "
           f"the 2.9% plays in the $100 M example), the measured fall in pages moves the bill by 0.07 × (−{_pc(p['change'])}) = "
           f"**down {_pc(ex['bill_change'])} of the whole bill**: on the $100 M example, about ${abs(ex['musd']):.1f} M a year of the "
@@ -245,6 +297,9 @@ def block(d: dict) -> str:
             + (f", and down in each of our three runs beyond the noise ({p['reading']})" if p.get("reading") else "")
             + (f", while the governor turned the knobs itself ({'; '.join(f'{x:.0f}' for x in cph)} settings an hour in runs A; B; C, "
                "no person touching either arm)" if len(cph) == 3 else "")
+            + (f". Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have "
+               f"been sent went down {_pc(d['pages']['change'])} ({d['pages']['reading']}; `{d['pages']['record']}`): fewer pages, "
+               "each open about as long" if d.get("pages") and d["pages"].get("change") is not None else "")
             + ". In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of "
             f"7%, down {_pc(ex['bill_change'])} of the whole bill. It is not added to the index (a share of a bill and a reading of "
             "work and speed do not add), and it removes no person: a person keeps the switch.")
