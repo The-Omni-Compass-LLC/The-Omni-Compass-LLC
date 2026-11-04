@@ -178,6 +178,22 @@ def build() -> dict:
             "places": pl, "total": total(pl), "source": "results/TWO_BILLS.json (tools/two_bills.py)"}
 
 
+def _people_row() -> str:
+    """The bill's people line (tools/oversight.py): the staff who watch and tune the stack; Omni-Compass moves it through the
+    pages, the alert minutes every real Kubernetes receipt measures, and never through a receipt of hours or pay."""
+    try:
+        from oversight import build as _oversight
+        o = _oversight()
+        p, c = o["pooled"], o["count"]
+        moved = (f"through the pages: the alert minutes (the minutes an on-call page would be open) fell {abs(p['change']) * 100:.1f}% "
+                 f"over {c['tests']} real Kubernetes tests on {o['engine']}, fewer in {c['fewer']}, to none in {c['to_zero']} "
+                 "(`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt")
+    except Exception:   # no table with the pages yet
+        moved = "through the pages it takes away (`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt"
+    return (f"| The people who watch and tune the stack (on call, triage, hand tuning) | the owner's staff (a cloud's own operations "
+            f"sit inside its price) | {moved} | the owner's staff | the same |")
+
+
 def markdown(d: dict) -> str:
     pl, eq = d["places"], d["equation"]
     bm0, cl0 = pl.get("bare_metal") or {}, pl.get("cloud") or {}
@@ -259,7 +275,7 @@ def markdown(d: dict) -> str:
          "| Data out (egress) | per gigabyte that leaves the cloud | only through the work: more requests served can send more data out, "
          "a rise proportional to the work (not priced in the receipt read so far) | an allowance or a flat port | no, inside the allowance |",
          "| Storage and its speed | per gigabyte stored, plus the speed tier bought | no (not priced) | inside the box | no |",
-         "| The hidden labour | inside the cloud's premium | no | the owner's staff | no |", "",
+         _people_row(), "",
          "So the receipts read so far price the item Omni-Compass moves most in each place (the cloud's machine-hours; the chip's window), "
          "and leave out items it does not move. An item it does not move has bₖ = 0 and only pulls b toward 0, so an owner's full bill "
          "shows a smaller b than the compute line alone; an item that grows with the work (egress) takes back a share of w in the cloud, "

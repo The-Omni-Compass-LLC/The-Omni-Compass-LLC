@@ -1134,6 +1134,30 @@ def scenarios20() -> dict:
     return {"file": str(f.relative_to(ROOT)), "title": d.get("title"), "run": d.get("run"), "gauges": d.get("gauges"), "organisms": orgs}
 
 
+def bills() -> dict:
+    """The one equation's inputs (results/TWO_BILLS.json, tools/two_bills.py; the reading by tools/work_per_bill.py): every
+    chip run's work and bill on both arms, and the cloud set's bill, so the page computes E = W / B, ΔW, ΔB and
+    G = (1 + ΔW) / (1 + ΔB) − 1 in its own code and checks each run's G against the Python's (the founder's words of 2
+    November: the one thing to prove is more work for the bill)."""
+    tb, wp = ROOT / "results" / "TWO_BILLS.json", ROOT / "results" / "WORK_PER_BILL.json"
+    if not tb.exists():
+        return {}
+    d = json.loads(tb.read_text(encoding="utf-8"))
+    w = json.loads(wp.read_text(encoding="utf-8")) if wp.exists() else {}
+    chip, cl = d.get("chip") or {}, d.get("cloud") or {}
+    bm = (w.get("places") or {}).get("bare_metal") or {}
+    g = {r.get("run"): r.get("G") for r in bm.get("runs", [])}
+    runs = [{"run": i + 1, "id": (chip.get("runs") or [None] * 3)[i] if i < len(chip.get("runs") or []) else None,
+             "native": {"work": r["native"]["work"], "bill": r["native"]["bill"]},
+             "omni": {"work": r["omni"]["work"], "bill": r["omni"]["bill"]}, "G_python": g.get(i + 1)}
+            for i, r in enumerate(chip.get("per_run") or [])]
+    bill = cl.get("bill") or {}
+    return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json",
+            "chip": {"engine": chip.get("engine"), "title": chip.get("title"), "runs": runs, "reading": bm.get("reading")},
+            "cloud": {"engine": cl.get("engine"), "page": cl.get("page"), "repetitions": cl.get("repetitions"),
+                      "bill": {k: bill.get(k) for k in ("native", "omni", "ci95")}, "work_counted": bool(cl.get("work"))}}
+
+
 def injection_grid() -> dict:
     """The injection grid (results/injection_grid/INJECTION_GRID_<base>.json, tools/injection_grid.py, class S): the Python's
     newest 500 injections through every organism, native and with Omni-Compass on native, and through every governor on each
@@ -1217,6 +1241,31 @@ def glossary() -> dict:
     the file it names, the ten organisms, the two arms and their twenty scenarios, every muscle of the catalog, and the index."""
     f = ROOT / "docs" / "engine" / "glossary.json"
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
+def tour() -> dict:
+    """The guided tour (tools/tour_script.py): every section of the page in the page's order, in the words the Live Engine
+    Manual prints for it, with the section's own controls line, an opening and a close that carry the notice. A stop carries
+    its recorded clip (docs/engine/tour/, tools/tour_voice.py) only while the clip's words are the stop's words today; any other
+    stop is read by the browser's own voice."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import tour_script  # noqa: E402
+    vf = HERE / "tour" / "TOUR_VOICE.json"
+    v = json.loads(vf.read_text(encoding="utf-8")) if vf.exists() else {}
+    clips, steps = v.get("clips") or {}, []
+    for st in tour_script.steps():
+        c = clips.get(st["id"]) or {}
+        ok = bool(c) and c.get("sha") == st["sha"] and (HERE / "tour" / c.get("file", "")).exists()
+        steps.append({k: st[k] for k in ("id", "label", "title", "text", "controls", "notice", "say", "sha")}
+                     | {"clip": c["file"] if ok else "", "seconds": c.get("seconds") if ok else None})
+    about = None
+    if v:
+        about = {"voice": v.get("voice"), "voice_name": "Heart" if v.get("voice") == "af_heart" else v.get("voice"),
+                 "model_short": "Kokoro-82M v1.0", "model": v.get("model"), "model_license": v.get("model_license"),
+                 "runtime": v.get("runtime"), "encoder": v.get("encoder"), "made_with": v.get("made_with"),
+                 "clips": sum(1 for x in steps if x["clip"]), "stops": len(steps),
+                 "minutes": round(sum(x["seconds"] or 0 for x in steps) / 60, 1)}
+    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps}
 
 
 def field() -> dict:
@@ -1355,6 +1404,15 @@ def records(runs: bool) -> dict:
                                            ("h.json", "c.json", "s.json", "r.json", "w.json", "g.json", "cpu.json", "ho.json", "x.json"))
         # the monitor registry with the wall's Grafana dashboard (written to deploy/grafana/omni-compass-wall.json by the build, read back by a check)
         reg = json.loads((HERE / "monitors.json").read_text(encoding="utf-8"))
+        # page_n is each monitor's order of appearance on the page (the registry's own rule), read from the page as it stands,
+        # never kept by hand: a stored order went stale for 44 of 62 monitors when the page's sections moved (3 November)
+        _ids, _order = {m["id"] for m in reg.get("monitors", [])}, []
+        for _c in re.findall(r'<canvas\b[^>]*\bid="([^"]+)"', (HERE / "OMNI_COMPASS_LIVE_ENGINE.html").read_text(encoding="utf-8")):
+            if _c != "wallCv" and _c in _ids and _c not in _order:
+                _order.append(_c)
+        for _m in reg.get("monitors", []):
+            if _m["id"] in _order:
+                _m["page_n"] = _order.index(_m["id"]) + 1
         reg["grafana"] = XGF.main(str(t / "wall.json")) if CHECKING else XGF.main()
     name, digest = engine()
     from tools.readings import SIZE_FLOOR
@@ -1368,7 +1426,7 @@ def records(runs: bool) -> dict:
     return {"harness": h, "ctlrec": pack_controller(c), "scen": s, "runs": rr, "fleet": fleet(), "build": build, "whole": wh,
             "gpurun": gpu, "cpuhost": cpu, "monitors": reg, "engineruns": eruns, "heldout": ho, "cpptwin": x,
             "beatsweep": beat_sweep(), "dial": dial(), "coremc": core_mc(), "onnative": on_native_abc(), "scenarios": scenarios20(), "injgrid": injection_grid(), "audit": verdict_audit(), "glossary": glossary(),
-            "lawwires": law_wires(), "field": field()}
+            "lawwires": law_wires(), "field": field(), "bills": bills(), "tour": tour()}
 
 
 def embedded(page: str, key: str):
@@ -1435,21 +1493,46 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     if (href) { var a = document.createElement("a"); a.href = href; a.textContent = "Open the newest build"; a.style.color = "#9fe6a0"; d.appendChild(a); }
     document.body.appendChild(d);
   }
+  function say(text) {
+    /* the clock made visible (3 November): beside the engine chip, when this copy last asked GitHub and what it found */
+    var el = document.getElementById("omniFresh");
+    if (!el) {
+      var host = document.querySelector(".tbSub") || document.body;
+      el = document.createElement("span"); el.id = "omniFresh"; el.setAttribute("role", "status");
+      el.style.cssText = "margin-left:10px;font-size:12px;opacity:.8";
+      host.appendChild(el);
+    }
+    el.textContent = text;
+  }
+  function at(t) { try { return new Date(t).toLocaleString(); } catch (e) { return ""; } }
+  function builtOf(html) {
+    /* the build time the fetched page carries in its own build record: a page is opened only when it is truly newer than
+       this copy, so a stamp that runs ahead of the page GitHub serves (the two are cached apart) never reopens an older page
+       over and over (3 November) */
+    var m = /<script type="application\\/json" id="build">([\\s\\S]*?)<\\/script>/.exec(html || "");
+    try { return m ? (JSON.parse(m[1]) || {}).built_at || "" : ""; } catch (e) { return ""; }
+  }
   function check() {
     last = Date.now();
+    var mine = own(), next = at(last + DAY), when = at(last);
+    if (!mine) { say("This copy's own build time is not read yet; GitHub is asked at " + at(last + 60000) + "."); last = 0; setTimeout(check, 60000); return; }
     fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
       .then(function (v) {
-        var mine = own();
-        if (!v || !v.built_at || !mine || v.built_at <= mine) return;
+        if (!v || !v.built_at) { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); return; }
+        if (v.built_at <= mine) { say("Checked GitHub at " + when + ": " + (v.built_at === mine ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + next + "."); return; }
+        say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "): opening it.");
         return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
           .then(function (html) {
+            var theirs = builtOf(html);
+            if (!html) { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); return; }
+            if (!theirs || theirs <= mine) { say("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet; asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); return; }
             /* written over this one in place, the newer build's script met this page's own declarations again and
                stopped (1 November): it opens as a document of its own */
-            if (html && html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
-            else { note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); }
-          });
+            if (html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
+            else { say("A newer build is on GitHub (" + v.engine + ", built " + theirs + "); this browser opens it from the link below."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + theirs + ").", v.page_url); }
+          }, function () { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); });
       })
-      .catch(function () {});
+      .catch(function () { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); });
   }
   function start() {
     check();
@@ -1648,7 +1731,7 @@ def main() -> int:
               "the prose stays as written for the older engine until it is realigned, and the page says so")
     if a.check:
         bad = [k for k in ("harness", "ctlrec", "scen", "runs", "fleet", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field")
+                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills", "tour")
                if embedded(page, k) != rec[k]]
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,

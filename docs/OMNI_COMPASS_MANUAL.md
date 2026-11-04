@@ -5148,9 +5148,18 @@ line, a breach wakes a parked machine at the next decision, and nothing is given
 alert minutes in both arms (section 19.6), and the aim in a cloud is none on the omni side; an alert minute there is a
 fault to find, never a cost to accept.
 
+**Does it take the 3 a.m. call and the knob turning off our engineers?** That is what it is built for, and the receipt counts
+both in each arm. The 3 a.m. call: the alert minutes, every minute of the window whose 95th percentile was over the line, a
+minute a page would be open (section 19.6). The knob turning: the settings commands the governor wrote on its own, each read
+back and logged with its reason; native writes none, and no person touches either arm. What a person keeps is the switch:
+off hands every setting back to native at once (chapter 8). How the minutes become a line of the bill, at your team's own
+share of what the stack costs, and what the record reads, are in the Owner's Manual and `results/OVERSIGHT.md`; on your
+own stack, count the pages and the hands-on minutes in both arms of a paired pilot (`docs/PILOT_PROTOCOL.md`).
+
 **How fast does it act?** Its fast checks run every 5 seconds (a machine for pods that wait, a parked machine woken), three
-times as fast as the HPA's own 15-second check; its full decision runs every 15 seconds, the HPA's own pace (section
-3.4). Native's own checks run underneath, untouched, whatever the governor's period.
+times as fast as the HPA's own 15-second check; its full decision runs at the factory beat for its place, every 10 seconds
+on site and every 60 seconds through a cloud, read by the governor from the cluster's nodes, and a beat set by hand always
+wins (section 3.4). Native's own checks run underneath, untouched, whatever the governor's period.
 
 **What happens if the governor crashes?** Nothing harmful. The watchdog puts every setting back from the records on the
 objects themselves (section 20.2); a parked machine never blocks a pod even before that, because its taint is

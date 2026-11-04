@@ -88,11 +88,13 @@ showed no project, run `gcloud config set project YOUR-PROJECT-ID` first.)
    Secret: click in the box, **Ctrl+V** (the whole file from step 4). **Add secret** (or **Update secret**).
 3. **New repository secret**. Name: `GCP_PROJECT`. Secret: the Project ID from step 2. **Add secret**.
 
-That is all. Within the hour the conductor runs Google's check at no cost (**Actions**, **cloud-check**, the run titled
-`cloud-check google`): the key's shape (only its length and missing parts are ever printed, never a character of it), the
-login, the machine type and every quota a set needs. When it passes, the sets start on their own on the engine that stands
-(branch `main`; `v11` is kept in step with it), and no result goes up before it has been read. When it fails, it says which
-of these to fix, and nothing is built or billed.
+That is all. To have it read at once, start it by hand: **Actions**, **cloud-check**, **Run workflow**, choose `google`, **Run
+workflow**. Otherwise the conductor runs it on its own: after a failed check it waits an hour, and the wait doubles with every
+failure in a row (two, four, eight, sixteen hours) up to a day, so a key not yet stored is read once a day, not every hour. The
+check costs nothing (**Actions**, **cloud-check**, the run titled `cloud-check google`) and reads the key's shape (only its
+length and missing parts are ever printed, never a character of it), the login, the machine type and every quota a set needs.
+When it passes, the sets start on their own on the engine that stands (branch `main`, the working branch kept level with it),
+and no result goes up before it has been read. When it fails, it says which of these to fix, and nothing is built or billed.
 
 ## 6. Google's limits (quotas)
 

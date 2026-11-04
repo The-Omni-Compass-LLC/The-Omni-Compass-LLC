@@ -5121,9 +5121,18 @@ line, a breach wakes a parked machine at the next decision, and nothing is given
 alert minutes in both arms (section 20.6), and the aim in a cloud is none on the omni side; an alert minute there is a
 fault to find, never a cost to accept.
 
+**Does it take the 3 a.m. call and the knob turning off our engineers?** That is what it is built for, and the receipt counts
+both in each arm. The 3 a.m. call: the alert minutes, every minute of the window whose 95th percentile was over the line, a
+minute a page would be open (section 20.6). The knob turning: the settings commands the governor wrote on its own, each read
+back and logged with its reason; native writes none, and no person touches either arm. What a person keeps is the switch:
+off hands every setting back to native at once (chapter 9). How the minutes become a line of the bill, at your team's own
+share of what the stack costs, and what the record reads, are in the Owner's Manual and `results/OVERSIGHT.md`; on your
+own stack, count the pages and the hands-on minutes in both arms of a paired pilot (`docs/PILOT_PROTOCOL.md`).
+
 **How fast does it act?** Its fast checks run every 5 seconds (a machine for pods that wait, a parked machine woken), three
-times as fast as the HPA's own 15-second check; its full decision runs every 15 seconds, the HPA's own pace (section
-3.4). Native's own checks run underneath, untouched, whatever the governor's period.
+times as fast as the HPA's own 15-second check; its full decision runs at the factory beat for its place, every 10 seconds
+on site and every 60 seconds through a cloud, read by the governor from the cluster's nodes, and a beat set by hand always
+wins (section 4.4). Native's own checks run underneath, untouched, whatever the governor's period.
 
 **What happens if the governor crashes?** Nothing harmful. The watchdog puts every setting back from the records on the
 objects themselves (section 21.2); a parked machine never blocks a pod even before that, because its taint is
@@ -7574,8 +7583,9 @@ delete what it built.
    login may be retired: in the Azure portal search **App registrations**, open **omni-compass-github**, and click
    **Delete**. Nothing in the repository names it.
 
-The conductor runs Azure's check again within the hour, and the sets start on their own once it passes. Nothing is built and
-nothing is billed while it fails.
+The conductor runs Azure's check again (an hour after a failure, the wait doubling with every failure in a row up to a day;
+start it by hand to have it read at once: **Actions**, **cloud-check**, **Run workflow**, `azure`), and the sets start on their
+own once it passes. Nothing is built and nothing is billed while it fails.
 
 ### F.8 The second way in: the sign-in without a password (OIDC)
 
@@ -7692,11 +7702,13 @@ showed no project, run `gcloud config set project YOUR-PROJECT-ID` first.)
    Secret: click in the box, **Ctrl+V** (the whole file from step 4). **Add secret** (or **Update secret**).
 3. **New repository secret**. Name: `GCP_PROJECT`. Secret: the Project ID from step 2. **Add secret**.
 
-That is all. Within the hour the conductor runs Google's check at no cost (**Actions**, **cloud-check**, the run titled
-`cloud-check google`): the key's shape (only its length and missing parts are ever printed, never a character of it), the
-login, the machine type and every quota a set needs. When it passes, the sets start on their own on the engine that stands
-(branch `main`; `v11` is kept in step with it), and no result goes up before it has been read. When it fails, it says which
-of these to fix, and nothing is built or billed.
+That is all. To have it read at once, start it by hand: **Actions**, **cloud-check**, **Run workflow**, choose `google`, **Run
+workflow**. Otherwise the conductor runs it on its own: after a failed check it waits an hour, and the wait doubles with every
+failure in a row (two, four, eight, sixteen hours) up to a day, so a key not yet stored is read once a day, not every hour. The
+check costs nothing (**Actions**, **cloud-check**, the run titled `cloud-check google`) and reads the key's shape (only its
+length and missing parts are ever printed, never a character of it), the login, the machine type and every quota a set needs.
+When it passes, the sets start on their own on the engine that stands (branch `main`, the working branch kept level with it),
+and no result goes up before it has been read. When it fails, it says which of these to fix, and nothing is built or billed.
 
 ### G.6 Google's limits (quotas)
 
@@ -7766,8 +7778,9 @@ in a service control policy"). Moving to the Paid plan removes it; the credits s
    **Billing and Cost Management**, open it, and click **Upgrade plan** on its home page.
 3. Read the page, and click **Upgrade to paid plan** (or **Upgrade plan**) to confirm.
 
-Nothing else changes: the login made for GitHub (step 2) and the two secrets (step 3) stay as they are. Within the hour the
-conductor's check reads the account again and the sets start on their own.
+Nothing else changes: the login made for GitHub (step 2) and the two secrets (step 3) stay as they are. The
+conductor's check reads the account again (start it by hand to have it read at once: **Actions**, **cloud-check**, **Run
+workflow**, `amazon`) and the sets start on their own.
 
 ### H.3 A login for GitHub (an IAM user)
 
@@ -7790,11 +7803,13 @@ conductor's check reads the account again and the sets start on their own.
 2. **New repository secret**. Name: `AWS_ACCESS_KEY_ID`. Secret: the Access key. **Add secret**.
 3. **New repository secret**. Name: `AWS_SECRET_ACCESS_KEY`. Secret: the Secret access key. **Add secret**.
 
-That is all. Within the hour the conductor runs Amazon's check at no cost (**Actions**, **cloud-check**, the run titled
-`cloud-check amazon`): the keys log in, the account can read and rent machines (not the Free plan), the instance type is
-offered and the processor quota holds a set. When it passes, the sets start on their own on the engine that stands (branch
-`main`; `v11` is kept in step with it), and no result goes up before it has been read. When it fails, it says which of
-these to fix, and nothing is built or billed.
+That is all. To have it read at once, start it by hand: **Actions**, **cloud-check**, **Run workflow**, choose `amazon`, **Run
+workflow**. Otherwise the conductor runs it on its own: after a failed check it waits an hour, and the wait doubles with every
+failure in a row (two, four, eight, sixteen hours) up to a day, so a key not yet stored is read once a day, not every hour. The
+check costs nothing (**Actions**, **cloud-check**, the run titled `cloud-check amazon`) and reads whether the keys log in, the
+account can read and rent machines (not the Free plan), the instance type is offered and the processor quota holds a set. When
+it passes, the sets start on their own on the engine that stands (branch `main`, the working branch kept level with it), and no
+result goes up before it has been read. When it fails, it says which of these to fix, and nothing is built or billed.
 
 ### H.5 What it costs
 
@@ -8327,6 +8342,7 @@ Omni-Compass Evaluation License changes those terms. Installed versions are thos
 | Numba | compiled inner loops of the motion-axis plant | BSD-2-Clause |
 | PyTorch (on GPU machines only, not installed by `requirements.txt`) | the GPU workload of the benchmark | BSD-3-Clause |
 | `tests/third_party/hpa_independent.py` | an independently written HPA reference used unmodified in tests | its own terms, stated in the file |
+| Kokoro-82M v1.0 text-to-speech model and its voice `af_heart` (hexgrad/Kokoro-82M; the int8 ONNX files of thewh1teagle/kokoro-onnx), run by kokoro-onnx; FFmpeg | the recorded voice of the live engine's guided tour (`docs/engine/tour/`, made by `tools/tour_voice.py`): only the clips it read are kept, never the model | Apache-2.0 (the model and its voices); MIT (kokoro-onnx); FFmpeg's own LGPL/GPL, used as a tool and not shipped |
 | Liberation Serif and Liberation Sans fonts (embedded in the PDF book) | typesetting | SIL Open Font License 1.1 |
 | DejaVu Sans and DejaVu Sans Mono fonts (embedded in the PDF book) | typesetting | Bitstream Vera / DejaVu license (free) |
 | PlanetLab / CoMon VM CPU traces, March 2011 (`fleet/traces/`, `k8s_controlplane/traces/`; source in their `PROVENANCE.json`) | held-out demand for the modelled fleet | their own terms (public research data); no Omni-Compass copyright is claimed in them |

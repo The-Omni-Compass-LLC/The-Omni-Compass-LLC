@@ -1182,7 +1182,10 @@ PART_REF = re.compile(r"\bPart ([IVX]+)\b")
 # a reference that follows another document's name (`DISCLOSURES.md`, section 4; `LICENSE`, section 10; the Operator's
 # Manual, Appendix L; the founder's manuscript) carries that document's numbering and is left as written; the book's own
 # manual, named in full, is not another document
-EXTERNAL = re.compile(r"(\.md`|\.md\)|LICENSE`|Manual,|Manual's|DISCLOSURES|of the manual|the page['’]s)\W*$")   # the page's section 4c: the live benchmark engine's own numbering
+EXTERNAL = re.compile(r"(\.md`|\.md\)|LICENSE`|Manual,|Manual's|DISCLOSURES|of the manual|the\s+page['’]s)\W*$")   # the page's section 4c: the live benchmark engine's own numbering
+# a reference followed by another document's name ("section 3b of `results/WHOLE_SYSTEM.md`", "section 2 of the page") carries
+# that document's numbering too
+EXTERNAL_AFTER = re.compile(r"\s+of\s+(?:\[?`[^`]+`|the\s+(?:live\s+)?page\b|the\s+README\b|`?LICENSE\b)")
 MANUSCRIPT = re.compile(r"[Mm]anuscript")
 OWN_NAME = (re.compile(r"Owner's Manual|OWNERS_MANUAL\.md") if OWNER else re.compile(r"Live Benchmark Engine Manual|LIVE_ENGINE_MANUAL\.md") if LIVE
             else re.compile(r"Operator's Manual|OMNI_COMPASS_MANUAL\.md"))
@@ -1270,7 +1273,7 @@ def rewrite_refs(text, kind, key, own, prev=""):
         return (own[t], "section") if t in own else (None, None)
 
     def sec(mt):
-        if external(mt.start()):
+        if external(mt.start()) or EXTERNAL_AFTER.match(text, mt.end()):
             return mt.group(0)
         word, lst = mt.group(1), mt.group(2)
         to_manual = kind != "M" and bool(re.search(r"manual(?:'s)?\W*$", text[max(0, mt.start() - 30):mt.start()]))
@@ -1673,10 +1676,23 @@ def chapter_opener(num, title, kicker=None, top=0.9 * inch):
          GoldRule(FW, 1.2, 16), Spacer(1, 6)])
 
 
+class OwnLabels(Numberer):
+    """A bound page's headings left as the page numbers them (its own "10." stays printed), each label mapped to itself, so
+    the page's own "section 10" points at the heading the reader sees numbered 10."""
+    def heading(self, lvl, txt):
+        m = LABEL_RE.match(txt)
+        if m:
+            label = m.group(1) or (m.group(2) + ("." + m.group(3) if m.group(3) else "") if m.group(2) else m.group(4))
+            self.labels.setdefault(label, label)
+        return txt
+
+
 def front_lines(lines, kind="M", key="front"):
-    """A front-matter section's lines: its headings carry no number, its references the book's numbers."""
-    nb = Numberer(None)
-    return [rewrite_refs(ln, kind, key, {}) for ln in number_headings(lines, 2, nb)]
+    """A front-matter section's lines: its headings carry no book number (a bound page, kind F, keeps its own), its
+    references the book's numbers (a bound page's own references its own)."""
+    nb = OwnLabels(None) if kind == "F" else Numberer(None)
+    numbered = number_headings(lines, 2, nb)
+    return [rewrite_refs(ln, kind, key, nb.labels) for ln in numbered]
 
 
 def front_chapter(doc, title, lines, kind="M"):
