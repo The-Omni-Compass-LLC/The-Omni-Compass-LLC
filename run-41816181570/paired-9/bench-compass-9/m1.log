@@ -1,0 +1,424 @@
+date_utc=2026-11-04T13:33:43Z
+arm=compass
+git_commit=43b93436c26b0418e272589a3fbd2ab25be4e4a0
+docker=Docker version 28.0.4, build b8034c0
+kind=kind v0.31.0 go1.25.5 linux/amd64
+kubectl=v1.35.0
+server=v1.35.0
+python=Python 3.12.16
+metrics_server=v0.9.0 sha256=1cec29a5267809306a2c6ec74a3e449abbb705b4a8beed0c8a1963910f72c79b
+workers=6
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+deployment.apps/coredns patched
+Waiting for deployment "metrics-server" rollout to finish: 0 of 1 updated replicas are available...
+deployment "metrics-server" successfully rolled out
+deployment "coredns" successfully rolled out
+busybox: loaded into every node from the runner's own copy (kind load)
+Waiting for daemon set "rig-prepull" rollout to finish: 0 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 1 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 2 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 3 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 4 of 6 updated pods are available...
+Waiting for daemon set "rig-prepull" rollout to finish: 5 of 6 updated pods are available...
+daemon set "rig-prepull" successfully rolled out
+images=pre-pulled on every worker before the arm (deploy/kind/prepull.yaml)
+image_ids= 6 registry.k8s.io/hpa-example@sha256:581697a37f0e136db86d6b30392f0db40ce99c8248a7044c770012f4e8491544 
+deployment.apps/php-apache created
+service/php-apache created
+horizontalpodautoscaler.autoscaling/php-apache created
+cores: the 7 kind nodes on cores 0-2, the governor alone on core 3 (of 4), in every arm
+service/php-apache-edge created
+poddisruptionbudget.policy/php-apache created
+Waiting for deployment "php-apache" rollout to finish: 0 of 1 updated replicas are available...
+deployment "php-apache" successfully rolled out
+group: a member of a group of clusters omni-m1; the stream sent by the group, this member's scheduler as shipped (registry.k8s.io/kube-scheduler:v1.35.0)
+busybox:1.36 pre-pulled on every worker
+coredns=registry.k8s.io/coredns/coredns:v1.13.1
+metrics-server=registry.k8s.io/metrics-server/metrics-server:v0.9.0
+batch queue: group: a member of a group of clusters omni-m1; the stream sent by the group, this member's scheduler as shipped (registry.k8s.io/kube-scheduler:v1.35.0) (batch_queue.txt)
+probe_url=http://172.18.0.4:30080/ (Service via kube-proxy on the control plane)
+configmap/omni-security created
+deployment.apps/load-generator created
+loadgen=closed
+Waiting for deployment "load-generator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "load-generator" successfully rolled out
+namespace/omni-compass created
+serviceaccount/omni-compass created
+clusterrole.rbac.authorization.k8s.io/omni-compass-sense created
+clusterrole.rbac.authorization.k8s.io/omni-compass-nodes created
+clusterrolebinding.rbac.authorization.k8s.io/omni-compass-sense created
+clusterrolebinding.rbac.authorization.k8s.io/omni-compass-nodes created
+role.rbac.authorization.k8s.io/omni-compass-app created
+rolebinding.rbac.authorization.k8s.io/omni-compass-app created
+== can (each muscle's push)
+patch hpa/php-apache (hpa): yes
+create hpa (omni-v23: the hand-back of a knob Omni-Compass cannot move to native's own autoscaler): yes
+Warning: resource 'nodes' is not namespace scoped
+
+patch nodes (node pool: idle mark): yes
+create pods/eviction (node pool: drain): yes
+patch pods/resize (power cap, in place): yes
+patch pods (make before break: which pods leave first): yes
+get pods/resize (power cap reads before it writes): yes
+patch deployment/php-apache (rollout guard, cap record): yes
+patch deployment/php-apache --subresource=scale (pod muscle of its own, --own-replicas: what kubectl scale writes): yes
+get configmap/omni-security (security afferent): yes
+== cannot
+Warning: resource 'nodes' is not namespace scoped
+
+delete nodes: no
+create pods: no
+delete pods: no
+delete deployments: no
+patch deployment/load-generator: no
+patch deployment/load-generator --subresource=scale (the pod muscle of its own writes the named workload alone): no
+patch deployments in kube-system: no
+patch hpa in kube-system: no
+get secrets (any namespace): no
+Warning: resource 'namespaces' is not namespace scoped
+
+create namespaces: no
+patch configmap/omni-security: no
+== warm-up 120s (both arms)
+group: member omni-m1 of 2, the windows opened together at 1793799450
+batch: 24 jobs of 10 pods, 5 at a time, one every 30 s, 3000 MB hashed each, through group
+== ARM compass: Omni-Compass driving HPA target + node pool + power sensing
+== reset
+omni writes during the run: 44
+open workers: 6 (wanted 6)
+pod CPU limits after kill: 500m
+HPA replica range after kill: 1,10
+restored target: 50
+workers in service: 6 of 6
+Omni records left after kill: none
+rows captured: 80
+== controller: decisions inside the window 149 of 150 (one every 10.1 s; 149 in all), failed decisions or checks 1
+-- controller's own cost (CPU of the process and every command it ran): {"time": 1793800941.788532, "overhead": {"cpu_s": 93.19, "wall_s": 1490.7, "cores_mean": 0.0625}}
+-- my writes by muscle (count, first words of why)
+     18 record original target: 
+     10 HPA target to rho* = 30% (SLO reflex: not tighter than
+      8 HPA target to rho* = 50% (SLO reflex: not tighter than
+      1 rollout: resume (change permitted)
+      1 rollout: record pause
+      1 rollout: pause (change not
+      1 rollout: clear pause record
+      1 immune hand-back: a pod waits,
+      1 convey: record original CPU
+      1 convey: omni-m1-worker4 idle CPU
+      1 convey: omni-m1-worker idle CPU
+-- conveyed CPU limits (last 8)
+convey: record original CPU limit
+convey: omni-m1-worker4 idle CPU to its 1 serving pod(s), limit 3690m in place
+convey: omni-m1-worker idle CPU to its 1 serving pod(s), limit 3700m in place
+-- pod reflex (last 8)
+-- controller.log (last 40 lines)
+decision failed (1 in a row): CalledProcessError(1, ['/home/runner/work/The-Omni-Compass-LLC/The-Omni-Compass-LLC/scripts/kubectl_omni.sh', 'top', 'nodes', '--no-headers']) API 503 for apis/metrics.k8s.io/v1beta1/nodes
+-- audit errors (last 10)
+{"time": 1793800391.3671494, "error": "CalledProcessError(1, ['/home/runner/work/The-Omni-Compass-LLC/The-Omni-Compass-LLC/scripts/kubectl_omni.sh', 'top', 'nodes', '--no-headers'])", "stderr": "API 503 for apis/metrics.k8s.io/v1beta1/nodes", "consecutive_failures": 1}
+-- decision trail (nodes seen -> recommended | p95 ms | SLO clean | calm | node-view calm | node gate)
+  compass: Β >  90.0° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 960.2622 | axle S 0.0166 (rest 2.3686) | circles 0
+  6 -> 6 | p95 None | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority; a sense is blind | queue 1.0 | U 0.818 | blind ['latency'] | latency age 2.2 s | proprioception {}
+  compass: Α +   4.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 951.5026 -8.7596 | axle S 0.0293 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1007.7 | clean False | calm 0.0 | node calm 0.037 | gate latency breached now; node organ has no contraction authority | queue 1.015 | U 0.817 | blind [] | latency age 0.6 s | proprioception {}
+  compass: Α +   5.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 942.8319 -8.6707 | axle S 0.042 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1007.7 | clean False | calm 0.0 | node calm 0.19 | gate latency breached now; node organ has no contraction authority | queue 1.015 | U 0.817 | blind [] | latency age 3.1 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Α +   6.8° Expansion: rising through rest | Ω held | G·n≤0 yes | L 934.6682 -8.1637 | axle S 0.054 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1007.7 | clean False | calm 0.0 | node calm 0.259 | gate pods waiting; pods scaling up; latency breached now; node organ has no contraction authority | queue 1.015 | U 0.817 | blind [] | latency age 6.4 s | proprioception {}
+  compass: Ε +  11.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 925.1466 -9.5216 | axle S 0.068 (rest 2.3686) | circles 0
+  6 -> 6 | p95 907.4 | clean False | calm 0.0 | node calm 0.373 | gate latency breached now; node organ has no contraction authority | queue 0.815 | U 0.822 | blind [] | latency age 7.6 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Α +   5.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 921.6412 -3.5054 | axle S 0.0732 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1197.4 | clean False | calm 0.0 | node calm 0.469 | gate latency breached now; node organ has no contraction authority | queue 1.395 | U 0.814 | blind [] | latency age 8.7 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Α +   5.6° Expansion: rising through rest | Ω held | G·n≤0 yes | L 920.9535 -0.6877 | axle S 0.0742 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1345.6 | clean False | calm 0.0 | node calm 0.548 | gate latency breached now; node organ has no contraction authority | queue 1.691 | U 0.802 | blind [] | latency age 3.8 s | proprioception {}
+  compass: Α +   7.1° Expansion: rising through rest | Ω held | G·n≤0 yes | L 920.2388 -0.7146 | axle S 0.0752 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1345.6 | clean False | calm 0.0 | node calm 0.614 | gate latency breached now; node organ has no contraction authority | queue 1.691 | U 0.792 | blind [] | latency age 11.7 s | proprioception {}
+  compass: Α +   7.3° Expansion: rising through rest | Ω held | G·n≤0 yes | L 922.1669 +1.9281 (forced) | axle S 0.0724 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1816.8 | clean False | calm 0.0 | node calm 0.669 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.778 | blind [] | latency age 8.7 s | proprioception {}
+  compass: Ε +   9.1° Expansion: rising through rest | Ω held | G·n≤0 yes | L 923.8805 +1.7136 (forced) | axle S 0.0699 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1832.6 | clean False | calm 0.0 | node calm 0.714 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.766 | blind [] | latency age 8.0 s | proprioception {}
+  compass: Ε +  10.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 925.4078 +1.5273 (forced) | axle S 0.0677 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1878.9 | clean False | calm 0.0 | node calm 0.751 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.757 | blind [] | latency age 7.4 s | proprioception {}
+  compass: Ε +  12.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 926.8790 +1.4712 (forced) | axle S 0.0656 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1878.9 | clean False | calm 0.0 | node calm 0.782 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.749 | blind [] | latency age 8.1 s | proprioception {}
+  compass: Ε +  15.0° Expansion: rising through rest | Ω held | G·n≤0 yes | L 928.1718 +1.2928 (forced) | axle S 0.0637 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1878.9 | clean False | calm 0.0 | node calm 0.807 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.743 | blind [] | latency age 6.7 s | proprioception {}
+  compass: Ε +  17.0° Expansion: rising through rest | Ω held | G·n≤0 yes | L 929.2865 +1.1147 (forced) | axle S 0.0621 (rest 2.3686) | circles 0
+  6 -> 6 | p95 1878.9 | clean False | calm 0.0 | node calm 0.828 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.737 | blind [] | latency age 6.1 s | proprioception {}
+  compass: Ε +  19.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 930.2492 +0.9627 (forced) | axle S 0.0608 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2192.8 | clean False | calm 0.0 | node calm 0.793 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.732 | blind [] | latency age 1.8 s | proprioception {}
+  compass: Ε +  21.4° Expansion: rising through rest | Ω held | G·n≤0 yes | L 931.0714 +0.8222 (forced) | axle S 0.0596 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2192.8 | clean False | calm 0.0 | node calm 0.816 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.729 | blind [] | latency age 11.8 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Ζ ⇄  23.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 931.7253 +0.6539 (forced) | axle S 0.0587 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2215.8 | clean False | calm 0.0 | node calm 0.835 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.725 | blind [] | latency age 7.9 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Ζ ⇄  25.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.2749 +0.5495 (forced) | axle S 0.058 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2235.5 | clean False | calm 0.0 | node calm 0.851 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.723 | blind [] | latency age 4.2 s | proprioception {}
+  compass: Ζ ⇄  28.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.7160 +0.4411 (forced) | axle S 0.0574 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2235.5 | clean False | calm 0.0 | node calm 0.864 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.720 | blind [] | latency age 13.7 s | proprioception {}
+  compass: Ζ ⇄  30.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.0704 +0.3545 (forced) | axle S 0.0569 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2536.4 | clean False | calm 0.0 | node calm 0.796 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.719 | blind [] | latency age 9.2 s | proprioception {}
+  compass: Ζ ⇄  32.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.2811 +0.2107 (forced) | axle S 0.0567 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.818 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.717 | blind [] | latency age 0.3 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Ζ ⇄  35.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.4103 +0.1291 (forced) | axle S 0.0565 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.837 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.716 | blind [] | latency age 10.1 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Ζ ⇄  37.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.4649 +0.0547 (forced) | axle S 0.0565 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.852 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.714 | blind [] | latency age 5.1 s | proprioception {}
+  compass: Δ ⇄  39.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.4776 +0.0127 (forced) | axle S 0.0566 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.865 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.713 | blind [] | latency age 14.1 s | proprioception {}
+  compass: Δ ⇄  41.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.4273 -0.0503 | axle S 0.0567 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.875 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.713 | blind [] | latency age 7.8 s | proprioception {}
+  compass: Δ ⇄  43.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.3197 -0.1076 | axle S 0.0569 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.73 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.712 | blind [] | latency age 18.4 s | proprioception {}
+  compass: Δ ⇄  45.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 933.1603 -0.1595 | axle S 0.0572 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3647.5 | clean False | calm 0.0 | node calm 0.712 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.711 | blind [] | latency age 27.7 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Δ ⇄  47.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.9539 -0.2064 | axle S 0.0575 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.747 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.711 | blind [] | latency age 10.5 s | proprioception {}
+  compass: Δ ⇄  49.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.6792 -0.2746 | axle S 0.058 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.777 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.710 | blind [] | latency age 19.6 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Δ ⇄  51.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.4197 -0.2596 | axle S 0.0584 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.801 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.710 | blind [] | latency age 7.0 s | proprioception {}
+  compass: Η ⇄  53.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 932.1246 -0.2950 | axle S 0.0589 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.822 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.710 | blind [] | latency age 16.8 s | proprioception {}
+  compass: Η ⇄  54.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 931.7979 -0.3268 | axle S 0.0594 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.712 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.710 | blind [] | latency age 5.8 s | proprioception {}
+  compass: Η ⇄  55.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 931.4169 -0.3810 | axle S 0.06 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.747 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.709 | blind [] | latency age 16.8 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  56.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 931.0121 -0.4048 | axle S 0.0606 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5799.6 | clean False | calm 0.0 | node calm 0.776 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.709 | blind [] | latency age 25.4 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  57.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 930.5993 -0.4128 | axle S 0.0613 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.775 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.709 | blind [] | latency age 9.1 s | proprioception {}
+  compass: Η ⇄  59.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 930.1935 -0.4058 | axle S 0.0619 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.749 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.709 | blind [] | latency age 19.0 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  60.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 929.7698 -0.4236 | axle S 0.0625 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.777 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.708 | blind [] | latency age 3.5 s | proprioception {}
+  compass: Η ⇄  59.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 929.2919 -0.4779 | axle S 0.0633 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.552 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.708 | blind [] | latency age 14.4 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  59.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 928.7898 -0.5022 | axle S 0.064 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.531 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.708 | blind [] | latency age 24.0 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  60.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 928.2788 -0.5110 | axle S 0.0648 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.591 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.708 | blind [] | latency age 8.4 s | proprioception {}
+  compass: Η ⇄  60.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 927.7477 -0.5310 | axle S 0.0656 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.641 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.707 | blind [] | latency age 22.3 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  60.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 927.2118 -0.5360 | axle S 0.0664 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6716.9 | clean False | calm 0.0 | node calm 0.684 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.707 | blind [] | latency age 28.7 s | proprioception {}
+  compass: Η ⇄  61.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 926.6722 -0.5395 | axle S 0.0673 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5708.8 | clean False | calm 0.0 | node calm 0.638 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.707 | blind [] | latency age 10.3 s | proprioception {}
+  compass: Η ⇄  63.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 926.1821 -0.4901 | axle S 0.068 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5708.8 | clean False | calm 0.0 | node calm 0.681 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.707 | blind [] | latency age 21.5 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  61.8° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 925.6494 -0.5327 | axle S 0.0688 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5708.8 | clean False | calm 0.0 | node calm 0.42 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.707 | blind [] | latency age 30.8 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Η ⇄  61.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 925.1161 -0.5333 | axle S 0.0696 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8034.3 | clean False | calm 0.0 | node calm 0.244 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 6.8 s | proprioception {}
+  compass: Η ⇄  61.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 924.5831 -0.5330 | axle S 0.0704 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8034.3 | clean False | calm 0.0 | node calm 0.33 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 16.9 s | proprioception {}
+  compass: Η ⇄  67.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 924.1418 -0.4413 | axle S 0.0711 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8034.3 | clean False | calm 0.0 | node calm 0.406 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 27.3 s | proprioception {}
+  compass: Η ⇄  66.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 923.6851 -0.4567 | axle S 0.0718 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.474 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 6.0 s | proprioception {}
+  compass: Η ⇄  63.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 923.2016 -0.4835 | axle S 0.0725 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.398 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 15.6 s | proprioception {}
+  compass: Η ⇄  61.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 922.6807 -0.5210 | axle S 0.0733 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.232 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.706 | blind [] | latency age 25.8 s | proprioception {}
+  compass: Η ⇄  60.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 922.1636 -0.5170 | axle S 0.0741 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.313 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 11.0 s | proprioception {}
+  compass: Η ⇄  58.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 921.6252 -0.5384 | axle S 0.0749 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.387 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 18.5 s | proprioception {}
+  compass: Η ⇄  61.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 921.1318 -0.4934 | axle S 0.0756 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.453 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 29.1 s | proprioception {}
+  compass: Η ⇄  61.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 920.6429 -0.4888 | axle S 0.0763 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8230.2 | clean False | calm 0.0 | node calm 0.512 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 38.3 s | proprioception {}
+  compass: Η ⇄  60.8° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 920.1591 -0.4838 | axle S 0.0771 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7645.7 | clean False | calm 0.0 | node calm 0.564 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 8.9 s | proprioception {}
+  compass: Β >  87.1° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.9389 -0.2201 | axle S 0.0774 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7645.7 | clean False | calm 0.0 | node calm 0.609 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 18.1 s | proprioception {}
+  compass: Ι >  98.8° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.8278 -0.1111 | axle S 0.0776 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7645.7 | clean False | calm 0.0 | node calm 0.375 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 29.4 s | proprioception {}
+  compass: Β >  95.7° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.7047 -0.1231 | axle S 0.0778 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7645.7 | clean False | calm 0.0 | node calm 0.218 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 10.4 s | proprioception {}
+  compass: Β >  92.8° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.5710 -0.1338 | axle S 0.078 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7645.7 | clean False | calm 0.0 | node calm 0.116 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 20.8 s | proprioception {}
+  compass: Β >  90.1° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.4277 -0.1432 | axle S 0.0782 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7586.2 | clean False | calm 0.0 | node calm 0.051 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 3.3 s | proprioception {}
+  compass: Β >  87.5° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 919.2761 -0.1516 | axle S 0.0784 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7586.2 | clean False | calm 0.0 | node calm 0.014 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 13.3 s | proprioception {}
+  compass: Δ ⇄  49.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 918.8331 -0.4430 | axle S 0.0791 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7586.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 23.9 s | proprioception {}
+  compass: Δ ⇄  49.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 918.3979 -0.4352 | axle S 0.0797 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5856.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 6.4 s | proprioception {}
+  compass: Δ ⇄  49.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 917.9706 -0.4273 | axle S 0.0804 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5856.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.705 | blind [] | latency age 16.0 s | proprioception {}
+  compass: Η ⇄  60.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 917.6414 -0.3291 | axle S 0.0809 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5181.6 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 1.4 s | proprioception {}
+  compass: Η ⇄  61.8° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 917.3285 -0.3129 | axle S 0.0813 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5181.6 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 11.1 s | proprioception {}
+  compass: Η ⇄  60.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 917.0186 -0.3100 | axle S 0.0818 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5181.6 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 3.9 s | proprioception {}
+  compass: Β >  84.5° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 916.8409 -0.1777 | axle S 0.0821 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5181.6 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 13.2 s | proprioception {}
+  compass: Θ >  81.7° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 916.6601 -0.1808 | axle S 0.0823 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4621.6 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 6.2 s | proprioception {}
+  compass: Θ >  79.0° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 916.4769 -0.1832 | axle S 0.0826 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4459.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 0.2 s | proprioception {}
+  compass: Δ ⇄  49.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 916.1499 -0.3270 | axle S 0.0831 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3789.1 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 1.0 s | proprioception {}
+  compass: Ζ ⇄  34.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 915.6995 -0.4504 | axle S 0.0838 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3046.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.704 | blind [] | latency age 0.9 s | proprioception {}
+  compass: Ζ ⇄  35.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 915.2613 -0.4382 | axle S 0.0844 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2938.7 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 1.4 s | proprioception {}
+  compass: Δ ⇄  51.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 914.9510 -0.3103 | axle S 0.0849 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2938.7 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 0.8 s | proprioception {}
+  compass: Β >  85.9° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 914.7882 -0.1628 | axle S 0.0851 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2938.7 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 10.8 s | proprioception {}
+  compass: Θ >  78.3° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 914.6111 -0.1772 | axle S 0.0854 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2631.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 10.2 s | proprioception {}
+  compass: Θ >  75.3° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 914.4335 -0.1775 | axle S 0.0857 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2631.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 18.5 s | proprioception {}
+  compass: Θ >  76.8° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 914.2688 -0.1647 | axle S 0.0859 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6212.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 5.6 s | proprioception {}
+  compass: Θ >  73.8° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 914.1037 -0.1651 | axle S 0.0862 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6212.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 9.8 s | proprioception {}
+  compass: Θ >  75.7° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 913.9514 -0.1523 | axle S 0.0864 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6212.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 20.4 s | proprioception {}
+  compass: Β >  93.6° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 913.8503 -0.1011 | axle S 0.0865 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6212.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 29.3 s | proprioception {}
+  compass: Β >  89.3° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 913.7464 -0.1039 | axle S 0.0867 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7225.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 5.8 s | proprioception {}
+  compass: Β >  85.2° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 913.6403 -0.1061 | axle S 0.0869 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7225.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 16.7 s | proprioception {}
+  compass: Δ ⇄  44.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 913.4291 -0.2112 | axle S 0.0872 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7225.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 25.7 s | proprioception {}
+  compass: Δ ⇄  41.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 913.2087 -0.2205 | axle S 0.0875 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7225.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 37.0 s | proprioception {}
+  compass: Δ ⇄  41.0° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 912.9925 -0.2162 | axle S 0.0878 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7225.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 7.9 s | proprioception {}
+  compass: Θ >  68.1° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 912.8579 -0.1346 | axle S 0.088 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7190.5 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 4.5 s | proprioception {}
+  compass: Δ ⇄  41.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 912.6593 -0.1986 | axle S 0.0883 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7190.5 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 14.2 s | proprioception {}
+  compass: Δ ⇄  41.5° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 912.4644 -0.1949 | axle S 0.0886 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7190.5 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 24.4 s | proprioception {}
+  compass: Η ⇄  60.6° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 912.3249 -0.1395 | axle S 0.0888 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 0.9 s | proprioception {}
+  compass: Β >  90.1° Dispersion: peak extension, the turn | Ω held | G·n≤0 yes | L 912.2381 -0.0868 | axle S 0.089 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 12.8 s | proprioception {}
+  compass: Β >  85.0° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 912.1500 -0.0881 | axle S 0.0891 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 20.8 s | proprioception {}
+  compass: Θ >  80.2° Expansion: peak extension, the turn | Ω held | G·n≤0 yes | L 912.0609 -0.0891 | axle S 0.0892 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 30.8 s | proprioception {}
+  compass: Ζ ⇄  28.3° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.8550 -0.2058 | axle S 0.0895 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 18.8 s | proprioception {}
+  compass: Δ ⇄  48.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.7189 -0.1362 | axle S 0.0897 (rest 2.3686) | circles 0
+  6 -> 6 | p95 7437.9 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 25.9 s | proprioception {}
+  compass: Η ⇄  53.5° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.5975 -0.1214 | axle S 0.0899 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.703 | blind [] | latency age 1.5 s | proprioception {}
+  compass: Δ ⇄  51.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.4774 -0.1201 | axle S 0.0901 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 11.0 s | proprioception {}
+  compass: Δ ⇄  43.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.3459 -0.1316 | axle S 0.0903 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 20.5 s | proprioception {}
+  compass: Δ ⇄  42.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.2164 -0.1295 | axle S 0.0905 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 1.3 s | proprioception {}
+  compass: Ζ ⇄  23.5° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 911.0247 -0.1917 | axle S 0.0908 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 10.9 s | proprioception {}
+  compass: Ε +  18.8° Expansion: rising through rest | Ω held | G·n≤0 yes | L 910.7997 -0.2250 | axle S 0.0911 (rest 2.3686) | circles 0
+  6 -> 6 | p95 9524.8 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 23.5 s | proprioception {}
+  compass: Ε +  19.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 910.5819 -0.2178 | axle S 0.0914 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8722.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 4.5 s | proprioception {}
+  compass: Δ ⇄  48.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 910.4611 -0.1208 | axle S 0.0916 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8722.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 16.1 s | proprioception {}
+  compass: Δ ⇄  39.1° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 910.3294 -0.1316 | axle S 0.0918 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6050.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 3.8 s | proprioception {}
+  compass: Δ ⇄  38.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 910.2005 -0.1289 | axle S 0.092 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6050.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 0.2 s | proprioception {}
+  compass: Δ ⇄  44.7° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 910.0872 -0.1133 | axle S 0.0922 (rest 2.3686) | circles 0
+  6 -> 6 | p95 6050.0 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 10.3 s | proprioception {}
+  compass: Ε +  21.0° Expansion: rising through rest | Ω held | G·n≤0 yes | L 909.9116 -0.1757 | axle S 0.0924 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4317.3 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 2.7 s | proprioception {}
+  compass: Ε +  21.6° Expansion: rising through rest | Ω held | G·n≤0 yes | L 909.7411 -0.1704 | axle S 0.0927 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3871.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.702 | blind [] | latency age 1.0 s | proprioception {}
+  compass: Ε +  14.1° Expansion: rising through rest | Ω held | G·n≤0 yes | L 909.5114 -0.2297 | axle S 0.093 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3191.4 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.701 | blind [] | latency age 4.7 s | proprioception {}
+  compass: Ε +  12.4° Expansion: rising through rest | Ω held | G·n≤0 yes | L 909.2511 -0.2603 | axle S 0.0934 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2429.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.701 | blind [] | latency age 5.0 s | proprioception {}
+  compass: Ε +  14.5° Expansion: rising through rest | Ω held | G·n≤0 yes | L 909.0134 -0.2377 | axle S 0.0937 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2429.2 | clean False | calm 0.0 | node calm 0.0 | gate pods waiting; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.701 | blind [] | latency age 14.1 s | proprioception {}
+  compass: Ε +  10.4° Expansion: rising through rest | Ω held | G·n≤0 yes | L 908.6941 -0.3193 | axle S 0.0942 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3243.2 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.701 | blind [] | latency age 8.9 s | proprioception {}
+  compass: Ε +  11.7° Expansion: rising through rest | Ω held | G·n≤0 yes | L 908.3876 -0.3066 | axle S 0.0947 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3243.2 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.701 | blind [] | latency age 18.7 s | proprioception {}
+  compass: Ε +   9.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 908.0158 -0.3718 | axle S 0.0952 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4412.0 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.700 | blind [] | latency age 2.0 s | proprioception {}
+  compass: Ε +  11.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 907.6593 -0.3564 | axle S 0.0957 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4412.0 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.700 | blind [] | latency age 12.6 s | proprioception {}
+  compass: Ε +  12.5° Expansion: rising through rest | Ω held | G·n≤0 yes | L 907.3174 -0.3419 | axle S 0.0963 (rest 2.3686) | circles 0
+  6 -> 6 | p95 4412.0 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.700 | blind [] | latency age 21.9 s | proprioception {}
+  compass: Ε +  13.0° Expansion: rising through rest | Ω held | G·n≤0 yes | L 906.9764 -0.3410 | axle S 0.0968 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5857.5 | clean False | calm 0.0 | node calm 0.0 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 7.9 s | proprioception {}
+  compass: Ε +  14.1° Expansion: rising through rest | Ω held | G·n≤0 yes | L 906.6491 -0.3273 | axle S 0.0972 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5857.5 | clean False | calm 0.0 | node calm 0.013 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 17.9 s | proprioception {}
+  compass: Ε +  15.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 906.3348 -0.3143 | axle S 0.0977 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5857.5 | clean False | calm 0.0 | node calm 0.078 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 3.1 s | proprioception {}
+  compass: Ε +  16.2° Expansion: rising through rest | Ω held | G·n≤0 yes | L 906.0328 -0.3019 | axle S 0.0982 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5857.5 | clean False | calm 0.0 | node calm 0.144 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 11.5 s | proprioception {}
+  compass: Ε +  18.5° Expansion: rising through rest | Ω held | G·n≤0 yes | L 905.7555 -0.2773 | axle S 0.0986 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5857.5 | clean False | calm 0.0 | node calm 0.209 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 22.4 s | proprioception {}
+  compass: Ε +  19.3° Expansion: rising through rest | Ω held | G·n≤0 yes | L 905.4887 -0.2668 | axle S 0.099 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5572.3 | clean False | calm 0.0 | node calm 0.272 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.699 | blind [] | latency age 4.3 s | proprioception {}
+  compass: Ε +  21.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 905.2447 -0.2440 | axle S 0.0993 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5572.3 | clean False | calm 0.0 | node calm 0.331 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 15.4 s | proprioception {}
+  compass: Ε +  22.5° Expansion: rising through rest | Ω held | G·n≤0 yes | L 905.0096 -0.2351 | axle S 0.0997 (rest 2.3686) | circles 0
+  6 -> 6 | p95 5572.3 | clean False | calm 0.0 | node calm 0.386 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 24.8 s | proprioception {'hpa default/php-apache': 0.0}
+  compass: Ε +  18.9° Expansion: rising through rest | Ω held | G·n≤0 yes | L 904.7573 -0.2523 | axle S 0.1 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8014.5 | clean False | calm 0.0 | node calm 0.436 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 7.2 s | proprioception {}
+  compass: Ζ ⇄  24.2° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 904.5400 -0.2172 | axle S 0.1004 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8014.5 | clean False | calm 0.0 | node calm 0.483 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 19.8 s | proprioception {}
+  compass: Ζ ⇄  32.4° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 904.3561 -0.1839 | axle S 0.1006 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8014.5 | clean False | calm 0.0 | node calm 0.526 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 3.7 s | proprioception {}
+  compass: Ζ ⇄  31.9° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 904.1782 -0.1779 | axle S 0.1009 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8014.5 | clean False | calm 0.0 | node calm 0.564 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 14.1 s | proprioception {}
+  compass: Ζ ⇄  31.5° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 904.0061 -0.1721 | axle S 0.1012 (rest 2.3686) | circles 0
+  6 -> 6 | p95 8014.5 | clean False | calm 0.0 | node calm 0.6 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 6.1 s | proprioception {}
+  compass: Δ ⇄  46.5° Expansion: expansion, exchange under way | Ω held | G·n≤0 yes | L 903.8651 -0.1409 | axle S 0.1014 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3955.0 | clean False | calm 0.0 | node calm 0.632 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 0.9 s | proprioception {}
+  compass: Δ ⇄  44.1° Expansion: expansion, exchange under way | Ω: machine_fill below the floor, held | G·n≤0 yes | L 903.7282 -0.1369 | axle S 0.1016 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3955.0 | clean False | calm 0.0 | node calm 0.661 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 2.1 s | proprioception {}
+  compass: Η ⇄  54.5° Expansion: expansion, exchange under way | Ω: machine_fill below the floor, held | G·n≤0 yes | L 903.6080 -0.1202 | axle S 0.1018 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3494.1 | clean False | calm 0.0 | node calm 0.688 | gate pods scaling up; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 1.0 s | proprioception {}
+  compass: Ν − 171.5° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 903.7609 +0.1528 (forced) | axle S 0.1015 (rest 2.3686) | circles 0
+  6 -> 6 | p95 3239.9 | clean False | calm 0.0 | node calm 0.712 | gate pods scaling up; latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 5.5 s | proprioception {}
+  compass: Ν − 169.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 903.9033 +0.1424 (forced) | axle S 0.1013 (rest 2.3686) | circles 0
+  6 -> 6 | p95 2674.9 | clean False | calm 0.0 | node calm 0.735 | gate latency breached now; node organ has no contraction authority | queue 2.0 | U 0.698 | blind [] | latency age 4.4 s | proprioception {}
+  compass: Ω − 175.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 888.6567 -15.2465 | axle S 0.1237 (rest 2.3686) | circles 0
+  6 -> 6 | p95 649.4 | clean False | calm 0.0 | node calm 0.755 | gate latency breached now; node organ has no contraction authority | queue 0.299 | U 0.734 | blind [] | latency age 3.6 s | proprioception {}
+  compass: Ω − 174.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 872.1438 -16.5130 | axle S 0.1482 (rest 2.3686) | circles 0
+  6 -> 6 | p95 515.8 | clean False | calm 0.0 | node calm 0.774 | gate latency breached now; node organ has no contraction authority | queue 0.032 | U 0.770 | blind [] | latency age 2.7 s | proprioception {}
+  compass: Ω − 173.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 856.5836 -15.5601 | axle S 0.1713 (rest 2.3686) | circles 0
+  6 -> 6 | p95 135.0 | clean False | calm 0.0 | node calm 0.791 | gate release permitted | queue 0.0 | U 0.802 | blind [] | latency age 2.1 s | proprioception {}
+  compass: Ω − 172.9° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 842.1845 -14.3991 | axle S 0.1929 (rest 2.3686) | circles 0
+  6 -> 6 | p95 108.2 | clean False | calm 0.0 | node calm 0.807 | gate release permitted | queue 0.0 | U 0.828 | blind [] | latency age 0.9 s | proprioception {}
+  compass: Ν − 172.2° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 828.8563 -13.3283 | axle S 0.213 (rest 2.3686) | circles 0
+  6 -> 6 | p95 100.1 | clean False | calm 0.0 | node calm 0.821 | gate release permitted | queue 0.0 | U 0.851 | blind [] | latency age 0.1 s | proprioception {}
+  compass: Ν − 171.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 816.5159 -12.3403 | axle S 0.2317 (rest 2.3686) | circles 0
+  6 -> 6 | p95 99.5 | clean False | calm 0.0 | node calm 0.835 | gate release permitted | queue 0.0 | U 0.869 | blind [] | latency age 4.5 s | proprioception {}
+  compass: Ν − 171.2° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 805.0999 -11.4160 | axle S 0.2491 (rest 2.3686) | circles 0
+  6 -> 6 | p95 99.3 | clean False | calm 0.006 | node calm 0.847 | gate release permitted | queue 0.0 | U 0.884 | blind [] | latency age 3.7 s | proprioception {}
+  compass: Ν − 170.7° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 794.5126 -10.5874 | axle S 0.2653 (rest 2.3686) | circles 0
+  6 -> 6 | p95 99.3 | clean False | calm 0.033 | node calm 0.859 | gate release permitted | queue 0.0 | U 0.897 | blind [] | latency age 2.9 s | proprioception {}
+  compass: Ν − 170.2° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 784.7027 -9.8099 | axle S 0.2804 (rest 2.3686) | circles 0
+  6 -> 6 | p95 99.5 | clean False | calm 0.068 | node calm 0.87 | gate release permitted | queue 0.0 | U 0.907 | blind [] | latency age 2.0 s | proprioception {}
+  compass: Ν − 169.8° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 775.5988 -9.1039 | axle S 0.2944 (rest 2.3686) | circles 0
+  6 -> 6 | p95 99.5 | clean False | calm 0.107 | node calm 0.879 | gate release permitted | queue 0.0 | U 0.915 | blind [] | latency age 1.0 s | proprioception {}
+  compass: Ν − 169.3° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 767.1840 -8.4148 | axle S 0.3075 (rest 2.3686) | circles 0
+  6 -> 6 | p95 102.6 | clean False | calm 0.148 | node calm 0.889 | gate release permitted | queue 0.0 | U 0.922 | blind [] | latency age 0.2 s | proprioception {}
+  compass: Ν − 168.9° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 759.3822 -7.8018 | axle S 0.3196 (rest 2.3686) | circles 0
+  6 -> 6 | p95 102.6 | clean False | calm 0.189 | node calm 0.897 | gate release permitted | queue 0.0 | U 0.927 | blind [] | latency age 4.7 s | proprioception {}
+  compass: Ν − 168.4° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 752.1228 -7.2594 | axle S 0.3309 (rest 2.3686) | circles 0
+  6 -> 6 | p95 102.6 | clean False | calm 0.228 | node calm 0.905 | gate release permitted | queue 0.0 | U 0.931 | blind [] | latency age 3.8 s | proprioception {}
+  compass: Ν − 167.9° Dispersion: falling through rest | Ω: machine_fill below the floor, held | G·n≤0 yes | L 745.4014 -6.7214 | axle S 0.3415 (rest 2.3686) | circles 0
+  6 -> 6 | p95 102.6 | clean False | calm 0.265 | node calm 0.913 | gate release permitted | queue 0.0 | U 0.935 | blind [] | latency age 2.9 s | proprioception {}
