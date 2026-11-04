@@ -87,6 +87,51 @@ class Tour(unittest.TestCase):
             if s["clip"]:
                 self.assertEqual(clips[s["id"]]["sha"], s["sha"], f"{s['id']}: a clip that reads other words")
 
+    def _tour_code(self):
+        a, b = self.page.index("const TOUR = {"), self.page.index("function eqLive() {")
+        return self.page[a:b]
+
+    def test_the_opening_names_the_cards_own_buttons(self):
+        """4 November: the opening told the reader to use Next and Back and that Play steps through on its own; the card had
+        neither a Back button nor a Play that stepped on, and the reader was left asking what to click. Every control the
+        opening names is a button the card draws, by the name it wears."""
+        code = self._tour_code()
+        for said, label in (("Play", "▶ Play"), ("Pause", "⏸ Pause"), ("back ten seconds", "⏪ 10 s"), ("forward ten seconds", "10 s ⏩"),
+                            ("From the start", "↺ From the start"), ("Stop", "■ Stop"), ("Previous stop", "◀ Previous stop"),
+                            ("Next stop", "Next stop ▶"), ("Step on by itself", "Step on by itself: "), ("Close", "Close ✕")):
+            with self.subTest(said=said):
+                self.assertIn(said, tour_script.OPEN, f"the opening does not name {said}")
+                self.assertIn(label, code, f"the card draws no {label!r} button")
+        for gone in ("Use Next and Back", "Play steps through on its own"):
+            self.assertNotIn(gone, tour_script.OPEN)
+
+    def test_the_card_never_sits(self):
+        """4 November: the tour read its opening and sat. A clip that failed to load, a browser voice that never started, or a
+        browser that plays sound only after a press left no clock moving the card, and the refusal turned Step on by itself
+        off. Now a reading clock moves the card from the first moment, every voice has a watchdog, and a refusal lights Play."""
+        code = self._tour_code()
+        self.assertIn("setInterval(tourTick, 250)", code, "no clock ticks the card")
+        self.assertRegex(code, r"function tourFrom\(pos, byPress\) \{[^\n]*\n(?:[^\n]*\n){0,4}\s*tourReadOn\(pos\)",
+                         "a stop must start its reading clock before any voice is tried")
+        self.assertRegex(code, r"TOUR\.mode === \"read\" && TOUR\.playing && p >= d - 0\.05\) \{ tourAfter\(\)",
+                         "the reading clock must end the stop on time")
+        refusal = re.search(r'err\.name === "NotAllowedError"\) \{(.*?)\} \}\); \};', code, re.S)
+        self.assertIsNotNone(refusal, "the recorded voice's refusal is not handled")
+        self.assertIn("TOUR.need = true", refusal.group(1), "a refusal must light Play")
+        self.assertNotIn("TOUR.auto = false", refusal.group(1), "a refusal must not stop the tour stepping on")
+        self.assertIn("tneed", code)
+        self.assertIn("No sound yet: this browser plays sound only after a press. Press the lit ▶ Play", code)
+        for dog in ("}, 5000);", "}, 4500);", "now - TOUR.lastTAt > 8000"):
+            self.assertIn(dog, code, f"a voice without its watchdog: {dog}")
+        # each address of the recorded voice is tried once: only the error event moves to the next one
+        self.assertRegex(code, r"a\.onerror = \(\) => \{ if \(mine\(\) && !heard\) next\(\); \};")
+        self.assertNotRegex(code, r"\.catch\(err => \{[^}]*else go\(\)", "a failed play may not try the next address a second time")
+        # the browser's own voice reads one sentence at a time, each with its own watchdog
+        self.assertIn("const say = k => {", code)
+        self.assertIn("say(k + 1)", code)
+        self.assertNotIn('aria-live="polite"></div>', self.page.split('id="tourCard"', 1)[1][:120],
+                         "the whole card may not be a live region: a screen reader would read the clock four times a second")
+
 
 if __name__ == "__main__":
     unittest.main()
