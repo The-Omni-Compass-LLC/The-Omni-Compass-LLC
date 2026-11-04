@@ -35,15 +35,21 @@ class SiteNumbers(unittest.TestCase):
         # 4 November: the model table left results/, where the website had read it and printed 47.2% and 49.9% as results
         self.assertFalse((ROOT / "results" / "ABC_TABLE.json").exists(), "a model table under results/ is read as a result")
         abc = json.loads((ROOT / "docs" / "history" / "model_tables" / "ABC_TABLE_MODEL.json").read_text(encoding="utf-8"))
-        web = 100 * (abc["web"]["A"]["mean_ms"] / abc["web"]["C"]["mean_ms"] - 1)
-        self.assertAlmostEqual(no["abc_web_speed"]["value_pct"], round(web, 1))
+        self.assertIn("web", abc)
+        # 4 November, the founder: those two figures are garbage and live nowhere, not even as a figure on the remove list
+        for k in ("abc_web_speed", "abc_multi_speed", "abc_gpu_energy"):
+            self.assertIsNone(no[k]["value_pct"], k)
+        for f in ("SITE_NUMBERS.json", "SITE_NUMBERS.md"):
+            text = (ROOT / "results" / f).read_text(encoding="utf-8")
+            for figure in ("47.2", "49.9"):
+                self.assertNotIn(figure, text, f"{figure} in results/{f}")
         for k in ("abc_web_speed", "abc_multi_speed", "abc_gpu_energy", "drain_20_percent", "sixteen_million", "free_work_33",
                   "thirteen_point_one", "arm_d_work_per_dollar"):
             self.assertIn(k, no)
         # arm D is shown from its receipt; only its work per dollar waits (the founder's words of 4 November: four arms, A, B, C, D)
         self.assertFalse(any("nothing for D" in n["why"] for n in no.values()))
         shown = " ".join(n["sentence"] for n in self.d["show"])
-        for figure in (f"{no['abc_web_speed']['value_pct']:.1f}%", f"{no['abc_multi_speed']['value_pct']:.1f}%", "20%", "$16"):
+        for figure in ("47.2", "49.9", "20%", "$16"):
             self.assertNotIn(figure, shown, f"{figure} has no receipt and is shown")
 
     def test_four_arms_each_from_its_receipt(self):
