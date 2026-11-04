@@ -546,6 +546,20 @@ if [ -n "${ORGANISM:-}" ]; then
     --scale "${ORGANISM_SCALE:-1}" --go-file "$OUT_DIR/organism.go" > "$OUT_DIR/organism.log" 2>&1 &
   kil_pid=$!
 fi
+# On a managed cluster the service's autoscaler holds a current reading before the warm-up, in every arm (amendment of 4 November,
+# docs/K8S_COMPASS_PREREGISTRATION.md): in the Azure tuning case (run 41745105583) each arm ran on a cluster created minutes
+# before; native's autoscaler read from the start and entered the window at 5 copies, the Omni-Compass arm's read nothing for its
+# first two and a half minutes, held 1 copy and failed 1,481 of the first 1,501 requests. The warm-up now starts only once the
+# autoscaler reads the service (up to 300 s), and the wait is recorded; the same in every arm. kind is left as it was.
+if [ "$PLATFORM" != kind ] && kubectl get hpa "$HPA_NAME" >/dev/null 2>&1; then
+  hpa_t0=$(date +%s); hpa_ok=no; cm=""
+  for t in $(seq 1 60); do
+    cm=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.status.currentMetrics[0].resource.current.averageUtilization}' 2>/dev/null || true)
+    [ -n "$cm" ] && { hpa_ok=yes; break; }
+    sleep 5
+  done
+  echo "autoscaler reading before the warm-up: $hpa_ok after $(( $(date +%s) - hpa_t0 )) s (utilization ${cm:-none}%)" | tee -a "$OUT_DIR/preflight.txt"
+fi
 echo "== warm-up ${WARMUP}s (both arms)"; sleep "$WARMUP"
 # LIST first, then continue from its resourceVersion across bounded API watches.
 # Start before the workload and measured window; never infer missing events from a final snapshot.
