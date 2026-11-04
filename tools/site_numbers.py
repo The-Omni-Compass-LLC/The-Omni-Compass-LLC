@@ -127,14 +127,14 @@ def build() -> dict:
     gpu = abc["gpu"]
     gp = 100 * (gpu["A"]["energy_kwh"] / gpu["C"]["energy_kwh"] - 1)
     no = [
-        {"id": "abc_web_speed", "value_pct": round(sp(w), 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
+        {"id": "abc_web_speed", "value_pct": None, "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": f"our own model (class S), Omni-Compass alone (its column C, no Kubernetes) against Kubernetes alone (column A): "
                 f"the mean response time only, while the same column used {_pct(nh(w))} more machine-hours and {_pct(en(w))} more "
                 "energy. Not a whole-system gain, not bare metal, not the cloud, and a model is never proof."},
-        {"id": "abc_multi_speed", "value_pct": round(sp(mlt), 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
+        {"id": "abc_multi_speed", "value_pct": None, "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": f"the same model's multi-service column: Omni-Compass alone against Kubernetes alone, the mean response time "
                 f"only, with {_pct(nh(mlt))} more machine-hours and {_pct(en(mlt))} more energy. Class S, never a result."},
-        {"id": "abc_gpu_energy", "value_pct": round(gp, 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
+        {"id": "abc_gpu_energy", "value_pct": None, "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": "the same model's GPU scenario (class S): Omni-Compass alone against Kubernetes alone, the energy. Not a GPU "
                 "measurement: the card's own meter reads energy per request served as the chip number above says."},
         {"id": "abc_column_b", "value_pct": round(100 * (w["B"]["mean_ms"] / w["A"]["mean_ms"] - 1), 1),
