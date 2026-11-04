@@ -26,11 +26,16 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT_MD, OUT_JSON = ROOT / "results" / "OVERSIGHT.md", ROOT / "results" / "OVERSIGHT.json"
 sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT))
 from legal import stamp  # noqa: E402
+from readings import LOWER, three_run_reading  # noqa: E402
+from omnicompass.student_t import t95  # noqa: E402
 
 OWN_RUNS = "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results."
 ALERT, COMMANDS = "alert minutes", "settings commands the governor wrote on its own"
 SHARE_EXAMPLE, SPEND_EXAMPLE = 0.07, 100.0   # the founder's example of 3 November (7% of the bill), on the $100 M example budget
+Z95 = 1.959964                               # a sum over many tables: the normal 95% point
+NODES, NODE_HOURS = "worker nodes in service, mean", "node-hours"
 
 
 def tables() -> tuple:
@@ -57,6 +62,39 @@ def _mean(runs, side):
     return sum(xs) / len(xs) if xs else None
 
 
+def by_run(found: list) -> dict:
+    """The tables summed run by run (A, B, C): each run's alert minutes native and with Omni-Compass, their difference with its
+    95% interval (each table's own interval and repetitions, the exact Student t, the variances added, the normal point for
+    the sum), the governor's own commands an hour over the measured windows, and the three runs read by the one key."""
+    runs = []
+    for k in range(3):
+        n = o = dd = var = cmd = hours = 0.0
+        ok = True
+        for f, d in found:
+            R = d["rows"]
+            a = R[next(x for x in R if x.startswith(ALERT))]["runs"]
+            if len(a) <= k:
+                ok = False
+                break
+            r = a[k]
+            reps = ((d.get("runs") or [{}] * 3)[k] or {}).get("paired_repetitions") or 0
+            lo, hi = (r.get("ci95") or [r["diff"], r["diff"]])[:2]
+            t = t95(reps - 1) if reps > 1 else float("nan")
+            n += r["native"]; o += r["omni"]; dd += r["diff"]
+            var += ((hi - lo) / (2 * t)) ** 2 if t == t else 0.0
+            c = next((R[x]["runs"] for x in R if x.startswith(COMMANDS)), None)
+            nh, nodes = R.get(NODE_HOURS, {}).get("runs") or [], R.get(NODES, {}).get("runs") or []
+            if c and len(c) > k and len(nh) > k and len(nodes) > k and nodes[k].get("native"):
+                cmd += c[k]["omni"]; hours += nh[k]["native"] / nodes[k]["native"]
+        if not ok:
+            return {"runs": [], "reading": None}
+        se = var ** 0.5
+        runs.append({"native": n, "omni": o, "diff": dd, "ci95": [dd - Z95 * se, dd + Z95 * se],
+                     "change": dd / n if n else None, "commands_per_hour": cmd / hours if hours else None, "hours": hours})
+    reading = three_run_reading([{"native": r["native"], "diff": r["diff"], "ci95": r["ci95"]} for r in runs], LOWER)
+    return {"runs": runs, "reading": reading.replace("**", "")}
+
+
 def build() -> dict:
     v, found = tables()
     rows = []
@@ -72,10 +110,11 @@ def build() -> dict:
                      "commands": _mean(c["runs"], "omni") if c else None})
     tn, to = sum(r["native"] for r in rows), sum(r["omni"] for r in rows)
     pooled = (to / tn - 1) if tn else None
+    per_run = by_run(found)
     people = SHARE_EXAMPLE * pooled if pooled is not None else None
     return {"engine": f"omni-v{v}" if v else None, "question": "they don't need a 3 a.m. call and they don't need [anyone] to turn knobs "
             "when OmniCompass is ... self-gauging", "said": "the founder, 3 November 2026", "rows": rows,
-            "pooled": {"native": tn, "omni": to, "change": pooled},
+            "pooled": {"native": tn, "omni": to, "change": pooled, "runs": per_run["runs"], "reading": per_run["reading"]},
             "count": {"tests": len(rows), "fewer": sum(1 for r in rows if r["omni"] < r["native"]),
                       "to_zero": sum(1 for r in rows if r["native"] > 0 and r["omni"] == 0),
                       "same": sum(1 for r in rows if r["omni"] == r["native"]), "more": sum(1 for r in rows if r["omni"] > r["native"])},
@@ -91,6 +130,30 @@ def build() -> dict:
 
 def _pc(x: float) -> str:
     return f"{abs(x) * 100:.1f}%"
+
+
+def _raw(x: float) -> str:
+    return f"{'+' if x > 0 else '−' if x < 0 else '±'}{abs(x):.2f}"
+
+
+def run_by_run(p: dict) -> list:
+    """The pooled pages run by run, and their reading by the one key."""
+    runs = p.get("runs") or []
+    if not runs:
+        return []
+    L = ["**Run by run.** The tables summed in each of our three runs (one repetition of every test, native beside Omni-Compass on "
+         "native); each difference's 95% interval adds its tables' variances, each from that table's own interval and repetitions.", "",
+         "| Run | Alert minutes, native → Omni-Compass on native, summed | Change | Difference, 95% interval (minutes) | Settings the governor wrote on its own, an hour |",
+         "|---|---|---|---|---|"]
+    for tag, r in zip("ABC", runs):
+        ch = "—" if r["change"] is None else ("down " if r["change"] < 0 else "up ") + _pc(r["change"])
+        cph = "—" if r["commands_per_hour"] is None else f"{r['commands_per_hour']:.0f}"
+        L.append(f"| {tag} | {r['native']:.2f} → {r['omni']:.2f} | {ch} | {_raw(r['diff'])} ({_raw(r['ci95'][0])} to {_raw(r['ci95'][1])}) | {cph} |")
+    every = (p["reading"] or "").startswith("GAIN in all three")
+    L += ["", f"**Read by the one key: {p['reading']}.**" + (" The pages fell in every run, each run's interval clear of zero." if every
+          else "") + " The settings the governor wrote an hour are counted over each run's measured windows (node-hours over the nodes "
+          "in service), with no person touching either arm.", ""]
+    return L
 
 
 def markdown(d: dict) -> str:
@@ -118,7 +181,7 @@ def markdown(d: dict) -> str:
           f"{p['omni']:.1f} with Omni-Compass on top: **down {_pc(p['change'])}** (our arithmetic over the tables, each test weighed by "
           f"its own minutes; the two-hour test holds {max(rows, key=lambda r: r['native'])['native'] / p['native'] * 100:.0f}% of "
           f"native's). Fewer pages in {c['fewer']} of the {c['tests']} tests, to none at all in {c['to_zero']}, the same in "
-          f"{c['same']}, more in {c['more']}. Each test's word is its own table's, by the one key.", "",
+          f"{c['same']}, more in {c['more']}. Each test's word is its own table's, by the one key.", ""] + run_by_run(p) + [
           "## The people line, through the one equation", "",
           "The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts by its share of native's bill, "
           "b = Σₖ sₖ·bₖ (`docs/WORK_PER_BILL.md`). The people who watch and tune a stack are one line, k = people, with its share "
@@ -149,6 +212,9 @@ def markdown(d: dict) -> str:
           "**Could the real number be bigger?** It can. An owner's people share may be larger than 7%, and a stack carries many "
           "services, each with its own pages, where each test here reads one. It can also be smaller: the record measures pages, "
           "and how much of a person's time moves with them is the owner's to count.", "",
+          "**What holds the stack's health when nobody is watching?** The mechanism, not a person's reaction time: the governor "
+          "reads every gauge every beat, which no person can, and moves before the line is crossed, inside each muscle's own limit. "
+          "The alert minutes are the record of how long health was lost, and they are what fell.", "",
           "**Does Omni-Compass replace the on-call engineer?** No. It takes pages away where its reading acts before the line; the "
           "person keeps the switch, the line and the profile.", "",
           "**How does an owner measure it on its own stack?** Count the alert minutes with the same rule, native and with "
@@ -160,18 +226,57 @@ def markdown(d: dict) -> str:
     return "\n".join(stamp(L)) + "\n"
 
 
+BLOCK_BEGIN = "<!-- the oversight line (tools/oversight.py) -->"
+BLOCK_END = "<!-- end of the oversight line -->"
+PLACES = (ROOT / "README.md", ROOT / "docs" / "OMNI_COMPASS_OWNERS_MANUAL.md", ROOT / "docs" / "STATE_OF_PLAY.md")
+
+
+def block(d: dict) -> str:
+    """The paragraph the README, the Owner's Manual and the state of play carry, from the same numbers as the page."""
+    p, c, ex = d["pooled"], d["count"], d["example"]
+    if not d["rows"] or p["change"] is None:
+        return "The oversight line: no Kubernetes three-run table carries the pages yet (`results/OVERSIGHT.md`)."
+    runs = p.get("runs") or []
+    cph = [r["commands_per_hour"] for r in runs if r.get("commands_per_hour")]
+    return ("**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). "
+            "The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. "
+            f"Across the {c['tests']} real Kubernetes tests of {d['engine']}, the minutes an on-call page would be open (the 3 a.m. call) "
+            f"went down {_pc(p['change'])}, fewer in {c['fewer']} tests and to none in {c['to_zero']}"
+            + (f", and down in each of our three runs beyond the noise ({p['reading']})" if p.get("reading") else "")
+            + (f", while the governor turned the knobs itself ({'; '.join(f'{x:.0f}' for x in cph)} settings an hour in runs A; B; C, "
+               "no person touching either arm)" if len(cph) == 3 else "")
+            + ". In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of "
+            f"7%, down {_pc(ex['bill_change'])} of the whole bill. It is not added to the index (a share of a bill and a reading of "
+            "work and speed do not add), and it removes no person: a person keeps the switch.")
+
+
+def place(text: str, para: str):
+    i, j = text.find(BLOCK_BEGIN), text.find(BLOCK_END)
+    if i < 0 or j < i:
+        return None
+    return text[:i] + BLOCK_BEGIN + "\n" + para + "\n" + text[j:]
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
     d = build()
     js, md = json.dumps(d, indent=1, ensure_ascii=False) + "\n", markdown(d)
+    para, placed = block(d), {}
+    for q in PLACES:
+        new = place(q.read_text(encoding="utf-8") if q.exists() else "", para)
+        if new is not None:
+            placed[q] = new
     if a.check:
-        bad = [p.relative_to(ROOT).as_posix() for p, s in ((OUT_JSON, js), (OUT_MD, md)) if not p.exists() or p.read_text(encoding="utf-8") != s]
+        bad = [p.relative_to(ROOT).as_posix() for p, s in ((OUT_JSON, js), (OUT_MD, md), *placed.items())
+               if not p.exists() or p.read_text(encoding="utf-8") != s]
         print("the oversight line: " + ("in line with the records" if not bad else ", ".join(bad) + " differ (python3 tools/oversight.py)"))
         return 1 if bad else 0
     OUT_JSON.write_text(js, encoding="utf-8")
     OUT_MD.write_text(md, encoding="utf-8")
+    for q, t in placed.items():
+        q.write_text(t, encoding="utf-8")
     p = d["pooled"]
     print(f"{OUT_MD.relative_to(ROOT)}: {d['count']['tests']} tests on {d['engine']}; alert minutes {p['native']:.1f} → {p['omni']:.1f} "
           f"({p['change'] * 100:+.1f}%); at the 7% example the bill moves {d['example']['bill_change'] * 100:+.2f}%")

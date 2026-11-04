@@ -1324,7 +1324,7 @@ reviewed or approved these results."
 The second table (`#blBills`) reads the software end's composition carried to the two places a system runs: **bare metal**, the
 software end with the chip held at native's (the chip enters as exactly 1, the machine's own layer not yet run), and **through
 the cloud**, the software end with the cloud's bill held at native's. Neither row is that place's bill: each place's bill and the
-work done inside it, native and Omni-Compass on native, are the four boxes of section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
+work done inside it, native and Omni-Compass on native, are the four boxes of the page's section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
 one number over its gauges, with its word; beside it every gauge with its word and its number. The light follows the index's
 word, and is red where any table under the route reads a slower service or less work LOSS, in either form; a route with no
 composition reads AWAITING, "not yet composed". The bills read the repository's own headline, by the index's rule, with the
@@ -1715,20 +1715,30 @@ and scrolled into view, and a card (`#tourCard`) shows the section's number and 
 words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
 own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
 
-The card is for the reader, not the narrator: everything heard can be heard again and checked against the words. The card reads
-along, the sentence being read lit (placed by each sentence's share of the voice, so it can sit a moment early or late), and a
-press on any sentence plays it again from there. The voice's own row holds **⏪ 10 s** (back ten seconds), **Pause** and **Play**
-(stop where it is, then go on from there), **↺ From the start** (the stop again from its first word), **10 s ⏩** (forward ten
-seconds), **■ Stop** (the voice stops and the tour stays on this stop) and the speed, **0.75×**, **1×** or **1.25×**; the bar under
-it shows where the voice is and drags back or forward. The stops' own row holds **◀ Previous stop**, **Next stop ▶**, **Step on by
-itself** (on or off: the next stop follows when this one ends), **Voice on** or **off**, **Close** and, where the page runs inside
-Claude, **Explain simply** (Claude restates the stop in plain words from the stop's own text alone, adding nothing). The keys
-follow the common players: **J** back ten seconds, **K** or the space bar pause and play, **L** forward ten seconds, **R** from the
-start, **S** stop, the arrow keys the stops and **Escape** ends the tour. On the browser's own voice, which cannot be wound, back
-and forward go one sentence. The tab starts the tour at its opening, narrated and stepping on by
-itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
-in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
-Play starts it.
+The card is for the reader, not the narrator: everything heard can be heard again and checked against the words, and the card
+never waits on a voice that is not playing. Under the title one line (`#tNow`) always says what is happening and what to press:
+the voice reading, paused or stopped, the time until the next stop, and, where no sound plays, why and what to do. The voice's own
+row follows it: **⏪ 10 s** (back ten seconds), **▶ Play** and **⏸ Pause** (one button: start, or hold where it is), **10 s ⏩**
+(forward ten seconds), **↺ From the start** (the stop again from its first word) and **■ Stop** (the voice stops and the tour
+stays on this stop); the bar under it shows where the card is and drags back or forward; then **◀ Previous stop** and **Next stop
+▶**. **Close ✕** stands at the card's top right. Below them the card reads along, the sentence being read lit (placed by each
+sentence's share of the voice, so it can sit a moment early or late), and a press on any sentence plays it again from there. The
+card's foot holds **Step on by itself** (on or off: the next stop follows when this one ends), the speed, **0.75×**, **1×** or
+**1.25×**, **Voice off** or **Voice on** and, where the page runs inside Claude, **Explain simply** (Claude restates the stop in
+plain words from the stop's own text alone, adding nothing); then a dot for every stop, a press on one going to it, and the last
+line, which names the voice speaking. The keys follow the common players: **J** back ten seconds, **K** or the space bar play and
+pause, **L** forward ten seconds, **R** from the start, **S** stop, the arrow keys the stops and **Escape** ends the tour. The tab
+starts the tour at its opening, narrated and stepping on by itself; the dock's button starts it at the section in view; a second
+press of either ends it. A link to the page that ends in `#tour` opens the page with the tour started.
+
+Whatever the browser allows, a clock moves the card. Where the recorded voice plays, it is the clock. Where only the browser's own
+voice speaks, it reads one sentence at a time, because some browsers cut a long reading short and never say it ended. Where no
+voice is heard, the card's own reading clock moves the lit sentence at the voice's pace and steps on when the stop ends. Where a
+browser plays sound only after a press, or nothing is heard within five seconds, **▶ Play** lights up and the line under the title
+says to press it; the press starts the voice where the card is reading. Where no voice can play at all, the line says so and the
+card reads along by itself. A recorded voice that stops moving for eight seconds (a lost connection) hands the card to its reading
+clock, and **▶ Play** tries it again. As it opens, the page asks which address serves the recorded voice (beside the page, beside
+the engine's own page, or GitHub's copy), so the press that starts the tour plays from the address that answers.
 
 The voice is recorded. Every stop was read once by a neural text-to-speech model, Kokoro-82M v1.0 (Apache-2.0), in its American
 English female voice *Heart*, and kept beside the page as a small MP3 (`docs/engine/tour/`, made by `tools/tour_voice.py`; the
@@ -2607,7 +2617,7 @@ The whole organism (the page's section 5d, `#s-whole`) opens with a box, "WHAT E
 and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
 two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
 carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
-are the four boxes of section 2b, never this composition, and the two places are never added together.
+are the four boxes of the page's section 2b, never this composition, and the two places are never added together.
 
 Omni-Compass is wired into every piece of a stack through its own two-way plug: the
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
@@ -2617,7 +2627,7 @@ place a system runs (**Scenario**; the founder's order of 1 November: these two 
 software on the owner's own machines (software × the chip, no cloud), and *Through the Cloud*, the software through the cloud onto
 its machines (cloud × the chip at the back end × software), with the cloud as two pieces beside it. Each place here is the software
 end carried to it, its chip and its bill held at native's until read; the bills themselves, and the work done inside them, native
-and Omni-Compass on native, are the four boxes of section 2b (`results/TWO_BILLS.md`).
+and Omni-Compass on native, are the four boxes of the page's section 2b (`results/TWO_BILLS.md`).
 
 A tenant cannot meter the provider's bare metal at the back of a cloud: the cloud's piece is the bill and the machines the
 provider meters, and the bare-metal piece is gauged on hardware the repository meters and carried to the provider's only as a

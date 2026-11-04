@@ -95,8 +95,8 @@ The three runs together, by the one key: **the runs disagree** (the mean of the 
 
 **Not yet read:**
 
-- the chip: eight A100 cards on Lambda, each organism on its own card: not yet read (lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
-- the chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16): not yet read (lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
+- the chip: eight A100 cards on Lambda, each organism on its own card: read (lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
+- the chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16): read (lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
 - through the cloud: Azure, one rented machine with the real cluster inside each organism: not yet read (big-organism-detached, run 41269562586 (100 copies, three repetitions)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 - through the cloud: Google Cloud: not yet run (its key is not in the repository's secrets (docs/GOOGLE_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 - through the cloud: Amazon Web Services: not yet run (its key is not in the repository's secrets and the account is on the Free plan (docs/AMAZON_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
