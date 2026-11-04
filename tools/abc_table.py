@@ -8,7 +8,7 @@ Held-out seeds 700201-700230 per workload. Our own model (class S), never a benc
 alone, which is not one of the four arms (A the chip native, B the chip with Omni-Compass on native, C the cloud native, D the cloud
 with Omni-Compass on native). Writes docs/history/model_tables/ABC_TABLE_MODEL.json and prints the table. (4 November: the website
 read this file from results/ and printed its web and multi response-time ratios, 47.2% and 49.9%, as whole-system gains; it was
-moved out of results/ so no page can read it as a result: docs/WEBSITE_NUMBERS.md.)"""
+moved out of results/ so no page can read it as a result: results/SITE_NUMBERS.md.)"""
 import json, sys
 from multiprocessing import Pool
 from pathlib import Path
