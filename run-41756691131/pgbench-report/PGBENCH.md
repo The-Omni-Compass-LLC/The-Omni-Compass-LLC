@@ -1,0 +1,96 @@
+# PostgreSQL behind PgBouncer: native and omni (Omni-Compass on top of the pooler's own pool size)
+
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Native is PostgreSQL as shipped behind PgBouncer's shipped pool of 20 server connections; omni is the same with the compass law writing the pool size through PgBouncer's own console inside [2, 90], handed back at the end. The load is pgbench, rate-limited, stepping one notch at a time, the peak notch offering native's own unlimited capacity. Every row is shown, losses included; a 95% interval of the paired difference (omni minus native) over the repetitions decides whether a change is beyond the noise. There is no watt-meter on the machine: the host's CPU-seconds are measured, no energy is claimed (`docs/POSTGRES_PREREGISTRATION.md`).
+
+## select (-S, scale 20): line 50 ms, 3 paired repetitions
+
+Native capacity, unlimited: 15,596 tps; base rate 2,339 tps; steps [1, 2, 3, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 1] × 30 s; 64 clients. Engine omni-v25 (digest cf56fc0a7b707452, 65 files) at `198314d551ea`.
+
+| Gauge | native | omni | change (95% interval) | reading |
+|---|---:|---:|---|---|
+| work inside the response line (transactions a second answered within the line) | 6,862 | 6,859 | -0.0% (-0.2 to +0.1) | STEADY, no difference beyond the noise |
+| throughput (transactions a second) | 6,862 | 6,859 | -0.0% (-0.2 to +0.1) | STEADY, no difference beyond the noise |
+| latency, 95th percentile (ms, lag included) | 0.905 | 0.899 | -0.7% (-13.7 to +12.3) | STEADY, no difference beyond the noise |
+| latency, 99th percentile (ms) | 1.77 | 1.72 | -2.4% (-21.9 to +17.0) | STEADY, no difference beyond the noise |
+| latency, median (ms) | 0.347 | 0.346 | -0.2% (-2.4 to +2.0) | STEADY, no difference beyond the noise |
+| latency, mean (ms) | 0.439 | 0.437 | -0.5% (-5.9 to +4.9) | STEADY, no difference beyond the noise |
+| failed transactions | 0 | 0 | +0 (+0 to +0) | STEADY, the same |
+| server connections alive, mean (the machines) | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | STEADY, the same |
+| server connections alive, most at once | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | STEADY, the same |
+| host CPU busy (share of the run) | 0.38 | 0.38 | -0.1% (-1.6 to +1.4) | STEADY, no difference beyond the noise |
+| host CPU-seconds | 646.2 | 645.9 | -0.1% (-1.5 to +1.4) | STEADY, no difference beyond the noise |
+| host CPU-seconds per 1,000 transactions inside the line | 0.209 | 0.209 | -0.0% (-1.5 to +1.5) | STEADY, no difference beyond the noise |
+| the harness's own CPU-seconds (the compass's brain in the omni arm, the sampler in both; inside the host's) | 8.09 | 8.75 | +8.2% (+3.6 to +12.8) | shown, not judged |
+| pool size, mean (the knob) | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | shown, not judged |
+
+The knob handed back and read back at the end of every omni arm: yes; a foreign writer seen: no; Omni's writes per arm: 0, 0, 0; fail-ups per arm: 0, 0, 0.
+
+Per repetition (inside the line tps / p95 ms / servers alive / pool mean):
+
+- rep 1 (native then omni): native 6861 / 0.9 / 20.0 / 20.0; omni 6862 / 0.9 / 20.0 / 20.0
+- rep 2 (omni then native): native 6861 / 0.9 / 20.0 / 20.0; omni 6855 / 0.9 / 20.0 / 20.0
+- rep 3 (native then omni): native 6862 / 0.9 / 20.0 / 20.0; omni 6860 / 0.9 / 20.0 / 20.0
+
+## simple_update (-N, scale 20): line 50 ms, 3 paired repetitions
+
+Native capacity, unlimited: 5,741 tps; base rate 861 tps; steps [1, 2, 3, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 1] × 30 s; 64 clients. Engine omni-v25 (digest cf56fc0a7b707452, 65 files) at `198314d551ea`.
+
+| Gauge | native | omni | change (95% interval) | reading |
+|---|---:|---:|---|---|
+| work inside the response line (transactions a second answered within the line) | 2,470 | 2,462 | -0.3% (-1.3 to +0.7) | STEADY, no difference beyond the noise |
+| throughput (transactions a second) | 2,526 | 2,524 | -0.0% (-0.1 to +0.0) | STEADY, no difference beyond the noise |
+| latency, 95th percentile (ms, lag included) | 5.14 | 6.79 | +32.0% (-38.4 to +102.4) | STEADY, no difference beyond the noise |
+| latency, 99th percentile (ms) | 177.6 | 182.9 | +2.9% (-33.9 to +39.8) | STEADY, no difference beyond the noise |
+| latency, median (ms) | 1.12 | 1.14 | +1.8% (-5.5 to +9.0) | STEADY, no difference beyond the noise |
+| latency, mean (ms) | 5.62 | 6.21 | +10.5% (-21.9 to +42.9) | STEADY, no difference beyond the noise |
+| failed transactions | 0 | 0 | +0 (+0 to +0) | STEADY, the same |
+| server connections alive, mean (the machines) | 20.0 | 24.7 | +23.4% (+20.5 to +26.2) | power given |
+| server connections alive, most at once | 20.0 | 35.0 | +75.0% (+50.2 to +99.8) | power given |
+| host CPU busy (share of the run) | 0.448 | 0.455 | +1.5% (-3.3 to +6.2) | STEADY, no difference beyond the noise |
+| host CPU-seconds | 788.6 | 800.0 | +1.5% (-3.4 to +6.3) | STEADY, no difference beyond the noise |
+| host CPU-seconds per 1,000 transactions inside the line | 0.709 | 0.722 | +1.8% (-2.7 to +6.3) | STEADY, no difference beyond the noise |
+| the harness's own CPU-seconds (the compass's brain in the omni arm, the sampler in both; inside the host's) | 3.12 | 3.75 | +20.0% (+14.7 to +25.3) | shown, not judged |
+| pool size, mean (the knob) | 20.0 | 24.8 | +23.8% (+18.2 to +29.4) | shown, not judged |
+
+The knob handed back and read back at the end of every omni arm: yes; a foreign writer seen: no; Omni's writes per arm: 47, 49, 44; fail-ups per arm: 0, 0, 0.
+
+Per repetition (inside the line tps / p95 ms / servers alive / pool mean):
+
+- rep 1 (native then omni): native 2454 / 5.0 / 20.0 / 20.0; omni 2444 / 8.2 / 24.9 / 25.3
+- rep 2 (omni then native): native 2490 / 4.9 / 20.0 / 20.0; omni 2494 / 6.2 / 24.5 / 24.5
+- rep 3 (native then omni): native 2467 / 5.6 / 20.0 / 20.0; omni 2450 / 6.0 / 24.6 / 24.5
+
+## tpcb_hot (tpcb (default), scale 2): line 50 ms, 3 paired repetitions
+
+Native capacity, unlimited: 1,906 tps; base rate 286 tps; steps [1, 2, 3, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 1] × 30 s; 64 clients. Engine omni-v25 (digest cf56fc0a7b707452, 65 files) at `198314d551ea`.
+
+| Gauge | native | omni | change (95% interval) | reading |
+|---|---:|---:|---|---|
+| work inside the response line (transactions a second answered within the line) | 839.2 | 836.4 | -0.3% (-0.5 to -0.2) | LOSS |
+| throughput (transactions a second) | 839.2 | 836.4 | -0.3% (-0.5 to -0.2) | LOSS |
+| latency, 95th percentile (ms, lag included) | 4.56 | 4.39 | -3.8% (-10.6 to +2.9) | STEADY, no difference beyond the noise |
+| latency, 99th percentile (ms) | 10.8 | 9.77 | -9.3% (-19.4 to +0.9) | STEADY, no difference beyond the noise |
+| latency, median (ms) | 1.74 | 1.72 | -0.7% (-2.2 to +0.7) | STEADY, no difference beyond the noise |
+| latency, mean (ms) | 2.25 | 2.2 | -2.3% (-6.0 to +1.3) | STEADY, no difference beyond the noise |
+| failed transactions | 0 | 0 | +0 (+0 to +0) | STEADY, the same |
+| server connections alive, mean (the machines) | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | STEADY, the same |
+| server connections alive, most at once | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | STEADY, the same |
+| host CPU busy (share of the run) | 0.291 | 0.288 | -0.8% (-2.0 to +0.5) | STEADY, no difference beyond the noise |
+| host CPU-seconds | 501.0 | 497.2 | -0.8% (-2.0 to +0.5) | STEADY, no difference beyond the noise |
+| host CPU-seconds per 1,000 transactions inside the line | 1.33 | 1.32 | -0.4% (-1.6 to +0.7) | STEADY, no difference beyond the noise |
+| the harness's own CPU-seconds (the compass's brain in the omni arm, the sampler in both; inside the host's) | 1.46 | 2.09 | +42.8% (+42.3 to +43.3) | shown, not judged |
+| pool size, mean (the knob) | 20.0 | 20.0 | +0.0% (+0.0 to +0.0) | shown, not judged |
+
+The knob handed back and read back at the end of every omni arm: yes; a foreign writer seen: no; Omni's writes per arm: 0, 0, 0; fail-ups per arm: 0, 0, 0.
+
+Per repetition (inside the line tps / p95 ms / servers alive / pool mean):
+
+- rep 1 (native then omni): native 839 / 4.7 / 20.0 / 20.0; omni 836 / 4.5 / 20.0 / 20.0
+- rep 2 (omni then native): native 838 / 4.5 / 20.0 / 20.0; omni 835 / 4.3 / 20.0 / 20.0
+- rep 3 (native then omni): native 841 / 4.4 / 20.0 / 20.0; omni 838 / 4.4 / 20.0 / 20.0
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
