@@ -1324,7 +1324,7 @@ reviewed or approved these results."
 The second table (`#blBills`) reads the software end's composition carried to the two places a system runs: **bare metal**, the
 software end with the chip held at native's (the chip enters as exactly 1, the machine's own layer not yet run), and **through
 the cloud**, the software end with the cloud's bill held at native's. Neither row is that place's bill: each place's bill and the
-work done inside it, native and Omni-Compass on native, are the four boxes of section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
+work done inside it, native and Omni-Compass on native, are the four boxes of the page's section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
 one number over its gauges, with its word; beside it every gauge with its word and its number. The light follows the index's
 word, and is red where any table under the route reads a slower service or less work LOSS, in either form; a route with no
 composition reads AWAITING, "not yet composed". The bills read the repository's own headline, by the index's rule, with the
@@ -2607,7 +2607,7 @@ The whole organism (the page's section 5d, `#s-whole`) opens with a box, "WHAT E
 and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
 two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
 carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
-are the four boxes of section 2b, never this composition, and the two places are never added together.
+are the four boxes of the page's section 2b, never this composition, and the two places are never added together.
 
 Omni-Compass is wired into every piece of a stack through its own two-way plug: the
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
@@ -2617,7 +2617,7 @@ place a system runs (**Scenario**; the founder's order of 1 November: these two 
 software on the owner's own machines (software × the chip, no cloud), and *Through the Cloud*, the software through the cloud onto
 its machines (cloud × the chip at the back end × software), with the cloud as two pieces beside it. Each place here is the software
 end carried to it, its chip and its bill held at native's until read; the bills themselves, and the work done inside them, native
-and Omni-Compass on native, are the four boxes of section 2b (`results/TWO_BILLS.md`).
+and Omni-Compass on native, are the four boxes of the page's section 2b (`results/TWO_BILLS.md`).
 
 A tenant cannot meter the provider's bare metal at the back of a cloud: the cloud's piece is the bill and the machines the
 provider meters, and the bare-metal piece is gauged on hardware the repository meters and carried to the provider's only as a

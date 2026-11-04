@@ -112,6 +112,15 @@ def check(root: Path = ROOT) -> list[str]:
         bad.append(f"tools/layout_check.py: OMNI_V{n}.json is not in the root file list")
     if f'"engine_v{n}' not in (root / "tools" / "release_manifest.py").read_text():
         bad.append(f"tools/release_manifest.py: no release group for omni-v{n}")
+    # every version in the change-control table, with its digest (3 November: omni-v25 had landed with the table ending at
+    # omni-v24); a row is words a person writes, so the landing leaves it to them and this check holds them to it
+    digest = json.loads((root / f"OMNI_V{n}.json").read_text()).get("digest", "") if (root / f"OMNI_V{n}.json").exists() else ""
+    cc = root / "docs" / "CHANGE_CONTROL.md"
+    row = re.search(rf"^\| omni-v{n} \|[^\n]*`([0-9a-f]+)`", cc.read_text(), re.M) if cc.exists() else None
+    if not row:
+        bad.append(f"docs/CHANGE_CONTROL.md: no row for omni-v{n} in the version table")
+    elif digest and not digest.startswith(row.group(1)):
+        bad.append(f"docs/CHANGE_CONTROL.md: omni-v{n}'s row names digest {row.group(1)}, its fingerprint {digest[:16]}")
     return bad
 
 

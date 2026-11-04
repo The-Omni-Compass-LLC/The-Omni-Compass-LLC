@@ -43,8 +43,9 @@ in a service control policy"). Moving to the Paid plan removes it; the credits s
    **Billing and Cost Management**, open it, and click **Upgrade plan** on its home page.
 3. Read the page, and click **Upgrade to paid plan** (or **Upgrade plan**) to confirm.
 
-Nothing else changes: the login made for GitHub (step 2) and the two secrets (step 3) stay as they are. Within the hour the
-conductor's check reads the account again and the sets start on their own.
+Nothing else changes: the login made for GitHub (step 2) and the two secrets (step 3) stay as they are. The
+conductor's check reads the account again (start it by hand to have it read at once: **Actions**, **cloud-check**, **Run
+workflow**, `amazon`) and the sets start on their own.
 
 ## 2. A login for GitHub (an IAM user)
 
@@ -67,11 +68,13 @@ conductor's check reads the account again and the sets start on their own.
 2. **New repository secret**. Name: `AWS_ACCESS_KEY_ID`. Secret: the Access key. **Add secret**.
 3. **New repository secret**. Name: `AWS_SECRET_ACCESS_KEY`. Secret: the Secret access key. **Add secret**.
 
-That is all. Within the hour the conductor runs Amazon's check at no cost (**Actions**, **cloud-check**, the run titled
-`cloud-check amazon`): the keys log in, the account can read and rent machines (not the Free plan), the instance type is
-offered and the processor quota holds a set. When it passes, the sets start on their own on the engine that stands (branch
-`main`; `v11` is kept in step with it), and no result goes up before it has been read. When it fails, it says which of
-these to fix, and nothing is built or billed.
+That is all. To have it read at once, start it by hand: **Actions**, **cloud-check**, **Run workflow**, choose `amazon`, **Run
+workflow**. Otherwise the conductor runs it on its own: after a failed check it waits an hour, and the wait doubles with every
+failure in a row (two, four, eight, sixteen hours) up to a day, so a key not yet stored is read once a day, not every hour. The
+check costs nothing (**Actions**, **cloud-check**, the run titled `cloud-check amazon`) and reads whether the keys log in, the
+account can read and rent machines (not the Free plan), the instance type is offered and the processor quota holds a set. When
+it passes, the sets start on their own on the engine that stands (branch `main`, the working branch kept level with it), and no
+result goes up before it has been read. When it fails, it says which of these to fix, and nothing is built or billed.
 
 ## 4. What it costs
 

@@ -549,6 +549,10 @@ reading approaches the line rather than after it is crossed; every Kubernetes an
 counts the babysitting tax in both arms (the alert minutes an on-call page would be open, and the commands the governor
 wrote on its own).
 
+<!-- the oversight line (tools/oversight.py) -->
+**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 13 real Kubernetes tests of omni-v21, the minutes an on-call page would be open (the 3 a.m. call) went down 28.9%, fewer in 11 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (69; 75; 82 settings an hour in runs A; B; C, no person touching either arm). In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 2.0% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
+<!-- end of the oversight line -->
+
 ## Check it yourself
 
 ```

@@ -54,6 +54,7 @@ declared engine.
 | omni-v22 | 30 Oct 18:30 | `0e23a0bc561b900a` | 65 | the five data stores' wires at the max, through each store's own account of a miss; the governor's hand-back tried five times against a transient failure of the cluster's API (`docs/OMNI_V22.md`) |
 | omni-v23 | 31 Oct 20:00 | `c96ea4105d8747db` | 65 | Omni direct keeps every muscle Omni-Compass cannot be: a workload's own scale write the cluster refuses three times in a row hands the knob back to native's own pod autoscaler, made from the operator's target and range (the founder's order of 31 October; `docs/OMNI_V23.md`) |
 | omni-v24 | 2 Nov 01:30 | `66c8f2d94b3e4725` | 65 | the factory beat for its place: with no beat set, the Kubernetes governor reads the cluster's nodes at its start and decides every 10 s on site and every 60 s through a cloud (a reading that fails keeps 60 s, a beat set by hand always wins), the pick of a rule frozen before any reading (docs/PACE_PREREGISTRATION.md, amendments 4 to 6); the model gate against omni-v23: no LOSS; eleven of twelve models identical; on site the minutes over the line down 60.7% and the 95th percentile down 8.2% (GAIN) |
+| omni-v25 | 3 Nov 21:00 | `cf56fc0a7b707452` | 65 | the Kafka wire's producer started before the governor's thread: from omni-v22 the forked producer inherited a lock that thread held and never sent a message, so every Kafka run on GitHub stopped at the job's 150-minute limit; a producer that overruns its schedule now stops its workload with the reason; the governor's decisions byte for byte omni-v24's (`docs/OMNI_V25.md`) |
 
 Each version through omni-v15 was a fault found in a real run and fixed, omni-v16 made the decision pace a clean setting
 and set the heartbeat at 15 s on the founder's word, and omni-v17 made the heartbeat a dial with the main engine at 60 s on his
@@ -88,7 +89,7 @@ stands is also a version that is re-proved, re-tested and re-built from its rece
 
 Each change below was found in a real run or in our own reading of the code, and each has its evidence written down. Each
 goes through the model gate against the engine that stands and, when it reads no LOSS there, lands at once as the next version
-with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v24, on the founder's orders of 23 and 31 October and his word of 1 November: the factory beat for its place,
+with `tools/land_engine.py`; the founder is told what it changed (rule 6). Landed in omni-v25, under the standing order that every fault found is fixed: the Kafka wire's producer started before the governor's thread, so the runs that had stopped at the job's limit since 30 October hand in their files again (`docs/OMNI_V25.md`); in omni-v24, on the founder's orders of 23 and 31 October and his word of 1 November: the factory beat for its place,
 10 s on site and 60 s through a cloud, the pick of the pace preregistration's frozen rule (`docs/OMNI_V24.md`); in omni-v23, on the founder's order of 31 October: a knob whose
 own-scale writes the cluster refuses handed back to native's own autoscaler, so the organism never runs with a knob nobody moves
 (`docs/OMNI_V23.md`); in omni-v17, on the founder's word of 22 October, afternoon: the

@@ -28,6 +28,16 @@ Every benchmark runs on GitHub's own machines with nobody watching, in both arms
 
 **Together.** Over the 13 tests the pages a repetition add up to 195.8 alert minutes on native and 139.3 with Omni-Compass on top: **down 28.9%** (our arithmetic over the tables, each test weighed by its own minutes; the two-hour test holds 40% of native's). Fewer pages in 11 of the 13 tests, to none at all in 3, the same in 2, more in 0. Each test's word is its own table's, by the one key.
 
+**Run by run.** The tables summed in each of our three runs (one repetition of every test, native beside Omni-Compass on native); each difference's 95% interval adds its tables' variances, each from that table's own interval and repetitions.
+
+| Run | Alert minutes, native → Omni-Compass on native, summed | Change | Difference, 95% interval (minutes) | Settings the governor wrote on its own, an hour |
+|---|---|---|---|---|
+| A | 182.07 → 127.57 | down 29.9% | −54.50 (−70.83 to −38.17) | 69 |
+| B | 213.20 → 156.60 | down 26.5% | −56.60 (−68.05 to −45.15) | 75 |
+| C | 192.20 → 133.67 | down 30.5% | −58.53 (−73.47 to −43.60) | 82 |
+
+**Read by the one key: GAIN in all three of our runs.** The pages fell in every run, each run's interval clear of zero. The settings the governor wrote an hour are counted over each run's measured windows (node-hours over the nodes in service), with no person touching either arm.
+
 ## The people line, through the one equation
 
 The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts by its share of native's bill, b = Σₖ sₖ·bₖ (`docs/WORK_PER_BILL.md`). The people who watch and tune a stack are one line, k = people, with its share s(people) of the owner's bill. The receipts give that line's change only where the time spent moves with the pages; stated as the assumption it is: b(people) = the change in alert minutes. The line then moves the whole bill by s(people)·b(people), and it enters the benefit only through the bill: G = (1 + ΔW) / (1 + ΔB) − 1.
@@ -47,6 +57,8 @@ The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts 
 **What does self-gauging mean here?** At every beat the governor reads the system's own meters, decides, writes a setting only through the plug, reads the write back and records its reason in its audit; it acts on the reading before the line is crossed, where a person acts after the page. In the tests above it wrote its settings on its own, the number in the table, with no person touching either arm.
 
 **Could the real number be bigger?** It can. An owner's people share may be larger than 7%, and a stack carries many services, each with its own pages, where each test here reads one. It can also be smaller: the record measures pages, and how much of a person's time moves with them is the owner's to count.
+
+**What holds the stack's health when nobody is watching?** The mechanism, not a person's reaction time: the governor reads every gauge every beat, which no person can, and moves before the line is crossed, inside each muscle's own limit. The alert minutes are the record of how long health was lost, and they are what fell.
 
 **Does Omni-Compass replace the on-call engineer?** No. It takes pages away where its reading acts before the line; the person keeps the switch, the line and the profile.
 
