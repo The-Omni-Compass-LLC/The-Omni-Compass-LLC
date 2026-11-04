@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# Load generator for the full-engine pilot, pinned to the control plane so draining a worker never stops the traffic.
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: load-generator}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: load-generator}}
+  template:
+    metadata: {labels: {app: load-generator}}
+    spec:
+      nodeSelector: {node-role.kubernetes.io/control-plane: ""}
+      tolerations:
+        - {key: node-role.kubernetes.io/control-plane, operator: Exists, effect: NoSchedule}
+        - {key: node-role.kubernetes.io/master, operator: Exists, effect: NoSchedule}
+      containers:
+        - name: load
+          image: busybox:1.36
+          command: ["/bin/sh", "-c"]
+          args:
+            - while true; do for i in $$(seq 1 20); do wget -q -O- http://keda-add-ons-http-interceptor-proxy.keda:8080/ >/dev/null; done; sleep $$((RANDOM % 3)); done
