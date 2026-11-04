@@ -334,6 +334,24 @@ class ConductorGate(unittest.TestCase):
             with self.subTest(runs=runs):
                 self.assertEqual(grid.check_state(runs, g, self.NOW)[0], want)
 
+    def test_a_failure_repeated_is_checked_less_often(self):
+        """After failed checks in a row the wait doubles (1, 2, 4, 8, 16 hours) up to a day; a pass resets it; a cancelled
+        check counts for neither."""
+        g = "Google Cloud"
+        self.assertEqual([grid.check_retry_min(n) for n in range(1, 8)], [60, 120, 240, 480, 960, 1440, 1440])
+        fail = lambda t: self.run_(g, "completed", "failure", t)
+        three = [fail("2026-10-18T10:00:00Z"), fail("2026-10-18T12:00:00Z"), fail("2026-10-18T17:00:00Z")]   # newest 3 h ago
+        self.assertEqual(grid.check_state(three, g, self.NOW)[0], "wait")                    # three in a row: 4 hours
+        self.assertEqual(grid.check_state(three, g, "2026-10-18T21:01:00Z")[0], "check")     # 4 h 1 min after the newest
+        reset = [fail("2026-10-18T10:00:00Z"), self.run_(g, "completed", "success", "2026-10-18T11:00:00Z"),
+                 fail("2026-10-18T18:30:00Z")]                                                # one failure since the pass
+        self.assertEqual(grid.check_state(reset, g, self.NOW)[0], "check")
+        cancelled = three[:2] + [self.run_(g, "completed", "cancelled", "2026-10-18T13:00:00Z"), three[2]]
+        self.assertEqual(grid.check_state(cancelled, g, self.NOW)[0], "wait")
+        many = [fail(f"2026-10-1{d}T0{h}:00:00Z") for d in (5, 6, 7) for h in (1, 5, 9)]   # nine in a row, newest 17 Oct 09:00
+        self.assertEqual(grid.check_state(many, g, "2026-10-18T08:59:00Z")[0], "wait")      # a day at most
+        self.assertEqual(grid.check_state(many, g, "2026-10-18T09:01:00Z")[0], "check")
+
     def test_the_workflow_titles_match_the_conductor(self):
         w = yaml.safe_load((ROOT / ".github" / "workflows" / "cloud-check.yml").read_text())
         self.assertEqual(w["run-name"], "cloud-check ${{ github.event.inputs.cloud || 'azure' }}")

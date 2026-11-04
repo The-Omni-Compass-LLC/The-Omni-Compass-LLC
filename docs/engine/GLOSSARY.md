@@ -174,6 +174,7 @@ The organisms and the muscles' plants are our own models (evidence class S) unle
 ### Page and Monitors
 
 - **the benefit board.** Every benchmark's measured effect in one board, native against Omni-Compass on top of native, by domain and by gauge family, with the Omni index that weighs them together; every bar is its table's own word (GAIN green, STEADY yellow, LOSS red, power given blue) beside its size. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
+- **the guided tour.** A narrated walk through the page, one stop for every section in the page's order, started from the tab on the right edge of the screen or the dock's Tour button: each stop outlines its section and shows what it holds, in the Live Engine Manual's own words, and what can be done there. The voice is recorded (Kokoro-82M v1.0, Apache-2.0, its female voice Heart), and a clip plays only while its words are the stop's words today; otherwise the browser's own voice reads them. *Source: `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md`; `tools/tour_script.py`.*
 - **the traffic signal.** Every monitor's light, read on its band: green GAINING, low in its band with room to climb; yellow STEADY, inside its band; red REDLINING, at the top of its band and holding there, blinking red and black; red OVER THE LINE, past its band, blinking red and white; grey, and said so, where there is no line. On a record the colour is the reading's word: GAIN green, STEADY yellow, LOSS red. A needle that falls is not a LOSS and one that rises is not a GAIN: each light reads what its gauge is for. The light moves with its monitor: it reads the series the monitor draws. Every signal shows all four live words, the lit one bright and the rest dim, on native's side and on Omni-Compass's side alike: Omni-Compass's redline reflex is built never to let a muscle redline, and the red is still wired, so that if one does (a fault, a bug) it is seen at once, and the kill switch hands everything back to native in the same instant. The engine that stands carries the rule in its immune system, knob by knob, landed on 25 October (omnicompass/immune.py and its C++ twin cpp/src/immune.cpp): over its line three decisions, stuck, and native's twin lower by more than 5%, the knob is handed to native for 10 decisions, doubling up to 160; where native is not stronger Omni-Compass stays. The page's live model applies the same rule, with the engine's own numbers, to every muscle it draws. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`; `docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md`.*
 - **GAINING.** Green on the traffic signal: low in its band with room to climb, or Omni-Compass ahead of native now (a GAIN). *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
 - **REDLINING.** Red on the traffic signal, blinking red and black: at the top of its band and holding there, or Omni-Compass behind native now (a LOSS). Red means LOSS and the alarm only, never native. *Source: `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`.*
@@ -1611,7 +1612,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | Auxiliary Input | term | 0 (#s-wall); B (#s-guide) |
 | AWAITING | term | B (#s-guide) |
 | the band | term | 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 5d (#s-whole); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem) |
-| bare metal | term | 2b (#s-answer); 3a (#s-engines); 3d (#s-dial); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
+| bare metal | term | 2b (#s-answer); 3a (#s-engines); 3d (#s-dial); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | the benefit board | term | 2c (#s-board); B (#s-guide); C (#s-problem) |
 | the bill of a route | term | 2b (#s-answer); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the bone | term | 3a (#s-engines); 5h (#s-math); B (#s-guide) |
@@ -1691,7 +1692,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | observer | term | 3i (#s-dash) |
 | Omni index | term | 2b (#s-answer); B (#s-guide); C (#s-problem); D (#s-read) |
 | Omni-Compass | term | 1 (#s-health); 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 2d (#s-loss); 2e (#s-status); 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3g (#s-brain); 3h (#s-verdict); 3i (#s-dash); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5f (#s-lab); 5g (#s-master); 5h (#s-math); 5i (#s-fail); 5j (#s-self); B (#s-guide); C (#s-problem); D (#s-read); E (#s-monlist); G (#s-disclose) |
-| Omni-Compass on native | term, arm | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 3f (#s-plane); 3i (#s-dash); 4a (#s-ops); 5c (#s-scn); 5d (#s-whole); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
+| Omni-Compass on native | term, arm | 1 (#s-health); 2b (#s-answer); 3c (#s-desk); 3f (#s-plane); 3i (#s-dash); 4a (#s-ops); 5c (#s-scn); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | Omni-Compass's blue | term | 2c (#s-board); 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4d (#s-cloud); 4g (#s-github); 5d (#s-whole); B (#s-guide); D (#s-read) |
 | one pedal | term | 3c (#s-desk); 4a (#s-ops); B (#s-guide); G (#s-disclose) |
 | the orchestra | term | 4e (#s-orch); 5d (#s-whole); 5e (#s-fleet); B (#s-guide) |
@@ -1749,7 +1750,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | ρ* | term | 5h (#s-math) |
 | σ | term | 3c (#s-desk); 3g (#s-brain); 3h (#s-verdict); 5a (#s-proof); 5h (#s-math) |
 
-Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the heartbeat's seven buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; one mechanism, in one place; preset; protocol 4; the seal; the three places Omni-Compass lives; where the benefit lives.
+Not printed in the page's own words at this build (defined above, not yet on the page): a cell's reference; candidate profile; contract, this decision; cruise; custom profile; defensive system; governing engine; the guided tour; the heartbeat's seven buttons; the injection batch; live tuning bench; the monitor wall stack; native baseline; one mechanism, in one place; preset; protocol 4; the seal; the three places Omni-Compass lives; where the benefit lives.
 
 ---
 

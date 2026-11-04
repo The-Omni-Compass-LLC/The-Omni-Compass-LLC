@@ -77,7 +77,8 @@ def organisms() -> list:
             out.append(place)
             continue
         rec = json.loads(path.read_text(encoding="utf-8"))
-        place.update(status="read", engine=rec.get("engine", ""), run_ids=rec.get("runs", []), rows=[])
+        place.update(status="read", engine=rec.get("engine", ""), run_ids=rec.get("runs", []), rows=[],
+                     card_writes=rec.get("card_writes"))
         for name, title in ORGANISMS:
             for size in sorted({r["copies"] for r in rec["rows"] if r["organism"] == name}):
                 cell = {"organism": name, "title": title, "copies": size}
@@ -305,7 +306,13 @@ def page(c: dict, k: dict, organisms_: list) -> str:
         if place["status"] != "read":
             L += [f"{'Not yet run' if place['status'] == 'not yet run' else 'Not yet read'}: {place['runs']}.", ""]
             continue
-        L += [f"From `{place['table']}` ({place['engine'].split(' (')[0]}; runs {', '.join(place['run_ids'])}).", "",
+        cw = place.get("card_writes") or []
+        wrote = (" The card governor's writes, from its own audit in each Omni-Compass arm: "
+                 + ", ".join(f"{L_} {x['writes']} in {x['arms']} arms" for L_, x in zip("ABC", cw))
+                 + ("; it wrote nothing on the card, so on the card the two arms were one system, and a change read in these cells is "
+                    "the order of the arms and the card's own drift, not the engine." if cw and all(x["arms"] and not x["writes"] for x in cw)
+                    else ".")) if cw else ""
+        L += [f"From `{place['table']}` ({place['engine'].split(' (')[0]}; runs {', '.join(place['run_ids'])}).{wrote}", "",
               "| Organism | Copies | " + " | ".join(n for _, n in ORG_MEASURES) + " |", "|---|---:|" + "---|" * len(ORG_MEASURES)]
         for r in place["rows"]:
             L.append(f"| {r['title']} | {r['copies']} | " + " | ".join(r[m] for m, _ in ORG_MEASURES) + " |")

@@ -40,8 +40,9 @@ REVIEWED = {
                                             "muscle's read command in the operator's wiring file; from omni-v14 a command "
                                             "with nothing only a shell reads runs without one, so the shell is reached only "
                                             "for a pipe, a redirect or a variable the operator wrote)",
-    ("B602", "tools/wall_meter.py"): OPERATOR + " (a wall meter read by a command, `cmd:` in the meter's address; without a "
-                                     "shell unless it holds a pipe, a redirect or a variable, as the governor's commands)",
+    ("B310", "tools/tour_voice.py"): FIXED_URL + " (the tour voice's two model files from one fixed GitHub release, each checked "
+                                     "against its pinned SHA-256 and deleted when it differs; run by hand or by the live page's "
+                                     "build, never by the governor)",
     ("B103", "tools/run_pgbench.py"): "PgBouncer's folder on the benchmark machine is owned by postgres and set 0o755: others "
                                       "may read and enter it, never write it",
     ("B108", "k8s_controlplane/mechanism_harness.py"): CI_TMP,
@@ -132,12 +133,15 @@ def page(j: dict) -> str:
          f"that runs ({', '.join(f'`{t}/`' for t in TARGETS)}; {j['lines_scanned']:,} lines). The workflow "
          "`security-scan.yml` runs it on every push to main that touches code, and every week, with `pip-audit` over every "
          "pinned dependency; it fails on a finding of high or medium severity that no review below names.", "",
-         f"**{j['high']} findings of high severity and {j['medium']} of medium severity, every one reviewed below; "
+         f"**{j['high']} finding{'' if j['high'] == 1 else 's'} of high severity and {j['medium']} of medium severity, every one reviewed below; "
          f"{j['low']} of low severity, counted by kind.** Fixed on 19 October: a world-writable PgBouncer folder (now owned "
          "by postgres, 0o755) and the MD5 that PostgreSQL's own password method defines, now marked as not used for "
          "security. Fixed in omni-v14 (21 October): the operator's own commands (the site power reading, a muscle's read "
          "command, a wall meter's) run without a shell unless they hold a pipe, a redirect or a variable, so the governor's "
-         "site power reading no longer reaches a shell at all and one high finding is gone.", "",
+         "site power reading no longer reaches a shell at all and one high finding is gone. Fixed on 3 November: the wall "
+         "meter's command (`tools/wall_meter.py`, `cmd:`) runs without a shell at all, a pipe included (each stage's output "
+         "into the next), and anything else only a shell reads is refused with the reason, so a second high finding is "
+         "gone.", "",
          "## Every finding of high or medium severity, and why it stands", "",
          "| Check | File | Severity | Findings (lines) | Why it stands |", "|---|---|---|---|---|"]
     for r in j["reviewed"]:

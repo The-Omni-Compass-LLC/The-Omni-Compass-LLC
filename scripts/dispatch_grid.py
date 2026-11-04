@@ -98,7 +98,7 @@ KUBE_BUILD = {1: 1, 10: 1, 100: 8, 500: 40}         # minutes to build the organ
 KUBE_PROTOCOL = "4"
 MAX_TRIES = 3                      # a repetition whose job failed this many times is started no more (the report lists it)
 # the runs that go before the grid: Azure first (the founder's order of 13 October: Kubernetes on Azure is finished first),
-# the other clouds when he starts them, the push's verify and the archive of finished runs. While one of them waits for a
+# the other clouds when he starts them, the push's verify, the archive of finished runs and the live engine's rebuild. While one of them waits for a
 # runner (or a grid run's report does), the conductor starts nothing new, so the job that waits is next in GitHub's queue
 # instead of behind the grid
 # every benchmark run again on the engine that stands (the founder's order of 13 October, night: everything on the newest
@@ -145,14 +145,29 @@ CLOUDS = (("Azure", AZURE_WF, AZURE_QUEUE),
 # machine type and every quota a set needs; 18 October, when a key cut short and an account on Amazon's Free plan failed
 # every set started there at the login, each using up its A or B; Azure since 22 October, after its stored key held, for a
 # while on 21 October, a text Azure's login refuses, and a failed set counts as started). The conductor starts a check itself when the cloud
-# has none, the last failed CHECK_RETRY_MIN ago or more, or the last pass is CHECK_FRESH_H old; a fix the founder stores is
-# so taken up within the hour, and a cloud that cannot rent never uses up a set.
+# has none, the last pass is CHECK_FRESH_H old, or the last failed long enough ago: CHECK_RETRY_MIN after one failure, the wait
+# doubling with each failure in a row up to CHECK_RETRY_MAX_MIN (1, 2, 4, 8, 16 hours, then a day), so a blocker only the
+# owner can clear (a key not stored whole, an account not on a paid plan) is read once a day, not once an hour; a check started
+# by hand (Actions, cloud-check, Run workflow) is read at the next tick, so a fix the founder stores is taken up at once, and a
+# cloud that cannot rent never uses up a set.
 CHECK_WF = "cloud-check.yml"
 CHECKS = {"Google Cloud": "google", "Amazon": "amazon", "Azure": "azure", **BYOC}
 CHECK_FRESH_H = 24
 CHECK_RETRY_MIN = 60
+CHECK_RETRY_MAX_MIN = 24 * 60
+FAILED = ("failure", "timed_out", "startup_failure")
+
+
+def check_retry_min(failures):
+    """The wait before the next $0 check after this many failed checks in a row: CHECK_RETRY_MIN, doubling, at most
+    CHECK_RETRY_MAX_MIN."""
+    return min(CHECK_RETRY_MIN * 2 ** max(0, failures - 1), CHECK_RETRY_MAX_MIN)
 FIRST = ("aks-metered-full.yml", "aks-metered.yml", "big-organism-detached.yml", "big-organism.yml", "cloud-organism.yml", "gke-metered.yml",
-         "eks-metered.yml", "byoc-metered.yml", "verify.yml", "archive-run.yml", "peek.yml")
+         "eks-metered.yml", "byoc-metered.yml", "verify.yml", "archive-run.yml", "peek.yml",
+         # the live engine's rebuild (3 November: it waited behind the grid for a runner, a newer start cancelled it while it waited,
+         # and main's page went seven hours without a rebuild although its clock fired every three; the founder's order of 1
+         # November is that the page follows GitHub)
+         "live-engine.yml")
 
 
 # ------------------------------------------------------------------------------------------------- shard shapes
@@ -480,6 +495,10 @@ def waits_for_a_runner(path, jobs):
     open_ = [x for x in jobs if x["status"] in ("queued", "waiting", "pending", "requested")]
     if not open_ or any(x["status"] == "in_progress" for x in jobs):
         return False
+    if wf == "live-engine.yml":
+        # the page's rebuild holds the grid only while its job is queued for a runner, never while it waits on its own group
+        # behind another rebuild (3 November): holding the grid then would buy it nothing
+        return any(x["status"] == "queued" for x in open_)
     if wf in FIRST:
         return True
     return wf in ("six.yml", "six-kube.yml") and any((x.get("name") or "").startswith("report") for x in open_)
@@ -736,8 +755,15 @@ def check_state(runs, cloud, now=None):
         if age < CHECK_FRESH_H * 60:
             return "go", f"its $0 check passed {age:.0f} minutes ago"
         return "check", f"its last $0 check passed over {CHECK_FRESH_H} hours ago"
-    if age < CHECK_RETRY_MIN:
-        return "wait", f"its $0 check failed {age:.0f} minutes ago ({link}); checked again after {CHECK_RETRY_MIN} minutes"
+    failures = 0                                           # failed checks in a row, newest first; a cancelled one is skipped
+    for x in reversed(mine):
+        if x.get("conclusion") == "success":
+            break
+        failures += x.get("conclusion") in FAILED
+    wait = check_retry_min(max(1, failures))
+    if age < wait:
+        return "wait", (f"its $0 check failed {age:.0f} minutes ago ({link}), {max(1, failures)} in a row; checked again after "
+                        f"{wait} minutes, or at once when one is started by hand")
     return "check", f"its last $0 check did not pass ({link})"
 
 
