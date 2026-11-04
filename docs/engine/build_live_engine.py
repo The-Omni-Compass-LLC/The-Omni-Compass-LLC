@@ -1404,6 +1404,15 @@ def records(runs: bool) -> dict:
                                            ("h.json", "c.json", "s.json", "r.json", "w.json", "g.json", "cpu.json", "ho.json", "x.json"))
         # the monitor registry with the wall's Grafana dashboard (written to deploy/grafana/omni-compass-wall.json by the build, read back by a check)
         reg = json.loads((HERE / "monitors.json").read_text(encoding="utf-8"))
+        # page_n is each monitor's order of appearance on the page (the registry's own rule), read from the page as it stands,
+        # never kept by hand: a stored order went stale for 44 of 62 monitors when the page's sections moved (3 November)
+        _ids, _order = {m["id"] for m in reg.get("monitors", [])}, []
+        for _c in re.findall(r'<canvas\b[^>]*\bid="([^"]+)"', (HERE / "OMNI_COMPASS_LIVE_ENGINE.html").read_text(encoding="utf-8")):
+            if _c != "wallCv" and _c in _ids and _c not in _order:
+                _order.append(_c)
+        for _m in reg.get("monitors", []):
+            if _m["id"] in _order:
+                _m["page_n"] = _order.index(_m["id"]) + 1
         reg["grafana"] = XGF.main(str(t / "wall.json")) if CHECKING else XGF.main()
     name, digest = engine()
     from tools.readings import SIZE_FLOOR
@@ -1484,21 +1493,46 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     if (href) { var a = document.createElement("a"); a.href = href; a.textContent = "Open the newest build"; a.style.color = "#9fe6a0"; d.appendChild(a); }
     document.body.appendChild(d);
   }
+  function say(text) {
+    /* the clock made visible (3 November): beside the engine chip, when this copy last asked GitHub and what it found */
+    var el = document.getElementById("omniFresh");
+    if (!el) {
+      var host = document.querySelector(".tbSub") || document.body;
+      el = document.createElement("span"); el.id = "omniFresh"; el.setAttribute("role", "status");
+      el.style.cssText = "margin-left:10px;font-size:12px;opacity:.8";
+      host.appendChild(el);
+    }
+    el.textContent = text;
+  }
+  function at(t) { try { return new Date(t).toLocaleString(); } catch (e) { return ""; } }
+  function builtOf(html) {
+    /* the build time the fetched page carries in its own build record: a page is opened only when it is truly newer than
+       this copy, so a stamp that runs ahead of the page GitHub serves (the two are cached apart) never reopens an older page
+       over and over (3 November) */
+    var m = /<script type="application\\/json" id="build">([\\s\\S]*?)<\\/script>/.exec(html || "");
+    try { return m ? (JSON.parse(m[1]) || {}).built_at || "" : ""; } catch (e) { return ""; }
+  }
   function check() {
     last = Date.now();
+    var mine = own(), next = at(last + DAY), when = at(last);
+    if (!mine) { say("This copy's own build time is not read yet; GitHub is asked at " + at(last + 60000) + "."); last = 0; setTimeout(check, 60000); return; }
     fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
       .then(function (v) {
-        var mine = own();
-        if (!v || !v.built_at || !mine || v.built_at <= mine) return;
+        if (!v || !v.built_at) { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); return; }
+        if (v.built_at <= mine) { say("Checked GitHub at " + when + ": " + (v.built_at === mine ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + next + "."); return; }
+        say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "): opening it.");
         return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
           .then(function (html) {
+            var theirs = builtOf(html);
+            if (!html) { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); return; }
+            if (!theirs || theirs <= mine) { say("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet; asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); return; }
             /* written over this one in place, the newer build's script met this page's own declarations again and
                stopped (1 November): it opens as a document of its own */
-            if (html && html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
-            else { note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); }
-          });
+            if (html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
+            else { say("A newer build is on GitHub (" + v.engine + ", built " + theirs + "); this browser opens it from the link below."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + theirs + ").", v.page_url); }
+          }, function () { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); });
       })
-      .catch(function () {});
+      .catch(function () { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); });
   }
   function start() {
     check();

@@ -98,7 +98,7 @@ KUBE_BUILD = {1: 1, 10: 1, 100: 8, 500: 40}         # minutes to build the organ
 KUBE_PROTOCOL = "4"
 MAX_TRIES = 3                      # a repetition whose job failed this many times is started no more (the report lists it)
 # the runs that go before the grid: Azure first (the founder's order of 13 October: Kubernetes on Azure is finished first),
-# the other clouds when he starts them, the push's verify and the archive of finished runs. While one of them waits for a
+# the other clouds when he starts them, the push's verify, the archive of finished runs and the live engine's rebuild. While one of them waits for a
 # runner (or a grid run's report does), the conductor starts nothing new, so the job that waits is next in GitHub's queue
 # instead of behind the grid
 # every benchmark run again on the engine that stands (the founder's order of 13 October, night: everything on the newest
@@ -152,7 +152,11 @@ CHECKS = {"Google Cloud": "google", "Amazon": "amazon", "Azure": "azure", **BYOC
 CHECK_FRESH_H = 24
 CHECK_RETRY_MIN = 60
 FIRST = ("aks-metered-full.yml", "aks-metered.yml", "big-organism-detached.yml", "big-organism.yml", "cloud-organism.yml", "gke-metered.yml",
-         "eks-metered.yml", "byoc-metered.yml", "verify.yml", "archive-run.yml", "peek.yml")
+         "eks-metered.yml", "byoc-metered.yml", "verify.yml", "archive-run.yml", "peek.yml",
+         # the live engine's rebuild (3 November: it waited behind the grid for a runner, a newer start cancelled it while it waited,
+         # and main's page went seven hours without a rebuild although its clock fired every three; the founder's order of 1
+         # November is that the page follows GitHub)
+         "live-engine.yml")
 
 
 # ------------------------------------------------------------------------------------------------- shard shapes
@@ -480,6 +484,10 @@ def waits_for_a_runner(path, jobs):
     open_ = [x for x in jobs if x["status"] in ("queued", "waiting", "pending", "requested")]
     if not open_ or any(x["status"] == "in_progress" for x in jobs):
         return False
+    if wf == "live-engine.yml":
+        # the page's rebuild holds the grid only while its job is queued for a runner, never while it waits on its own group
+        # behind another rebuild (3 November): holding the grid then would buy it nothing
+        return any(x["status"] == "queued" for x in open_)
     if wf in FIRST:
         return True
     return wf in ("six.yml", "six-kube.yml") and any((x.get("name") or "").startswith("report") for x in open_)
