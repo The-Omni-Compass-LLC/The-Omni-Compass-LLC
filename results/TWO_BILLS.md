@@ -98,11 +98,52 @@ Each organism runs native and with Omni-Compass on native in each place: on the 
 
 ### The chip: eight A100 cards on Lambda, each organism on its own card
 
-Not yet read: lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737.
+From `results/gpu/V23_A100_8CARD_STACKS_ABC.json` (omni-v23; runs 41271477833, 41279081905, 41271481737). The card governor's writes, from its own audit in each Omni-Compass arm: A 0 in 15 arms, B 0 in 12 arms, C 0 in 12 arms; it wrote nothing on the card, so on the card the two arms were one system, and a change read in these cells is the order of the arms and the card's own drift, not the engine.
+
+| Organism | Copies | work done (requests served) | bill (the rental for the window) | work per dollar |
+|---|---:|---|---|---|
+| Compute / AI / Cloud | 1 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Compute / AI / Cloud | 10 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Compute / AI / Cloud | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Physics / Robotics / Autonomous | 1 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Physics / Robotics / Autonomous | 10 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Energy / Facility / Industrial | 1 | no value | no value | no value |
+| Energy / Facility / Industrial | 10 | no value | no value | no value |
+| Energy / Facility / Industrial | 100 | no value | no value | no value |
+| Distribution / Specialized | 1 | no value | no value | no value |
+| Distribution / Specialized | 10 | no value | no value | no value |
+| Distribution / Specialized | 100 | no value | no value | no value |
+| The four stacked | 1 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| The four stacked | 10 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| The whole tower | 1 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| The whole tower | 10 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
 
 ### The chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16)
 
-Not yet read: lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877.
+From `results/gpu/V23_A10_STACKS_FULL_ABC.json` (omni-v23; runs 41271470803, 41271473309, 41271475877). The card governor's writes, from its own audit in each Omni-Compass arm: A 0 in 62 arms, B 0 in 62 arms, C 0 in 62 arms; it wrote nothing on the card, so on the card the two arms were one system, and a change read in these cells is the order of the arms and the card's own drift, not the engine.
+
+| Organism | Copies | work done (requests served) | bill (the rental for the window) | work per dollar |
+|---|---:|---|---|---|
+| The spine | 1 | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | STEADY, under the floor (the three runs' mean 0.01%) | power given by the mean of our three runs, beyond the noise in 0 of 3 |
+| The spine | 10 | STEADY, under the floor (the three runs' mean 0.12%) | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.13%) |
+| The spine | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Compute / AI / Cloud | 1 | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.00%) |
+| Compute / AI / Cloud | 10 | STEADY, under the floor (the three runs' mean 0.18%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.17%) |
+| Compute / AI / Cloud | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Physics / Robotics / Autonomous | 1 | STEADY, under the floor (the three runs' mean 0.30%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.29%) |
+| Physics / Robotics / Autonomous | 10 | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | STEADY, under the floor (the three runs' mean 0.00%) | power given by the mean of our three runs, beyond the noise in 0 of 3 |
+| Physics / Robotics / Autonomous | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Energy / Facility / Industrial | 1 | STEADY, under the floor (the three runs' mean 0.03%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.04%) |
+| Energy / Facility / Industrial | 10 | STEADY, under the floor (the three runs' mean 0.23%) | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.22%) |
+| Energy / Facility / Industrial | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| Distribution / Specialized | 1 | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.01%) |
+| Distribution / Specialized | 10 | STEADY, under the floor (the three runs' mean 0.16%) | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.16%) |
+| Distribution / Specialized | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| The four stacked | 1 | STEADY, under the floor (the three runs' mean 0.02%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.03%) |
+| The four stacked | 10 | STEADY, under the floor (the three runs' mean 0.03%) | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.03%) |
+| The four stacked | 100 | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged | one repetition in a run: shown, not judged |
+| The whole tower | 1 | STEADY, under the floor (the three runs' mean 0.00%) | STEADY, under the floor (the three runs' mean 0.01%) | STEADY, under the floor (the three runs' mean 0.01%) |
+| The whole tower | 10 | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | STEADY, under the floor (the three runs' mean 0.00%) | power given by the mean of our three runs, beyond the noise in 0 of 3 |
 
 ### Through the cloud: Azure, one rented machine with the real cluster inside each organism
 

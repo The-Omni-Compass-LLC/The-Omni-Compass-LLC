@@ -59,6 +59,28 @@ def contrasts(run_dir):
     return out
 
 
+def card_writes(run_dir):
+    """The card governor's own count of its writes, from each Omni-Compass arm's audit (the record it writes at its end,
+    "writes": n, or {card: n} on several cards): (writes, arms read)."""
+    total = arms = 0
+    for f in sorted(Path(run_dir).rglob("audit.jsonl")):
+        if f.parent.name != "omni":
+            continue
+        last = None
+        for ln in f.read_text(errors="replace").splitlines():
+            if '"writes"' in ln:
+                try:
+                    last = json.loads(ln)
+                except ValueError:
+                    pass
+        w = last.get("writes") if last else None
+        if isinstance(w, dict):
+            total += sum(int(v) for v in w.values()); arms += 1
+        elif isinstance(w, (int, float)) and not isinstance(w, bool):
+            total += int(w); arms += 1
+    return total, arms
+
+
 def card_bill(c, o, n):
     """The founder's two bills (1 November): the card's bill is the rental for the arm's own window (its wall time at the
     card's hourly price, which cancels in the change) and its work per dollar the requests it served for that bill. Added to the
@@ -102,6 +124,7 @@ def table(title, dirs, ids, commits, plan=None):
     runs = [contrasts(d) for d in dirs]
     means = [arm_means(d) for d in dirs]
     engines = [engine_of(c) for c in commits]
+    writes = [card_writes(d) for d in dirs]
     if len({e.split(" (")[0] for e in engines}) != 1:
         raise SystemExit(f"the three runs ran different engines: {engines}")
     keys = sorted(set().union(*[set(r) for r in runs]))
@@ -109,10 +132,15 @@ def table(title, dirs, ids, commits, plan=None):
              f"Three runs on rented cards (A, B and C), engine {engines[0]}; runs " + ", ".join(f"{L} {i} (`{c[:12]}`)" for L, i, c in zip("ABC", ids, commits)) +
              " (their files on the branch `raw`, `run-<id>/`). " + (plan or "Each run planned 10 paired repetitions at 1 copy, 10 at 10 and 10 at 100, and "
              "reached its rented hours' deadline part-finished") + ": the repetitions each run finished are counted beside each row. A size "
-             "is judged by the one key where every run finished two or more repetitions of it; with one repetition a run it is shown, not judged.",
+             "is judged by the one key where every run finished two or more repetitions of it; with one repetition a run it is shown, not judged. "
+             "The card governor's writes, from each Omni-Compass arm's own audit: " + ", ".join(f"{L} {w} in {n} arms" for L, (w, n) in zip("ABC", writes))
+             + ("; it wrote nothing on the card, so on the card the two arms were one system and a change read there is the order of the "
+                "arms and the card's own drift, not the engine (the stacks' modelled muscles were governed in every arm)."
+                if all(n and not w for w, n in writes) else "."),
              "", "| Copies | Organism | Part | Repetitions (A, B, C) | Measure | Three runs | A | B | C |",
              "|---:|---|---|---|---|---|---|---|---|"]
     record = {"title": title, "runs": list(ids), "commits": list(commits), "engine": engines[0], "rows": [],
+              "card_writes": [{"writes": w, "arms": n} for w, n in writes],
               "arms": [{f"{s}:{o}": v for (s, o), v in m.items()} for m in means]}
     for size, name in keys:
         reps = [r.get((size, name), []) for r in runs]

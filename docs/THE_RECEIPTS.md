@@ -96,6 +96,9 @@ tools/results_chapter.py`, newest engine first: the headline gauges in the table
 one key; every row stands in the table. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or
 approved these results.
 
+- **The organisms on the eight-card machine: six organisms, each on its own A100, three runs on rented machines**
+  (`results/gpu/V23_A100_8CARD_STACKS_ABC.md`, omni-v23): 225 rows, the stacks (our own models, class S): 36 shown, not judged, 24
+  other; the card (its own meter, class P): 63 shown, not judged, 42 other; both together: 36 shown, not judged, 24 other.
 - **The card on omni-v23, the power cap at 70% of the card's top (cap): three runs on an A10**
   (`results/gpu/V23_A10_CAP_ABC.md`, omni-v23): energy per served request (J) STEADY, under the floor (the three runs' mean
   0.38%); requests served STEADY, the same; response time, 95th percentile (ms) the runs disagree. Its 13 gauges: 3 GAIN, 7
@@ -107,6 +110,10 @@ approved these results.
   rented cards** (`results/gpu/V23_A10_FAST_ABC.md`, omni-v23): energy per served request (J) STEADY, under the floor (the three
   runs' mean 0.13%); requests served STEADY, the same; response time, 95th percentile (ms) the runs disagree. Its 13 gauges: 12
   STEADY, 1 the runs disagree.
+- **The organisms on the card, fully loaded: the seven organisms with an A10 inside, the card offered 1.3 times its full-power
+  capacity, three runs on rented cards** (`results/gpu/V23_A10_STACKS_FULL_ABC.md`, omni-v23): 300 rows, the stacks (our own
+  models, class S): 56 STEADY, 24 shown, not judged; the card (its own meter, class P): 1 GAIN, 6 power given, 84 STEADY, 7 LOSS,
+  42 shown, not judged; both together: 56 STEADY, 24 shown, not judged.
 - **The card on omni-v21, the power cap at 70% of the card's top (cap): three runs on an A100**
   (`results/gpu/V21_A100_CAP_ABC.md`, omni-v21): energy per served request (J) STEADY, under the floor (the three runs' mean
   0.12%); requests served STEADY, the same; response time, 95th percentile (ms) the runs disagree. Its 13 gauges: 2 GAIN, 8
