@@ -11,11 +11,11 @@ receipt for it ... cannot live nowhere in this website").
 Each number carries its word (GAIN, STEADY, LOSS, power given, the runs disagree), the word first; its size and direction in
 words; what it measures; where (the software end on GitHub's machines, the chip, through the cloud); its evidence class (L live
 software, P a physical meter, S our own model); its engine; its receipt; and the one sentence a page may print. Beside them,
-the numbers a page may not show as a result, each with the reason: our own model's columns (results/ABC_TABLE.json) and
+the numbers a page may not show as a result, each with the reason: our own model's columns (docs/history/model_tables/ABC_TABLE_MODEL.json) and
 figures that no receipt carries.
 
 The letters A, B and C mean three different things in this repository, and a page must never mix them:
-  - in results/ABC_TABLE.json (tools/abc_table.py, class S, our own model): A Kubernetes alone, B Omni-Compass on top of
+  - in docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py, class S, our own model): A Kubernetes alone, B Omni-Compass on top of
     Kubernetes, C Omni-Compass alone (no Kubernetes);
   - in results/TWO_BILLS.json (the two bills): A the chip native, B the chip with Omni-Compass on native, C the cloud native,
     D the cloud with Omni-Compass on native;
@@ -64,7 +64,7 @@ def build() -> dict:
     a10 = R("results/gpu/V23_A10_CAP_FULL_ABC.json")
     wpb = R("results/WORK_PER_BILL.json")
     tb = R("results/TWO_BILLS.json")
-    abc = R("results/ABC_TABLE.json")
+    abc = R("docs/history/model_tables/ABC_TABLE_MODEL.json")
     eng = _engines(idx.get("tests") or [])
     soft = "the software end: real software on GitHub's own machines, never bare metal and never a cloud, with no bill in it"
     nums = []
@@ -127,18 +127,18 @@ def build() -> dict:
     gpu = abc["gpu"]
     gp = 100 * (gpu["A"]["energy_kwh"] / gpu["C"]["energy_kwh"] - 1)
     no = [
-        {"id": "abc_web_speed", "value_pct": round(sp(w), 1), "receipt": "results/ABC_TABLE.json (tools/abc_table.py)",
+        {"id": "abc_web_speed", "value_pct": round(sp(w), 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": f"our own model (class S), Omni-Compass alone (its column C, no Kubernetes) against Kubernetes alone (column A): "
                 f"the mean response time only, while the same column used {_pct(nh(w))} more machine-hours and {_pct(en(w))} more "
                 "energy. Not a whole-system gain, not bare metal, not the cloud, and a model is never proof."},
-        {"id": "abc_multi_speed", "value_pct": round(sp(mlt), 1), "receipt": "results/ABC_TABLE.json (tools/abc_table.py)",
+        {"id": "abc_multi_speed", "value_pct": round(sp(mlt), 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": f"the same model's multi-service column: Omni-Compass alone against Kubernetes alone, the mean response time "
                 f"only, with {_pct(nh(mlt))} more machine-hours and {_pct(en(mlt))} more energy. Class S, never a result."},
-        {"id": "abc_gpu_energy", "value_pct": round(gp, 1), "receipt": "results/ABC_TABLE.json (tools/abc_table.py)",
+        {"id": "abc_gpu_energy", "value_pct": round(gp, 1), "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": "the same model's GPU scenario (class S): Omni-Compass alone against Kubernetes alone, the energy. Not a GPU "
                 "measurement: the card's own meter reads energy per request served as the chip number above says."},
         {"id": "abc_column_b", "value_pct": round(100 * (w["B"]["mean_ms"] / w["A"]["mean_ms"] - 1), 1),
-         "receipt": "results/ABC_TABLE.json (tools/abc_table.py)",
+         "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)",
          "why": "in that model, Omni-Compass on top of Kubernetes (column B) reads the same as Kubernetes alone on web and "
                 "multi; the model is a tuning bench, not the record."},
         {"id": "drain_20_percent", "value_pct": 20.0, "receipt": "none",
@@ -152,7 +152,7 @@ def build() -> dict:
         {"id": "arm_d_work_per_dollar", "value_pct": None, "receipt": AKS.replace(".json", ".md"),
          "why": "arm D stands, from the Azure set on file (the four arms above, every gauge paired with arm C); what it cannot "
                 "show yet is the work per dollar, because that set sent a fixed rate of requests and counted no work. Nor is "
-                "there a column D in results/ABC_TABLE.json, so no D may be read from our own model."},
+                "there a column D in docs/history/model_tables/ABC_TABLE_MODEL.json, so no D may be read from our own model."},
         {"id": "thirteen_point_one", "value_pct": 13.1, "receipt": "results/WHOLE_SYSTEM.md (section 4)",
          "why": "no record carries 13.1% as a headline: it appears only inside single rows of the whole-system page's "
                 "separability check (Kueue's machines on the organism alone; KubeRay's modelled energy), one-row readings "
@@ -165,7 +165,7 @@ def build() -> dict:
             "rule": ("Every number a page shows comes from 'show', with its word first, its class, its place, its engine and its "
                      "receipt, in its own sentence. Nothing in 'not_for_the_site' is shown as a result. Our own model (class S) "
                      "is never shown as proof. Percentages of different bills are never added."),
-            "letters": {"results/ABC_TABLE.json": "class S, our own model: A Kubernetes alone, B Omni-Compass on top of "
+            "letters": {"docs/history/model_tables/ABC_TABLE_MODEL.json": "class S, our own model: A Kubernetes alone, B Omni-Compass on top of "
                         "Kubernetes, C Omni-Compass alone", "results/TWO_BILLS.json": "the two bills: A the chip native, B the chip "
                         "with Omni-Compass on native, C the cloud native, D the cloud with Omni-Compass on native",
                         "three-run tables": "A, B and C are the three runs of one benchmark"},

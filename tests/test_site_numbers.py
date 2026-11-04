@@ -32,7 +32,9 @@ class SiteNumbers(unittest.TestCase):
 
     def test_the_models_columns_and_the_unbacked_figures_are_not_for_the_site(self):
         no = {n["id"]: n for n in self.d["not_for_the_site"]}
-        abc = json.loads((ROOT / "results" / "ABC_TABLE.json").read_text(encoding="utf-8"))
+        # 4 November: the model table left results/, where the website had read it and printed 47.2% and 49.9% as results
+        self.assertFalse((ROOT / "results" / "ABC_TABLE.json").exists(), "a model table under results/ is read as a result")
+        abc = json.loads((ROOT / "docs" / "history" / "model_tables" / "ABC_TABLE_MODEL.json").read_text(encoding="utf-8"))
         web = 100 * (abc["web"]["A"]["mean_ms"] / abc["web"]["C"]["mean_ms"] - 1)
         self.assertAlmostEqual(no["abc_web_speed"]["value_pct"], round(web, 1))
         for k in ("abc_web_speed", "abc_multi_speed", "abc_gpu_energy", "drain_20_percent", "sixteen_million", "free_work_33",

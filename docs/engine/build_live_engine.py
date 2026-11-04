@@ -1606,8 +1606,21 @@ def stamp_fallbacks(page: str, build: dict) -> str:
     return head + tail
 
 
+def finite(o):
+    """A record as a browser can read it: a number that is not finite (an interval of one repetition, a ratio over nothing) is
+    written null, never NaN or Infinity, which JSON does not have; on 4 November one Azure run of a single repetition put NaN in
+    the ledger and every browser refused the whole build record."""
+    if isinstance(o, float):
+        return o if math.isfinite(o) else None
+    if isinstance(o, dict):
+        return {k: finite(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [finite(v) for v in o]
+    return o
+
+
 def inject(page: str, key: str, value) -> str:
-    text = json.dumps(value, separators=(",", ":"), ensure_ascii=False)
+    text = json.dumps(finite(value), separators=(",", ":"), ensure_ascii=False, allow_nan=False)
     if "</" in text:
         raise ValueError(f"{key}: a record holds '</', which would end its script block")
     tag = f'<script type="application/json" id="{key}">'
@@ -1738,9 +1751,7 @@ def main() -> int:
         print(f"the engine that stands is now {rec['build']['engine']} (the page was built on {old}): records rebuilt on it; "
               "the prose stays as written for the older engine until it is realigned, and the page says so")
     if a.check:
-        bad = [k for k in ("harness", "ctlrec", "scen", "runs", "fleet", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills", "tour")
-               if embedded(page, k) != rec[k]]
+        bad = [k for k in rec if k != "build" and embedded(page, k) != finite(rec[k])]   # every record the page carries
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
         # the ledger, the commit and the time) is a reading with its own read time, not rebuilt by a check
@@ -1758,13 +1769,12 @@ def main() -> int:
         for k in bad:
             if k not in rec:          # the appraisal's counts are a file, not a record: named above, no record to compare
                 continue
-            where = first_difference(embedded(page, k), rec[k])
+            where = first_difference(embedded(page, k), finite(rec[k]))
             if where:
                 print(f"  {k}: first difference at {where[0]}: the page {where[1]}, the rebuild {where[2]}")
         return 1 if bad else 0
-    for k in ("harness", "ctlrec", "scen", "runs", "fleet", "build", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-              "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field"):
-        page = inject(page, k, rec[k])
+    for k in rec:                                # every record, the tour, the bills and the law's wires included (4 November:
+        page = inject(page, k, rec[k])           # those three were written once by hand and never rebuilt)
     page = stamp_fallbacks(page, rec["build"])   # the markup's fallbacks follow the build record, never a hand
     page = self_update(page)                     # every copy of the page follows the newest build on GitHub
     PAGE.write_text(page, encoding="utf-8")

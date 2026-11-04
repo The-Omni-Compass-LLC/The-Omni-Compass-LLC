@@ -33,19 +33,19 @@ Arm D is the Omni-Compass side of the Azure set already on file, paired repetiti
 
 | Figure | Why it is not a result | Where it comes from |
 |---|---|---|
-| abc_web_speed (47.2%) | our own model (class S), Omni-Compass alone (its column C, no Kubernetes) against Kubernetes alone (column A): the mean response time only, while the same column used 40.8% more machine-hours and 25.9% more energy. Not a whole-system gain, not bare metal, not the cloud, and a model is never proof. | `results/ABC_TABLE.json (tools/abc_table.py)` |
-| abc_multi_speed (49.9%) | the same model's multi-service column: Omni-Compass alone against Kubernetes alone, the mean response time only, with 41.8% more machine-hours and 26.7% more energy. Class S, never a result. | `results/ABC_TABLE.json (tools/abc_table.py)` |
-| abc_gpu_energy (5.3%) | the same model's GPU scenario (class S): Omni-Compass alone against Kubernetes alone, the energy. Not a GPU measurement: the card's own meter reads energy per request served as the chip number above says. | `results/ABC_TABLE.json (tools/abc_table.py)` |
-| abc_column_b (0.0%) | in that model, Omni-Compass on top of Kubernetes (column B) reads the same as Kubernetes alone on web and multi; the model is a tuning bench, not the record. | `results/ABC_TABLE.json (tools/abc_table.py)` |
+| abc_web_speed (47.2%) | our own model (class S), Omni-Compass alone (its column C, no Kubernetes) against Kubernetes alone (column A): the mean response time only, while the same column used 40.8% more machine-hours and 25.9% more energy. Not a whole-system gain, not bare metal, not the cloud, and a model is never proof. | `docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)` |
+| abc_multi_speed (49.9%) | the same model's multi-service column: Omni-Compass alone against Kubernetes alone, the mean response time only, with 41.8% more machine-hours and 26.7% more energy. Class S, never a result. | `docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)` |
+| abc_gpu_energy (5.3%) | the same model's GPU scenario (class S): Omni-Compass alone against Kubernetes alone, the energy. Not a GPU measurement: the card's own meter reads energy per request served as the chip number above says. | `docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)` |
+| abc_column_b (0.0%) | in that model, Omni-Compass on top of Kubernetes (column B) reads the same as Kubernetes alone on web and multi; the model is a tuning bench, not the record. | `docs/history/model_tables/ABC_TABLE_MODEL.json (tools/abc_table.py)` |
 | drain_20_percent (20.0%) | a 20% operational drain (13% machines + 7% people) is not on the record: the 12.9% is work and speed on GitHub's machines, not a bill, and the people line measured is the pages (results/OVERSIGHT_PAGES.md), worth about 2% of a run cost at a 7% people share; percentages of different bills do not add. | `none` |
 | sixteen_million (—) | $16 million is 20% of $100 million; the 20% has no receipt, so neither does the $16 million. | `none` |
 | free_work_33 (33.0%) | no table, chip receipt or cloud receipt carries a 33% rise in work for the bill. | `none` |
-| arm_d_work_per_dollar (—) | arm D stands, from the Azure set on file (the four arms above, every gauge paired with arm C); what it cannot show yet is the work per dollar, because that set sent a fixed rate of requests and counted no work. Nor is there a column D in results/ABC_TABLE.json, so no D may be read from our own model. | `results/live/AKS_STEADY_100_OMNI_V18.md` |
+| arm_d_work_per_dollar (—) | arm D stands, from the Azure set on file (the four arms above, every gauge paired with arm C); what it cannot show yet is the work per dollar, because that set sent a fixed rate of requests and counted no work. Nor is there a column D in docs/history/model_tables/ABC_TABLE_MODEL.json, so no D may be read from our own model. | `results/live/AKS_STEADY_100_OMNI_V18.md` |
 | thirteen_point_one (13.1%) | no record carries 13.1% as a headline: it appears only inside single rows of the whole-system page's separability check (Kueue's machines on the organism alone; KubeRay's modelled energy), one-row readings on omni-v12 used to test an assumption, never a result to headline. | `results/WHOLE_SYSTEM.md (section 4)` |
 
 ## The letters A, B, C and D
 
-- `results/ABC_TABLE.json`: class S, our own model: A Kubernetes alone, B Omni-Compass on top of Kubernetes, C Omni-Compass alone.
+- `docs/history/model_tables/ABC_TABLE_MODEL.json`: class S, our own model: A Kubernetes alone, B Omni-Compass on top of Kubernetes, C Omni-Compass alone.
 - `results/TWO_BILLS.json`: the two bills: A the chip native, B the chip with Omni-Compass on native, C the cloud native, D the cloud with Omni-Compass on native.
 - `three-run tables`: A, B and C are the three runs of one benchmark.
 
