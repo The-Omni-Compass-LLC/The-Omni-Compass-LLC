@@ -2783,6 +2783,7 @@ on the service, as the page's section 4c shows.
 | 7 | Plug | one wire in, one wire out: each write clipped to the cover; the snapshot taken once at the start is what reset restores; each write read back; the kill switch hands every lever to native at once | `compass_law.Plug`, `master.py` |
 | 8 | Verdict | the paired trial of chapter 16 | `verdict.py` (its C++ twin `cpp/src/verdict.cpp`, chapter 26) |
 | 9 | The whole organism | each layer measured against its own native, the layers composed by the product law with every interval carried in logarithms, two readings of the same numbers, the separability assumption tested on the governors' four ways | `tools/whole_system.py`, `docs/engine/export_whole.py` |
+| 10 | Work for the bill | E = W / B in each place; G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1, each run's G computed in the page's own code and checked against the Python's; the people line priced on any run cost, S = κ · p · β · r and G = (1 + ΔW) / (1 + (1 − p) · ΔB − p · κ · β · r) − 1 (section 32.4) | `tools/two_bills.py`, `tools/work_per_bill.py` |
 
 ### 32.2 What the specification is for
 
@@ -2800,6 +2801,10 @@ switch), with both arms on the same demand. A table, **Reads and Sets by Part**,
 source: native's controller under each muscle, the max of the harness, the brain, the nerves, the immune system, the compass law,
 the release gate, the plug and the verdict. Two notes close the section: **Engine Code Provenance** (what is the engine's code,
 ported, and checked against the Python and the C++ on every build) and **Realms Harness and Stress-Test Model**, the two bodies.
+
+### 32.4 The People Line, Priced
+
+Item 10 holds two calculators: **Try the equation** (ΔW and ΔB give G) and **The people line, priced**: a run cost, the people's share p, the share β of their time on pages and the governed knobs, the share κ of the freed time that becomes money, and r, which opens at the counted pages a person would have been sent (the alert minutes beside them), give S = κ · p · β · r in percent and dollars a year and G with the people line. Only r is measured; p, β and κ are an owner's.
 
 
 ## 33. Failure Modes and Controls
@@ -3971,7 +3976,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-04 01:11 UTC on omni-v25 (digest cf56fc0a7b707452) from commit 63fc4dc666d3.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-04 07:40 UTC on omni-v25 (digest cf56fc0a7b707452) from commit bbb1fe22a343.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.

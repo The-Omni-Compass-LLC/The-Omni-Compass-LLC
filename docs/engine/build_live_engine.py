@@ -1138,7 +1138,9 @@ def bills() -> dict:
     """The one equation's inputs (results/TWO_BILLS.json, tools/two_bills.py; the reading by tools/work_per_bill.py): every
     chip run's work and bill on both arms, and the cloud set's bill, so the page computes E = W / B, ΔW, ΔB and
     G = (1 + ΔW) / (1 + ΔB) − 1 in its own code and checks each run's G against the Python's (the founder's words of 2
-    November: the one thing to prove is more work for the bill)."""
+    November: the one thing to prove is more work for the bill); and the people line's measured fall (results/OVERSIGHT.json:
+    the pages a person would have been sent and the alert minutes), so the page prices the people line on any run cost with an
+    owner's own shares (the founder's words of 4 November)."""
     tb, wp = ROOT / "results" / "TWO_BILLS.json", ROOT / "results" / "WORK_PER_BILL.json"
     if not tb.exists():
         return {}
@@ -1152,7 +1154,13 @@ def bills() -> dict:
              "omni": {"work": r["omni"]["work"], "bill": r["omni"]["bill"]}, "G_python": g.get(i + 1)}
             for i, r in enumerate(chip.get("per_run") or [])]
     bill = cl.get("bill") or {}
-    return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json",
+    ov = ROOT / "results" / "OVERSIGHT.json"
+    o = json.loads(ov.read_text(encoding="utf-8")) if ov.exists() else {}
+    op, pg = o.get("pooled") or {}, o.get("pages") or {}
+    people = {"source": "results/OVERSIGHT.json", "engine": o.get("engine"),
+              "minutes": op.get("change"), "minutes_reading": op.get("reading"),
+              "pages": pg.get("change"), "pages_reading": pg.get("reading"), "pages_record": pg.get("record")} if o else {}
+    return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json", "people": people,
             "chip": {"engine": chip.get("engine"), "title": chip.get("title"), "runs": runs, "reading": bm.get("reading")},
             "cloud": {"engine": cl.get("engine"), "page": cl.get("page"), "repetitions": cl.get("repetitions"),
                       "bill": {k: bill.get(k) for k in ("native", "omni", "ci95")}, "work_counted": bool(cl.get("work"))}}
