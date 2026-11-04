@@ -30,6 +30,20 @@ def conductor():
 
 
 class CloudWorkMeter(unittest.TestCase):
+    def test_a_cloud_window_opens_only_once_the_autoscaler_can_see(self):
+        """4 November (run 41745105583): the Omni-Compass arm's autoscaler read no metric for the window's first 155 s and the
+        workload sat at 1 pod while native's held 5. In a cloud the window waits for a reading and a desired count, in both arms,
+        and a blind autoscaler makes the arm invalid; kind's rig is not changed by it."""
+        text = (ROOT / "scripts" / "kind_bench.sh").read_text()
+        warm = text.index('echo "== warm-up ${WARMUP}s (both arms)"')
+        window = text.index('python3 tools/bench_integrity.py collect')
+        block = text[warm:window]
+        self.assertIn('if [ "$PLATFORM" = aks ] && kubectl get hpa "$HPA_NAME"', block)
+        self.assertIn("{.status.currentMetrics[0].resource.current.averageUtilization}", block)
+        self.assertIn("{.status.desiredReplicas}", block)
+        self.assertIn("INVALID RUN: the service's autoscaler read no metric of its pods within 900 s", block)
+        self.assertNotIn("ARM", block.split('if [ "$PLATFORM" = aks ]', 1)[1].split("\nfi\n", 1)[0], "the same wait in every arm")
+
     def test_the_rig_runs_the_meter_in_a_cloud(self):
         text = (ROOT / "scripts" / "kind_bench.sh").read_text()
         self.assertIn('{ [ "$PLATFORM" = kind ] || [ "$PLATFORM" = aks ]; }', text)

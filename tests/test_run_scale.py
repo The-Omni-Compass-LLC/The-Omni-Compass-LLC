@@ -207,6 +207,11 @@ class Conductor(unittest.TestCase):
         self.assertIn("verify.yml", g.FIRST)
         self.assertIn("archive-run.yml", g.FIRST)
         self.assertIn("live-engine.yml", g.FIRST)   # the page's rebuild waits for no benchmark (3 November)
+        for paid in ("lambda-gpu.yml", "gpu-bench.yml", "lambda-attach.yml"):   # a paid GPU run waits for no free run (4 November)
+            self.assertIn(paid, g.FIRST)
+            self.assertTrue(g.waits_for_a_runner(f".github/workflows/{paid}", [{"status": "queued", "name": "launch"}]))
+            self.assertFalse(g.waits_for_a_runner(f".github/workflows/{paid}", [{"status": "in_progress", "name": "launch"},
+                                                                                 {"status": "queued", "name": "watch"}]))
         self.assertTrue(g.waits_for_a_runner(".github/workflows/live-engine.yml", [q]))
         self.assertFalse(g.waits_for_a_runner(".github/workflows/live-engine.yml", [dict(q, status="waiting")]))   # behind another rebuild
 
@@ -263,8 +268,12 @@ class Conductor(unittest.TestCase):
         self.assertEqual(g.azure_to_start(q, {steady: 3, x: 3, y: 3}, set()), [])
         self.assertEqual(g.azure_title({"dial": "max", "replica_ceiling": "0"}), "aks-metered steady replica room 0 dial max eastus Standard_D2s_v4")
         own = g.azure_queue(g.AZURE_QUEUE)                                 # the repository's own queue reads: the work meter's tuning
-        self.assertEqual([(r, n) for r, n, _, _ in own], [("A", "work meter tuning case")])   # case first, run once (31 October,
-        # night: the cloud judged by its work per dollar); the four sets of the open load wait behind the meter's, commented
+        self.assertEqual([(r, n) for r, n, _, _ in own], [("A", "work meter tuning case"),   # case first, run once (31 October,
+                                                          ("A", "work meter tuning case, lower down")])
+        # night: the cloud judged by its work per dollar), then the second, lower down (4 November: the first started above
+        # native's limit); the four sets of the open load wait behind the meter's, commented
+        self.assertEqual([kv["rate_steps"] for _, _, _, kv in own], ["10 20 40 60 80 100 120 140", "1 2 3 4 5 6 8 10"])
+        self.assertEqual(len({t for _, _, t, _ in own}), 2, "each tuning case is read back by a title of its own")
         for _, _, title, kv in own:
             self.assertTrue(title.startswith("aks-metered ") and " dial max " in title, title)
             # the replica room read live, as on kind: the operator's cap no longer pinned by the struck rule of 14 October

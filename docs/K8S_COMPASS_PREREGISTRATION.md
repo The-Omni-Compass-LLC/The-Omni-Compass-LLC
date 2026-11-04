@@ -1459,6 +1459,33 @@ three-run tables give both readings, and the reading of 4 October, every measure
 from the tables that stand (omni-v21's): the headline GAIN, up 5.0% (the reading of 4 October: GAIN, up 5.2%); the service
 reading (work and speed alone, declared 9 October) unchanged, GAIN, up 12.9%.
 
+## Amendment (4 November 2026, written before any further cloud set runs): the autoscaler seen before the window; a second tuning case lower down
+
+The founder's words of 4 November: "All the clouds. Especially the clouds ... Rerun, run, run." Azure's work-meter tuning case
+(the amendment of 31 October, night; run 41745105583 on omni-v25, one paired repetition at the max, never counted) read two
+things from its own files (`aks-1/bench-*-1/work_meter.json`, `capture.csv`, on the branch raw):
+
+- **Native's limit lies below the lowest rate tried.** Inside the 500 ms line native answered 301 of 1,501 requests at 10 a
+  second, 594 of 2,998 at 20 and 9 of 6,000 at 40, then none, with 10 pods on two to four D2s_v4 workers and answers taking 1
+  to 2 s. The rates 10 to 140 a second start above what this service serves on these machines, so the rule's counted rates
+  ("from below what native serves inside the line to above what Omni-Compass serves") cannot be read from them.
+- **The arms did not open their windows alike.** In the Omni-Compass arm's new cluster the service's pod autoscaler read no
+  metric of its pods for the first 155 s of the window (its desired count 0, the workload held at 1 pod; native's autoscaler,
+  which could see, held 5), and 1,481 of the first step's 1,501 requests failed. That is the rig's, not either arm's.
+
+Two changes, both before any further cloud set, the same in both arms and in every cloud (Azure, Google, Amazon):
+
+1. **The window opens only once the service's autoscaler can see.** In a cloud (`scripts/kind_bench.sh`, `PLATFORM=aks`, which
+   Google and Amazon run as) the rig waits after the warm-up until the service's pod autoscaler reports a reading of its pods
+   and a desired count of at least one, records the wait (`preflight.txt`, "autoscaler sighted before the window"), and marks the
+   arm invalid if the autoscaler is still blind after 900 s (`hpa_blind.txt`). kind's rig is unchanged.
+2. **A second tuning case, lower down.** The same machines, the same load and the same rule, one paired repetition at the max,
+   never counted (`scripts/azure_queue.txt`, its second line, `runs=A`), at 1, 2, 3, 4, 5, 6, 8 and 10 requests a second over
+   1,200 s (150 s a rate). The counted meter set's rates are then written here from it, as the amendment of 31 October, night,
+   says, before the counted set's run A; the four sets of the open load still wait behind the meter's, as written.
+
+The first tuning case stays in the record as run; nothing in it is counted.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---

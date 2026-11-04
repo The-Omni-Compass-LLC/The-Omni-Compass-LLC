@@ -547,6 +547,25 @@ if [ -n "${ORGANISM:-}" ]; then
   kil_pid=$!
 fi
 echo "== warm-up ${WARMUP}s (both arms)"; sleep "$WARMUP"
+if [ "$PLATFORM" = aks ] && kubectl get hpa "$HPA_NAME" >/dev/null 2>&1; then
+  # 4 November (Azure's work-meter tuning case, run 41745105583): in the Omni-Compass arm's new cluster the service's pod
+  # autoscaler read no metric for the first 155 s of the window (desired 0, the workload held at 1 pod while native's, whose
+  # autoscaler could see, held 5), and nearly every request of the first step failed. In a cloud the window opens only once
+  # the service's own autoscaler reports a reading of its pods, the same wait in both arms; an autoscaler still blind after
+  # 900 s makes the arm invalid, never a result (docs/K8S_COMPASS_PREREGISTRATION.md, the amendment of 4 November)
+  sighted=""
+  for i in $(seq 1 90); do
+    cur=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.status.currentMetrics[0].resource.current.averageUtilization}' --request-timeout=20s 2>/dev/null || true)
+    want=$(kubectl get hpa "$HPA_NAME" -o jsonpath='{.status.desiredReplicas}' --request-timeout=20s 2>/dev/null || true)
+    if [ -n "$cur" ] && [ "${want:-0}" -ge 1 ] 2>/dev/null; then sighted="$cur% at $(( (i - 1) * 10 )) s, desired $want"; break; fi
+    sleep 10
+  done
+  if [ -z "$sighted" ]; then
+    kubectl describe hpa "$HPA_NAME" > "$OUT_DIR/hpa_blind.txt" 2>&1 || true
+    echo "INVALID RUN: the service's autoscaler read no metric of its pods within 900 s (hpa_blind.txt)"; exit 1
+  fi
+  echo "autoscaler sighted before the window: $sighted" | tee -a "$OUT_DIR/preflight.txt"
+fi
 # LIST first, then continue from its resourceVersion across bounded API watches.
 # Start before the workload and measured window; never infer missing events from a final snapshot.
 rm -f "$OUT_DIR/pod_watch.stop" "$OUT_DIR/pod_watch.ready"
