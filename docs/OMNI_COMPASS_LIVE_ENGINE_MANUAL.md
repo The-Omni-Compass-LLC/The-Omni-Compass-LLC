@@ -1703,8 +1703,13 @@ The dock at the foot of the screen keeps the console in reach from anywhere on t
 state of the switch, the scorecard's number against native (Omni-Compass on native's change in work in the real three-run
 test), the wall's worst signal with its counts, the decision, the
 muscles past the line on each side, the frame time, demand and noise, a surge, a lost pool, pause, a way to the control panel
-(`#s-health`) and the console, a **Tour** button that starts the guided tour at the section in view (section 11.7), and a
-button that folds it.
+(`#s-health`) and the console, a **Tour** button that starts the guided tour at the section in view (section 11.7), a
+**Screen** button and a button that folds it. The page is one page on every screen, from a phone to a television: on a phone and
+a tablet it keeps its own layouts; on a wider screen it is enlarged as one piece so its column fills about four fifths of the
+screen (1.2 times at 1,920 pixels across, 1.6 at 2,560, 2.4 at 3,840), a television's browser starting larger still. **Screen**
+steps through automatic and 1 to 3 times and remembers the choice on that device; the keys **+**, **−** and **0** do the same. Every
+monitor draws at the enlarged size within a fixed budget of pixels, so a television's memory holds them all, and every pointer and
+tooltip lands where it is aimed at any size.
 
 ### 11.7 The guided tour
 
