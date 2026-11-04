@@ -1,0 +1,33 @@
+# Kafka: Omni-Compass on top of a consumer group's operator-set size
+
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Apache Kafka as shipped (one broker, a topic of 8 partitions); native: the consumer group at the operator's count (2); omni: the compass law on the consumer count inside [1, 8], holding the group's own end-to-end latency at 40% of the 500 ms line. The same offered load in both arms. Energy is the host's CPU seconds, the compass's own cost included. Every row is reported, losses included.
+
+## light: 1.0 ms of work a message, 128 B, steps 1 2 3 2 3 4 5 6 5 4 3 2 1 2 1 × 30.0 s
+
+Native capacity 1928 messages a second; base rate 289.2/s; 3 paired repetitions; engine omni-v25 (digest cf56fc0a7b707452, 65 files) at `0a92e09fe669`.
+
+| Gauge | native | omni | change | 95% interval of the difference | reading |
+|---|---:|---:|---:|---:|---|
+| work inside the response line (messages a second handled within the line) | 725 | 847 | +16.8% | 120 to 124 | GAIN |
+| throughput (messages a second consumed) | 848 | 848 | -0.0% | -0.0279 to 0.00333 | STEADY, no difference beyond the noise |
+| end-to-end latency, 95th percentile (ms) | 2,270 | 9.56 | -99.6% | -2,332 to -2,189 | GAIN |
+| end-to-end latency, 99th percentile (ms) | 3,593 | 11.3 | -99.7% | -3,597 to -3,566 | GAIN |
+| end-to-end latency, median (ms) | 7.7 | 6.17 | -19.8% | -1.58 to -1.48 | GAIN |
+| end-to-end latency, mean (ms) | 298 | 7.47 | -97.5% | -298 to -282 | GAIN |
+| consumer lag, most messages waiting at once | 3,224 | 256 | -92.0% | -3,146 to -2,788 | GAIN |
+| consumer lag, mean messages waiting | 257 | 6.63 | -97.4% | -258 to -242 | GAIN |
+| messages produced and never consumed | 0 | 0 |  | 0 to 0 | STEADY, the same |
+| consumers running, mean (the resources held) | 2 | 5.1 | +155.2% | 2.52 to 3.69 | power given |
+| consumers running, most at once | 2 | 8 | +300.0% | 6 to 6 | power given |
+| host CPU busy (share of the run) | 0.371 | 0.417 | +12.4% | 0.0216 to 0.0706 | power given |
+| host CPU-seconds | 661 | 737 | +11.6% | 33.4 to 120 | power given |
+| host CPU-seconds per 1,000 messages inside the line | 2.02 | 1.93 | -4.5% | -0.207 to 0.0258 | STEADY, no difference beyond the noise |
+| consumer changes written (the knob's moves) | 2 | 16 | +700.0% | 5.39 to 22.6 | shown, not judged |
+
+Every omni arm handed back to the operator's count: yes; fail-ups: 0.
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
