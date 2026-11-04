@@ -2390,6 +2390,7 @@ kill     Lᵢ ← L* at once (native)</pre>
 <div class="dock min" id="dock" role="region" aria-label="Control Dock">
   <button class="dkeep" id="dKill" aria-pressed="false">Kill switch</button>
   <button class="dkeep" id="dFactory" title="Every knob back to the factory tune">Factory tune</button>
+  <button class="dkeep" id="dScreen" title="The page's size on this screen: automatic, or 1× to 3× (keys + − 0); remembered on this device">Screen auto 1×</button>
   <button class="dkeep" id="dTour" aria-pressed="false" title="A guided tour of the whole page, section by section, read aloud if you wish">Tour</button>
   <span class="dk dkeep" id="dkState">Omni-Compass ON</span>
   <span class="dk dkeep" id="dkBottom" title="more work than native in the real three-run test">vs native —</span>
@@ -2483,7 +2484,7 @@ kill     Lᵢ ← L* at once (native)</pre>
   <p class="contact">The Omni-Compass LLC · Main office infrastructure · Toll-free direct <b>1-888-339-9551</b> · System route asset <b>1-888-DEX-YLL-1</b><br>Landline, registered in Florida, <b>321-746-4411</b> · System route access <b>321-PING-411</b> · <a href="https://www.omni-compass.com">www.omni-compass.com</a></p>
 </section>
 
-<script>(() => { const pad = () => { const d = document.getElementById("dock"); if (d) document.body.style.paddingBottom = (d.getBoundingClientRect().height + 24) + "px"; };
+<script>(() => { const pad = () => { const d = document.getElementById("dock"); if (d) document.body.style.paddingBottom = (d.offsetHeight + 24) + "px"; };
   window.addEventListener("load", pad); window.addEventListener("resize", pad); document.addEventListener("click", () => setTimeout(pad, 50));
   if (window.ResizeObserver) window.addEventListener("load", () => { const d = document.getElementById("dock"); if (d) new ResizeObserver(pad).observe(d); }); })();</script>
 <p class="legal" id="notice-end" style="margin-top:28px">© 2026 The Omni-Compass LLC. All rights reserved. <b>Evaluation and Simulation use only.</b> Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with LICENSE, NOTICE and DISCLOSURES.md. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p>
@@ -3004,8 +3005,39 @@ CanvasRenderingContext2D.prototype.arc = function (x, y, r, a0, a1, ccw) {
   return ARC_RAW.call(this, x, y, r, a0, a1, ccw); };
 const RMQ = matchMedia("(prefers-reduced-motion: reduce)"); let reduceMotion = RMQ.matches; RMQ.addEventListener("change", e => { reduceMotion = e.matches; });   // followed as the viewer changes it
 
+const SCREEN = {mode: "auto", z: 1, steps: ["auto", 1, 1.25, 1.5, 2, 2.5, 3]};
+const SCREEN_TV = /SmartTV|SMART-TV|Tizen|Web0S|webOS|BRAVIA|NetCast|AFT[A-Z]|GoogleTV|Google TV|Android TV|CrKey|HbbTV|Roku|Viera|AQUOS|PhilipsTV|VIDAA|Xbox|PlayStation/i.test(navigator.userAgent || "");
+function zk(el, r) {   // the page's own pixels for each screen pixel of an element: 1, or the inverse of the page's enlargement
+  const w = el && (el.offsetWidth || el.clientWidth); return w && r && r.width ? w / r.width : 1;
+}
+function screenFit(force) {   // the page enlarged as one piece on a wide screen; any size set by hand stays
+  const vw = window.innerWidth || 1280;
+  let z = SCREEN.mode === "auto" ? Math.max(1, vw / 1600) * (SCREEN_TV ? 1.6 : 1) : +SCREEN.mode;
+  z = Math.round(Math.max(1, Math.min(3, z, vw / 360)) * 100) / 100;   // never narrower than a phone's 360 pixels of page
+  const b = $("dScreen");
+  if (b) { b.textContent = "Screen " + (SCREEN.mode === "auto" ? "auto " : "") + z + "×"; b.setAttribute("aria-label", "Screen size: " + (SCREEN.mode === "auto" ? "automatic, " : "") + z + " times; press for the next size"); }
+  if (z === SCREEN.z && !force) return;
+  SCREEN.z = z; document.documentElement.style.zoom = z === 1 ? "" : String(z);
+  window.dispatchEvent(new Event("resize"));   // every monitor fits itself again at the new resolution
+}
+function screenSet(mode) {
+  SCREEN.mode = mode; try { localStorage.setItem("omniScreen", String(mode)); } catch (e) { /* a private window keeps nothing */ }
+  screenFit(true);
+}
+function screenWire() {
+  try { const m = localStorage.getItem("omniScreen"); if (m && SCREEN.steps.map(String).includes(m)) SCREEN.mode = m === "auto" ? "auto" : +m; } catch (e) { /* nothing kept */ }
+  const b = $("dScreen"); if (b) b.addEventListener("click", () => { const i = SCREEN.steps.map(String).indexOf(String(SCREEN.mode)); screenSet(SCREEN.steps[(i + 1) % SCREEN.steps.length]); });
+  window.addEventListener("resize", () => screenFit(false));
+  document.addEventListener("keydown", e => { if (e.ctrlKey || e.metaKey || e.altKey) return; const t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+    const st = SCREEN.steps.filter(x => x !== "auto"), cur = SCREEN.z;
+    if (e.key === "+" || e.key === "=") screenSet(st.find(x => x > cur + 0.01) || 3);
+    else if (e.key === "-" || e.key === "_") screenSet([...st].reverse().find(x => x < cur - 0.01) || 1);
+    else if (e.key === "0") screenSet("auto"); });
+  screenFit(true);
+}
 function fit(cv, aspect) {
-  const dpr = Math.min(2, window.devicePixelRatio || 1); const w = cv.clientWidth; const h = Math.round(w*aspect);
+  const w = cv.clientWidth; const h = Math.round(w*aspect);   /* drawn at the enlarged resolution, never coarser than before, and within two and a half million pixels a monitor, so a television's memory holds every monitor */
+  const base = Math.min(2, window.devicePixelRatio || 1), dpr = Math.max(base, Math.min(2.5, (window.devicePixelRatio || 1) * (SCREEN.z || 1), Math.sqrt(2.5e6 / Math.max(1, w*h))));
   if (cv.width !== Math.round(w*dpr) || cv.height !== Math.round(h*dpr)) { cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.height = h + "px"; }
   const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); return {g, w, h};
 }
@@ -3367,7 +3399,7 @@ const stCv = document.getElementById("strip");
 // the shared crosshair (Grafana's shared tooltip): hover any live chart and every live chart marks the same decision with each side's value
 const XH = {t: null, src: "", segs: {}};
 function xhReg(id, segs) { XH.segs[id] = segs; const cv = $(id); if (!cv || cv.dataset.xh) return; cv.dataset.xh = "1";
-  cv.addEventListener("mousemove", e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, sg = (XH.segs[id] || []).find(q => x >= q.x0 && x <= q.x1); if (!sg) return;
+  cv.addEventListener("mousemove", e => { const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(cv, r), sg = (XH.segs[id] || []).find(q => x >= q.x0 && x <= q.x1); if (!sg) return;
     XH.t = Math.max(0, Math.round(sg.t0 + (x - sg.x0)/Math.max(1, sg.x1 - sg.x0)*(sg.t1 - sg.t0))); XH.src = id; });
   cv.addEventListener("mouseleave", () => { if (XH.src === id) XH.t = null; }); }
 function xhMark(g, X, Y, series, top, bot, fmt, col, idx) {   // idx: the series index of the hovered decision (default the decision itself)
@@ -3925,7 +3957,7 @@ const note = $("stressNote");
 $("sSpike").addEventListener("click", () => knobFault("surge", 1)); $("sBlind").addEventListener("click", () => knobFault("blind")); $("sSec").addEventListener("click", () => knobFault("sec"));
 $("sKill").addEventListener("click", () => setKill(!W.killed));
 // click and hover a muscle on either ring
-function hit(ev, armSel) { const cv = RING[armSel]; const r = cv.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; let best = -1, bd = 1e9;
+function hit(ev, armSel) { const cv = RING[armSel]; const r = cv.getBoundingClientRect(); const x = (ev.clientX - r.left) * zk(cv, r), y = (ev.clientY - r.top) * zk(cv, r); let best = -1, bd = 1e9;
   W.muscles.forEach((M, i) => { const [nx, ny] = nodeXY(i, armSel); const d = (nx - x)**2 + (ny - y)**2; if (d < bd) { bd = d; best = i; } });
   return bd < 18*18 ? best : -1; }
 for (const armSel of ["nat", "omni"]) { const cv = RING[armSel];
@@ -3934,7 +3966,7 @@ for (const armSel of ["nat", "omni"]) { const cv = RING[armSel];
     if (i < 0) { tip.hidden = true; cv.style.cursor = "default"; return; } cv.style.cursor = "pointer";
     const M = W.muscles[i], s = W[armSel].m[i]; tip.hidden = false; tip.textContent = `${M.name} · p ${s.p.toFixed(2)} · F ${s.F.toFixed(2)}`;
     const host = $("ringTip").parentElement.getBoundingClientRect(), r = cv.getBoundingClientRect();
-    tip.style.left = Math.min(ev.clientX - host.left + 16, host.width - tip.offsetWidth - 10) + "px"; tip.style.top = (ev.clientY - host.top + 18) + "px"; });
+    const hz = zk($("ringTip").parentElement, host); tip.style.left = Math.min((ev.clientX - host.left) * hz + 16, host.width * hz - tip.offsetWidth - 10) + "px"; tip.style.top = ((ev.clientY - host.top) * hz + 18) + "px"; });
   cv.addEventListener("mouseleave", () => { $("ringTip").hidden = true; }); }
 
 
@@ -4848,7 +4880,7 @@ function buildOps() {
   const tipB = $("opsTipBlk"), pan = $("opsBlocks").parentElement;
   const showB = ev => { const el = ev.target.closest("[data-blk]"); if (!el) { tipB.hidden = true; return; } const r = rows[+el.dataset.blk], pr = pan.getBoundingClientRect(), er = el.getBoundingClientRect();
     tipB.innerHTML = `<b>${r.name}</b><br><code>${r.workflow}</code><br>${r.tables.length ? r.tables.map(x => `${x.file} (${x.engine})`).join("<br>") : "no three-run table yet"}<br>now: ${r.now || "—"}${r.abc && Object.keys(r.abc).length ? `<br>on ${OPS_BUILD.engine || "the engine that stands"}: ${boardAbc(r, true)}` : ""}`;
-    tipB.hidden = false; const x = Math.min(er.left - pr.left, pr.width - 300); tipB.style.left = Math.max(0, x) + "px"; tipB.style.top = (er.bottom - pr.top + 6) + "px"; };
+    tipB.hidden = false; const pz = zk(pan, pr), x = Math.min((er.left - pr.left) * pz, pr.width * pz - 300); tipB.style.left = Math.max(0, x) + "px"; tipB.style.top = ((er.bottom - pr.top) * pz + 6) + "px"; };
   $("opsBlocks").addEventListener("pointerover", showB); $("opsBlocks").addEventListener("focusin", showB);
   $("opsBlocks").addEventListener("pointerleave", () => tipB.hidden = true); $("opsBlocks").addEventListener("focusout", () => tipB.hidden = true);
   // the crosshairs and their tooltips
@@ -4870,7 +4902,7 @@ function buildOps() {
 }
 function opsHover(id, tipId, html) {
   const cv = $(id), tip = $(tipId); if (!cv || !tip) return;
-  cv.addEventListener("pointermove", ev => { const G = OPS.geo[id]; const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  cv.addEventListener("pointermove", ev => { const G = OPS.geo[id]; const r = cv.getBoundingClientRect(), x = (ev.clientX - r.left) * zk(cv, r), y = (ev.clientY - r.top) * zk(cv, r);
     if (!G) { tip.hidden = true; return; } const i = Math.floor((x - G.ml)/(G.w - G.ml - G.mr)*G.N);
     if (i < 0 || i >= G.N) { OPS.hov[id] = null; tip.hidden = true; return; } OPS.hov[id] = i; const s = html(i); if (!s) { tip.hidden = true; return; }
     tip.innerHTML = s; tip.hidden = false; const pw = cv.parentElement.clientWidth, tw = tip.offsetWidth;
@@ -5432,7 +5464,7 @@ function buildLab() {
   const up = () => { TL.drag = null; }; cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
   // the matrix: its own pointer handler, for it reads the muscle row as well as the decision
   const dv = $("tDelta"), dt = $("tTipDelta");
-  dv.addEventListener("pointermove", e => { const G = OPS.geo.tDelta; if (!G) return; const r = dv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  dv.addEventListener("pointermove", e => { const G = OPS.geo.tDelta; if (!G) return; const r = dv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(dv, r), y = (e.clientY - r.top) * zk(dv, r);
     const k = Math.floor((x - G.ml)/(G.w - G.ml - G.mr)*G.N), row = Math.floor((y - G.top)/(G.bot - G.top)*G.n);
     if (k < 0 || k >= G.N || row < 0 || row >= G.n || k > W.t) { dt.hidden = true; return; } const i = tOrder()[row], Rr = tRec(), n = W.muscles.length, m = W.muscles[i];
     const pn = Rr.native.p[k*n + i]/1000, po = Rr.omni.p[k*n + i]/1000;
@@ -5443,7 +5475,7 @@ function buildLab() {
     return `<b>minute ${mmss(i*RU.bin_s)} to ${mmss((i + 1)*RU.bin_s)}</b><br><span class="tn">native</span> ${f(a[k][i])}<br><span class="to">Omni-Compass</span> ${f(o[k][i])}`; });
   opsHover("tModes", "tTipModes", i => { const E = TL.eig; if (!E) return ""; return `<b>mode ${i + 1}</b><br><span class="tn">native</span> ${(100*E.native.share[i]).toFixed(2)}% of the motion<br><span class="to">Omni-Compass</span> ${(100*E.omni.share[i]).toFixed(2)}%`; });
   const rv = $("tRadar"), rt = $("tTipRadar");
-  rv.addEventListener("pointermove", e => { const G = TL.radar; if (!G) return; const r = rv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  rv.addEventListener("pointermove", e => { const G = TL.radar; if (!G) return; const r = rv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(rv, r), y = (e.clientY - r.top) * zk(rv, r);
     const j = Math.floor((y - G.top)/G.rowH), A = radarAxes()[j]; if (!A) { rt.hidden = true; return; } TL.radarHov = j;
     rt.innerHTML = `<b>${A.k}</b><br><span class="tn">native</span> ${fmtAxis(A.n)} · <span class="to">Omni-Compass</span> ${fmtAxis(A.o)} (× ${(A.o/A.n).toFixed(3)})<br>the run's reading: ${ruWord((ruR().official_paired || {})[A.k], RU_AIM[A.k])}`;
     rt.hidden = false; rt.style.left = Math.max(0, Math.min(rv.offsetLeft + x + 14, rv.parentElement.clientWidth - rt.offsetWidth - 4)) + "px"; rt.style.top = (rv.offsetTop + y + 14) + "px"; });
@@ -5806,10 +5838,10 @@ function buildFleet() {
     const ben = r.pct === null ? (r.gain || r.loss || r.even ? "—" : "0") : fxWordHtml(r) + ` ${r.pct > 0 ? r.pct.toFixed(r.pct >= 10 ? 1 : 2) + "%" : r.pct < 0 ? `<span class="note">(net ${r.loss ? "LOSS" : "power given"} ${(-r.pct).toFixed(-r.pct >= 10 ? 1 : 2)}%)</span>` : ""}`;
     return `<tr><td>${first ? "<b>" + r.dom + "</b>" : ""}</td><td>${r.benchmark}<br><span class="note">${benWords(r.words)}</span></td><td>${r.ev}</td><td>${r.engine}</td><td>${ben}</td><td class="${r.gain ? "w-gain" : ""}">${r.gain}</td><td class="${r.given ? "w-gain" : ""}">${r.given}</td><td class="${r.even ? "w-even" : ""}">${r.even ?? "—"}</td><td class="${r.loss ? "w-loss" : ""}">${r.loss}</td><td>${r.status}</td></tr>`; }).join(""); })();
   const tip = $("fxTipBen"), cv = $("fxBen");
-  if (!FXW.wired) cv.addEventListener("pointermove", e => { const G = FXW.geo; if (!G) return; const r = cv.getBoundingClientRect(), y = e.clientY - r.top, j = Math.floor((y - G.top)/G.rowH), R = fxAll()[j];
+  if (!FXW.wired) cv.addEventListener("pointermove", e => { const G = FXW.geo; if (!G) return; const r = cv.getBoundingClientRect(), y = (e.clientY - r.top) * zk(cv, r), j = Math.floor((y - G.top)/G.rowH), R = fxAll()[j];
     if (!R) { tip.hidden = true; FXW.hov = null; return; } FXW.hov = j; drawBenefit();
     tip.innerHTML = `<b>${R.benchmark}</b> · ${R.dom || ""}<br>${R.pct === null ? "" : fxWord(R) + (R.pct > 0 ? " " + R.pct.toFixed(2) + "%" : "") + " · "}${R.gain} GAIN, ${R.given} power given, ${R.loss} LOSS<br>${benWords(R.words || R.status)}<br><span class="tn">${R.file || ""}</span> (${R.engine}, evidence ${R.ev})`;
-    tip.hidden = false; tip.style.left = Math.max(0, Math.min(e.clientX - cv.parentElement.getBoundingClientRect().left + 14, cv.parentElement.clientWidth - tip.offsetWidth - 4)) + "px"; tip.style.top = (cv.offsetTop + y + 14) + "px"; });
+    tip.hidden = false; tip.style.left = Math.max(0, Math.min((e.clientX - cv.parentElement.getBoundingClientRect().left) * zk(cv, r) + 14, cv.parentElement.clientWidth - tip.offsetWidth - 4)) + "px"; tip.style.top = (cv.offsetTop + y + 14) + "px"; });
   if (!FXW.wired) cv.addEventListener("pointerleave", () => { tip.hidden = true; FXW.hov = null; drawBenefit(); });
   // the grid
   const G = FX.grid; if (!G) { $("fxGridNote").textContent = "No grid in this build."; return; }
@@ -5853,7 +5885,7 @@ function buildFleet() {
     let body = cap ? "too large for a free runner's memory or time: listed as pending runner capacity, never rented" : !sq ? "not in the receipt" : kind === "modelled" ? `${sq.label}; misses moved ${sq.viol_pp === null ? "—" : Math.abs(sq.viol_pp).toFixed(3) + " pp"}; work ${sq.work === 0 ? "the same" : sq.work === null ? "—" : Math.abs(100*sq.work).toFixed(3) + "%"}; energy ${sq.energy > 0 ? "power given " + (100*sq.energy).toFixed(3) + "%" : "the same"} (${sq.runs} run${sq.runs > 1 ? "s" : ""})`
       : `${unsign(sq.verdict || "")}${sq.p95 !== null && sq.p95 !== undefined ? `; 95th percentile moved ${Math.abs(sq.p95).toFixed(1)}%` : ""} (${sq.reps} repetition${sq.reps > 1 ? "s" : ""})`;
     gt.innerHTML = `<b>${l} · ${c.toLocaleString("en-US")} cop${c > 1 ? "ies" : "y"} · ${n.toLocaleString("en-US")} run${n > 1 ? "s" : ""}</b><br>${wd}: ${body}${vline}`; gt.hidden = false;
-    gt.style.left = Math.max(0, Math.min(er.left - pr.left, pr.width - gt.offsetWidth - 4)) + "px"; gt.style.top = (er.bottom - pr.top + 6) + "px"; };
+    const gz = zk(host, pr); gt.style.left = Math.max(0, Math.min((er.left - pr.left) * gz, pr.width * gz - gt.offsetWidth - 4)) + "px"; gt.style.top = ((er.bottom - pr.top) * gz + 6) + "px"; };
   if (!FXW.wired) { host.addEventListener("pointerover", show); host.addEventListener("focusin", show); host.addEventListener("pointerleave", () => gt.hidden = true); } FXW.wired = true;
 }
 
@@ -7689,7 +7721,7 @@ function monFull(m) { const el = m.el.closest(".panel") || m.el.parentElement; i
 const KEYS = {hover: null};
 document.addEventListener("mouseover", e => { const c = e.target.closest && e.target.closest("canvas"); if (c && MON.byId[c.id]) KEYS.hover = MON.byId[c.id]; });
 function keyCard() { let c = document.querySelector(".keyCard"); if (c) { c.remove(); return; } c = document.createElement("div"); c.className = "keyCard"; c.setAttribute("role", "dialog"); c.setAttribute("aria-label", "Keyboard Shortcuts");
-  c.innerHTML = `<b>Keyboard Shortcuts</b><br><kbd>v</kbd> full screen the monitor under the mouse · <kbd>Esc</kbd> leave it<br><kbd>k</kbd> the kiosk: the wall and its control panel alone, again to leave<br><kbd>p</kbd> pause or run · <kbd>s</kbd> one decision<br><kbd>f</kbd> back to the factory tune<br><kbd>w</kbd> the wall · <kbd>1</kbd>–<kbd>4</kbd> the parts<br><kbd>?</kbd> this card<br><b>With the guided tour open</b><br><kbd>J</kbd> back ten seconds · <kbd>K</kbd> or <kbd>Space</kbd> pause and play · <kbd>L</kbd> forward ten seconds<br><kbd>R</kbd> this stop from its start · <kbd>S</kbd> stop the voice · <kbd>←</kbd> <kbd>→</kbd> the stops · <kbd>Esc</kbd> end the tour<br><span class="note">The kill switch is never on one key: it is its own button, on every monitor, in the dock and in the main control panel.</span>`;
+  c.innerHTML = `<b>Keyboard Shortcuts</b><br><kbd>v</kbd> full screen the monitor under the mouse · <kbd>Esc</kbd> leave it<br><kbd>k</kbd> the kiosk: the wall and its control panel alone, again to leave<br><kbd>p</kbd> pause or run · <kbd>s</kbd> one decision<br><kbd>f</kbd> back to the factory tune<br><kbd>w</kbd> the wall · <kbd>1</kbd>–<kbd>4</kbd> the parts<br><kbd>?</kbd> this card<br><kbd>+</kbd> <kbd>−</kbd> the page larger or smaller on this screen · <kbd>0</kbd> its automatic size<br><b>With the guided tour open</b><br><kbd>J</kbd> back ten seconds · <kbd>K</kbd> or <kbd>Space</kbd> pause and play · <kbd>L</kbd> forward ten seconds<br><kbd>R</kbd> this stop from its start · <kbd>S</kbd> stop the voice · <kbd>←</kbd> <kbd>→</kbd> the stops · <kbd>Esc</kbd> end the tour<br><span class="note">The kill switch is never on one key: it is its own button, on every monitor, in the dock and in the main control panel.</span>`;
   document.body.appendChild(c); c.addEventListener("click", () => c.remove()); }
 document.addEventListener("keydown", e => { if (e.ctrlKey || e.metaKey || e.altKey) return; const t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
   if (typeof TOUR !== "undefined" && TOUR.on && /^[jklrs ]$/i.test(e.key)) return;   // the tour's own keys while it is open
@@ -7816,9 +7848,9 @@ function tradeTipHtml(t) { const r = t.rc, hd = t.head, ww = w => /LOSS/.test(w)
     + (hd ? `<br>${ESC(hd.g)}: ${hd.runs.map((q, k) => `${"ABC"[k]} ${byWord(q.v, hd.w, q.pct ? "%" : "")} (${byWordRange(q.lo, q.hi, hd.w, q.pct ? "%" : "")})`).join(" · ")} <span class="word w-${ww(hd.w)}">${ESC(hd.w)}</span>` : "") + `<br><span class="tn">${ESC(r.file)}</span>`; }
 function tradeWire() { if (TRADE.wired) return; TRADE.wired = true; const tip = $("tradeTip"); if (!tip) return;
   [["tradeMap", "map", "hov"], ["tradeQuotes", "quotes", "hovQ"]].forEach(([id, key, hk]) => { const cv = $(id); if (!cv) return;
-    cv.addEventListener("pointermove", e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, hit = TRADE[key].find(b => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
+    cv.addEventListener("pointermove", e => { const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(cv, r), y = (e.clientY - r.top) * zk(cv, r), hit = TRADE[key].find(b => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
       if (!hit) { tip.hidden = true; TRADE[hk] = null; return; } TRADE[hk] = hit.t; tip.innerHTML = tradeTipHtml(hit.t); tip.hidden = false;
-      const P = cv.parentElement.getBoundingClientRect(); tip.style.left = Math.max(0, Math.min(e.clientX - P.left + 14, cv.parentElement.clientWidth - tip.offsetWidth - 4)) + "px"; tip.style.top = (e.clientY - P.top + 14) + "px"; });
+      const P = cv.parentElement.getBoundingClientRect(), pz = zk(cv.parentElement, P); tip.style.left = Math.max(0, Math.min((e.clientX - P.left) * pz + 14, cv.parentElement.clientWidth - tip.offsetWidth - 4)) + "px"; tip.style.top = ((e.clientY - P.top) * pz + 14) + "px"; });
     cv.addEventListener("pointerleave", () => { tip.hidden = true; TRADE[hk] = null; }); }); }
 function drawTradeMap(now) {   // monitor: the market map, every three-run table a tile, its area the gauges it judged, its colour its reading, a reading cursor walking it
   const cv = $("tradeMap"); if (!cv) return; tradeWire(); const cw0 = Math.max(1, cv.clientWidth), {g, w, h} = fit(cv, cw0 < 600 ? 1.05 : 0.46); g.clearRect(0, 0, w, h);
@@ -7927,7 +7959,7 @@ function drawWall(now) {
     WALL.tiles.push({x, y, w: iw, h: th - 8, el: t.el, n: m.n}); });
   const note = `${srcs.length} monitors · ${(MONREG.blocks || []).length || 1} blocks · ${live} on screen · the rest drawn in turn while the wall is in view`; if (note !== WALL.note) { WALL.note = note; const n = $("wallNote"); if (n) n.textContent = note; }
 }
-{ const cv = $("wallCv"); if (cv) cv.addEventListener("click", e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; const t = WALL.tiles.find(t => x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h); if (t) { const b = $("mon-" + t.n); (b || t.el).scrollIntoView({behavior: "auto", block: "start"}); } }); }
+{ const cv = $("wallCv"); if (cv) cv.addEventListener("click", e => { const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(cv, r), y = (e.clientY - r.top) * zk(cv, r); const t = WALL.tiles.find(t => x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h); if (t) { const b = $("mon-" + t.n); (b || t.el).scrollIntoView({behavior: "auto", block: "start"}); } }); }
 // ---------------------------------------------------------------- the new monitors
 function monLanes(g, w, ml, mr, gap) { const lw = (w - ml - mr - gap)/2; return [["Native", css.steel, ml, lw], ["Omni-Compass", css.brass, ml + lw + gap, lw]]; }
 // the GPU card: the one metered run, replayed
@@ -8129,7 +8161,7 @@ function drawMuscleCv() {
   if (p) { g.fillStyle = css.ink; g.fillText(cutToFit(g, `${MUS.pick == null ? `reading ${(ri + 1).toLocaleString("en-US")} of ${M.length.toLocaleString("en-US")}: ` : "held: "}${p[0]} · ${p[1]} · realm ${p[2]} · ${p[3]} · knob ${p[4]} · ${rmWord(p[5])[0]}`, w - 16), 8, h - 18); g.fillStyle = css.muted; }
   g.fillText(cutToFit(g, `${MUS.pick == null ? "click a cell to hold it" : "click it again elsewhere to move"} · green GAIN, yellow STEADY (pale: at its limit on native), red LOSS · in the order of the catalog, family by family`, w - 16), 8, h - 4);
 }
-{ const cv = $("muscleCv"); if (cv) cv.addEventListener("click", e => { const r = cv.getBoundingClientRect(), x = (e.clientX - r.left), y = (e.clientY - r.top), sc = cv.clientWidth ? (cv.width/ (window.devicePixelRatio || 1))/cv.clientWidth : 1; const i = Math.floor((y - MUS.top)/MUS.ch)*MUS.cols + Math.floor((x - 8)/MUS.cw); const M = (SC.realms || {}).muscles || []; MUS.pick = i >= 0 && i < M.length ? i : null; const n = $("muscleNote"); if (n && MUS.pick != null) { const m = M[MUS.pick]; n.innerHTML = `<b>${ESC(m[0])}</b> · ${ESC(m[1])} · realm ${ESC(m[2])} · template ${ESC(m[3])} · knob ${ESC(m[4])} · <span class="word ${rmWord(m[5])[1]}">${ESC(rmWord(m[5])[0])}</span>` + (Array.isArray(m[6]) ? `<div class="note">loads: ${m[6].map(l => `${ESC(String(l[0]))} (misses ${l[1]} native → ${l[2]} Omni-Compass)`).join("; ")}</div>` : ""); } drawMuscleCv(); }); }
+{ const cv = $("muscleCv"); if (cv) cv.addEventListener("click", e => { const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * zk(cv, r), y = (e.clientY - r.top) * zk(cv, r), sc = cv.clientWidth ? (cv.width/ (window.devicePixelRatio || 1))/cv.clientWidth : 1; const i = Math.floor((y - MUS.top)/MUS.ch)*MUS.cols + Math.floor((x - 8)/MUS.cw); const M = (SC.realms || {}).muscles || []; MUS.pick = i >= 0 && i < M.length ? i : null; const n = $("muscleNote"); if (n && MUS.pick != null) { const m = M[MUS.pick]; n.innerHTML = `<b>${ESC(m[0])}</b> · ${ESC(m[1])} · realm ${ESC(m[2])} · template ${ESC(m[3])} · knob ${ESC(m[4])} · <span class="word ${rmWord(m[5])[1]}">${ESC(rmWord(m[5])[0])}</span>` + (Array.isArray(m[6]) ? `<div class="note">loads: ${m[6].map(l => `${ESC(String(l[0]))} (misses ${l[1]} native → ${l[2]} Omni-Compass)`).join("; ")}</div>` : ""); } drawMuscleCv(); }); }
 // the seven organisms under three loads
 function drawOrgCv() {
   const cv = $("orgCv"); if (!cv) return; const O = (SC.realms || {}).organisms || {}, cw0 = Math.max(cv.clientWidth, 1), narrowO = cw0 < 600, nO0 = Math.max(1, (O.normal || []).length), bandH = nO0*26 + 24;   // a phone: the three loads as three bands
@@ -10070,7 +10102,7 @@ const GLOSS = [["HPA", /\bHPA\b/, "the Horizontal Pod Autoscaler: Kubernetes's o
       const ab = document.createElement("abbr"); ab.title = d; ab.textContent = m[0]; const rest = n.splitText(m.index); rest.nodeValue = rest.nodeValue.slice(m[0].length); n.parentNode.insertBefore(ab, rest); break; } }); })();   // each term marked where it first appears
 document.querySelectorAll("canvas").forEach(c => { if (c.getAttribute("aria-hidden") === "true") return; c.setAttribute("role", "img");
   if (!c.getAttribute("aria-label")) { const hd = c.closest(".panel, section") && c.closest(".panel, section").querySelector("h3, h2"); c.setAttribute("aria-label", hd ? hd.textContent.trim() : "Live Chart"); } });
-noiseWords(); document.querySelectorAll(".atLim").forEach(e => { e.textContent = AT_LIM; }); buildInfo(); buildDial(); buildKeyEx(); voiceWire(); tourWire(); eqLive(); buildBottom(); buildReceipts(); try { buildAudit(); } catch (e) { console.warn("the verdict audit", e); } try { printSections(); } catch (e) { console.warn("the print buttons", e); } buildRealms(); setStack("gpu", 0); buildBoard(); buildOps(); beatSetup(); swInit(); mcSetup(); jgSetup(); buildLab(); buildAI(); buildFleet(); buildSelf(); buildPlaces(); buildLedgers(); buildMech(); buildDesk(); buildFamTable(); tally(); fillSumIndex(); buildRegister(); setRuns(0, 0, 0); updateScan(); setInterval(updateScan, 1000); buildHealth(); buildFail(); buildInstruments(); buildMaster(); buildSteering(); buildRealK8s(); buildStats(); buildOrch(); buildWhole(); try { igCheck(); } catch (e) { console.warn("the injection grid's check", e); }
+noiseWords(); document.querySelectorAll(".atLim").forEach(e => { e.textContent = AT_LIM; }); buildInfo(); buildDial(); buildKeyEx(); screenWire(); voiceWire(); tourWire(); eqLive(); buildBottom(); buildReceipts(); try { buildAudit(); } catch (e) { console.warn("the verdict audit", e); } try { printSections(); } catch (e) { console.warn("the print buttons", e); } buildRealms(); setStack("gpu", 0); buildBoard(); buildOps(); beatSetup(); swInit(); mcSetup(); jgSetup(); buildLab(); buildAI(); buildFleet(); buildSelf(); buildPlaces(); buildLedgers(); buildMech(); buildDesk(); buildFamTable(); tally(); fillSumIndex(); buildRegister(); setRuns(0, 0, 0); updateScan(); setInterval(updateScan, 1000); buildHealth(); buildFail(); buildInstruments(); buildMaster(); buildSteering(); buildRealK8s(); buildStats(); buildOrch(); buildWhole(); try { igCheck(); } catch (e) { console.warn("the injection grid's check", e); }
 drawVerdict2();
 V.P = vParams(); for (let k = 0; k < V.P.min; k++) V.ref.push(vSample(false, V.P, V.rng)); for (let k = 0; k < V.P.min; k++) V.got.push(vSample(true, V.P, V.rng));
 V.running = true; V.lastAdd = 0;
