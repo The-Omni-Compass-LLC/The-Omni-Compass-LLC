@@ -413,6 +413,10 @@ def main():
     check("the pages a person would have been sent, counted from the oversight line's raw files by the preregistered rule: "
           "results/OVERSIGHT_PAGES.md is its record's (tools/pages.py)", r.returncode == 0,
           (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "site_numbers.py"), "--check"], capture_output=True, text=True)
+    check("the numbers a website may show, each with its receipt, the four arms A, B, C and D each from its own, and our own "
+          "model's columns listed as not for the site: results/SITE_NUMBERS.md is what the records give (tools/site_numbers.py)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "index_words.py"), "--check"], capture_output=True, text=True)
     check("the Owner's Manual's index, bottom line, three arms and routes are what the records give (tools/index_words.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
