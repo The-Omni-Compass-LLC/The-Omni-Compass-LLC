@@ -944,6 +944,12 @@ TERMS = [
       "domain and by gauge family, with the Omni index that weighs them together; every bar is its table's own word (GAIN green, "
       "STEADY yellow, LOSS red, power given blue) beside its size.",
       [(PAGE_F, "measured effect in one board")], aka=["benefit board"]),
+    T("the guided tour", W, "A narrated walk through the page, one stop for every section in the page's order, started from the "
+      "tab on the right edge of the screen or the dock's Tour button: each stop outlines its section and shows what it holds, in the "
+      "Live Engine Manual's own words, and what can be done there. The voice is recorded (Kokoro-82M v1.0, Apache-2.0, its female "
+      "voice Heart), and a clip plays only while its words are the stop's words today; otherwise the browser's own voice reads them.",
+      [(MAN, "The voice is recorded."), ("tools/tour_script.py", "one stop for every section of the page, in the page's own order")],
+      aka=["tour", "guided tour", "the tour"]),
     T("the traffic signal", W, "Every monitor's light, read on its band: green GAINING, low in its "
       "band with room to climb; yellow STEADY, inside its band; red REDLINING, at the top of its band and holding there, blinking red "
       "and black; red OVER THE LINE, past its band, blinking red and white; grey, and said so, where there is no line. On a record "

@@ -1228,7 +1228,7 @@ reviewed or approved these results."
 The second table (`#blBills`) reads the software end's composition carried to the two places a system runs: **bare metal**, the
 software end with the chip held at native's (the chip enters as exactly 1, the machine's own layer not yet run), and **through
 the cloud**, the software end with the cloud's bill held at native's. Neither row is that place's bill: each place's bill and the
-work done inside it, native and Omni-Compass on native, are the four boxes of section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
+work done inside it, native and Omni-Compass on native, are the four boxes of the page's section 2b, read from `results/TWO_BILLS.md`. The big number is the whole workload's index,
 one number over its gauges, with its word; beside it every gauge with its word and its number. The light follows the index's
 word, and is red where any table under the route reads a slower service or less work LOSS, in either form; a route with no
 composition reads AWAITING, "not yet composed". The bills read the repository's own headline, by the index's rule, with the
@@ -1624,7 +1624,44 @@ The dock at the foot of the screen keeps the console in reach from anywhere on t
 state of the switch, the scorecard's number against native (Omni-Compass on native's change in work in the real three-run
 test), the wall's worst signal with its counts, the decision, the
 muscles past the line on each side, the frame time, demand and noise, a surge, a lost pool, pause, a way to the control panel
-(`#s-health`) and the console, and a button that folds it.
+(`#s-health`) and the console, a **Tour** button that starts the guided tour at the section in view (section 11.7), and a
+button that folds it.
+
+### 11.7 The guided tour
+
+A tab on the right edge of the screen, **Guided tour** (`#tourTab`; on a phone a round button above the dock), and the dock's
+**Tour** button start a narrated walk through the page. The tour has one stop for every section, in the page's own order, from
+the monitor wall to the glossary, with an opening and a close that carry the legal notice. At each stop the section is outlined
+and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the section shows in this book's own
+words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
+own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
+
+The card is for the reader, not the narrator: everything heard can be heard again and checked against the words. The card reads
+along, the sentence being read lit (placed by each sentence's share of the voice, so it can sit a moment early or late), and a
+press on any sentence plays it again from there. The voice's own row holds **⏪ 10 s** (back ten seconds), **Pause** and **Play**
+(stop where it is, then go on from there), **↺ From the start** (the stop again from its first word), **10 s ⏩** (forward ten
+seconds), **■ Stop** (the voice stops and the tour stays on this stop) and the speed, **0.75×**, **1×** or **1.25×**; the bar under
+it shows where the voice is and drags back or forward. The stops' own row holds **◀ Previous stop**, **Next stop ▶**, **Step on by
+itself** (on or off: the next stop follows when this one ends), **Voice on** or **off**, **Close** and, where the page runs inside
+follow the common players: **J** back ten seconds, **K** or the space bar pause and play, **L** forward ten seconds, **R** from the
+start, **S** stop, the arrow keys the stops and **Escape** ends the tour. On the browser's own voice, which cannot be wound, back
+and forward go one sentence. The tab starts the tour at its opening, narrated and stepping on by
+itself; the dock's button starts it at the section in view; a second press of either ends it. A link to the page that ends
+in `#tour` opens the page with the tour started; where the browser holds a voice back until a press, the card says so and
+Play starts it.
+
+The voice is recorded. Every stop was read once by a neural text-to-speech model, Kokoro-82M v1.0 (Apache-2.0), in its American
+English female voice *Heart*, and kept beside the page as a small MP3 (`docs/engine/tour/`, made by `tools/tour_voice.py`; the
+words are written once, in `tools/tour_script.py`). Each clip is stored with the SHA-256 of the exact words it reads, and the page
+plays a clip only while those words are the stop's words today; a stop whose words changed after its clip was read is spoken by
+the browser's own voice (its most natural English voice, a woman's where it has one) until the clip is read again, which the
+page's build on GitHub does by itself. So the voice never says what this book and the page do not. The card's last line names the
+voice that is speaking.
+
+Beside the engine chip at the head of the page a line says when this copy last asked GitHub, what it found and when it asks next
+(`#omniFresh`): every copy of the page reads the newest build's stamp when it opens and every 24 hours after, opens a newer build
+in place only when the page GitHub serves is itself newer than this copy, and says so when GitHub cannot be reached. The copy
+checked against GitHub every 6 hours and republished whenever GitHub holds a newer build, at least once a day.
 
 
 ## 12. Heartbeat Dial
@@ -2529,7 +2566,7 @@ The whole organism (the page's section 5d, `#s-whole`) opens with a box, "WHAT E
 and its table of the pieces Omni-Compass sits on (section 21.1): the software end, which goes with it to either place, and the
 two places a system runs, bare metal and the cloud (the founder's order of 1 November). Below it the software end's composition is
 carried to each place, read two ways, native and Omni-Compass on top of native; each place's own bill and the work done inside it
-are the four boxes of section 2b, never this composition, and the two places are never added together.
+are the four boxes of the page's section 2b, never this composition, and the two places are never added together.
 
 Omni-Compass is wired into every piece of a stack through its own two-way plug: the
 software (the cluster, its add-ons, its governors and orchestrators, and the services on it: the pools, the consumers, the
@@ -2539,7 +2576,7 @@ place a system runs (**Scenario**; the founder's order of 1 November: these two 
 software on the owner's own machines (software × the chip, no cloud), and *Through the Cloud*, the software through the cloud onto
 its machines (cloud × the chip at the back end × software), with the cloud as two pieces beside it. Each place here is the software
 end carried to it, its chip and its bill held at native's until read; the bills themselves, and the work done inside them, native
-and Omni-Compass on native, are the four boxes of section 2b (`results/TWO_BILLS.md`).
+and Omni-Compass on native, are the four boxes of the page's section 2b (`results/TWO_BILLS.md`).
 
 A tenant cannot meter the provider's bare metal at the back of a cloud: the cloud's piece is the bill and the machines the
 provider meters, and the bare-metal piece is gauged on hardware the repository meters and carried to the provider's only as a
@@ -3493,6 +3530,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Control | Where | Acts on | Leaves alone |
 |---|---|---|---|
 | Kill switch | the control panel; the head of the page's section 1; every section's controls; every monitor's strip; the console; the dock | every lever of every governor on the page, to native at once; shades every time axis red; a second press releases it | the records: nothing recorded is modified |
+| Guided tour | the tab on the right edge of the screen (on a phone, above the dock); the dock's Tour button | the page's scroll, one outlined section at a time, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
 | Return to native (the reset) | the fuse box's profile row; the variation switchboard's native arm | the same hand-back, named the reset; the switch reads "OFF by the reset" | the records: nothing recorded is modified |
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |
@@ -3680,6 +3718,7 @@ Omni-Compass Evaluation License changes those terms. Installed versions are thos
 | Numba | compiled inner loops of the motion-axis plant | BSD-2-Clause |
 | PyTorch (on GPU machines only, not installed by `requirements.txt`) | the GPU workload of the benchmark | BSD-3-Clause |
 | `tests/third_party/hpa_independent.py` | an independently written HPA reference used unmodified in tests | its own terms, stated in the file |
+| Kokoro-82M v1.0 text-to-speech model and its voice `af_heart` (hexgrad/Kokoro-82M; the int8 ONNX files of thewh1teagle/kokoro-onnx), run by kokoro-onnx; FFmpeg | the recorded voice of the live engine's guided tour (`docs/engine/tour/`, made by `tools/tour_voice.py`): only the clips it read are kept, never the model | Apache-2.0 (the model and its voices); MIT (kokoro-onnx); FFmpeg's own LGPL/GPL, used as a tool and not shipped |
 | Liberation Serif and Liberation Sans fonts (embedded in the PDF book) | typesetting | SIL Open Font License 1.1 |
 | DejaVu Sans and DejaVu Sans Mono fonts (embedded in the PDF book) | typesetting | Bitstream Vera / DejaVu license (free) |
 | PlanetLab / CoMon VM CPU traces, March 2011 (`fleet/traces/`, `k8s_controlplane/traces/`; source in their `PROVENANCE.json`) | held-out demand for the modelled fleet | their own terms (public research data); no Omni-Compass copyright is claimed in them |
@@ -3917,7 +3956,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-03 16:28 UTC on omni-v25 (digest cf56fc0a7b707452) from commit 52a4affc692d.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-04 01:11 UTC on omni-v25 (digest cf56fc0a7b707452) from commit 63fc4dc666d3.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.
@@ -5078,7 +5117,7 @@ The composition is read in the two places a stack runs (the Scenario knob): the 
 
 **The page, in its own words.**
 
-WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS. The software end (Kubernetes, the orchestrators and governors, the services) is where Omni-Compass decides and works, and its benchmark shows the benefit: more work, faster, on fewer machines (class L, composed below). The chip (a processor or GPU card) is hardware: Omni-Compass turns only its own controls, and its benchmark shows that it holds: no harm to its heat, its power or its service (the card's own meter, class P). The cloud (the wire and the provider's own software) carries the software end's work and bills it by machine-hours, and its benchmark shows that it holds: the bill not raised beyond the noise and the service not harmed; where the work can grow, its yardstick is the work per dollar, the work answered within the line divided by the bill, against native, a rise in the bill power given beside the work it bought. Inside the chip or the provider's own code cannot be measured from outside and is never claimed. What the benefit cost the chip, the energy and the wire is listed row by row in section L.11 of `results/WHOLE_SYSTEM.md` (`DISCLOSURES.md`, sections 9 and 10; the words for every place are written once in tools/places.py).
+WHAT EACH PLACE SHOWS: THE BENEFIT, OR THAT IT HOLDS. The software end (Kubernetes, the orchestrators and governors, the services) is where Omni-Compass decides and works, and its benchmark shows the benefit: more work, faster, on fewer machines (class L, composed below). The chip (a processor or GPU card) is hardware: Omni-Compass turns only its own controls, and its benchmark shows that it holds: no harm to its heat, its power or its service (the card's own meter, class P). The cloud (the wire and the provider's own software) carries the software end's work and bills it by machine-hours, and its benchmark shows that it holds: the bill not raised beyond the noise and the service not harmed; where the work can grow, its yardstick is the work per dollar, the work answered within the line divided by the bill, against native, a rise in the bill power given beside the work it bought. Inside the chip or the provider's own code cannot be measured from outside and is never claimed. What the benefit cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md` (`DISCLOSURES.md`, sections 9 and 10; the words for every place are written once in tools/places.py).
 
 Composed Reading. —
 
@@ -5399,7 +5438,7 @@ The wall's light count is the one count the breakers, the section signals and th
 
 Redline Reflex. At the top of its band Omni-Compass pushes at once; where a muscle stays over its line three decisions, stuck, and native's twin reads lower by more than 5%, it hands the muscle to native for 10 decisions (doubling for each hand-back in a row, up to 160), and takes it back only when its side is under the line and lower than native's by 5%; where native is not stronger it stays, because redlining less than native is still a benefit against native. Every light still carries its red: if a muscle redlines on Omni-Compass's side and the reflex cannot stop it (a fault, a bug), it is seen at once, and the kill switch hands everything back to native in the same instant. The rule entered the engine with omni-v21 and stands in the engine that stands, omni-v25, in its immune system, knob by knob (omnicompass/immune.py, the same file in both fingerprints, its C++ twin cpp/src/immune.cpp, proven alike on 200 seeded scripts, and the nervous system's native_hold; on Kubernetes each service's autoscaler target, native's twin the operator's own target), beside the SLO reflex and the pod reflex of the Kubernetes governor (omni_controller/controller.py); this page's live model (class S) applies the same rule, with the engine's own numbers, to every muscle it draws.
 
-Green, GAINING: low in its band with room to climb, or a GAIN. Dark, AWAITING: the run that fills it has not landed. Grey, NO LINE: a monitor with no line to cross (a bill, a count of runs, a digest check) or no reading yet; neither is ever counted green. Yellow, STEADY: inside its band, or level with native (a change under 0.5%). Red, REDLINING, blinking red and black: at the top of its band and holding there, or a LOSS row. Red, OVER THE LINE, blinking red and white: past the top of its band. Native is orange everywhere, Omni-Compass blue; red is never a side, only the alarm. A monitor that draws two sides carries three lights in its button: native's, Omni-Compass's, each read from its own side on the same load, and the reading between them now by the key (GAIN green, STEADY yellow, LOSS red), so the moment one side turns a colour the other does not is seen as it happens. REDLINING comes before the line: a gauge within 3% of the top of its band, or whose slope over its last readings reaches it within 3 readings. A needle that falls is not a LOSS and one that rises is not a GAIN: each light reads what its gauge is for (a wait that falls is GAINING; work that falls is not). Click a light for its reason; a light turned red by the knobs goes back with the factory tune. The three-reading projection is the light's own. The brain's law acts on the position inside its band and damps on the position's rate of change (K[D] × v, omnicompass/compass_law.py), with a fail-up at the band's 95% wall; it projects nothing ahead (section 3). Each light reads the series its monitor draws, and a light fed by our own models says so (class S); hover it for the reading.
+Green, GAINING: low in its band with room to climb, or a GAIN. Dark, AWAITING: the run that fills it has not landed. Grey, NO LINE: a monitor with no line to cross (a bill, a count of runs, a digest check) or no reading yet; neither is ever counted green. Yellow, STEADY: inside its band, or level with native (a change under 0.5%). Red, REDLINING, blinking red and black: at the top of its band and holding there, or a LOSS row. Red, OVER THE LINE, blinking red and white: past the top of its band. Native is orange everywhere, Omni-Compass blue; red is never a side, only the alarm. A monitor that draws two sides carries three lights in its button: native's, Omni-Compass's, each read from its own side on the same load, and the reading between them now by the key (GAIN green, STEADY yellow, LOSS red), so the moment one side turns a colour the other does not is seen as it happens. REDLINING comes before the line: a gauge within 3% of the top of its band, or whose slope over its last readings reaches it within 3 readings. A needle that falls is not a LOSS and one that rises is not a GAIN: each light reads what its gauge is for (a wait that falls is GAINING; work that falls is not). Click a light for its reason; a light turned red by the knobs goes back with the factory tune. The three-reading projection is the light's own. The brain's law acts on the position inside its band and damps on the position's rate of change (K[D] × v, omnicompass/compass_law.py), with a fail-up at the band's 95% wall; it projects nothing ahead. Each light reads the series its monitor draws, and a light fed by our own models says so (class S); hover it for the reading.
 
 **1 Control Panel**
 

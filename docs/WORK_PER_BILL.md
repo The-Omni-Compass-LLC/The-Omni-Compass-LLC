@@ -44,7 +44,7 @@ The bill is the sum of its line items, B = Σₖ cₖ, and each item's change co
 | Electricity | inside the price | no line of its own | paid by the owner where the box sits on its own meter | yes: the card's own meter reads the energy for each request served (GAIN in all three A10 runs); not priced in the receipt, a line an owner adds at its own rate |
 | Data out (egress) | per gigabyte that leaves the cloud | only through the work: more requests served can send more data out, a rise proportional to the work (not priced in the receipt read so far) | an allowance or a flat port | no, inside the allowance |
 | Storage and its speed | per gigabyte stored, plus the speed tier bought | no (not priced) | inside the box | no |
-| The hidden labour | inside the cloud's premium | no | the owner's staff | no |
+| The people who watch and tune the stack (on call, triage, hand tuning) | the owner's staff (a cloud's own operations sit inside its price) | through the pages: the alert minutes (the minutes an on-call page would be open) fell 28.9% over 13 real Kubernetes tests on omni-v21, fewer in 11, to none in 3 (`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt | the owner's staff | the same |
 
 So the receipts read so far price the item Omni-Compass moves most in each place (the cloud's machine-hours; the chip's window), and leave out items it does not move. An item it does not move has bₖ = 0 and only pulls b toward 0, so an owner's full bill shows a smaller b than the compute line alone; an item that grows with the work (egress) takes back a share of w in the cloud, and an owner's own electricity rate gives bare metal a second line where the card's energy cut is paid back.
 
@@ -95,8 +95,8 @@ The three runs together, by the one key: **the runs disagree** (the mean of the 
 
 **Not yet read:**
 
-- the chip: eight A100 cards on Lambda, each organism on its own card: not yet read (lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
-- the chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16): not yet read (lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
+- the chip: eight A100 cards on Lambda, each organism on its own card: read (lambda-gpu 8card pooled, runs 41271477833, 41279081905 and 41271481737); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
+- the chip: one A10 on Lambda, the card fully loaded inside the organism (docs/GPU_PREREGISTRATION.md, amendment 16): read (lambda-gpu 1card stacks-full, runs 41271470803, 41271473309 and 41271475877); tools/two_bills.py reads its card rows (requests served, energy) as the A10's
 - through the cloud: Azure, one rented machine with the real cluster inside each organism: not yet read (big-organism-detached, run 41269562586 (100 copies, three repetitions)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 - through the cloud: Google Cloud: not yet run (its key is not in the repository's secrets (docs/GOOGLE_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 - through the cloud: Amazon Web Services: not yet run (its key is not in the repository's secrets and the account is on the Free plan (docs/AMAZON_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only

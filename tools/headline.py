@@ -437,6 +437,19 @@ def places_block(m) -> list:
     # table, or the runs that will write it, or never run
     org_places = {p.get("table") or p.get("label"): p for p in (tb.get("organisms") or [])}
 
+    def eight_what():
+        # what the eight-card machine ran, counted from its own table (six organisms on 1 November, the spine not among them)
+        try:
+            rec = json.loads((ROOT / "results/gpu/V23_A100_8CARD_STACKS_ABC.json").read_text(encoding="utf-8"))
+            orgs = sorted({r["organism"] for r in rec.get("rows") or []})
+        except (OSError, ValueError, KeyError):
+            orgs = []
+        if not orgs:
+            return "the seven organisms at 1, 10 and 100 copies, each on its own card"
+        words = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven"}
+        miss = "" if "spine" in orgs else ", the spine not among them"
+        return f"{words.get(len(orgs), len(orgs))} organisms at 1, 10 and 100 copies, each on its own card{miss}"
+
     def org_place(key, fallback):
         p = org_places.get(key)
         if not p:
@@ -444,13 +457,15 @@ def places_block(m) -> list:
         if p.get("status") == "read":
             return f"read in `{p['table']}`, every organism at every size in `results/TWO_BILLS.md`"
         if p.get("status") == "not yet read":
-            return f"started on {stands} ({p['runs']}); not yet read"
+            m = re.search(r"/V(\d+)_", key or "")      # the engine its runs started on is its table's own (V23_...), never the one that stands
+            on = f"omni-v{m.group(1)}" if m else stands
+            return f"started on {on} ({p['runs']}); not yet read" + (f"; it runs again on {stands}" if on != stands else "")
         return f"not yet run: {p['runs']}"
     L += ["| Place | What runs there | Native against Omni-Compass on native |", "|---|---|---|",
           f"| Bare metal, one card | the card's own workload, at the usual load and fully loaded | {'three runs on ' + stands + ', above' if full else 'not yet run on ' + stands} |",
           f"| Bare metal, one card | the seven organisms (the spine, the four realms, the four stacked, the whole catalog) at 1, 10 and 100 copies | {org_txt} |",
           f"| Bare metal, one card, fully loaded | the seven organisms at 1, 10 and 100 copies, the card offered more than it serves (docs/GPU_PREREGISTRATION.md, amendment 16) | {org_place('results/gpu/V23_A10_STACKS_FULL_ABC.json', 'not yet run on ' + stands)} |",
-          f"| Bare metal, the eight-card machine | the seven organisms at 1, 10 and 100 copies, each on its own card | {org_place('results/gpu/V23_A100_8CARD_STACKS_ABC.json', ('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED)} |",
+          f"| Bare metal, the eight-card machine | {eight_what()} | {org_place('results/gpu/V23_A100_8CARD_STACKS_ABC.json', ('read in `' + eight[-1].relative_to(ROOT).as_posix() + '`') if eight else NOT_RENTED)} |",
           f"| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | {'read in `' + az[-1].relative_to(ROOT).as_posix() + '`' if az else 'queued, its switch ' + _switch('azure') + '; not yet read on ' + stands} |",
           f"| Through the cloud: Azure, the seven organisms | one rented Azure machine, each organism with the real cluster inside, 100 copies | {org_place('results/live/V23_AZURE_ORGANISMS_ABC.json', 'not yet run on ' + stands)} |",
           f"| Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch {_switch('google')}, Amazon's {_switch('amazon')}; not yet run |", ""]

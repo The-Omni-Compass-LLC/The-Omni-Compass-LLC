@@ -114,8 +114,9 @@ delete what it built.
    login may be retired: in the Azure portal search **App registrations**, open **omni-compass-github**, and click
    **Delete**. Nothing in the repository names it.
 
-The conductor runs Azure's check again within the hour, and the sets start on their own once it passes. Nothing is built and
-nothing is billed while it fails.
+The conductor runs Azure's check again (an hour after a failure, the wait doubling with every failure in a row up to a day;
+start it by hand to have it read at once: **Actions**, **cloud-check**, **Run workflow**, `azure`), and the sets start on their
+own once it passes. Nothing is built and nothing is billed while it fails.
 
 ## 8. The second way in: the sign-in without a password (OIDC)
 
