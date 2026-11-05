@@ -38,6 +38,12 @@ Z95 = 1.959964                               # a sum over many tables: the norma
 NODES, NODE_HOURS = "worker nodes in service, mean", "node-hours"
 
 
+# comparisons that are not Omni-Compass on native against that native at the factory tune: an orchestrator against the organism
+# alone (ORCH), Omni-Compass in place of an orchestrator (VS) or with it against the organism alone (BOTH), Omni-Compass by itself
+# (SOLO) and the heartbeat at another beat (PACE)
+NOT_ON_NATIVE = re.compile(r"_4W_(ORCH|VS|BOTH)$|^V\d+_SOLO|^V\d+_PACE_")
+
+
 def tables() -> tuple:
     """Every Kubernetes three-run table of the newest engine that carries the alert minutes (results/live/V<n>_*.json)."""
     by = {}
@@ -49,6 +55,8 @@ def tables() -> tuple:
             continue
         rows = d.get("rows")
         if not m or not isinstance(rows, dict) or not any(k.startswith(ALERT) for k in rows):
+            continue
+        if NOT_ON_NATIVE.search(f.stem):        # the oversight line reads Omni-Compass on native against native, at the factory tune
             continue
         by.setdefault(int(m.group(1)), []).append((f, d))
     if not by:
@@ -113,6 +121,8 @@ def build() -> dict:
     per_run = by_run(found)
     people = SHARE_EXAMPLE * pooled if pooled is not None else None
     pg = pages_counted()
+    if pg and v and pg.get("engine") != f"omni-v{v}":     # two engines are never read together: the pages wait for their recount
+        pg = {"record": pg["record"], "engine": pg["engine"], "change": None, "other_engine": True}
     return {"engine": f"omni-v{v}" if v else None, "pages": pg, "question": "they don't need a 3 a.m. call and they don't need [anyone] to turn knobs "
             "when OmniCompass is ... self-gauging", "said": "the founder, 3 November 2026", "rows": rows,
             "pooled": {"native": tn, "omni": to, "change": pooled, "runs": per_run["runs"], "reading": per_run["reading"]},
@@ -144,7 +154,7 @@ def pages_counted():
     mins = [(sum(t["runs"][k]["minutes_native"] for t in prim["tests"] if t["runs"][k]),
              sum(t["runs"][k]["minutes_omni"] for t in prim["tests"] if t["runs"][k])) for k in range(3)]
     runs = [r for t in rec["tests"] for r in t["runs"]]
-    return {"record": "results/OVERSIGHT_PAGES.md", "rule": rec["primary"], "native": nat, "omni": omn,
+    return {"record": "results/OVERSIGHT_PAGES.md", "engine": f"omni-v{rec['engine']}", "rule": rec["primary"], "native": nat, "omni": omn,
             "change": (omn / nat - 1) if nat else None, "reading": prim["reading"].replace("**", ""),
             "runs_read": sum(1 for r in runs if r["reps"]), "runs": len(runs),
             "minutes_per_page": [[a / x["native"] if x["native"] else None, b / x["omni"] if x["omni"] else None]
@@ -164,6 +174,11 @@ def _raw(x: float) -> str:
 def pages_section(d: dict) -> list:
     """The pages counted, not only the minutes: the record tools/pages.py writes from the same runs' raw files."""
     g = d.get("pages")
+    if g and g.get("other_engine"):
+        return ["## Pages counted, not only minutes", "",
+                f"The pages a person would have been sent are counted from the raw files of {g['engine']}'s tables (`{g['record']}`, "
+                f"that engine's own record); these minutes are {d['engine']}'s, and two engines are never read together, so the "
+                f"count of pages on {d['engine']}'s runs comes next and is not printed here before it is made.", ""]
     if not g or g.get("change") is None:
         return []
     mpp = "; ".join(f"{a:.1f} → {b:.1f} in run {t}" for t, (a, b) in zip("ABC", g["minutes_per_page"]) if a and b)

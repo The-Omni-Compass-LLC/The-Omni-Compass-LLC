@@ -1218,7 +1218,8 @@ def verdict_audit() -> dict:
                "runs": [[r4(x.get("native")), r4(x.get("omni")), r4(x.get("raw_pct")), r4(x.get("raw_unit")), bool(x.get("clear"))]
                         for x in r["runs"]], "ev": r.get("evidence")}
         if cz:   # the LOSS ledger's own cause, page, fix and what decides it (tools/loss_ledger.py CAUSES), never composed on the page
-            c = ledger_cause(t["stem"].split("_", 1)[1], ledger_gauge(r, t))
+            eng = t["stem"].split("_", 1)[0]
+            c = ledger_cause(t["stem"].split("_", 1)[1], ledger_gauge(r, t), int(eng[1:]) if eng[1:].isdigit() else None)
             out["cz"] = list(c) if c else None
         return out
     disc = ROOT / "results" / "verdict_audit" / "DISCREPANCIES.json"
