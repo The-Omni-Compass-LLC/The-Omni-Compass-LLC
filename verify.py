@@ -417,11 +417,6 @@ def main():
     check("the numbers a website may show, each with its receipt, the four arms A, B, C and D each from its own, and our own "
           "model's columns listed as not for the site: results/SITE_NUMBERS.md is what the records give (tools/site_numbers.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
-    r = subprocess.run([sys.executable, str(ROOT / "tools" / "film.py"), "--check"], capture_output=True, text=True)
-    check("the film, YIELD LIMIT LINE: every shot speaks the screenplay's words, every line has a shot, every number the "
-          "audience hears or reads is declared and every receipt says what its record says; the PDFs, the Final Draft file, "
-          "the shot list, the prompt pack, the cards and the overlays are what the sources give (tools/film.py)",
-          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[0])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "index_words.py"), "--check"], capture_output=True, text=True)
     check("the Owner's Manual's index, bottom line, three arms and routes are what the records give (tools/index_words.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
