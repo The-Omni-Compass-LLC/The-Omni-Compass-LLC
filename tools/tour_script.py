@@ -26,10 +26,15 @@ PAGE = ROOT / "docs" / "engine" / "OMNI_COMPASS_LIVE_ENGINE.html"
 sys.path.insert(0, str(ROOT / "tools"))
 from legal import PLAIN  # noqa: E402  (the notice, written once)
 
+# every part of the page a reader can stop at, in its order: the sections, the control cycle's trio, the title page and the
+# disclosures (5 November, the editor seat: the tour said "That is the whole page" after leaving out 3e, A and G)
+SECTION = r'<(?:section|header) class="(?:stack|trio|disclose|head)(?:\s[^"]*)?" id="([a-z0-9-]+)"'
 CAP = 640           # the most characters a stop reads from its chapter, cut at a sentence: about 40 seconds of speech
 CHAPTER = re.compile(r"^This chapter reads the page's (section [0-9]+[a-z]?|appendix [A-Z]|\*\*Contents\*\*)[, ]*(?:\*\*([^*]+)\*\*)? ?\(`#([a-z0-9-]+)`\)")
 OPEN = ("Welcome to the guided tour of the Omni-Compass Live Engine. The tour walks the page from top to bottom, one section at "
-        "a time, from the monitor wall to the glossary at the back. At each stop the section is outlined and scrolled into view, "
+        "a time, from the monitor wall to the disclosures at the back. You do not have to take the tour: you can leave it at any "
+        "moment and explore the page by hand, and the blue Guided tour tab brings it back. At each stop the section is outlined "
+        "and scrolled into view, "
         "a hand moves over it with the voice and points at what the words name, and this card says what the section shows in "
         "the words of the Live Engine Manual and names what you can do there; the buttons under Try these flash the real "
         "controls on the page. The line under the title always says what is happening and what to press. The buttons wear the "
@@ -44,7 +49,11 @@ OPEN = ("Welcome to the guided tour of the Omni-Compass Live Engine. The tour wa
         "again where you are.")
 CLOSE = ("That is the whole page. Every number on it is computed from the engine's own code or read from the repository's "
          "records, and every reading carries its word, GAIN, STEADY or LOSS, by what its gauge is for. The three manuals, the "
-         "Live Engine Manual first, open from the control panel.")
+         "Live Engine Manual first, open from the control panel. Press Close to explore the page by hand; the blue Guided tour "
+         "tab starts the tour again.")
+NAV = ("This stop is done. Press the green circle, Skip, for the next stop; the yellow diamond, Replay, to hear this one again; "
+       "the red stop sign, Back, for the stop before; or the blue question mark to see what every button does. While Step on by "
+       "itself is on, the tour goes on by itself.")
 
 
 def _strip_parens(s: str) -> str:
@@ -158,7 +167,7 @@ def _chapters(manual: str) -> dict:
 
 def _controls(page: str) -> dict:
     out = {}
-    for m in re.finditer(r'<section class="stack[^"]*" id="([a-z0-9-]+)"', page):
+    for m in re.finditer(SECTION, page):
         nxt = page.find("<section ", m.end())
         seg = page[m.end(): nxt if nxt > 0 else len(page)]
         k = re.search(r'<div class="secknobs"[^>]*>(.*?)</div>', seg, re.S)
@@ -192,6 +201,14 @@ def steps(manual: str | None = None, page: str | None = None) -> list:
         s["say"] = spoken(say)
         s["sha"] = sha(s["say"])
     return out
+
+
+def nav() -> dict:
+    """The line the card reads between two stops (5 November: the founder's words, "when Section 1 is done you need to ... tell
+    them ... hit the button for a question ... hit the other button to continue"), one recorded clip shared by every stop."""
+    say = spoken(NAV)
+    return {"id": "nav", "label": "Guided tour", "title": "Between the stops", "text": NAV, "controls": "", "notice": "",
+            "say": say, "sha": sha(say)}
 
 
 if __name__ == "__main__":

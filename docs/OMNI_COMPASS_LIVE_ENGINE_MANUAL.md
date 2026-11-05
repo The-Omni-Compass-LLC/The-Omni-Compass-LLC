@@ -1713,9 +1713,11 @@ tooltip lands where it is aimed at any size.
 
 ### 11.7 The guided tour
 
-A tab on the right edge of the screen, **Guided tour** (`#tourTab`; on a phone a round button above the dock), and the dock's
-**Tour** button start a narrated walk through the page. The tour has one stop for every section, in the page's own order, from
-the monitor wall to the glossary, with an opening and a close that carry the legal notice. At each stop the section is outlined
+A blue tab, **Guided tour** (`#tourTab`), sits just above the dock's **Tour** button on every screen and bounces while the page is
+at its top; it and the dock's button start a narrated walk through the page that steps on by itself. The tour has one stop for
+every section, in the page's own order, from the monitor wall to the disclosures, the control cycle's trio and the title page
+included, with an opening and a close that carry the legal notice. The opening says that this is the tour and that the reader may
+leave it at any moment and explore the page by hand (**Close**, or the **Escape** key; the blue tab brings it back). At each stop the section is outlined
 and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the section shows in this book's own
 words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
 own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
@@ -1728,11 +1730,13 @@ stopped, the time until the next stop, and, where no sound plays, why and what t
 the bar under it drags back or forward. Then, red to green as a traffic light on its side: the red stop sign **◀ Back** (the stop
 before), the yellow yield diamond **↺ Replay** (this stop from its first word), the green circle **Skip ▶** (the next stop) and the
 blue square **?** (a key to every button). Below them the card reads along, the sentence being read lit, and a press on any
-sentence plays it again from there. The card's foot holds **Step on by itself** (on or off: the next stop follows when this one
-ends), the speed, **0.75×**, **1×** or **1.25×**, **Voice off** or **Voice on** and, inside Claude, **Explain simply** (Claude
+sentence plays it again from there. When a stop ends, the line under the title says which button does what, and the recorded voice
+says it once ("press the green circle, Skip, for the next stop; the yellow diamond, Replay, to hear this one again; the red stop
+sign, Back, for the stop before; or the blue question mark to see what every button does"), then, while **Step on by itself** is
+on, the tour goes on to the next stop. The card's foot holds **Step on by itself** (on from the start, whichever button opened the
+tour; on or off: the next stop follows when this one ends), the speed, **0.75×**, **1×** or **1.25×**, **Voice off** or **Voice on** and, inside Claude, **Explain simply** (Claude
 restates the stop from its own text alone); then the last line, naming the voice. Keys: **J**, **K** or space, **L**, **R**,
-**S**, the arrows and **Escape**. The tab starts the tour at its opening, narrated and stepping on by itself; the dock's button
-starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started.
+**S**, the arrows and **Escape**. The tab starts the tour at its opening; the dock's button starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started.
 A hand moves over the page with the voice, through each section and from control to control, pressing only what opens (a fold, a
 tab), never a switch; the whole recorded voice loads at once when the tour starts.
 
@@ -3539,7 +3543,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Control | Where | Acts on | Leaves alone |
 |---|---|---|---|
 | Kill switch | the control panel; the head of the page's section 1; every section's controls; every monitor's strip; the console; the dock | every lever of every governor on the page, to native at once; shades every time axis red; a second press releases it | the records: nothing recorded is modified |
-| Guided tour | the tab on the right edge of the screen (on a phone, above the dock); the dock's Tour button | the page's scroll, one outlined section at a time, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
+| Guided tour | the blue tab above the dock's Tour button; the dock's Tour button | the page's scroll, one outlined section at a time, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
 | Return to native (the reset) | the fuse box's profile row; the variation switchboard's native arm | the same hand-back, named the reset; the switch reads "OFF by the reset" | the records: nothing recorded is modified |
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |

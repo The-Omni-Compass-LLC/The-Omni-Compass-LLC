@@ -28,7 +28,9 @@ class Tour(unittest.TestCase):
         cls.steps = tour_script.steps()
 
     def test_every_section_once_in_the_page_order(self):
-        sections = re.findall(r'<section class="stack[^"]*" id="([a-z0-9-]+)"', self.page)
+        sections = re.findall(tour_script.SECTION, self.page)
+        for sid in ("s-decision", "title-page", "s-disclose"):   # 5 November: the trio, the title page and the disclosures are stops too
+            self.assertIn(sid, sections)
         ids = [s["id"] for s in self.steps]
         self.assertEqual(ids[0], "intro")
         self.assertEqual(ids[-1], "end")
@@ -105,6 +107,18 @@ class Tour(unittest.TestCase):
                 self.assertIn(label, code, f"the card draws no {label!r} button")
         for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop and Next stop", "blue button"):
             self.assertNotIn(gone, tour_script.OPEN)
+
+    def test_the_reader_may_leave_and_hears_what_to_press(self):
+        """5 November (the founder's words): the opening says this is the tour and that the reader may explore by hand; the blue
+        tab sits by the dock's Tour button and bounces on the landing view; when a stop ends the voice says which button does what."""
+        self.assertIn("leave it at any moment and explore the page by hand", tour_script.OPEN)
+        nv = tour_script.nav()
+        for said in ("green circle, Skip", "yellow diamond, Replay", "red stop sign, Back", "blue question mark"):
+            self.assertIn(said, nv["text"])
+        code = self._tour_code()
+        self.assertIn("function tourNavSay(tok, go)", code)
+        self.assertIn("function tourPlaceTab()", code)
+        self.assertIn("body.tourInvite #tourTab{animation:tourBounce", self.page)
 
     def test_the_buttons_wear_the_signs_and_the_hand_moves_with_the_voice(self):
         """5 November (the founder's words): Back a red stop sign, Replay a yellow yield diamond, Play and Skip green, the
