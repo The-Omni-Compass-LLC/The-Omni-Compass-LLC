@@ -1276,7 +1276,10 @@ def tour() -> dict:
                  "runtime": v.get("runtime"), "encoder": v.get("encoder"), "made_with": v.get("made_with"),
                  "clips": sum(1 for x in steps if x["clip"]), "stops": len(steps),
                  "minutes": round(sum(x["seconds"] or 0 for x in steps) / 60, 1)}
-    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps}
+    nv = tour_script.nav(); c = clips.get("nav") or {}   # the line between the stops: one clip, read after every stop but the last
+    ok = bool(c) and c.get("sha") == nv["sha"] and (HERE / "tour" / c.get("file", "")).exists()
+    nav = {k: nv[k] for k in ("id", "title", "text", "say", "sha")} | {"clip": c["file"] if ok else "", "seconds": c.get("seconds") if ok else None}
+    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps, "nav": nav}
 
 
 def field() -> dict:
@@ -1477,11 +1480,25 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
 (function () {
   var meta = document.querySelector('meta[name="omni-live-source"]');
   if (!meta || !window.fetch || !window.JSON) return;
-  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0;
+  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0, tries = 0;
+  function whole(html) {
+    /* a page that arrived whole: it ends with its closing tag and carries its own self-update (5 November, the software seat: a page
+       cut short in transit opened as an empty wall that called itself the newest build) */
+    return !!html && /<\\/html>\\s*$/i.test(html) && html.indexOf('id="omniSelfUpdate"') > 0;
+  }
+  function again(text) {
+    /* at most four more asks a day; then the daily check */
+    if (++tries <= 4) { say(text + " Asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); }
+    else say(text + " Next check " + at(last + DAY) + ".");
+  }
   function fresh(html) {
     /* the newest build opens as a document of its own, in a fresh script realm; the few links beside the page are made
        absolute, so they still reach the repository's files */
-    html = html.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+    /* only the markup's own links: the scripts and the records are left as written (5 November, the software seat: the rewrite also
+       reached the script's template text and broke 1,012 of 1,366 links) */
+    html = html.split(/(<script\\b[\\s\\S]*?<\\/script>)/i).map(function (part, i) {
+      return i % 2 ? part : part.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+    }).join("");
     location.replace(URL.createObjectURL(new Blob([html], { type: "text/html" })));
   }
   if (typeof MON !== "undefined" && window.Blob && window.URL && URL.createObjectURL) {
@@ -1536,7 +1553,8 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
           .then(function (html) {
             var theirs = builtOf(html);
             if (!html) { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); return; }
-            if (!theirs || theirs <= mine) { say("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet; asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); return; }
+            if (!whole(html)) { again("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page arrived incomplete; this copy stays."); return; }
+            if (!theirs || theirs <= mine) { again("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet."); return; }
             /* written over this one in place, the newer build's script met this page's own declarations again and
                stopped (1 November): it opens as a document of its own */
             if (html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);

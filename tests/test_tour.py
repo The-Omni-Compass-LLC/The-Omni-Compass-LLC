@@ -28,7 +28,9 @@ class Tour(unittest.TestCase):
         cls.steps = tour_script.steps()
 
     def test_every_section_once_in_the_page_order(self):
-        sections = re.findall(r'<section class="stack[^"]*" id="([a-z0-9-]+)"', self.page)
+        sections = re.findall(tour_script.SECTION, self.page)
+        for sid in ("s-decision", "title-page", "s-disclose"):   # 5 November: the trio, the title page and the disclosures are stops too
+            self.assertIn(sid, sections)
         ids = [s["id"] for s in self.steps]
         self.assertEqual(ids[0], "intro")
         self.assertEqual(ids[-1], "end")
@@ -97,12 +99,15 @@ class Tour(unittest.TestCase):
         opening names is a button the card draws, by the name it wears."""
         code = self._tour_code()
         for said, label in (("Play", "▶ Play"), ("Pause", "⏸ Pause"), ("back ten seconds", "⏪ 10 s"), ("forward ten seconds", "10 s ⏩"),
-                            ("From the start", "↺ From the start"), ("Stop", "■ Stop"), ("Previous stop", "◀ Previous stop"),
-                            ("Next stop", "Next stop ▶"), ("Step on by itself", "Step on by itself: "), ("Close", "Close ✕")):
+                            ("Green, Continue", "Continue ▶"), ("Yellow, Replay", "↺ Replay"), ("Red, Back", "◀ Back"),
+                            ("Blue, Ask", "</span>Ask</button>"), ("Chapters", "☰ Chapters"), ("Stop", "■ Stop"),
+                            ("Step on by itself", "Step on by itself: "), ("Close", "Close ✕")):
             with self.subTest(said=said):
                 self.assertIn(said, tour_script.OPEN, f"the opening does not name {said}")
                 self.assertIn(label, code, f"the card draws no {label!r} button")
-        for gone in ("Use Next and Back", "Play steps through on its own"):
+        self.assertIn("leave it at any moment and explore the page by hand", tour_script.OPEN, "the opening says the reader may leave the tour")
+        self.assertIn("pointer", tour_script.OPEN)
+        for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop", "From the start"):
             self.assertNotIn(gone, tour_script.OPEN)
 
     def test_the_card_never_sits(self):

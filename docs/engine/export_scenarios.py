@@ -401,7 +401,7 @@ COMMON = {"Kubernetes", "Omni-Compass", "Omni", "The", "With", "Native", "Real",
 # the pages written from every table (the manuals, the state of play, the levels, the power page, the deviations register, the
 # benefit sheet, the wiring verdicts, the dossier, the summaries): each names every table and gauge, and none is a table's cause
 AGGREGATE = __import__("re").compile(r"MANUAL|STATE_OF_PLAY|LEVELS|POWER|DEVIATIONS|BENEFIT_SHEET|WIRING_VERDICTS|DOSSIER|REFEREE_SUMMARY|"
-                                     r"THE_RECEIPTS|ENGINE_COVERAGE|EVIDENCE_LEDGER|REGISTER|CHANGELOG|LIMITATIONS")
+                                     r"THE_RECEIPTS|ENGINE_COVERAGE|EVIDENCE_LEDGER|REGISTER|CHANGELOG|LIMITATIONS|SITE_AUDIT|WEBSITE_CLAIMS|AUDIT_20")
 
 
 def causes(r):

@@ -339,6 +339,17 @@ def work_for_the_bill() -> list:
     return L
 
 
+def chip_engine() -> str:
+    """The engine the chip's own receipt ran on, as results/TWO_BILLS.json names it (5 November, the mechanism seat: an omni-v23 receipt
+    was called the standing engine's)."""
+    f = ROOT / "results" / "TWO_BILLS.json"
+    try:
+        e = (json.loads(f.read_text(encoding="utf-8")).get("chip") or {}).get("engine") or ""
+    except (OSError, ValueError):
+        e = ""
+    return e.split(" ")[0] if e else "its own engine"
+
+
 def places_block(m) -> list:
     stands = m["stands"]
     tb = json.loads((ROOT / "results" / "TWO_BILLS.json").read_text(encoding="utf-8")) if (ROOT / "results" / "TWO_BILLS.json").exists() else {}
@@ -564,7 +575,8 @@ def markdown(m) -> str:
              f"on {eng}, the newest engine with its three runs in (the engine that stands, {stands}, runs it again)")
     A = m["arms"]
     L += ["", f"One real test of the whole loop, {where}, three runs on GitHub's own machines, on {A['where']}: native is "
-          f"{A['native']}, and the other side is {A['on_native']}. It is one test, not the figure of record. On top of native, "
+          f"{A['native']}, and the other side is {A['on_native']}. It is one test, not the figure of record: the verdict audit took its table "
+          "out of the count and keeps it in the record ([`results/verdict_audit/VERDICT_AUDIT.json`](results/verdict_audit/VERDICT_AUDIT.json)). On top of native, "
           f"Omni-Compass did {100 * s0['work']:.1f}% more work than native, its 95th-percentile response time "
           f"{100 * abs(s0['p95']):.1f}% {'shorter' if s0['p95'] < 0 else 'longer'}."]
     L += ["", "| Arm | Signal | Work | Response, 95th percentile | Machines | Units |", "|---|---|---|---|---|---|",
@@ -590,9 +602,9 @@ def markdown(m) -> str:
           "| Route | Bill, native → Omni-Compass → saving | Supporting measurements |", "|---|---|---|"]
     on = m["scen"][0]["rows"]["machines"]
     L.append(f"| **On-site**: the software on your own bare metal | **unresolved** in dollars: no machine-hour or energy price is declared; "
-             f"the chip's own energy on {m['stands']} is in the bare-metal box above | machines, Omni-Compass on top of native: {said(on, 'machines')} |")
+             f"the chip's own energy on {chip_engine()} is in the bare-metal box above | machines, Omni-Compass on top of native: {said(on, 'machines')} |")
     az = m["azure_now"]
-    az_txt = (f"on Azure the {az['engine']} {az['name'] + ' ' if az['name'] else ''}set (run {az['run']}) runs first, one set at a time"
+    az_txt = (f"the run ledger's newest Azure set is the {az['engine']} {az['name'] + ' ' if az['name'] else ''}set (run {az['run']}); Azure runs one set at a time"
               + (f", and the {m['stands']} sets queue behind it" if az["behind"] else "")
               + " (`docs/RUN_LEDGER.md`, section 3; `scripts/azure_queue.txt`)") if az else f"no {m['stands']} Azure set has run yet (`scripts/azure_queue.txt`)"
     cloud = (f"read in [`{m['azure'][-1].relative_to(ROOT).as_posix()}`]({m['azure'][-1].relative_to(ROOT).as_posix()})" if m["azure"]
@@ -611,8 +623,9 @@ def markdown(m) -> str:
               f"{100 * (1 - 1 / mc):.1f}% fewer (native's machines over Omni-Compass's, ×{mc:.3f}); the index over work, speed and machines "
               f"{index_word(w['index'])} {abs(w['index']):.1f}%. The energy and the cloud's bill are held at native's and never counted: the "
               "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
-              "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read it STEADY); the chip's own receipt on "
-              f"{stands} is the bare-metal box above. What the benefit "
+              "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read its work and its energy STEADY, "
+              "its response times LOSS by the mean of the three runs, `results/gpu/V21_A100_CAP_ABC.md`); the chip's own receipt, on "
+              f"{chip_engine()}, is the bare-metal box above. What the benefit "
               "cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. A composition across engines "
               f"(class S over {cls} tables), never read as one engine's result; each total follows its tables as every benchmark runs again "
               f"on {stands}."]
