@@ -659,6 +659,16 @@ def page_html(m) -> str:
         elif ln.strip():
             out.append(f"<p>{inline(ln)}</p>")
     flush()
+    # the four arms, each from its receipt, read live by the page from its bills record (armsLive): written here, where section 2b is
+    # written, so no rewrite of the section can drop it (5 November: a hand-placed container was lost at every headline run)
+    arms = ('<p><b>The four arms, each from its receipt.</b> A and B are one A10 card, native and with Omni-Compass on native, its bill the '
+            "rental and its own meter beside it; C and D are Azure's cluster, native and with Omni-Compass on native, paired repetition by "
+            "repetition, its bill the cloud's. Arm D is read from the Azure set already on file (omni-v18, at the tune-down on the machines "
+            "alone); its counted runs on the engine that stands are queued. Each change is worded by the one key: by what its gauge is for, "
+            'from a change of 0.5% up, with \u201cinside the noise\u201d said where its interval crosses zero.</p>\n  '
+            '<div class="tableWrap" id="armsLive" aria-live="off"></div>')
+    at = next((i for i, x in enumerate(out) if "The software both places carry." in x), len(out))
+    out.insert(at, arms)
     return ('<section class="stack" id="s-answer" aria-label="Benefit Against Native">\n  <h2><span class="sn">2b</span>Benefit Against Native</h2>\n  '
             + "\n  ".join(out) + "\n</section>")
 

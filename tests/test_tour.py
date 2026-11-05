@@ -98,17 +98,51 @@ class Tour(unittest.TestCase):
         neither a Back button nor a Play that stepped on, and the reader was left asking what to click. Every control the
         opening names is a button the card draws, by the name it wears."""
         code = self._tour_code()
-        for said, label in (("Play", "▶ Play"), ("Pause", "⏸ Pause"), ("back ten seconds", "⏪ 10 s"), ("forward ten seconds", "10 s ⏩"),
-                            ("Green, Continue", "Continue ▶"), ("Yellow, Replay", "↺ Replay"), ("Red, Back", "◀ Back"),
-                            ("Blue, Ask", "</span>Ask</button>"), ("Chapters", "☰ Chapters"), ("Stop", "■ Stop"),
-                            ("Step on by itself", "Step on by itself: "), ("Close", "Close ✕")):
+        for said, label in (("Play", "▶ Play"), ("Continue", "▶ Continue"), ("Pause", "⏸ Pause"), ("back ten seconds", "⏪ 10 s"),
+                            ("forward ten seconds", "10 s ⏩"), ("Replay", "↺ Replay"), ("Stop", "■ Stop"), ("Back", "◀ Back"),
+                            ("Skip", "Skip ▶"), ("question mark", 'id="tHelp"'), ("Step on by itself", "Step on by itself: "),
+                            ("Close", "Close ✕")):
             with self.subTest(said=said):
                 self.assertIn(said, tour_script.OPEN, f"the opening does not name {said}")
                 self.assertIn(label, code, f"the card draws no {label!r} button")
-        self.assertIn("leave it at any moment and explore the page by hand", tour_script.OPEN, "the opening says the reader may leave the tour")
-        self.assertIn("pointer", tour_script.OPEN)
-        for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop", "From the start"):
+        for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop and Next stop", "blue button"):
             self.assertNotIn(gone, tour_script.OPEN)
+
+    def test_the_reader_may_leave_and_hears_what_to_press(self):
+        """5 November (the founder's words): the opening says this is the tour and that the reader may explore by hand; the blue
+        tab sits by the dock's Tour button and bounces on the landing view; when a stop ends the voice says which button does what."""
+        self.assertIn("leave it at any moment and explore the page by hand", tour_script.OPEN)
+        nv = tour_script.nav()
+        for said in ("green circle, Skip", "yellow diamond, Replay", "red stop sign, Back", "blue question mark"):
+            self.assertIn(said, nv["text"])
+        code = self._tour_code()
+        self.assertIn("function tourNavSay(tok, go)", code)
+        self.assertIn("function tourPlaceTab()", code)
+        self.assertIn("body.tourInvite #tourTab{animation:tourBounce", self.page)
+
+    def test_the_buttons_wear_the_signs_and_the_hand_moves_with_the_voice(self):
+        """5 November (the founder's words): Back a red stop sign, Replay a yellow yield diamond, Play and Skip green, the
+        question blue; a list of every stop showing the one being read; the whole voice loaded in one go; a hand that scrolls
+        the page and points with the voice, and opens only what opening is all a press does."""
+        code = self._tour_code()
+        page = PAGE.read_text(encoding="utf-8")
+        for cls, label in (("tsig tred", "◀ Back"), ("tsig tyel", "↺ Replay"), ("tsig tgrn", "Skip ▶"), ("tsig tblu", "?</button>")):
+            self.assertRegex(code, re.escape(f'class="{cls}"') + r'[^`]*' + re.escape(label), f"{label} wears no {cls}")
+        self.assertIn('id="tPause" class="tsig tgrn"', code, "Play is the green go button")
+        self.assertIn("#tourCard .tsig.tred .tsh{clip-path:var(--oct)", page, "red only as a stop sign: Back's mark is an octagon")
+        self.assertIn("#tourCard .tsig.tyel .tsh{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)", page, "Replay's mark is a diamond")
+        self.assertIn("#tourCard .tsig.tgrn .tsh{border-radius:50%", page, "Skip's mark is a circle")
+        self.assertIn('<select id="tJump"', code, "no list of every stop")
+        self.assertIn('$("tJump").addEventListener("change", e => tourShow(+e.target.value, true));', code)
+        self.assertIn("function tourPreload()", code)
+        self.assertIn("tourShow(at, \"play\");   // the press that opened the tour is the press a browser waits for before it plays sound\n  tourPreload();", code)
+        self.assertIn("if (pre && !usedPre) { usedPre = true; TOUR.tryBase = TOUR.base; src = pre; }", code, "a loaded clip is played from this browser")
+        self.assertIn("function tourFollow(k)", code)
+        self.assertIn("if (moved && TOUR.playing) tourFollow(k);", code, "the lit sentence moves the page")
+        safe = re.search(r"const TOUR_SAFE = el => (.*?);   // opening, never a switch", code, re.S)
+        self.assertIsNotNone(safe, "the hand has no rule for what it may open")
+        for word in ("kill", "surge", "lose", "factory", "native", "stop"):
+            self.assertIn(word, safe.group(1), f"the hand could press a {word} switch")
 
     def test_the_card_never_sits(self):
         """4 November: the tour read its opening and sat. A clip that failed to load, a browser voice that never started, or a
@@ -125,7 +159,7 @@ class Tour(unittest.TestCase):
         self.assertIn("TOUR.need = true", refusal.group(1), "a refusal must light Play")
         self.assertNotIn("TOUR.auto = false", refusal.group(1), "a refusal must not stop the tour stepping on")
         self.assertIn("tneed", code)
-        self.assertIn("No sound yet: this browser plays sound only after a press. Press the lit ▶ Play", code)
+        self.assertIn("No sound yet: this browser plays sound only after a press. Press the lit green ▶ Play", code)
         for dog in ("}, 5000);", "}, 4500);", "now - TOUR.lastTAt > 8000"):
             self.assertIn(dog, code, f"a voice without its watchdog: {dog}")
         # each address of the recorded voice is tried once: only the error event moves to the next one

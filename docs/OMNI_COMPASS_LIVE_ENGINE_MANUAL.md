@@ -1714,43 +1714,31 @@ tooltip lands where it is aimed at any size.
 ### 11.7 The guided tour
 
 A blue tab, **Guided tour** (`#tourTab`), sits just above the dock's **Tour** button on every screen and bounces while the page is
-at its top; it and the dock's button start a narrated walk through the page that moves by itself. The tour has one stop for every
-section, in the page's own order, from the monitor wall to the disclosures, the control cycle's trio and the title page included,
-with an opening and a close that carry the legal notice. The opening says that this is the tour, that the reader may leave it at any
-moment and explore the page by hand (**Close**, or the **Escape** key; the blue tab brings it back), and what each button does. At
-each stop the section is outlined and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the
-section shows in this book's own words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can
-be done there (the section's own controls line); under **Try these** each button of the section is named, and a press flashes the
-real control on the page.
-
-A blue pointer (`#tourPtr`) moves with the voice. Each sentence the card reads is matched, by its own words, to the part of the
-section that carries them (a heading, a monitor, a table, a button, a folded part); the page scrolls to it, a folded part is opened
-(and folded again when the stop changes), and the pointer points at it, with a tap shown where it is a control; a sentence that
-names nothing walks the pointer on down the section, so the page keeps moving while the voice reads. The pointer never presses a
-control: the knobs, the switch and the records stay as the reader left them. A reader who scrolls the page meanwhile is left alone
-for twelve seconds.
+at its top; it and the dock's button start a narrated walk through the page that steps on by itself. The tour has one stop for
+every section, in the page's own order, from the monitor wall to the disclosures, the control cycle's trio and the title page
+included, with an opening and a close that carry the legal notice. The opening says that this is the tour and that the reader may
+leave it at any moment and explore the page by hand (**Close**, or the **Escape** key; the blue tab brings it back). At each stop the section is outlined
+and scrolled into view, and a card (`#tourCard`) shows the section's number and title, what the section shows in this book's own
+words (the first paragraphs of the chapter that reads that section, cut at a sentence) and what can be done there (the section's
+own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
 
 The card is for the reader, not the narrator: everything heard can be heard again and checked against the words, and the card
-never waits on a voice that is not playing. Under the title one line (`#tNow`) always says what is happening and what to press.
-Under it stand the four large buttons, each coloured by what it does and each colour in its shape: **Continue ▶**, green and round,
-the next stop (on the last stop **Explore by hand ✓**, which ends the tour); **↺ Replay**, yellow and shaped as a yield diamond,
-this stop again from its first word; **◀ Back**, red and shaped as a stop sign, the stop before; and **Ask**, blue, a box for a
-question: where the page runs inside Claude, Claude answers from the page's own records; elsewhere the card lists the sections of
-the page that carry the question's words and the glossary's terms, each with **Go there**, which scrolls the page to it and points
-(the search composes nothing). **☰ Chapters** beside **Close ✕** opens the list of every stop, the one being read marked **you are
-here** and the ones passed ticked; a press on any stop goes to it. The voice's own row follows: **⏪ 10 s** (back ten seconds),
-**▶ Play** and **⏸ Pause** (one button: start, or hold where it is), **10 s ⏩** (forward ten seconds) and **■ Stop** (the voice
-stops and the tour stays on this stop); the bar under it shows where the card is and drags back or forward. Below them the card
-reads along, the sentence being read lit (placed by each sentence's share of the voice, so it can sit a moment early or late), and
-a press on any sentence plays it again from there. When a stop ends, the card says which button does what, the recorded voice says
-it once ("press the green Continue button for the next stop, the yellow Replay button to hear this one again, the red Back button
-for the stop before, or the blue Ask button with a question") and, while **Step on by itself** is on, the tour goes on to the next
-stop. The card's foot holds **Step on by itself** (on from the start, whichever button opened the tour), the speed, **0.75×**,
-**1×** or **1.25×**, **Voice off** or **Voice on** and, where the page runs inside Claude, **Explain simply**; then the last line,
-which names the voice speaking. The keys follow the common players: **J** back ten seconds, **K** or the space bar play and pause,
-**L** forward ten seconds, **R** the stop from its first word, **S** stop, the arrow keys the stops and **Escape** ends the tour.
-The tab starts the tour at its opening; the dock's button starts it at the section in view; a second press of either ends it. A
-link to the page that ends in `#tour` opens the page with the tour started.
+never waits on a voice that is not playing. A list at its top (`#tJump`) names every stop, the one being read selected: pick one
+to go there. Under the title one line (`#tNow`) always says what is happening and what to press: the voice reading, paused or
+stopped, the time until the next stop, and, where no sound plays, why and what to do. The voice's row: **⏪ 10 s**, the green
+**▶ Play** (**▶ Continue** once begun, **⏸ Pause** while reading), **10 s ⏩** and **■ Stop** (the voice stops; the tour stays);
+the bar under it drags back or forward. Then, red to green as a traffic light on its side: the red stop sign **◀ Back** (the stop
+before), the yellow yield diamond **↺ Replay** (this stop from its first word), the green circle **Skip ▶** (the next stop) and the
+blue square **?** (a key to every button). Below them the card reads along, the sentence being read lit, and a press on any
+sentence plays it again from there. When a stop ends, the line under the title says which button does what, and the recorded voice
+says it once ("press the green circle, Skip, for the next stop; the yellow diamond, Replay, to hear this one again; the red stop
+sign, Back, for the stop before; or the blue question mark to see what every button does"), then, while **Step on by itself** is
+on, the tour goes on to the next stop. The card's foot holds **Step on by itself** (on from the start, whichever button opened the
+tour; on or off: the next stop follows when this one ends), the speed, **0.75×**, **1×** or **1.25×**, **Voice off** or **Voice on** and, inside Claude, **Explain simply** (Claude
+restates the stop from its own text alone); then the last line, naming the voice. Keys: **J**, **K** or space, **L**, **R**,
+**S**, the arrows and **Escape**. The tab starts the tour at its opening; the dock's button starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started.
+A hand moves over the page with the voice, through each section and from control to control, pressing only what opens (a fold, a
+tab), never a switch; the whole recorded voice loads at once when the tour starts.
 
 Whatever the browser allows, a clock moves the card. Where the recorded voice plays, it is the clock. Where only the browser's own
 voice speaks, it reads one sentence at a time, because some browsers cut a long reading short and never say it ended. Where no
@@ -3555,7 +3543,7 @@ A copy whose page, engine or records differ from what these print is not a copy 
 | Control | Where | Acts on | Leaves alone |
 |---|---|---|---|
 | Kill switch | the control panel; the head of the page's section 1; every section's controls; every monitor's strip; the console; the dock | every lever of every governor on the page, to native at once; shades every time axis red; a second press releases it | the records: nothing recorded is modified |
-| Guided tour | the blue tab above the dock's Tour button; the dock's Tour button | the page's scroll, one outlined section at a time, a folded part opened while its stop is read, the pointer, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
+| Guided tour | the blue tab above the dock's Tour button; the dock's Tour button | the page's scroll, one outlined section at a time, and the tour's card and voice (section 11.7) | every knob, the switch and the records: the tour reads and points, and a press under Try these only flashes the real control |
 | Return to native (the reset) | the fuse box's profile row; the variation switchboard's native arm | the same hand-back, named the reset; the switch reads "OFF by the reset" | the records: nothing recorded is modified |
 | Turn Omni-Compass OFF / ON | the console | the brain's outputs: OFF, read in shadow, nothing leaves; ON, outputs reach the muscles | the native side, which never stops |
 | The max / Tune-down | the control panel; the console; the page's section 3e | the dial of the live benchmark engine's governor | the records; the official runs' own dial, named in each |

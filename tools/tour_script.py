@@ -26,30 +26,34 @@ PAGE = ROOT / "docs" / "engine" / "OMNI_COMPASS_LIVE_ENGINE.html"
 sys.path.insert(0, str(ROOT / "tools"))
 from legal import PLAIN  # noqa: E402  (the notice, written once)
 
-# every part of the page the reader can stop at, in its order: the sections, the control cycle's trio, the title page and the
+# every part of the page a reader can stop at, in its order: the sections, the control cycle's trio, the title page and the
 # disclosures (5 November, the editor seat: the tour said "That is the whole page" after leaving out 3e, A and G)
 SECTION = r'<(?:section|header) class="(?:stack|trio|disclose|head)(?:\s[^"]*)?" id="([a-z0-9-]+)"'
 CAP = 640           # the most characters a stop reads from its chapter, cut at a sentence: about 40 seconds of speech
 CHAPTER = re.compile(r"^This chapter reads the page's (section [0-9]+[a-z]?|appendix [A-Z]|\*\*Contents\*\*)[, ]*(?:\*\*([^*]+)\*\*)? ?\(`#([a-z0-9-]+)`\)")
-OPEN = ("Welcome to the guided tour of the Omni-Compass Live Engine. This is the tour: it walks the page by itself, one section at "
-        "a time, from the monitor wall to the glossary at the back, and a blue pointer moves on the page to what the voice is "
-        "describing, scrolling to it and opening it where a part is folded. You do not have to take the tour: you can leave it at "
-        "any moment and explore the page by hand, and the blue Guided tour tab brings it back. The four large buttons on this card "
-        "are coloured by what they do. Green, Continue: on to the next stop. Yellow, Replay: this stop again from its first word. "
-        "Red, Back: the stop before. Blue, Ask: type a question, and the card shows where the page answers it, or, where the page "
-        "runs inside Claude, an answer from the page's own records. Chapters lists every stop and marks the one you are on; press "
-        "any stop to go straight there. Under them, Play and Pause start and hold the voice, back ten seconds and forward ten "
-        "seconds move within the stop, and Stop silences it and stays on this stop. While Step on by itself is on, the next stop "
+OPEN = ("Welcome to the guided tour of the Omni-Compass Live Engine. The tour walks the page from top to bottom, one section at "
+        "a time, from the monitor wall to the disclosures at the back. You do not have to take the tour: you can leave it at any "
+        "moment and explore the page by hand, and the blue Guided tour tab brings it back. At each stop the section is outlined "
+        "and scrolled into view, "
+        "a hand moves over it with the voice and points at what the words name, and this card says what the section shows in "
+        "the words of the Live Engine Manual and names what you can do there; the buttons under Try these flash the real "
+        "controls on the page. The line under the title always says what is happening and what to press. The buttons wear the "
+        "page's own signs. The green Play starts the voice, Continue goes on from where it paused, and Pause holds it; back ten "
+        "seconds and forward ten seconds move inside the stop, and Stop silences it and stays on this stop. Under them, the red "
+        "stop sign, Back, goes to the stop before; the yellow yield diamond, Replay, hears this stop again from its first word; "
+        "the green circle, Skip, goes on to the next stop; and the blue square, the question mark, shows what every button does. "
+        "The list at the top names every stop: pick one to go straight there. While Step on by itself is on, the next stop "
         "follows when this one ends. Press any sentence to hear it again from there. Where a browser plays sound only after a "
-        "press, the Play button lights up: press it, and the voice starts where the card is reading. Close, or the Escape key, "
-        "ends the tour.")
+        "press, the green Play lights up: press it, and the voice starts where the card is reading. Where no voice can play, "
+        "the card reads along by itself at the voice's pace. Close, or the Escape key, ends the tour; the Tour button starts it "
+        "again where you are.")
 CLOSE = ("That is the whole page. Every number on it is computed from the engine's own code or read from the repository's "
          "records, and every reading carries its word, GAIN, STEADY or LOSS, by what its gauge is for. The three manuals, the "
          "Live Engine Manual first, open from the control panel. Press Close to explore the page by hand; the blue Guided tour "
          "tab starts the tour again.")
-NAV = ("This stop is done. Press the green Continue button for the next stop, the yellow Replay button to hear this one again, "
-       "the red Back button for the stop before, or the blue Ask button with a question. While Step on by itself is on, the tour "
-       "goes on by itself.")
+NAV = ("This stop is done. Press the green circle, Skip, for the next stop; the yellow diamond, Replay, to hear this one again; "
+       "the red stop sign, Back, for the stop before; or the blue question mark to see what every button does. While Step on by "
+       "itself is on, the tour goes on by itself.")
 
 
 def _strip_parens(s: str) -> str:
