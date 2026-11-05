@@ -1721,20 +1721,20 @@ words (the first paragraphs of the chapter that reads that section, cut at a sen
 own controls line); under **Try these** each button of the section is named, and a press flashes the real control on the page.
 
 The card is for the reader, not the narrator: everything heard can be heard again and checked against the words, and the card
-never waits on a voice that is not playing. Under the title one line (`#tNow`) always says what is happening and what to press:
-the voice reading, paused or stopped, the time until the next stop, and, where no sound plays, why and what to do. The voice's own
-row follows it: **⏪ 10 s** (back ten seconds), **▶ Play** and **⏸ Pause** (one button: start, or hold where it is), **10 s ⏩**
-(forward ten seconds), **↺ From the start** (the stop again from its first word) and **■ Stop** (the voice stops and the tour
-stays on this stop); the bar under it shows where the card is and drags back or forward; then **◀ Previous stop** and **Next stop
-▶**. **Close ✕** stands at the card's top right. Below them the card reads along, the sentence being read lit (placed by each
-sentence's share of the voice, so it can sit a moment early or late), and a press on any sentence plays it again from there. The
-card's foot holds **Step on by itself** (on or off: the next stop follows when this one ends), the speed, **0.75×**, **1×** or
-**1.25×**, **Voice off** or **Voice on** and, where the page runs inside Claude, **Explain simply** (Claude restates the stop in
-plain words from the stop's own text alone, adding nothing); then a dot for every stop, a press on one going to it, and the last
-line, which names the voice speaking. The keys follow the common players: **J** back ten seconds, **K** or the space bar play and
-pause, **L** forward ten seconds, **R** from the start, **S** stop, the arrow keys the stops and **Escape** ends the tour. The tab
-starts the tour at its opening, narrated and stepping on by itself; the dock's button starts it at the section in view; a second
-press of either ends it. A link to the page that ends in `#tour` opens the page with the tour started.
+never waits on a voice that is not playing. A list at its top (`#tJump`) names every stop, the one being read selected: pick one
+to go there. Under the title one line (`#tNow`) always says what is happening and what to press: the voice reading, paused or
+stopped, the time until the next stop, and, where no sound plays, why and what to do. The voice's row: **⏪ 10 s**, the green
+**▶ Play** (**▶ Continue** once begun, **⏸ Pause** while reading), **10 s ⏩** and **■ Stop** (the voice stops; the tour stays);
+the bar under it drags back or forward. Then, red to green as a traffic light on its side: the red stop sign **◀ Back** (the stop
+before), the yellow yield diamond **↺ Replay** (this stop from its first word), the green circle **Skip ▶** (the next stop) and the
+blue square **?** (a key to every button). Below them the card reads along, the sentence being read lit, and a press on any
+sentence plays it again from there. The card's foot holds **Step on by itself** (on or off: the next stop follows when this one
+ends), the speed, **0.75×**, **1×** or **1.25×**, **Voice off** or **Voice on** and, inside Claude, **Explain simply** (Claude
+restates the stop from its own text alone); then the last line, naming the voice. Keys: **J**, **K** or space, **L**, **R**,
+**S**, the arrows and **Escape**. The tab starts the tour at its opening, narrated and stepping on by itself; the dock's button
+starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started.
+A hand moves over the page with the voice, through each section and from control to control, pressing only what opens (a fold, a
+tab), never a switch; the whole recorded voice loads at once when the tour starts.
 
 Whatever the browser allows, a clock moves the card. Where the recorded voice plays, it is the clock. Where only the browser's own
 voice speaks, it reads one sentence at a time, because some browsers cut a long reading short and never say it ended. Where no

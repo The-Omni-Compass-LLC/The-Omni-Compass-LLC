@@ -30,14 +30,18 @@ CAP = 640           # the most characters a stop reads from its chapter, cut at 
 CHAPTER = re.compile(r"^This chapter reads the page's (section [0-9]+[a-z]?|appendix [A-Z]|\*\*Contents\*\*)[, ]*(?:\*\*([^*]+)\*\*)? ?\(`#([a-z0-9-]+)`\)")
 OPEN = ("Welcome to the guided tour of the Omni-Compass Live Engine. The tour walks the page from top to bottom, one section at "
         "a time, from the monitor wall to the glossary at the back. At each stop the section is outlined and scrolled into view, "
-        "and this card says what the section shows in the words of the Live Engine Manual and names what you can do there; the "
-        "buttons under Try these flash the real controls on the page. The line under the title always says what is happening and "
-        "what to press. Play and Pause start and hold the voice; back ten seconds, forward ten seconds and From the start hear it "
-        "again; Stop silences it and stays on this stop. Previous stop and Next stop move through the tour, and while Step on by "
-        "itself is on, the next stop follows when this one ends. Press any sentence to hear it again from there. Where a browser "
-        "plays sound only after a press, the Play button lights up: press it, and the voice starts where the card is reading. "
-        "Where no voice can play, the card reads along by itself at the voice's pace. Close, or the Escape key, ends the tour; "
-        "the Tour button starts it again where you are.")
+        "a hand moves over it with the voice and points at what the words name, and this card says what the section shows in "
+        "the words of the Live Engine Manual and names what you can do there; the buttons under Try these flash the real "
+        "controls on the page. The line under the title always says what is happening and what to press. The buttons wear the "
+        "page's own signs. The green Play starts the voice, Continue goes on from where it paused, and Pause holds it; back ten "
+        "seconds and forward ten seconds move inside the stop, and Stop silences it and stays on this stop. Under them, the red "
+        "stop sign, Back, goes to the stop before; the yellow yield diamond, Replay, hears this stop again from its first word; "
+        "the green circle, Skip, goes on to the next stop; and the blue square, the question mark, shows what every button does. "
+        "The list at the top names every stop: pick one to go straight there. While Step on by itself is on, the next stop "
+        "follows when this one ends. Press any sentence to hear it again from there. Where a browser plays sound only after a "
+        "press, the green Play lights up: press it, and the voice starts where the card is reading. Where no voice can play, "
+        "the card reads along by itself at the voice's pace. Close, or the Escape key, ends the tour; the Tour button starts it "
+        "again where you are.")
 CLOSE = ("That is the whole page. Every number on it is computed from the engine's own code or read from the repository's "
          "records, and every reading carries its word, GAIN, STEADY or LOSS, by what its gauge is for. The three manuals, the "
          "Live Engine Manual first, open from the control panel.")
