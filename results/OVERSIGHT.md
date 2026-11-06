@@ -68,7 +68,7 @@ Every benchmark runs on GitHub's own machines with nobody watching, in both arms
 
 ## Pages counted, not only minutes
 
-The pages a person would have been sent are counted from the raw files of omni-v21's tables (`results/OVERSIGHT_PAGES.md`, that engine's own record); these minutes are omni-v25's, and two engines are never read together, so the count of pages on omni-v25's runs comes next and is not printed here before it is made.
+A person is paid by the page, not by the minute. Counted from the same runs' raw files by the rule written before the count (a page opens on a bad minute and closes after five clean ones; `docs/OVERSIGHT_PAGES_PREREGISTRATION.md`), and only from runs whose recount gives their table's own alert minutes (123 of 123), the pages a person would have been sent went from 33.94 to 31.73 a repetition of every test together: **down 6.5%, GAIN by the mean of our three runs, beyond the noise in 2 of 3** (`results/OVERSIGHT_PAGES.md`). A page stays open about as long in both arms (minutes a page, native → Omni-Compass: 14.1 → 13.7 in run A; 15.5 → 15.2 in run B; 14.0 → 14.3 in run C): Omni-Compass sends fewer pages, not shorter ones. Every alert rule declared with it reads GAIN (5 of 6).
 
 ## The people line, through the one equation
 

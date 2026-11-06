@@ -7,6 +7,7 @@
 GitHub every three hours and after every result, and every copy of it, the company's website's included, reads the newest
 build's stamp from the repository when it opens and every 24 hours after, and loads the newer build in place
 (docs/engine/build_live_engine.py self_update, write_version; docs/engine/LIVE_ENGINE_VERSION.json)."""
+import hashlib
 import importlib.util
 import json
 import sys
@@ -47,6 +48,12 @@ class SelfUpdate(unittest.TestCase):
         self.assertNotIn("document.write", ble.SELF_UPDATE)
         self.assertIn("URL.createObjectURL(new Blob([html]", ble.SELF_UPDATE)
         self.assertIn("location.replace(", ble.SELF_UPDATE)
+        # 6 November, the software seat: a page cut short, or with a fault in its script, opened over a working copy and called
+        # itself the newest build. It opens only with its stamp's byte count and sha256, its build the stamp's, every script
+        # compiling; a build whose engine does not start sends the tab back; a failed check is asked again within the hour
+        for s in ('crypto.subtle.digest("SHA-256"', "v.bytes", "v.sha256", "new Function(", "HOUR = 3600 * 1000", "function settle()"):
+            self.assertIn(s, ble.SELF_UPDATE)
+        self.assertNotIn("900000", ble.SELF_UPDATE)
 
     def test_a_rebuild_keeps_one_copy_however_often_it_runs(self):
         once = ble.self_update(PAGE)
@@ -64,6 +71,8 @@ class SelfUpdate(unittest.TestCase):
             finally:
                 ble.VERSION = keep
         self.assertEqual((v["engine"], v["built_at"]), ("omni-v23", "2026-11-01 18:00 UTC"))
+        data = ble.PAGE.read_bytes()
+        self.assertEqual((v["bytes"], v["sha256"]), (len(data), hashlib.sha256(data).hexdigest()))   # the page as it stands on disk
         self.assertTrue(v["page_url"].endswith("docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"))
 
     def test_the_stamp_is_committed_with_every_rebuild(self):
