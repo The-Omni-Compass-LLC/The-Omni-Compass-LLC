@@ -238,8 +238,11 @@
 })();
 
 (function () {   // the real clips: one for each band of the page, dark at both ends and blue in the middle, each over its own still frame
-  var CLIPS = ["wall/dark-1", "wall/dark-2", "wall/blue-1", "wall/blue-2", "wall/dark-2", "wall/dark-1"];   // docs/engine/wall/, top to bottom of the whole page: the dark loops at both ends, the blue in the middle (the founder's words of 6 November)
-  var bg = document.getElementById("omniBg"), A = document.getElementById("omniVidA"), B = document.getElementById("omniVidB"), cur = -1, seq = 0, want = null, bad = {}, armed = false;
+  var SCENES = {"aisles": {"name": "Aisles", "bands": ["wall/aisle1", "wall/aisle2", "wall/blueaisle", "wall/bluetray", "wall/aisle2", "wall/aisle1"]}, "wall": {"name": "Video wall", "bands": ["wall/wall_@"]}, "strips": {"name": "Strips", "bands": ["wall/strips_@"]}, "racks": {"name": "Racks", "bands": ["wall/dark-1", "wall/dark-2", "wall/blue-1", "wall/blue-2", "wall/dark-2", "wall/dark-1"]}};   // docs/engine/wall/: each scenery's loops top to bottom of the whole page, the blue in the middle; "@" is land or port by the screen's shape
+  var ORDER = ["aisles", "wall", "strips", "racks"], scene = "aisles";
+  try { var sv = localStorage.getItem("omniScene"); if (SCENES[sv]) scene = sv; } catch (e) { scene = "aisles"; }
+  var CLIPS = SCENES[scene].bands;
+  var bg = document.getElementById("omniBg"), A = document.getElementById("omniVidA"), B = document.getElementById("omniVidB"), cur = "", seq = 0, want = null, bad = {}, armed = false;
   if (!bg) return;
   function native() { try { return (typeof W !== "undefined" && W && W.killed) || (typeof MASTER !== "undefined" && MASTER && MASTER.off); } catch (e) { return false; } }
   setInterval(function () { bg.classList.toggle("native", !!native()); }, 1000);
@@ -258,6 +261,7 @@
     var de = document.documentElement, span = Math.max(1, de.scrollHeight - innerHeight), f = Math.min(1, Math.max(0, (window.scrollY || de.scrollTop || 0) / span));
     return Math.min(CLIPS.length - 1, Math.floor(f * CLIPS.length));
   }
+  function srcOf(k) { return CLIPS[k].replace("@", innerHeight > innerWidth ? "port" : "land"); }   // a grid or strips made for the screen's shape
   function hush(v) { if (v && !v.paused) { try { v.pause(); } catch (e) { /* nothing to stop */ } } }
   function arm() {   // where the browser waits for a tap before any video plays, the reader's first tap, click or key starts it
     if (armed) return; armed = true;
@@ -272,8 +276,9 @@
     if (t.paused && t.getAttribute("src")) { var p = t.play(); if (p && p.catch) p.catch(function () { arm(); }); }
   }
   function show(k) {
-    if (off() || k === cur) return;   // nothing changes while the wallpaper is off; the band is read again when it comes back
-    cur = k; var my = ++seq, src = CLIPS[k];
+    var src = srcOf(k);
+    if (off() || src === cur) return;   // nothing changes while the wallpaper is off; the band is read again when it comes back
+    cur = src; var my = ++seq;
     bg.style.backgroundImage = 'url("' + src + '.jpg")'; bg.classList.add("vid");   // the band's still frame at once: a real data centre even before, or without, the clip
     if (!moving || bad[src] || document.hidden) { want = null; A.classList.remove("on"); B.classList.remove("on"); hush(A); hush(B); return; }
     var front = A.classList.contains("on") ? A : (B.classList.contains("on") ? B : null), back = front === A ? B : A, tried = false;
@@ -295,11 +300,25 @@
   addEventListener("resize", function () { show(part()); });
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) { hush(A); hush(B); return; }
-    if (moving && !want) cur = -1; show(part()); settle();
+    if (moving && !want) cur = ""; show(part()); settle();
   });
   new MutationObserver(function () {   // the dock's Wallpaper switch: off stops the clip, on brings the band's clip back
-    if (off()) { hush(A); hush(B); } else { if (moving && !want) cur = -1; show(part()); settle(); }
+    if (off()) { hush(A); hush(B); } else { if (moving && !want) cur = ""; show(part()); settle(); }
   }).observe(document.body, {attributes: true, attributeFilter: ["class"]});
+  function label() { var b = document.getElementById("dScene"); if (b) b.textContent = "Scenery: " + SCENES[scene].name; }
+  function setScene(n) {   // the dock's Scenery button: the next scenery, remembered by the browser
+    scene = n; CLIPS = SCENES[n].bands; try { localStorage.setItem("omniScene", n); } catch (e) { /* not kept */ }
+    cur = ""; label(); show(part()); settle();
+  }
+  function wireScene() {
+    var d = document.getElementById("dock"); if (!d || document.getElementById("dScene")) { label(); return; }
+    var b = document.createElement("button"); b.id = "dScene"; b.className = "dkeep"; b.type = "button";
+    b.title = "The scenery behind the page: Aisles, Video wall, Strips or Racks (real data-centre footage; decoration only, it shows no measurement)";
+    b.addEventListener("click", function () { setScene(ORDER[(ORDER.indexOf(scene) + 1) % ORDER.length]); });
+    var w = document.getElementById("dWall"); if (w && w.parentNode === d) d.insertBefore(b, w.nextSibling); else d.appendChild(b);
+    label();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(wireScene, 0); }); else setTimeout(wireScene, 0);
   show(part());   // at once: the still frame shows and the clip loads beside the page while the rest of the page arrives
 })();
 </script>
@@ -1039,21 +1058,24 @@ section.tourOn{outline:3px solid var(--brass);outline-offset:4px;border-radius:6
 @media (max-width:640px){#tourTab[aria-pressed="true"]{display:none}}
 /* fix_VIDS: the live background under the page (real data-centre clips; the drawn night aisle where none can play), and the page's
    blocks apart on dark glass cards over it, each with a blue edge, so the racks' lights run between and through them */
-#omniBg{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background:#06121d;background-size:cover;background-position:center}
+#omniBg{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background:#2a3b4c;background-size:cover;background-position:center;filter:brightness(1.3) saturate(1.2) contrast(1.04)}
 #omniBg.vid canvas{visibility:hidden}
 #omniBg video,#omniBg canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.2s ease}
-#omniBg video{opacity:0;filter:saturate(1.3) contrast(1.06)}#omniBg video.on{opacity:1}
-#omniBg .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,9,16,.20),rgba(3,9,16,.32)),rgba(78,151,209,.06);transition:background .6s}
-#omniBg.native .tint{background:linear-gradient(180deg,rgba(3,9,16,.20),rgba(3,9,16,.32)),rgba(255,138,31,.14)}
-html{background:#06121d}
+#omniBg video{opacity:0}#omniBg video.on{opacity:1}
+#omniBg .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(214,232,255,.10),rgba(214,232,255,.04));transition:background .6s}
+#omniBg.native .tint{background:linear-gradient(180deg,rgba(255,190,120,.16),rgba(255,160,80,.10))}
+html{background:#2a3b4c}
 body{background:transparent}
 .wrap{gap:44px}
-.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.76);border:1px solid rgba(110,180,255,.42);border-radius:12px;box-shadow:0 0 0 12px rgba(7,14,23,.76),0 0 0 13px rgba(110,180,255,.42),0 0 28px 12px rgba(78,151,209,.22)}
-.panel,.toc{background-color:rgba(18,28,38,.80)}
-@media (max-width:640px){.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.56);box-shadow:0 0 0 6px rgba(7,14,23,.56),0 0 0 7px rgba(110,180,255,.42),0 0 18px 6px rgba(78,151,209,.22)}.panel,.toc{background-color:rgba(18,28,38,.62)}}
+.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.64);border:1px solid rgba(140,200,255,.55);border-radius:12px;box-shadow:0 0 0 12px rgba(7,14,23,.64),0 0 0 13px rgba(140,200,255,.55),0 0 28px 12px rgba(120,190,255,.25)}
+.panel,.toc{background-color:rgba(18,28,38,.66)}
+@media (max-width:640px){.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.52);box-shadow:0 0 0 6px rgba(7,14,23,.52),0 0 0 7px rgba(140,200,255,.55),0 0 18px 6px rgba(120,190,255,.25)}.panel,.toc{background-color:rgba(18,28,38,.56)}}
 body.wallOff #omniBg{display:none}
 body.wallOff,html:has(body.wallOff){background:var(--bg)}
 @media print{#omniBg{display:none}html{background:#fff}}
+
+
+
 
 
 
@@ -2768,7 +2790,7 @@ kill     Lᵢ ← L* at once (native)</pre>
   <p><b>Evidence by View.</b> A monitor of the engine and of the runs GitHub ran. Each view says its evidence class. The official Kubernetes and database runs are class L, played back from their own SHA-256-checked files. The engine's harness, the shipped controller on the modelled cluster, the GPU card, the Linux host, the realms table and the grid are class S: our own models, run by the repository's own code. <span data-live="hwState">The GPU place replays one card run second by second and counts the engine that stands's card tables; no CPU package has been measured on real hardware; on Google Cloud and Amazon no set has finished (their first sets, on omni-v10 on 18 October, stopped at the login).</span> The brain, nerves, compass law and verdict on the page are the engine's code, checked against the Python and the C++.</p>
   <p><b>Appraisal.</b> Every view of this page is reproduced from the repository’s own code by an independent path and compared value by value (<code>docs/engine/APPRAISAL.md</code>; rerun with <code>docs/engine/check_live_engine.py</code> and <code>docs/engine/check_records.py</code>). The brain’s mathematics agree to machine precision. The harness views and the live controller are identical to the repository’s own runs on every tick and every plant.</p>
   <p><b>Factory Tune.</b> The engine is presented as The Omni-Compass LLC tuned it and ships it: self-running, set at the factory, every muscle on its own setting, no single setting universal. A licensee may add on, retune, upgrade or tune down any muscle; a changed tune's results are its own (DISCLOSURES.md, section 3).</p>
-  <p id="wallCredit"><b>Background video.</b> The moving data centres behind the page are short loops cut from <a href="https://commons.wikimedia.org/wiki/File:B-roll_of_Wikimedia_Foundation_servers_at_CyrusOne_in_Carrollton,_Texas_-_photographed_in_2015.webm">B-roll of Wikimedia Foundation servers at CyrusOne in Carrollton, Texas (2015)</a>, by the Wikimedia Foundation, via Wikimedia Commons, licensed <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Changed: four stretches trimmed, each looped with a short dissolve, scaled to 1280 pixels wide, re-encoded without sound, one still frame taken from each, and shown under a tint, the two dark loops at the top and bottom of the page and the two blue loops in the middle. The loops (<code>docs/engine/wall/</code>) are shared under the same licence; they are not part of Omni-Compass and the notice above and below does not cover them. They are decoration: they show no measurement, and the dock's Wallpaper switch turns them off.</p>
+  <p id="wallCredit"><b>Background video.</b> The moving data centres behind the page are short loops cut from <a href="https://commons.wikimedia.org/wiki/File:B-roll_of_Wikimedia_Foundation_servers_at_CyrusOne_in_Carrollton,_Texas_-_photographed_in_2015.webm">B-roll of Wikimedia Foundation servers at CyrusOne in Carrollton, Texas (2015)</a>, by the Wikimedia Foundation, via Wikimedia Commons, licensed <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Changed: thirteen stretches trimmed, each looped with a short dissolve, scaled to 1280 pixels wide, re-encoded without sound, some set side by side as strips or a grid of tiles, one still frame taken from each loop, brightened and shown under a light veil; the dock's Scenery button chooses among Aisles, Video wall, Strips and Racks, each with its blue loops in the middle of the page. The loops (<code>docs/engine/wall/</code>) are shared under the same licence; they are not part of Omni-Compass and the notice above and below does not cover them. They are decoration: they show no measurement, and the dock's Wallpaper switch turns them off.</p>
   <h3>Contact</h3>
   <p class="contact">The Omni-Compass LLC · Main office infrastructure · Toll-free direct <b>1-888-339-9551</b> · System route asset <b>1-888-DEX-YLL-1</b><br>Landline, registered in Florida, <b>321-746-4411</b> · System route access <b>321-PING-411</b> · <a href="https://www.omni-compass.com">www.omni-compass.com</a></p>
 </section>
