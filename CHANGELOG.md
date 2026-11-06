@@ -3,10 +3,12 @@
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ## 2026-11-06: the live engine's background (no engine change; omni-v25 stands)
-- **Real data-centre footage behind the page**: five short loops (7 to 10 s each, about 0.3 to 1.2 MB, `.webm` and `.mp4`) cut from
+- **Real data-centre footage behind the page**: four short loops (7 to 10 s each, about 0.3 to 1.1 MB, `.webm` and `.mp4`) cut from
   the Wikimedia Foundation's B-roll of its servers at CyrusOne in Carrollton, Texas (2015), licensed CC BY-SA 3.0; credited in the
-  page's disclosures and in `docs/engine/wall/README.md` with the source, the licence and every change made. One loop for each part
-  of the page as the reader scrolls; two video layers dissolve one into the next. Decoration only: it shows no measurement.
+  page's disclosures and in `docs/engine/wall/README.md` with the source, the licence and every change made. The page is read as six
+  equal bands from top to bottom, the two dark loops at both ends and the two blue loops in the middle (the founder's words of
+  6 November), so the order reads the same scrolling down or back up; two video layers dissolve one into the next. Decoration only:
+  it shows no measurement.
 - **The blocks on dark glass cards**, each with a blue edge and set apart, so the footage runs between them; a dark tint over it, blue
   while Omni-Compass runs and native's orange when the kill switch hands the page to native.
 - **Where no clip plays** (the clip fails, or the reader asks the browser to save data) the drawn aisle of racks stands in; under
