@@ -4,7 +4,11 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """Three columns, same scenarios: A Kubernetes alone, B Omni-Compass on top of Kubernetes, C Omni-Compass alone.
-Held-out seeds 700201-700230 per workload. Writes results/ABC_TABLE.json and prints the table."""
+Held-out seeds 700201-700230 per workload. Our own model (class S), never a benchmark and never a headline: its C is Omni-Compass
+alone, which is not one of the four arms (A the chip native, B the chip with Omni-Compass on native, C the cloud native, D the cloud
+with Omni-Compass on native). Writes docs/history/model_tables/ABC_TABLE_MODEL.json and prints the table. (4 November: the website
+read this file from results/ and printed its web and multi response-time ratios, 47.2% and 49.9%, as whole-system gains; it was
+moved out of results/ so no page can read it as a result: results/SITE_NUMBERS.md.)"""
 import json, sys
 from multiprocessing import Pool
 from pathlib import Path
@@ -38,7 +42,7 @@ if __name__ == "__main__":
         rows = [r for vv, s, r in res if vv == v]
         out[v] = {arm: {m: float(np.mean([r[arm][m] for r in rows])) for m in rows[0]["A"] if isinstance(rows[0]["A"][m], (int, float))}
                   for arm in "ABC"}
-    (ROOT / "results/ABC_TABLE.json").write_text(json.dumps(out, indent=1))
+    (ROOT / "docs/history/model_tables/ABC_TABLE_MODEL.json").write_text(json.dumps(out, indent=1))
     for v, d in out.items():
         print(v)
         for m in ("energy_kwh", "node_hours", "p95_ms", "p99_ms", "mean_ms", "start_stop", "node_reversals", "work_completed", "time_healthy"):

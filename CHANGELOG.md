@@ -2,6 +2,26 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-05: the live engine after the consensus audit of 5 November (no engine change; omni-v25 stands)
+- **The audit**: seven seats graded the live engine page independently (editor C−, designer C, mechanism and numbers C+, software D;
+  the mechanical, live-operator and website seats run again on this build). Its first fixes, by the seats' findings:
+- **The figure of record leads**: the dock and section 2a carry the Omni index; the one orchestrator test the verdict audit took out
+  of the count is shown beside it and named so (`tools/headline.py`, `results/verdict_audit/VERDICT_AUDIT.json`).
+- **Arm D by the one key**: Azure's omni-v18 set reads failed requests up 3.9% by the mean (4.758% to 4.945%), its interval across zero,
+  a LOSS by the 0.5% floor, and the 99th percentile GAIN (down 11.0%); the four arms' panel, the README and DISCLOSURES no longer say
+  the cloud set holds.
+- **Numbers and words**: the chip's receipt named by its own engine (omni-v23); the A100's three runs read in full (work and energy
+  STEADY, the response times LOSS by the mean); at the max the cloud's governor parks no machine; section 3e's cycle at the brain's own
+  period; Azure's card and the run ledger read every run on record (the omni-v21 set ended in failure on 3 November; two omni-v25 tuning
+  cases ran to their end on 4 November); aggregate pages are never a LOSS row's cause; the reading rule stated as the one key reads it;
+  the company's and the licence's names keep their letters.
+- **The page**: the self-update rewrites only the markup's links and never opens a page that arrived incomplete (at most four retries a
+  day); at most 30 frames a second, 15 on a touch screen, and monitors at 1.5 pixels a point on a phone; each part of the page starts
+  on its own; the red word white on a darker red; one kill switch wiggles; a phone's section controls at least 44 px.
+- **The tour** (on main's card of 5 November): the blue Guided tour tab above the dock's Tour button, bouncing on the landing view; the
+  opening says the reader may leave and explore by hand; when a stop ends the card and the recorded voice say which button does what;
+  stops for 3e, A and G; it steps on by itself however it is opened (`tools/tour_script.py`, Live Engine Manual 11.7).
+
 ## 2026-11-03: omni-v25 stands: the Kafka wire's producer started before the governor's thread
 - **omni-v25** (`OMNI_V25.json`, fingerprint `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`): omni-v24 with one fault fixed in the Kafka wire: the producer is started before the governor's thread, because from omni-v22 that thread opened its own Kafka client while the producer was forked, the producer inherited a lock the thread held and never sent a message, and every Kafka run on GitHub since 30 October stopped at the job's 150-minute limit with nothing handed in; a producer that overruns its schedule now stops its workload with the reason. The governor's decisions are byte for byte omni-v24's (53 of the wire's 58 definitions identical, the brain among them). A comment in the Kubernetes governor
   names the corrected ladder's file. The Kafka workflow prints the runner's progress into the job's log. The model gate against omni-v24:

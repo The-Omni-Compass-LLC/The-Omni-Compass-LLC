@@ -268,25 +268,38 @@ def referee_tests_block() -> list:
 
 
 def worked_block() -> list:
-    """Section 3.4's worked examples of S = G / (1 + G), from the newest tables: the all-four test's work and the pooler's connections."""
+    """Section 3.4's worked examples of S = G / (1 + G), from the newest tables: the all-four test's work, and the pooler's
+    connections where its newest table cut them (on an engine where the pooler gave connections, the page says so and draws no
+    saving from it)."""
     rs = {r["benchmark"]: r for r in rows()}
     a4, pg = rs["Real Kubernetes, all four at once"], rs["PostgreSQL, the pooler's pool size"]
     m = re.search(r"work inside the line up ([\d.]+)% to ([\d.]+)%", a4["words"])
     c = re.search(r"connections held open cut ([\d.]+)% to ([\d.]+)%", pg["words"])
+    u = re.search(r"connections held open up ([\d.]+)% to ([\d.]+)%", pg["words"])
     lo, hi = float(m.group(1)), float(m.group(2))
-    clo, chi = float(c.group(1)), float(c.group(2))
     glo, ghi = lo / 100.0, hi / 100.0
-    rlo, rhi = 1.0 - chi / 100.0, 1.0 - clo / 100.0
-    text = (f"**Two worked examples, from the newest tables** (written from the benefit sheet's record by "
-            f"`python3 tools/results_chapter.py`). In the all-four Kubernetes test (`{a4['file']}`, {a4['engine']}) the same machines "
-            f"answered {m.group(1)}% to {m.group(2)}% more requests inside the response line: *G* is {glo:.2f} to {ghi:.2f}, so the same "
-            f"work would need 1/{1 + glo:.2f} to 1/{1 + ghi:.2f} of the machines, a saving *S* = *G* / (1 + *G*) of "
-            f"{100 * glo / (1 + glo):.1f}% to {100 * ghi / (1 + ghi):.1f}%, had the fleet been free to shrink; on kind it was not, which "
-            f"is why the table reports the work and not a bill. In the database test (`{pg['file']}`, {pg['engine']}) the pooler held "
-            f"{c.group(1)}% to {c.group(2)}% fewer connections open for the same work: the resource there is connections, "
-            f"*C[omni] / C[native]* is {rlo:.3f} to {rhi:.3f}, and read as more work for the same connections the gain would be "
-            f"*G* = {100 * (1 / rhi - 1):.1f}% to {100 * (1 / rlo - 1):.1f}%. Which of the two a stack takes is decided by the stack, "
-            f"and each table reports what happened.")
+    first = (f"In the all-four Kubernetes test (`{a4['file']}`, {a4['engine']}) the same machines "
+             f"answered {m.group(1)}% to {m.group(2)}% more requests inside the response line: *G* is {glo:.2f} to {ghi:.2f}, so the same "
+             f"work would need 1/{1 + glo:.2f} to 1/{1 + ghi:.2f} of the machines, a saving *S* = *G* / (1 + *G*) of "
+             f"{100 * glo / (1 + glo):.1f}% to {100 * ghi / (1 + ghi):.1f}%, had the fleet been free to shrink; on kind it was not, which "
+             f"is why the table reports the work and not a bill.")
+    if c:
+        clo, chi = float(c.group(1)), float(c.group(2))
+        rlo, rhi = 1.0 - chi / 100.0, 1.0 - clo / 100.0
+        text = (f"**Two worked examples, from the newest tables** (written from the benefit sheet's record by "
+                f"`python3 tools/results_chapter.py`). {first} In the database test (`{pg['file']}`, {pg['engine']}) the pooler held "
+                f"{c.group(1)}% to {c.group(2)}% fewer connections open for the same work: the resource there is connections, "
+                f"*C[omni] / C[native]* is {rlo:.3f} to {rhi:.3f}, and read as more work for the same connections the gain would be "
+                f"*G* = {100 * (1 / rhi - 1):.1f}% to {100 * (1 / rlo - 1):.1f}%. Which of the two a stack takes is decided by the stack, "
+                f"and each table reports what happened.")
+    else:
+        given = (f" held {u.group(1)}% to {u.group(2)}% more connections open (power given)" if u else
+                 " did not cut the connections it held open")
+        text = (f"**A worked example, from the newest tables** (written from the benefit sheet's record by "
+                f"`python3 tools/results_chapter.py`). {first} In the database test (`{pg['file']}`, {pg['engine']}) the pooler"
+                f"{given}, so no saving of connections is drawn from it on this engine; the table reports what it bought with them. "
+                f"Which of the two a stack takes, more work or fewer machines, is decided by the stack, and each table reports what "
+                f"happened.")
     return OW.wrap(text)
 
 

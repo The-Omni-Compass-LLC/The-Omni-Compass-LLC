@@ -89,7 +89,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--status", action="store_true")
     a = ap.parse_args(argv)
-    steps, idx = tour_script.steps(), load()
+    steps, idx = tour_script.steps() + [tour_script.nav()], load()   # every stop and the line between the stops
     ok, stale = status(steps, idx)
     print(f"guided tour: {len(ok)} of {len(steps)} stops have a clip that reads their words today; {len(stale)} to read")
     if a.status:

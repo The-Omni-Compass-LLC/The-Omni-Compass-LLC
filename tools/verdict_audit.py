@@ -73,6 +73,8 @@ def engine_standing() -> int:
 
 
 def comparison(base: str) -> str:
+    if base.startswith("SOLO"):     # Omni-Compass by itself, the pod autoscaler removed: Omni-Compass in place of a controller
+        return COMPARISONS[1]
     m = re.search(r"_4W_([A-Z]+)$", base)
     return COMPARISON.get(m.group(1), COMPARISONS[0]) if m else COMPARISONS[0]
 
