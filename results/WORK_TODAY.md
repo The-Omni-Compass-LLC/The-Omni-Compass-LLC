@@ -1,12 +1,12 @@
 # More Work at the End of the Day: Every Test, Native Against Omni-Compass on Native
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 > "We need to see if we're doing more work at the end of the day. That's all that matters when we're governing." (the founder, 2 November 2026)
 
 Every test the repository holds, read by its work row alone: the work done with Omni-Compass on top of native against native on the same machines, by the one key (a change of 0.5% or more is a change). Nothing here is a new measurement; each row names its record.
 
-**The answer today: more work in 10 of the 20 tests that counted their work, less work in none.** The work held in 9: each of those offers its load at a fixed rate, the same in both arms, so the most either arm can do is answer all of it inside the line. In 1 the runs disagree. 9 more tests could not show more work whatever the governor did: they sent a fixed load or did not count the work.
+**The answer today: more work in 9 of the 19 tests that counted their work, less work in none.** The work held in 9: each of those offers its load at a fixed rate, the same in both arms, so the most either arm can do is answer all of it inside the line. In 1 the runs disagree. 9 more tests could not show more work whatever the governor did: they sent a fixed load or did not count the work. 1 more, taken out of the count by the verdict audit, is shown at the end and never counted.
 
 ## The tests that counted their work
 
@@ -20,7 +20,6 @@ Every test the repository holds, read by its work row alone: the work done with 
 | the software end (GitHub's machines, class L), Real messaging (Apache Kafka, GitHub) | Kafka `heavy`: the consumer group's size, three paired repetitions, three runs | the work answered inside the response line, at a load offered at a fixed rate, the same in both arms | up 17.3% | GAIN in all three of our runs | `results/live/V25_KAFKA.json` |
 | the software end (GitHub's machines, class L), Real messaging (Apache Kafka, GitHub) | Kafka `light`: the consumer group's size, three paired repetitions, three runs | the work answered inside the response line, at a load offered at a fixed rate, the same in both arms | up 16.7% | GAIN in all three of our runs | `results/live/V25_KAFKA.json` |
 | the software end (GitHub's machines, class L), Real cache (Redis, GitHub) | Redis `large`: the cache's memory ceiling, three paired repetitions, three runs | the work answered inside the response line, at a load offered at a fixed rate, the same in both arms | up 15.6% | GAIN in all three of our runs | `results/live/V25_REDIS.json` |
-| the software end (GitHub's machines, class L), Omni-Compass's own orchestrator showing | 18 steps of 25 s, clients stepping 1 2 3 2 3 4 … | the requests served a step by clients that send again as soon as they are answered | up 8.5% (runs: up 10.3%, up 8.2%, up 7.0%) | GAIN in all three of our runs | `results/orchestrator/V21_THREE_ARMS_ABC.json` |
 | the software end (GitHub's machines, class L), Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `read_write`: the buffer pool's size, three paired repetitions, three runs | the work answered inside the response line, at a load offered at a fixed rate, the same in both arms | up 1.7% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | `results/live/V25_SYSBENCH.json` |
 | bare metal (one A10 card on Lambda, class L), the chip | The card on omni-v23, the power cap at 70% of the card's top, the full load (cap-full): three runs on an A10 | the requests the card served in the same metered window | up 0.5%, by the mean (runs: up 1.5%, up 0.7%, down 0.7%) | the runs disagree | `results/TWO_BILLS.json chip (results/gpu/V23_A10_CAP_FULL_ABC.json)` |
 | the software end (GitHub's machines, class L), Real database (PostgreSQL behind PgBouncer, GitHub) | pgbench `select`: the pooler's pool size, three paired repetitions, three runs | the work answered inside the response line, at a load offered at a fixed rate, the same in both arms | held | STEADY, under the floor (the three runs' mean 0.02%) | `results/live/V25_PGBENCH.json` |
@@ -49,10 +48,16 @@ A test that sends the same fixed load to both arms, or reads only time, misses a
 | the software end (GitHub's machines, class L), Real Kubernetes (GitHub) | With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | the test does not count its work (it reads time, misses and machines) | `results/live/V25_KEDA_REQUESTS.json` |
 | through the cloud (Azure, billed), the cloud | omni-v18, 97 paired repetitions | the work was not counted (a fixed rate of requests); the work meter runs in every cloud set from 31 October | `results/TWO_BILLS.json cloud (results/live/AKS_STEADY_100_OMNI_V18.md)` |
 
-Engines: each record names the engine it ran on (the software end's tables on omni-v21, the chip on omni-v23, the cloud on omni-v18); every benchmark runs again on omni-v24, and this page is written again from the records when they land (`python3 tools/work_today.py`).
+## The test taken out of the count
+
+| Where | Test | Work, Omni-Compass on native against native | Reading (the one key) | Why it is not counted | Record |
+|---|---|---|---|---|---|
+| the software end (GitHub's machines, class L), Omni-Compass's own orchestrator showing | 18 steps of 25 s, clients stepping 1 2 3 2 3 4 … | up 8.5% (runs: up 10.3%, up 8.2%, up 7.0%) | GAIN in all three of our runs | the verdict audit took its table out of the count (results/verdict_audit/VERDICT_AUDIT.json, status taken out): shown, never counted | `results/orchestrator/V21_THREE_ARMS_ABC.json` |
+
+Engines: each record names the engine it ran on (the software end's tables on omni-v25, the chip and the cloud on the engines their rows name above); every benchmark runs again on the engine that stands, and this page is written again from the records when they land (`python3 tools/work_today.py`).
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

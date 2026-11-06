@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -96,7 +96,7 @@ from tools.legal import TOP, _drop_end, normalize_markdown  # noqa: E402  (the o
 from tools.repo import URL as REPO_URL  # noqa: E402  (the repository, written once in tools/repo.py)
 BANNER_MD = f"> {TOP}"
 FILED = ("All patents, copyrights and trademarks covering the Omni-Compass engine, its "
-         "mathematics and its software have been filed in the United States by The Omni-Compass LLC.")
+         "mathematics and its software have been filed in the United States by The Omni-Compass LLC / Dubra Software.")
 
 # ---------------------------------------------------------------- fonts
 LIB = "/usr/share/fonts/truetype/liberation/"
@@ -1554,7 +1554,7 @@ class Book(BaseDocTemplate):
         # the page number in both bottom corners (the founder's order of 17 October: the left and the right, everywhere)
         mid = (x0 + x1) / 2
         c.setFont("Serif-Italic", SMALL); c.setFillColor(GREY)
-        c.drawCentredString(mid, 0.64 * inch, "© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only.")   # one literal, so tools/legal.py reads it whole
+        c.drawCentredString(mid, 0.64 * inch, "© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only.")   # one literal, so tools/legal.py reads it whole
         c.drawCentredString(mid, 0.51 * inch, "All patents, copyrights and trademarks filed in the USA.")
         c.setFont("Serif-Bold", 9); c.setFillColor(NAVY)
         c.drawCentredString(mid, 0.35 * inch, "www.omni-compass.com")
@@ -1633,7 +1633,7 @@ def front_matter(doc):
     s += [Marker("nohead"), Marker("chapter", title="Copyright and License"), Spacer(1, 0.2 * inch)]
     for t in [
         f"<b>The Omni-Compass {EDITION_NAME}</b><br/>{SUBTITLE}<br/>" + EDITION,
-        "Copyright © 2026 The Omni-Compass LLC. All rights reserved. No part of this book may be reproduced, stored "
+        "Copyright © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. No part of this book may be reproduced, stored "
         "or transmitted in any form or by any means, except as allowed by the Omni-Compass Evaluation License, without "
         "the written permission of The Omni-Compass LLC.",
         "The Omni-Compass LLC reserves the right to change this book, the software it describes and their terms at any "

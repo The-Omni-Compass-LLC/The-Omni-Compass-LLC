@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -52,9 +52,9 @@ PY = sys.executable
 STEPS = [1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 6, 5, 6, 7, 6, 7, 8]
 MACHINES = [(f"m{i}", 7100 + i, (i - 1) // 2) for i in range(1, 7)]     # name, port, core
 CTL_CORE = 3
-TOP = ("© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. Any commercial use, "
+TOP = ("© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only. Any commercial use, "
        "commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass "
-       "requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and "
+       "requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and "
        "printout carries this notice with LICENSE, NOTICE and DISCLOSURES.md. All patents, copyrights and trademarks "
        "filed in the USA. www.omni-compass.com")
 
@@ -639,5 +639,5 @@ def main(argv=None):
 if __name__ == "__main__":
     main()
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

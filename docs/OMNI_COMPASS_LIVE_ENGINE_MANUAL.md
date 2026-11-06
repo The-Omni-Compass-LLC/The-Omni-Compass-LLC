@@ -1,13 +1,13 @@
 # THE OMNI-COMPASS LIVE BENCHMARK ENGINE MANUAL
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ## How to Read the Live Benchmark Engine: Its Monitors, Gauges and Knobs, Native beside Omni-Compass
 
 **October 2026**
 **The Omni-Compass LLC**
 
-All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by The Omni-Compass LLC.
+All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by The Omni-Compass LLC / Dubra Software.
 
 ---
 
@@ -120,7 +120,7 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
 - **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
-- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, the machines it took read beside it, a rise power given), and the wire and the chip are read for whether it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
 
@@ -1281,9 +1281,10 @@ This chapter reads the page's section 2a, **Scorecard** (`#s-bottom`).
 
 The scorecard (`#s-bottom`), the first section of the page's Part 2, asks one question: is Omni-Compass a benefit? It answers
 with one light and one number for each way to run a workload, against native alone on the same work, read from the
-repository's own records. The line at its head (`#blHead`) puts the answer in one sentence: Omni-Compass on native, with its
-signal word and its change in work against native in the real three-run test. The same number stands in the dock at the foot of
-the screen ("vs native, more work (3 real runs): on native").
+repository's own records. The line at its head (`#blHead`) gives the figure of record first: the Omni index, every real test
+together, Omni-Compass on native against native alone, with its word, its size and the LOSS rows its tables hold, each in section
+2d. Every other number in the section is a second reading. The dock at the foot of the screen carries the same figure once it is
+unfolded (it opens folded).
 
 ### 4.2 How to read it
 
@@ -2272,7 +2273,7 @@ This chapter reads the page's section 4e, **Orchestrators and Governors** (`#s-o
 
 ### 22.1 What they are
 
-The governors and orchestrators that sit between the work and the cluster: batch schedulers and job
+These products sit between the work and the cluster: batch schedulers and job
 queues (Kueue, Volcano, the KAI scheduler, Armada), multi-cluster governors (Karmada, Open Cluster Management), the default
 Kubernetes scheduler and its bin-packing profile, the co-location and rightsizing controllers (Koordinator, Crane, CruiseKube,
 Goldilocks), the GPU and edge orchestrators (KubeRay, KubeEdge, Nephio) and Gödel. Each runs live on real Kubernetes as its
@@ -2614,10 +2615,11 @@ This chapter reads the page's section 5d, **Whole Organism** (`#s-whole`).
 
 The section opens with **What Each Place Shows: the Benefit, or That It Holds** (`#placesHold`). The software end (Kubernetes,
 the orchestrators and governors, the services) is where Omni-Compass decides and works; its benchmark shows the benefit. The chip
-(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark shows that it holds: no harm to its heat,
-its power or its service, read by the card's own meter. The cloud (the wire and the provider's own software) carries the software
-end's work and bills it by machine-hours; its benchmark shows that it holds: the bill not raised beyond the noise and the service
-not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
+(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark is to show whether it holds: no harm to
+its heat, its power or its service, read by the card's own meter. Today the card's tables hold LOSS rows on that meter, each in
+section 2d, so the set does not yet read that it holds. The cloud (the wire and the provider's own software) carries the software
+end's work and bills it by machine-hours; its benchmark is to show whether it holds: the bill not raised beyond the noise and the
+service not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
 Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
 ### 28.1 The two places a system runs
@@ -3178,7 +3180,7 @@ This chapter reads the page's appendix G, **Disclosures, Law and Contact** (`#s-
 The page closes on its appendix G, **Disclosures, Law and Contact** (`#s-disclose`), before the closing legal
 notice (`#notice-end`). It opens with the live tuning engine box (`#tuningBench`): **THIS PAGE IS A LIVE TUNING ENGINE. THE
 BENCHMARKS ARE ONE TUNED ENGINE.** Every knob, button and monitor on the page can be turned in real time (the heartbeat at 10, 15,
-30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native), and turning any
+20, 30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native), and turning any
 knob can change every metric, either way; what the page shows at any setting other than the factory tune demonstrates that range
 and is never a benchmark result. Every benchmark result is one engine at its one factory tune, chosen by the declared rule of
 `docs/THE_TUNE.md`; a tune other than the factory tune is the tuner's own, and its results are its own. No profile on the page is
@@ -3685,4 +3687,4 @@ production use.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -11,6 +11,7 @@ import pathlib
 import re
 import sys
 import unittest
+from decimal import ROUND_HALF_UP, Decimal
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
@@ -34,7 +35,9 @@ class Tour(unittest.TestCase):
         ids = [s["id"] for s in self.steps]
         self.assertEqual(ids[0], "intro")
         self.assertEqual(ids[-1], "end")
-        self.assertEqual(ids[1:-1], sections, "a section of the page has no stop, or the stops are out of the page's order")
+        if 'id="heroRow"' in self.page:   # 6 November (the editor seat): the result-first row is a stop too, right after the opening
+            self.assertEqual(ids[1], "heroRow", "the result first is the first stop after the opening")
+        self.assertEqual([i for i in ids[1:-1] if i != "heroRow"], sections, "a section of the page has no stop, or the stops are out of the page's order")
 
     def test_the_notice_opens_and_closes_it(self):
         self.assertEqual(self.steps[0]["notice"], PLAIN)
@@ -46,7 +49,7 @@ class Tour(unittest.TestCase):
     def test_each_stop_in_the_manuals_words(self):
         manual = (ROOT / "docs" / "OMNI_COMPASS_LIVE_ENGINE_MANUAL.md").read_text(encoding="utf-8")
         words = {w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'-]+", re.sub(r"[_/.]", " ", manual))}   # a file's name said as words
-        for s in self.steps[1:-1]:
+        for s in [x for x in self.steps[1:-1] if x["id"] != "heroRow"]:   # the result first speaks its own row's words, tested below
             self.assertTrue(s["text"], s["id"])
             self.assertLessEqual(len(s["text"]), tour_script.CAP + 1, s["id"])
             new = {w for w in re.findall(r"[A-Za-z][A-Za-z'-]+", s["text"]) if w.lower() not in words}
@@ -93,20 +96,41 @@ class Tour(unittest.TestCase):
         a, b = self.page.index("const TOUR = {"), self.page.index("function eqLive() {")
         return self.page[a:b]
 
-    def test_the_opening_names_the_cards_own_buttons(self):
-        """4 November: the opening told the reader to use Next and Back and that Play steps through on its own; the card had
-        neither a Back button nor a Play that stepped on, and the reader was left asking what to click. Every control the
-        opening names is a button the card draws, by the name it wears."""
+    def test_the_key_names_the_cards_own_buttons(self):
+        """4 November: the opening told the reader to use Next and Back, which the card did not have. 6 November (the live seat):
+        the opening took 2 min 11 s and promised a hand that pointed at what the words name; now it names the way on, the way
+        back, the key and Close, and the key behind the blue question mark (or the ? key) names every button the card draws."""
         code = self._tour_code()
-        for said, label in (("Play", "▶ Play"), ("Continue", "▶ Continue"), ("Pause", "⏸ Pause"), ("back ten seconds", "⏪ 10 s"),
-                            ("forward ten seconds", "10 s ⏩"), ("Replay", "↺ Replay"), ("Stop", "■ Stop"), ("Back", "◀ Back"),
-                            ("Skip", "Skip ▶"), ("question mark", 'id="tHelp"'), ("Step on by itself", "Step on by itself: "),
-                            ("Close", "Close ✕")):
-            with self.subTest(said=said):
-                self.assertIn(said, tour_script.OPEN, f"the opening does not name {said}")
-                self.assertIn(label, code, f"the card draws no {label!r} button")
-        for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop and Next stop", "blue button"):
+        key = re.search(r'<div class="tkey" id="tKey" hidden>(.*?)</div>', code, re.S)
+        self.assertIsNotNone(key, "the card has no key")
+        for label in ("▶ Play", "▶ Continue", "⏸ Pause", "⏪ 10 s", "10 s ⏩", "↺ Replay", "■ Stop", "◀ Back", "Skip ▶", "Step on by itself",
+                      "Speed", "Voice off", "Explain simply", "Fold ▾", "Unfold ▴", "Close ✕", "Esc"):
+            with self.subTest(label=label):
+                self.assertIn(label, key.group(1), f"the key does not name {label}")
+                self.assertIn(label, code.replace(key.group(0), ""), f"the card draws no {label!r}")
+        for said in ("Skip", "Back", "question mark", "Close"):
+            self.assertIn(said, tour_script.OPEN, f"the opening does not name {said}")
+        for gone in ("Use Next and Back", "Play steps through on its own", "Previous stop and Next stop", "blue button",
+                     "points at what the words name"):
             self.assertNotIn(gone, tour_script.OPEN)
+        self.assertLess(len(tour_script.OPEN), 700, "the opening is short: what every button does is the key's")
+        self.assertIn('else if (e.key === "?") { e.preventDefault(); const h = $("tHelp"); if (h) h.click(); }', code, "the ? key opens the key")
+        self.assertIn('e.classList.contains("legal") || e.classList.contains("ntc")', self.page, "the notice in the card is never painted")
+
+    def test_the_result_first_speaks_the_figure_of_record(self):
+        """6 November (the editor seat): the tour skipped the result-first row and never said the figure of record. Its stop reads
+        the Omni index row of results/BENEFIT_SHEET.json, the row the hero reads, rounded as the page rounds it, with its LOSS rows."""
+        hero = next((s for s in self.steps if s["id"] == "heroRow"), None)
+        if 'id="heroRow"' not in self.page:
+            self.assertIsNone(hero)
+            return
+        self.assertIsNotNone(hero, "no stop for the result-first row")
+        rows = json.loads((ROOT / "results" / "BENEFIT_SHEET.json").read_text(encoding="utf-8"))["rows"]
+        ox = next(r for r in rows if "Omni index" in r["benchmark"])
+        self.assertIn(f" {Decimal(abs(ox['pct'])).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)}%", hero["text"])
+        self.assertIn(f"{ox['loss']} LOSS row", hero["text"])
+        self.assertIn("second reading", hero["text"])
+        self.assertEqual(tour_script.check(self.page), [], "a stop quotes words the page no longer carries")
 
     def test_the_reader_may_leave_and_hears_what_to_press(self):
         """5 November (the founder's words): the opening says this is the tour and that the reader may explore by hand; the blue

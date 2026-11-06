@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -88,12 +88,12 @@ def build() -> dict:
     add(id="alert_minutes", word=p["reading"].split(" ")[0], reading=p["reading"], value_pct=round(100 * p["change"], 1),
         direction=_dir(p["change"]), cls="L", place=soft, engine=ov["engine"], receipt="results/OVERSIGHT.md",
         what="the minutes a person on call would have a page open, all the Kubernetes tests together",
-        sentence=f"The minutes a person would be paged: {_dir(p['change'])} {_pct(100 * p['change'])}, {p['reading']} ({ov['engine']}).")
+        sentence=f"The minutes a person would be paged: {p['reading']}, {_dir(p['change'])} {_pct(100 * p['change'])} ({ov['engine']}).")
     if g.get("change") is not None:
         add(id="pages", word=g["reading"].split(" ")[0], reading=g["reading"], value_pct=round(100 * g["change"], 1),
             direction=_dir(g["change"]), cls="L", place=soft, engine=ov["engine"], receipt="results/OVERSIGHT_PAGES.md",
             what="the pages a person would have been sent, counted from the raw files by the rule written before the count",
-            sentence=f"The pages a person would be sent: {_dir(g['change'])} {_pct(100 * g['change'])}, {g['reading']} ({ov['engine']}).")
+            sentence=f"The pages a person would be sent: {g['reading']}, {_dir(g['change'])} {_pct(100 * g['change'])} ({ov['engine']}).")
     row = a10["rows"]["energy per served request (J)"]
     ch = [100 * r["diff"] / r["native"] for r in row["runs"] if isinstance(r, dict) and r.get("native")]
     m = sum(ch) / len(ch)
@@ -102,7 +102,7 @@ def build() -> dict:
         direction=_dir(m), cls="P", place="the chip: one A10 card rented directly, its own power meter", engine=a10e,
         receipt="results/gpu/V23_A10_CAP_FULL_ABC.md",
         what="the energy for each request served, the power cap at 70% of the card's top, the full load",
-        sentence=f"On one A10 card, its own meter: energy per request served {_dir(m)} {_pct(m)}, {row['reading']} ({a10e}).")
+        sentence=f"On one A10 card, its own meter: energy per request served {row['reading']}, {_dir(m)} {_pct(m)} ({a10e}).")
     bm = wpb["places"]["bare_metal"]
     gs = [r["G"] for r in eval_runs(bm.get("runs"))]
     add(id="chip_work_for_the_bill", word="the runs disagree" if bm.get("reading", "").startswith("the runs disagree") else bm.get("reading"),
@@ -118,7 +118,7 @@ def build() -> dict:
             direction=_dir(bc), cls="L", place="through the cloud: Azure, its own bill", engine=(tb.get("cloud") or {}).get("engine"),
             receipt=(tb.get("cloud") or {}).get("page") or "results/TWO_BILLS.md",
             what="the cloud's bill, Omni-Compass on top of native against native, by the mean of the paired repetitions",
-            sentence=f"Through the cloud (Azure): the bill {_dir(bc)} {_pct(bc)}, inside the noise; the work was not counted, "
+            sentence=f"Through the cloud (Azure): the bill power given, {_dir(bc)} {_pct(bc)}, inside the noise; the work was not counted, "
                      "so the work per dollar is not read yet.")
     w, mlt = abc["web"], abc["multi"]
     sp = lambda v: 100 * (v["A"]["mean_ms"] / v["C"]["mean_ms"] - 1)  # noqa: E731
@@ -142,8 +142,8 @@ def build() -> dict:
          "why": "in that model, Omni-Compass on top of Kubernetes (column B) reads the same as Kubernetes alone on web and "
                 "multi; the model is a tuning bench, not the record."},
         {"id": "drain_20_percent", "value_pct": 20.0, "receipt": "none",
-         "why": "a 20% operational drain (13% machines + 7% people) is not on the record: the 12.9% is work and speed on "
-                "GitHub's machines, not a bill, and the people line measured is the pages (results/OVERSIGHT_PAGES.md), "
+         "why": "a 20% operational drain (13% machines + 7% people) is not on the record: the Omni index (" + _pct(h) + ", "
+                "results/OMNI_INDEX.md) is work, speed and machines on GitHub's machines, not a bill, and the people line measured is the pages (results/OVERSIGHT_PAGES.md), "
                 "worth about 2% of a run cost at a 7% people share; percentages of different bills do not add."},
         {"id": "sixteen_million", "value_pct": None, "receipt": "none",
          "why": "$16 million is 20% of $100 million; the 20% has no receipt, so neither does the $16 million."},
@@ -205,7 +205,9 @@ def four_arms(tb: dict, a10: dict) -> dict:
         C[name] = {"value": round(v["native"], 4), "unit": unit}
         D[name] = {"value": round(v["omni"], 4), "unit": unit}
         chg = 100 * v["diff"] / v["native"]
-        dvc.append({"gauge": name, "change_pct": round(chg, 1), "direction": _dir(chg), "beyond_the_noise": bool(v.get("significant"))})
+        spent = unit in ("usd", "h", "Wh")                 # a resource: a rise is power given, a fall a GAIN; every other gauge here aims lower
+        word = "STEADY" if abs(chg) < 0.5 else ("power given" if spent else "LOSS") if chg > 0 else "GAIN"
+        dvc.append({"gauge": name, "word": word, "change_pct": round(chg, 1), "direction": _dir(chg), "beyond_the_noise": bool(v.get("significant"))})
     reps = cl.get("repetitions") or aks.get("repetitions")
     arms = {
         "A": {"name": "the chip native", "place": "one A10 card rented directly; its bill the rental", "class": "P", "engine": eng,
@@ -226,8 +228,8 @@ def four_arms(tb: dict, a10: dict) -> dict:
     sig = [x for x in dvc if x["beyond_the_noise"]]
     inside = [x for x in dvc if not x["beyond_the_noise"]]
     s_d = (f"Arm D, the cloud with Omni-Compass on native, against arm C, the cloud native (Azure, {reps} paired repetitions, one run, "
-           f"{cl.get('engine')}): " + "; ".join(f"{x['gauge']} {x['direction']} {_pct(x['change_pct'])}, beyond the noise" for x in sig)
-           + ("; " if sig and inside else "") + "; ".join(f"{x['gauge']} {x['direction']} {_pct(x['change_pct'])}, inside the noise" for x in inside)
+           f"{cl.get('engine')}): " + "; ".join(f"{x['gauge']} {x['word']}, {x['direction']} {_pct(x['change_pct'])}, beyond the noise" for x in sig)
+           + ("; " if sig and inside else "") + "; ".join(f"{x['gauge']} {x['word']}, {x['direction']} {_pct(x['change_pct'])}, inside the noise" for x in inside)
            + "; the work not counted, so the work per dollar is not read yet.")
     s_b = ("Arm B, the chip with Omni-Compass on native, against arm A, the chip native (one A10, three runs, " + eng + "): the work for "
            "the bill " + ", ".join(f"{_dir(100 * x)} {_pct(100 * x)}" for x in g) + ": the runs disagree, not yet shown to rise.")
@@ -235,7 +237,8 @@ def four_arms(tb: dict, a10: dict) -> dict:
         {"id": "arm_b_vs_a", "word": "the runs disagree", "reading": "the runs disagree", "value_pct": None,
          "runs_pct": [round(100 * x, 2) for x in g], "cls": "P", "place": arms["B"]["place"], "engine": eng, "receipt": rec_chip,
          "what": "the four arms: B against A", "sentence": s_b},
-        {"id": "arm_d_vs_c", "word": "one run", "reading": "one run: " + ("beyond the noise in " + ", ".join(x["gauge"] for x in sig) if sig else "inside the noise"),
+        {"id": "arm_d_vs_c", "word": "one run", "reading": "one run, read gauge by gauge: " + "; ".join(f"{w} on {', '.join(x['gauge'] for x in dvc if x['word'] == w)}" for w in ("LOSS", "GAIN", "power given", "STEADY") if any(x["word"] == w for x in dvc))
+                   + ("; beyond the noise in " + ", ".join(x["gauge"] for x in sig) if sig else "; every gauge inside the noise"),
          "value_pct": None, "cls": "L", "place": arms["D"]["place"], "engine": cl.get("engine"), "receipt": arms["D"]["receipt"],
          "what": "the four arms: D against C", "sentence": s_d}]
     return {"arms": arms, "sentences": sentences}
@@ -292,5 +295,5 @@ def main(argv=None) -> int:
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

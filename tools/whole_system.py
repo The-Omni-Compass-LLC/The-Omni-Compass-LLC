@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -188,6 +188,17 @@ def word_for(gauge, est):
     if r > 1.0:
         return readings.GAIN
     return readings.LOSS if AIM[gauge] in ("higher", "lower") else readings.GIVEN
+
+
+def composed_gloss(total):
+    """The index's gloss from the headline row's own totals (without the card, by the index's rule), each composed gauge by its
+    word (6 November: "on fewer machines" stood beside a machines total that read power given): "fewer machines" only where the
+    machines read GAIN, a rise power given."""
+    say = {"work": {readings.GAIN: "more work", readings.LOSS: "less work", readings.STEADY: "the same work"},
+           "speed": {readings.GAIN: "faster", readings.LOSS: "slower", readings.STEADY: "as fast"},
+           "machines": {readings.GAIN: "on fewer machines", readings.GIVEN: "the machines it took shown beside it as power given",
+                        readings.STEADY: "on the same machines"}}
+    return ", ".join(say[g].get(word_for(g, total.get(g)), f"{g} not composed") for g in COMPOSED)
 
 
 def pct(r):
@@ -621,11 +632,11 @@ def main(argv=None):
     L.append("")
     L.append("What is composed (the founder's order of 31 October 2026). The whole organism is shown at the software end: **work, speed and machines "
              "are composed**. **The energy and the bill are held at native's** (exactly 1, shown beside, never composed): on the cluster the energy is a "
-             "declared model of the machines row, never a meter, so composing it would count the fewer machines twice and claim a saving at the chip that "
+             "declared model of the machines row, never a meter, so composing it would count the machines twice and claim a change at the chip that "
              "no meter read; the cloud is the wire and its bill is kept exactly as native's, the benefit being more work for the same bill. **The chip and "
              "the wire enter as exactly 1 on every gauge**: the chip is kept exactly as native runs it (its own meter at the factory tune reads it so, "
              "section 2), and the cloud's runs are the check that the software end's benefit holds through the wire. The index over the gauges is the "
-             "mean of the three composed gauges' logs: more work, faster, on fewer machines, for the same power and the same bill.")
+             f"mean of the three composed gauges' logs: {composed_gloss(results[(SCOPE_WITHOUT, 'index')][1])}, for the same power and the same bill.")
     L.append("")
     L.append("Two readings of the same numbers. **By the index's rule** a gauge of a test enters only when its three-run reading is GAIN, LOSS or power "
              "given in all three of our runs; a STEADY gauge, a disagreement, or a table of one run enters as exactly 1 with no variance (nothing inside the "

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-// Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+// Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 // Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 // Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 // All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -65,16 +65,24 @@ const path = require("path");
   const perrs = []; phone.on("pageerror", e => perrs.push(String(e.message).slice(0, 200)));
   await phone.goto(url, {waitUntil: "load", timeout: 180000});
   await phone.waitForTimeout(8000);
+  await phone.waitForFunction(() => document.querySelectorAll("#lossKnobs tr[data-lkr]").length > 0, null, {timeout: 90000}).catch(() => {});   // the LOSS register is drawn once the engine runs
   out.checks.phone = await phone.evaluate(() => {
     const w = document.documentElement.clientWidth, sw = document.documentElement.scrollWidth;
     const wide = [...document.querySelectorAll("body *")].filter(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.right > w + 2 && getComputedStyle(e).position !== "fixed"; })
       .slice(0, 8).map(e => (e.id ? "#" + e.id : e.tagName.toLowerCase() + (e.className && typeof e.className === "string" ? "." + e.className.split(" ")[0] : "")));
-    return {client_width: w, scroll_width: sw, overflow_px: sw - w, wider_than_screen: wide};
+    // every section laid out, then: no word clipped to a stop sign over two lines (its later lines would vanish), and every LOSS row shown
+    const cv = document.createElement("style"); cv.textContent = "section.stack{content-visibility:visible!important}"; document.head.appendChild(cv);
+    const clipSplit = [...document.querySelectorAll("body *")].filter(e => { const c = getComputedStyle(e); return c.clipPath !== "none" && c.display === "inline" && e.getClientRects().length > 1; }).length;
+    const shown = sel => [...document.querySelectorAll(sel)].filter(e => e.getBoundingClientRect().height > 0 && (!e.checkVisibility || e.checkVisibility())).length;   // a row in a closed <details> is laid out but not shown
+    const loss = {register: document.querySelectorAll("#lossKnobs tr[data-lkr]").length, register_shown: shown("#lossKnobs tr[data-lkr]"),
+      against_native: document.querySelectorAll("#auditLoss tbody tr").length, against_native_shown: shown("#auditLoss tbody tr")};
+    cv.remove();
+    return {client_width: w, scroll_width: sw, overflow_px: sw - w, wider_than_screen: wide, clip_split: clipSplit, loss_rows: loss};
   }).catch(e => ({error: String(e)}));
   out.checks.phone.page_errors = perrs.length;
   await browser.close();
   console.log(JSON.stringify(out));
 })().catch(e => { console.log(JSON.stringify({fatal: String(e && e.stack || e).slice(0, 800)})); process.exit(1); });
 
-// © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+// © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
 // monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

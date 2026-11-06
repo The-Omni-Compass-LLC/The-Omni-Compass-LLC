@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -473,9 +473,9 @@ def drawing(key: str, width: float = W) -> Drawing:
 FAMILIES = {"Sans": "'Liberation Sans', Arial, Helvetica, sans-serif", "Sans-Bold": "'Liberation Sans', Arial, Helvetica, sans-serif",
             "Serif": "'Liberation Serif', 'Times New Roman', serif", "Sym": "'DejaVu Sans', Verdana, sans-serif",
             "Mono": "'DejaVu Sans Mono', Menlo, monospace"}
-NOTICE = ("© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. Any commercial use, "
+NOTICE = ("© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only. Any commercial use, "
           "commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass "
-          "requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and "
+          "requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and "
           "printout carries this notice with LICENSE, NOTICE and DISCLOSURES.md. All patents, copyrights and trademarks filed "
           "in the USA. www.omni-compass.com")
 

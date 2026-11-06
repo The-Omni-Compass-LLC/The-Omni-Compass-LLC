@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -10,6 +10,10 @@ build's stamp from the repository when it opens and every 24 hours after, and lo
 import hashlib
 import importlib.util
 import json
+import os
+import re
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -82,9 +86,63 @@ class SelfUpdate(unittest.TestCase):
         stamp = json.loads((ROOT / "docs" / "engine" / "LIVE_ENGINE_VERSION.json").read_text())
         self.assertEqual(stamp["built_at"], ble.embedded(PAGE, "build")["built_at"])
 
+    def test_the_page_carries_its_identity_and_the_stamp_names_it(self):
+        # 6 November, the software seat: four different pages carried one build time, so copies of three of them never loaded the newest.
+        # The page carries its own identity (the sha256 of its bytes with the identity read as zeros), the stamp names it, and a copy
+        # decides by it; zeros only until the build's stamp first writes it
+        head = PAGE[:PAGE.index("</head>")]
+        ids = re.findall(r'<meta name="omni-page-id" content="([0-9a-f]{64})">', head)
+        self.assertEqual(len(ids), 1, "one identity tag, in the head")
+        data = ble.PAGE.read_bytes()
+        stamp = json.loads((ROOT / "docs" / "engine" / "LIVE_ENGINE_VERSION.json").read_text())
+        if ids[0] != "0" * 64:
+            self.assertEqual(ids[0], ble.page_id(data), "the page changed after its identity was written: run build_live_engine.py --stamp")
+        if stamp.get("page_id"):
+            self.assertEqual((stamp["page_id"], stamp["bytes"], stamp["sha256"]), (ids[0], len(data), hashlib.sha256(data).hexdigest()),
+                             "the stamp names the page as committed: run docs/engine/build_live_engine.py --stamp after every writer of the page")
+        for s in ("ownId()", "v.page_id", "idOf(html)", 'mem("opening", { sha: x.v.sha256', "homeLink(p.back)", "started()"):
+            self.assertIn(s, ble.SELF_UPDATE)
+
+    def test_the_identity_is_written_once_and_follows_every_byte(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "page.html"
+            p.write_bytes(b'<html><head><meta name="omni-page-id" content="' + b"0" * 64 + b'"></head><body>one</body></html>')
+            a = ble.stamp_page_id(p)
+            once = p.read_bytes()
+            self.assertRegex(a, r"^[0-9a-f]{64}$")
+            self.assertIn(a.encode(), once)
+            self.assertEqual((ble.stamp_page_id(p), p.read_bytes()), (a, once), "stamped again, nothing changes")
+            p.write_bytes(once.replace(b"one", b"two"))
+            self.assertNotEqual(ble.stamp_page_id(p), a, "one byte changed, another identity")
+            self.assertEqual(len(p.read_bytes()), len(once), "the identity is written 64 characters for 64")
+
+    def test_every_script_the_page_runs_compiles(self):
+        # 6 November, the software seat: no check compiled the page's scripts, so a fault in one could be committed and stop the engine
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("node is not installed")
+        i, n = 0, 0
+        while True:
+            a = PAGE.find("<script", i)
+            if a < 0:
+                break
+            g = PAGE.index(">", a)
+            z = PAGE.index("</script>", g)
+            i = z + 9
+            attrs = PAGE[a + 7:g]
+            if "src=" in attrs or ("type=" in attrs and "javascript" not in attrs):
+                continue
+            with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
+                f.write(PAGE[g + 1:z])
+            r = subprocess.run([node, "--check", f.name], capture_output=True, text=True)
+            os.unlink(f.name)
+            n += 1
+            self.assertEqual(r.returncode, 0, f"the script at character {a:,} does not compile: {r.stderr[:400]}")
+        self.assertGreaterEqual(n, 4, "the self-update, the wallpaper, the first row and the engine")
+
 
 if __name__ == "__main__":
     unittest.main()
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

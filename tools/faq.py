@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -87,7 +87,7 @@ def markdown(f: dict) -> str:
          "gradually (the lease).", "",
          "**Where does it run, and where does the benefit live?** At the software end, wired in at any of three places: on site, "
          "through a cloud, or at the chip. The benefit is made and measured at the software end; at the chip and in the cloud's bill "
-         "the record shows that it holds and what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). "
+         "the record is read for whether it holds (a place holds when its runs read no LOSS) and for what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). "
          "GitHub's runners are never called bare metal.", "",
          "**What is not claimed?** No outside party has reviewed or approved these results; no model result is offered as proof; no "
          "figure without a record (a \"20% drain\", a 2.9% \"stack tax\", a projected percentage) is written anywhere "

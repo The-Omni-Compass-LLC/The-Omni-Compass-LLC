@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -55,6 +55,7 @@ def render(d, target):
     want = {"streak": imm.get("streak"), "relief": imm.get("relief"), "margin": imm.get("margin"), "hold": imm.get("hold"),
             "holdMax": imm.get("hold_max")}
     rr, k, e, ph, g, sg, an, hd = (c.get(x) or {} for x in ("reflex_run", "kill", "errors", "phone", "geometry", "signals", "anchors", "head"))
+    lr = ph.get("loss_rows") or {}
     gain, steady, loss = g.get("gain") or {}, g.get("steady") or {}, g.get("loss") or {}
     rows = [
         row("The page opens", bool(c.get("load_ms")), f"loaded in {c.get('load_ms', '—')} ms; {hd.get('bytes', 0) / 1e6:.1f} MB as rendered",
@@ -70,7 +71,7 @@ def render(d, target):
         row("STEADY is a yellow diamond", (steady.get("transform") or "").startswith("matrix(0.707107, 0.707107"),
             f"rotated 45° ({(steady.get('transform') or '')[:28]}…), {steady.get('bg')}; drawn {g.get('drawn', {}).get('steady', '—')} times",
             "a square turned 45°, yellow"),
-        row("LOSS is a red octagonal stop sign", "polygon" in (loss.get("pill_clip") or "") and "255, 77, 85" in (loss.get("pill_bg") or ""),
+        row("LOSS is a red octagonal stop sign", "polygon" in (loss.get("pill_clip") or "") and any(c in (loss.get("pill_bg") or "") for c in ("255, 77, 85", "200, 16, 46")),
             f"the word's plate clipped to an octagon, {loss.get('pill_bg')}, a white octagon inside; drawn {g.get('drawn', {}).get('loss', '—')} times",
             "an octagon, red"),
         row("The four live words", sg.get("words") == ["GAINING", "STEADY", "REDLINING", "AWAITING", "OVER THE LINE"],
@@ -87,6 +88,12 @@ def render(d, target):
         row("A phone, 390 px", ph.get("overflow_px") == 0 and ph.get("page_errors") == 0,
             f"page {ph.get('scroll_width', '—')} px wide on a {ph.get('client_width', '—')} px screen; wide tables scroll inside their own box",
             "no sideways scroll of the page"),
+        row("No red word loses a line", ph.get("clip_split") == 0,
+            f"{ph.get('clip_split', '—')} words clipped to a stop sign break over two lines at 390 px (Chromium draws only the first)", "none"),
+        row("Every LOSS row shown on a phone", bool(lr.get("register")) and lr.get("register_shown") == lr.get("register")
+            and lr.get("against_native_shown") == lr.get("against_native"),
+            f"the LOSS register {lr.get('register_shown', '—')} of {lr.get('register', '—')} rows shown at 390 px; "
+            f"the rows against native {lr.get('against_native_shown', '—')} of {lr.get('against_native', '—')}", "every row, never folded"),
     ]
     L = ["# The live benchmark engine: acceptance in a real browser", "",
          f"Read on {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} by `tools/live_engine_acceptance.py` "
@@ -128,5 +135,5 @@ def main(argv=None):
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

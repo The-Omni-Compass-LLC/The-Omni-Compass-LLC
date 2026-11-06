@@ -1,6 +1,6 @@
 # Questions a Buyer Asks, Answered from the Record
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Every number on this page is read from its record when the page is written (`python3 tools/faq.py`); each answer names the page that holds the whole story. Our own models (class S) are never offered as proof; live software is class L and a physical meter class P.
 
@@ -16,7 +16,7 @@ Every number on this page is read from its record when the page is written (`pyt
 
 **What does a person still do?** Hold the kill switch (one hand, instant, security only), set each service's response line and choose the profile. Everything else the governor does on its own: reads every gauge, writes only through the two-way plug, reads each write back, records its reason, and hands every setting back to native at the reset, after a crash gradually (the lease).
 
-**Where does it run, and where does the benefit live?** At the software end, wired in at any of three places: on site, through a cloud, or at the chip. The benefit is made and measured at the software end; at the chip and in the cloud's bill the record shows that it holds and what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). GitHub's runners are never called bare metal.
+**Where does it run, and where does the benefit live?** At the software end, wired in at any of three places: on site, through a cloud, or at the chip. The benefit is made and measured at the software end; at the chip and in the cloud's bill the record is read for whether it holds (a place holds when its runs read no LOSS) and for what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). GitHub's runners are never called bare metal.
 
 **What is not claimed?** No outside party has reviewed or approved these results; no model result is offered as proof; no figure without a record (a "20% drain", a 2.9% "stack tax", a projected percentage) is written anywhere (`docs/WEBSITE_CLAIMS.md`); turning any knob off the factory tune can change every metric, in any direction.
 
@@ -28,4 +28,4 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

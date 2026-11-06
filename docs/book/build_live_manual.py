@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -39,12 +39,19 @@ CONTACT = ("The Omni-Compass LLC, main office infrastructure. Toll-free direct: 
            "Landline, registered in Florida: 321-746-4411. www.omni-compass.com")
 
 
+FILLED = "[filled in as the page opens]"
+
+
 def text(fragment: str) -> str:
-    """Visible text of an HTML fragment, entities decoded, whitespace folded."""
+    """Visible text of an HTML fragment, entities decoded, whitespace folded; a place the page fills as it opens (an element with
+    an id, or a span with a class, holding only a dash or a "Connecting…" placeholder, or a bold lead followed by a bare dash) is
+    said to be one, never printed as a bare dash (the editor seat of 6 November: "Composed Reading. —", "(— of these sixty)")."""
     s = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", fragment, flags=re.S)
     s = re.sub(r"<br\s*/?>", " ", s)
+    s = re.sub(r'<(\w+)\b[^>]*\sid="[^"]+"[^>]*>\s*(?:—|…|(?:[A-Z][a-z]+ ?){1,3}…)\s*</\1>|<span\b[^>]*\sclass="[^"]+"[^>]*>\s*—\s*</span>', FILLED, s)
     s = re.sub(r"<[^>]+>", "", s)
-    return re.sub(r"\s+", " ", html.unescape(s)).strip()
+    s = re.sub(r"\s+", " ", html.unescape(s)).strip()
+    return FILLED if re.fullmatch(r"(?:[A-Z][a-z]+ ?){1,3}…", s) else re.sub(r"(?<=[.:]) —$", " " + FILLED, s)
 
 
 def embedded(page: str, key: str):
@@ -97,7 +104,7 @@ def model(page: str) -> dict:
                 tx = text(w.group(4)); kind = "h"
             else:
                 tx = text(w.group(2) if w.group(2) is not None else w.group(3)); kind = "p"
-            if tx and tx not in ("—", "-") and not tx.startswith("Summary.") and len(tx) > 2:
+            if tx and tx not in ("—", "-", FILLED) and not tx.startswith("Summary.") and len(tx) > 2:
                 words.append((kind, tx))
         summ_t = text(summ.group(1)) if summ else ""
         if summ_t in ("", "—"):
@@ -109,6 +116,28 @@ def model(page: str) -> dict:
                       "panels": [text(x) for x in re.findall(r"<h3[^>]*>(.*?)</h3>", sec, re.S)],
                       "monitors": [c for c in re.findall(r'<canvas id="([A-Za-z0-9_-]+)"', sec) if c != "wallCv"]})
     return {"items": items, "number": number, "canvases": canv}
+
+
+ORG = {"compute_ai_cloud": "Compute / AI / Cloud", "physics_robotics_autonomous": "Physics / Robotics / Autonomous",
+       "energy_facility_industrial": "Energy / Facility / Industrial", "distribution_specialized": "Distribution / Specialized",
+       "spine": "the spine", "stack": "the four stacked", "tower": "the tower"}
+
+
+def card_losses(page: str) -> list:
+    """Every LOSS row on the GPU card's own meter, as the page's LOSS Register lists them (gpuLoss): the card tables' rows, the
+    stacked boxes' card readings and the composition's chip layer (class P) where its tables are not among the card tables."""
+    G = (embedded(page, "gpurun") or {}).get("tables") or []
+    out = [(t, x) for t in G if t.get("kind") == "card" for x in (t.get("rows") or []) if x.get("w") == "LOSS"]
+    out += [(t, {"g": f"the card's {'95th percentile' if f.get('measure') == 'p95' else f.get('measure')}, {ORG.get(f.get('organism'), f.get('organism'))} "
+                      f"at {f.get('copies')} {'copy' if f.get('copies') == 1 else 'copies'}", "rd": f.get("rd", "")})
+            for t in G if t.get("kind") == "stacks" for f in (t.get("flagged") or []) if f.get("w") == "LOSS" and f.get("part") == "card"]
+    files = {t.get("file") for t in G}
+    for c in (embedded(page, "whole") or {}).get("cost") or []:
+        if "class P" in (c.get("piece") or "") and not any(s in files for s in c.get("sources") or []):
+            m = re.search(r"omni-v\d+", c.get("piece") or "")
+            t = {"title": f"The composition's chip layer, {c.get('piece')}", "engine": m.group(0) if m else "", "file": ", ".join(c.get("sources") or [])}
+            out += [(t, {"g": f"{x.get('gauge')} ({x.get('part')})", "rd": x.get("reading", "")}) for x in c.get("rows") or [] if x.get("word") == "LOSS"]
+    return out
 
 
 READ = {   # how to read a monitor of each layer, and what the engineer in charge does with it
@@ -233,21 +262,36 @@ def md_lines() -> list[str]:
     for k, v in K.items():
         out.append(f"| {v['label']} | {v['what']} | {v['where']} |")
     out += ["", "### Appendix C. Every LOSS row, whose it is, its cause and the knob that answers it", ""]
-    rows = []
-    for rc in scen.get("receipts", []):
-        way = re.search(r"_4W_(TOP|ORCH|BARE|VS|BOTH)\.md$", rc.get("file", ""))
-        omni = (not way) or way.group(1) in ("TOP", "BARE")
-        for r in rc.get("rows", []):
-            if r.get("w") != "LOSS":
-                continue
-            cause = next((c for c in rc.get("causes", []) if r["g"].lower().startswith(c["gauge"].lower())), None)
-            rows.append((omni, rc, r, cause))
+    rows, aud = [], embedded(page, "audit") or {}
+    if "losses" in aud:
+        # the verdict audit's own split, the one the page's LOSS Register (section 2d) counts and lists (the editor seat of
+        # 6 November: this appendix counted 163, then 291, LOSS rows against native where the page counts 273)
+        rec = {rc.get("file"): rc for rc in scen.get("receipts", [])}
+        for omni, key in ((True, "losses"), (False, "losses_apart")):
+            for x in aud.get(key) or []:
+                rc = rec.get(x.get("f")) or {"file": x.get("f", ""), "title": x.get("t", ""), "engine": x.get("e", "")}
+                r = next((y for y in rc.get("rows", []) if y.get("g") == x.get("g") and y.get("w") == "LOSS"), None) or {"g": x.get("g", ""), "abc": [x.get("rd", "")]}
+                cause = next((c for c in rc.get("causes", []) if r["g"].lower().startswith(c["gauge"].lower())), None)
+                rows.append((omni, {**rc, "engine": rc.get("engine") or x.get("e", "")}, r, cause, x.get("k", "")))
+    else:
+        for rc in scen.get("receipts", []):
+            way = re.search(r"_4W_(TOP|ORCH|BARE|VS|BOTH)\.md$", rc.get("file", ""))
+            omni = (not way) or way.group(1) in ("TOP", "BARE")
+            for r in rc.get("rows", []):
+                if r.get("w") != "LOSS":
+                    continue
+                cause = next((c for c in rc.get("causes", []) if r["g"].lower().startswith(c["gauge"].lower())), None)
+                rows.append((omni, rc, r, cause, "" if omni else "the orchestrator's own"))
     rows.sort(key=lambda x: not x[0])
-    out += [f"{sum(1 for x in rows if x[0])} LOSS rows are Omni-Compass against its native; {sum(1 for x in rows if not x[0])} are an orchestrator's own cost against the organism alone, with no Omni-Compass in either arm. Every one is shown as its table writes it.", ""]
-    for omni, rc, r, cause in rows:
+    apart, card = [x[4] for x in rows if not x[0]], card_losses(page)
+    kinds = ", ".join(f"{apart.count(k)} {k}" for k in dict.fromkeys(apart) if k)
+    out += [f"{sum(1 for x in rows if x[0])} LOSS rows are Omni-Compass against its native, the count the page's LOSS Register (section 2d) "
+            f"reads; {len(apart)} more are set apart as the verdict audit sets them and are never read as Omni-Compass against its native"
+            f"{': ' + kinds if kinds else ''}; and {len(card)} are on the GPU card's own meter (class P). Every one is shown as its table writes it.", ""]
+    for omni, rc, r, cause, kind in rows:
         g = r["g"].lower()
         if not omni:
-            knob = "nothing of Omni-Compass to turn: the orchestrator's own cost"
+            knob = f"set apart ({kind or 'the orchestrator’s own'}): not a reading of Omni-Compass against its native"
         elif re.search(r"pod start wait|start wait", g):
             knob = "the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms"
         elif re.search(r"response time|turnaround|time over the response line|wait", g):
@@ -257,7 +301,9 @@ def md_lines() -> list[str]:
         else:
             knob = "the muscle's own card (its band, cushions and glide); a setting that reads LOSS in the model gate is refused and the muscle stays native"
         cz = f" Cause: {cause['title']} (`{cause['file']}`)." if cause else ""
-        out.append(f"- **{'Omni-Compass against native' if omni else 'the orchestrator’s own cost'}.** {rc.get('title', '').split(':')[0]} ({rc.get('engine', '')}, `{rc.get('file', '')}`): {r['g']}, A B C {' · '.join(r.get('abc') or [])}.{cz} The knob: {knob}.")
+        out.append(f"- **{'Omni-Compass against native' if omni else 'Set apart, ' + (kind or 'the orchestrator’s own')}.** {rc.get('title', '').split(':')[0]} ({rc.get('engine', '')}, `{rc.get('file', '')}`): {r['g']}, A B C {' · '.join(r.get('abc') or [])}.{cz} The knob: {knob}.")
+    for t, x in card:
+        out.append(f"- **The GPU card's own meter.** {str(t.get('title', '')).split(':')[0]} ({t.get('engine', '')}, `{t.get('file', '')}`): {x['g']}; {x.get('rd', '')}.")
     out += ["", "### Appendix D. Glossary", "",
             "- **Native**: the system under its own controllers alone. **Omni-Compass** (the omni arm): the same system with Omni-Compass on top of those controllers.",
             "- **Muscle**: one knob of the system a native controller turns (replicas, machines, a power limit, a frequency ceiling, a cache size). **Organism**: a body of muscles governed as one.",

@@ -1,6 +1,6 @@
 # Instructions for GitHub Copilot in this repository
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 GitHub Copilot reads this file; every other assistant reads `AGENTS.md`, which says the same.
 
@@ -26,7 +26,7 @@ across engine versions.
 
 - Never call Omni-Compass open source, free software, or free for commercial, research, non-commercial or production use.
   It is proprietary and licensed for evaluation and simulation only (`LICENSE`, section 1). Every other use requires a
-  signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC.
+  signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software.
 - Never remove, shorten or alter the notice, the SPDX tags, `LICENSE`, `NOTICE` or `DISCLOSURES.md`, in the repository or
   in anything exported from it. Every export carries `README.md`, `LICENSE`, `NOTICE` and `DISCLOSURES.md`
   (`python3 tools/legal.py --bundle DIR` copies them).
@@ -54,4 +54,4 @@ across engine versions.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
