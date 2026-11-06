@@ -9,7 +9,8 @@ each as `.webm` and `.mp4` with one still frame as `.jpg`. They are decoration: 
 by the Wikimedia Foundation, via Wikimedia Commons.
 
 **Licence.** [Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)](https://creativecommons.org/licenses/by-sa/3.0/).
-These loops and stills are adaptations of that work and are shared under the same licence. They are not part of
+These loops and stills are adaptations of that work and are shared under the same licence (its text:
+`LICENSES/CC-BY-SA-3.0.txt`; `REUSE.toml` names them so). They are not part of
 Omni-Compass, and The Omni-Compass LLC's notice does not cover them.
 
 **Changes.** Thirteen stretches trimmed from the 720p derivative, each looped with a short dissolve (its last second or so
@@ -17,7 +18,7 @@ fades into its first), scaled to 1280 pixels wide at 24 frames a second and re-e
 MP4); some set side by side as three strips or a grid of six tiles, in a wide and an upright layout; one still frame taken
 from each loop (one second in, JPEG); on the page, brightened and shown under a light veil.
 
-| Stretch | From (seconds into the source) | Length | Shows | Used in |
+| Stretch | Cut from (seconds into the source) | Length | Shows | Used in |
 |---|---|---|---|---|
 | aisle1 | 1326.0 | 8.0 s | moving down a straight aisle between racks, white floor, doors at the end | Aisles; Video wall |
 | aisle2 | 926.0 | 6.5 s | a second straight aisle between racks | Aisles |
@@ -33,7 +34,8 @@ from each loop (one second in, JPEG); on the page, brightened and shown under a 
 | blue-1 | 1135.2 | 7.0 s | the backs of servers, blue cables and port lights | Racks |
 | blue-2 | 709.2 | 7.0 s | blue network cabling and switch lights | Racks |
 
-`strips_land` / `strips_port`: faces, blueserv and fronts in three strips, the blue in the middle. `wall_land` / `wall_port`:
+Each cut starts at the time given; its loop's first frame is its dissolve length later (1.5 s, or 1.2 s for blue-1 and
+blue-2), since the loop's last stretch dissolves into its first. `strips_land` / `strips_port`: faces, blueserv and fronts in three strips, the blue in the middle. `wall_land` / `wall_port`:
 six tiles, the blue ones in the middle column (wide) or the middle row (upright).
 
 **Where each plays.** The dock's Scenery button chooses among four sceneries, remembered by the browser: **Aisles** (the
