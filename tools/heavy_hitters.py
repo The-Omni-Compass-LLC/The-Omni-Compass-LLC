@@ -141,9 +141,11 @@ def words(x: Hit) -> str:
         return "at its limit on native: native runs the knob at the top of its range and Omni-Compass writes nothing"
     if x.tier == 4:
         return "STEADY: the same as native, no change of 0.5% or more"
-    return {"misses": f"GAIN +{x.value:.2f}%: of all its decisions, {x.value:.2f}% taken back under its line ({x.rescued:,} decisions)",
-            "line": f"GAIN +{x.value:.1f}%: the work waiting in line cleared {x.value:.1f}% sooner",
-            "work": f"GAIN +{x.value:.1f}%: work up {x.value:.1f}%"}[x.gauge]
+    # the word first, then the change in words, then why it helps (the founder's words of 6 November: "it needs to be stated why")
+    return {"misses": f"GAIN, {x.value:.2f}% of all its decisions taken back under its line ({x.rescued:,} decisions): fewer decisions past "
+                      f"its own limit, so it helps the system",
+            "line": f"GAIN, the work waiting in line cleared {x.value:.1f}% sooner: less waiting, so it helps the system",
+            "work": f"GAIN, work up {x.value:.1f}%: more work done"}[x.gauge]
 
 
 def short(x: Hit) -> str:
@@ -152,9 +154,9 @@ def short(x: Hit) -> str:
         return "at its limit on native"
     if x.tier == 4:
         return "STEADY"
-    return {"misses": f"GAIN +{x.value:.2f}% of decisions back under the line",
-            "line": f"GAIN +{x.value:.1f}%, the line cleared sooner",
-            "work": f"GAIN +{x.value:.1f}%, work up"}[x.gauge]
+    return {"misses": f"GAIN, {x.value:.2f}% of decisions back under the line",
+            "line": f"GAIN, the line cleared {x.value:.1f}% sooner",
+            "work": f"GAIN, work up {x.value:.1f}%"}[x.gauge]
 
 
 def rule_words(record: Path = RECORD) -> str:

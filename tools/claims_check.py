@@ -11,7 +11,7 @@ document, word, sentence, paragraph ... every claim and everything benchmarkable
 What it reads: every published Markdown page (the front door, docs/, docs/engine/, docs/book/, docs/specs/, the
 summaries at the top of results/), the live engine's word-for-word appendix (docs/engine/PAGE_WORD_FOR_WORD.md), and every
 spoken line of the guided tour (the page's "tour" record: what the voice says aloud). What it leaves: the history and the
-dated reports, which keep the words of their day (docs/history/, any file dated _2026-MM-DD, docs/engine/audit_*/,
+dated reports and every older engine's own page (docs/OMNI_V<n>.md), which keep the words of their day (docs/history/, any file dated _2026-MM-DD, docs/engine/audit_*/,
 CHANGELOG.md); the pre-registrations, whose bytes are locked; the per-run tables under results/<folder>/, which
 tools/reread.py reads again from their own data; the founder's rule books, which quote the retired words to retire them
 (CLAUDE.md, AGENTS.md, GEMINI.md); and docs/WEBSITE_CLAIMS.md's remove list, which quotes what must come off.
@@ -65,9 +65,19 @@ REPEAT_NAMES = re.compile(r"Governor Heartbeat|Self-Governed|governors_page|Orch
 AIM = re.compile(r"\baim\b|founder's (?:words|aim|line)|\bgoal\b", re.I)
 
 
+def standing() -> str:
+    """The engine that stands (tools/omni_version.py), whose own page is read; every older engine's page keeps the words of its day."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import omni_version   # noqa: E402
+    return "omni-" + next(iter(omni_version.VERSIONS))   # VERSIONS lists the newest first
+
+
 def published() -> list[str]:
     files = subprocess.run(["git", "-C", str(ROOT), "ls-files", "*.md"], capture_output=True, text=True, check=True).stdout.split()
-    return [f for f in files if not any(p.search(f) for p in KEEP_WORDS_OF_THEIR_DAY) or f == "docs/engine/PAGE_WORD_FOR_WORD.md"]
+    n = re.sub(r"\D", "", standing().split("-v")[-1]) or "25"
+    older = re.compile(rf"^docs/OMNI_V(?!{n}\.md$)\d+(_[A-Z0-9_]+)?\.md$")
+    return [f for f in files if (not any(p.search(f) for p in KEEP_WORDS_OF_THEIR_DAY) and not older.search(f))
+            or f == "docs/engine/PAGE_WORD_FOR_WORD.md"]
 
 
 def tour_lines() -> list[tuple[str, str]]:
