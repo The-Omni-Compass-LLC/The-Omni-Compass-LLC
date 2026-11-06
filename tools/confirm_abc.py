@@ -278,7 +278,7 @@ def main(argv=None):
         L[2:2] = [f"**Not three runs of one engine on one rig: {'; '.join(off)}.** The readings below compare runs that differ.", ""]
     L += ["", "| Measure | A | B | C | Reading |", "|---|---|---|---|---|"]
     tally, rows = {}, {}
-    for k in [CAPACITY] + KEYS:
+    for k in [CAPACITY] + [g for g in KEYS if g != CAPACITY]:   # KEYS (tools/live_reps.py) carries the capacity row too: one row, once
         rs = [p.get(k) for _, p, _, _ in runs]
         if any(r is None for r in rs):
             continue
