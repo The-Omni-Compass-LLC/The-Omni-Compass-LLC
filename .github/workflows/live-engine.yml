@@ -111,6 +111,9 @@ jobs:
           # the website's one-file copy follows every rebuild (the founder's words of 1 November: "people need to click updated new
           # shit and it needs to keep on updating"): docs/live/index.html is rebuilt from the page each time, never left behind it
           python docs/engine/build_standalone.py | tee -a "$GITHUB_STEP_SUMMARY"
+          # the stamp every copy reads, written last from the page as it is committed (its byte count and sha256 after every writer
+          # above, section 2b's included): a copy opens a newer page only when it arrives with exactly those bytes
+          python docs/engine/build_live_engine.py --stamp | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The page's engine against the Python and the C++; every record against the repository's own runs
         # the check reads with the access the build had (1 November: without GitHub's token the check's own rebuild read a run's
         # engine from CHANGELOG.md where the build had read it from GitHub's run record, and the two words differed)
