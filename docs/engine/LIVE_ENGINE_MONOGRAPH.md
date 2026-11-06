@@ -1477,7 +1477,6 @@ The safeguards are mechanical, not independent: byte-for-byte rebuilds from sign
 
 **Documentation drift.**
 
-- `docs/INDUSTRY_LANDSCAPE.md` still quotes an Omni index of 5.0% (12.9% on work and speed alone) from older tables. The figure of record is the 20.4% of `results/OMNI_INDEX.md` and `results/SITE_NUMBERS.md`.
 - `docs/LANDSCAPE.md`, read on 24 October, describes the live page with a third arm, Omni-Compass direct. The current manual shows native and Omni-Compass on top of native, "never Omni-Compass by itself" (`docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md`).
 - The descriptions that lag the page itself are listed in section 1.10, and those that lag the stack in section 2.9, item 7.
 
