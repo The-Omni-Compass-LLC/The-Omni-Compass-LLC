@@ -44,6 +44,10 @@ PRIMARY = (1, 5)                      # FOR 1 bad minute, RESET 5 clean minutes 
 RULES = ((1, 5), (1, 15), (2, 5), (2, 15), (5, 5), (5, 15))   # the sensitivity declared with it, the primary first
 Z95 = 1.959964                        # the normal point for a sum of the tables' differences, as the oversight line sums
 ARMS = {"native": "native", "compass": "omni", "bowl": "omni"}  # runs recorded before the rename call the compass arm 'bowl'
+# the four ways' "Omni-Compass on the organism alone, against the organism alone" (V<n>_<SYSTEM>_4W_BARE): its table pairs the
+# compassbare arm against the nativebare arm of the same runs, so its pages are counted from those two arms (6 November: read
+# from the native and compass arms, the recount could not give the table's own alert minutes and all thirty runs were left out)
+BARE_ARMS = {"nativebare": "native", "compassbare": "omni"}
 HOURS_PER_PAGE = 6.0                  # Beyer et al., Site Reliability Engineering (2016), ch. 11: an incident's whole cycle
 
 
@@ -115,18 +119,19 @@ def _folders() -> dict:
     return out
 
 
-def _arms(folder: str) -> dict:
-    """{part: {rep: {arm: directory}}} for every bench-<arm>-<rep> folder under a run that holds a latency.csv."""
+def _arms(folder: str, arms: dict = ARMS) -> dict:
+    """{part: {rep: {arm: directory}}} for every bench-<arm>-<rep> folder under a run that holds a latency.csv, the arms named
+    by the table's own comparison."""
     out: dict = {}
     for p in git("ls-tree", "-r", "--name-only", RAW, "--", folder).decode().splitlines():
         if not p.endswith("/latency.csv"):
             continue
         parts = p.split("/")
         m = re.fullmatch(r"bench-([a-z]+)-(\d+)", parts[-2])
-        if not m or m.group(1) not in ARMS:
+        if not m or m.group(1) not in arms:
             continue
         part = "/".join(x for x in parts[1:-2] if not re.fullmatch(r"paired-\d+", x))
-        out.setdefault(part, {}).setdefault(int(m.group(2)), {})[ARMS[m.group(1)]] = "/".join(parts[:-1])
+        out.setdefault(part, {}).setdefault(int(m.group(2)), {})[arms[m.group(1)]] = "/".join(parts[:-1])
     return out
 
 
@@ -163,7 +168,7 @@ def count() -> dict:
             t["runs"].append(one)
             if not one["folder"] or rec is None:
                 continue
-            groups = _arms(one["folder"])
+            groups = _arms(one["folder"], BARE_ARMS if re.search(r"_4W_BARE$", f.stem) else ARMS)
             tried = []
             for part, reps in sorted(groups.items()):
                 both = sorted(r for r, a in reps.items() if "native" in a and "omni" in a)

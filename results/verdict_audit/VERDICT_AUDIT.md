@@ -4,32 +4,32 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `bd7581c021097881`). The engine that stands is omni-v25. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
+Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `ec8f59bad92e00e2`). The engine that stands is omni-v25. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
 
 ## The counts
 
 | What | Count |
 |---|---|
-| Three-run tables | 338: 98 standing, 178 superseded, 60 the road, 2 taken out |
-| Standing tables, Omni-Compass against its native | 61 |
-| Standing tables on the engine that stands (omni-v25) | 93 |
+| Three-run tables | 340: 100 standing, 178 superseded, 60 the road, 2 taken out |
+| Standing tables, Omni-Compass against its native | 63 |
+| Standing tables on the engine that stands (omni-v25) | 95 |
 | Standing tables not yet run again on omni-v25 | 5 |
-| Rows recomputed from their stored values | 10560 of 14574 |
+| Rows recomputed from their stored values | 10598 of 14630 |
 | Stored readings the key reads otherwise | 0 |
 | Markdown readings unlike their JSON twin | 0 |
 
 ### Standing tables: Omni-Compass against its native (the readings do no harm is judged by)
 
-Every word: 481 GAIN, 179 power given, 570 STEADY, 273 LOSS, 185 the runs disagree, 30 the runs differ, 637 shown, 201 tuning. The four categories are exclusive: each row has one word.
+Every word: 486 GAIN, 181 power given, 584 STEADY, 287 LOSS, 188 the runs disagree, 30 the runs differ, 655 shown, 201 tuning. The four categories are exclusive: each row has one word.
 
 | Engine | Words |
 |---|---|
-| omni-v25 | 468 GAIN, 179 power given, 560 STEADY, 267 LOSS, 170 the runs disagree, 30 the runs differ, 619 shown, 201 tuning |
+| omni-v25 | 473 GAIN, 181 power given, 574 STEADY, 281 LOSS, 173 the runs disagree, 30 the runs differ, 637 shown, 201 tuning |
 | omni-v12 | 13 GAIN, 10 STEADY, 6 LOSS, 15 the runs disagree, 18 shown |
 
 | Evidence class | Words |
 |---|---|
-| L (the real software) | 384 GAIN, 169 power given, 409 STEADY, 273 LOSS, 185 the runs disagree, 580 shown, 189 tuning |
+| L (the real software) | 389 GAIN, 171 power given, 423 STEADY, 287 LOSS, 188 the runs disagree, 598 shown, 189 tuning |
 | S (an outside simulator driven by our own runner) | 97 GAIN, 10 power given, 161 STEADY, 30 the runs differ, 57 shown, 12 tuning |
 
 Useful work, time waited and resources apart (item 8 of the work order): a resource spent or held that rose is power given, shown beside what it bought, never a gain in work.
@@ -37,28 +37,28 @@ Useful work, time waited and resources apart (item 8 of the work order): a resou
 | The gauge's direction | Words |
 |---|---|
 | a count that must never rise | 6 GAIN, 82 STEADY, 14 tuning |
-| resource spent or held | 264 GAIN, 179 power given, 224 STEADY, 60 the runs disagree, 6 the runs differ, 63 tuning |
-| shown | 6 STEADY, 19 the runs differ, 637 shown, 56 tuning |
-| time waited, missed or failed | 180 GAIN, 177 STEADY, 268 LOSS, 119 the runs disagree, 2 the runs differ, 39 tuning |
+| resource spent or held | 267 GAIN, 181 power given, 230 STEADY, 62 the runs disagree, 6 the runs differ, 63 tuning |
+| shown | 6 STEADY, 19 the runs differ, 655 shown, 56 tuning |
+| time waited, missed or failed | 182 GAIN, 185 STEADY, 282 LOSS, 120 the runs disagree, 2 the runs differ, 39 tuning |
 | work done | 31 GAIN, 81 STEADY, 5 LOSS, 6 the runs disagree, 3 the runs differ, 29 tuning |
 
 Evidence strength beside the word (it never changes the word):
 
 | Word | Strength |
 |---|---|
-| GAIN | 197 strong, 94 deterministic, reproduced in all three runs, 88 inconclusive, 55 weak, 44 moderate, 3 not recomputable from runs |
-| LOSS | 90 inconclusive, 83 strong, 53 weak, 47 moderate |
-| power given | 101 strong, 26 moderate, 23 inconclusive, 19 weak, 10 deterministic, reproduced in all three runs |
+| GAIN | 198 strong, 94 deterministic, reproduced in all three runs, 92 inconclusive, 55 weak, 44 moderate, 3 not recomputable from runs |
+| LOSS | 95 inconclusive, 86 strong, 57 weak, 49 moderate |
+| power given | 101 strong, 26 moderate, 24 inconclusive, 20 weak, 10 deterministic, reproduced in all three runs |
 
-| STEADY of each kind | 225 under the floor, 345 exactly the same |
+| STEADY of each kind | 231 under the floor, 353 exactly the same |
 |---|---|
-| The runs disagree, by cause | 185 opposite directions inside overlapping noise |
+| The runs disagree, by cause | 188 opposite directions inside overlapping noise |
 
 ### Every comparison and status
 
 | Status, comparison | Words |
 |---|---|
-| standing | against its native | 481 GAIN, 179 power given, 570 STEADY, 273 LOSS, 185 the runs disagree, 30 the runs differ, 637 shown, 201 tuning |
+| standing | against its native | 486 GAIN, 181 power given, 584 STEADY, 287 LOSS, 188 the runs disagree, 30 the runs differ, 655 shown, 201 tuning |
 | standing | in place of a controller | 108 GAIN, 29 power given, 69 STEADY, 76 LOSS, 17 the runs disagree, 137 shown |
 | standing | the orchestrator's own | 31 GAIN, 11 power given, 85 STEADY, 76 LOSS, 32 the runs disagree, 99 shown |
 | standing | two changes at once | 61 GAIN, 25 power given, 45 STEADY, 95 LOSS, 9 the runs disagree, 99 shown |
@@ -71,7 +71,7 @@ Evidence strength beside the word (it never changes the word):
 
 The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two changes at once (BOTH) and in place of a controller (VS) are shown, never a reading of Omni-Compass against its native.
 
-## Every LOSS row of Omni-Compass against its native (273)
+## Every LOSS row of Omni-Compass against its native (287)
 
 | Table | Engine | Class | Gauge | Native → Omni-Compass, raw change, each run | Evidence |
 |---|---|---|---|---|---|
@@ -140,6 +140,10 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V25_CRUISEKUBE.md` | omni-v25 | L | response time (ms), mean | 76.07 → 79.08 (+4.0%); 87.47 → 90.32 (+3.2%); 82.57 → 84.86 (+2.8%) | strong; 3 of 3 beyond the noise |
 | `results/live/V25_CRUISEKUBE.md` | omni-v25 | L | response time (ms), 95th percentile | 114.3 → 117.4 (+2.7%); 135.8 → 138.8 (+2.2%); 127.3 → 129.1 (+1.4%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V25_CRUISEKUBE.md` | omni-v25 | L | response time (ms), 99th percentile | 127.5 → 137.3 (+7.7%); 155.1 → 166.5 (+7.3%); 147.1 → 147.2 (+0.1%) | weak; 1 of 3 beyond the noise |
+| `results/live/V25_CRUISEKUBE_RECORDER.md` | omni-v25 | L | response time (ms), mean | 72.94 → 74.39 (+2.0%); 75.02 → 77.37 (+3.1%); 80.02 → 81.15 (+1.4%) | weak; 1 of 3 beyond the noise |
+| `results/live/V25_CRUISEKUBE_RECORDER.md` | omni-v25 | L | response time (ms), 95th percentile | 105.8 → 109.1 (+3.1%); 112 → 116.6 (+4.1%); 120.8 → 122.1 (+1.1%) | weak; 1 of 3 beyond the noise |
+| `results/live/V25_CRUISEKUBE_RECORDER.md` | omni-v25 | L | response time (ms), 99th percentile | 117.7 → 127.8 (+8.6%); 125.5 → 136.6 (+8.8%); 133.3 → 141.9 (+6.5%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V25_CRUISEKUBE_RECORDER.md` | omni-v25 | L | pod start wait, mean (s) | 1.617 → 1.75 (+8.2%); 1.4 → 1.55 (+10.7%); 1.3 → 1.45 (+11.5%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V25_FAIRNESS.md` | omni-v25 | L | response time (ms), 95th percentile | 2042 → 2033 (−0.5%); 2123 → 2474 (+16.5%); 2428 → 2590 (+6.6%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V25_FAIRNESS.md` | omni-v25 | L | pod start wait, total (s) | 9.9 → 10.8 (+9.1%); 8.2 → 10.2 (+24.4%); 8.3 → 10.9 (+31.3%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V25_FAIRNESS.md` | omni-v25 | L | pod start wait, mean (s) | 1.66 → 1.684 (+1.4%); 1.519 → 1.833 (+20.7%); 1.521 → 1.912 (+25.7%) | weak; 1 of 3 beyond the noise |
@@ -231,6 +235,16 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V25_KOORDINATOR.md` | omni-v25 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 732.6 → 889.7 (+21.4%); 816.7 → 848.1 (+3.8%); 818.2 → 848.1 (+3.7%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V25_KOORDINATOR.md` | omni-v25 | L | queue: job turnaround, submitted to done, mean (s) | 843.7 → 877.8 (+4.0%); 898.3 → 933.6 (+3.9%); 933 → 983.9 (+5.5%) | weak; 1 of 3 beyond the noise |
 | `results/live/V25_KOORDINATOR.md` | omni-v25 | L | queue: jobs unfinished at the window's end | 9.8 → 11.7 (+19.4%); 13 → 14.9 (+14.6%); 15 → 16.4 (+9.3%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | response time (ms), 95th percentile | 209.9 → 226.6 (+8.0%); 248.4 → 259.4 (+4.4%); 219.3 → 233.3 (+6.4%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | response time (ms), 99th percentile | 302.8 → 339.3 (+12.0%); 360.2 → 383.9 (+6.6%); 324.7 → 356 (+9.6%) | strong; 3 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | time over the response line (% of samples) | 0.092 → 0.1204 (+30.8%); 0.27 → 0.4154 (+53.9%); 0.2152 → 0.2709 (+25.9%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | pod start wait, total (s) | 0.8; 3.4; 0.6 → 1.5 (+150.0%) | weak; 1 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | pod start wait, mean (s) | 0.45; 1.1833333333333333; 0.6 → 0.7 (+16.7%) | weak; 1 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | batch: queue finished (s) | 1442 → 1475 (+2.2%); 1452 → 1466 (+0.9%); 1443 → 1480 (+2.5%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | queue: job wait, submitted to its first pod running, mean (s) | 118 → 171.7 (+45.4%); 161.8 → 204.9 (+26.6%); 133.8 → 183.7 (+37.3%) | strong; 3 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 569.3 → 734.6 (+29.0%); 779.2 → 805 (+3.3%); 612 → 738.4 (+20.7%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | queue: job turnaround, submitted to done, mean (s) | 766.7 → 805.2 (+5.0%); 852.1 → 909.7 (+6.8%); 811.9 → 877.1 (+8.0%) | strong; 3 of 3 beyond the noise |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | L | queue: jobs unfinished at the window's end | 6.8 → 8.1 (+19.1%); 12.8 → 14.2 (+10.9%); 9.9 → 12.2 (+23.2%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V25_KUBERAY_4W_BARE.md` | omni-v25 | L | response time (ms), 95th percentile | 1973 → 2096 (+6.2%); 1176 → 1315 (+11.8%); 1405 → 1575 (+12.1%) | weak; 1 of 3 beyond the noise |
 | `results/live/V25_KUBERAY_4W_BARE.md` | omni-v25 | L | response time (ms), 99th percentile | 2686 → 2882 (+7.3%); 1667 → 1897 (+13.8%); 2040 → 2169 (+6.3%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V25_KUBERAY_4W_BARE.md` | omni-v25 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 11.8 → 12 (+1.7%); 8 → 8.7 (+8.8%); 9.3 → 9.4 (+1.1%) | inconclusive; 0 of 3 beyond the noise |
@@ -572,6 +586,7 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V25_CRANE_4W_TOP.md` | omni-v25 | standing | against its native | L | A 41816152588 (10 reps, `43b93436c26b`), B 41821621221 (10 reps, `92dda68811ad`), C 41828241662 (10 reps, `f79d0dcabf73`) |
 | `results/live/V25_CRANE_4W_VS.md` | omni-v25 | standing | in place of a controller | L | A 41816152588 (10 reps, `43b93436c26b`), B 41821621221 (10 reps, `92dda68811ad`), C 41828241662 (10 reps, `f79d0dcabf73`) |
 | `results/live/V25_CRUISEKUBE.md` | omni-v25 | standing | against its native | L | A 41747200129 (10 reps, `ee22662430a9`), B 41765479982 (10 reps, `479d719fc787`), C 41777088814 (10 reps, `0a92e09fe669`) |
+| `results/live/V25_CRUISEKUBE_RECORDER.md` | omni-v25 | standing | against its native | L | A 42173265097 (10 reps, `869cb06c6488`), B 42173285642 (10 reps, `869cb06c6488`), C 42185619972 (10 reps, `869cb06c6488`) |
 | `results/live/V25_FAIRNESS.md` | omni-v25 | standing | against its native | L | A 41751121984 (10 reps, `63fc4dc666d3`), B 41768864707 (10 reps, `db6e040b4584`), C 41780381804 (10 reps, `0a92e09fe669`) |
 | `results/live/V25_FAULTS.md` | omni-v25 | standing | against its native | L | A 41753024820 (10 reps, `63fc4dc666d3`), B 41768870890 (10 reps, `db6e040b4584`), C 41781962156 (10 reps, `0a92e09fe669`) |
 | `results/live/V25_FAULTS_EXTENDED.md` | omni-v25 | standing | against its native | L | A 41792496184 (10 reps, `05092772357b`), B 41794354171 (10 reps, `05092772357b`), C 41796185630 (10 reps, `473c170f787e`) |
@@ -597,6 +612,7 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V25_KEDA_CPU_REQUESTS.md` | omni-v25 | standing | against its native | L | A 41753044221 (10 reps, `63fc4dc666d3`), B 41770442526 (10 reps, `db6e040b4584`), C 41781979744 (10 reps, `0a92e09fe669`) |
 | `results/live/V25_KEDA_REQUESTS.md` | omni-v25 | standing | against its native | L | A 41753044221 (10 reps, `63fc4dc666d3`), B 41770442526 (10 reps, `db6e040b4584`), C 41781979744 (10 reps, `0a92e09fe669`) |
 | `results/live/V25_KOORDINATOR.md` | omni-v25 | standing | against its native | L | A 41800261877 (10 reps, `7d379c6ebae3`), B 41800269022 (10 reps, `7d379c6ebae3`), C 41802293120 (10 reps, `7d379c6ebae3`) |
+| `results/live/V25_KOORDINATOR_CGROUP.md` | omni-v25 | standing | against its native | L | A 42173258848 (10 reps, `869cb06c6488`), B 42173278954 (10 reps, `869cb06c6488`), C 42185612749 (10 reps, `869cb06c6488`) |
 | `results/live/V25_KUBERAY_4W_BARE.md` | omni-v25 | standing | against its native | L | A 41816118654 (10 reps, `43b93436c26b`), B 41821612423 (10 reps, `92dda68811ad`), C 41828233886 (10 reps, `f79d0dcabf73`) |
 | `results/live/V25_KUBERAY_4W_BOTH.md` | omni-v25 | standing | two changes at once | L | A 41816118654 (10 reps, `43b93436c26b`), B 41821612423 (10 reps, `92dda68811ad`), C 41828233886 (10 reps, `f79d0dcabf73`) |
 | `results/live/V25_KUBERAY_4W_ORCH.md` | omni-v25 | standing | the orchestrator's own | L | A 41816118654 (10 reps, `43b93436c26b`), B 41821612423 (10 reps, `92dda68811ad`), C 41828233886 (10 reps, `f79d0dcabf73`) |

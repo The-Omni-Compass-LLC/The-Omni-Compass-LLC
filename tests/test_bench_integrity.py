@@ -73,6 +73,21 @@ class PodEvidence(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'expired history'):
                 integrity.validate(root)
 
+    def test_a_receipt_is_admitted_across_an_empty_gap_only(self):
+        for gap, admitted in [({'empty': True, 'pods_written': [], 'pods_gone': []}, True),
+                              ({'empty': False, 'pods_written': ['one'], 'pods_gone': []}, False),
+                              ({'empty': True, 'pods_written': [], 'pods_gone': ['one']}, False),
+                              ({'pods_written': [], 'pods_gone': []}, False)]:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory); self.fixture(root, [pod(True, True)])
+                (root / 'pod_watch_receipt.json').write_text(json.dumps(
+                    {'schema': 1, 'complete': True, 'started_at': 99, 'ended_at': 121, 'segments': 2, 'gaps': [gap]}))
+                if admitted:
+                    integrity.validate(root)
+                else:
+                    with self.assertRaisesRegex(ValueError, 'expired across a change'):
+                        integrity.validate(root)
+
     def test_collector_continues_bookmark_version_without_relisting(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); urls = []
@@ -95,12 +110,14 @@ class PodEvidence(unittest.TestCase):
             self.assertIn('resourceVersion=11', urls[1])
             self.assertTrue(json.loads((root / 'pod_watch_receipt.json').read_text())['complete'])
 
-    def collect_with(self, root, segments):
-        """Run the collector over scripted watch requests: (stdout text, exit code, stderr text) each."""
-        listing = {'metadata': {'resourceVersion': '10'}, 'items': [pod()]}
-        urls = []
+    def collect_with(self, root, segments, listings=None):
+        """Run the collector over scripted watch requests: (stdout text, exit code, stderr text) each. `listings` are the
+        LISTs it is answered, in order: the one before the watch, then one for each gap (the last repeats)."""
+        listings = listings or [{'metadata': {'resourceVersion': '10'}, 'items': [pod()]}]
+        urls, self.lists = [], []
         def run(args, **kwargs):
-            return subprocess.CompletedProcess(args, 0, json.dumps(listing))
+            self.lists.append(args)
+            return subprocess.CompletedProcess(args, 0, json.dumps(listings[min(len(self.lists), len(listings)) - 1]))
         class Process:
             def __init__(self, text, code):
                 self.stdout = io.StringIO(text); self.code = code
@@ -131,11 +148,90 @@ class PodEvidence(unittest.TestCase):
             self.assertEqual((receipt['segments'], receipt['client_retries']), (1, 1))
             self.assertEqual(len((root / 'pod_watch.json').read_text().splitlines()), 3)
 
-    def test_expired_history_is_never_resumed(self):
+    EXPIRED_EVENT = json.dumps({'type': 'ERROR', 'object': {
+        'kind': 'Status', 'apiVersion': 'v1', 'metadata': {}, 'status': 'Failure',
+        'message': 'too old resource version: 12 (14)', 'reason': 'Expired', 'code': 410}}) + '\n'
+
+    @staticmethod
+    def listed(version, *pods):
+        return {'metadata': {'resourceVersion': version}, 'items': list(pods)}
+
+    def test_expired_history_is_bridged_by_a_list_that_proves_the_gap_empty(self):
+        # run 42173251769, repetition 5: after 47 clean segments the watch cache began again at version 18664, five
+        # versions after the last bookmark (18659); the whole Omni-Compass arm was refused for it
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            with self.assertRaisesRegex(RuntimeError, 'expired'):
-                self.collect_with(root, [('', 1, 'Error from server (Expired): too old resource version\n')])
+            seen = json.dumps({'type': 'BOOKMARK', 'object': {'metadata': {'resourceVersion': '12'}}}) + '\n'
+            urls = self.collect_with(root, [
+                (seen, 0, ''), (self.EXPIRED_EVENT, 0, ''),
+                (json.dumps({'type': 'MODIFIED', 'object': pod(True, True)}) + '\n', 0, '')],
+                [self.listed('10', pod()), self.listed('14', pod())])
+            self.assertIn('resourceVersion=12', urls[1])
+            self.assertIn('resourceVersion=14', urls[2])           # resumed at the LIST that proved the gap empty
+            self.assertEqual(len(self.lists), 2)
+            receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+            self.assertTrue(receipt['complete'])
+            gap = receipt['gaps'][0]
+            self.assertEqual((gap['from_resource_version'], gap['to_resource_version'], gap['pods_listed']), ('12', '14', 1))
+            self.assertEqual((gap['pods_written'], gap['pods_gone'], gap['empty']), ([], [], True))
+            # the stream holds the watch's own events only: no error, nothing copied from the LIST
+            types = [json.loads(line)['type'] for line in (root / 'pod_watch.json').read_text().splitlines()]
+            self.assertEqual(types, ['ADDED', 'BOOKMARK', 'MODIFIED'])
+
+    def test_expired_history_said_by_the_client_is_bridged_the_same_way(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            urls = self.collect_with(root, [
+                ('', 1, 'Error from server (Expired): too old resource version\n'),
+                (json.dumps({'type': 'MODIFIED', 'object': pod(True, True)}) + '\n', 0, '')],
+                [self.listed('10', pod()), self.listed('15', pod())])
+            self.assertIn('resourceVersion=15', urls[1])
+            receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+            self.assertTrue(receipt['complete'])
+            self.assertEqual((receipt['client_retries'], receipt['gaps'][0]['empty']), (0, True))
+
+    def assert_gap_refused(self, root, fresh, field, value):
+        with self.assertRaisesRegex(RuntimeError, 'across a change'):
+            self.collect_with(root, [(self.EXPIRED_EVENT, 0, '')], [self.listed('10', pod()), fresh])
+        receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+        self.assertFalse(receipt['complete'])
+        self.assertFalse(receipt['gaps'][0]['empty'])
+        if field:
+            self.assertEqual(receipt['gaps'][0][field], value)
+
+    def test_expired_history_across_a_write_fails(self):
+        written = pod(); written['metadata']['resourceVersion'] = '13'
+        with tempfile.TemporaryDirectory() as directory:
+            self.assert_gap_refused(Path(directory), self.listed('14', written), 'pods_written', ['one'])
+
+    def test_expired_history_across_a_deletion_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            self.assert_gap_refused(Path(directory), self.listed('14'), 'pods_gone', ['one'])
+
+    def test_expired_history_across_a_new_pod_fails(self):
+        new = pod(); new['metadata']['uid'] = 'two'
+        with tempfile.TemporaryDirectory() as directory:
+            self.assert_gap_refused(Path(directory), self.listed('14', pod(), new), 'pods_written', ['two'])
+
+    def test_a_list_older_than_the_watch_or_without_numbered_versions_proves_nothing(self):
+        odd = pod(); odd['metadata']['resourceVersion'] = 'opaque'
+        for fresh in (self.listed('9', pod()), self.listed('14', odd), self.listed('not-a-number', pod())):
+            with tempfile.TemporaryDirectory() as directory:
+                self.assert_gap_refused(Path(directory), fresh, None, None)
+
+    def test_any_other_api_error_still_fails(self):
+        error = json.dumps({'type': 'ERROR', 'object': {'kind': 'Status', 'code': 500, 'reason': 'InternalError'}}) + '\n'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(ValueError, 'pod watch API error'):
+                self.collect_with(root, [(error, 0, '')])
+            self.assertFalse(json.loads((root / 'pod_watch_receipt.json').read_text())['complete'])
+
+    def test_expired_history_again_and_again_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(RuntimeError, 'expired %d times in a row' % (integrity.RETRIES + 1)):
+                self.collect_with(root, [(self.EXPIRED_EVENT, 0, '')] * (integrity.RETRIES + 1))
             self.assertFalse(json.loads((root / 'pod_watch_receipt.json').read_text())['complete'])
 
     def test_repeated_client_failures_fail_the_receipt(self):

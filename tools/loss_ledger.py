@@ -174,6 +174,36 @@ for _sys in ("KAI", "KUEUE", "VOLCANO", "BINPACK", "VANILLA", "KOORDINATOR"):
     for _g in ("batch: queue finished", "queue: job"):
         CAUSES[(25, _sys, _g)] = SCHED_SUSPECT
 
+# the web service's rows on the batch rigs, read from their own runs on 6 November (docs/LOSS_CAUSES_2026-11-06.md): keyed only on
+# the tables whose governor's audit was read and showed the target flipping (Armada and KubeRay on top, and Koordinator's rigs,
+# flipped a tenth as often or less and take no cause from it)
+FLIP_PAGE = "docs/LOSS_CAUSES_2026-11-06.md"
+FLIP_NEXT = ("omni-v26, through the model gate: the decision that returns native's target because a pod waits starts the same "
+             "hold as the immune hand-back, so the fail-up is not taken again while the room is spoken for; then the benchmark's "
+             "three runs on that engine")
+FLIP = ("an engine fault found in the files: when a pod waits while the web service's target stands at the fail-up's floor, the "
+        "decision returns native's target without starting the immune hand-back's hold (omni_controller/controller.py, \"past the "
+        "wall, but not from load\"), and the fast check that starts the hold skips a target already at native's; so the next "
+        "decision with no pod waiting fails up again, and the batch queue's normal waiting flips the target between the cover's "
+        "floor (30%) and native's (50%) every one or two decisions (the KAI scheduler's four ways: 304 flips over 30 repetitions, "
+        "the hold caught on 21 times; run 41810759693, repetition 2: 13 target writes in 270 s, the hold only at 274.5 s, with 5 "
+        "of the queue's pods waiting and all 7 web pods Ready); the flips keep extra web pods that hold room the queue was owed, "
+        "its busy minutes last longer, and the web service's response time over the whole window rises with them; after the queue "
+        "the same arms serve 41% to 54% faster than native in all 30 repetitions", FLIP_PAGE, "", FLIP_NEXT)
+FLIP_QUEUE = ("the web service's target flips (the same page): the batch queue's own waiting pods toggle the web service's "
+              "fail-up, and the extra web pods it keeps take room and processor from the queue (the KAI scheduler's four ways: in "
+              "the 15 repetitions where the queue ran long and the flips were nearly all the governor wrote, the queue finished 0.1% "
+              "to 6.8% later); the control plane's reads at the 10 s beat are suspected beside it, not yet measured", FLIP_PAGE, "",
+              FLIP_NEXT + "; the control plane's processor read beside the queue in the next runs")
+FLIPPED = [f"{_s}_4W_BARE" for _s in ("KAI", "VOLCANO", "KUEUE", "GODEL", "BINPACK", "ARMADA", "KARMADA", "OCM", "KUBERAY")] \
+    + [f"{_s}_4W_TOP" for _s in ("KAI", "VOLCANO", "KUEUE", "GODEL", "BINPACK", "KARMADA", "OCM")] \
+    + ["KAI", "VOLCANO", "KUEUE", "BINPACK", "VANILLA"]
+for _name in FLIPPED:
+    for _g in ("response time", "time over the response line", "alert minutes"):
+        CAUSES[(25, _name, _g)] = FLIP
+    for _g in ("batch: queue finished", "queue: job"):
+        CAUSES[(25, _name, _g)] = FLIP_QUEUE
+
 
 def newest_tables():
     """Each benchmark's newest whole table: (engine number, benchmark name, path)."""

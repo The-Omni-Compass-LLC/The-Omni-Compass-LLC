@@ -341,16 +341,16 @@ it, and nothing older than the newest result stands in front of it. Earlier fron
 <!-- front-page:tables:begin -->
 | Last changed (UTC) | Table | Reading |
 |---|---|---|
-| 2026-11-06 00:22 | [The verdict audit: every row recomputed from its stored values, every count from one selection](results/verdict_audit/VERDICT_AUDIT.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 90 s against the factory beat (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_90_VS_FACTORY.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 90 s against native (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_90.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 75 s against the factory beat (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_75_VS_FACTORY.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 75 s against native (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_75.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 5 s against the factory beat (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_5_VS_FACTORY.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 5 s against native (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_5.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 30 s against the factory beat (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_30_VS_FACTORY.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 30 s against native (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_30.md) |  |
-| 2026-11-06 00:22 | [Steady load, the heartbeat at 15 s against the factory beat (docs/PACE_PREREGISTRATION.md, amendment 3): the A/B/C three-run table (Omni v25)](results/pace/V25_PACE_15_VS_FACTORY.md) |  |
+| 2026-11-06 22:24 | [The verdict audit: every row recomputed from its stored values, every count from one selection](results/verdict_audit/VERDICT_AUDIT.md) |  |
+| 2026-11-06 22:24 | [Koordinator under the batch stream, on the cgroup root its own tests use: Omni-Compass on top of its colocation (register row 89): the A/B/C three-run table (Omni v25)](results/live/V25_KOORDINATOR_CGROUP.md) |  |
+| 2026-11-06 22:24 | [CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations, the recorder counting a worker held by CruiseKube's own overload mark while it serves as in service: the A/B/C three-run table (Omni v25)](results/live/V25_CRUISEKUBE_RECORDER.md) |  |
+| 2026-11-06 22:24 | [All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v25)](results/live/V25_ALL_FOUR.md) |  |
+| 2026-11-06 22:24 | [The Numbers a Website May Show, Each With Its Receipt](results/SITE_NUMBERS.md) |  |
+| 2026-11-06 22:24 | [The pages a person would have been sent: native against Omni-Compass on native](results/OVERSIGHT_PAGES.md) |  |
+| 2026-11-06 22:24 | [The Oversight Line: the Pages a Person Would Answer, Native Against Omni-Compass on Native](results/OVERSIGHT.md) |  |
+| 2026-11-06 19:49 | [The injection grid: the Python's 500 injections through every organism and every governor (modelled)](results/injection_grid/INJECTION_GRID_3613462717.md) |  |
+| 2026-11-06 18:24 | [The engine's runs: 500 runs from the jump generator (base 3613462717), one digest](results/engine_runs/ENGINE_RUNS_500_3613462717.md) |  |
+| 2026-11-06 12:20 | [The injection grid: the Python's 500 injections through every organism and every governor (modelled)](results/injection_grid/INJECTION_GRID_3549104563.md) |  |
 <!-- front-page:tables:end -->
 
 **Benchmark runs that just finished on GitHub** (a run becomes a result when its three-run set is complete):
@@ -358,16 +358,16 @@ it, and nothing older than the newest result stands in front of it. Earlier fron
 <!-- front-page:runs:begin -->
 | Finished (UTC) | Benchmark | Outcome | Run |
 |---|---|---|---|
-| 2026-11-06 00:18 | raw-sweep | success | [42133910820](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42133910820) |
-| 2026-11-06 00:01 | engine-runs | success | [42133176358](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42133176358) |
-| 2026-11-05 23:53 | health | success | [42132460349](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42132460349) |
-| 2026-11-05 23:46 | live-engine | success | [42123853295](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42123853295) |
-| 2026-11-05 23:35 | grid | success | [42129841995](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42129841995) |
-| 2026-11-05 23:17 | security-scan | success | [42127957171](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42127957171) |
-| 2026-11-05 22:43 | injection-grid | success | [42111454007](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42111454007) |
-| 2026-11-05 21:29 | lambda-gpu 1card fast dry-check | failure | [42110793585](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42110793585) |
-| 2026-11-05 21:14 | big-organism-detached collect | success | [42110684678](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42110684678) |
-| 2026-11-05 20:53 | six-kube x500 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,distribution_specialized,spine reps 36+25 arms native compass split yes window 7200 protocol 4 | failure | [42009765812](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42009765812) |
+| 2026-11-06 22:59 | engine-runs | failure | [42304221444](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42304221444) |
+| 2026-11-06 22:57 | grid | success | [42308462663](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42308462663) |
+| 2026-11-06 22:12 | live-engine | cancelled | [42284837849](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42284837849) |
+| 2026-11-06 21:35 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 411+41 arms native compass split no window 960 protocol 4 | success | [42276408930](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42276408930) |
+| 2026-11-06 21:13 | raw-sweep | success | [42293346267](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42293346267) |
+| 2026-11-06 20:20 | six-kube x500 orgs tower reps 53+9 arms native compass split yes window 12000 protocol 4 | cancelled | [42208093311](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208093311) |
+| 2026-11-06 20:10 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 370+41 arms native compass split no window 960 protocol 4 | success | [42266809915](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42266809915) |
+| 2026-11-06 19:54 | health | success | [42283495028](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42283495028) |
+| 2026-11-06 19:49 | injection-grid | success | [42270456434](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42270456434) |
+| 2026-11-06 19:47 | big-organism-detached collect | success | [42281842665](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42281842665) |
 <!-- front-page:runs:end -->
 
 **Two sides, always shown together, and only two: native is the system as it runs on its own; omni, Omni-Compass on
@@ -568,7 +568,7 @@ counts the babysitting tax in both arms (the alert minutes an on-call page would
 wrote on its own).
 
 <!-- the oversight line (tools/oversight.py) -->
-**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 41 real Kubernetes tests of omni-v25, the minutes an on-call page would be open (the 3 a.m. call) went down 7.4%, fewer in 15 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (218; 218; 205 settings an hour in runs A; B; C, no person touching either arm). In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.5% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
+**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 43 real Kubernetes tests of omni-v25, the minutes an on-call page would be open (the 3 a.m. call) went down 7.4%, fewer in 16 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (216; 216; 203 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 6.7% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.5% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
 <!-- end of the oversight line -->
 
 ## Check it yourself

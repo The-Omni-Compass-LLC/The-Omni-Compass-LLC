@@ -17,33 +17,81 @@ from urllib.parse import urlencode
 
 PAUSE = 'omnicompass.io/paused-by-omni'
 # A watch request cut by the client (its own timeout on a loaded API server, a reset connection) is resumed at the last
-# resourceVersion written: the server replays every event after it, so nothing is lost. Expired history is a gap and
-# fails; so does a run of failed requests that delivers nothing (run 40938221203, repetitions 360 and 371: one client
-# timeout each, 11 and 26 clean segments before it, and the arm was refused for it).
+# resourceVersion written: the server replays every event after it, so nothing is lost (run 40938221203, repetitions 360
+# and 371: one client timeout each, 11 and 26 clean segments before it, and the arm was refused for it). RETRIES failed
+# requests in a row fail the receipt.
+# History the API server's watch cache no longer holds (410 Expired) is a gap: the cache began again at a later version
+# (kind's one API server rebuilds it when its own watch of etcd breaks; on a managed cloud another API server may answer).
+# 36 of 32,525 arms on the branch raw were refused for it (6 November 2026), 30 of them in the Azure long set (run
+# 40940616527, native and Omni-Compass alike) and 6 on kind, Koordinator's runs among them (41806648201, 41810789445,
+# 42173251769); in each the last version delivered was 1 to 321 versions older than the rebuilt cache. A gap is bridged
+# only by a fresh LIST that proves it empty (bridge): every pod it lists at the very version this watch last delivered
+# for it, none gone, none new. Any other gap fails the receipt, as every gap did before.
 EXPIRED = ('Expired', 'too old resource version', '(410)', 'Gone')
 RETRIES = 5
+LIST = ['get', 'pods', '-n', 'default', '-l', 'run=php-apache', '-o', 'json', '--request-timeout=20s']
 # A write refused by its resourceVersion precondition is read again and retried while the object is still ours: on a
 # live cluster the HPA and the Deployment controller write the same object (run 40938221203, repetition 349: the reset's
 # one patch lost that race and the arm was refused for it).
 CONFLICT = ('the object has been modified', 'Conflict')
 
 
-def read_events(text):
+def read_events(text, errors=False):
+    """The watch's events in order; an API error event raises, unless the caller judges it itself (errors=True)."""
     decoder = json.JSONDecoder()
     while text.strip():
         event, end = decoder.raw_decode(text.lstrip())
-        if event.get('type') == 'ERROR':
+        if event.get('type') == 'ERROR' and not errors:
             raise ValueError('pod watch API error: ' + str(event.get('object')))
         yield event
         text = text.lstrip()[end:]
 
 
+def expired(status):
+    """True for the API server's 410 on a watch: its watch cache no longer holds the resourceVersion asked for."""
+    status = status if isinstance(status, dict) else {}
+    return status.get('code') == 410 or status.get('reason') in ('Expired', 'Gone')
+
+
+def number(version):
+    """A resourceVersion as the integer the API server's own watch cache compares (etcd's revision); None if not one."""
+    try:
+        return int(version)
+    except (TypeError, ValueError):
+        return None
+
+
+def bridge(listing, last, live):
+    """Whether a gap in the watch is empty, read from a fresh LIST against the last resourceVersion the watch delivered
+    (`last`) and the version it last delivered for each pod it holds (`live`, uid -> resourceVersion).
+
+    Empty means: the LIST is not older than `last`; every pod it lists is one the watch holds, at the very version the
+    watch last delivered for it, so nothing wrote it since; and every pod the watch holds is listed, so none was deleted.
+    Then no event of a watched pod falls in the gap, and the watch resumes at the LIST's version. Anything else, a version
+    that is not a number included, may hide a transition, and the receipt fails.
+    """
+    meta = listing.get('metadata') or {}
+    listed = {}
+    for pod in listing.get('items') or []:
+        pod_meta = pod.get('metadata') or {}
+        listed[pod_meta.get('uid')] = pod_meta.get('resourceVersion')
+    after, before = number(meta.get('resourceVersion')), number(last)
+    written = sorted(str(uid) for uid, version in listed.items()
+                     if uid not in live or number(version) is None or number(version) != number(live[uid]))
+    gone = sorted(uid for uid in live if uid not in listed)
+    return {'from_resource_version': last, 'to_resource_version': meta.get('resourceVersion'), 'pods_listed': len(listed),
+            'pods_written': written, 'pods_gone': gone,
+            'empty': None not in (after, before) and after >= before and not written and not gone}
+
+
 def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.Popen, sleep=time.sleep):
-    """A LIST followed by watches at its resourceVersion; never relist across a gap.
+    """A LIST followed by watches at its resourceVersion; a new LIST only across a gap it proves empty.
 
     Every clean server timeout resumes the last event/bookmark's resourceVersion, and so does a request the client
-    cut, its unfinished last line dropped (the resumed watch delivers that event again). Expired history, malformed
-    JSON and RETRIES failed requests in a row fail the receipt.
+    cut, its unfinished last line dropped (the resumed watch delivers that event again). History the watch cache no
+    longer holds (410) is bridged by a fresh LIST only when that LIST proves the gap empty (bridge); each gap is written
+    in the receipt. A gap that is not empty, malformed JSON, any other API error, and RETRIES failed requests (or more
+    than RETRIES expired histories) in a row fail the receipt.
     A stop file drains the current bounded request before the collector exits.
     """
     directory = Path(directory)
@@ -52,17 +100,47 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
     err_path = directory / 'pod_watch.err'
     for name in ('pod_watch.ready', 'pod_watch_receipt.json'):
         (directory / name).unlink(missing_ok=True)
+    live = {}                                   # every pod the watch holds: uid -> the last resourceVersion delivered
+
+    def listing():
+        return json.loads(run([kubectl] + LIST, check=True, capture_output=True, text=True).stdout)
+
     try:
-        result = run([kubectl, 'get', 'pods', '-n', 'default', '-l', 'run=php-apache',
-                      '-o', 'json', '--request-timeout=20s'], check=True, capture_output=True, text=True)
-        listing = json.loads(result.stdout)
-        version = listing['metadata']['resourceVersion']
+        first = listing()
+        version = first['metadata']['resourceVersion']
         with (directory / 'pod_watch.json').open('w') as output:
-            for pod in listing['items']:
-                output.write(json.dumps({'type': 'ADDED', 'object': pod}) + '\n')
-            output.flush()
+            def keep(event):
+                output.write(json.dumps(event) + '\n')
+                output.flush()
+                meta = event['object']['metadata']
+                if event.get('type') == 'DELETED':
+                    live.pop(meta.get('uid'), None)
+                elif meta.get('uid'):
+                    live[meta['uid']] = meta.get('resourceVersion')
+                return meta['resourceVersion']
+
+            def bridged(last):
+                for attempt in range(1, RETRIES + 1):
+                    try:
+                        fresh = listing()
+                        break
+                    except (subprocess.CalledProcessError, ValueError):
+                        if attempt == RETRIES:
+                            raise
+                        receipt['client_retries'] += 1
+                        sleep(1)
+                gap = bridge(fresh, last, live)
+                gap['at'] = time.time()
+                receipt.setdefault('gaps', []).append(gap)
+                if not gap['empty']:
+                    raise RuntimeError('pod watch history expired across a change to a watched pod; '
+                                       'see pod_watch_receipt.json')
+                return fresh['metadata']['resourceVersion']
+
+            for pod in first['items']:
+                keep({'type': 'ADDED', 'object': pod})
             (directory / 'pod_watch.ready').touch()
-            failures = 0
+            failures = refusals = 0
             with err_path.open('w') as errors:
                 while not stop.exists():
                     query = urlencode({'watch': 'true', 'labelSelector': 'run=php-apache',
@@ -72,7 +150,7 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                     before = err_path.stat().st_size
                     process = popen([kubectl, 'get', '--raw', '/api/v1/namespaces/default/pods?' + query,
                                      '--request-timeout=60s'], stdout=subprocess.PIPE, stderr=errors, text=True)
-                    cut = ''
+                    cut, refused, code = '', None, None
                     try:
                         for line in process.stdout:
                             if not line.strip():
@@ -80,20 +158,33 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                             if not line.endswith('\n'):
                                 cut = line          # the stream's last line, unfinished: judged once the exit is known
                                 continue
-                            for event in read_events(line):
-                                version = event['object']['metadata']['resourceVersion']
-                                output.write(json.dumps(event) + '\n')
-                                output.flush()
-                        code = process.wait()
+                            for event in read_events(line, errors=True):
+                                if event.get('type') == 'ERROR':
+                                    refused = event.get('object') or {}
+                                    break
+                                version = keep(event)
+                            if refused is not None:
+                                break
+                        if refused is None:
+                            code = process.wait()
                     finally:
                         process.stdout.close()
                         if process.poll() is None:
                             process.terminate()
                             process.wait(timeout=5)
-                    if code != 0:
+                    if refused is not None and not expired(refused):
+                        raise ValueError('pod watch API error: ' + str(refused))
+                    said = ''
+                    if refused is None and code != 0:
                         said = err_path.read_bytes()[before:].decode(errors='replace') if err_path.exists() else ''
-                        if any(word in said for word in EXPIRED):
-                            raise RuntimeError('pod watch history expired; see pod_watch.err')
+                    if refused is not None or any(word in said for word in EXPIRED):
+                        refusals += 1
+                        if refusals > RETRIES:
+                            raise RuntimeError('pod watch history expired %d times in a row; see pod_watch_receipt.json'
+                                               % refusals)
+                        version = bridged(version)
+                        continue
+                    if code != 0:
                         failures += 1
                         receipt['client_retries'] += 1
                         if failures >= RETRIES:
@@ -101,10 +192,8 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                         sleep(1)
                         continue
                     for event in read_events(cut):
-                        version = event['object']['metadata']['resourceVersion']
-                        output.write(json.dumps(event) + '\n')
-                        output.flush()
-                    failures = 0
+                        version = keep(event)
+                    failures = refusals = 0
                     receipt['segments'] += 1
                     receipt['last_resource_version'] = version
         receipt['complete'] = True
@@ -123,6 +212,9 @@ def validate(directory):
     end = float((directory / 'window_end.txt').read_text())
     if not receipt.get('complete') or not receipt.get('segments'):
         raise ValueError('pod watch did not complete: ' + str(receipt.get('error', 'no segment')))
+    for gap in receipt.get('gaps') or []:
+        if gap.get('empty') is not True or gap.get('pods_written') or gap.get('pods_gone'):
+            raise ValueError('pod watch history expired across a change to a watched pod: ' + json.dumps(gap, sort_keys=True))
     if int(receipt['started_at']) > start or receipt['ended_at'] < end or end < start:
         raise ValueError('pod watch does not cover the measured window')
     observed = {}

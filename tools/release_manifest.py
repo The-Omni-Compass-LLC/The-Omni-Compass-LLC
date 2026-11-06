@@ -28,7 +28,7 @@ RECEIPT = ROOT / "results" / "VERIFY_RECEIPT.txt"
 GROUPS = {
     "benchmark_integrity": ["tools/bench_integrity.py", "tests/test_bench_integrity.py", "pilot/bench_report.py",
                             "scripts/kind_bench.sh", "scripts/kind_paired.sh", "scripts/aks_paired.sh",
-                            ".github/workflows/six-kube.yml", "docs/REPAIR_20261029.md",
+                            ".github/workflows/six-kube.yml", "docs/REPAIR_20261029.md", "docs/REPAIR_20261106.md",
                             "tools/omni_switch.py", "scripts/kind_faults.sh", "tests/test_faults_extended.py",
                             "tests/test_switch_trust.py", "verify.py"],
     "engine_v8_citylearn": ["OMNI_V8.json", "tools/run_citylearn.py", "docs/OMNI_V8.md", "docs/CITYLEARN_PREREGISTRATION.md"],
