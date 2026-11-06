@@ -18,6 +18,7 @@ Omni-Compass Evaluation License changes those terms. Installed versions are thos
 | DejaVu Sans and DejaVu Sans Mono fonts (embedded in the PDF book) | typesetting | Bitstream Vera / DejaVu license (free) |
 | PlanetLab / CoMon VM CPU traces, March 2011 (`fleet/traces/`, `k8s_controlplane/traces/`; source in their `PROVENANCE.json`) | held-out demand for the modelled fleet | their own terms (public research data); no Omni-Compass copyright is claimed in them |
 | Google cluster-usage traces 2011 (`clusterdata-2011-2`), from which `results/traces/google2011/` is derived (`docs/TRACES_PREREGISTRATION.md`) | the public demand trace on the real cluster | Google's published terms for the traces; no Omni-Compass copyright is claimed in the trace itself |
+| Data-centre footage behind the live engine page (`docs/engine/wall/*.webm`, `*.mp4`, `*.jpg`), cut from *B-roll of Wikimedia Foundation servers at CyrusOne in Carrollton, Texas - photographed in 2015* by the Wikimedia Foundation, via Wikimedia Commons (`docs/engine/wall/README.md` lists every change) | the page's moving background, decoration only | CC BY-SA 3.0 (`LICENSES/CC-BY-SA-3.0.txt`); the adapted loops and stills are shared under the same licence |
 
 Kubernetes, kind, `kubectl`, the NVIDIA driver and `nvidia-smi` are not distributed with Omni-Compass; it calls them
 where an operator has installed them. Their names are the property of their owners (`DISCLOSURES.md`, section 1).
