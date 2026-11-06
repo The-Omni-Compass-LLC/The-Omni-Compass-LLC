@@ -23,6 +23,7 @@ Every benchmark runs on GitHub's own machines with nobody watching, in both arms
 | Crane (Effective HPA, on Kubernetes 1.25) under the batch stream, the four ways: Omni-Compass on the organism alone against the organism alone (register row 90) | 0.27 → 0.10 | down 62.5% | the runs disagree | 6.6 | `results/live/V25_CRANE_4W_BARE.json` |
 | Crane (Effective HPA, on Kubernetes 1.25) under the batch stream, the four ways: Omni-Compass on top of Crane against Crane as shipped (register row 90) | 0.00 → 0.03 | — | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 6.3 | `results/live/V25_CRANE_4W_TOP.json` |
 | CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations | 0.00 → 0.00 | none in either arm | STEADY, the same | 4.0 | `results/live/V25_CRUISEKUBE.json` |
+| CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations, the recorder counting a worker held by CruiseKube's own overload mark while it serves as in service | 0.00 → 0.00 | none in either arm | STEADY, the same | 4.2 | `results/live/V25_CRUISEKUBE_RECORDER.json` |
 | Fairness: a noisy neighbour on the same workers | 8.77 → 8.33 | down 4.9% | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 127.9 | `results/live/V25_FAIRNESS.json` |
 | Faults: a machine down, a spike, a runaway pod, a blind probe | 6.73 → 5.63 | down 16.3% | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 47.6 | `results/live/V25_FAULTS.json` |
 | Faults, extended: the four faults and the two that blind a governor (the API server frozen 30 s, the metrics server gone two minutes) in a 2,500 s window | 9.40 → 7.07 | down 24.8% | GAIN in all three of our runs | 64.3 | `results/live/V25_FAULTS_EXTENDED.json` |
@@ -37,6 +38,7 @@ Every benchmark runs on GitHub's own machines with nobody watching, in both arms
 | Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top | 0.37 → 0.00 | down 100.0% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 452.9 | `results/live/V25_KEDA_CPU_REQUESTS.json` |
 | Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top | 5.17 → 1.77 | down 65.8% | GAIN in all three of our runs | 87.6 | `results/live/V25_KEDA_REQUESTS.json` |
 | Koordinator under the batch stream: Omni-Compass on top of its colocation (register row 89) | 0.07 → 0.13 | up 100.0% | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 112.5 | `results/live/V25_KOORDINATOR.json` |
+| Koordinator under the batch stream, on the cgroup root its own tests use: Omni-Compass on top of its colocation (register row 89) | 0.10 → 0.03 | down 66.7% | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 104.7 | `results/live/V25_KOORDINATOR_CGROUP.json` |
 | KubeRay (the Ray autoscaler) under the batch stream, the four ways: Omni-Compass on the organism alone against the organism alone (register row 92) | 9.70 → 10.03 | up 3.4% | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 112.4 | `results/live/V25_KUBERAY_4W_BARE.json` |
 | KubeRay (the Ray autoscaler) under the batch stream, the four ways: Omni-Compass on top of KubeRay against KubeRay as shipped (register row 92) | 23.97 → 23.90 | down 0.3% | STEADY, under the floor (the three runs' mean 0.26%) | 32.4 | `results/live/V25_KUBERAY_4W_TOP.json` |
 | Kueue under the batch stream: Omni-Compass on top of Kueue's admission (register row 63) | 10.90 → 11.63 | up 6.7% | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 97.5 | `results/live/V25_KUEUE.json` |
@@ -54,21 +56,21 @@ Every benchmark runs on GitHub's own machines with nobody watching, in both arms
 | Volcano under the batch stream, the four ways: Omni-Compass on top of Volcano against Volcano as shipped (register row 63) | 8.33 → 8.70 | up 4.4% | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 107.8 | `results/live/V25_VOLCANO_4W_TOP.json` |
 | Wandering demand: load that steps up and down by one (1 2 3 2 3 4 5 6 5 4 5 6 7 8 7 6 5 4 3 4 3 2 1 2 1) | 31.03 → 25.63 | down 17.4% | GAIN in all three of our runs | 51.8 | `results/live/V25_WANDERING.json` |
 
-**Together.** Over the 41 tests the pages a repetition add up to 492.9 alert minutes on native and 456.4 with Omni-Compass on top: **down 7.4%** (our arithmetic over the tables, each test weighed by its own minutes; the two-hour test holds 20% of native's). Fewer pages in 15 of the 41 tests, to none at all in 3, the same in 2, more in 24. Each test's word is its own table's, by the one key.
+**Together.** Over the 43 tests the pages a repetition add up to 493.0 alert minutes on native and 456.4 with Omni-Compass on top: **down 7.4%** (our arithmetic over the tables, each test weighed by its own minutes; the two-hour test holds 20% of native's). Fewer pages in 16 of the 43 tests, to none at all in 3, the same in 3, more in 24. Each test's word is its own table's, by the one key.
 
 **Run by run.** The tables summed in each of our three runs (one repetition of every test, native beside Omni-Compass on native); each difference's 95% interval adds its tables' variances, each from that table's own interval and repetitions.
 
 | Run | Alert minutes, native → Omni-Compass on native, summed | Change | Difference, 95% interval (minutes) | Settings the governor wrote on its own, an hour |
 |---|---|---|---|---|
-| A | 485.03 → 451.67 | down 6.9% | −33.37 (−44.79 to −21.94) | 218 |
-| B | 503.20 → 461.27 | down 8.3% | −41.93 (−49.68 to −34.19) | 218 |
-| C | 490.33 → 456.27 | down 6.9% | −34.07 (−43.72 to −24.41) | 205 |
+| A | 485.03 → 451.67 | down 6.9% | −33.37 (−44.79 to −21.94) | 216 |
+| B | 503.30 → 461.37 | down 8.3% | −41.93 (−49.68 to −34.18) | 216 |
+| C | 490.53 → 456.27 | down 7.0% | −34.27 (−43.93 to −24.61) | 203 |
 
 **Read by the one key: GAIN in all three of our runs.** The pages fell in every run, each run's interval clear of zero. The settings the governor wrote an hour are counted over each run's measured windows (node-hours over the nodes in service), with no person touching either arm.
 
 ## Pages counted, not only minutes
 
-A person is paid by the page, not by the minute. Counted from the same runs' raw files by the rule written before the count (a page opens on a bad minute and closes after five clean ones; `docs/OVERSIGHT_PAGES_PREREGISTRATION.md`), and only from runs whose recount gives their table's own alert minutes (123 of 123), the pages a person would have been sent went from 33.94 to 31.73 a repetition of every test together: **down 6.5%, GAIN by the mean of our three runs, beyond the noise in 2 of 3** (`results/OVERSIGHT_PAGES.md`). A page stays open about as long in both arms (minutes a page, native → Omni-Compass: 14.1 → 13.7 in run A; 15.5 → 15.2 in run B; 14.0 → 14.3 in run C): Omni-Compass sends fewer pages, not shorter ones. Every alert rule declared with it reads GAIN (5 of 6).
+A person is paid by the page, not by the minute. Counted from the same runs' raw files by the rule written before the count (a page opens on a bad minute and closes after five clean ones; `docs/OVERSIGHT_PAGES_PREREGISTRATION.md`), and only from runs whose recount gives their table's own alert minutes (129 of 129), the pages a person would have been sent went from 34.04 to 31.77 a repetition of every test together: **down 6.7%, GAIN by the mean of our three runs, beyond the noise in 2 of 3** (`results/OVERSIGHT_PAGES.md`). A page stays open about as long in both arms (minutes a page, native → Omni-Compass: 14.1 → 13.7 in run A; 15.4 → 15.1 in run B; 13.9 → 14.3 in run C): Omni-Compass sends fewer pages, not shorter ones. Every alert rule declared with it reads GAIN (5 of 6).
 
 ## The people line, through the one equation
 
