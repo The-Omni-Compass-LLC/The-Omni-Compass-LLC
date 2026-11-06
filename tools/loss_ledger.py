@@ -151,6 +151,29 @@ CAUSES = {
                                 "the benchmark's three runs on the engine that stands, and more pairs a cap"),
 }
 
+# omni-v25's own causes, read from its own runs (docs/LOSS_CAUSES_2026-11-05.md), keyed with the engine
+BEAT_PAGE = "docs/LOSS_CAUSES_2026-11-05.md"
+BEAT_LOAD = ("the governor's own processor at the factory beat on site (10 s since omni-v24) on the shared test machine, where this "
+             "rig gives it no core of its own: 0.075 to 0.103 of a core over each window (its audit's overhead record), against 0.014 "
+             "to 0.016 at omni-v21's 60 s beat; the batch pods ran on about 3.6 of the runner's four cores, so about 2.5% of their "
+             "processor went to the governor, the size of the queue's rise; Omni-Compass moved no machine, pod or limit during the "
+             "queue", BEAT_PAGE, "",
+             "the next version, through the model gate: the governor's own processor counted in the body's load on a shared host "
+             "(the founder's order of 13 October); then the benchmark's three runs on that engine")
+SCHED_SUSPECT = ("suspected, not yet measured: the same beat's reads; on these rigs the governor has its own core, but the control "
+                 "plane that answers its reads runs on the batch pods' cores, and at the 10 s beat it is asked six times as often as "
+                 "at 60 s (omni-v12's four ways at 60 s read the KAI queue LOSS by the mean too, so the beat is not the whole of it)",
+                 BEAT_PAGE, "",
+                 "the control plane's processor read beside the queue in the next runs; the next version through the model gate")
+CAUSES[(25, "BATCH", "batch: queue finished")] = BEAT_LOAD
+for _sys in ("KAI", "KUEUE", "VOLCANO", "BINPACK", "KUBERAY", "GODEL", "KARMADA", "OCM", "ARMADA"):
+    for _way in ("TOP", "BARE"):
+        for _g in ("batch: queue finished", "queue: job"):
+            CAUSES[(25, f"{_sys}_4W_{_way}", _g)] = SCHED_SUSPECT
+for _sys in ("KAI", "KUEUE", "VOLCANO", "BINPACK", "VANILLA", "KOORDINATOR"):
+    for _g in ("batch: queue finished", "queue: job"):
+        CAUSES[(25, _sys, _g)] = SCHED_SUSPECT
+
 
 def newest_tables():
     """Each benchmark's newest whole table: (engine number, benchmark name, path)."""
@@ -194,13 +217,28 @@ def loss_rows(data):
 
 
 def section(name):
+    if name.startswith("SOLO"):     # Omni-Compass by itself: in place of a controller (tools/verdict_audit.py, comparison)
+        return SECTIONS[1]
     m = re.search(r"_4W_([A-Z]+)$", name)
     return ARMS.get(m.group(1), SECTIONS[0]) if m else SECTIONS[0]
 
 
-def cause(name, gauge):
-    for (bench, prefix), c in CAUSES.items():
-        if bench == name and gauge.startswith(prefix):
+# The causes keyed (benchmark, gauge prefix) were read from the runs of omni-v21 and the engines before it; a newer engine's row
+# takes only a cause keyed with its own engine, (engine, benchmark, gauge prefix), read from its own runs (5 November: the
+# omni-v25 tables landed, and an older engine's cause is never carried onto a newer engine's row unread).
+WRITTEN_FOR = 21
+
+
+def cause(name, gauge, engine=None):
+    """The written cause of a LOSS row: (cause, page, fixed in, what decides it), or None. engine is the table's engine number
+    (25 for V25_BATCH); None reads the causes as written for the engines up to WRITTEN_FOR."""
+    for key, c in CAUSES.items():
+        if len(key) == 3 and key[0] == engine and key[1] == name and gauge.startswith(key[2]):
+            return c
+    if engine is not None and engine > WRITTEN_FOR:
+        return None
+    for key, c in CAUSES.items():
+        if len(key) == 2 and key[0] == name and gauge.startswith(key[1]):
             return c
     return None
 
@@ -276,7 +314,7 @@ def render(built):
         if s == SECTIONS[0]:
             L += ["| Engine | Benchmark | Gauge | Each run's size | Cause | Fixed in | What decides it |", "|---|---|---|---|---|---|---|"]
             for n, name, p, gauge, row, title_ in rows[s]:
-                c = cause(name, gauge)
+                c = cause(name, gauge, n)
                 why, page, fixed, decides = c if c else ("not yet written", "", "", "the benchmark's three runs on the engine that stands")
                 L.append(f"| omni-v{n} | `{p.relative_to(ROOT)}` | {gauge} | {sizes(row)} | {why}" + (f" (`{page}`)" if page else "")
                          + f" | {fixed or '—'} | {decides} |")

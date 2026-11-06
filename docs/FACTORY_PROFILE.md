@@ -43,7 +43,7 @@ is verified, and no other profile is released before it.
 |---|---|---|
 | Governing engine | The executable mathematical rules that turn observations and internal state into governing decisions. | `omnicompass/` (the compass law, the core, the nervous system, the verdict), `omni_controller/controller.py`, its C++ twin `cpp/src/governor.cpp` |
 | Native baseline | The system's documented configuration and behaviour with no Omni-Compass governing it: every muscle under its own native controller, as its vendor ships it. | the arm `native` in every benchmark; `realms/harness.py`, the plant and its native controller alone |
-| Factory profile | The complete, versioned set of Omni-Compass default settings shipped together. | `OMNI_V19.json` (the fingerprint), the controller's defaults, `realms/muscle_cards_v5.csv` |
+| Factory profile | The complete, versioned set of Omni-Compass default settings shipped together. | `OMNI_V25.json` (the fingerprint of the engine that stands), the controller's defaults, `realms/muscle_cards_v5.csv` |
 | Candidate profile | A proposed combination of settings under evaluation. | the live engine's "Try the candidate" (the best beat of a sweep); the model gate's candidates (`tools/model_gate.py`) |
 | Active profile | The settings actually governing the current run. | the live engine's "active profile" line, with its fingerprint |
 | Custom profile | An identifiable configuration that differs from the released factory profile. | any knob turned on the bench; its fingerprint names it; its results are its own |
@@ -140,7 +140,7 @@ refused commands and recovery; exact agreement for discrete decisions, with tole
 arithmetic needs them. The seal holds the twins to it (`tools/seal.py`, `results/SEAL.json`, the parity tests under `tests/`), and
 the live benchmark engine is held to the Python and the C++ on every build (`docs/engine/check_live_engine.py`).
 
-A release record identifies the engine version and its fingerprint (`OMNI_V19.json`), the profile, the implementations' parity
+A release record identifies the engine version and its fingerprint (`OMNI_V25.json` on the engine that stands), the profile, the implementations' parity
 receipts and the validation receipts. A matching fingerprint establishes identity; the validation receipts establish what that
 identified implementation demonstrated.
 
@@ -202,7 +202,7 @@ a result.
 | The Operator's Manual | starting from the factory profile, making a custom profile, reading the command acknowledgements, the two restoring controls |
 | The Owner's Manual | healthy production, how a configuration is chosen, the whole-workload benefit, the scope of the validation |
 | The Live Benchmark Engine Manual | every control, its backend, its effects, its limits, and the factory against the active settings |
-| The engine's own pages (`docs/OMNI_V19.md`, `cpp/`, `tools/seal.py`) | the equations, units, profile loading, timing, parity checks and release fingerprints |
+| The engine's own pages (`docs/OMNI_V25.md`, `cpp/`, `tools/seal.py`) | the equations, units, profile loading, timing, parity checks and release fingerprints |
 | The reading guide (`docs/HOW_TO_READ_THE_RESULTS.md`) | the workload contract, the measurement boundary, the profile's identity, the costs, the requirements and the verdict rules |
 
 That is the common language: build and verify the mechanisms; tune and validate the complete profile; freeze its release identity;

@@ -167,7 +167,10 @@ FIRST = ("aks-metered-full.yml", "aks-metered.yml", "big-organism-detached.yml",
          # the live engine's rebuild (3 November: it waited behind the grid for a runner, a newer start cancelled it while it waited,
          # and main's page went seven hours without a rebuild although its clock fired every three; the founder's order of 1
          # November is that the page follows GitHub)
-         "live-engine.yml")
+         "live-engine.yml",
+         # the paid GPU runs (4 November: the founder's twelve Lambda runs, A, B and C of four tests, sat queued behind the grid's
+         # free runs; a launch rents the card and its watch job reads it from GitHub, so neither may wait behind free work)
+         "lambda-gpu.yml", "gpu-bench.yml", "lambda-attach.yml")
 
 
 # ------------------------------------------------------------------------------------------------- shard shapes

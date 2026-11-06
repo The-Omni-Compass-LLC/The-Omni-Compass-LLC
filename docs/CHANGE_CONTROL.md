@@ -118,6 +118,21 @@ cluster.
 | The brain's dwell and its wait after an addition at the fast beats | omni-v16 restated both in seconds (at 15 s, 4 and 20 steps for the 1 and 5 a minute); the live-engine session (branch `claude/interactive-animated-charts-icvnsw`, 22 October) reports on its own sweep, on-site at 5, 10 and 15 s, machine-hours +3.8%, +3.4% and +2.9% against native where a build counting them as readings that agree read −1.0% to +0.9%, the pods waiting the same; the main engine's 60 s is untouched by it | not yet reproduced here; a search of the dwell counted in readings at each beat, in the tune study's rule (`docs/THE_TUNE.md`, section 4) |
 | The cloud's floor check and a warm reserve | the same session reports two faults under `--give-back-only`: a floor that orders machines the cloud has already deleted is read as a command that did not land and holds every give-back, and give-backs made before the largest requests of the last hours are read leave too few machines; with both fixed its build read identical to native in the cloud setting at every beat, where the engine that stands reads the pods waiting, the 95th percentile and the alert minutes LOSS at some beats | not yet reproduced here; candidates for the cloud setting's LOSS rows (the rows above), through the model gate |
 
+**Read again on omni-v25 (4 November; the model gate `results/model_gate/V25_VS_V24.md`, class S).** Three rows above were read on
+older settings and stand corrected here, and six open items named on other pages join the list:
+
+| Change | Why | Evidence so far |
+|---|---|---|
+| The pods that wait for a place, at the max (the cloud's setting from 31 October) | against native, native's 7.311 pending pod-minutes an hour against 8.247 at the main engine's 60 s and 11.565 at 15 s: up 12.80% and 58.18%, LOSS; the row above reads the struck tune-down | `results/model_gate/V25_VS_V24.md`, the cluster models |
+| The card's 99th percentile | against native, up 0.94% on the modelled card and 4.59% near the voltage floor, LOSS (the row above reads it STEADY) | `results/model_gate/V25_VS_V24.md`, `card` and `card_floor` |
+| The blink model's alert minutes | now down 22.54% against native, GAIN: the +2.35% LOSS the cloud-cost row names no longer stands | `results/model_gate/V25_VS_V24.md`, `cluster_blink` |
+| The verdict's false acceptance | at 20 pieces of work a decision a give-back step that truly costs 3% is kept 28% of the time and one costing 5% 14%, a free step 60%; at 200 pieces 26%, 7% and 66% | `results/model_gate/V25_VS_V24.md`, the verdict model; the strict form refused on 19 October (`v12-verdict-study`) |
+| The trade between muscles judged on the organism | the founder's order of 19 October (`DISCLOSURES.md`, section 3): no code, model or row yet | `omnicompass/verdict.py` (each muscle judged on itself) |
+| The immune system on every knob | the founder's order of 24 October: it stands on two knobs, the Kubernetes autoscaler's target and the Kafka wire | `omni_controller/controller.py` (`_immune_native`), `tools/run_kafka.py` |
+| `--give-back-only` leaves the engine | the order of 31 October struck the cloud's rule and said the flag leaves with the next version; it is still in the governor | `omni_controller/controller.py` (`apply_give_back_only`) |
+| The cloud's beat and the work per dollar in the cloud model | through a cloud no beat was admissible on the corrected ladder (every beat raised the machine-hours, every beat but 90 s the pods waiting); the cloud model sends a fixed load and reads no bill, so it cannot read the work per dollar a cloud tune is judged by | `results/model_gate/V23_LADDER_CORRECTED.md`, `docs/PACE_PREREGISTRATION.md` amendments 4 to 6, `docs/THE_TUNE.md` |
+| Kafka's 20 s notch | the burst's peak queue up 30.6% at run C's setting, inside the seeds' spread | `docs/OMNI_V22.md` |
+
 ---
 
 *© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
