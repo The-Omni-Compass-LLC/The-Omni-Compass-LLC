@@ -239,31 +239,59 @@
 
 (function () {   // the real clips over the drawn aisle: one for each band of the page, dark at both ends and blue in the middle, cross-faded as the reader scrolls
   var CLIPS = ["wall/dark-1", "wall/dark-2", "wall/blue-1", "wall/blue-2", "wall/dark-2", "wall/dark-1"];   // docs/engine/wall/, top to bottom of the whole page: the dark loops at both ends, the blue in the middle (the founder's words of 6 November)
-  var bg = document.getElementById("omniBg"), A = document.getElementById("omniVidA"), B = document.getElementById("omniVidB"), cur = -1, front = A;
+  var bg = document.getElementById("omniBg"), A = document.getElementById("omniVidA"), B = document.getElementById("omniVidB"), cur = -1, seq = 0, bad = {};
   if (!bg) return;
   function native() { try { return (typeof W !== "undefined" && W && W.killed) || (typeof MASTER !== "undefined" && MASTER && MASTER.off); } catch (e) { return false; } }
   setInterval(function () { bg.classList.toggle("native", !!native()); }, 1000);
   var save = false; try { save = !!(navigator.connection && navigator.connection.saveData); } catch (e) { save = false; }
   if (!CLIPS.length || !A || !A.play || save) return;   // a reader who asks to save data keeps the drawn aisle
   var EXT = ".mp4"; try { if (A.canPlayType('video/webm; codecs="vp9"')) EXT = ".webm"; } catch (e) { EXT = ".mp4"; }   // the format this browser plays
+  var ALT = EXT === ".webm" ? ".mp4" : ".webm";
   var rm = false; try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { rm = false; }
+  function off() {   // the dock's Wallpaper switch, read from the browser before the dock is built
+    if (document.body && document.body.classList.contains("wallOff")) return true;
+    try { return localStorage.getItem("omniWall") === "off"; } catch (e) { return false; }
+  }
   function part() {   // where the reader is along the whole page, top to bottom, as one of CLIPS.length equal bands
     var de = document.documentElement, span = Math.max(1, de.scrollHeight - innerHeight), f = Math.min(1, Math.max(0, (window.scrollY || de.scrollTop || 0) / span));
     return Math.min(CLIPS.length - 1, Math.floor(f * CLIPS.length));
   }
+  function shown() { return A.classList.contains("on") ? A : (B.classList.contains("on") ? B : null); }
+  function hush(v) { if (v && !v.paused) { try { v.pause(); } catch (e) { /* nothing to stop */ } } }
+  function settle() {   // one clip plays at a time: the one shown, unless the page is hidden, the wallpaper off or motion reduced
+    var s = shown(); hush(s === A ? B : A); if (!s) hush(B);
+    if (s && s.paused && !rm && !document.hidden && !off()) { var p = s.play(); if (p && p.catch) p.catch(function () {}); }
+  }
+  function aisle() { A.classList.remove("on"); B.classList.remove("on"); hush(A); hush(B); bg.classList.remove("vid"); }   // the drawn aisle, never another band's clip
   function show(k) {
-    if (k === cur) return; cur = k; var back = front === A ? B : A, src = CLIPS[k] + EXT;
-    back.oncanplay = function () { back.oncanplay = null; var go = function () { back.classList.add("on"); front.classList.remove("on"); bg.classList.add("vid"); var old = front; front = back; setTimeout(function () { if (old !== front) old.pause(); }, 1300); };
-      if (rm) go(); else { var pr = back.play(); if (pr && pr.then) pr.then(go, go); else go(); } };
-    back.onerror = function () { back.classList.remove("on"); if (!front.classList.contains("on")) bg.classList.remove("vid"); };   // a clip that cannot play leaves the drawn aisle showing
-    back.preload = "auto"; back.src = src; back.load();
+    if (off() || document.hidden) return;   // nothing loads while the wallpaper is off or the page is hidden; the band is read again when it comes back
+    var src = CLIPS[k];
+    if (bad[src]) { if (cur !== k) { cur = k; seq++; aisle(); } return; }   // a clip that would not play in either format: the aisle in its band
+    if (k === cur && shown()) return;
+    cur = k; var my = ++seq, s = shown(), back = s === A ? B : A, tried = false;   // each change has its own number; an older change's events are ignored
+    back.oncanplay = function () {
+      if (my !== seq) return; back.oncanplay = null;
+      var go = function () {
+        if (my !== seq) return;
+        back.classList.add("on"); (back === A ? B : A).classList.remove("on"); bg.classList.add("vid");
+        setTimeout(function () { if (my === seq) settle(); }, 1300);   // after the dissolve only the shown clip plays
+      };
+      if (rm) go(); else { var pr = back.play(); if (pr && pr.then) pr.then(go, go); else go(); }
+    };
+    back.onerror = function () {
+      if (my !== seq) return;
+      if (!tried) { tried = true; back.src = src + ALT; back.load(); return; }   // the other format, once
+      bad[src] = true; aisle();
+    };
+    back.preload = "auto"; back.src = src + EXT; back.load();
   }
   var tick = 0; addEventListener("scroll", function () { if (!tick) tick = requestAnimationFrame(function () { tick = 0; show(part()); }); }, {passive: true});
-  document.addEventListener("visibilitychange", function () { if (document.hidden) front.pause(); else if (!rm && front.src && !document.body.classList.contains("wallOff")) front.play().catch(function () {}); });
-  new MutationObserver(function () {   // the dock's Wallpaper switch: off stops the clip too, on starts it again
-    if (document.body.classList.contains("wallOff")) front.pause(); else if (!rm && front.src && !document.hidden) front.play().catch(function () {});
+  addEventListener("resize", function () { show(part()); });
+  document.addEventListener("visibilitychange", function () { if (document.hidden) { hush(A); hush(B); } else { show(part()); settle(); } });
+  new MutationObserver(function () {   // the dock's Wallpaper switch: off stops the clip, on brings the band's clip back
+    if (off()) { hush(A); hush(B); } else { show(part()); settle(); }
   }).observe(document.body, {attributes: true, attributeFilter: ["class"]});
-  setTimeout(function () { show(part()); }, 1500);   // after the page has started, so the clip never competes with the engine's first paint
+  show(part());   // at once: the clip loads beside the page and plays while the rest of the page arrives
 })();
 </script>
 <style>
@@ -1012,9 +1040,13 @@ body{background:transparent}
 .wrap{gap:44px}
 .wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.84);border:1px solid rgba(110,180,255,.42);border-radius:12px;box-shadow:0 0 0 12px rgba(7,14,23,.84),0 0 0 13px rgba(110,180,255,.42),0 0 28px 12px rgba(78,151,209,.22)}
 .panel,.toc{background-color:rgba(18,28,38,.88)}
+@media (max-width:640px){.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.72);box-shadow:0 0 0 6px rgba(7,14,23,.72),0 0 0 7px rgba(110,180,255,.42),0 0 18px 6px rgba(78,151,209,.22)}.panel,.toc{background-color:rgba(18,28,38,.78)}}
 body.wallOff #omniBg{display:none}
 body.wallOff,html:has(body.wallOff){background:var(--bg)}
 @media print{#omniBg{display:none}html{background:#fff}}
+/* fix_PHONE: the Bills and Receipts table keeps its columns readable and scrolls sideways in its frame on a narrow screen */
+#whRcp{min-width:760px}
+
 
 
 
@@ -2730,7 +2762,9 @@ kill     Lᵢ ← L* at once (native)</pre>
   <p class="contact">The Omni-Compass LLC · Main office infrastructure · Toll-free direct <b>1-888-339-9551</b> · System route asset <b>1-888-DEX-YLL-1</b><br>Landline, registered in Florida, <b>321-746-4411</b> · System route access <b>321-PING-411</b> · <a href="https://www.omni-compass.com">www.omni-compass.com</a></p>
 </section>
 
-<script>(() => { const pad = () => { const d = document.getElementById("dock"); if (d) document.body.style.paddingBottom = (d.offsetHeight + 24) + "px"; };
+<script>(() => { const pad = () => { const d = document.getElementById("dock"), t = document.getElementById("tourTab"); if (!d) return;   // fix_PHONE: room below the page for the dock and the Guided tour tab above it
+    let h = d.offsetHeight + 24; if (t && getComputedStyle(t).display !== "none") h += Math.ceil(t.getBoundingClientRect().height) + 16;
+    document.body.style.paddingBottom = h + "px"; };
   window.addEventListener("load", pad); window.addEventListener("resize", pad); document.addEventListener("click", () => setTimeout(pad, 50));
   if (window.ResizeObserver) window.addEventListener("load", () => { const d = document.getElementById("dock"); if (d) new ResizeObserver(pad).observe(d); }); })();</script>
 <p class="legal" id="notice-end" style="margin-top:28px">© 2026 The Omni-Compass LLC. All rights reserved. <b>Evaluation and Simulation use only.</b> Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with LICENSE, NOTICE and DISCLOSURES.md. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p>

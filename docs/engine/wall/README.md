@@ -1,5 +1,7 @@
 # The live engine's background video
 
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
 The four loops in this folder (`dark-1`, `dark-2`, `blue-1` and `blue-2`, each as `.webm` and `.mp4`) are the moving data
 centres behind the live engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`). They are decoration: they show no
 measurement.
@@ -26,3 +28,7 @@ shown on the page under a dark tint.
 blue-1, blue-2, dark-2, dark-1. The dark loops sit at both ends of the page and the blue in the middle, so the order reads
 the same scrolling down or back up. The page picks the format the browser plays. The dock's Wallpaper switch turns it off;
 under reduced motion it stands still; a reader who asks to save data gets the drawn aisle instead.
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
