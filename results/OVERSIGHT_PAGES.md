@@ -46,13 +46,13 @@ Together, the three runs' means: **13.83 → 10.28 pages**, down **25.7%** with 
 
 The bill is the sum of its lines: C = M + P + O, with M the machines, P the people who run the stack and O the rest, held fixed. The people line is priced by time-driven activity-based costing (Kaplan and Anderson, *Harvard Business Review*, November 2004): P = w · Σⱼ Nⱼ · hⱼ + R, with Nⱼ the events a year of kind j (a page, a hand-made change of a setting, a capacity review), hⱼ the person-hours each takes (a page's whole cycle about 6 hours by Google's SRE book, chapter 11), w one person-hour fully loaded and R the fixed cost of an on-call rotation. Omni-Compass's share of the bill saved on the people line is S(people) = κ · p · β · r: p the people's share of the run cost, β the share of their time that is answering pages and turning the knobs Omni-Compass governs (the SRE book holds on-call to at most 25% of an engineer's time), r the fall in the events that call a person, κ the share of the freed time that becomes money (1 where a rotation or a head is released or the time goes to paid work, 0 where nothing changes). Only r is measured here; p, β and κ are an owner's. With the machines' line, the live page's one equation reads G = (1 + ΔW) ⁄ (1 + m · ΔM + p · ΔP) − 1, ΔP = −κ · β · r.
 
-On a run cost of $100 million, κ = 1, r = 25.7% (the pages above, the change of the three runs' means) and, beside it, r = 28.9% (the alert minutes):
+On a run cost of $100 million, κ = 1, r = 25.7% (the pages above, the change of the three runs' means):
 
 | People's share of the run cost, p | β = 25% (on-call time only) | β = 100% (every people hour) |
 |---|---|---|
-| 7% | $0.4 million (0.4%); by the minutes $0.5 million | $1.8 million (1.8%); by the minutes $2.0 million |
-| 10% | $0.6 million (0.6%); by the minutes $0.7 million | $2.6 million (2.6%); by the minutes $2.9 million |
-| 20% | $1.3 million (1.3%); by the minutes $1.4 million | $5.1 million (5.1%); by the minutes $5.8 million |
+| 7% | $0.4 million (0.4%) | $1.8 million (1.8%) |
+| 10% | $0.6 million (0.6%) | $2.6 million (2.6%) |
+| 20% | $1.3 million (1.3%) | $5.1 million (5.1%) |
 
 These are the arithmetic of a measured fall and an owner's own shares, not a measured saving: the people cost itself, in hours, is measured only in a paired pilot on an owner's own records, their pager history and their log of changes to the governed settings, before and with Omni-Compass on native (`docs/PILOT_PROTOCOL.md`). The machines' line is read on the chip and through the cloud (`results/TWO_BILLS.md`), and the two lines are never added as percentages of different bills: each enters the one equation with its own share.
 

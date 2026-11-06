@@ -28,7 +28,9 @@ class ReleaseCampaign(unittest.TestCase):
 
     def test_queue_is_complete_and_excluded_providers_cannot_dispatch(self):
         queue = grid.rerun_queue()
-        self.assertEqual(len(queue), 195)        # 65 entries, A, B and C (Omni-Compass by itself a second time, on the rig as
+        self.assertEqual(len(queue), 204)        # 68 entries, A, B and C (5 November: Koordinator's four ways, the batch through
+                                                 # Koordinator on the cgroup root and CruiseKube with the recorder in service again
+                                                 # whole, their one unfinished omni-v25 run read in no table; Omni-Compass by itself a second time, on the rig as
                                                  # amended on 31 October; the steady and wandering tests back since omni-v8;
                                                  # MySQL, Redis and MongoDB with native as shipped beside the operator's, 17 October;
                                                  # every data store at the max beside the tune-down, 18 October;
