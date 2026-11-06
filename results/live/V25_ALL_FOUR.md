@@ -46,7 +46,6 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 | pod start wait, mean (s) | 1.477 → 1.737; raw +17.6% (95%: −0.8% to +36.0%); LOSS | 1.439 → 1.646; raw +14.3% (95%: −12.6% to +41.3%); LOSS | 1.681 → 1.627; raw −3.3% (95%: −20.9% to +14.3%); GAIN | **the runs disagree** |
 | host CPU busy, the real machine under kind (%) | 67.86 → 69.16; raw +1.9% (95%: +0.4% to +3.4%) | 64.45 → 65.06; raw +0.9% (95%: −0.9% to +2.8%) | 73.42 → 74.9; raw +2.0% (95%: +1.0% to +3.0%) | shown, not judged |
 | host cores (the real machine under kind) | 4 → 4; raw ±0.0% (95%: ±0.0% to ±0.0%) | 4 → 4; raw ±0.0% (95%: ±0.0% to ±0.0%) | 4 → 4; raw ±0.0% (95%: ±0.0% to ±0.0%) | shown, not judged |
-| work inside the response line (requests a second; the capacity test's own gauge) | 21.6 → 28.2; raw +30.6% (95%: +24.3% to +36.8%); GAIN | 22.8 → 31.2; raw +36.8% (95%: +27.1% to +46.6%); GAIN | 15.6 → 25.8; raw +65.4% (95%: +46.8% to +84.0%); GAIN | **GAIN in all three of our runs** |
 
 Readings: 1 GAIN by the mean of our three runs, 5 GAIN in all three of our runs, 1 LOSS by the mean of our three runs, 1 LOSS in all three of our runs, 3 STEADY, the same, 3 STEADY, under the floor, 1 power given by the mean of our three runs, 1 power given in all three of our runs, 9 shown, not judged, 1 the runs disagree.
 
