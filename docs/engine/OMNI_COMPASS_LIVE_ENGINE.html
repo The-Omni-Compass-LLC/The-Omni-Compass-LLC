@@ -215,7 +215,8 @@
     var rg = g.createRadialGradient(W0 / 2, H0 * 0.46, 0, W0 / 2, H0 * 0.46, Math.max(W0, H0) * 0.6);
     rg.addColorStop(0, "rgba(90,160,230,.22)"); rg.addColorStop(1, "rgba(90,160,230,0)"); g.fillStyle = rg; g.fillRect(0, 0, W0, H0);
   }
-  function loop(t) { raf = requestAnimationFrame(loop); if (!on || document.hidden || t - prev < STEP - 2) return; prev = t; draw(t); }
+  var holder = document.getElementById("omniBg");   // where a real clip plays over it, the aisle is not drawn
+  function loop(t) { raf = requestAnimationFrame(loop); if (!on || document.hidden || (holder && holder.classList.contains("vid")) || t - prev < STEP - 2) return; prev = t; draw(t); }
   function start() { size(); cancelAnimationFrame(raf); last = 0; if (rm) { draw(performance.now()); return; } raf = requestAnimationFrame(loop); }
   function setOn(v) {
     on = v; try { localStorage.setItem("omniWall", on ? "on" : "off"); } catch (e) { /* not kept */ }
@@ -253,13 +254,16 @@
   }
   function show(k) {
     if (k === cur) return; cur = k; var back = front === A ? B : A, src = CLIPS[k] + EXT;
-    back.oncanplay = function () { back.oncanplay = null; var go = function () { back.classList.add("on"); front.classList.remove("on"); var old = front; front = back; setTimeout(function () { if (old !== front) old.pause(); }, 1300); };
+    back.oncanplay = function () { back.oncanplay = null; var go = function () { back.classList.add("on"); front.classList.remove("on"); bg.classList.add("vid"); var old = front; front = back; setTimeout(function () { if (old !== front) old.pause(); }, 1300); };
       if (rm) go(); else { var pr = back.play(); if (pr && pr.then) pr.then(go, go); else go(); } };
-    back.onerror = function () { back.classList.remove("on"); };   // a clip that cannot play leaves the drawn aisle showing
+    back.onerror = function () { back.classList.remove("on"); if (!front.classList.contains("on")) bg.classList.remove("vid"); };   // a clip that cannot play leaves the drawn aisle showing
     back.preload = "auto"; back.src = src; back.load();
   }
   var tick = 0; addEventListener("scroll", function () { if (!tick) tick = requestAnimationFrame(function () { tick = 0; show(part()); }); }, {passive: true});
-  document.addEventListener("visibilitychange", function () { if (document.hidden) front.pause(); else if (!rm && front.src) front.play().catch(function () {}); });
+  document.addEventListener("visibilitychange", function () { if (document.hidden) front.pause(); else if (!rm && front.src && !document.body.classList.contains("wallOff")) front.play().catch(function () {}); });
+  new MutationObserver(function () {   // the dock's Wallpaper switch: off stops the clip too, on starts it again
+    if (document.body.classList.contains("wallOff")) front.pause(); else if (!rm && front.src && !document.hidden) front.play().catch(function () {});
+  }).observe(document.body, {attributes: true, attributeFilter: ["class"]});
   setTimeout(function () { show(part()); }, 1500);   // after the page has started, so the clip never competes with the engine's first paint
 })();
 </script>
@@ -1012,6 +1016,7 @@ body{background:transparent}
 body.wallOff #omniBg{display:none}
 body.wallOff,html:has(body.wallOff){background:var(--bg)}
 @media print{#omniBg{display:none}html{background:#fff}}
+
 
 
 /* fix_TOUR3: the blue Guided tour tab, just above the dock's Tour button on every screen; it bounces on the landing view */
