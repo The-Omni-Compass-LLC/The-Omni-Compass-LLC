@@ -39,9 +39,11 @@ one body, the organism: every muscle driven as far as its own limit and never pa
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
-organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
-every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
+organism: never less work or health than native (`DISCLOSURES.md`, section 3). The one headline is an aim, not a result.
+The aim: more work, faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers
+already in place, every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds. The record reads
+the work and the speed (the Omni index, `results/OMNI_INDEX.md`); the machines are not yet fewer: the whole organism's
+composition reads them more, power given (`results/WHOLE_SYSTEM.md`).
 
 **Where the proof is.** This book shows how to wire, tune, run and check Omni-Compass. The mechanism, the mathematics and
 every result, each a paired comparison of native and Omni-Compass on top of native run three times, every row kept, LOSS
@@ -183,7 +185,7 @@ the change is the mean of the three runs' changes in percent of native; a mean u
    and the test is rebuilt so the machine no longer decides it.
 6. **Every row is shown**, LOSS included. Nothing is cut from a receipt because it went against Omni-Compass.
 
-**How the governor tells GAIN from LOSS.** The governor does not read a plus or a minus sign as good or bad. Before it
+**How Omni-Compass tells GAIN from LOSS.** It does not read a plus or a minus sign as good or bad. Before it
 moves anything, every gauge it reads is declared with its aim, and the aim decides the word: for time waited, missed or
 failed a fall is GAIN; for work done a rise is GAIN; for a resource spent or held a fall is a cut, and a cut is GAIN, while
 a rise is power given, kept only while it buys the work or the speed shown beside it. A slow knob moves only as far as a
@@ -276,7 +278,7 @@ back the processor, or that the autoscaler is adding machines the database canno
 the middle of its range, because playing it safe is its whole job. The headroom between the middle and the edge is
 paid for every hour and almost never used.
 
-**That gap is what you are wiring it to close.** Omni-Compass is a **supervisory governor**: one governor over the
+**That gap is what you are wiring it to close.** Omni-Compass is a **supervisory governor**: one supervisor over the
 muscles you already run. It never replaces them and it never competes with them. It reads them, it decides, and it
 writes one setting at a time through a two-way plug: one wire in, one wire out. Before it writes anything, it takes a
 snapshot. When it stops, every setting goes back to that snapshot.
@@ -440,7 +442,7 @@ Every question has a place in this book, and the places outside it are few and n
 | The next step while wiring | the level you are at (section 6.3) and your stack (chapter 7); every step names what you should see when it is done right |
 | A reading you do not understand | the key at the front of this book; Appendix C (every gauge, its source and its aim); chapter 11 (what a receipt proves and what it does not); section 10's reference bands |
 | A symptom | Appendix D (troubleshooting, symptom by symptom); chapter 8 (the three ways a governor stops); section 5.3 (blind means hold); section 4.5 (wired right or wired wrong) |
-| A setting | Appendix K (every setting of the Kubernetes governor and of the card governors, with its shipped value) |
+| A setting | Appendix K (every setting of Omni-Compass on Kubernetes and on the cards, with its shipped value) |
 | An audit line | Appendix L (every record, field by field, with the six searches that answer most questions) |
 | What a result elsewhere means | `DISCLOSURES.md`, section 4 (the front matter): the first presumption is the wiring, the settings or the reading, never the law |
 | What is inside the engine | the Owner's Manual: the theory, the mathematics, the mechanism, the source |
@@ -1462,7 +1464,7 @@ neither wrote nor is waiting on is read as someone else's.
 If a lever is found at a value Omni-Compass did not write, someone else owns it: the governor stops writing that lever and
 leaves it alone, because restoring over it would fight the new owner. An operator who changed a knob by hand meant to,
 and a second controller that changed it is a conflict to be reported, not won. The lever is left where it was found, the
-audit records the value and the time, the governor goes on governing the other levers, and its exit code says so. A
+audit records the value and the time, Omni-Compass goes on supervising the other levers, and its exit code says so. A
 reader of the receipts who finds such a record knows at once that two hands were on the stack, and the paired run that
 contains it is read with that in mind. For an installer this rule has one consequence above all: **a knob may have only
 one writer besides its native controller**. A runbook, a cron job, a building schedule or a second tool that writes the
@@ -1511,7 +1513,7 @@ makes the beat a dial, any beat from 5 to 120 s on the command line (the factory
 its place from omni-v24); omni-v18 carries Omni direct, Omni-Compass run on the muscles with no Kubernetes beneath it (`omni_orchestrator/`), as
 part of the engine, so its three arms (native, Omni on native, Omni direct) run from one fingerprint; omni-v19 takes
 `--own-replicas namespace/name,...` (or `OMNI_OWN_REPLICAS`), Omni-Compass by itself on Kubernetes: for a workload no autoscaler
-governs, the governor sets its replica count itself through the workload's own scale (the grant: `get`, `patch` and `update` on
+governs, Omni-Compass sets its replica count itself through the workload's own scale (the grant: `get`, `patch` and `update` on
 `deployments/scale` by name, `deploy/rbac-own-pods.yaml`, chapter 14), every `--own-every-s` (15 s), its target and
 range read from the workload's `omnicompass.io/target-utilization` and `omnicompass.io/replica-range` annotations (else
 `--own-target`), never below the workload's own count at the max (the tune-down may go to the range's floor), the count recorded on the workload
@@ -2157,8 +2159,8 @@ paired receipts, this section is a wiring instruction, not a claim of savings.
 
 **On autopilot: why nobody babysits it.** Omni-Compass is an autopilot: a closed-loop supervisory controller that runs,
 steers and corrects itself inside the system it governs, as a self-driving car's controller does inside the car. Once
-the paired trial on a muscle has passed and the governor is set to govern, nobody turns a knob and nobody has to react.
-Every change is the governor's own, and the governor audits itself: every write is read back from the system, every
+the paired trial on a muscle has passed and Omni-Compass is set to write, nobody turns a knob and nobody has to react.
+Every change is Omni-Compass's own, and it audits itself: every write is read back from the system, every
 machine it gives back is kept only after its own paired trial shows the response time holds, every reading, decision and
 reason is in its audit, and it hands every setting back at the end; nobody has to check its work either. It holds the response time at the centre of its band, under the line, and acts as the reading approaches the
 line, so the correction lands before the line is crossed, not after a person is paged. What a native stack pays in
@@ -2190,7 +2192,7 @@ three: every setting at native, read back, with no record left.
   every governor registers itself with the exact command that puts every setting back
   (`omni_controller.controller --restore-only`, which restores from the snapshot annotations on the objects themselves,
   so it needs no memory of the dead process), and renews a lease every decision. The watchdog
-  (`tools/omni_switch.py watchdog`), run as its own service beside the governors, finds any governor whose process is gone
+  (`tools/omni_switch.py watchdog`), run as its own service beside Omni-Compass's processes, finds any of them that is gone
   or whose lease is older than its limit (five decision periods, at least two minutes), stops a hung one, runs its
   recorded restore command, and records what it did. Drill it before production: kill the governor outright in the middle
   of a governed paired run on your own system, and record how many seconds pass before every setting is back at the
@@ -2296,7 +2298,7 @@ is deliberately not the governor's to hold. It lives in a ConfigMap owned by ano
 team, in practice); while its key reads true, every expansion the governor would make is blocked and every contraction is
 still allowed, so a governor under a hold can only give capacity back, never take more. The governor reads the hold on
 every decision and records in its audit that it read it; it has no verb that could write it. The kill switch (chapter 8)
-is the blunter instrument beside it: the hold constrains a running governor, the switch stops every governor on the machine
+is the blunter instrument beside it: the hold constrains a running Omni-Compass, the switch stops every Omni-Compass process on the machine
 and hands everything back. An operator who suspects anything untoward uses the switch first, reads the audit second, and
 rotates the governor's identity third; the hold is for the slower case of a change window or an incident elsewhere during
 which no one wants capacity added.
@@ -2582,7 +2584,7 @@ autoscaler, which stays in every arm and alone adds machines (chapter 19).
 | 3. Watch | the governor installed in watch mode | an audit with decisions and no write, for at least one full day of the service's own load | one to seven days |
 | 4. Feed and line | the response-time feed and the written line | the feed's age under 15 seconds at every decision; the line signed off by the service's owner | a day |
 | 5. Paired run | native against native with Omni-Compass on top, on the company's own cluster | a receipt read row by row, every LOSS explained or fixed and rerun | two to five days |
-| 6. Govern | the governing role granted, the governor switched to govern, the OFF switch and the watchdog wired | the OFF switch drilled: every setting back and read back within 60 seconds | a day |
+| 6. Govern | the role that lets it write granted, Omni-Compass switched from watching to writing, the OFF switch and the watchdog wired | the OFF switch drilled: every setting back and read back within 60 seconds | a day |
 | 7. Day two | upgrades, rollbacks, audits, alarms, fleet roll-out | quarterly drill of the OFF switch and the watchdog | ongoing |
 
 ![Flowchart: the implementer's eight phases and their gates. From the verified copy through the account and the cluster, identity, the watch, the feed and the line, the paired run and the governing grant to day two; each phase has a gate that must pass before the next begins, and the OFF switch is drilled before the governor writes.](book/figures/f_phases.svg)
@@ -2983,7 +2985,7 @@ time a parked machine keeps billing after its pods have gone, and it is the same
 
 GKE runs metrics-server; check with `kubectl top nodes`. The service needs a CPU HorizontalPodAutoscaler and container
 requests, exactly as in section 15.3. GKE Autopilot clusters are a different product: their nodes are managed by Google
-and not visible as a pool the governor can park, so the governor's machine lever has nothing to move there. Use a
+and not visible as a pool Omni-Compass can park, so its machine lever has nothing to move there. Use a
 Standard cluster.
 
 ### 16.4 The registry and the governor's image
@@ -3167,7 +3169,7 @@ paired run deletes every cluster it made as its last step, whatever happened.
 
 The governor holds a service at its line by reading the service's response time. The **feed** is how that reading
 reaches it; the **line** is the response time the service must meet, written down by the service's owner. Both are the
-implementer's to provide, on any cloud, and both are decided before the governor watches, because a governor watching a
+implementer's to provide, on any cloud, and both are decided before Omni-Compass watches, because a supervisor watching a
 wrong feed against a wrong line produces an audit that teaches nothing.
 
 ### 18.1 The line
@@ -3537,10 +3539,10 @@ reads back at start, so an old version starting after a new one begins from the 
 
 ### 20.7 A fleet of clusters
 
-One governor per cluster, never one governor for several clusters: each cluster has its own autoscaler, its own
+One Omni-Compass per cluster, never one for several clusters: each cluster has its own autoscaler, its own
 machines and its own line. A fleet is rolled out cluster by cluster, each through the phases of section 13.3, with a
 paired receipt on at least one cluster of each kind (each provider, each machine family, each service class) before the
-rest of that kind go to govern. The governor's settings are the same text in every cluster of a kind; keep them in the
+rest of that kind go to govern. Omni-Compass's settings are the same text in every cluster of a kind; keep them in the
 company's configuration repository and deploy them like any other workload, and keep one audit store for the fleet.
 
 ### 20.8 Runbooks
@@ -3592,7 +3594,7 @@ firmware and driver deciding its clock under the default power limit.
   cannot be governed; the wire check (section 21.4) fails on it and says which wire.
 - **The vendor's driver**, recent enough to support locked clocks and power limits on the card; `nvidia-smi -q -d
   CLOCK,POWER` lists the supported clocks and the power-limit range.
-- **Root**, for the governor's writes; the governor is the only process allowed to set the card's clocks and limit while
+- **Root**, for Omni-Compass's writes on the card; it is the only process allowed to set the card's clocks and limit while
   it runs, and the machine check refuses to start if another management agent holds them.
 - **A response-time feed** for the work on the card (chapter 18): the serving engine's own per-request timings, or the
   probe against the serving endpoint.
@@ -3641,7 +3643,7 @@ which it did is read as a wiring fault first: the clock ceiling raised where the
 
 ### 21.6 OFF on a card
 
-`sudo touch /tmp/omni-gpu-kill` (one card's governor), `SIGTERM` to the governor, or the master switch
+`sudo touch /tmp/omni-gpu-kill` (Omni-Compass on one card), `SIGTERM` to its process, or the master switch
 (`sudo python3 tools/omni_switch.py off`, every governor on the machine) each restore the card at once: clocks reset to the
 card's own range (`nvidia-smi -rgc`), the power limit back to the value read at start, both read back. A restore that does
 not read back exits with code 3 and must be completed by hand before anything runs again (Appendix D). The fault drill
@@ -3653,7 +3655,7 @@ on every new card model.
 Where the cards are nodes of a Kubernetes cluster (the vendor's device plugin exposing `nvidia.com/gpu`), the card
 governor runs as a privileged agent on each GPU node (it writes the card's own settings, which needs the host's
 management interface), one per node, with its feed taken from the serving pods on that node. It never schedules or
-moves a pod; the cluster's own scheduler and autoscaler place the work, and the governor of chapter 19 governs the
+moves a pod; the cluster's own scheduler and autoscaler place the work, and Omni-Compass on the cluster (chapter 19) moves the
 machines, if the cards are in a cloud. The two governors are different writers of different settings and never touch the
 same one.
 
@@ -3712,7 +3714,7 @@ governor:
 | machines in service, machines seen | each `decision`: `nodes_observed`, `nodes_recommended` | the governor's view of the pool, decision by decision |
 | machines parked and woken | each `write` whose `why` is `node pool size` (a decision) or `scheduling floor (pending pods)` (a fast check) | every move of the machine lever |
 | trials and their outcomes | each `verdict`: `trial`, `step allowed`, `step refused`, `trial abandoned` | the give-back trials; abandoned trials point to a thin feed |
-| the response time the governor read | each `decision`: `latency_p95_ms` | the governor's own reading, beside the company's own |
+| the response time Omni-Compass read | each `decision`: `latency_p95_ms` | its own reading, beside the company's own |
 | senses | the `senses` of the `authority` record written with each decision: `blind`, `latency_age_s` | a feed lost, or late |
 | proprioception | the `proprioception` of the same `authority` record | a command that did not land, or another writer |
 | decision time | each `decision_ms` | the governor keeping its period |
@@ -3776,7 +3778,7 @@ alerts, Google Cloud alerting policies, CloudWatch alarms, Datadog monitors) aga
 same on-call rotation as the service. For Prometheus they are written already: `deploy/prometheus/omni-compass-rules.yaml`
 (load it with `rule_files:`, or wrap its `groups:` in a PrometheusRule for the Prometheus Operator) carries ten rules, each
 with its severity, its meaning and the action to take: the governor stale (no decision for three intervals while
-governing; critical), a governor orphaned (died or hung without handing back; critical), writes hammering (more than 300
+writing; critical), an Omni-Compass process orphaned (died or hung without handing back; critical), writes hammering (more than 300
 settings commands an hour), write errors, a recommendation oscillating (more than 20 reversals an hour), a sense blind for
 five minutes, the service at its line in more than 10% of decisions, the master switch off (information), the audit
 unreadable, and the governor's own processor above half a core. The staleness bound is three of the governor's own beats
@@ -4042,7 +4044,7 @@ not (section 24.5), only machine-hours above K reach the bill:
 
 R[$] = p Σₖ Δ t (N(tₖ) − max(K, N[req] (tₖ)))⁺ .
 
-**The governor's own floor.** The governor never parks a machine that would leave the processor requests of the pods
+**Omni-Compass's own floor.** It never parks a machine that would leave the processor requests of the pods
 on the machines in service, with the spare of its `--headroom` setting (half again, by default; Appendix K), or their
 processor in use, without a place. With Q′[c] (t) the requests of every pod on the machines in service (DaemonSet pods
 included), U[c] (t) the processor in use, and C′[c] one machine's allocatable processor, it keeps at least
@@ -4223,7 +4225,7 @@ specific to bare metal.
 
 **No machine is created or deleted by the governor.** The shipped machine script (`scripts/kind_nodepool.sh`) parks and
 wakes machines that exist, with a `PreferNoSchedule` taint; a parked machine stays powered, joined and Ready, and a pod
-that needs it lands on it at once. On bare metal, parking concentrates the work on fewer machines, and a parked machine
+that needs it lands on it at once. On bare metal, parking packs the work onto the machines left in service, and a parked machine
 whose pods have gone idles at its idle power.
 
 **Powering a parked machine down is the operator's own command, and its price is the boot.** The governor's machine lever
@@ -4338,7 +4340,7 @@ should be shipped off the site, because an edge site's disks are the first thing
 | Claim | What backs it |
 |---|---|
 | More work from the same machines | the paired receipt's work rows (requests served, jobs completed) reading GAIN, with response time and failures STEADY or GAIN, on the same machines in both arms |
-| The same work on fewer machines | the machine rows reading GAIN at the tune-down, with every service row STEADY or GAIN |
+| A claim of the same work with fewer machines in service | the machine rows reading GAIN at the tune-down, with every service row STEADY or GAIN |
 | Power | a meter of class P named in the receipt; the power the max took shown as power given beside the work it bought, never called a loss |
 | A dollar figure | the company's own price per kilowatt-hour or per machine-hour, applied by finance to the measured rows, never by the governor's receipt |
 
@@ -4705,7 +4707,7 @@ continuous-delivery controller interacts with the OFF switch, and how a fleet of
 
 | Unit | Rule |
 |---|---|
-| The cluster | one governor, one feed, one line, one set of governed pools; never one governor for several clusters, never two governors on one cluster |
+| The cluster | one Omni-Compass, one feed, one line, one set of pools it moves; never one Omni-Compass for several clusters, never two on one cluster |
 | The kind | clusters on the same provider, machine families, autoscaler profile and service class; one paired receipt per kind decides whether the kind may govern |
 | The engine version | one engine version across the fleet at a time, apart from the wave that is upgrading; a receipt is read only against the version it was made on (chapter 12) |
 | The wave | an ordered group of clusters that moves from one phase to the next together, after the wave before it has run a full cycle of its load without a fault |
@@ -4804,8 +4806,8 @@ deletion-cost mark.
 
 ### 27.5 Many services on one cluster
 
-The governor's machine lever governs machines, and machines are shared. Where several services run on the governed pools, the
-governor's single feed must speak for all of them (section 18.6): the feed of the service most sensitive to a lost
+Omni-Compass's machine lever moves machines, and machines are shared. Where several services run on the pools it moves, its
+single feed must speak for all of them (section 18.6): the feed of the service most sensitive to a lost
 machine, or an adapter that writes the worst of the services' own percentiles against their own lines. Three practical
 rules follow:
 
@@ -4813,7 +4815,7 @@ rules follow:
    pools that serve other services unlabelled. A pool dedicated to one service (a node pool with a taint the service
    tolerates) is the simplest case and the cleanest receipt.
 2. **One line per pool.** If two services on the same pool have lines that cannot be scaled to one, they are not
-   governed together: split the pool, or govern only by the stricter line.
+   supervised together: split the pool, or hold it to the stricter line alone.
 3. **Batch and stateful work.** Pods that the cluster autoscaler will not move (section 24.4) pin their machines; the
    governor may park such a machine, but it empties only when those pods end. A pool that carries long jobs and serving
    pods together gives the governor little to give back, honestly; the receipt shows it as STEADY on the bill.
@@ -5304,7 +5306,7 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | Idle at once | the work done and demand at zero: the pedal lifted all the way in one move, every safety check still holding |
 | Kill switch | security only: one switch in a human hand that turns every governor on the machine off at once; never the reset |
 | Lease | the record every governor renews each decision; a lease older than its limit, or a dead process, makes the watchdog hand back for it |
-| Watchdog | the service beside the governors that hands back for any governor that died or hung without doing it itself |
+| Watchdog | the service beside Omni-Compass's processes that hands back for any of them that died or hung without doing it itself |
 | Verdict, paired trial | the trial on the muscle itself that allows a slow knob to move only where the cost is within 2%; "left native" where no step passes (section 1.2) |
 | Tuning case | the one workload or case the rules were fixed on; shown in every receipt and never counted |
 | Untouched case | a workload or case the rules were applied to unchanged; the judged rows |
@@ -5385,7 +5387,7 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | `deploy/Dockerfile` | the container image: non-root, read-only root filesystem, no Linux capabilities |
 | `deploy/install/omni-compass.yaml` | the watch-mode install with a read-only identity (level 1) |
 | `deploy/install/rbac-cloud.yaml` | the cloud's grant: patch nodes and pods, and in the service's namespace by name its autoscaler, its Deployment's records and its pods' processor, nothing else (section 14.3) |
-| `deploy/install/omni-compass-cloud.yaml` | the cloud's governing Deployment: the governor, its probe and its watchdog in one pod, shipped with `--dry-run` (chapter 19, Appendix I) |
+| `deploy/install/omni-compass-cloud.yaml` | the cloud's Deployment: Omni-Compass, its probe and its watchdog in one pod, shipped with `--dry-run` (chapter 19, Appendix I) |
 | `deploy/Dockerfile.cloud` | the cloud image: the shipped image with `jq`, the machine script, the probe, the Prometheus feed adapter and the switch tool |
 | `scripts/kind_nodepool.sh` | the machine script: keeps `{n}` machines in service by the idle taint alone; never creates, deletes, cordons or uncordons a machine, and never moves a pod |
 | `tools/prom_feed.py` | the response-time feed from the company's own Prometheus (section 22.7) |
@@ -5411,7 +5413,7 @@ Every gauge in a receipt, where it comes from, and whether it is measured or mod
 | time over the response line (share of samples) | the same, against the written line | measured | lower |
 | failed requests, lost messages | the same | measured | lower; any increase is marked |
 | alert minutes: whole minutes whose 95th percentile, failed requests counted over, was over the line | the probe's own records, minute by minute | measured | lower: the minutes an on-call page would be open |
-| settings commands the governor wrote on its own | the governor's audit | measured | shown, not judged (no person touched either arm) |
+| settings commands Omni-Compass wrote on its own | its own audit | measured | shown, not judged (no person touched either arm) |
 | the governor's additions decided while the service was still inside its line (% of its additions) | the governor's audit | measured | shown, not judged |
 | worker machines in service, mean; node-hours | the cluster's own node records every 15 s | measured (machine-hours on a local cluster; the provider's own count in a cloud) | lower; a rise is power given |
 | compute bill at list price | the provider's own machine count × list price per family | measured (a real bill) | lower; a rise is power given |
@@ -5462,7 +5464,7 @@ pods it started), not to be counted for or against it.
 | A three-run table heads itself with a warning | a run's commit is not the engine version it claims, or the three are not separate runs | run `tools/omni_version.py --commit <sha>` on each; make the table only from runs on one engine version |
 
 | Cloud: the governor's pod shows `2/3` or restarts its watchdog | the pod was applied without `shareProcessNamespace: true`, or the watchdog lacks the shared `/tmp` | apply the manifest as shipped (Appendix I); a watchdog that cannot see the governor's process judges it dead and hands back over it (section 20.2) |
-| Cloud: parked machines are woken every few seconds, then parked again | the watchdog runs in a separate pod, or a second governor runs on the cluster | one governor, its watchdog in its own pod (section 20.2); `kubectl get pods -A -l app=omni-compass` must list exactly one pod |
+| Cloud: parked machines are woken every few seconds, then parked again | the watchdog runs in a separate pod, or a second Omni-Compass runs on the cluster | one Omni-Compass, its watchdog in its own pod (section 20.2); `kubectl get pods -A -l app=omni-compass` must list exactly one pod |
 | Cloud: the pod is refused at admission with a Pod Security message | the namespace enforces a profile the pod does not meet, or a later edit loosened the pod | the shipped pod meets `restricted` (section 26.3); compare the applied pod with Appendix I |
 | OpenShift: the pod is refused with `unable to validate against any security context constraint` | `restricted-v2` refuses the fixed user 10001 | grant `nonroot-v2` to the service account (section 25.3) |
 | Cloud: every decision shows the feed blind | the probe cannot reach the service (its URL, a network policy, the service's port), or the adapter's queries return nothing | `kubectl -n omni-compass logs deploy/omni-compass -c probe` (or `-c feed`); test the URL from the pod; check the network policy (section 26.5) and, for the adapter, run each query in the metrics system's own console |
@@ -5601,7 +5603,7 @@ changes one runs a changed tune, whose receipts are its own (section 3.6).
 | Setting | Default | The cloud's value | What it is |
 |---|---|---|---|
 | `--mode` | `observe` | `nodepool` | `observe` writes nothing; `target` moves autoscaler targets; `nodepool` also moves machines |
-| `--law` | `governor` | `compass` | the law the governor holds the service with |
+| `--law` | `governor` | `compass` | the law Omni-Compass holds the service with |
 | `--interval` | unset: the factory beat for its place | 10 s on site, 60 s through a cloud | the full decision period, read from the cluster's own nodes at the start (a dial from 5 to 120 s; section 3.4) |
 | `--floor-interval` | 5 s | 5 s | the fast checks' period, between decisions, in `nodepool` mode |
 | `--max-node-step` | 2 | 1 | the most machines one decision moves |

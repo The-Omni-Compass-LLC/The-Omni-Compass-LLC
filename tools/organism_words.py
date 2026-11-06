@@ -103,12 +103,23 @@ def organisms(d: dict) -> list:
     return rows
 
 
+def grid_words(s: str) -> str:
+    """The grid report's own summary with its signs put in words (the founder's order of 6 November: the word first, then the
+    direction in words and the size; a signed change only labelled raw; under the 0.5% floor STEADY)."""
+    s = re.sub(r"\bpower given \+(\d[\d.]*)% to \+(\d[\d.]*)%", r"power given, up \1% to \2%", s)
+    s = re.sub(r"\bpower given \+(\d[\d.]*)%", r"power given, up \1%", s)
+    s = re.sub(r"\bwork ([+−-])(\d[\d.]*)%", lambda m: (f"work STEADY, the same (raw {m.group(1)}{m.group(2)}%)" if float(m.group(2)) < FLOOR
+                                                       else f"work {'up' if m.group(1) == '+' else 'down'} {m.group(2)}% (raw {m.group(1)}{m.group(2)}%)"), s)
+    return s
+
+
 def grid() -> tuple:
     t = GRID.read_text(encoding="utf-8")
     m = re.search(r"\*\*Across the grid: (.+?)\*\*", t, re.S)
     summary = " ".join(m.group(1).split()) if m else None
     if summary and "; with the cluster inside" in summary:
         summary = summary.split("; with the cluster inside")[0]
+    summary = grid_words(summary) if summary else summary
     eng = re.search(r"engine (omni-v\d+)", t)
     sent = sorted(int(p.name.split("_v")[1]) for p in (ROOT / "results").glob("grid_v*")
                   if p.is_dir() and (p / "DISPATCHED.json").exists() and not (p / "GRID.md").exists())
@@ -165,15 +176,18 @@ def realms_lines(link_prefix: str = "") -> list:
         L.append(f"| another reading | {m['other']} |")
     L += ["",
           "Each organism under each load: the change in decisions over the line (Omni-Compass's count against native's), the",
-          "largest change in work over the three loads, and the largest power given (the organism's energy against native's).",
+          "largest change in work over the three loads, and the largest rise in energy (the organism's energy against native's; under",
+          "the 0.5% floor it reads STEADY).",
           "",
-          "| Organism (muscles) | Over the line: " + " | ".join(n for _, n in LOADS) + " | Work, largest change | Power given, largest |",
+          "| Organism (muscles) | Over the line: " + " | ".join(n for _, n in LOADS) + " | Work, largest change | Energy, largest rise |",
           "|---|---:|---:|---:|---|---:|"]
     for name, n, cells, work, power in rows:
         cell = [said("GAIN" if c <= -FLOOR else ("LOSS" if c >= FLOOR else "STEADY"), c) for c in cells]
         wk = (f"STEADY, {abs(work):.3f}% (under the {FLOOR}% floor)" if abs(work) < FLOOR
               else said("GAIN" if work > 0 else "LOSS", work, 2))
-        pw = said("power given", power, 2) if power >= 0 else said("GAIN", power, 2, "power")
+        pw = ("STEADY, the same" if abs(power) < 0.0005
+              else f"STEADY, {'up' if power >= 0 else 'down'} {abs(power):.3f}% (under the {FLOOR}% floor)" if abs(power) < FLOOR
+              else said("power given", power, 2) if power >= 0 else said("GAIN", power, 2, "power"))
         L.append(f"| {name} ({n:,}) | " + " | ".join(cell) + f" | {wk} | {pw} |")
     return L
 
@@ -185,7 +199,7 @@ def grid_lines(link_prefix: str = "") -> list:
     if gsum:
         g = (f"**The grid** (the seven organisms at 1, 10 and 100 copies, each at 1, 10 and 100 runs). Its one written report is "
              f"engine {geng}'s ([`results/grid_v5/GRID.md`]({link_prefix}results/grid_v5/GRID.md)); its modelled squares read, in the report's own "
-             f"words: \"{gsum}\". The squares with the real cluster inside are read gauge by gauge in the same report.")
+             f"summary with its signs put in words: {gsum}. The squares with the real cluster inside are read gauge by gauge in the same report.")
         if sent:
             g += (f" The grid has been sent on every engine since, omni-v{sent[0]} to omni-v{sent[-1]} (`results/grid_v*/DISPATCHED.json`), "
                   f"and no report of those runs has been written yet; until one is, the grid is read only on {geng}.")

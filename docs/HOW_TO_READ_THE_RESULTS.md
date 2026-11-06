@@ -217,7 +217,7 @@ against the same Kubernetes with Omni-Compass on top. Read:
 
 Energy on kind is a declared model, not a meter: kind keeps every machine powered.
 
-## The three-run tables (`results/live/V<engine>_<TEST>.md`, for example `V7_GOLDILOCKS.md`, `V8_CITYLEARN.md`)
+## The three-run tables (`results/live/V<engine>_<TEST>.md`, for example `V25_GOLDILOCKS.md`, `V25_CITYLEARN.md`)
 
 Every benchmark since the engine was frozen runs three separate times, A, B and C, on the same bytes, and the table
 shows all three beside each gauge, each with its own 95% interval. Read the last column first, by the verdict rules above:
@@ -267,9 +267,9 @@ PyBullet does not reproduce to the bit across machines; its amendment says so.
 `V3_OWN_COST.md` is Omni-Compass's own CPU, from the `overhead` record every omni arm's audit carries, by organism and
 copies, under the engine each run carried; it is shown and not judged, and it is a few thousandths of one core at every
 size. The robustness tables (`results/live/V11_ROBUST_KILL.md` and `V11_ROBUST_LONG.md` on the engine that stands; each earlier engine's are its own record) add rows that belong to the omni
-arm alone, since native has no governor to kill: the seconds from the kill until every setting was back at the operator's
-(the allowance is 60 s, declared before the run), whether a second governor started and governed to the end, and the
-governor's memory in the last ten minutes over the first ten (a quarter's growth is a leak, declared before the run); the
+arm alone, since native has no Omni-Compass process to kill: the seconds from the kill until every setting was back at the operator's
+(the allowance is 60 s, declared before the run), whether a second Omni-Compass process started and ran to the end, and that
+process's memory in the last ten minutes over the first ten (a quarter's growth is a leak, declared before the run); the
 300 s after the kill (120 s on the tables up to omni-v14's) are compared between the arms like any paired gauge.
 
 ## The organisms with a real cluster inside (`SIX_KUBE.md`, `V3_SIX_KUBE.md`, `V3_BIG_ORGANISM.md`)
@@ -311,7 +311,7 @@ realms, the four stacked and the whole tower. Each square shows the modelled val
 inside. Read a square as "with Omni-Compass on top, against native, at this many copies, over this many runs". A square
 still running says so, and one beyond a free runner's memory or time is listed as pending runner capacity, never rented.
 
-## Kubernetes at scale (`KWOK.md`, from the `kwok-scale` workflow)
+## Kubernetes at scale (the `kwok-scale` workflow, its table written by `tools/kwok_report.py` into the run's own files; none is committed to the repository yet)
 
 Real Kubernetes at 50, 500 and 1,000 nodes (KWOK nodes: real Kubernetes objects with no machines behind them):
 - **decision time** is how long Omni-Compass takes to decide, at that size;

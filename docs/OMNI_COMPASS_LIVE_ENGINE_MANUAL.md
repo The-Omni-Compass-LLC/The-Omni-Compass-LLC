@@ -39,9 +39,11 @@ one body, the organism: every muscle driven as far as its own limit and never pa
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
-organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
-every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
+organism: never less work or health than native (`DISCLOSURES.md`, section 3). The one headline is an aim, not a result.
+The aim: more work, faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers
+already in place, every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds. The record reads
+the work and the speed (the Omni index, `results/OMNI_INDEX.md`); the machines are not yet fewer: the whole organism's
+composition reads them more, power given (`results/WHOLE_SYSTEM.md`).
 
 **Where the page shows it.** The live benchmark engine page plays every benchmark back from its own SHA-256-checked files, native
 beside Omni-Compass on top of native, lane by lane, and runs the engine's own runs in the page: the Python's seeded runs, and
@@ -977,7 +979,7 @@ native and on the Omni-Compass side, its ceiling, floor, size, τ and sensing de
 | its sensing delay | +0 to +6 decisions | +0 | decisions between what the muscle does and what its controllers read |
 
 The group's switch reads **Omni-Compass governs it** and, pressed, hands the muscles in scope back to native's own controller
-while every other muscle stays governed; pressed again, Omni-Compass governs them again. The kill switch hands every muscle back
+while every other muscle stays with Omni-Compass; pressed again, it takes them back. The kill switch hands every muscle back
 at once.
 
 ### 2.23 A changed tune is not a result
@@ -2285,7 +2287,7 @@ project ships it, native and with Omni-Compass on top of it; Omni-Compass never 
 preregistration, its rig on GitHub, runs A, B and C, and its three-run table as it lands. **Orchestration Stack**, live:
 Omni-Compass on top, the governor native as shipped, Kubernetes and its nodes beneath, the work dots moving at the live
 engine's demand (a picture of the flow, not a measurement, replaced by the governor's readings the moment its three runs
-land). **Governor and Orchestrator Catalog**: what each governs, native as shipped, Omni-Compass on top, and what the repository holds
+land). **Governor and Orchestrator Catalog**: what each one controls, native as shipped, Omni-Compass on top, and what the repository holds
 today. Click a governor (a tile, a row of the road or of the catalog) to hold it in every view.
 
 ### 22.3 Four-Way Comparison
@@ -2304,7 +2306,7 @@ both lanes.
 
 ### 22.4 Orchestra Organism
 
-The eighth organism: every governor's catalog muscles, each governor's a body of its own and all of
+The eighth organism: every governor's catalog muscles, each product's a body of its own and all of
 them together one body, native and with Omni-Compass on top (modelled, class S; `tools/run_orchestra.py`,
 `results/orchestra/ORCHESTRA.md`). It is a grouping of catalog rows like the seven, never an engine file.
 
@@ -2544,9 +2546,9 @@ it ran and on how many processes close the line.
   the twenty scenarios above.
 - **Way**: *Omni-Compass on native*; *a governor on the organism* (each of the fourteen: the Kubernetes scheduler with its
   bin-packing profile, Kueue, Volcano, KAI, Koordinator, CruiseKube, Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster
-  Management, KubeEdge and Nephio); *Omni-Compass on top of a governor*. The orchestra already holds every governor's muscles,
+  Management, KubeEdge and Nephio); *Omni-Compass on top of a governor*. The orchestra already holds the muscles of all of them,
   so on it only Omni-Compass on native is offered.
-- **Against**: native, and, for Omni-Compass on top of a governor, the governor on the organism too, so Omni-Compass's own
+- **Against**: native, and, for Omni-Compass on top of a governor, that product on the organism too, so Omni-Compass's own
   effect on that governed stack is read alone.
 - **Runs**: 1, 10, 100 or 500. **Organisms stacked**: 1, 10, 100 or 500. Every cell is the one batch cut down: 100 runs are
   the first 100 of the batch's 500, 10 the first 10, 1 the first; and each run carries a stack of 500 organisms, of which 100
@@ -2581,7 +2583,7 @@ word. A click on a cell selects it.
   beside. Its line names the first way, the rank of Omni-Compass on native, and the ranks held by the ways with Omni-Compass on
   top; the rows with Omni-Compass are drawn in its colour. A click on a way selects it. In our models a governor's knobs run
   under their own native controllers, so a governor's way reads native's work index by construction. What it moves is the share
-  over the line and the power of its knobs, and its rank says so. The governors as their projects ship them, governing real
+  over the line and the power of its knobs, and its rank says so. The governors as their projects ship them, running real
   workloads, are read on real Kubernetes in the page's section 4e (class L): fourteen named, twelve with a rig built, eleven run the four
   ways.
 - **Organisms on the Same Injections**: the chosen way and cell on every organism, so each organism's reaction to the same

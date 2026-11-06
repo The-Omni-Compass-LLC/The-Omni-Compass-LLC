@@ -185,9 +185,10 @@ def _people_row() -> str:
         from oversight import build as _oversight
         o = _oversight()
         p, c = o["pooled"], o["count"]
-        moved = (f"through the pages: the alert minutes (the minutes an on-call page would be open) fell {abs(p['change']) * 100:.1f}% "
-                 f"over {c['tests']} real Kubernetes tests on {o['engine']}, fewer in {c['fewer']}, to none in {c['to_zero']} "
-                 "(`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt")
+        moved = (f"through the pages: {p.get('reading', 'by the mean')}, the alert minutes (the minutes an on-call page would be open) "
+                 f"{'down' if p['change'] < 0 else 'up'} {abs(p['change']) * 100:.1f}% pooled over {c['tests']} real Kubernetes tests on "
+                 f"{o['engine']}; test by test fewer in {c['fewer']} (to none in {c['to_zero']}), the same in {c.get('same', 0)}, more in "
+                 f"{c.get('more', 0)} (`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt")
     except Exception:   # no table with the pages yet
         moved = "through the pages it takes away (`results/OVERSIGHT.md`); the hours and pay are the owner's own line, on no receipt"
     return (f"| The people who watch and tune the stack (on call, triage, hand tuning) | the owner's staff (a cloud's own operations "
@@ -197,10 +198,12 @@ def _people_row() -> str:
 def markdown(d: dict) -> str:
     pl, eq = d["places"], d["equation"]
     bm0, cl0 = pl.get("bare_metal") or {}, pl.get("cloud") or {}
-    chip_w = ", ".join(_pct(r["w"]) for r in bm0.get("runs", [])) or "not yet read"
-    chip_usd = ", ".join(("$" if r["w"] >= 0 else "−$") + f"{abs(500 * r['w']):.2f}" for r in bm0.get("runs", [])) or "not yet read"
-    cloud_b = _pct(cl0["b"]) if cl0.get("b") is not None else "not read"
-    chip_100m = ", ".join(("+$" if r["w"] >= 0 else "−$") + f"{abs(100 * r['w']):.2f} M" for r in bm0.get("runs", [])) or "not yet read"
+    way = lambda x: "up" if x > 0 else "down"
+    chip_w = ", ".join(f"{way(r['w'])} {abs(r['w']) * 100:.2f}% (raw {_pct(r['w'])})" for r in bm0.get("runs", [])) or "not yet read"
+    chip_usd = ", ".join(f"${abs(500 * r['w']):.2f} {'more' if r['w'] >= 0 else 'less'}" for r in bm0.get("runs", [])) or "not yet read"
+    cloud_b = (f"{way(cl0['b'])} {abs(cl0['b']) * 100:.2f}% (raw {_pct(cl0['b'])}){', power given' if cl0['b'] > 0 else ''}"
+               if cl0.get("b") is not None else "not read")
+    chip_100m = ", ".join(f"${abs(100 * r['w']):.2f} M {'more' if r['w'] >= 0 else 'less'}" for r in bm0.get("runs", [])) or "not yet read"
     on_items = {"compute": 720 * 4.50, "egress": 500 * 0.08, "storage": 30.0}
     we_items = {"compute": 40 * 4.50, "egress": 50 * 0.08, "storage": 30.0}
     on, we = owner_bill(on_items, {}), owner_bill(we_items, {})
@@ -345,19 +348,26 @@ def markdown(d: dict) -> str:
     bm = pl.get("bare_metal")
     if bm:
         L += [f"**Bare metal** ({bm['title']}; {bm['engine']}; `{bm['source']}`):", "",
-              "| Run | Work, native → Omni-Compass | w | Bill, native → Omni-Compass | b | Work per dollar, native → Omni-Compass | G (its own word) |",
+              "| Run | Work, native → Omni-Compass | w (raw) | Bill, native → Omni-Compass | b (raw) | Work per dollar, native → Omni-Compass | G (its own word, then its size) |",
               "|---|---|---:|---|---:|---|---|"]
         for r in bm["runs"]:
             word = "GAIN" if r["G"] >= 0.005 else "LOSS" if r["G"] <= -0.005 else "STEADY, under the floor"
+            gw = (f"{word} (raw {_pct(r['G'])})" if word.startswith("STEADY")
+                  else f"{word}, {'up' if r['G'] > 0 else 'down'} {abs(r['G']) * 100:.2f}% (raw {_pct(r['G'])}): "
+                       f"{'more' if r['G'] > 0 else 'less'} work for each dollar")
             L.append(f"| run {r['run']} | {r['W'][0]:,.1f} → {r['W'][1]:,.1f} requests | {_pct(r['w'])} | ${r['B'][0]:.4f} → ${r['B'][1]:.4f} | "
-                     f"{_pct(r['b'])} | {r['Y_native']:,.0f} → {r['Y_omni']:,.0f} | {_pct(r['G'])} {word} |")
-        L += ["", f"The three runs together, by the one key: **{bm['reading']}** (the mean of the three G {_pct(bm['mean_G'])}). No interval "
+                     f"{_pct(r['b'])} | {r['Y_native']:,.0f} → {r['Y_omni']:,.0f} | {gw} |")
+        mg = bm["mean_G"]
+        L += ["", f"The three runs together, by the one key: **{bm['reading']}** (the mean of the three G {'up' if mg > 0 else 'down'} "
+              f"{abs(mg) * 100:.2f}%, raw {_pct(mg)}" + ("; the runs point different ways, so the mean is no word" if bm["reading"] == "the runs disagree" else "")
+              + "). No interval "
               "is carried for a run's work per dollar, so no run is counted beyond the noise; each run's word is its own size against the "
               "0.5% floor.", ""]
     cl = pl.get("cloud")
     if cl:
         L += [f"**Through the cloud** ({cl['engine']}, {cl['repetitions']} paired repetitions, {cl['conditions']}; `{cl['source']}`): the bill "
-              f"${cl['bill'][0]:.4f} → ${cl['bill'][1]:.4f} a window, b {_pct(cl['b'])}, inside the noise; the work done "
+              f"${cl['bill'][0]:.4f} → ${cl['bill'][1]:.4f} a window, the bill {'up' if cl['b'] > 0 else 'down'} {abs(cl['b']) * 100:.2f}%"
+              f"{', power given' if cl['b'] > 0 else ''}, inside the noise (raw b {_pct(cl['b'])}); the work done "
               f"was not counted, so G(cloud) is not read: {cl['note']}.", ""]
     rest = [v for k, v in pl.items() if k.startswith("organisms_")]
     if rest:

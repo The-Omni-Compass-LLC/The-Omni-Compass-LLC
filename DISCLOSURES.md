@@ -37,8 +37,9 @@ and every report point here. Where any other page seems to say more than this pa
    means. Labels are assigned by code from rules written and committed before the run
    (`docs/GPU_PREREGISTRATION.md`, `docs/REALMS_PREREGISTRATION.md`, `docs/K8S_COMPASS_PREREGISTRATION.md`), never by hand.
 5. Losses and failed runs are kept beside the wins (`docs/EVIDENCE_LEDGER.md`, `results/live/`, git history). The
-   first real-card run, for example, saved energy (+3.6% work per energy, proven) and made the slowest answers 58.5%
-   slower; it is published as it happened.
+   first real-card run, for example, read GAIN on its energy (the work per energy up 3.6%, its interval clear of zero) and LOSS
+   on its slowest answers (the 95th percentile 58.5% slower); it is published as it happened
+   (`results/gpu/run-20261002T082232Z/GPU_REPS.md`, `docs/EVIDENCE_LEDGER.md`).
 6. No result is a promise of a saving on any other system. No dollar figure in this repository is a measured result.
    Nothing here is a vendor certification, a safety certification, legal advice or investment advice.
 

@@ -349,11 +349,15 @@ def work_for_the_bill() -> list:
          "[`docs/WORK_PER_BILL.md`](docs/WORK_PER_BILL.md) (`tools/work_per_bill.py`).", ""]
     bm, cl, t = d["places"].get("bare_metal"), d["places"].get("cloud"), d.get("total") or {}
     items = []
+    # the word, then the direction in words, then the size with no sign, then why; the signed change only labelled raw (the founder's words of 6 November)
+    way = lambda x: "unchanged" if abs(x) < 5e-5 else f"{'up' if x > 0 else 'down'} {abs(x) * 100:.2f}%"
+    why = lambda g: "each dollar bought more work" if g >= 0.005 else "each dollar bought less work" if g <= -0.005 else "under the 0.5% floor"
     if bm:
-        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G " + ", ".join(f"run {r['run']} {pct(r['G'])} {word(r['G'])}" for r in bm["runs"])
-                     + f"; the three runs by the one key **{bm['reading']}** (their mean {pct(bm['mean_G'])})")
+        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G, the work for each dollar, " + ", ".join(f"run {r['run']} {word(r['G'])}, {way(r['G'])} ({why(r['G'])})" for r in bm["runs"])
+                     + f"; the three runs by the one key **{bm['reading']}** (their mean raw {pct(bm['mean_G'])})")
     if cl:
-        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): b {pct(cl['b'])}, inside the noise, the work not counted in that set, so G(cloud) not yet read"
+        bw = "power given" if cl['b'] >= 0.005 else "GAIN, a cut" if cl['b'] <= -0.005 else "STEADY"   # the bill is a resource spent: a rise power given, never a LOSS
+        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): the bill {bw}, {way(cl['b'])} (raw {pct(cl['b'])}), inside the noise, the work not counted in that set, so G(cloud) not yet read"
                      if cl.get("G") is None else f"through the cloud, {cl['engine']}: G {pct(cl['G'])}")
     items.append("both places together: read only for an owner's own spend in each, once the cloud's G is read")
     L += ["Today: " + "; ".join(items) + ".", ""]
@@ -760,7 +764,9 @@ def place_readme(text: str, block: str) -> str:
     if BEGIN in text:
         a = text.index(BEGIN); z = text.index(END, a) + len(END)
         return text[:a] + block + text[z:]
-    tag = "**More work, faster, on fewer machines, for the same energy and the same bill, on top of the stack you already run.**"
+    tag = ("**The aim, in the founder's words: more work, faster, on fewer machines, for the same energy and the same bill, on top of "
+           "the stack you already run.** It is an aim, not a result: the record reads the work and the speed (the Omni index below); "
+           "the machines are not yet fewer, and the whole organism's composition reads them more, power given (`results/WHOLE_SYSTEM.md`).")
     i = text.index(tag) + len(tag)
     return text[:i] + "\n\n" + block + text[i:]
 
