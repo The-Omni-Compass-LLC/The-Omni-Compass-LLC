@@ -406,7 +406,8 @@ different parts of a stack are not added into one bill: the invoice is one gain,
 The value a customer sees comes in three forms, each on its own line of the receipt:
 
 1. **Work per energy** - more finished work per kilowatt-hour.
-2. **Capacity** - the same work on fewer machines in service; it becomes a cost reduction when the released machines are
+2. **Capacity** - the same work with fewer machines in service (a kind of benefit, not a result: on omni-v25 the whole
+   organism's composition reads its machines 77.7% more, power given, `results/WHOLE_SYSTEM.md`); it becomes a cost reduction when the released machines are
    returned to the cloud or switched off by the platform around Omni-Compass.
 3. **Service** - faster responses and fewer breaches at the same load.
 

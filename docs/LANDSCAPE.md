@@ -110,8 +110,8 @@ Each grade reads public material against the measures above. "np" is not publish
   governs Kubernetes, accelerators, power, cooling, buildings, grids and machines with one law. The others publish case studies
   whose savings are their own claims.
 - **Where I am behind.** Every product above runs on customers' production systems; I have none. My real-software evidence is on
-  GitHub's small machines and kind clusters, my clouds are one set in progress on Azure, my GPU result is not in, and my widest
-  results are my own models (class S). Evidence scale is my D, and only production runs raise it.
+  GitHub's small machines and kind clusters, my clouds are one set in progress on Azure, my GPU result is not in (as read on 24 October; the card runs on
+  Lambda since are in `results/gpu/`), and my widest results are my own models (class S). Evidence scale is my D, and only production runs raise it.
 - **The operator's surface.** My live benchmark engine shows native and Omni-Compass on the same monitor, reads every gauge in the gauge's
   own aim (GAIN, STEADY, LOSS), and carries knobs, buttons and lights on every monitor. I found no compute governor whose console
   shows the governed system beside native on the same monitor; SCADA screens carry live knobs on live plants, and that is the

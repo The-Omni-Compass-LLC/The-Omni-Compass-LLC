@@ -128,15 +128,15 @@ Kept as its own page, `docs/history/STATE_OF_PLAY_2026-10-10.md`: the 10 October
 ## In one paragraph (2026-10-06, Omni v1)
 
 **Omni v1, the same in all three of our runs.** On real Kubernetes, every test ran three times as separate GitHub runs on the frozen
-engine, ten pairs each (`docs/OMNI_V1.md`, the six `results/live/V1_*.md` tables). Work inside the response line **+42%
-to +48%** in all three runs of the all-four test (18.6 → 27.6 requests a second in run A), GAIN in all three of our runs; the 95th
-percentile **−57% to −69%** in every run of the steady, wandering, all-four and fault tests, GAIN in all three of our runs; failed
-requests −12% to −13% where load swings, GAIN in all three of our runs; machines −1.5% to −3.4% at steady load and −15% to −24% on
-the batch queue, GAIN in all three of our runs, no difference beyond the noise elsewhere; energy a declared model (kind never powers a
-machine down); beside a noisy neighbour, no difference beyond the noise on every row. **The Omni index on v1: +26.2%**
-on real Kubernetes (`results/OMNI_INDEX.md`; only rows the same in all three of our runs count, a row inside the noise counts
-as zero; Azure and the card join when their v1 runs land). The paragraph below is the earlier engine's reading, kept as
-the record it was.
+engine, ten pairs each (`docs/OMNI_V1.md`, the six `results/live/V1_*.md` tables). Work inside the response line **up 42%
+to 48%** in all three runs of the all-four test (18.6 → 27.6 requests a second in run A): more work, GAIN in all three of our runs; the
+95th percentile **down 56% to 69%** in every run of the steady, wandering, all-four and fault tests: faster answers, GAIN in all three
+of our runs; failed requests down 12% to 13% where load swings, GAIN in all three of our runs; machines down 1.5% to 3.4% at steady load
+and down 15% to 24% on the batch queue, a cut, GAIN in all three of our runs, no difference beyond the noise elsewhere; energy a declared
+model (kind never powers a machine down); beside a noisy neighbour, no difference beyond the noise on every row. **The Omni index on
+v1** read real Kubernetes alone (only rows the same in all three of our runs counted, a row inside the noise as zero; Azure and the
+card were to join when their v1 runs landed); its figure of that day is not kept in the tree, so it is not repeated here (the index
+of record is omni-v25's, `results/OMNI_INDEX.md`). The paragraph below is the earlier engine's reading, kept as the record it was.
 
 Omni-Compass sits on top of Kubernetes and hardware and gets more out of what is already there. On real Kubernetes,
 the engine before v1 (the live controller at rules 1-8, commit `353903683009`), ten pairs per test, native against
@@ -146,8 +146,8 @@ compass with the same work sent to both:
 swings, energy equal or lower, and not one pod left without a machine. Machines: up to 2% fewer. Omni gives a machine
 back only when a paired trial shows the service no slower without it, and on these clusters one machine fewer made
 requests 30-45% slower in most trials, so it kept them and spent them on speed and work (earlier engines without that
-check parked 29-36%: `docs/history/`). All of it together, real software on real computers (the software end, not bare metal and not the chip): **the Omni index +12.9%**
-(`results/OMNI_INDEX.md`).
+check parked 29-36%: `docs/history/`). All of it together, real software on real computers (the software end, not bare metal and not the chip): **12.9%, GAIN, by
+that engine's own index** (kept whole in `docs/history/OMNI_INDEX_pre_v1.md`; the index of record is omni-v25's, `results/OMNI_INDEX.md`).
 
 **Omni v1** (`docs/OMNI_V1.md`): the engine is frozen and fingerprinted (`OMNI_V1.json`), and every test above runs
 three times on it, as separate GitHub runs (A the result, B and C the replications); each table reads GAIN in all three of our runs,

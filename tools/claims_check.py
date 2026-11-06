@@ -42,7 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "engine" / "OMNI_COMPASS_LIVE_ENGINE.html"
 
-KEEP_WORDS_OF_THEIR_DAY = (re.compile(r"^docs/history/"), re.compile(r"_20\d\d-\d\d-\d\d"), re.compile(r"^docs/engine/audit_"),
+KEEP_WORDS_OF_THEIR_DAY = (re.compile(r"^docs/history/"), re.compile(r"_20\d\d-?\d\d-?\d\d"), re.compile(r"^docs/engine/audit_"),
                            re.compile(r"(^|/)CHANGELOG\.md$"), re.compile(r"PREREGISTRATION"), re.compile(r"^results/[^/]+/"),
                            re.compile(r"^(CLAUDE|AGENTS|GEMINI)\.md$"), re.compile(r"^docs/WEBSITE_CLAIMS\.md$"),
                            re.compile(r"^\.github/"), re.compile(r"^docs/omni_v5/"), re.compile(r"^docs/handoff/"),

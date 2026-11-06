@@ -21,7 +21,7 @@ snapshot taken once at the start found it until Omni-Compass's own law moves it.
 monitor numbers on the page take a violet outline while direct is in view, and Omni-Compass's line on a live chart is drawn in
 violet (`--direct`), never a reading's colour. The factory button puts the switch back on native, as Omni-Compass ships.
 
-**Two governed arms, one switch.** Both governed arms run every decision beside native, each with its own brain (`W.omniOn` with
+**Two supervised arms, one switch.** Both arms with Omni-Compass run every decision beside native, each with its own brain (`W.omniOn` with
 `W.brainOn`, `W.dirA` with `W.brainD`), so the switch changes which one is in view, at once and with its whole history; it never
 restarts a run. The kill switch hands both back to native. Native's side never moves with the switch.
 
@@ -211,7 +211,7 @@ native and on the Omni-Compass side, its ceiling, floor, size, τ and sensing de
 | its sensing delay | +0 to +6 decisions | +0 | decisions between what the muscle does and what its controllers read |
 
 The group's switch reads **Omni-Compass governs it** and, pressed, hands the muscles in scope back to native's own controller
-while every other muscle stays governed; pressed again, Omni-Compass governs them again. The kill switch hands every muscle back
+while every other muscle stays under Omni-Compass; pressed again, Omni-Compass takes them back. The kill switch hands every muscle back
 at once.
 
 **A changed tune is not a result.** Every knob of this panel shows a variation of the mechanism (class S, our own model). The

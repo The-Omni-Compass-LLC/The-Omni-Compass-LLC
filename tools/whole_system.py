@@ -525,6 +525,18 @@ def beside():
 
 
 # ----------------------------------------------------------------------------------------------------------------------- the page
+def _modelled_words(name, x, rise, fall):
+    """A modelled change against native in words (the founder's order of 6 November): the gauge, the direction, the size with no
+    sign, and its word by what the gauge is for; under the 0.5% floor STEADY."""
+    if not x:
+        return f"{name} the same (STEADY)"
+    size = f"{100 * abs(x):.3f}%" if 100 * abs(x) >= 0.0005 else "less than 0.001%"
+    said = f"{name} {'up' if x > 0 else 'down'} {size}"
+    if abs(x) < readings.SIZE_FLOOR:
+        return f"{said} (STEADY, under the {100 * readings.SIZE_FLOOR:g}% floor)"
+    return f"{said} ({rise if x > 0 else fall})"
+
+
 def test_line(t):
     parts = []
     for g in GAUGES:
@@ -789,9 +801,11 @@ def main(argv=None):
     if rv:
         for org, o in rv["organisms"].items():
             m = o["misses_pp"]
+            from wiring_verdicts import pp_words, floor_words   # the organisms' figures in words, by the one key's floor, written once
             L.append(f"- The organisms, our own models (class S, `{rv['source']}`, commit {rv['commit']}): {'the spine' if org == 'spine' else 'the whole tower'} "
-                     f"({o['n']} muscles) under its own load: {o['label'].lower().replace('_', ' ')}, misses {m[0]:+.3f} pp ({m[1]:+.3f} to {m[2]:+.3f}), "
-                     f"work {100 * o['work'][0]:+.2f}%, power given {100 * o['energy'][0]:+.3f}%. A model's energy is not a meter's; these rows are shown, not composed.")
+                     f"({o['n']} muscles) under its own load: {readings.labelled(o['label'])}, {pp_words(*m[:3])}, "
+                     f"{floor_words('work', o['work'][0], False)}, {floor_words('energy', o['energy'][0], True)}. A model's energy is not a meter's; "
+                     "these rows are shown, not composed.")
     sk = side.get("six_kube_v3")
     if sk:
         for key, r in sk["p95"].items():

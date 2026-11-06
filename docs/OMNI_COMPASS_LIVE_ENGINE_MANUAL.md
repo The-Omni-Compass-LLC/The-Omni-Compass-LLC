@@ -13,6 +13,11 @@ All patents, copyrights and trademarks covering the Omni-Compass engine, its mat
 
 # FRONT MATTER
 
+
+> **The monograph.** What the live benchmark engine is for, and what it does and does not show, is written at a referee's level in
+> `docs/engine/LIVE_ENGINE_MONOGRAPH.md`: purpose, the stack and every module, the mechanism, the evidence, the receipts on omni-v25,
+> reproduction and limits. This manual is how to read the page; the monograph is why the page exists and what stands behind it.
+
 ## The Problem and the Answer
 
 **What the whole industry faces.** Every computing system in service, from one server to a cloud region, from a GPU to a

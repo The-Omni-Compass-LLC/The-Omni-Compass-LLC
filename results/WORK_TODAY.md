@@ -6,7 +6,7 @@
 
 Every test the repository holds, read by its work row alone: the work done with Omni-Compass on top of native against native on the same machines, by the one key (a change of 0.5% or more is a change). Nothing here is a new measurement; each row names its record.
 
-**The answer today: more work in 9 of the 19 tests that counted their work, less work in none.** The work held in 9: each of those offers its load at a fixed rate, the same in both arms, so the most either arm can do is answer all of it inside the line. In 1 the runs disagree. 9 more tests could not show more work whatever the governor did: they sent a fixed load or did not count the work. 1 more, taken out of the count by the verdict audit, is shown at the end and never counted.
+**The answer today: more work in 9 of the 19 tests that counted their work, less work in none.** The work held in 9: each of those offers its load at a fixed rate, the same in both arms, so the most either arm can do is answer all of it inside the line. In 1 the runs disagree. 9 more tests could not show more work whatever Omni-Compass did: they sent a fixed load or did not count the work. 1 more, taken out of the count by the verdict audit, is shown at the end and never counted.
 
 ## The tests that counted their work
 
@@ -34,7 +34,7 @@ Every test the repository holds, read by its work row alone: the work done with 
 
 ## The tests that could not show more work
 
-A test that sends the same fixed load to both arms, or reads only time, misses and machines, cannot show more work, however well the system is governed: it shows the same work done faster, with fewer alert minutes or on fewer machines. To answer the question in these tests too, each needs a load whose work grows when the system serves faster (the work meter, `LOADGEN=meter` in `scripts/kind_bench.sh`, as every cloud set carries from 31 October).
+A test that sends the same fixed load to both arms, or reads only time, misses and machines, cannot show more work, however well the system is supervised: it can show only the same work done faster, with fewer alert minutes or with fewer machines in service. To answer the question in these tests too, each needs a load whose work grows when the system serves faster (the work meter, `LOADGEN=meter` in `scripts/kind_bench.sh`, as every cloud set carries from 31 October).
 
 | Where | Test | Why it could not show more work | Record |
 |---|---|---|---|

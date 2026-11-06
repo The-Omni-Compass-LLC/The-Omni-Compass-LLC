@@ -153,7 +153,7 @@ the engine version, configuration, hardware or model, workload and measurement b
 | Native baseline | The system's documented configuration and behavior without Omni-Compass governing it. | each benchmark's native arm, as its project ships it |
 | Factory profile | The complete, versioned set of Omni-Compass default settings shipped together. | θ*, sections 1 and 2: the engine's defaults and `realms/muscle_cards_v5.csv` |
 | Candidate profile | A proposed combination of settings undergoing evaluation. | a tune of the search grid (`tools/tune_study.py`) or a candidate engine in the model gate (`tools/model_gate.py`) |
-| Active profile | The settings actually governing the current run. | the governor's own audit of its arguments; the live engine's bench line (section 1 of the page's wall) |
+| Active profile | The settings actually governing the current run. | Omni-Compass's own audit of its arguments; the live engine's bench line (section 1 of the page's wall) |
 | Custom profile | An identifiable configuration differing from the released factory profile. | any knob turned on the bench or set on the control panel (`tools/omni_control.py`) |
 | Live tuning bench | The interface that operates the engine's controls and displays their effects through the connected backend. | `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` with `tools/omni_control.py` |
 | Harness | The machinery that supplies workloads, executes comparisons, checks requirements and records results. | `scripts/kind_bench.sh`, the paired cloud scripts, `tools/live_reps.py`, `tools/confirm_abc.py`, `cpp/` |
@@ -166,7 +166,7 @@ the engine version, configuration, hardware or model, workload and measurement b
 The physiological terms are engineering analogies; each points to concrete code, signals, actuators and checks, named in the right
 column.
 
-**Fixed tuning, continuously changing behavior.** Let x be the governed system's state, z the governor's internal state, y its
+**Fixed tuning, continuously changing behavior.** Let x be the supervised system's state, z Omni-Compass's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval, Δ ∈ {10, 15, 30, 60, 90, 120} s on
 the bench's six buttons (the factory's beat by place since omni-v24: 10 s on site, 60 s through a cloud). At decision k:
 

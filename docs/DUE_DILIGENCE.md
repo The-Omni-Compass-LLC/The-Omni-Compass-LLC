@@ -10,8 +10,8 @@ Answers reference the Claims Register (C-numbers) and the Technical Manual.
 **Can every number be reproduced?** `python verify.py` rebuilds the C++, reruns parity, reruns the 100,000,000-decision soak and compares it with the recorded result, replays held-out scenarios and checks the pre-registered SHA-256 hashes (program fingerprints are additionally checked when the Python version matches the recorded one).
 
 ## Operations
-**Against what we run today?** Compared against a documented-behaviour reference model of Kubernetes autoscaling (HPA tolerance 0.1, 300 s scale-down stabilization, HPA targets 0.5 to 0.8; simplified Cluster Autoscaler with 10-minute unneeded time, 0.5 utilization threshold, 10-minute delay after scale-up): C8 to C12, including where Omni-Compass read LOSS. The reference model is not the upstream controllers (C12b); running the upstream controllers against the same scenarios is the next baseline step.
-**On real traffic?** Not yet. Results use a synthetic stack model. Replay of published production traces and the pilot protocol are the next evidence steps (C14).
+**Against what we run today?** On real software, against the native controller as its project ships it: Kubernetes' own pod autoscaler and scheduler on real clusters, and the data stores as their vendors ship them, paired, three runs each (`results/OMNI_INDEX.md`, class L). In the models (class S, C8 to C12), against a documented-behaviour reference model of Kubernetes autoscaling (HPA tolerance 0.1, 300 s scale-down stabilization, HPA targets 0.5 to 0.8; simplified Cluster Autoscaler with 10-minute unneeded time, 0.5 utilization threshold, 10-minute delay after scale-up): C8 to C12, including where Omni-Compass read LOSS. The reference model is not the upstream controllers (C12b); running the upstream controllers against the same scenarios is the next baseline step.
+**On real traffic?** Not yet: no production traffic. The live results run real software on GitHub's machines with generated load and a public day of demand replayed (the Google cluster trace of 2011, `results/live/V25_TRACE_GOOGLE2011.md`); the models use a synthetic stack model. The pilot protocol is the next evidence step (C14).
 **What happens when it is wrong?** Observe mode changes nothing (C6). The reset returns control to the native managers at the next interval (omni_kill arm). The shield blocks actions that violate I1 to I5 (C7).
 **Will it wear hardware?** Machine start/stop cycles, power-cap travel and thermal travel are measured for every arm (C12, Manual Chapter 8).
 
@@ -21,7 +21,7 @@ Answers reference the Claims Register (C-numbers) and the Technical Manual.
 **Does it replace encryption, identity or policy engines?** No. Those components are retained (fleet model, security role).
 
 ## Finance
-**What does it save?** Energy per run versus current autoscaling (C8). Fleet-scale figures are modeled (C13); the governance saving comes from reduced idle and padded capacity, not from removing the decision components' own consumption.
+**What does it save?** In the models, energy per run versus the reference autoscaling (C8, class S). On real software the record reads the work, the speed and the machines it took (the Omni index, `results/OMNI_INDEX.md`); more work for the bill is still being measured (`docs/WORK_PER_BILL.md`), and no bill saving is claimed. Fleet-scale figures are modelled (C13); the modelled saving comes from reduced idle and padded capacity, not from removing the decision components' own consumption.
 **What does it cost to run?** C5.
 
 ## Adoption

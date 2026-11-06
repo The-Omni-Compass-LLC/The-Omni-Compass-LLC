@@ -41,7 +41,7 @@ plane, the front, the six hands and the clients on the fourth core. Units of 250
 about 40 ms of processor. Both arms took the same clients, 1 2 3 2 3 4, 15 s a step. Every number is from the showing's own
 files (each request's record, the control plane's timeline and audit, the kernel's processor counters).
 
-| gauge | yardstick | Omni | Omni against it |
+| gauge | yardstick | Omni | Omni against it (raw change) |
 |---|---:|---:|---:|
 | requests answered (work) | 1,174 | 1,044 | −11.1% |
 | requests failed | 0 | 0 | — |
@@ -51,8 +51,8 @@ files (each request's record, the control plane's timeline and audit, the kernel
 | machine-minutes on (the bill) | 9.0 | 6.6 | −27% |
 | processor-seconds used by the units | 52.8 | 50.2 | −5% |
 
-Read by the one key, step by step (six pairs): requests answered −11.1% **LOSS**; the 95th percentile +23.8% **LOSS**;
-machines on −26.5% **GAIN (a cut)**. The units Omni held were the yardstick's own at every beat (2 → 3 → 4 → 6 → 7, each
+Read by the one key, step by step (six pairs): requests answered **LOSS**, down 11.1% (fewer answered); the 95th percentile
+**LOSS**, up 23.8% (slower answers); machines on **GAIN (a cut)**, down 26.5%. The units Omni held were the yardstick's own at every beat (2 → 3 → 4 → 6 → 7, each
 equal to the native twin, the compass force negative throughout because the 95th percentile sat far under the 800 ms line);
 no unit ever waited for room. What differed is where they stood: Omni packed them, four units of 250 m on the two machines
 of one core, and parked the two empty machines; the yardstick spread them, two units a core at most. Four units whose

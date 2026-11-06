@@ -16,7 +16,7 @@ its operator set, and native keeps running underneath.
   (S. J. Qin and T. A. Badgwell, "A survey of industrial model predictive control technology", *Control Engineering
   Practice* 11(7), 2003). Omni-Compass has the same layering: the native autoscaler, pool or firmware is the regulatory
   loop; Omni-Compass is the supervisory layer.
-- **Reference and command governors.** A governor modifies the reference given to a loop that is already stable, so that
+- **Reference and command governors.** Such a scheme modifies the reference given to a loop that is already stable, so that
   constraints hold, and leaves the loop itself alone (E. Garone, S. Di Cairano and I. Kolmanovsky, "Reference and command
   governors for systems with constraints: a survey on theory and applications", *Automatica* 75, 2017). This is the
   closest formal relative of Omni-Compass: it moves a setting, inside a cover, on top of native.

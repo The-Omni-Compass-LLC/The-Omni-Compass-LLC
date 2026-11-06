@@ -9,7 +9,7 @@ borrows a stronger class from the one printed beside it.
 |---|---|---|
 | **T** | formally proved theorem, under stated assumptions | L1 mathematical mechanism |
 | **V** | finite computational verification: exact over a declared finite set, never a theorem beyond it | L1 |
-| **S** | simulation / model result | L2 modelled systems |
+| **S** | our own model's result (modelled; never offered as proof) | L2 modelled systems |
 | **L** | live observation of external software (a real Kubernetes API, a real process) | L3 external software |
 | **P** | independent physical measurement (a meter Omni does not read or control) | L4 physical plant |
 | **O** | open: not established | — |
@@ -18,7 +18,7 @@ No layer stands in for another: a theorem is not a physical validation, a Monte 
 model's energy is not a meter's.
 
 Mechanism identity for every row: `results/MECHANISM_IDENTITY.json`. Canonical engine `symmetric_verified`, mechanism
-id `29d9808dfb8f…`; the printed configuration `printed_eight_line`, id `cd333dc166fb…`, is a named alternative
+id `b10f1b4128ff…`; the printed configuration `printed_eight_line`, id `623934cc31e9…`, is a named alternative
 (Option A of the directive: one canonical, one alternative embodiment; no equivalence is claimed).
 
 ## Layer 1: the mechanism
@@ -40,40 +40,45 @@ id `29d9808dfb8f…`; the printed configuration `printed_eight_line`, id `cd333d
 | V | Frozen 500-fixture comparison: symmetric_verified final error 7.48e-5, integrated abs(u) 0.878, peak 13.93; printed_eight_line 5.13e-6, 11.79, 18.87. Both executable; not interchangeable. | `results/MECHANISM_IDENTITY.json` |
 | V | Python and C++ produce identical results (engine, governor, shield, HPA law, conveyance, GPU rules); twins sealed. | `verify.py`, `results/SEAL.json` |
 
-## Layer 2: models and simulations
+## Layer 2: our own models
 
 | Class | Statement | Where |
 |---|---|---|
 | S | Synthetic stack: energy for Omni over the Kubernetes reference 168.9 → 121.7 kWh per run (documented-behaviour reference, not upstream controllers). | `docs/CLAIMS_REGISTER.md` C8 |
-| S | Fleet harness, recorded PlanetLab shapes: −40.6% energy vs HPA+CA, −21.7% vs Karpenter-lite (omni_fleet). | C17 |
-| S | Single GPU physics model: the engine alone would save 10.6–13.6% work per kJ on card A but breaks the p95 guardrail by 15–28%; with the frozen guards, about +1 to +5% inside it. | `results/gpu/sim/FINDINGS.md` |
-| S | Node exchange (CPU and GPU on one budget): +1.4 to +5.7% work against the separate budgets, never over budget. | `results/hardware/NODE_EXCHANGE_*.json` |
-| S | Six organisms (345, 262, 282, 337, the four stacked 1,226, the whole tower 656), the compass law on every muscle against each organism's own controllers, 1,000 paired runs at 1× and 10× size: work per energy +0.20% to +0.30%, energy −0.21% to −0.32%; every knob handed back. | `results/scale/GRID.md` |
-| S | GPU card model, the card's firmware alone against the firmware with Omni on top (amendment 8: the verdict, 2% allowance), geometric means over 10 seeds and 10 fresh seeds: AI token generation, energy −3.25% / −3.72%, median +0.55% / +0.70%, p95 +0.29% / +0.26%; compute-bound, energy −0.70% / −0.48%, median +1.56% / +1.47%. A fixed 105 W power cap alone against the cap with Omni on top: energy −2.09% / −2.37% (AI token generation). | `results/sim/gpu_two_wire/RESULT.md` |
-| S | Realm harness round 3 (every realm carries the shared spine), preregistered, seeds 3000-3009: the whole 656-muscle tower native against one governor on top, work per energy +0.1% (+0.1 to +0.1), violations +0.5 pp, SUPERIOR WITHIN GUARDRAILS. Realms: Energy +0.2% with +1.9 pp violations (tradeoff); Compute 0.0% with +2.1 pp (not established); Distribution −0.1% (lower); Physics −0.7% (lower). Rounds 1 and 2 kept, superseded. | `results/realms/REALMS.md` |
-| S | Stacked organism (round 4, seeds 4000-4009): the four realm organisms on one clock, 1,226 muscles with every duplicate; stacked native equals the four realms alone on every seed. One governor over the stack: energy −0.14%, work per energy +0.02%, violations +1.4 pp, ENERGY IMPROVEMENT WITH SERVICE TRADEOFF; four separate governors about the same (+0.04%); one governor against four separate: −0.02% (lower, by a hair). | `results/realms/stack/STACK.md` |
+| S | Fleet harness, recorded PlanetLab shapes: energy down 40.6% vs HPA+CA and down 21.7% vs Karpenter-lite, a cut (omni_fleet). | C17 |
+| S | Single GPU physics model: the engine alone would save 10.6–13.6% work per kJ on card A but breaks the p95 guardrail by 15–28%; with the frozen guards, about 1% to 5% more work per kJ inside it. | `results/gpu/sim/FINDINGS.md` |
+| S | Node exchange (CPU and GPU on one budget): 1.4% to 5.7% more work against the separate budgets, never over budget. | `results/hardware/NODE_EXCHANGE_*.json` |
+| S | Six organisms (345, 262, 282, 337, the four stacked 1,226, the whole tower 656), the compass law on every muscle against each organism's own controllers, 1,000 paired runs at 1× and 10× size, before round 6: work per energy up 0.20% to 0.30%, energy down 0.21% to 0.32%; every knob handed back. | `docs/HISTORY.md` (the grid's file since written again) |
+| S | The six organisms on Omni v3 (430, 376, 470, 440, the four stacked 1,716, the whole tower 945), 1 to 1,000 paired runs at 1 to 1,000 copies: work per energy up 0.06% to 0.40%, a little more work for each unit of energy (under the 0.5% floor of the one key, so STEADY by it); time over the service line lower than native's in every cell; every knob handed back. | `results/scale/GRID.md` |
+| S | GPU card model, the card's firmware alone against the firmware with Omni on top (amendment 8: the verdict, 2% allowance), geometric means over 10 seeds and 10 fresh seeds, raw changes: AI token generation, energy −3.25% / −3.72% (less energy), median +0.55% / +0.70% and p95 +0.29% / +0.26% (slower); compute-bound, energy −0.70% / −0.48%, median +1.56% / +1.47%. A fixed 105 W power cap alone against the cap with Omni on top: energy −2.09% / −2.37% (AI token generation). Written on 5 October under an earlier engine; it stands on no engine since (`docs/engine/APPRAISAL.md`, item 5). | `results/sim/gpu_two_wire/RESULT.md` |
+| S | Realm harness round 3 (every realm carries the shared spine), preregistered, seeds 3000-3009: the whole 656-muscle tower native against one brain on top, work per energy up 0.1% (raw +0.1 to +0.1), violations up 0.5 pp, its label of that day SUPERIOR WITHIN GUARDRAILS. Realms: Energy up 0.2% with violations up 1.9 pp (a trade); Compute 0.0% with violations up 2.1 pp (not established); Distribution down 0.1%; Physics down 0.7%. Rounds 1 and 2 kept, superseded. | `results/realms/REALMS.md` |
+| S | Stacked organism (round 4, seeds 4000-4009): the four realm organisms on one clock, 1,226 muscles with every duplicate; stacked native equals the four realms alone on every seed. One brain over the stack: energy down 0.14%, work per energy up 0.02%, violations up 1.4 pp, its label of that day ENERGY IMPROVEMENT WITH SERVICE TRADEOFF; four separate brains about the same (up 0.04%); one brain against four separate: down 0.02%, by a hair. | `results/realms/stack/STACK.md` |
 
 ## Layer 3: live external software
 
+The kind sets 21 to 27 below ran on the engines before omni-v1 and are kept as their record; "clear of the noise" is that
+day's "proven" (an interval clear of zero). The live record of the engine that stands, omni-v25, is `results/OMNI_INDEX.md`.
+
 | Class | Statement | Where |
 |---|---|---|
-| P | omni-v18 on a real card, NVIDIA A100 SXM4 40 GB (Lambda run 40079645681, 24 October), one run of 10 paired repetitions, the card's own meter: every service gauge STEADY (work per energy up 0.2%, the 95th percentile up 0.2%, requests served the same, none lost), the temperature up 1.4% to 1.5% (power given); wire check 7 of 7, fault drill 5 of 5; the governor wrote nothing in 3,050 decisions, both knobs at their top on native (at its limit on native). | `results/gpu/run-20261024T091235Z/GPU_REPS.md` |
-| P | First real-GPU counted run, NVIDIA A10 (Lambda), 10 paired repetitions, the card's own meter: work per energy +3.6% (+2.7 to +4.5, proven), GPU energy −3.5%, same requests, none lost; wire check 7 of 7, every write read back, every arm restored. | `results/gpu/run-20261002T082232Z/GPU_REPS.md` |
-| L | Set 25 (commit `6fa7a97`), real Kubernetes, 10 paired repetitions: machines in service −32.3%, p95 −57.3%, 0 failed requests, total CPU including Omni's own −0.6% (not proven). | `results/live/LIVE_REPS_25.md` |
-| L | Set 26 (commit `e7f920d`), real Kubernetes, 10 paired repetitions, three arms: the allocation law machines −35.8%, p95 −55.4%; **the compass law in the live controller machines −17.2%, p95 −64.8%**, 0 failed requests, label by the preregistered rule *fewer machines within the band*. | `results/live/LIVE_REPS_26.md` |
-| L | Set 27 (commit `d46c959`), real Kubernetes, 10 paired repetitions, three arms: the allocation law machines −36.6%, p95 −53.1%; **the compass law aligned with the GPU governor machines −15.9%, p95 −65.5%, p99 −72.6%**, 0 failed requests, label by the preregistered rule *fewer machines within the band*. | `results/live/LIVE_REPS_27.md` |
-| L | Set 24 (2026-10-02, commit `c908054`), real Kubernetes (kind), 10 paired repetitions: machines in service −31.6% (proven), p95 response time −60.1% (proven), p99 −64.1% (proven), HPA replicas −38.6% (proven), 0 failed requests on both; total CPU including Omni's own −1.8% (not proven); energy with every machine powered −0.3% (declared model). | `results/live/LIVE_REPS_24.md` |
-| L | Set 23 (set 22 repeated on the current code, 2026-10-02), real Kubernetes (kind), 10 paired repetitions, equal work: p95 response time −62% (proven), replicas −37% (proven), pods started −64% (proven), 0 failed requests; total CPU with Omni's own −1.0% and modelled energy −0.2% (no difference). | `results/live/LIVE_REPS_23.md` |
-| L | Set 22, real Kubernetes (kind), 10 paired repetitions, equal work (fixed-rate load): p95 response time −61% (proven), replicas −23% (proven), pending pod-minutes −91% (proven), 0 failed requests. | `results/live/LIVE_REPS_22.md` |
-| L | Set 21, real Kubernetes (kind), 10 paired repetitions: p95 response time −37% (proven), replicas −12% (proven), 0 failed requests. | `results/live/LIVE_REPS_21.md` |
+| P | omni-v18 on a real card, NVIDIA A100 SXM4 40 GB (Lambda run 40079645681, 24 October), one run of 10 paired repetitions, the card's own meter: every service gauge STEADY (work per energy up 0.2%, the 95th percentile up 0.2%, requests served the same, none lost), the temperature up 1.4% to 1.5% (power given); wire check 7 of 7, fault drill 5 of 5; Omni-Compass wrote nothing in 3,050 decisions, both knobs at their top on native (at its limit on native). | `results/gpu/run-20261024T091235Z/GPU_REPS.md` |
+| P | omni-v23 on one NVIDIA A10 (Lambda), three runs of 5 paired repetitions, the power cap at 70% of the card's top, the card fully loaded, the card's own meter: the energy for each request served down 0.8% to 1.8%, less energy for the same work, GAIN in all three of our runs; the work for each dollar the runs disagree. | `results/gpu/V23_A10_CAP_FULL_ABC.md`, `docs/WORK_PER_BILL.md` |
+| P | First real-GPU counted run, NVIDIA A10 (Lambda), 2 October, 10 paired repetitions, the card's own meter: work per energy up 3.6% (raw +2.7% to +4.5%, clear of the noise), GPU energy down 3.5%, same requests, none lost; wire check 7 of 7, every write read back, every arm restored. On a card controller since replaced: obsolete (`results/OMNI_INDEX.md`). | `results/gpu/run-20261002T082232Z/GPU_REPS.md` |
+| L | Set 25 (commit `6fa7a97`), real Kubernetes, 10 paired repetitions: machines in service down 32.3%, p95 down 57.3%, 0 failed requests, total CPU including Omni's own down 0.6% (inside the noise). | `results/live/LIVE_REPS_25.md` |
+| L | Set 26 (commit `e7f920d`), real Kubernetes, 10 paired repetitions, three arms: the allocation law machines down 35.8%, p95 down 55.4%; **the compass law in the live controller machines down 17.2%, p95 down 64.8%**, 0 failed requests, label by the preregistered rule *fewer machines within the band*. | `results/live/LIVE_REPS_26.md` |
+| L | Set 27 (commit `d46c959`), real Kubernetes, 10 paired repetitions, three arms: the allocation law machines down 36.6%, p95 down 53.1%; **the compass law aligned with the GPU governor machines down 15.9%, p95 down 65.5%, p99 down 72.6%**, 0 failed requests, label by the preregistered rule *fewer machines within the band*. | `results/live/LIVE_REPS_27.md` |
+| L | Set 24 (2026-10-02, commit `c908054`), real Kubernetes (kind), 10 paired repetitions: machines in service down 31.6%, p95 response time down 60.1%, p99 down 64.1%, HPA replicas down 38.6%, each clear of the noise, 0 failed requests on both; total CPU including Omni's own down 1.8% (inside the noise); energy with every machine powered down 0.3% (declared model). | `results/live/LIVE_REPS_24.md` |
+| L | Set 23 (set 22 repeated on the current code, 2026-10-02), real Kubernetes (kind), 10 paired repetitions, equal work: p95 response time down 62%, replicas down 37%, pods started down 64%, each clear of the noise, 0 failed requests; total CPU with Omni's own down 1.0% and modelled energy down 0.2% (no difference). | `results/live/LIVE_REPS_23.md` |
+| L | Set 22, real Kubernetes (kind), 10 paired repetitions, equal work (fixed-rate load): p95 response time down 61%, replicas down 23%, pending pod-minutes down 91%, each clear of the noise, 0 failed requests. | `results/live/LIVE_REPS_22.md` |
+| L | Set 21, real Kubernetes (kind), 10 paired repetitions: p95 response time down 37% and replicas down 12%, each clear of the noise, 0 failed requests. | `results/live/LIVE_REPS_21.md` |
 | L | Omni patched a real Kubernetes API in place (no restart); the reset restored every setting in every run; watch mode wrote nothing. | same, `results/live/` |
-| S | Set 21 energy is a declared model, not a meter: +1.8% higher with parked machines at idle power. | same (energy table) |
+| S | Set 21 energy is a declared model, not a meter: up 1.8% with parked machines at idle power (power given). | same (energy table) |
 
 ## Layer 4: independent physical measurement
 
 | Class | Statement | Where |
 |---|---|---|
-| O | Omni changes successful work per measured joule on a GPU. The bench is built with three receipts (governor, actuator, outcome), the three contrasts (observation, authority, total), and result labels by rule; it has **not** been run on a card. | `scripts/gpu_paired.sh`, `docs/GPU_PREREGISTRATION.md` |
+| O | Omni-Compass changes successful work per measured joule on a GPU, measured by a meter Omni-Compass does not read or control. The bench is built with three receipts (governor, actuator, outcome), the three contrasts (observation, authority, total), and result labels by rule; it has run on rented cards with the card's own meter (layer 3), not yet with an independent meter. | `scripts/gpu_paired.sh`, `docs/GPU_PREREGISTRATION.md` |
 | O | Production data-centre energy effect. | — |
 | O | Whether the power limit is the right actuator for LLM serving. Published measurements (arXiv 2605.11999, H200) find memory-bound decode draws 137–300 W of 700 W, so no power cap binds; clock scaling is what saves energy there (arXiv 2501.08219, GreenLLM 2508.16449). The pinned bench workload is compute-bound, where the cap does bind: a result on it does not transfer to LLM decode. | external literature |
 | O | Wall-plug (whole-machine) energy effect; CPU package and DRAM (RAPL) effect. | — |
@@ -85,26 +90,26 @@ Nothing here is deleted when a later result looks different.
 
 | Class | Statement | Where |
 |---|---|---|
-| P | Same run: p95 response time **+58.5% higher** (510 to 809 ms), mean +48%; label by rule ENERGY IMPROVEMENT WITH SERVICE TRADEOFF. Cause: governor wiring (busy bursts served below the card's own clock); corrected in amendments 6-7, not yet re-run on a card. | `results/gpu/run-20261002T082232Z/GPU_REPS.md`, `docs/GPU_PREREGISTRATION.md` |
-| S | Two-wire GPU card, the profiles of amendment 7 (removed in amendment 8): service +5.3% work per energy with the median +14.8% slower; batch p95 +7.0% (−4.8 to +20.3). The governor before amendment 6 gave p95 +32.9% and +37.1%. | `docs/GPU_PREREGISTRATION.md`, history in git |
-| S | Six organisms, same runs: time over the service line **+0.19 to +0.27 pp higher in every cell**; band first is not held anywhere. | `results/scale/GRID.md` |
-| S | Round 6 law (HPA target held at the operator's own, machine release margin 0.6), 20 paired seeds per organism, before the grid rerun: work per energy +0.086% to +0.201%, time over the line −0.010 to −0.031 pp (ahead of native in all six), work unchanged within its interval, every knob handed back. | `docs/REALMS_PREREGISTRATION.md` (round 6) |
+| P | The run of 2 October: p95 response time **up 58.5%, slower** (510 to 809 ms), mean up 48%, LOSS; label by rule ENERGY IMPROVEMENT WITH SERVICE TRADEOFF. Cause: governor wiring (busy bursts served below the card's own clock); corrected in amendments 6-7, not yet re-run on a card. | `results/gpu/run-20261002T082232Z/GPU_REPS.md`, `docs/GPU_PREREGISTRATION.md` |
+| S | Two-wire GPU card, the profiles of amendment 7 (removed in amendment 8): service 5.3% more work per energy with the median 14.8% slower; batch p95 up 7.0% (raw −4.8% to +20.3%). The card controller before amendment 6 gave p95 up 32.9% and 37.1%. | `docs/GPU_PREREGISTRATION.md`, history in git |
+| S | Six organisms, the same runs before round 6: time over the service line **up 0.19 to 0.27 pp in every cell, LOSS**; band first is not held anywhere. | `docs/HISTORY.md` (the grid's file since written again) |
+| S | Round 6 law (HPA target held at the operator's own, machine release margin 0.6), 20 paired seeds per organism, before the grid rerun: work per energy up 0.086% to 0.201%, time over the line down 0.010 to 0.031 pp (ahead of native in all six), work unchanged within its interval, every knob handed back. | `docs/REALMS_PREREGISTRATION.md` (round 6) |
 | L | Set 21: modelled energy 1.8% **power given** with every machine powered (the only honest energy row on kind). | `results/live/LIVE_REPS_21.md` |
-| S | Realm harness round 1 (superseded, kept): all five organisms **LOSS** (whole tower −0.1%). Its Omni layer did not follow the shipped controller (no contraction authority or SLO reflex, the stack law in place of the HPA, request traffic paused, a site budget under native draw). | `results/realms/round1/` |
-| S | Realm harness round 2: the Physics / Robotics / Autonomous organism **LOSS** (−1.9%, violations +2.9 pp); the Compute organism's +2.5% costs +2.9 pp of service violations; 68 single muscles LOSS or power given, mostly batch pacing and cooling setpoints under the live cooling law. | `results/realms/REALMS.md` |
-| L | Set 22, equal work: no CPU saving once Omni's own CPU is counted (service −7.6%, controller +0.070 cores, together −0.9%, not proven); modelled energy unchanged (−0.1%). | `results/live/LIVE_REPS_22.md` |
-| L | Set 20: the "same work" reading was wrong; requests were +35%. | `results/live/LIVE_REPS_20.md` addendum |
+| S | Realm harness round 1 (superseded, kept): all five organisms **LOSS** (whole tower down 0.1%). Its Omni layer did not follow the shipped controller (no contraction authority or SLO reflex, the stack law in place of the HPA, request traffic paused, a site budget under native draw). | `results/realms/round1/` |
+| S | Realm harness round 2: the Physics / Robotics / Autonomous organism **LOSS** (down 1.9%, violations up 2.9 pp); the Compute organism's 2.5% more costs 2.9 pp more service violations; 68 single muscles LOSS or power given, mostly batch pacing and cooling setpoints under the live cooling law. | `results/realms/REALMS.md` |
+| L | Set 22, equal work: no CPU saving once Omni's own CPU is counted (service down 7.6%, its controller 0.070 cores more, together down 0.9%, inside the noise); modelled energy unchanged (down 0.1%). | `results/live/LIVE_REPS_22.md` |
+| L | Set 20: the "same work" reading was wrong; requests were up 35%. | `results/live/LIVE_REPS_20.md` addendum |
 | L | Sets 1–2: machine savings **withdrawn** — a broken probe had blinded the latency sense. | `results/live/LIVE_REPS_PROBE_DEFECT.md` |
 | L | Set 3 with a working probe: Omni kept all 6 machines; no significant difference except more waiting pods. | `docs/HISTORY.md` |
-| L | Set 21: pending pod-minutes +238% (not proven); pod starts +37% (not proven). | `results/live/LIVE_REPS_21.md` |
+| L | Set 21: pending pod-minutes up 238% and pod starts up 37%, both inside the noise. | `results/live/LIVE_REPS_21.md` |
 | S | GPU and batch: energy 1–2% **power given**, power and heat margins 1–4% short of tight packers (AKS/Karpenter, CAST AI, Spot). | `docs/HISTORY.md` |
-| S | Machine round trips 1.1 → 1.7 per run (**LOSS**) in 6 of 8 seed-target combinations. | C12 |
+| S | Machine round trips 1.1 → 1.7 per run (**power given**: a round trip is wear) in 6 of 8 seed-target combinations. | C12 |
 | S | Power-protect mode: backlog violations 2.5% → 6.7% (**LOSS**). | C12p |
-| S | Park strategy on PlanetLab shapes: energy +1.3% vs HPA+CA, +33.6% vs Karpenter-lite (**power given**). | C17 |
-| S | Typical response time about 20% slower than every platform in the web and four-cluster simulations. | `docs/HISTORY.md` |
+| S | Park strategy on PlanetLab shapes: energy up 1.3% vs HPA+CA and up 33.6% vs Karpenter-lite (**power given**). | C17 |
+| S | Typical response time about 20% slower than every platform in the web and four-cluster models (LOSS). | `docs/HISTORY.md` |
 | S | GPU model: the engine without its guards breaks the p95 guardrail. | `results/gpu/sim/FINDINGS.md` |
 | S | The compass-stroke GPU variant was tried and not adopted. | same |
-| S | Right-sizing against VPA: p95 +15%, memory (OOM) kills +531%. | `docs/history/BENCHMARK_REPORT.md` |
+| S | Right-sizing against VPA: p95 up 15% and memory (OOM) kills up 531% (LOSS). | `docs/history/BENCHMARK_REPORT.md` |
 | — | Reported in the external master-build report (not reproducible from this repository): on fresh scenarios Karpenter+VPA sometimes used less modelled energy than Omni, while Omni had lower churn and fewer request-induced evictions. Kept here so it is not lost; to be re-run here before it is cited. | external |
 
 ---

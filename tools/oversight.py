@@ -213,9 +213,19 @@ def run_by_run(p: dict) -> list:
     return L
 
 
+def omni_index_readings():
+    """The Omni index's two readings as its own record carries them (results/OMNI_INDEX.json, tools/omni_index.py), never typed."""
+    try:
+        j = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8"))
+        return {"headline": float(j["headline_pct"]), "service": float(j["service_headline_pct"])}
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
 def markdown(d: dict) -> str:
     rows, p, c, ex = d["rows"], d["pooled"], d["count"], d["example"]
     eng = d["engine"]
+    idx = omni_index_readings()
     L = ["# The Oversight Line: the Pages a Person Would Answer, Native Against Omni-Compass on Native", "",
          f"> \"{d['question'][0].upper() + d['question'][1:]}\" ({d['said']})", "",
          "## What GitHub's runs measure, and what they cannot", "",
@@ -261,9 +271,14 @@ def markdown(d: dict) -> str:
           "people's time no longer spent answering pages, at native's cost. A larger share gives a larger line in proportion "
           f"(10% gives down {_pc(0.10 * p['change'])}); an owner's own share and its own count of pages replace both numbers.", "",
           "## What is not claimed", "",
-          "- **Not a 20% (13% + 7%).** The 12.9% is the software end's second reading of the Omni index (work and speed, on GitHub's "
-          "machines), not a bill; 7% is a share of a bill, not a gain. A reading and a share do not add; the people line enters G "
-          "only through ΔB, as above.",
+          "- **Not a 20% (13% + 7%).** That sum is an outside reading on the remove list (`docs/WEBSITE_CLAIMS.md`): a \"13%\" set "
+          "beside a 7% share of a bill. The 13% is no measured share of any bill (nearest to it in the record stood omni-v21's second "
+          "reading of the index, a reading of work and speed on GitHub's machines that a later engine replaced); 7% is a share of a bill, "
+          "not a gain. A reading and a share do "
+          "not add, whatever the reading: "
+          + (f"on {eng} the Omni index reads {idx['headline']:.1f}% and its second reading {idx['service']:.1f}% "
+             "(`results/OMNI_INDEX.md`), neither of them a bill; " if idx else "the Omni index (`results/OMNI_INDEX.md`) is no bill; ")
+          + "the people line enters G only through ΔB, as above.",
           "- **Not the people removed.** The record counts pages, not heads or salaries. An on-call rotation is staffed whether or not "
           "it is paged; what falls is the time the pages take, the triage and the hand tuning after them.",
           "- **Not every page gone, and never nobody.** Pages fell in most tests and to none in some, not in all. A person keeps the "

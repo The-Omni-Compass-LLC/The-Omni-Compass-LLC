@@ -24,7 +24,7 @@ Copies of this repository passed around as zips (the XPASS packages) carry chang
 - an adapter that defaults to CLAIM1, takes the target sign from the starting state and adds a disruption budget. Its
   C++ governor was only partly ported, which is where the reported Python/C++ mismatches came from.
 
-None of these enter before the GPU counted run run (the engine is frozen for it, `docs/GPU_PREREGISTRATION.md`). Any of
+None of these enter before the GPU counted run (the engine is frozen for it, `docs/GPU_PREREGISTRATION.md`). Any of
 them can be adopted afterwards only as a full change: Python and C++ together, the parity tests and `verify.py` green,
 and a new mechanism id.
 

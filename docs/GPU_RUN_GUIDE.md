@@ -197,11 +197,12 @@ A table from the GPU's own power meter:
 - native against Omni watching only, and native against Omni governing;
 - the preregistered primary result: work per energy, in requests served per kilojoule, with its 95% interval.
 
-It ends with one verdict line, one of:
-- **GAIN, proven**;
-- **LOSS, proven**;
-- **not proven**;
-- **more requests per kJ, fails the service guardrail**.
+It ends with one verdict line, chosen by rule (`tools/gpu_reps.py`, `label`), one of:
+- **SUPERIOR WITHIN GUARDRAILS**: more requests per kJ (GAIN, clear of the noise) with every service guardrail held;
+- **ENERGY IMPROVEMENT WITH SERVICE TRADEOFF**: more requests per kJ, clear of the noise, with a service guardrail failed;
+- **AWAY FROM ITS AIM**: fewer requests per kJ, clear of the noise;
+- **NONINFERIOR / INCONCLUSIVE** or **NOT ESTABLISHED**: no difference beyond the noise, with the guardrails held or not;
+- **NOT ATTRIBUTABLE: WATCH DIFFERS FROM NATIVE**, or **INVALID**.
 
 Whatever it says is the answer, and it is the first number in this project that Omni-Compass's own code did not
 compute.

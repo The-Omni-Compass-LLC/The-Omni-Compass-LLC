@@ -68,6 +68,19 @@ class TheRule(unittest.TestCase):
         self.assertEqual(wv.words("work", "higher", "-5%"), "work down 5.0%")
         self.assertEqual(wv.words("memory", "spent", "+215%"), "memory up 215%")
 
+    def test_a_range_across_zero_reads_by_its_mean(self):
+        # runs that went both ways have no one direction: the mean's word, the raw range beside it (V25_FAIRNESS.md's p95)
+        runs = [{"native": 100.0, "omni": 99.5}, {"native": 100.0, "omni": 116.5}, {"native": 100.0, "omni": 106.6}]
+        self.assertEqual(wv.words("p95", "lower", wv.pct_range(runs), runs=runs), "p95 up 7.5% by the mean, raw −0.5% to +16.5%")
+        self.assertEqual(wv.words("p95", "lower", "-52% to -50%", runs=[{"native": 100.0, "omni": 48.0}, {"native": 100.0, "omni": 50.0}]),
+                         "p95 cut 50% to 52%")
+
+    def test_the_organisms_figures_read_by_the_floor(self):
+        self.assertEqual(wv.floor_words("energy", 0.00011, True), "energy STEADY, up 0.011% (under the 0.5% floor)")
+        self.assertEqual(wv.floor_words("energy", 0.02, True), "power given, the energy up 2.000%")
+        self.assertEqual(wv.floor_words("work", 0.0, False), "work STEADY, the same")
+        self.assertEqual(wv.pp_words(-0.145, -0.176, -0.115), "misses down 0.145 pp (its 95% interval down 0.115 to 0.176 pp)")
+
     def test_the_range_reads_one_figure_when_the_runs_agree(self):
         self.assertEqual(wv.pct_range([{"native": 2, "omni": 8}, {"native": 2, "omni": 8}]), "+300%")
         self.assertEqual(wv.pct_range([{"native": 64, "omni": 65}, {"native": 64, "omni": 66}]), "+1.6% to +3.1%")

@@ -132,7 +132,7 @@ reading. A LOSS is root-caused again and never cut.
   unpacks in well under a second.
 - **The model gate carries the old rig.** The conveyance model's pod start time (`start_time` in `tools/model_gate.py`: 8 s up to
   half busy, rising to 12.4 s near the top) was fitted to the omni-v6 KEDA run's 151 starts. That curve is the empty-node
-  unpacking of section 4 in model form, and it is why the gate reads the pod start wait under conveyance LOSS (+9.0% on
+  unpacking of section 4 in model form, and it is why the gate reads the pod start wait under conveyance LOSS (up 9.0%, a longer wait, on
   omni-v10 and omni-v11, `docs/OMNI_V11.md`). The curve is refit from the first amended-rig KEDA runs' own files, never
   guessed. Until then the model's start-wait row reads this coupling, not the governor.
 

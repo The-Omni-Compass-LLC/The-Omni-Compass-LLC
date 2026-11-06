@@ -6,6 +6,8 @@
 
 **Open the live benchmark engine (the running page):** <https://claude.ai/artifact/PmGS8ogFLMQiuyjU2YEFn3>. The file in this repository, [`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`](docs/engine/OMNI_COMPASS_LIVE_ENGINE.html), is its source: GitHub shows a page's source as text and does not run it, so open the link above, or download the file and open it in a browser. **The whole engine in one file** (every monitor, knob and record inside it, about 15 MB, for a phone, a laptop or a website): [`docs/live/index.html`](docs/live/index.html), built from the page by `docs/engine/build_standalone.py`; with GitHub Pages serving `docs/` it opens at <https://the-omni-compass-llc.github.io/The-Omni-Compass-LLC/live/>.
 
+**What the live benchmark engine is for, at a referee's level:** [`docs/engine/LIVE_ENGINE_MONOGRAPH.md`](docs/engine/LIVE_ENGINE_MONOGRAPH.md), the monograph: its purpose, the stack and every module from the chip to the cloud, the mechanism (the compass law, the supervisory loop, the immune system, the kill switch), the evidence classes and the four arms, what the receipts show Omni-Compass does and does not do on omni-v25, how anyone runs and reproduces it, and its limits; every claim on a repository file.
+
 > **Evidence-integrity notice (2026-10-29).** The Omni index is an internally computed geometric-mean composite of heterogeneous benchmark ratios, **not** a measured reduction in total compute bills or a universal throughput improvement. Its Kubernetes energy values include modeled estimates; database, messaging and cache energy values can use CPU-time proxies, and the “machines” axis can mean connections, consumers, or allocated memory rather than physical machines. Each useful-work result is a specific three-run comparison on the engine its own table names, not a result proven for all engines or workloads. Results from different engines must not be represented as one end-to-end physical trial. “STEADY” can mean a nonzero difference below the existing 0.5% reporting threshold; it does not establish exact equality. All results are internally run and scored, not independently certified. See [the evidence-integrity audit](docs/EVIDENCE_INTEGRITY_AUDIT_20261029.md) before quoting performance or savings figures.
 
 
@@ -431,10 +433,10 @@ the 0.5% floor it reads STEADY).
 **The grid** (the seven organisms at 1, 10 and 100 copies, each at 1, 10 and 100 runs). Its one written report is engine
 omni-v5's ([`results/grid_v5/GRID.md`](results/grid_v5/GRID.md)); its modelled squares read, in the report's own summary with
 its signs put in words: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer
-misses; work STEADY, the same (raw +0.000%); power given, up 0.000% to 0.065%. The squares with the real cluster inside are read
-gauge by gauge in the same report. The grid has been sent on every engine since, omni-v6 to omni-v25
-(`results/grid_v*/DISPATCHED.json`), and no report of those runs has been written yet; until one is, the grid is read only on
-omni-v5.
+misses; work STEADY, the same (raw +0.000%); energy STEADY, up 0.000% to 0.065% (under the 0.5% floor). The squares with the
+real cluster inside are read gauge by gauge in the same report. The grid has been sent on every engine since, omni-v6 to
+omni-v25 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has been written yet; until one is, the grid is read
+only on omni-v5.
 
 **The twenty scenarios** (ten organisms, each native and with Omni-Compass on native; engine omni-v23, run 2026-10-31 20:06 UTC,
 three runs, seeds 3000 to 3002; [`results/scenarios/SCENARIOS_20.md`](results/scenarios/SCENARIOS_20.md)). In the 9 modelled

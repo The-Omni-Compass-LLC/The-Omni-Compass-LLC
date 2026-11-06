@@ -108,8 +108,8 @@ first work of section 5.
 
 ## 6. The orchestrator's LOSS of 23 October, read by this law
 
-The showing of Omni-Compass's own orchestrator read work −11.1% and the 95th percentile +23.8% LOSS against the yardstick
-while cutting machines 26.5% (`docs/OMNI_ORCHESTRATOR.md`). By section 2 that is a crossed limit or a wrong wire, and it was
+The showing of Omni-Compass's own orchestrator read LOSS against the yardstick on work (down 11.1%: fewer requests answered) and on
+the 95th percentile (up 23.8%: slower answers), while cutting machines 26.5% (a cut, GAIN) (`docs/OMNI_ORCHESTRATOR.md`). By section 2 that is a crossed limit or a wrong wire, and it was
 a crossed limit: the muscle at its wall was the **processor core**; the room rule counted paper requests and saw room where
 the core had none; two units busy at once on one core each took twice as long. The brain had no wire to that limit. With the
 limit wired (a machine's room measured as the processor it can still give at full speed, the engine's own 75% rule), the

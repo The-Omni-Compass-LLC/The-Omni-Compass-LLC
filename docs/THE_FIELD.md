@@ -95,7 +95,7 @@ or 5.
 | SCADA and HMI (Inductive Automation's Ignition, AVEVA) | the supervisory screen over plant controllers, setpoints bound to the controllers' tags [24] | a person acts | commercial (trial software) | not tried | beside: a person's command is never a lever (`docs/REGISTER.md`, section 4) |
 
 No console is an arm, and "instead" has no meaning for one. One test does matter: a person's write through a console during
-a governed run is kept, because the governor reads native's own setting each beat and hands back on the lease. That is a
+a supervised run is kept, because Omni-Compass reads native's own setting each beat and hands back on the lease. That is a
 robustness test (`docs/ROBUSTNESS_PREREGISTRATION.md`), not a comparison.
 
 ## 3. Native controllers and schedulers: the muscles' own loops

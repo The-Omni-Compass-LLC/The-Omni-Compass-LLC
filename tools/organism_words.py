@@ -106,8 +106,11 @@ def organisms(d: dict) -> list:
 def grid_words(s: str) -> str:
     """The grid report's own summary with its signs put in words (the founder's order of 6 November: the word first, then the
     direction in words and the size; a signed change only labelled raw; under the 0.5% floor STEADY)."""
-    s = re.sub(r"\bpower given \+(\d[\d.]*)% to \+(\d[\d.]*)%", r"power given, up \1% to \2%", s)
-    s = re.sub(r"\bpower given \+(\d[\d.]*)%", r"power given, up \1%", s)
+    # power given is the energy the max took (results/grid_v5/GRID.md, how to read a square): under the floor it reads STEADY
+    s = re.sub(r"\bpower given \+(\d[\d.]*)% to \+(\d[\d.]*)%", lambda m: (f"energy STEADY, up {m.group(1)}% to {m.group(2)}% (under the 0.5% floor)"
+                                                                         if float(m.group(2)) < FLOOR else f"power given, up {m.group(1)}% to {m.group(2)}%"), s)
+    s = re.sub(r"\bpower given \+(\d[\d.]*)%", lambda m: (f"energy STEADY, up {m.group(1)}% (under the 0.5% floor)" if float(m.group(1)) < FLOOR
+                                                       else f"power given, up {m.group(1)}%"), s)
     s = re.sub(r"\bwork ([+−-])(\d[\d.]*)%", lambda m: (f"work STEADY, the same (raw {m.group(1)}{m.group(2)}%)" if float(m.group(2)) < FLOOR
                                                        else f"work {'up' if m.group(1) == '+' else 'down'} {m.group(2)}% (raw {m.group(1)}{m.group(2)}%)"), s)
     return s

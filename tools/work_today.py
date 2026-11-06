@@ -93,7 +93,7 @@ def markdown(d: dict) -> str:
          f"**The answer today: more work in {len(grew)} of the {len(c)} tests that counted their work, less work in "
          f"{t.get('LOSS', 0) or 'none'}.** The work held in {t.get('STEADY', 0)}: each of those offers its load at a fixed rate, the same "
          f"in both arms, so the most either arm can do is answer all of it inside the line. In {t.get('the runs disagree', 0)} the runs "
-         f"disagree. {len(b)} more tests could not show more work whatever the governor did: they sent a fixed load or did not count "
+         f"disagree. {len(b)} more tests could not show more work whatever Omni-Compass did: they sent a fixed load or did not count "
          "the work." + (f" {len(d.get('taken_out') or [])} more, taken out of the count by the verdict audit, is shown at the end and never counted." if d.get("taken_out") else ""), "",
          "## The tests that counted their work", "",
          "| Where | Test | What the work is | Work, Omni-Compass on native against native | Reading (the one key) | Record |", "|---|---|---|---|---|---|"]
@@ -104,7 +104,8 @@ def markdown(d: dict) -> str:
         L.append(f"| {r['place']}, {r['category']} | {r['test']} | {r['what']} | {size}{runs} | {r['reading']} | `{r['source']}` |")
     L += ["", "## The tests that could not show more work", "",
           "A test that sends the same fixed load to both arms, or reads only time, misses and machines, cannot show more work, however "
-          "well the system is governed: it shows the same work done faster, with fewer alert minutes or on fewer machines. To answer "
+          "well the system is supervised: it can show only the same work done faster, with fewer alert minutes or with fewer machines in "
+          "service. To answer "
           "the question in these tests too, each needs a load whose work grows when the system serves faster (the work meter, "
           "`LOADGEN=meter` in `scripts/kind_bench.sh`, as every cloud set carries from 31 October).", "",
           "| Where | Test | Why it could not show more work | Record |", "|---|---|---|---|"]

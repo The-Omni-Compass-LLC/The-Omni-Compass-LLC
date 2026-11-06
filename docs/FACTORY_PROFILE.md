@@ -71,7 +71,7 @@ shows.
 
 ## 3. The mathematics: a fixed tune governing a changing system
 
-Let x be the governed system's state, z the governor's internal state, y its observations, θ the complete configuration profile,
+Let x be the supervised system's state, z the engine's internal state, y its observations, θ the complete configuration profile,
 and Δ the full governing decision interval. The public interval choices on the bench are
 
   Δ ∈ {10, 15, 20, 30, 60, 90, 120} s

@@ -46,7 +46,7 @@ Twenty-four of the live benchmark engine page's sixty muscles meet that rule.
 2. **One harness setting is off against the real runs: the HPA target.** The harness's native runs every pool at 70%;
    the repository's real Kubernetes native ran at 50%. A native with more spare capacity changes what the max can add
    and what it can hand back. Setting it from the receipts is a change to `realms/presets.py`, which sits inside the
-   omni-v10 fingerprint: the next engine version, the model gate first, every realms result run again.
+   fingerprint of the engine that stands (omni-v25, `OMNI_V25.json`): the next engine version, the model gate first, every realms result run again.
 3. **Axes, loops and batteries are not yet measured.** Their rows stay assumptions, marked so, until a real machine's
    setting is read.
 4. **The cloud bill needs a heavier load.** Azure's own autoscaler ran the real light load on fewer than two workers;

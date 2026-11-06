@@ -80,7 +80,7 @@ The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts 
 
 ## What is not claimed
 
-- **Not a 20% (13% + 7%).** The 12.9% is the software end's second reading of the Omni index (work and speed, on GitHub's machines), not a bill; 7% is a share of a bill, not a gain. A reading and a share do not add; the people line enters G only through ΔB, as above.
+- **Not a 20% (13% + 7%).** That sum is an outside reading on the remove list (`docs/WEBSITE_CLAIMS.md`): a "13%" set beside a 7% share of a bill. The 13% is no measured share of any bill (nearest to it in the record stood omni-v21's second reading of the index, a reading of work and speed on GitHub's machines that a later engine replaced); 7% is a share of a bill, not a gain. A reading and a share do not add, whatever the reading: on omni-v25 the Omni index reads 20.4% and its second reading 94.0% (`results/OMNI_INDEX.md`), neither of them a bill; the people line enters G only through ΔB, as above.
 - **Not the people removed.** The record counts pages, not heads or salaries. An on-call rotation is staffed whether or not it is paged; what falls is the time the pages take, the triage and the hand tuning after them.
 - **Not every page gone, and never nobody.** Pages fell in most tests and to none in some, not in all. A person keeps the kill switch (one hand, instant, security only), sets the response line and chooses the profile.
 

@@ -69,7 +69,7 @@
 It also runs 2,000 systems over 30 steps and checks the full law never exceeds the budget or breaks a floor. That test
 found and fixed one real bug: an organ whose need fell below its device floor was given a ceiling under that floor.
 
-**Simulation.** `hardware/site_exchange.py`: four GPU groups of 16 H100-class GPUs share one site budget (MLPerf gamma).
+**The model (class S).** `hardware/site_exchange.py`: four GPU groups of 16 H100-class GPUs share one site budget (MLPerf gamma).
 Held-out seed 929292, 48 scenarios per budget. Results: `results/hardware/SITE_EXCHANGE_HELDOUT_*.json`.
 
 | Site budget (share of TDP) | 70% | 60% | 50% |
@@ -95,7 +95,8 @@ full clock to feed it; demand 1.6x the plant traces (the GPUs are held back by t
 - **XC** conveyance over CPU and GPU organs together: each CPU group is held to the clock its feeding work needs, and
   the watts it no longer holds flow to the GPU groups in deficit.
 
-Seed 515151, 24 scenarios. Results: `results/hardware/NODE_EXCHANGE_*.json`. XC against S, paired:
+Seed 515151, 24 scenarios, our own model (class S). Results: `results/hardware/NODE_EXCHANGE_*.json`. XC against S, paired,
+each a raw change with its sign (work served up, backlog and latency down: more work and faster, GAIN):
 
 | Site budget (share of GPU TDP + CPU maximum) | 60% | 70% | 80% |
 |---|---:|---:|---:|
@@ -111,11 +112,11 @@ Seed 515151, 24 scenarios. Results: `results/hardware/NODE_EXCHANGE_*.json`. XC 
   each CPU to its allocation, so the watts it gives up are really free, and it never goes over.
 - **Most of the gain is the CPUs' reserve, not their clock.** Against XM, XC gains ~1% work per kWh; against S, the
   watts a fixed plan must keep for CPUs that might peak are what the GPUs receive.
-- The same holds for the least and most favourable MLPerf gamma fits, and for CPU shares 0.2 and 0.6 (+2.3% to +4.2%
+- The same holds for the least and most favourable MLPerf gamma fits, and for CPU shares 0.2 and 0.6 (2.3% to 4.2% more
   work at the 70% budget), `tests/test_node_exchange.py` checks N1-N4 in `verify.py`.
 
 ## 5. What is not claimed
-- This is a simulation on declared device physics.
+- This is our own model (class S) on declared device physics, never offered as proof of a physical saving.
 - The live levers that would carry it are GPU power limits (`nvidia-smi -pl`, DCGM), RAPL package limits, and pod CPU
   limits under a namespace budget. They exist in `omni_controller/muscles.py`, but the exchange between them has not
   run on hardware.

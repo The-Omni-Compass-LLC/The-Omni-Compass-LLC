@@ -26,7 +26,7 @@ level only when it holds. The OFF switch (section 2) works at every level.
 | The Kubernetes controller and its muscles | `omni_controller/controller.py`, `omni_controller/muscles.py` |
 | The GPU governor (one GPU box, no Kubernetes needed) | `omni_controller/gpu_governor.py` |
 | Container image recipe; install and permission files | `deploy/Dockerfile`, `deploy/install/omni-compass.yaml`, `deploy/rbac-*.yaml`, `deploy/pilot/` |
-| Proof tools: paired tests on your own stack, the GPU test, simulations | `scripts/`, `tools/`, `hardware/` |
+| Proof tools: paired tests on your own stack, the GPU test, our own models | `scripts/`, `tools/`, `hardware/` |
 | Every check the code must pass | `python3 verify.py` (ends with `VERIFICATION: PASS`) |
 | The C++ engine: every law twinned in C++20, proven equal to the Python | `cpp/` (build: `cmake -S cpp -B cpp/build && cmake --build cpp/build`) |
 | The seal: the fingerprints that lock each Python law to its C++ twin | `results/SEAL.json`, `python3 tools/seal.py --check` |
@@ -197,8 +197,8 @@ policy's recorded maximum back exactly. GPUs can be wired the same way from the 
 |---|---|---|
 | site power stress | `--power-cmd "<prints site watts>" --site-limit-w <limit>` | wired: power stress enters the engine; batch pace and caps respond |
 | cooling setpoint | `--cooling-cmd "<sets {c}>" --cooling-min-c 18 --cooling-max-c 27 --cooling-restore-c 22` | wired: warmer supply air while cool, colder as heat rises |
-| **CPU + GPU on one power budget** | `hardware/node_exchange.py` (the conveyance law over CPU and GPU organs) | **simulation only.** The live levers exist (levels 5 and 6); the exchange between them has not run on hardware |
-| GPU groups sharing a site budget | `hardware/site_exchange.py` | **simulation only** |
+| **CPU + GPU on one power budget** | `hardware/node_exchange.py` (the conveyance law over CPU and GPU organs) | **modelled only (class S).** The live levers exist (levels 5 and 6); the exchange between them has not run on hardware |
+| GPU groups sharing a site budget | `hardware/site_exchange.py` | **modelled only (class S)** |
 | on-site batteries as an organ | designed (`docs/DOMAIN_MAP.md`) | **not built** |
 
 ---
@@ -256,15 +256,15 @@ policy's recorded maximum back exactly. GPUs can be wired the same way from the 
 
 ---
 
-## 8. What is proven, and how
+## 8. What is shown, and of what kind
 
 | Claim | Evidence | Kind |
 |---|---|---|
-| On real Kubernetes, Omni v1, three runs of ten pairs each: more work inside the response line (+42% to +48%), p95 −57% to −69%, machines fewer where a paired trial allowed it (steady −1.5% to −3.4%, batch −15% to −24%) | `results/live/V1_ALL_FOUR.md`, `V1_STEADY.md`, `V1_WANDERING.md`, `V1_FAULTS.md`, `V1_BATCH.md`, `V1_FAIRNESS.md` | measured on kind; read by the three-run rule (`docs/OMNI_V1.md`) |
-| On a real database, Omni v3: 61% to 72% fewer connections held open for the same work and latency, at +14% to +28% host CPU-seconds (power given in all three of our runs, reported) | `results/live/V3_PGBENCH.md` | measured on GitHub's machines |
+| On real Kubernetes, Omni v1 (an engine that no longer stands; omni-v25's record is `results/OMNI_INDEX.md`), three runs of ten pairs each: more work inside the response line (up 42% to 48%), the 95th percentile down 56% to 69% (faster answers), machines in service down where a paired trial allowed it (steady down 1.5% to 3.4%, batch down 15% to 24%), each GAIN in all three of our runs | `results/live/V1_ALL_FOUR.md`, `V1_STEADY.md`, `V1_WANDERING.md`, `V1_FAULTS.md`, `V1_BATCH.md`, `V1_FAIRNESS.md` | measured on kind; read by the three-run rule (`docs/OMNI_V1.md`) |
+| On a real database, Omni v3 (an engine that no longer stands; omni-v25's record is `results/OMNI_INDEX.md`), its last counted set: on `tpcb_hot` the connections held open for the same work cut 7% to 13%, GAIN in all three of our runs, with the host's CPU STEADY (the first counted set's 61% to 63% cut and its CPU cost, up 14% to 27%, power given, traced to the harness's own launches, are kept in `docs/history/V3_PGBENCH_set1.md`) | `results/live/V3_PGBENCH.md` | measured on GitHub's machines |
 | On Azure's bill, 4 workers: no difference beyond the noise on any gauge (the fleet is too small for the lever) | `results/live/V1_AKS_STEADY.md`, `V1_AKS_BURST.md` | a real bill |
 | Energy on Kubernetes | declared model on kind, no meter | modelled |
-| GPU: more work per energy within the speed guardrail | earlier card controller, obsolete; rerun on rented cards pending | hardware meter |
+| GPU: more work per energy within the speed guardrail | the run of 2 October on an earlier card controller, obsolete; the runs on rented cards since (`results/gpu/`): on one A10 on omni-v23 the energy for each request served down 0.8% to 1.8%, GAIN in all three of our runs (`results/gpu/V23_A10_CAP_FULL_ABC.md`) | the card's own meter |
 | CPU and GPU on one power budget: more work, never over the budget | `results/hardware/NODE_EXCHANGE_*.json` | modelled |
 | Safety: OFF switch restores everything; watch mode writes nothing | every live run's switch drill; `verify.py` | measured / checked |
 
@@ -289,7 +289,7 @@ the same answers, proven by a parity test on every build.
 parity tests pass (`python3 tools/seal.py`). `verify.py` fails if any sealed file changes afterwards, and names it. So
 the Python and the C++ cannot drift apart unnoticed. What stays in Python is the plumbing that talks to Kubernetes,
 nvidia-smi and sensors (`omni_controller/controller.py`, `muscles.py`, the device I/O of `gpu_governor.py`) and the
-simulation harnesses; every decision they take goes through the twinned laws. The seal lists them as Python only.
+model harnesses; every decision they take goes through the twinned laws. The seal lists them as Python only.
 
 Keep this manual with the code. When Omni-Compass changes, this manual, the C++ twin and the seal change in the same
 commit.

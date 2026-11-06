@@ -556,7 +556,7 @@ TERMS = [
     T("k[d]", L, "The damping: k[d] × velocity meets whatever is shoving the position (a load rising, heat building) with an equal "
       "and opposite push. Chosen for critical damping, k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt, the reading glides to the centre and "
       "stops, no overshoot, no ringing. Some wires set it at three times that, so a rising load is met before it reaches the wall "
-      "(the Kubernetes governor, the GPU governors, the realms' arms and the grid's runner); the data stores' runners, the "
+      "(the Kubernetes wire, the card's two wires, the realms' arms and the grid's runner); the data stores' runners, the "
       "orchestrator's brain and the other simulators keep the class's critical damping. The page's section 5h lists every wire, "
       "read from the repository at each build.",
       [(LAW, "K_D x velocity: whatever is shoving the position"),
@@ -607,7 +607,7 @@ TERMS = [
       "redistributes.",
       [(CORE, "(7) dB/dt = B_dot ; dB_dot/dt = gamma_c delta S - (omega_B/Q_B) B_dot - omega_B^2 B"),
        (PAGE_F, "Piece 3, Bath")], aka=["the bath", "B_dot"]),
-    T("piece 4, the governor's law", B, "The governor's law (omnicompass/adapter.py, nervous_system.py): "
+    T("piece 4, the governor's law", B, "The supervisory law of the fourth piece (omnicompass/adapter.py, nervous_system.py): "
       "push and the utilisation target ρ* from the state, and the nerves' grants to every organ: one law for every muscle, with "
       "no outside authority.",
       [(PAGE_F, "Piece 4, Governor Law"),
