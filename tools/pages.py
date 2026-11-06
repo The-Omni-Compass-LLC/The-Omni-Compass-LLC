@@ -313,8 +313,9 @@ def markdown(rec: dict) -> str:
           "κ the share of the freed time that becomes money (1 where a rotation or a head is released or the time goes to paid "
           "work, 0 where nothing changes). Only r is measured here; p, β and κ are an owner's. With the machines' line, the live "
           "page's one equation reads G = (1 + ΔW) ⁄ (1 + m · ΔM + p · ΔP) − 1, ΔP = −κ · β · r.", ""]
-    try:
-        r_min = -float(json.loads(oversight.OUT_JSON.read_text(encoding="utf-8"))["pooled"]["change"])
+    try:                       # the alert minutes beside the pages only from the same engine's tables, never another's
+        ov = json.loads(oversight.OUT_JSON.read_text(encoding="utf-8"))
+        r_min = -float(ov["pooled"]["change"]) if ov.get("engine") == f"omni-v{rec['engine']}" else None
     except (OSError, ValueError, KeyError, TypeError):
         r_min = None
     L += [f"On a run cost of $100 million, κ = 1, r = {100 * r_pages:.1f}% (the pages above, the change of the three runs' means)"

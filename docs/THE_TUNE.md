@@ -59,7 +59,8 @@ reads one tune against another, θ′ against θ, with g(θ, s) in the place of 
 
   A = { θ ∈ Θ : Rⱼ(θ) ≠ LOSS for every gauge j, and every muscle within its own limit },
 
-and in a cloud also R[bill] (θ) ≠ power given: the same work for a bill never bigger than native's.
+and in a cloud also the work per dollar not falling against native, E(θ) = W / B ≥ E(native): the bill may rise only where the
+work rises more (the order of 31 October; a rise of the bill by itself is power given, never a LOSS).
 
 **What a tune is for.** The max serves the organism's output (its work, and the time it waits, misses or fails) and gives power
 to buy it; it never shaves energy for its own sake. Let Jₛ be the service gauges (in a cloud the bill joins them, its aim
@@ -148,7 +149,7 @@ the engine version, configuration, hardware or model, workload and measurement b
 
 | Term | Exact meaning | Where it is in this repository |
 |---|---|---|
-| Governing engine | The executable mathematical rules that transform observations and internal state into governing decisions. | the fingerprinted files of the engine that stands (`OMNI_V18.json`, `tools/omni_version.py`) |
+| Governing engine | The executable mathematical rules that transform observations and internal state into governing decisions. | the fingerprinted files of the engine that stands (`OMNI_V25.json`, `tools/omni_version.py`) |
 | Native baseline | The system's documented configuration and behavior without Omni-Compass governing it. | each benchmark's native arm, as its project ships it |
 | Factory profile | The complete, versioned set of Omni-Compass default settings shipped together. | θ*, sections 1 and 2: the engine's defaults and `realms/muscle_cards_v5.csv` |
 | Candidate profile | A proposed combination of settings undergoing evaluation. | a tune of the search grid (`tools/tune_study.py`) or a candidate engine in the model gate (`tools/model_gate.py`) |
@@ -167,7 +168,7 @@ column.
 
 **Fixed tuning, continuously changing behavior.** Let x be the governed system's state, z the governor's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval, Δ ∈ {10, 15, 30, 60, 90, 120} s on
-the bench's six buttons (60 s the factory's). At decision k:
+the bench's six buttons (the factory's beat by place since omni-v24: 10 s on site, 60 s through a cloud). At decision k:
 
 ```
 y[k] = h(x[k]),   z[k+1] = F[θ](z[k], y[k]),   u[req][k] = G[θ](z[k], y[k]),   u[cmd][k] = Π[C](u[req][k]),
