@@ -108,6 +108,106 @@
 })();
 </script>
 </head><body>
+<canvas id="omniWall" aria-hidden="true"></canvas>
+<script id="omniWallpaper">
+/* The wallpaper under the page (the founder's words of 6 November): decoration only, it shows no measurement. A static circuit grid
+   and rack frames are drawn once per size; packets run the grid's lines, pre-drawn columns of code slide down, rack lights blink;
+   at most 24 frames a second (12 on a touch screen), still while the tab is hidden, drawn once and left still under reduced
+   motion; the dock's Wallpaper switch turns it off and the browser remembers. Blue while Omni-Compass runs; native's orange when the
+   kill switch hands the page to native. */
+(function () {
+  var cv = document.getElementById("omniWall"); if (!cv || !cv.getContext) return;
+  var g = cv.getContext("2d"), dpr = 1, W0 = 0, H0 = 0, base = null, packets = [], cols = [], leds = [], last = 0, prev = 0, raf = 0, on = true, rm = false;
+  var touch = false; try { touch = matchMedia("(pointer: coarse)").matches || innerWidth <= 640; } catch (e) { touch = innerWidth <= 640; }
+  var STEP = 1000 / (touch ? 12 : 24), CELL = touch ? 44 : 56, CH = "01ABCDEF0123456789{}[]<>=+*/;:#$&%";
+  try { on = localStorage.getItem("omniWall") !== "off"; } catch (e) { on = true; }
+  try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { rm = false; }
+  function side() {   // the engine's own side, read from the page's engine where it has started
+    try { if (typeof W !== "undefined" && W && W.killed) return "255,138,31"; } catch (e) { /* not started */ }
+    try { if (typeof MASTER !== "undefined" && MASTER && MASTER.off) return "255,138,31"; } catch (e) { /* not started */ }
+    return "78,151,209";
+  }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function packet() {
+    var h = Math.random() < 0.5;
+    return {h: h, x: h ? rnd(0, W0) : Math.floor(rnd(0, W0 / CELL)) * CELL + 0.5, y: h ? Math.floor(rnd(0, H0 / CELL)) * CELL + 0.5 : rnd(0, H0),
+            v: rnd(40, 140) * (Math.random() < 0.5 ? -1 : 1), l: rnd(18, 60)};
+  }
+  function column(rgb) {   // a column of code, drawn once, slid on every frame
+    var n = Math.round(rnd(12, 26)), c = document.createElement("canvas"), q; c.width = 16; c.height = n * 15; q = c.getContext("2d");
+    q.font = "12px ui-monospace,SFMono-Regular,Menlo,monospace"; q.textBaseline = "top";
+    for (var k = 0; k < n; k++) { q.fillStyle = "rgba(" + rgb + "," + (0.07 + 0.2 * k / n).toFixed(3) + ")"; q.fillText(CH.charAt(Math.floor(Math.random() * CH.length)), 2, k * 15); }
+    return c;
+  }
+  function build() {
+    var rgb = side(), q, i, x, y;
+    base = document.createElement("canvas"); base.width = cv.width; base.height = cv.height; q = base.getContext("2d"); q.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = q.createLinearGradient(0, 0, W0, H0); bg.addColorStop(0, "#081016"); bg.addColorStop(0.5, "#0c161d"); bg.addColorStop(1, "#071015");
+    q.fillStyle = bg; q.fillRect(0, 0, W0, H0);
+    q.strokeStyle = "rgba(" + rgb + ",.11)"; q.lineWidth = 1;
+    for (x = 0.5; x < W0; x += CELL) { q.beginPath(); q.moveTo(x, 0); q.lineTo(x, H0); q.stroke(); }
+    for (y = 0.5; y < H0; y += CELL) { q.beginPath(); q.moveTo(0, y); q.lineTo(W0, y); q.stroke(); }
+    q.fillStyle = "rgba(" + rgb + ",.34)";
+    for (i = 0; i < W0 * H0 / (CELL * CELL) / 5; i++) q.fillRect(Math.floor(rnd(0, W0 / CELL)) * CELL - 1, Math.floor(rnd(0, H0 / CELL)) * CELL - 1, 3, 3);
+    leds = [];   // racks down both edges: frames drawn once, their lights blink
+    var rw = touch ? 22 : 34, rh = touch ? 120 : 170;
+    [6, W0 - rw - 6].forEach(function (rx) {
+      for (var ry = 40; ry + rh < H0; ry += rh + 18) {
+        q.strokeStyle = "rgba(" + rgb + ",.24)"; q.strokeRect(rx + 0.5, ry + 0.5, rw, rh);
+        for (var sy = ry + 8; sy < ry + rh - 6; sy += 11) { q.fillStyle = "rgba(255,255,255,.055)"; q.fillRect(rx + 4, sy, rw - 8, 6); leds.push({x: rx + rw - 9, y: sy + 2, on: Math.random() < 0.5}); }
+      }
+    });
+    packets = []; var n = Math.round(W0 * H0 / (touch ? 30000 : 17000)); for (i = 0; i < n; i++) packets.push(packet());
+    cols = []; var nc = Math.max(4, Math.round(W0 / (touch ? 170 : 110)));
+    for (i = 0; i < nc; i++) cols.push({x: Math.round(rnd(40, W0 - 40)), y: rnd(-H0, H0), v: rnd(14, 46), img: column(rgb)});
+    base.rgb = rgb;
+  }
+  function size() {
+    W0 = innerWidth; H0 = innerHeight; dpr = Math.min(window.devicePixelRatio || 1, touch ? 1 : 1.5);
+    var z = parseFloat(document.documentElement.style.zoom) || 1; cv.style.width = (W0 / z) + "px"; cv.style.height = (H0 / z) + "px";   // the page's own zoom
+    cv.width = Math.round(W0 * dpr); cv.height = Math.round(H0 * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0); build();
+  }
+  function draw(t) {
+    var rgb = side(), dt = last ? Math.min(0.2, (t - last) / 1000) : 0; last = t;
+    if (rgb !== base.rgb) build();   // the kill switch turned the page native, or back
+    g.drawImage(base, 0, 0, W0, H0);
+    var sy = (t / 60) % (H0 + 240) - 120, sg = g.createLinearGradient(0, sy - 120, 0, sy + 120);   // a slow scanning light down the screen
+    sg.addColorStop(0, "rgba(" + rgb + ",0)"); sg.addColorStop(0.5, "rgba(" + rgb + ",.07)"); sg.addColorStop(1, "rgba(" + rgb + ",0)");
+    g.fillStyle = sg; g.fillRect(0, sy - 120, W0, 240);
+    for (var i = 0; i < cols.length; i++) { var c = cols[i]; c.y += c.v * dt; if (c.y > H0 + 40) { c.y = -c.img.height - rnd(0, 200); c.x = Math.round(rnd(40, W0 - 40)); } g.drawImage(c.img, c.x, c.y); }
+    g.lineWidth = 1.4;
+    for (i = 0; i < packets.length; i++) {
+      var p = packets[i], d = p.v > 0 ? 1 : -1;
+      if (p.h) { p.x += p.v * dt; if (p.x < -80 || p.x > W0 + 80) packets[i] = p = packet(); }
+      else { p.y += p.v * dt; if (p.y < -80 || p.y > H0 + 80) packets[i] = p = packet(); }
+      var x0 = p.h ? p.x - d * p.l : p.x, y0 = p.h ? p.y : p.y - d * p.l, gr = g.createLinearGradient(x0, y0, p.x, p.y);
+      gr.addColorStop(0, "rgba(" + rgb + ",0)"); gr.addColorStop(1, "rgba(" + rgb + ",.75)");
+      g.strokeStyle = gr; g.beginPath(); g.moveTo(x0, y0); g.lineTo(p.x, p.y); g.stroke();
+      g.fillStyle = "rgba(" + rgb + ",.85)"; g.fillRect(p.x - 1.2, p.y - 1.2, 2.4, 2.4);
+    }
+    for (i = 0; i < leds.length; i++) { var L = leds[i]; if (Math.random() < 0.015) L.on = !L.on; g.fillStyle = L.on ? "rgba(80,200,120,.6)" : "rgba(80,200,120,.12)"; g.fillRect(L.x, L.y, 4, 2); }
+  }
+  function loop(t) { raf = requestAnimationFrame(loop); if (!on || document.hidden || t - prev < STEP - 2) return; prev = t; draw(t); }
+  function start() { size(); cancelAnimationFrame(raf); last = 0; if (rm) { draw(performance.now()); return; } raf = requestAnimationFrame(loop); }
+  function setOn(v) {
+    on = v; try { localStorage.setItem("omniWall", on ? "on" : "off"); } catch (e) { /* not kept */ }
+    document.body.classList.toggle("wallOff", !on);
+    var b = document.getElementById("dWall"); if (b) { b.textContent = on ? "Wallpaper on" : "Wallpaper off"; b.setAttribute("aria-pressed", String(on)); }
+    if (on && rm) draw(performance.now());
+  }
+  function wire() {   // the dock's switch, beside the Tour button
+    var d = document.getElementById("dock"); if (!d || document.getElementById("dWall")) return;
+    var b = document.createElement("button"); b.id = "dWall"; b.className = "dkeep"; b.type = "button";
+    b.title = "The moving data-centre wallpaper behind the page: decoration only, it shows no measurement";
+    b.addEventListener("click", function () { setOn(!on); });
+    var t = document.getElementById("dTour"); if (t && t.parentNode === d) d.insertBefore(b, t.nextSibling); else d.appendChild(b);
+    setOn(on);
+  }
+  var t0 = 0; addEventListener("resize", function () { clearTimeout(t0); t0 = setTimeout(start, 200); });
+  function go() { start(); wire(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
+})();
+</script>
 <style>
 /* Dark by default, light where the viewer's system asks for it: one set of tokens, each redefined for the light theme. Layout: an engine bay. The organism ring is the hero; the decision cycle, the phase plane, the brain and the verdict follow in the order one decision runs. */
 :root{
@@ -842,6 +942,14 @@ section.tourOn{outline:3px solid var(--brass);outline-offset:4px;border-radius:6
 @media print{#tourTab,#tourCard{display:none!important}}
 @media (min-width:641px){#tourCard{right:56px}}
 @media (max-width:640px){#tourTab[aria-pressed="true"]{display:none}}
+/* fix_WALL: the moving data-centre wallpaper under the page; every block sits on its own dark backing above it */
+#omniWall{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;display:block}
+html{background:#0a1014}
+body{background:transparent}
+.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(12,17,21,.9);box-shadow:0 0 0 10px rgba(12,17,21,.9),0 0 0 11px rgba(78,151,209,.16);border-radius:2px}
+body.wallOff #omniWall{display:none}
+@media print{#omniWall{display:none}html{background:#fff}}
+
 /* fix_TOUR3: the blue Guided tour tab, just above the dock's Tour button on every screen; it bounces on the landing view */
 #tourTab,#tourTab:not(#x){top:auto;bottom:66px;right:16px;transform:none;writing-mode:horizontal-tb;border:2px solid #9fd0ff;border-radius:24px;padding:10px 18px;background:#1d5fa0;color:#fff;font-size:16px;font-weight:700;letter-spacing:.02em;box-shadow:0 6px 18px rgba(0,0,0,.5)}
 #tourTab .ti{writing-mode:horizontal-tb;margin:0 8px 0 0}
@@ -5582,8 +5690,9 @@ function tourNavSay(tok, go) {   // fix_TOUR3: the line between the stops, in th
 function tourPlaceTab() {   // fix_TOUR3: the blue tab sits just above the dock's Tour button, on every screen
   const t = $("tourTab"), d = $("dTour"); if (!t || !d) return; const r = d.getBoundingClientRect();
   if (!r.width) { t.style.left = t.style.bottom = t.style.right = ""; return; }
-  t.style.right = "auto"; t.style.left = Math.round(Math.max(8, Math.min(innerWidth - t.offsetWidth - 8, r.left + r.width / 2 - t.offsetWidth / 2))) + "px";
-  t.style.bottom = Math.round(innerHeight - r.top + 10) + "px";
+  const z = parseFloat(document.documentElement.style.zoom) || 1, tw = t.getBoundingClientRect().width || t.offsetWidth;   // the page's own zoom (the Screen button)
+  t.style.right = "auto"; t.style.left = Math.round(Math.max(8, Math.min(innerWidth - tw - 8, r.left + r.width / 2 - tw / 2)) / z) + "px";
+  t.style.bottom = Math.round((innerHeight - r.top + 10) / z) + "px";
 }
 function tourInvite() { document.body.classList.toggle("tourInvite", !TOUR.on && window.scrollY < innerHeight * 1.5); }   // fix_TOUR3: it bounces on the landing view
 function tourWire() {
