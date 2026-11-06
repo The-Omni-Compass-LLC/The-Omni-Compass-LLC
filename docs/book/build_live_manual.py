@@ -142,7 +142,7 @@ def card_losses(page: str) -> list:
 
 READ = {   # how to read a monitor of each layer, and what the engineer in charge does with it
     "switch": ("The wiring from the top down: the master switch above the brain, the brain above the organism, the organism above every muscle, and native's own controllers under every muscle, never switched. The switch's state is the word on it: ON in green while Omni-Compass governs; engaged, the switch red and OFF in white.",
-               "Press the kill switch only for security: it is instant, every setting goes back to native and is read back. Watch the governors' table beside it: every governor on the page says OFF and what it handed back."),
+               "Press the kill switch only for security: it is instant, every setting goes back to native and is read back. Watch the table beside it: every orchestrator and scheduler on the page says OFF and what it handed back."),
     "whole": ("Bars and tiles in the traffic light of the one key: GAIN green to one side, LOSS red to the other, STEADY yellow on zero, power given blue. A figure is a composition or a table's own word, never a single run's number.",
               "Read the word before the size, and the interval before the word: an interval across zero is STEADY whatever its centre. A LOSS on the board is answered on the status board, with its cause and its knob."),
     "service": ("The four golden signals of a service, one point a decision of the live benchmark engine: native in orange, Omni-Compass in blue, the same demand on both. A red band is a kill-switch window.",

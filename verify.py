@@ -362,6 +362,10 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "layout_check.py")], capture_output=True, text=True)
     check("the repository is lined up: the declared root, every link and every named path present (tools/layout_check.py)",
           r.returncode == 0, r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "claims_check.py")], capture_output=True, text=True)
+    check("every published word reads by the one key: no EVEN, no bare signed number as a reading, no direction against its number, "
+          "no 'fewer machines' said as a result, no govern root twice in a breath, no retired headline (tools/claims_check.py)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "lint_names.py")], capture_output=True, text=True)
     check("every Python file compiles and reads no name that nothing defines (tools/lint_names.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])

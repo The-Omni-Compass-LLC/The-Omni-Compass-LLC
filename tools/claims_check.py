@@ -10,7 +10,8 @@ document, word, sentence, paragraph ... every claim and everything benchmarkable
 
 What it reads: every published Markdown page (the front door, docs/, docs/engine/, docs/book/, docs/specs/, the
 summaries at the top of results/), the live engine's word-for-word appendix (docs/engine/PAGE_WORD_FOR_WORD.md), and every
-spoken line of the guided tour (the page's "tour" record: what the voice says aloud). What it leaves: the history and the
+spoken line of the guided tour (the page's "tour" record: what the voice says aloud). A printed book is read chapter by chapter, and a chapter it binds whole
+from one of the files below keeps that file's words (read from the books' own outlines). What it leaves: the history and the
 dated reports and every older engine's own page (docs/OMNI_V<n>.md), which keep the words of their day (docs/history/, any file dated _2026-MM-DD, docs/engine/audit_*/,
 CHANGELOG.md); the pre-registrations, whose bytes are locked; the per-run tables under results/<folder>/, which
 tools/reread.py reads again from their own data; the founder's rule books, which quote the retired words to retire them
@@ -32,6 +33,7 @@ Checks (each finding: file:line, the check, the words):
 """
 from __future__ import annotations
 
+import ast
 import collections
 import json
 import re
@@ -72,12 +74,60 @@ def standing() -> str:
     return "omni-" + next(iter(omni_version.VERSIONS))   # VERSIONS lists the newest first
 
 
-def published() -> list[str]:
-    files = subprocess.run(["git", "-C", str(ROOT), "ls-files", "*.md"], capture_output=True, text=True, check=True).stdout.split()
+def of_their_day(path: str) -> bool:
+    """A file that keeps the words of its day: the history, a dated report, a pre-registration, an older engine's page."""
     n = re.sub(r"\D", "", standing().split("-v")[-1]) or "25"
     older = re.compile(rf"^docs/OMNI_V(?!{n}\.md$)\d+(_[A-Z0-9_]+)?\.md$")
-    return [f for f in files if (not any(p.search(f) for p in KEEP_WORDS_OF_THEIR_DAY) and not older.search(f))
-            or f == "docs/engine/PAGE_WORD_FOR_WORD.md"]
+    return any(p.search(path) for p in KEEP_WORDS_OF_THEIR_DAY) or bool(older.search(path))
+
+
+def published() -> list[str]:
+    files = subprocess.run(["git", "-C", str(ROOT), "ls-files", "*.md"], capture_output=True, text=True, check=True).stdout.split()
+    return [f for f in files if not of_their_day(f) or f == "docs/engine/PAGE_WORD_FOR_WORD.md"]
+
+
+def bound_copies() -> list[str]:
+    """The chapters a printed book binds whole from a file that keeps the words of its day (a pre-registration, the change
+    log of the pre-registrations, an older engine's page, the history): read from the books' own outlines
+    (docs/book/build_book.py), so the book is held to exactly the rule its sources are. Returned as each chapter's title
+    (or, for a title the builder writes from the engine list, the title's fixed opening)."""
+    tree = ast.parse((ROOT / "docs" / "book" / "build_book.py").read_text(encoding="utf-8"))
+    titles = []
+    for node in tree.body:
+        if not (isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id.endswith("_OUTLINE") for t in node.targets)):
+            continue
+        for el in getattr(node.value, "elts", []):
+            if not (isinstance(el, ast.Tuple) and len(el.elts) == 2 and isinstance(el.elts[1], ast.Tuple)):
+                continue
+            title, (kind, *src) = el.elts[0], el.elts[1].elts
+            if not src:
+                continue
+            src = src[0]
+            if isinstance(src, ast.Name):            # ROAD: every older engine's page
+                paths, old = [], src.id == "ROAD"
+            else:
+                paths = [c.value for c in (src.elts if isinstance(src, ast.List) else [src]) if isinstance(c, ast.Constant)]
+                old = bool(paths) and all(isinstance(x, str) and of_their_day(x) for x in paths)
+            if not old:
+                continue
+            if isinstance(title, ast.Constant):
+                titles.append(title.value)
+            elif isinstance(title, ast.JoinedStr) and title.values and isinstance(title.values[0], ast.Constant):
+                titles.append(title.values[0].value)
+    return titles
+
+
+def scan_book(name: str, text: str, findings: list):
+    """A printed book: every chapter read, but a chapter bound whole from a file of its day keeps that file's words."""
+    keep = bound_copies()
+    chapter = re.compile(r"^## \d+\. (.*)$")
+    lines, out, skip = text.splitlines(), [], False
+    for line in lines:
+        m = chapter.match(line)
+        if m:
+            skip = any(m.group(1).startswith(t) for t in keep)
+        out.append("" if skip else line)
+    scan(name, "\n".join(out), findings)
 
 
 def tour_lines() -> list[tuple[str, str]]:
@@ -113,7 +163,8 @@ def main(argv: list[str]) -> int:
     for f in published():
         p = ROOT / f
         if p.exists():
-            scan(f, p.read_text(encoding="utf-8", errors="replace"), findings)
+            text = p.read_text(encoding="utf-8", errors="replace")
+            (scan_book if f.startswith("docs/book/") and f.endswith("_BOOK.md") else scan)(f, text, findings)
     for name, say in tour_lines():
         scan(name, say, findings)
     if "--summary" in argv:
