@@ -59,10 +59,11 @@ class StatedEngine(unittest.TestCase):
             self.assertEqual(benefit_sheet.stated_engines(md), {21})
 
     def test_the_swarm_row_reads_one_engine(self):
+        import re
         rows = json.loads((ROOT / "results" / "BENEFIT_SHEET.json").read_text())["rows"]
-        swarm = [r for r in rows if r["file"].endswith("V21_SWARM.md")]
-        self.assertTrue(swarm)
-        self.assertEqual(swarm[0]["engine"], "omni-v21")
+        swarm = [(r, m) for r in rows if (m := re.search(r"V(\d+)_SWARM\.md$", r["file"]))]
+        self.assertTrue(swarm)                               # the newest swarm table's row reads that table's one engine
+        self.assertEqual(swarm[0][0]["engine"], f"omni-v{swarm[0][1].group(1)}")
 
 
 def summary(letter, rels):

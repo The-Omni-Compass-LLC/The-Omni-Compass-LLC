@@ -4,7 +4,7 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `8aa378506a5bc917`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v25. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
+Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `bd7581c021097881`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v25. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
 
 ## The rule
 
@@ -17,13 +17,13 @@ Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.jso
 
 ## The independent check
 
-Every one of the 11,069 rows was classed twice: as the key wrote it, and by `independent()` in `tools/audit_export.py`, written from the rule above with no code shared with `tools/readings.py` and each run's difference recomputed as Omni-Compass minus native from the stored values. **10,085 agree; 0 differ**; 984 cannot be recomputed from the committed record, for the reasons counted here (none of them is changed by this report: a table's words stay as its runner printed them).
+Every one of the 14,574 rows was classed twice: as the key wrote it, and by `independent()` in `tools/audit_export.py`, written from the rule above with no code shared with `tools/readings.py` and each run's difference recomputed as Omni-Compass minus native from the stored values. **13,483 agree; 0 differ**; 1,091 cannot be recomputed from the committed record, for the reasons counted here (none of them is changed by this report: a table's words stay as its runner printed them).
 
 | Why a row cannot be recomputed | the road | superseded | standing | taken out |
 |---|---:|---:|---:|---:|
-| not recomputable at nine decimals: the committed table printed its changes to two decimals; the runner's raw files hold the values | 73 | 201 | 101 | 0 |
+| not recomputable at nine decimals: the committed table printed its changes to two decimals; the runner's raw files hold the values | 73 | 302 | 101 | 0 |
 | not recomputable: the printed changes round across the 0.5% floor | 1 | 0 | 0 | 0 |
-| not recomputable: the record declares no aim for this gauge (a table of an earlier engine, its words kept as printed) | 570 | 0 | 14 | 24 |
+| not recomputable: the record declares no aim for this gauge (a table of an earlier engine, its words kept as printed) | 570 | 14 | 6 | 24 |
 
 A standing table that cannot be recomputed at nine decimals from the committed table is a traceability gap: its runner's raw files (on the branch `raw`, `scripts/raw_archive.sh open`) hold the values, and the next export reads them there.
 
@@ -33,28 +33,27 @@ Each benchmark's newest table on its own engine. A table on an older engine stan
 
 | Engine | GAIN | LOSS | POWER GIVEN | STEADY (EXACT) | BELOW PRACTICAL THRESHOLD | STATISTICALLY INCONCLUSIVE | RUNS DISAGREE | RUNS DIFFER IN RIG | INVALID OR MISSING | SHOWN, NEVER JUDGED | TUNING, NEVER COUNTED |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| omni-v21 | 279 | 50 | 99 | 247 | 204 | 0 | 175 | 31 | 0 | 366 | 201 |
-| omni-v12 | 139 | 113 | 31 | 90 | 46 | 0 | 96 | 0 | 0 | 216 | 0 |
-| **all** | **418** | **163** | **130** | **337** | **250** | **0** | **271** | **31** | **0** | **582** | **201** |
+| omni-v25 | 468 | 267 | 179 | 338 | 222 | 0 | 170 | 30 | 0 | 619 | 201 |
+| omni-v12 | 13 | 6 | 0 | 7 | 3 | 0 | 15 | 0 | 0 | 18 | 0 |
+| **all** | **481** | **273** | **179** | **345** | **225** | **0** | **185** | **30** | **0** | **637** | **201** |
 
 ## Confidence of the GAIN, LOSS and power given rows (standing, against native)
 
 | Confidence | Rows |
 |---|---:|
-| statistically inconclusive | 261 |
-| strong | 156 |
-| weak | 109 |
+| strong | 381 |
+| statistically inconclusive | 201 |
+| weak | 127 |
+| moderate | 117 |
 | deterministic, reproduced in all three runs | 104 |
-| moderate | 77 |
 | not recorded (a table that printed its changes only) | 3 |
-| 0 of 3 runs beyond their noise | 1 |
 
 ## Run-to-run stability (standing, against native, rows that moved)
 
 | The runs | Rows |
 |---|---:|
-| moved one direction (0.5% or more) | 692 |
-| moved in opposite directions (0.5% or more) | 261 |
+| moved one direction (0.5% or more) | 874 |
+| moved in opposite directions (0.5% or more) | 183 |
 
 The rows that disagree are not resolved by this report: each is a test unstable at that gauge, to be looked into (workload instability, the shared runner, baseline drift or too few repetitions) and run again; a disagreement is never counted as a GAIN or a LOSS.
 

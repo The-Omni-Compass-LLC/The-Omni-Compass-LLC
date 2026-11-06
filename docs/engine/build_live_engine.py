@@ -1160,7 +1160,10 @@ def bills() -> dict:
     people = {"source": "results/OVERSIGHT.json", "engine": o.get("engine"),
               "minutes": op.get("change"), "minutes_reading": op.get("reading"),
               "pages": pg.get("change"), "pages_reading": pg.get("reading"), "pages_record": pg.get("record")} if o else {}
+    sn = ROOT / "results" / "SITE_NUMBERS.json"   # the four arms, A, B, C and D, each from its receipt (tools/site_numbers.py)
+    arms = (json.loads(sn.read_text(encoding="utf-8")).get("four_arms") or {}) if sn.exists() else {}
     return {"source": "results/TWO_BILLS.json", "reading_source": "results/WORK_PER_BILL.json", "people": people,
+            "arms_source": "results/SITE_NUMBERS.json", "arms": arms,
             "chip": {"engine": chip.get("engine"), "title": chip.get("title"), "runs": runs, "reading": bm.get("reading")},
             "cloud": {"engine": cl.get("engine"), "page": cl.get("page"), "repetitions": cl.get("repetitions"),
                       "bill": {k: bill.get(k) for k in ("native", "omni", "ci95")}, "work_counted": bool(cl.get("work"))}}
@@ -1215,7 +1218,8 @@ def verdict_audit() -> dict:
                "runs": [[r4(x.get("native")), r4(x.get("omni")), r4(x.get("raw_pct")), r4(x.get("raw_unit")), bool(x.get("clear"))]
                         for x in r["runs"]], "ev": r.get("evidence")}
         if cz:   # the LOSS ledger's own cause, page, fix and what decides it (tools/loss_ledger.py CAUSES), never composed on the page
-            c = ledger_cause(t["stem"].split("_", 1)[1], ledger_gauge(r, t))
+            eng = t["stem"].split("_", 1)[0]
+            c = ledger_cause(t["stem"].split("_", 1)[1], ledger_gauge(r, t), int(eng[1:]) if eng[1:].isdigit() else None)
             out["cz"] = list(c) if c else None
         return out
     disc = ROOT / "results" / "verdict_audit" / "DISCREPANCIES.json"
@@ -1273,7 +1277,10 @@ def tour() -> dict:
                  "runtime": v.get("runtime"), "encoder": v.get("encoder"), "made_with": v.get("made_with"),
                  "clips": sum(1 for x in steps if x["clip"]), "stops": len(steps),
                  "minutes": round(sum(x["seconds"] or 0 for x in steps) / 60, 1)}
-    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps}
+    nv = tour_script.nav(); c = clips.get("nav") or {}   # the line between the stops: one clip, read after every stop but the last
+    ok = bool(c) and c.get("sha") == nv["sha"] and (HERE / "tour" / c.get("file", "")).exists()
+    nav = {k: nv[k] for k in ("id", "title", "text", "say", "sha")} | {"clip": c["file"] if ok else "", "seconds": c.get("seconds") if ok else None}
+    return {"source": "tools/tour_script.py", "voice_source": "docs/engine/tour/TOUR_VOICE.json", "voice": about, "steps": steps, "nav": nav}
 
 
 def field() -> dict:
@@ -1474,11 +1481,25 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
 (function () {
   var meta = document.querySelector('meta[name="omni-live-source"]');
   if (!meta || !window.fetch || !window.JSON) return;
-  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0;
+  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0, tries = 0;
+  function whole(html) {
+    /* a page that arrived whole: it ends with its closing tag and carries its own self-update (5 November, the software seat: a page
+       cut short in transit opened as an empty wall that called itself the newest build) */
+    return !!html && /<\\/html>\\s*$/i.test(html) && html.indexOf('id="omniSelfUpdate"') > 0;
+  }
+  function again(text) {
+    /* at most four more asks a day; then the daily check */
+    if (++tries <= 4) { say(text + " Asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); }
+    else say(text + " Next check " + at(last + DAY) + ".");
+  }
   function fresh(html) {
     /* the newest build opens as a document of its own, in a fresh script realm; the few links beside the page are made
        absolute, so they still reach the repository's files */
-    html = html.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+    /* only the markup's own links: the scripts and the records are left as written (5 November, the software seat: the rewrite also
+       reached the script's template text and broke 1,012 of 1,366 links) */
+    html = html.split(/(<script\\b[\\s\\S]*?<\\/script>)/i).map(function (part, i) {
+      return i % 2 ? part : part.replace(/(href|src)="(?!#|https?:|data:|blob:|mailto:|tel:|javascript:)([^"]+)"/g, function (m, a, u) { return a + '="' + base + u + '"'; });
+    }).join("");
     location.replace(URL.createObjectURL(new Blob([html], { type: "text/html" })));
   }
   if (typeof MON !== "undefined" && window.Blob && window.URL && URL.createObjectURL) {
@@ -1533,7 +1554,8 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
           .then(function (html) {
             var theirs = builtOf(html);
             if (!html) { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); return; }
-            if (!theirs || theirs <= mine) { say("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet; asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); return; }
+            if (!whole(html)) { again("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page arrived incomplete; this copy stays."); return; }
+            if (!theirs || theirs <= mine) { again("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet."); return; }
             /* written over this one in place, the newer build's script met this page's own declarations again and
                stopped (1 November): it opens as a document of its own */
             if (html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
@@ -1606,8 +1628,21 @@ def stamp_fallbacks(page: str, build: dict) -> str:
     return head + tail
 
 
+def finite(o):
+    """A record as a browser can read it: a number that is not finite (an interval of one repetition, a ratio over nothing) is
+    written null, never NaN or Infinity, which JSON does not have; on 4 November one Azure run of a single repetition put NaN in
+    the ledger and every browser refused the whole build record."""
+    if isinstance(o, float):
+        return o if math.isfinite(o) else None
+    if isinstance(o, dict):
+        return {k: finite(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [finite(v) for v in o]
+    return o
+
+
 def inject(page: str, key: str, value) -> str:
-    text = json.dumps(value, separators=(",", ":"), ensure_ascii=False)
+    text = json.dumps(finite(value), separators=(",", ":"), ensure_ascii=False, allow_nan=False)
     if "</" in text:
         raise ValueError(f"{key}: a record holds '</', which would end its script block")
     tag = f'<script type="application/json" id="{key}">'
@@ -1738,9 +1773,7 @@ def main() -> int:
         print(f"the engine that stands is now {rec['build']['engine']} (the page was built on {old}): records rebuilt on it; "
               "the prose stays as written for the older engine until it is realigned, and the page says so")
     if a.check:
-        bad = [k for k in ("harness", "ctlrec", "scen", "runs", "fleet", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-                          "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field", "bills", "tour")
-               if embedded(page, k) != rec[k]]
+        bad = [k for k in rec if k != "build" and embedded(page, k) != finite(rec[k])]   # every record the page carries
         # the build block: what the repository alone decides (the engine, its digest, the engines of the tables and the realms,
         # every benchmark's place and its tables) must be the page's; what GitHub said when the page was built (the run list,
         # the ledger, the commit and the time) is a reading with its own read time, not rebuilt by a check
@@ -1758,13 +1791,12 @@ def main() -> int:
         for k in bad:
             if k not in rec:          # the appraisal's counts are a file, not a record: named above, no record to compare
                 continue
-            where = first_difference(embedded(page, k), rec[k])
+            where = first_difference(embedded(page, k), finite(rec[k]))
             if where:
                 print(f"  {k}: first difference at {where[0]}: the page {where[1]}, the rebuild {where[2]}")
         return 1 if bad else 0
-    for k in ("harness", "ctlrec", "scen", "runs", "fleet", "build", "whole", "gpurun", "cpuhost", "monitors", "engineruns", "heldout", "cpptwin",
-              "beatsweep", "dial", "coremc", "onnative", "scenarios", "injgrid", "audit", "glossary", "field"):
-        page = inject(page, k, rec[k])
+    for k in rec:                                # every record, the tour, the bills and the law's wires included (4 November:
+        page = inject(page, k, rec[k])           # those three were written once by hand and never rebuilt)
     page = stamp_fallbacks(page, rec["build"])   # the markup's fallbacks follow the build record, never a hand
     page = self_update(page)                     # every copy of the page follows the newest build on GitHub
     PAGE.write_text(page, encoding="utf-8")

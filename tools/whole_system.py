@@ -252,11 +252,11 @@ def cluster_tests():
         if t:
             out.append(t)
     for name, f in GOV_SINGLE:
-        t = test_from_abc(f"Omni-Compass on top of {name}", f, GOV_MEASURES, None)
+        t = test_from_abc(f"Omni-Compass on top of {name}", newest(f), GOV_MEASURES, None)
         if t:
             out.append(t)
     for name, tag in GOVERNORS:
-        f = f"V12_{tag}_4W_TOP.json"
+        f = newest(f"V12_{tag}_4W_TOP.json")       # the newest engine's whole table of the comparison
         t = test_from_abc(f"Omni-Compass on top of {name} (the four ways, compass against native)", f, GOV_MEASURES, None)
         if t:
             out.append(t)
@@ -468,10 +468,10 @@ def separability():
     two agree within the noise where the layers do not interact."""
     out = []
     for name, tag in GOVERNORS:
-        top = LIVE / f"V12_{tag}_4W_TOP.json"
-        bare = LIVE / f"V12_{tag}_4W_BARE.json"
-        if not (top.exists() and bare.exists()):
-            continue
+        top = LIVE / newest(f"V12_{tag}_4W_TOP.json")
+        bare = LIVE / newest(f"V12_{tag}_4W_BARE.json")
+        if not (top.exists() and bare.exists()) or top.name.split("_")[0] != bare.name.split("_")[0]:
+            continue                               # the two from the same runs, one engine, never pooled across engines
         tt = test_from_abc(name, top.name, GOV_MEASURES, None)
         tb = test_from_abc(name, bare.name, GOV_MEASURES, None)
         for g in ("speed", "machines", "energy"):
