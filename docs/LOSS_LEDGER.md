@@ -6,7 +6,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 Every row of every three-run table stands where its table stands, LOSS included; this page gathers the LOSS rows so none of them is found only by reading every table. A LOSS row is a gauge that moved away from its declared aim by 0.5% or more across the benchmark's three runs, A, B and C (the founder's order of 24 October 2026, `tools/readings.py`): in all three, every run's 95% interval clear of zero, or by the mean of the three, with the count of runs beyond the noise. Each benchmark is read from its newest whole table; an older engine's table stands only until the engine that stands has run that benchmark three times, and the engine each row ran on is printed beside it.
 
-Rows that read LOSS across their three runs: **520**. Against my own native, the readings do no harm is judged by: **273**. In place of a controller: **76**. Without me, or two changes at once: **171**. By engine: omni-v25: 498, omni-v12: 22.
+Rows that read LOSS across their three runs: **534**. Against my own native, the readings do no harm is judged by: **287**. In place of a controller: **76**. Without me, or two changes at once: **171**. By engine: omni-v25: 512, omni-v12: 22.
 
 ## Against my own native
 
@@ -73,6 +73,10 @@ Omni-Compass on top of a native controller, against that native alone: the readi
 | omni-v25 | `results/live/V25_CRUISEKUBE.json` | response time (ms), mean | 4.0%, 3.2%, 2.8% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_CRUISEKUBE.json` | response time (ms), 95th percentile | 2.7%, 2.2%, 1.4% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_CRUISEKUBE.json` | response time (ms), 99th percentile | 7.7%, 7.3%, 0.1% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_CRUISEKUBE_RECORDER.json` | response time (ms), mean | 2.0%, 3.1%, 1.4% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_CRUISEKUBE_RECORDER.json` | response time (ms), 95th percentile | 3.1%, 4.1%, 1.1% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_CRUISEKUBE_RECORDER.json` | response time (ms), 99th percentile | 8.6%, 8.8%, 6.5% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_CRUISEKUBE_RECORDER.json` | pod start wait, mean (s) | 8.2%, 10.7%, 11.5% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_FAIRNESS.json` | response time (ms), 95th percentile | 0.5%, 16.5%, 6.6% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_FAIRNESS.json` | pod start wait, total (s) | 9.1%, 24.4%, 31.3% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_FAIRNESS.json` | pod start wait, mean (s) | 1.4%, 20.7%, 25.7% | not yet written | — | the benchmark's three runs on the engine that stands |
@@ -170,6 +174,16 @@ Omni-Compass on top of a native controller, against that native alone: the readi
 | omni-v12 | `results/live/V12_KOORDINATOR_4W_TOP.json` | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 0 to 0, 100.0%, 0.0% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v12 | `results/live/V12_KOORDINATOR_4W_TOP.json` | batch: queue finished (s) | 1.8%, 0.0%, 1.8% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v12 | `results/live/V12_KOORDINATOR_4W_TOP.json` | queue: job turnaround, submitted to done, mean (s) | 5.9%, 1.9%, 3.4% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | response time (ms), 95th percentile | 8.0%, 4.4%, 6.4% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | response time (ms), 99th percentile | 12.0%, 6.6%, 9.6% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | time over the response line (% of samples) | 30.8%, 53.9%, 25.9% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | pod start wait, total (s) | 0 to 0.8, 0 to 3.4, 150.0% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | pod start wait, mean (s) | 0 to 0.45, 0 to 1.183, 16.7% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | batch: queue finished (s) | 2.2%, 0.9%, 2.5% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | queue: job wait, submitted to its first pod running, mean (s) | 45.4%, 26.6%, 37.3% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | queue: job wait, submitted to its first pod running, 95th percentile (s) | 29.0%, 3.3%, 20.7% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | queue: job turnaround, submitted to done, mean (s) | 5.0%, 6.8%, 8.0% | not yet written | — | the benchmark's three runs on the engine that stands |
+| omni-v25 | `results/live/V25_KOORDINATOR_CGROUP.json` | queue: jobs unfinished at the window's end | 19.1%, 10.9%, 23.2% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_KUBERAY_4W_BARE.json` | response time (ms), 95th percentile | 6.2%, 11.8%, 12.1% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_KUBERAY_4W_BARE.json` | response time (ms), 99th percentile | 7.3%, 13.8%, 6.3% | not yet written | — | the benchmark's three runs on the engine that stands |
 | omni-v25 | `results/live/V25_KUBERAY_4W_BARE.json` | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 1.7%, 8.7%, 1.1% | not yet written | — | the benchmark's three runs on the engine that stands |

@@ -2,13 +2,13 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-The oversight line's second reading, counted from the raw files of its own 41 tables (omni-v25) by the rule written and committed before the first count (`docs/OVERSIGHT_PAGES_PREREGISTRATION.md`). A person on call is paid by the page, not by the minute: a page wakes someone, is answered, mitigated and written up. The alert minutes say how long a page would be open; this page says how many pages there would be. Class L: real software on GitHub's own machines, measured; no person is on those machines, so no hour or salary is on any receipt.
+The oversight line's second reading, counted from the raw files of its own 43 tables (omni-v25) by the rule written and committed before the first count (`docs/OVERSIGHT_PAGES_PREREGISTRATION.md`). A person on call is paid by the page, not by the minute: a page wakes someone, is answered, mitigated and written up. The alert minutes say how long a page would be open; this page says how many pages there would be. Class L: real software on GitHub's own machines, measured; no person is on those machines, so no hour or salary is on any receipt.
 
 ## The rule and the check
 
 A bad minute is the oversight line's alert minute exactly: a whole minute of the measured window whose 95th percentile response time (nearest rank, a failed request counted over the line) was over the line, 500 ms in every table. A page opens after FOR bad minutes in a row while no page is open, and closes after RESET clean minutes in a row. The primary rule is FOR 1 minute, RESET 5 minutes (Alertmanager's default `resolve_timeout`); every pair of FOR 1, 2 and 5 and RESET 5 and 15 is printed below, declared with it.
 
-Before any page was counted, the bad minutes recounted from the raw files had to give each run's printed alert minutes and their 95% interval: **123 of 123 runs** do, and only those are read.
+Before any page was counted, the bad minutes recounted from the raw files had to give each run's printed alert minutes and their 95% interval: **129 of 129 runs** do, and only those are read.
 
 ## The pages, test by test (the primary rule)
 
@@ -25,6 +25,7 @@ Before any page was counted, the bad minutes recounted from the raw files had to
 | Crane (Effective HPA, on Kubernetes 1.25) under the batch stream, the four ways | 0.20 → 0.10, down 50.0% (#41816152588) | 0.30 → 0.00, down 100.0% (#41821621221) | 0.10 → 0.20, up 100.0% (#41828241662) | the runs disagree |
 | Crane (Effective HPA, on Kubernetes 1.25) under the batch stream, the four ways | 0.00 → 0.00, no page in either arm (#41816152588) | 0.00 → 0.10, up 0.10 pages from none (#41821621221) | 0.00 → 0.00, no page in either arm (#41828241662) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | CruiseKube | 0.00 → 0.00, no page in either arm (#41747200129) | 0.00 → 0.00, no page in either arm (#41765479982) | 0.00 → 0.00, no page in either arm (#41777088814) | STEADY, the same |
+| CruiseKube | 0.00 → 0.00, no page in either arm (#42173265097) | 0.00 → 0.00, no page in either arm (#42173285642) | 0.00 → 0.00, no page in either arm (#42185619972) | STEADY, the same |
 | Fairness | 1.00 → 1.00, no change (#41751121984) | 1.00 → 1.00, no change (#41768864707) | 1.00 → 1.00, no change (#41780381804) | STEADY, the same |
 | Faults | 1.00 → 1.00, no change (#41753024820) | 1.00 → 1.00, no change (#41768870890) | 1.00 → 1.00, no change (#41781962156) | STEADY, the same |
 | Faults, extended | 1.90 → 1.80, down 5.3% (#41792496184) | 2.20 → 1.90, down 13.6% (#41794354171) | 2.20 → 1.60, down 27.3% (#41796185630) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
@@ -39,6 +40,7 @@ Before any page was counted, the bad minutes recounted from the raw files had to
 | Kubernetes with KEDA on the CPU target and the live requests in flight | 0.10 → 0.00, down 100.0% (#41753044221) | 0.50 → 0.00, down 100.0% (#41770442526) | 0.40 → 0.00, down 100.0% (#41781979744) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | Kubernetes with KEDA's HTTP add-on on the live requests in flight | 0.80 → 0.80, no change (#41753044221) | 0.90 → 0.80, down 11.1% (#41770442526) | 0.90 → 0.80, down 11.1% (#41781979744) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
 | Koordinator under the batch stream | 0.20 → 0.20, no change (#41800261877) | 0.00 → 0.00, no page in either arm (#41800269022) | 0.00 → 0.20, up 0.20 pages from none (#41802293120) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| Koordinator under the batch stream, on the cgroup root its own tests use | 0.00 → 0.00, no page in either arm (#42173258848) | 0.10 → 0.10, no change (#42173278954) | 0.20 → 0.00, down 100.0% (#42185612749) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
 | KubeRay (the Ray autoscaler) under the batch stream, the four ways | 1.00 → 0.90, down 10.0% (#41816118654) | 0.80 → 0.90, up 12.5% (#41821612423) | 0.90 → 0.80, down 11.1% (#41828233886) | the runs disagree |
 | KubeRay (the Ray autoscaler) under the batch stream, the four ways | 1.00 → 1.00, no change (#41816118654) | 1.00 → 1.00, no change (#41821612423) | 1.00 → 1.00, no change (#41828233886) | STEADY, the same |
 | Kueue under the batch stream | 1.00 → 1.10, up 10.0% (#41762066634) | 0.80 → 1.00, up 25.0% (#41775363004) | 0.90 → 0.80, down 11.1% (#41788859873) | the runs disagree |
@@ -55,16 +57,16 @@ Before any page was counted, the bad minutes recounted from the raw files had to
 | Volcano under the batch stream, the four ways | 0.90 → 0.90, no change (#41809087487) | 0.70 → 0.80, up 14.3% (#41812541481) | 0.90 → 0.90, no change (#41814366715) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | Volcano under the batch stream, the four ways | 0.80 → 0.80, no change (#41809087487) | 0.40 → 0.60, up 50.0% (#41812541481) | 0.80 → 0.80, no change (#41814366715) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | Wandering demand | 1.00 → 1.10, up 10.0% (#41751107237) | 1.00 → 1.00, no change (#41768852229) | 1.00 → 0.90, down 10.0% (#41780370478) | the runs disagree |
-| **All the tests together** (each test's pages per repetition summed) | 34.33 → 32.93, down 4.1% | 32.50 → 30.40, down 6.5% | 35.00 → 31.87, down 9.0% | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
+| **All the tests together** (each test's pages per repetition summed) | 34.33 → 32.93, down 4.1% | 32.60 → 30.50, down 6.4% | 35.20 → 31.87, down 9.5% | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** |
 
-Together, the three runs' means: **33.94 → 31.73 pages**, down **6.5%** with Omni-Compass on native, read **GAIN by the mean of our three runs, beyond the noise in 2 of 3**. Fewer pages, not only shorter ones: the minutes a page stays open, native → Omni-Compass, 14.1 → 13.7 in run A, 15.5 → 15.2 in run B, 14.0 → 14.3 in run C; the alert minutes over the same runs, 485.0 → 451.7, 503.2 → 461.3, 490.3 → 456.3.
+Together, the three runs' means: **34.04 → 31.77 pages**, down **6.7%** with Omni-Compass on native, read **GAIN by the mean of our three runs, beyond the noise in 2 of 3**. Fewer pages, not only shorter ones: the minutes a page stays open, native → Omni-Compass, 14.1 → 13.7 in run A, 15.4 → 15.1 in run B, 13.9 → 14.3 in run C; the alert minutes over the same runs, 485.0 → 451.7, 503.3 → 461.4, 490.5 → 456.3.
 
 ## Every rule declared with it
 
 | Rule (FOR bad minutes to open, RESET clean minutes to close) | Run A, together | Run B | Run C | The three runs |
 |---|---|---|---|---|
-| FOR 1, RESET 5 (the primary) | 34.33 → 32.93, down 4.1% | 32.50 → 30.40, down 6.5% | 35.00 → 31.87, down 9.0% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
-| FOR 1, RESET 15 | 30.40 → 28.90, down 4.9% | 30.70 → 28.60, down 6.8% | 30.90 → 30.87, down 0.1% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| FOR 1, RESET 5 (the primary) | 34.33 → 32.93, down 4.1% | 32.60 → 30.50, down 6.4% | 35.20 → 31.87, down 9.5% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| FOR 1, RESET 15 | 30.40 → 28.90, down 4.9% | 30.80 → 28.70, down 6.8% | 31.10 → 30.87, down 0.8% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | FOR 2, RESET 5 | 30.73 → 29.13, down 5.2% | 29.10 → 26.50, down 8.9% | 30.27 → 28.07, down 7.3% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | FOR 2, RESET 15 | 27.90 → 26.60, down 4.7% | 27.80 → 26.40, down 5.0% | 28.80 → 27.97, down 2.9% | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | FOR 5, RESET 5 | 25.53 → 25.40, down 0.5% | 23.50 → 22.50, down 4.3% | 23.67 → 23.47, down 0.8% | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
@@ -74,7 +76,7 @@ Together, the three runs' means: **33.94 → 31.73 pages**, down **6.5%** with O
 
 The bill is the sum of its lines: C = M + P + O, with M the machines, P the people who run the stack and O the rest, held fixed. The people line is priced by time-driven activity-based costing (Kaplan and Anderson, *Harvard Business Review*, November 2004): P = w · Σⱼ Nⱼ · hⱼ + R, with Nⱼ the events a year of kind j (a page, a hand-made change of a setting, a capacity review), hⱼ the person-hours each takes (a page's whole cycle about 6 hours by Google's SRE book, chapter 11), w one person-hour fully loaded and R the fixed cost of an on-call rotation. Omni-Compass's share of the bill saved on the people line is S(people) = κ · p · β · r: p the people's share of the run cost, β the share of their time that is answering pages and turning the knobs Omni-Compass governs (the SRE book holds on-call to at most 25% of an engineer's time), r the fall in the events that call a person, κ the share of the freed time that becomes money (1 where a rotation or a head is released or the time goes to paid work, 0 where nothing changes). Only r is measured here; p, β and κ are an owner's. With the machines' line, the live page's one equation reads G = (1 + ΔW) ⁄ (1 + m · ΔM + p · ΔP) − 1, ΔP = −κ · β · r.
 
-On a run cost of $100 million, κ = 1, r = 6.5% (the pages above, the change of the three runs' means) and, beside it, r = 7.4% (the alert minutes):
+On a run cost of $100 million, κ = 1, r = 6.7% (the pages above, the change of the three runs' means) and, beside it, r = 7.4% (the alert minutes):
 
 | People's share of the run cost, p | β = 25% (on-call time only) | β = 100% (every people hour) |
 |---|---|---|
