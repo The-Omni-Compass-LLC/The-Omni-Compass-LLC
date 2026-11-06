@@ -30,6 +30,17 @@ def conductor():
 
 
 class CloudWorkMeter(unittest.TestCase):
+    def test_a_cloud_arm_starts_once_the_autoscaler_can_see(self):
+        """4 November (run 41745105583): the Omni-Compass arm's autoscaler read no metric for the window's first 155 s and the
+        workload sat at 1 pod while native's held 5. On a managed cluster the warm-up starts only once the service's autoscaler
+        reads the service, the same in every arm, and the wait is recorded; kind's rig is not changed by it."""
+        text = (ROOT / "scripts" / "kind_bench.sh").read_text()
+        warm = text.index('echo "== warm-up ${WARMUP}s (both arms)"')
+        block = text[text.index('if [ "$PLATFORM" != kind ] && kubectl get hpa "$HPA_NAME"'):warm]
+        self.assertIn("{.status.currentMetrics[0].resource.current.averageUtilization}", block)
+        self.assertIn('autoscaler reading before the warm-up: $hpa_ok', block)
+        self.assertNotIn("$ARM", block, "the same wait in every arm")
+
     def test_the_rig_runs_the_meter_in_a_cloud(self):
         text = (ROOT / "scripts" / "kind_bench.sh").read_text()
         self.assertIn('{ [ "$PLATFORM" = kind ] || [ "$PLATFORM" = aks ]; }', text)

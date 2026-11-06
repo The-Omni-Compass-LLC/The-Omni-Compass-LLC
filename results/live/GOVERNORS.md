@@ -6,22 +6,22 @@
 **How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
-The founder's list of 19 October, night: every governor and orchestrator he named runs with the organism native under it, then with Omni-Compass on top of it, on the engine that stands (omni-v12). The organism is a six-worker real Kubernetes cluster (kind v0.31.0, Kubernetes v1.35.0) on GitHub's machines, each arm on a fresh cluster, the two arms back to back on one runner, ten paired repetitions a run, three runs (A, B and C) for a reading. Native is the governor as its project ships it; Omni-Compass sits on top with its own levers (the node pool, the service's autoscaler and processor limit, cruise and idle) and never writes the governor's objects, but where the governor owns the service's autoscaler (Crane): there its autoscaler moves reach the autoscaler through the governor's own object, by a plug, as on KEDA. Crane runs on Kubernetes 1.25.16 (its HPA is an API 1.26 removed) and Gödel on 1.24.17 (its supported range), where no pod is resized in place, so no processor limit is moved in any of their arms. Cost: $0 (GitHub's free machines). A governor's line reads only from its own three-run table; until then it says where its runs stand.
+The founder's list of 19 October, night: every governor and orchestrator he named runs with the organism native under it, then with Omni-Compass on top of it, on the engine that stands (omni-v25); a governor whose three runs have not yet landed whole on it reads from its newest engine's table, named in the table's file and in its runs line. The organism is a six-worker real Kubernetes cluster (kind v0.31.0, Kubernetes v1.35.0) on GitHub's machines, each arm on a fresh cluster, the two arms back to back on one runner, ten paired repetitions a run, three runs (A, B and C) for a reading. Native is the governor as its project ships it; Omni-Compass sits on top with its own levers (the node pool, the service's autoscaler and processor limit, cruise and idle) and never writes the governor's objects, but where the governor owns the service's autoscaler (Crane): there its autoscaler moves reach the autoscaler through the governor's own object, by a plug, as on KEDA. Crane runs on Kubernetes 1.25.16 (its HPA is an API 1.26 removed) and Gödel on 1.24.17 (its supported range), where no pod is resized in place, so no processor limit is moved in any of their arms. Cost: $0 (GitHub's free machines). A governor's line reads only from its own three-run table; until then it says where its runs stand.
 
 | Governor | What it governs | Register row | Where it stands | Readings (A, B and C) |
 |---|---|---:|---|---|
-| The Kubernetes scheduler (vanilla, and its bin-packing profile) | pod placement | 88 | as shipped: three runs in; bin-packing profile: three runs in | as shipped: 5 GAIN, 4 LOSS, 1 power given, 7 STEADY, 5 where the runs disagree ([table](V12_VANILLA.md)); bin-packing profile: 6 GAIN, 7 LOSS, 1 power given, 6 STEADY, 2 where the runs disagree ([table](V12_BINPACK.md)) |
-| Kueue | batch admission (a job at a time, by queue quota) | 63 | running four ways (below) | runs not yet finished |
-| Volcano | batch scheduling (queues, gangs) | 63 | running four ways (below) | runs not yet finished |
-| KAI scheduler | AI workload scheduling (queues, fair share, gangs) | 91 | three runs in | 5 GAIN, 5 LOSS, 0 power given, 6 STEADY, 6 where the runs disagree ([table](V12_KAI.md)) |
-| Koordinator | QoS colocation (batch work on what latency-sensitive pods leave unused) | 89 | three runs in | 7 GAIN, 2 LOSS, 2 power given, 7 STEADY, 4 where the runs disagree ([table](V12_KOORDINATOR.md)) |
-| CruiseKube | rightsizing (requests and limits, in place) | 81 | built; its runs come in the campaign | not yet run |
-| Crane | predictive autoscaling and resource governance | 90 | running four ways (below) | runs not yet finished |
-| KubeRay | Ray clusters (the Ray autoscaler) | 92 | running four ways (below) | runs not yet finished |
-| Gödel scheduler | unified online and offline scheduling | 93 | running four ways (below) | runs not yet finished |
-| Armada | multi-cluster batch | 94 | running four ways (below) | runs not yet finished |
-| Karmada | multi-cluster placement | 95 | running four ways (below) | runs not yet finished |
-| Open Cluster Management | multi-cluster management | 96 | running four ways (below) | runs not yet finished |
+| The Kubernetes scheduler (vanilla, and its bin-packing profile) | pod placement | 88 | as shipped: three runs in on omni-v25; bin-packing profile: three runs in on omni-v25 | as shipped: 6 GAIN, 9 LOSS, 2 power given, 5 STEADY, 0 where the runs disagree ([table](V25_VANILLA.md), omni-v25); bin-packing profile: 6 GAIN, 10 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_BINPACK.md), omni-v25) |
+| Kueue | batch admission (a job at a time, by queue quota) | 63 | three runs in on omni-v25 | 5 GAIN, 9 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_KUEUE.md), omni-v25) |
+| Volcano | batch scheduling (queues, gangs) | 63 | three runs in on omni-v25 | 4 GAIN, 9 LOSS, 2 power given, 5 STEADY, 2 where the runs disagree ([table](V25_VOLCANO.md), omni-v25) |
+| KAI scheduler | AI workload scheduling (queues, fair share, gangs) | 91 | three runs in on omni-v25 | 5 GAIN, 8 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V25_KAI.md), omni-v25) |
+| Koordinator | QoS colocation (batch work on what latency-sensitive pods leave unused) | 89 | three runs in on omni-v25 | 1 GAIN, 11 LOSS, 2 power given, 7 STEADY, 0 where the runs disagree ([table](V25_KOORDINATOR.md), omni-v25) |
+| CruiseKube | rightsizing (requests and limits, in place) | 81 | three runs in on omni-v25 | 1 GAIN, 3 LOSS, 1 power given, 7 STEADY, 4 where the runs disagree ([table](V25_CRUISEKUBE.md), omni-v25) |
+| Crane | predictive autoscaling and resource governance | 90 | four ways: three runs in on omni-v25 | read four ways (below) |
+| KubeRay | Ray clusters (the Ray autoscaler) | 92 | four ways: three runs in on omni-v25 | read four ways (below) |
+| Gödel scheduler | unified online and offline scheduling | 93 | four ways: three runs in on omni-v25 | read four ways (below) |
+| Armada | multi-cluster batch | 94 | four ways: three runs in on omni-v25 | read four ways (below) |
+| Karmada | multi-cluster placement | 95 | four ways: three runs in on omni-v25 | read four ways (below) |
+| Open Cluster Management | multi-cluster management | 96 | four ways: three runs in on omni-v25 | read four ways (below) |
 | KubeEdge | edge nodes | 97 | its rig is not yet built | not yet run |
 | Nephio | network-function automation | 98 | its rig is not yet built | not yet run |
 
@@ -31,17 +31,17 @@ Each system runs four ways in every repetition, each way on a fresh cluster of t
 
 | System | Runs (A, B and C) | Omni-Compass on top of it, against it as shipped | it as shipped, against the organism alone | Omni-Compass on the organism alone, against the organism alone | Omni-Compass on the organism alone, against it as shipped | Omni-Compass on top of it, against the organism alone |
 |---|---|---|---|---|---|---|
-| The KAI scheduler | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368344021) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368351097) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368358521) | 6 GAIN, 6 LOSS, 2 power given, 5 STEADY, 3 where the runs disagree ([table](V12_KAI_4W_TOP.md)) | 1 GAIN, 8 LOSS, 1 power given, 9 STEADY, 3 where the runs disagree ([table](V12_KAI_4W_ORCH.md)) | 7 GAIN, 3 LOSS, 0 power given, 5 STEADY, 7 where the runs disagree ([table](V12_KAI_4W_BARE.md)) | 14 GAIN, 1 LOSS, 0 power given, 5 STEADY, 2 where the runs disagree ([table](V12_KAI_4W_VS.md)) | 5 GAIN, 10 LOSS, 2 power given, 5 STEADY, 0 where the runs disagree ([table](V12_KAI_4W_BOTH.md)) |
-| Koordinator | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368366066) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368373713) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368380786) | 7 GAIN, 3 LOSS, 0 power given, 4 STEADY, 8 where the runs disagree ([table](V12_KOORDINATOR_4W_TOP.md)) | 5 GAIN, 5 LOSS, 0 power given, 8 STEADY, 4 where the runs disagree ([table](V12_KOORDINATOR_4W_ORCH.md)) | 6 GAIN, 3 LOSS, 0 power given, 6 STEADY, 7 where the runs disagree ([table](V12_KOORDINATOR_4W_BARE.md)) | 9 GAIN, 5 LOSS, 0 power given, 4 STEADY, 4 where the runs disagree ([table](V12_KOORDINATOR_4W_VS.md)) | 10 GAIN, 6 LOSS, 1 power given, 4 STEADY, 1 where the runs disagree ([table](V12_KOORDINATOR_4W_BOTH.md)) |
-| Kueue | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368387821) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368394823) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368401852) | 6 GAIN, 4 LOSS, 1 power given, 5 STEADY, 6 where the runs disagree ([table](V12_KUEUE_4W_TOP.md)) | 0 GAIN, 11 LOSS, 2 power given, 9 STEADY, 0 where the runs disagree ([table](V12_KUEUE_4W_ORCH.md)) | 8 GAIN, 4 LOSS, 1 power given, 6 STEADY, 3 where the runs disagree ([table](V12_KUEUE_4W_BARE.md)) | 17 GAIN, 0 LOSS, 0 power given, 5 STEADY, 0 where the runs disagree ([table](V12_KUEUE_4W_VS.md)) | 6 GAIN, 10 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V12_KUEUE_4W_BOTH.md)) |
-| Volcano | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368409208) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368415819) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368422189) | 6 GAIN, 4 LOSS, 1 power given, 6 STEADY, 5 where the runs disagree ([table](V12_VOLCANO_4W_TOP.md)) | 8 GAIN, 4 LOSS, 0 power given, 9 STEADY, 1 where the runs disagree ([table](V12_VOLCANO_4W_ORCH.md)) | 9 GAIN, 4 LOSS, 1 power given, 6 STEADY, 2 where the runs disagree ([table](V12_VOLCANO_4W_BARE.md)) | 8 GAIN, 5 LOSS, 0 power given, 5 STEADY, 4 where the runs disagree ([table](V12_VOLCANO_4W_VS.md)) | 9 GAIN, 6 LOSS, 1 power given, 5 STEADY, 1 where the runs disagree ([table](V12_VOLCANO_4W_BOTH.md)) |
-| The scheduler's bin-packing profile | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368428763) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368435483) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368442002) | 6 GAIN, 3 LOSS, 2 power given, 6 STEADY, 5 where the runs disagree ([table](V12_BINPACK_4W_TOP.md)) | 3 GAIN, 1 LOSS, 1 power given, 10 STEADY, 7 where the runs disagree ([table](V12_BINPACK_4W_ORCH.md)) | 6 GAIN, 4 LOSS, 1 power given, 6 STEADY, 5 where the runs disagree ([table](V12_BINPACK_4W_BARE.md)) | 8 GAIN, 4 LOSS, 0 power given, 5 STEADY, 5 where the runs disagree ([table](V12_BINPACK_4W_VS.md)) | 6 GAIN, 3 LOSS, 2 power given, 6 STEADY, 5 where the runs disagree ([table](V12_BINPACK_4W_BOTH.md)) |
-| KubeRay | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438462925) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438478652) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438494234) | 8 GAIN, 2 LOSS, 0 power given, 6 STEADY, 6 where the runs disagree ([table](V12_KUBERAY_4W_TOP.md)) | 0 GAIN, 10 LOSS, 4 power given, 6 STEADY, 2 where the runs disagree ([table](V12_KUBERAY_4W_ORCH.md)) | 6 GAIN, 8 LOSS, 2 power given, 5 STEADY, 1 where the runs disagree ([table](V12_KUBERAY_4W_BARE.md)) | 13 GAIN, 0 LOSS, 1 power given, 3 STEADY, 5 where the runs disagree ([table](V12_KUBERAY_4W_VS.md)) | 3 GAIN, 10 LOSS, 4 power given, 3 STEADY, 2 where the runs disagree ([table](V12_KUBERAY_4W_BOTH.md)) |
-| Crane | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438326588) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438344234) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438362894) | 1 GAIN, 2 LOSS, 2 power given, 7 STEADY, 4 where the runs disagree ([table](V12_CRANE_4W_TOP.md)) | 2 GAIN, 1 LOSS, 1 power given, 7 STEADY, 5 where the runs disagree ([table](V12_CRANE_4W_ORCH.md)) | 4 GAIN, 1 LOSS, 2 power given, 7 STEADY, 2 where the runs disagree ([table](V12_CRANE_4W_BARE.md)) | 4 GAIN, 2 LOSS, 2 power given, 7 STEADY, 1 where the runs disagree ([table](V12_CRANE_4W_VS.md)) | 0 GAIN, 2 LOSS, 4 power given, 5 STEADY, 5 where the runs disagree ([table](V12_CRANE_4W_BOTH.md)) |
-| The Gödel scheduler | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39530159191) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39530162328) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39530165147) | runs not yet finished | runs not yet finished | runs not yet finished | runs not yet finished | runs not yet finished |
-| Karmada | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438525862) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438541616) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39438559009) | 4 GAIN, 9 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V12_KARMADA_4W_TOP.md)) | 0 GAIN, 12 LOSS, 2 power given, 8 STEADY, 0 where the runs disagree ([table](V12_KARMADA_4W_ORCH.md)) | 4 GAIN, 9 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V12_KARMADA_4W_BARE.md)) | 14 GAIN, 2 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V12_KARMADA_4W_VS.md)) | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V12_KARMADA_4W_BOTH.md)) |
-| Open Cluster Management | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39479807336) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39479824367) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39479840381) | 4 GAIN, 10 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V12_OCM_4W_TOP.md)) | 4 GAIN, 9 LOSS, 0 power given, 8 STEADY, 1 where the runs disagree ([table](V12_OCM_4W_ORCH.md)) | 7 GAIN, 7 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V12_OCM_4W_BARE.md)) | 14 GAIN, 2 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V12_OCM_4W_VS.md)) | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V12_OCM_4W_BOTH.md)) |
-| Armada | [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39482335827) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39482351075) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39482365814) | 6 GAIN, 1 LOSS, 2 power given, 10 STEADY, 2 where the runs disagree ([table](V12_ARMADA_4W_TOP.md)) | 8 GAIN, 5 LOSS, 1 power given, 4 STEADY, 3 where the runs disagree ([table](V12_ARMADA_4W_ORCH.md)) | 5 GAIN, 8 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V12_ARMADA_4W_BARE.md)) | 8 GAIN, 6 LOSS, 2 power given, 2 STEADY, 3 where the runs disagree ([table](V12_ARMADA_4W_VS.md)) | 10 GAIN, 7 LOSS, 2 power given, 2 STEADY, 0 where the runs disagree ([table](V12_ARMADA_4W_BOTH.md)) |
+| The KAI scheduler | A [41809041712](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41809041712) (10 pairs), B [41810759693](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41810759693) (10 pairs), C [41812560443](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41812560443) (10 pairs); omni-v25 | 5 GAIN, 9 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_KAI_4W_TOP.md), omni-v25) | 0 GAIN, 11 LOSS, 1 power given, 8 STEADY, 2 where the runs disagree ([table](V25_KAI_4W_ORCH.md), omni-v25) | 4 GAIN, 10 LOSS, 2 power given, 5 STEADY, 1 where the runs disagree ([table](V25_KAI_4W_BARE.md), omni-v25) | 13 GAIN, 3 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_KAI_4W_VS.md), omni-v25) | 4 GAIN, 11 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V25_KAI_4W_BOTH.md), omni-v25) |
+| Koordinator | A [39368366066](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368366066) (10 pairs), B [39368373713](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368373713) (10 pairs), C [39368380786](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39368380786) (10 pairs); omni-v12; on omni-v25: [A](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41809048789) [B](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41810789445) [C](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41812570543), its three runs not yet whole | 7 GAIN, 3 LOSS, 0 power given, 4 STEADY, 8 where the runs disagree ([table](V12_KOORDINATOR_4W_TOP.md), omni-v12) | 5 GAIN, 5 LOSS, 0 power given, 8 STEADY, 4 where the runs disagree ([table](V12_KOORDINATOR_4W_ORCH.md), omni-v12) | 6 GAIN, 3 LOSS, 0 power given, 6 STEADY, 7 where the runs disagree ([table](V12_KOORDINATOR_4W_BARE.md), omni-v12) | 9 GAIN, 5 LOSS, 0 power given, 4 STEADY, 4 where the runs disagree ([table](V12_KOORDINATOR_4W_VS.md), omni-v12) | 10 GAIN, 6 LOSS, 1 power given, 4 STEADY, 1 where the runs disagree ([table](V12_KOORDINATOR_4W_BOTH.md), omni-v12) |
+| Kueue | A [41809077335](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41809077335) (10 pairs), B [41810798821](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41810798821) (10 pairs), C [41812580198](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41812580198) (10 pairs); omni-v25 | 4 GAIN, 11 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V25_KUEUE_4W_TOP.md), omni-v25) | 1 GAIN, 8 LOSS, 0 power given, 10 STEADY, 3 where the runs disagree ([table](V25_KUEUE_4W_ORCH.md), omni-v25) | 5 GAIN, 9 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_KUEUE_4W_BARE.md), omni-v25) | 8 GAIN, 8 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_KUEUE_4W_VS.md), omni-v25) | 4 GAIN, 11 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V25_KUEUE_4W_BOTH.md), omni-v25) |
+| Volcano | A [41809087487](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41809087487) (10 pairs), B [41812541481](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41812541481) (10 pairs), C [41814366715](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41814366715) (10 pairs); omni-v25 | 4 GAIN, 8 LOSS, 2 power given, 4 STEADY, 4 where the runs disagree ([table](V25_VOLCANO_4W_TOP.md), omni-v25) | 7 GAIN, 6 LOSS, 1 power given, 8 STEADY, 0 where the runs disagree ([table](V25_VOLCANO_4W_ORCH.md), omni-v25) | 5 GAIN, 9 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_VOLCANO_4W_BARE.md), omni-v25) | 6 GAIN, 7 LOSS, 2 power given, 5 STEADY, 2 where the runs disagree ([table](V25_VOLCANO_4W_VS.md), omni-v25) | 7 GAIN, 9 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_VOLCANO_4W_BOTH.md), omni-v25) |
+| The scheduler's bin-packing profile | A [41810750964](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41810750964) (10 pairs), B [41812549051](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41812549051) (10 pairs), C [41814375146](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41814375146) (10 pairs); omni-v25 | 5 GAIN, 9 LOSS, 2 power given, 5 STEADY, 1 where the runs disagree ([table](V25_BINPACK_4W_TOP.md), omni-v25) | 3 GAIN, 5 LOSS, 1 power given, 10 STEADY, 3 where the runs disagree ([table](V25_BINPACK_4W_ORCH.md), omni-v25) | 4 GAIN, 9 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V25_BINPACK_4W_BARE.md), omni-v25) | 4 GAIN, 10 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_BINPACK_4W_VS.md), omni-v25) | 6 GAIN, 8 LOSS, 2 power given, 5 STEADY, 1 where the runs disagree ([table](V25_BINPACK_4W_BOTH.md), omni-v25) |
+| KubeRay | A [41816118654](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41816118654) (10 pairs), B [41821612423](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41821612423) (10 pairs), C [41828233886](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828233886) (10 pairs); omni-v25 | 6 GAIN, 2 LOSS, 2 power given, 5 STEADY, 7 where the runs disagree ([table](V25_KUBERAY_4W_TOP.md), omni-v25) | 0 GAIN, 10 LOSS, 4 power given, 6 STEADY, 2 where the runs disagree ([table](V25_KUBERAY_4W_ORCH.md), omni-v25) | 5 GAIN, 7 LOSS, 2 power given, 5 STEADY, 3 where the runs disagree ([table](V25_KUBERAY_4W_BARE.md), omni-v25) | 13 GAIN, 4 LOSS, 2 power given, 3 STEADY, 0 where the runs disagree ([table](V25_KUBERAY_4W_VS.md), omni-v25) | 3 GAIN, 10 LOSS, 4 power given, 3 STEADY, 2 where the runs disagree ([table](V25_KUBERAY_4W_BOTH.md), omni-v25) |
+| Crane | A [41816152588](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41816152588) (10 pairs), B [41821621221](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41821621221) (10 pairs), C [41828241662](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828241662) (10 pairs); omni-v25 | 0 GAIN, 3 LOSS, 2 power given, 7 STEADY, 4 where the runs disagree ([table](V25_CRANE_4W_TOP.md), omni-v25) | 1 GAIN, 1 LOSS, 2 power given, 6 STEADY, 6 where the runs disagree ([table](V25_CRANE_4W_ORCH.md), omni-v25) | 0 GAIN, 1 LOSS, 2 power given, 8 STEADY, 5 where the runs disagree ([table](V25_CRANE_4W_BARE.md), omni-v25) | 4 GAIN, 2 LOSS, 2 power given, 5 STEADY, 3 where the runs disagree ([table](V25_CRANE_4W_VS.md), omni-v25) | 3 GAIN, 2 LOSS, 4 power given, 6 STEADY, 1 where the runs disagree ([table](V25_CRANE_4W_BOTH.md), omni-v25) |
+| The Gödel scheduler | A [41816164023](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41816164023) (10 pairs), B [41823813742](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41823813742) (10 pairs), C [41828251636](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828251636) (10 pairs); omni-v25 | 4 GAIN, 9 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V25_GODEL_4W_TOP.md), omni-v25) | 6 GAIN, 5 LOSS, 0 power given, 8 STEADY, 3 where the runs disagree ([table](V25_GODEL_4W_ORCH.md), omni-v25) | 4 GAIN, 9 LOSS, 2 power given, 4 STEADY, 3 where the runs disagree ([table](V25_GODEL_4W_BARE.md), omni-v25) | 5 GAIN, 6 LOSS, 2 power given, 5 STEADY, 4 where the runs disagree ([table](V25_GODEL_4W_VS.md), omni-v25) | 7 GAIN, 7 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_GODEL_4W_BOTH.md), omni-v25) |
+| Karmada | A [41816173049](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41816173049) (10 pairs), B [41823821537](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41823821537) (10 pairs), C [41828260509](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828260509) (10 pairs); omni-v25 | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_KARMADA_4W_TOP.md), omni-v25) | 1 GAIN, 10 LOSS, 0 power given, 8 STEADY, 3 where the runs disagree ([table](V25_KARMADA_4W_ORCH.md), omni-v25) | 4 GAIN, 11 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V25_KARMADA_4W_BARE.md), omni-v25) | 13 GAIN, 3 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_KARMADA_4W_VS.md), omni-v25) | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_KARMADA_4W_BOTH.md), omni-v25) |
+| Open Cluster Management | A [41816181570](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41816181570) (10 pairs), B [41823829193](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41823829193) (10 pairs), C [41828268372](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828268372) (10 pairs); omni-v25 | 4 GAIN, 10 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_OCM_4W_TOP.md), omni-v25) | 0 GAIN, 10 LOSS, 0 power given, 8 STEADY, 4 where the runs disagree ([table](V25_OCM_4W_ORCH.md), omni-v25) | 4 GAIN, 10 LOSS, 2 power given, 4 STEADY, 2 where the runs disagree ([table](V25_OCM_4W_BARE.md), omni-v25) | 14 GAIN, 2 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_OCM_4W_VS.md), omni-v25) | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_OCM_4W_BOTH.md), omni-v25) |
+| Armada | A [41828277526](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41828277526) (10 pairs), B [41830587387](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41830587387) (10 pairs), C [41830595635](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41830595635) (10 pairs); omni-v25 | 6 GAIN, 3 LOSS, 2 power given, 10 STEADY, 0 where the runs disagree ([table](V25_ARMADA_4W_TOP.md), omni-v25) | 7 GAIN, 5 LOSS, 2 power given, 5 STEADY, 2 where the runs disagree ([table](V25_ARMADA_4W_ORCH.md), omni-v25) | 4 GAIN, 12 LOSS, 2 power given, 4 STEADY, 0 where the runs disagree ([table](V25_ARMADA_4W_BARE.md), omni-v25) | 8 GAIN, 8 LOSS, 3 power given, 2 STEADY, 0 where the runs disagree ([table](V25_ARMADA_4W_VS.md), omni-v25) | 9 GAIN, 7 LOSS, 2 power given, 3 STEADY, 0 where the runs disagree ([table](V25_ARMADA_4W_BOTH.md), omni-v25) |
 
 ## The orchestra, the eighth organism (modelled, class S)
 
@@ -90,47 +90,47 @@ The founder's order of 25 October: every orchestrator on the same organisms with
 - **Its test on real Kubernetes (class L)**: the batch stream placed by the scheduler alone, in each setting (`docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 3); register row 88.
 - **In the catalog (modelled, class S)**: family 4, Kubernetes Placement & Scheduling (21 muscles, in the spine and every realm): `node_selector`, `node_affinity`, `pod_anti_affinity`, `topology_spread`, `taint_toleration`, `priority_class`, `preemption_policy`, `scheduler_backoff`, `scheduler_scoring_strategy`, `scheduler_plugin_weights`, `scheduling_gates`, `deschedule`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: GAIN (fewer misses); the climb: GAIN (fewer misses); work in line: GAIN (fewer misses).
-- **Runs (as shipped)**: A [39356571014](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356571014) (10 pairs), B [39356586356](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356586356) (10 pairs), C [39356601235](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356601235) (10 pairs); engine omni-v12 (digest d38b58fbe28939b8, 47 files).
+- **Runs (as shipped)**: A [41802300531](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41802300531) (10 pairs), B [41802315329](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41802315329) (10 pairs), C [41804417539](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41804417539) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
 
 | Gauge | Reading |
 |---|---|
-| queue: job wait, submitted to its first pod running, mean (s) | the runs disagree |
-| queue: job wait, submitted to its first pod running, 95th percentile (s) | STEADY, the same |
-| queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
-| queue: jobs unfinished at the window's end | STEADY, the same |
-| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.12%) |
-| batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
-| worker nodes in service, mean | GAIN in all three of our runs |
-| node-hours | GAIN in all three of our runs |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.15%) |
-| energy (Wh) | GAIN in all three of our runs |
-| energy per core-hour (Wh) | shown, not judged |
-| response time (ms), mean | GAIN in all three of our runs |
-| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
-| failed requests (%) | STEADY, the same |
-
-Every row of the run: [`results/live/V12_VANILLA.md`](V12_VANILLA.md).
-
-- **Runs (bin-packing profile)**: A [39356578556](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356578556) (10 pairs), B [39356594135](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356594135) (10 pairs), C [39356608147](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39356608147) (10 pairs); engine omni-v12 (digest d38b58fbe28939b8, 47 files).
-
-| Gauge | Reading |
-|---|---|
-| queue: job wait, submitted to its first pod running, mean (s) | the runs disagree |
+| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
 | queue: jobs unfinished at the window's end | STEADY, the same |
-| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.01%) |
+| batch: queue finished (s) | LOSS in all three of our runs |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
 | worker nodes in service, mean | GAIN in all three of our runs |
 | node-hours | GAIN in all three of our runs |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.05%) |
-| energy (Wh) | GAIN in all three of our runs |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.13%) |
+| energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | energy per core-hour (Wh) | shown, not judged |
-| response time (ms), mean | GAIN in all three of our runs |
-| response time (ms), 95th percentile | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| failed requests (%) | STEADY, the same |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
 
-Every row of the run: [`results/live/V12_BINPACK.md`](V12_BINPACK.md).
+Every row of the run: [`results/live/V25_VANILLA.md`](V25_VANILLA.md).
+
+- **Runs (bin-packing profile)**: A [41802308779](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41802308779) (10 pairs), B [41802323140](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41802323140) (10 pairs), C [41804425696](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41804425696) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
+
+| Gauge | Reading |
+|---|---|
+| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
+| queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
+| queue: jobs unfinished at the window's end | STEADY, the same |
+| batch: queue finished (s) | LOSS in all three of our runs |
+| batch: worker machines in service after the queue finished, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| node-hours | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) |
+| energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| energy per core-hour (Wh) | shown, not judged |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 1 of 3 |
+| response time (ms), 95th percentile | LOSS in all three of our runs |
+| failed requests (%) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+
+Every row of the run: [`results/live/V25_BINPACK.md`](V25_BINPACK.md).
 
 
 ## Kueue
@@ -139,7 +139,27 @@ Every row of the run: [`results/live/V12_BINPACK.md`](V12_BINPACK.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`; register row 63.
 - **In the catalog (modelled, class S)**: family 1, Work Admission & Demand Shaping (19 muscles, in its realm and the whole tower): `job_admission`, `batch_admission`, `queue_concurrency`, `queue_backpressure`, `tenant_admission`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Readings**: none yet; nothing is written here before its three runs are in.
+- **Runs**: A [41762066634](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41762066634) (10 pairs), B [41775363004](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41775363004) (10 pairs), C [41788859873](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41788859873) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
+
+| Gauge | Reading |
+|---|---|
+| queue: job wait, submitted to its first pod running, mean (s) | the runs disagree |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
+| queue: jobs unfinished at the window's end | STEADY, the same |
+| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
+| worker nodes in service, mean | GAIN in all three of our runs |
+| node-hours | GAIN in all three of our runs |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.05%) |
+| energy (Wh) | GAIN in all three of our runs |
+| energy per core-hour (Wh) | shown, not judged |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
+| response time (ms), 95th percentile | LOSS in all three of our runs |
+| failed requests (%) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+
+Every row of the run: [`results/live/V25_KUEUE.md`](V25_KUEUE.md).
+
 
 ## Volcano
 
@@ -147,7 +167,27 @@ Every row of the run: [`results/live/V12_BINPACK.md`](V12_BINPACK.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`; register row 63.
 - **In the catalog (modelled, class S)**: family 14, Distributed Cluster Managers (15 muscles, in its realm and the whole tower): `gang_schedule`, `queue_fairness`, `task_priority`, `task_preemption`, `binpack_pressure`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Readings**: none yet; nothing is written here before its three runs are in.
+- **Runs**: A [41762072500](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41762072500) (10 pairs), B [41775368304](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41775368304) (10 pairs), C [41790635305](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41790635305) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
+
+| Gauge | Reading |
+|---|---|
+| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
+| queue: jobs unfinished at the window's end | STEADY, the same |
+| batch: queue finished (s) | LOSS in all three of our runs |
+| batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
+| worker nodes in service, mean | GAIN in all three of our runs |
+| node-hours | GAIN in all three of our runs |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.03%) |
+| energy (Wh) | GAIN in all three of our runs |
+| energy per core-hour (Wh) | shown, not judged |
+| response time (ms), mean | the runs disagree |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| failed requests (%) | STEADY, the same |
+
+Every row of the run: [`results/live/V25_VOLCANO.md`](V25_VOLCANO.md).
+
 
 ## KAI scheduler
 
@@ -155,26 +195,26 @@ Every row of the run: [`results/live/V12_BINPACK.md`](V12_BINPACK.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 1; register row 91.
 - **In the catalog (modelled, class S)**: family 14, Distributed Cluster Managers (15 muscles, in its realm and the whole tower): `gang_schedule`, `queue_fairness`, `cluster_quota`, `task_preemption`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Runs**: A [39350900880](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39350900880) (10 pairs), B [39350907916](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39350907916) (10 pairs), C [39350915166](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39350915166) (10 pairs); engine omni-v12 (digest d38b58fbe28939b8, 47 files).
+- **Runs**: A [41800238758](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41800238758) (10 pairs), B [41800247331](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41800247331) (10 pairs), C [41800254736](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41800254736) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
 
 | Gauge | Reading |
 |---|---|
 | queue: job wait, submitted to its first pod running, mean (s) | the runs disagree |
-| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
-| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree |
+| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
 | queue: jobs unfinished at the window's end | STEADY, the same |
-| batch: queue finished (s) | STEADY, under the floor (the three runs' mean 0.34%) |
+| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
-| worker nodes in service, mean | GAIN in all three of our runs |
-| node-hours | GAIN in all three of our runs |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.01%) |
-| energy (Wh) | GAIN in all three of our runs |
+| worker nodes in service, mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| node-hours | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.04%) |
+| energy (Wh) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | energy per core-hour (Wh) | shown, not judged |
-| response time (ms), mean | GAIN in all three of our runs |
-| response time (ms), 95th percentile | the runs disagree |
-| failed requests (%) | STEADY, the same |
+| response time (ms), mean | the runs disagree |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
 
-Every row of the run: [`results/live/V12_KAI.md`](V12_KAI.md).
+Every row of the run: [`results/live/V25_KAI.md`](V25_KAI.md).
 
 
 ## Koordinator
@@ -183,26 +223,26 @@ Every row of the run: [`results/live/V12_KAI.md`](V12_KAI.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 2; register row 89.
 - **In the catalog (modelled, class S)**: family 14, Distributed Cluster Managers (15 muscles, in its realm and the whole tower): `oversubscription`, `resource_reclaim`, `binpack_pressure`, `spread_pressure`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Runs**: A [39359085965](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39359085965) (10 pairs), B [39359094679](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39359094679) (10 pairs), C [39359103518](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/39359103518) (10 pairs); engine omni-v12 (digest d38b58fbe28939b8, 47 files).
+- **Runs**: A [41800261877](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41800261877) (10 pairs), B [41800269022](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41800269022) (10 pairs), C [41802293120](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41802293120) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
 
 | Gauge | Reading |
 |---|---|
-| queue: job wait, submitted to its first pod running, mean (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree |
-| queue: job turnaround, submitted to done, mean (s) | the runs disagree |
-| queue: jobs unfinished at the window's end | the runs disagree |
-| batch: queue finished (s) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| batch: worker machines in service after the queue finished, mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| worker nodes in service, mean | STEADY, under the floor (the three runs' mean 0.44%) |
-| node-hours | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.14%) |
-| energy (Wh) | STEADY, under the floor (the three runs' mean 0.45%) |
+| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
+| queue: jobs unfinished at the window's end | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| worker nodes in service, mean | STEADY, under the floor (the three runs' mean 0.02%) |
+| node-hours | STEADY, under the floor (the three runs' mean 0.02%) |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.21%) |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.22%) |
 | energy per core-hour (Wh) | shown, not judged |
 | response time (ms), mean | GAIN in all three of our runs |
-| response time (ms), 95th percentile | GAIN in all three of our runs |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
 | failed requests (%) | STEADY, the same |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 
-Every row of the run: [`results/live/V12_KOORDINATOR.md`](V12_KOORDINATOR.md).
+Every row of the run: [`results/live/V25_KOORDINATOR.md`](V25_KOORDINATOR.md).
 
 
 ## CruiseKube
@@ -211,7 +251,22 @@ Every row of the run: [`results/live/V12_KOORDINATOR.md`](V12_KOORDINATOR.md).
 - **Its test on real Kubernetes (class L)**: `docs/CRUISEKUBE_PREREGISTRATION.md`; register row 81.
 - **In the catalog (modelled, class S)**: family 3, Container Resources (25 muscles, in the spine and every realm): `cruisekube_request_rightsizing`, `in_place_resize`, `cpu_request`, `memory_request`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: GAIN (fewer misses); the climb: GAIN (fewer misses); work in line: GAIN (fewer misses).
-- **Readings**: none yet; nothing is written here before its three runs are in.
+- **Runs**: A [41747200129](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41747200129) (10 pairs), B [41765479982](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41765479982) (10 pairs), C [41777088814](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/41777088814) (10 pairs); engine omni-v25 (digest cf56fc0a7b707452, 65 files).
+
+| Gauge | Reading |
+|---|---|
+| worker nodes in service, mean | STEADY, under the floor (the three runs' mean 0.23%) |
+| node-hours | the runs disagree |
+| energy, parked workers still on at idle power (Wh) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
+| energy (Wh) | STEADY, under the floor (the three runs' mean 0.36%) |
+| energy per core-hour (Wh) | shown, not judged |
+| response time (ms), mean | LOSS in all three of our runs |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| failed requests (%) | STEADY, the same |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | STEADY, the same |
+
+Every row of the run: [`results/live/V25_CRUISEKUBE.md`](V25_CRUISEKUBE.md).
+
 
 ## Crane
 

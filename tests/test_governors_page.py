@@ -88,7 +88,11 @@ class GovernorsPage(unittest.TestCase):
     def test_no_number_before_the_runs(self):
         text = G.render(runs={})
         crane = next(l for l in text.splitlines() if l.startswith("| Crane"))
-        self.assertTrue(crane.endswith("| not yet run |"))
+        self.assertNotRegex(crane, r"\d+ (GAIN|LOSS)")     # read only four ways: its summary row carries no count of its own
+        self.assertTrue(crane.endswith("| not yet run |") or crane.endswith("| read four ways (below) |"))
+        with mock.patch.object(G, "ROOT", Path(tempfile.mkdtemp())):
+            crane = next(l for l in G.render(runs={}).splitlines() if l.startswith("| Crane"))
+        self.assertTrue(crane.endswith("| not yet run |"))   # no table and no run: not yet run, never a number
 
     def test_every_catalog_muscle_named_is_in_the_catalog(self):
         import csv

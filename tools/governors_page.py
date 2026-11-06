@@ -7,9 +7,11 @@
 governs, what native is under it and what Omni-Compass does on top, where its test stands, and, once its three runs are in,
 its readings by the one key, every row counted, losses included (results/live/GOVERNORS.md).
 
-A governor's result is its three-run table on the engine that stands (tools/confirm_abc.py writes results/live/V12_<NAME>.md
-and .json), one table for each setting it is read in (the Kubernetes scheduler: as shipped and with the operator's
-bin-packing profile); until the table exists the page says where the runs stand, never a number. The runs started are listed
+A governor's result is its newest whole three-run table (tools/confirm_abc.py writes results/live/V<n>_<NAME>.md and .json),
+one table for each setting it is read in (the Kubernetes scheduler: as shipped and with the operator's bin-packing profile),
+each named with the engine its runs carried; a table of an older engine stands as that engine's result until the same test's
+three runs land whole on a newer one (tools/readings.py, landed); until a table exists the page says where the runs stand,
+never a number. The runs started are listed
 in results/live/governors_runs.json by setting, written when they are started.
 Usage: python3 tools/governors_page.py [--check]"""
 from __future__ import annotations
@@ -24,7 +26,8 @@ from tools.readings import labelled, receipt_key  # noqa: E402
 OUT = ROOT / "results" / "live" / "GOVERNORS.md"
 RUNS = ROOT / "results" / "live" / "governors_runs.json"
 CATALOG_FILE = ROOT / "realms" / "catalog_v5.csv"
-ENGINE = "omni-v12"
+from tools.omni_version import VERSIONS  # noqa: E402
+ENGINE = "omni-" + next(iter(VERSIONS))          # the engine that stands: the newest version declared
 from tools.repo import RUNS as REPO_RUNS  # noqa: E402  (the repository's name, written once)
 
 # (slug, name, register row, what it governs, native under it, its test) in the founder's order of naming, the
@@ -96,11 +99,11 @@ CATALOG = {
     "nephio": (66, ["ran_slice_resource_budget", "ran_du_cu_placement", "ran_cell_sleep", "ran_carrier_enable"]),
 }
 
-# A governor read in more than one setting: one three-run table for each (V12_<SETTING>.json), its runs listed by setting
+# A governor read in more than one setting: one three-run table for each (V<n>_<SETTING>.json), its runs listed by setting
 SETTINGS = {"scheduler": (("vanilla", "as shipped"), ("binpack", "bin-packing profile"))}
 
 # The four ways (docs/BATCH_QUEUE_PREREGISTRATION.md, amendment 6; the founder's order of 20 October): every comparison's
-# three-run table, V12_<SYSTEM>_4W_<TAG>.json (tools/confirm_abc.py --pair), its column on the page, in this order
+# three-run table, V<n>_<SYSTEM>_4W_<TAG>.json (tools/confirm_abc.py --pair), its column on the page, in this order
 FOUR_WAYS = (("TOP", "compass", "Omni-Compass on top of it, against it as shipped"),
              ("ORCH", "native|nativebare", "it as shipped, against the organism alone"),
              ("BARE", "compassbare|nativebare", "Omni-Compass on the organism alone, against the organism alone"),
@@ -129,12 +132,29 @@ def word_of(reading: str) -> str:
     return "shown, not judged"
 
 
+def table_file(slug: str):
+    """The governor's newest whole three-run table (V<n>_<SLUG>.json with the highest n that carries a result), or None; tables
+    of two engines are never pooled."""
+    import re
+    from tools.readings import landed
+    found = sorted((int(m.group(1)), p) for p in (ROOT / "results" / "live").glob(f"V*_{slug.upper()}.json")
+                   if (m := re.fullmatch(r"V(\d+)_" + re.escape(slug.upper()) + r"\.json", p.name)))
+    for _, p in reversed(found):
+        if landed(p):
+            return p
+    return None
+
+
 def table_of(slug: str):
-    """The governor's three-run table on the engine that stands, as tools/confirm_abc.py wrote it, or None."""
-    p = ROOT / "results" / "live" / f"V12_{slug.upper()}.json"
-    if not p.exists():
-        return None
-    return json.loads(p.read_text())
+    """The governor's newest whole three-run table, as tools/confirm_abc.py wrote it, or None."""
+    p = table_file(slug)
+    return json.loads(p.read_text()) if p else None
+
+
+def link_of(slug: str) -> str:
+    """The table's Markdown file beside this page, named with its engine (V25_KAI.md)."""
+    p = table_file(slug)
+    return p.with_suffix(".md").name if p else f"V?_{slug.upper()}.md"
 
 
 def four_way_table(system: str, tag: str):
@@ -162,6 +182,17 @@ def key_rows(table, limit=14):
     rest = [k for key in KEY for k in rows if k.startswith(key) and k not in first]
     seen = list(dict.fromkeys(first + rest))
     return [(k, rows[k].get("reading", "")) for k in seen[:limit]]
+
+
+def engine_of(table) -> str:
+    """The engine the table's runs carried, short (omni-v25), or the engine that stands when the table does not say."""
+    import re
+    for r in table.get("runs", []):
+        if isinstance(r, dict) and r.get("engine"):
+            m = re.match(r"omni-v\d+", r["engine"])
+            if m:
+                return m.group(0)
+    return ENGINE
 
 
 def runs_line(table):
@@ -256,7 +287,8 @@ def render(runs=None) -> str:
     L = ["# The governors and orchestrators: native under them, Omni-Compass on top", ""]
     L += receipt_key() + [""]
     L += [f"The founder's list of 19 October, night: every governor and orchestrator he named runs with the organism native "
-          f"under it, then with Omni-Compass on top of it, on the engine that stands ({ENGINE}). The organism is a six-worker "
+          f"under it, then with Omni-Compass on top of it, on the engine that stands ({ENGINE}); a governor whose three runs have not "
+          f"yet landed whole on it reads from its newest engine's table, named in the table's file and in its runs line. The organism is a six-worker "
           f"real Kubernetes cluster (kind v0.31.0, Kubernetes v1.35.0) on GitHub's machines, each arm on a fresh cluster, the "
           f"two arms back to back on one runner, ten paired repetitions a run, three runs (A, B and C) for a reading. Native is "
           f"the governor as its project ships it; Omni-Compass sits on top with its own levers (the node pool, the service's "
@@ -274,10 +306,13 @@ def render(runs=None) -> str:
             if t:
                 c = counts(t)
                 readings.append(f"{tag}{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['STEADY']} STEADY, "
-                                f"{c['the runs disagree']} where the runs disagree ([table](V12_{key.upper()}.md))")
-                wheres.append(f"{tag}three runs in")
+                                f"{c['the runs disagree']} where the runs disagree ([table]({link_of(key)}), {engine_of(t)})")
+                wheres.append(f"{tag}three runs in on {engine_of(t)}")
             elif started:
                 readings.append(f"{tag}runs not yet finished"); wheres.append(f"{tag}running: {started}")
+            elif four_way_table(key, "TOP"):          # read only four ways: its three runs are in, its readings below
+                readings.append(f"{tag}read four ways (below)")
+                wheres.append(f"{tag}four ways: three runs in on {engine_of(four_way_table(key, 'TOP'))}")
             elif runs_of(f"{key}4", runs):
                 readings.append(f"{tag}runs not yet finished"); wheres.append(f"{tag}running four ways (below)")
             elif test.startswith("not yet"):
@@ -299,16 +334,23 @@ def render(runs=None) -> str:
           "|---|---|" + "---|" * len(FOUR_WAYS)]
     for system, name in FOUR_SYSTEMS:
         started = runs_of(f"{system}4", runs)
+        top = four_way_table(system, "TOP")
+        if top:                                   # the runs the cells read, named with their engine
+            shown = f"{runs_line(top)[0]}; {engine_of(top)}"
+            if engine_of(top) != ENGINE and started:
+                shown += f"; on {ENGINE}: {started}, its three runs not yet whole"
+        else:
+            shown = started or "not yet started"
         cells = []
         for tag, _, _ in FOUR_WAYS:
             t = four_way_table(system, tag)
             if t:
                 c = counts(t)
                 cells.append(f"{c['GAIN']} GAIN, {c['LOSS']} LOSS, {c['power given']} power given, {c['STEADY']} STEADY, "
-                             f"{c['the runs disagree']} where the runs disagree ([table](V12_{system.upper()}_4W_{tag}.md))")
+                             f"{c['the runs disagree']} where the runs disagree ([table]({link_of(f'{system}_4W_{tag}')}), {engine_of(t)})")
             else:
                 cells.append("runs not yet finished" if started else "not yet run")
-        L.append(f"| {name} | {started or 'not yet started'} | " + " | ".join(cells) + " |")
+        L.append(f"| {name} | {shown} | " + " | ".join(cells) + " |")
     L.append("")
     orch = orchestra()
     L += ["## The orchestra, the eighth organism (modelled, class S)", ""]
@@ -340,7 +382,7 @@ def render(runs=None) -> str:
                 runs, engines = runs_line(t)
                 L.append(f"- **Runs{head}**: {runs}; engine {engines}.")
                 L += ["", "| Gauge | Reading |", "|---|---|"] + [f"| {k} | {r} |" for k, r in key_rows(t)]
-                L += ["", f"Every row of the run: [`results/live/V12_{key.upper()}.md`](V12_{key.upper()}.md).", ""]
+                L += ["", f"Every row of the run: [`results/live/{link_of(key)}`]({link_of(key)}).", ""]
             else:
                 L.append(f"- **Readings{head}**: none yet; nothing is written here before its three runs are in.")
         L.append("")
