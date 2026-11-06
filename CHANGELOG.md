@@ -2,6 +2,43 @@
 
 > © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-06: the re-grade's fixes on the live engine (no engine change; omni-v25 stands)
+- **One LOSS count everywhere**: the page reads whose reading each table is from the verdict audit's own record, so Omni-Compass
+  by itself (SOLO) is set apart as the audit sets it; every place prints 273 LOSS rows against native (267 on omni-v25 + 6 on
+  omni-v12) and 247 set apart (76 in place of a controller, 76 the orchestrator's own, 95 two changes at once), matching
+  `docs/LOSS_LEDGER.md`. A capacity row printed twice in `results/live/V25_ALL_FOUR.md` is counted once (`tools/confirm_abc.py`
+  now writes it once); both of the page's self-checks agree again.
+- **One headline**: the Omni index, GAIN 20.4%, is the figure of record; 94.0% (work and speed alone) and the composition's 41.9%
+  are named second readings. Machines read "77.7% more, power given", never "fewer"; `results/OMNI_INDEX.md`'s gloss no longer
+  says "on fewer machines" (`tools/omni_index.py`, `tools/headline.py`).
+- **The buttons**: the factory press under a security kill keeps the kill and says why; a monitor's kill switch drives the master
+  switch; the phone's dock and tour card no longer cover the Kill switch; the injection grid folds on a phone; frozen monitors move;
+  the market map turns native's colour with Omni-Compass OFF; the switchboard's Run row names its monitors.
+- **The phone**: the result first (the Omni index, the wall's lights and one sentence of what Omni-Compass is), long tables folded
+  to their first rows with every LOSS row kept shown (2d, the wall and the control panel never fold), the records read once at
+  start-up released, the drawing loop started once the page is read in.
+- **Self-update**: a copy opens a newer build only when it arrives with the stamp's byte count and sha256 and every script
+  compiles; a build whose engine does not start sends the tab back; a failed check is asked again within the hour
+  (`docs/engine/LIVE_ENGINE_VERSION.json` carries `bytes` and `sha256`).
+- **`docs/WEBSITE_CLAIMS.md`** rewritten on omni-v25 (GAIN 20.4%; 94.0% the second reading; the oversight line down 7.4% over 41
+  tests), with the website's 6 November faults listed against the record.
+
+## 2026-11-06: the live engine's background (no engine change; omni-v25 stands)
+- **Real data-centre footage behind the page**: loops cut from the Wikimedia Foundation's B-roll of its servers at CyrusOne in
+  Carrollton, Texas (2015), licensed CC BY-SA 3.0; credited in the page's disclosures and in `docs/engine/wall/README.md` with
+  the source, the licence and every change made. Decoration only: it shows no measurement.
+- **Four sceneries on the dock's Scenery button** (remembered): Aisles (the default: moving down straight aisles of racks at
+  the page's top and bottom, blue-lit aisles in the middle, as the reader scrolls), Video wall (six tiles like a control room's
+  screens, the blue ones in the middle), Strips (three strips, the blue one in the middle) and Racks (the first loops). The
+  blue sits in the middle of the page, the same scrolling down or back up (the founder's words of 6 November).
+- **Light, as the founder asked**: the footage brightened under a light veil and the page's blocks on see-through slates set
+  apart over it, most see-through on phones, so the footage lightens the page.
+- **On every device**: each band's still frame shows at once; the clip is asked to play at once and dissolves in on its first
+  frame; where a browser plays video only after a tap, the reader's first tap starts it; nothing loads while the Wallpaper
+  switch is off or the page is hidden; reduced motion and save-data readers see the stills.
+- **Phones**: the page's end clears the Guided tour tab; the Bills and Receipts table scrolls sideways in its frame.
+- **The tour tab** is placed in the page's own zoom (the Screen button), so it sits just above the dock's Tour button at any zoom.
+
 ## 2026-11-05: the live engine after the consensus audit of 5 November (no engine change; omni-v25 stands)
 - **The audit**: seven seats graded the live engine page independently (editor C−, designer C, mechanism and numbers C+, software D;
   the mechanical, live-operator and website seats run again on this build). Its first fixes, by the seats' findings:

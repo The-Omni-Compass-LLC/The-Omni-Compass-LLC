@@ -107,7 +107,7 @@ LEDGER = {"aks-metered.yml": "Azure", "gke-metered.yml": "Google Cloud", "eks-me
           "cloud-check.yml": "the $0 cloud check", "lambda-gpu.yml": "the GPU on Lambda", "cpu-power.yml": "the CPU package"}
 LEDGER_CACHE = HERE / "github_ledger.json"
 from tools.repo import NAME as REPO   # noqa: E402  (the repository, written once in tools/repo.py)
-from tools.repo import RAW_MAIN   # noqa: E402  (main's files as GitHub serves them, for the page's self-update)
+from tools.repo import HOME, RAW_MAIN   # noqa: E402  (main's files as GitHub serves them, for the page's self-update)
 LEDGER_GAUGES = ["machines billed, machine-hours", "compute bill at list price ($)", "worker nodes in service, mean", "response time (ms), 95th percentile",
                  "failed requests (%)", "time over the response line (% of samples)"]
 
@@ -1481,16 +1481,81 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
 (function () {
   var meta = document.querySelector('meta[name="omni-live-source"]');
   if (!meta || !window.fetch || !window.JSON) return;
-  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, last = 0, tries = 0;
-  function whole(html) {
-    /* a page that arrived whole: it ends with its closing tag and carries its own self-update (5 November, the software seat: a page
-       cut short in transit opened as an empty wall that called itself the newest build) */
-    return !!html && /<\\/html>\\s*$/i.test(html) && html.indexOf('id="omniSelfUpdate"') > 0;
+  var base = meta.getAttribute("content"), DAY = 24 * 3600 * 1000, HOUR = 3600 * 1000, fails = 0, timer = 0, due = 0, busy = 0,
+      PAGE = "OMNI_COMPASS_LIVE_ENGINE.html", BUILD = '<script type="application/' + 'json" id="build">', SHUT = "</" + "script>";
+  function later(ms) {
+    /* the next ask (6 November, the software seat: a check that failed waited a whole day): the daily check after a check that
+       reached GitHub; an hour after one that failed, doubling with each failure in a row up to the day, and back to the day at
+       the next success */
+    clearTimeout(timer); timer = setTimeout(check, ms); due = Date.now() + ms; return at(due);
   }
-  function again(text) {
-    /* at most four more asks a day; then the daily check */
-    if (++tries <= 4) { say(text + " Asked again at " + at(last + 900000) + "."); setTimeout(check, 900000); }
-    else say(text + " Next check " + at(last + DAY) + ".");
+  function failed() { fails++; return later(Math.min(DAY, HOUR * Math.pow(2, fails - 1))); }
+  function done() { fails = 0; return later(DAY); }
+  function mem(k, v) {
+    /* this tab's own note of the build it is opening and of a build that did not start here (none where the browser keeps none) */
+    try {
+      if (v === undefined) return JSON.parse(sessionStorage.getItem("omniSelfUpdate." + k) || "null");
+      if (v === null) sessionStorage.removeItem("omniSelfUpdate." + k); else sessionStorage.setItem("omniSelfUpdate." + k, JSON.stringify(v));
+    } catch (e) { /* no storage in this browser */ }
+    return null;
+  }
+  function hex(buf) { var b = new Uint8Array(buf), s = ""; for (var i = 0; i < b.length; i++) s += (b[i] < 16 ? "0" : "") + b[i].toString(16); return s; }
+  function builtOf(html) {
+    /* the build time a page carries in its own build record: a page is opened only when it is the build its stamp names */
+    var a = (html || "").indexOf(BUILD), z = a < 0 ? -1 : html.indexOf(SHUT, a);
+    if (z < 0) return "";
+    try { return (JSON.parse(html.slice(a + BUILD.length, z)) || {}).built_at || ""; } catch (e) { return ""; }
+  }
+  function compiles(html) {
+    /* every script the page runs compiles in this browser, read and never run (6 November, the software seat: a newer page with
+       one fault in its script opened as a dead page over a working copy); the records are data, left to the page. "" when every
+       script compiles, otherwise the browser's own words for the first that does not */
+    var i = 0, a, g, z, t;
+    while ((a = html.indexOf("<script", i)) >= 0) {
+      i = a + 7; t = html.charAt(i);
+      if (t !== ">" && t > " ") continue;
+      g = html.indexOf(">", i); z = g < 0 ? -1 : html.indexOf("</" + "script", g);
+      if (z < 0) return "a script is not closed";
+      i = z + 8; t = html.slice(a + 7, g).toLowerCase();
+      if (t.indexOf("src=") >= 0 || (t.indexOf("type=") >= 0 && t.indexOf("javascript") < 0)) continue;
+      try { new Function(html.slice(g + 1, z)); } catch (e) { return String((e && e.message) || e); }
+    }
+    return "";
+  }
+  function getPage(v) {
+    /* GitHub's newest page, read only when its stamp names a newer build than this copy, and opened only when it arrived whole:
+       exactly the byte count and the sha256 its stamp carries, its own build record the stamp's build, every script compiling
+       (6 November, the software seat: a page cut in the middle but closed with its tag, and a page with a fault in its script,
+       each opened over a working copy and called itself the newest build). A page that is not the stamp's build (GitHub caches
+       the two files apart) is left at its build record, near its head, and not read to its end */
+    return fetch(base + PAGE, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("its page could not be fetched");
+      if (!r.body || !r.body.getReader) return r.arrayBuffer().then(function (b) { return new Uint8Array(b); });
+      var rd = r.body.getReader(), parts = [], got = 0, head = "", dec = new TextDecoder("utf-8");
+      function pump() {
+        return rd.read().then(function (x) {
+          if (x.done) { var all = new Uint8Array(got), o = 0; for (var k = 0; k < parts.length; k++) { all.set(parts[k], o); o += parts[k].length; } parts = null; return all; }
+          got += x.value.length; parts.push(x.value);
+          if (got > v.bytes) { rd.cancel(); throw new Error("its page arrived longer than its stamp says"); }
+          if (head !== null) {
+            head += dec.decode(x.value, { stream: true });
+            var theirs = builtOf(head);
+            if (theirs || head.length > 8e6) { head = null; if (theirs && theirs !== v.built_at) { rd.cancel(); throw new Error("the page GitHub serves is not that build yet (it carries the build of " + theirs + ")"); } }
+          }
+          return pump();
+        });
+      }
+      return pump();
+    }).then(function (bytes) {
+      if (bytes.length !== v.bytes) throw new Error("its page arrived incomplete");
+      return crypto.subtle.digest("SHA-256", bytes).then(function (h) {
+        if (hex(h) !== v.sha256) throw new Error("its page arrived changed (its sha256 is not its stamp's)");
+        var html = new TextDecoder("utf-8").decode(bytes), bad;
+        if (builtOf(html) !== v.built_at) throw new Error("the page GitHub serves is not that build");
+        if ((bad = compiles(html))) throw new Error("its script does not compile in this browser (" + bad + ")");
+        return html;
+      });
+    });
   }
   function fresh(html) {
     /* the newest build opens as a document of its own, in a fresh script realm; the few links beside the page are made
@@ -1504,9 +1569,12 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
   }
   if (typeof MON !== "undefined" && window.Blob && window.URL && URL.createObjectURL) {
     /* this build was written over an older copy in place (the self-update of 1 November, before this one): the older
-       page's script is still loaded, so this build's own would stop on its declarations; it opens itself fresh instead */
-    fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
-      .then(function (html) { if (html) fresh(html); }).catch(function () {});
+       page's script is still loaded, so this build's own would stop on its declarations; it opens GitHub's newest page fresh
+       instead, and only one that arrives whole by its stamp (6 November, the software seat: this way opened any page it fetched) */
+    if (window.crypto && crypto.subtle && window.TextDecoder)
+      fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (v) { return v && v.built_at && v.bytes > 0 && /^[0-9a-f]{64}$/.test(v.sha256 || "") ? getPage(v) : null; })
+        .then(function (html) { if (html) fresh(html); }).catch(function () {});
     return;
   }
   function own() {
@@ -1534,40 +1602,50 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     el.textContent = text;
   }
   function at(t) { try { return new Date(t).toLocaleString(); } catch (e) { return ""; } }
-  function builtOf(html) {
-    /* the build time the fetched page carries in its own build record: a page is opened only when it is truly newer than
-       this copy, so a stamp that runs ahead of the page GitHub serves (the two are cached apart) never reopens an older page
-       over and over (3 November) */
-    var m = /<script type="application\\/json" id="build">([\\s\\S]*?)<\\/script>/.exec(html || "");
-    try { return m ? (JSON.parse(m[1]) || {}).built_at || "" : ""; } catch (e) { return ""; }
-  }
   function check() {
-    last = Date.now();
-    var mine = own(), next = at(last + DAY), when = at(last);
-    if (!mine) { say("This copy's own build time is not read yet; GitHub is asked at " + at(last + 60000) + "."); last = 0; setTimeout(check, 60000); return; }
+    /* GitHub's stamp alone decides (LIVE_ENGINE_VERSION.json, a few hundred bytes); the page is read only when the stamp names a
+       newer build than this copy (6 November, the software seat: a stamp that ran ahead of its page read the whole page five times) */
+    if (busy && Date.now() - busy < 600000) return;          // a check under way; one stuck ten minutes gives way
+    var mine = own(), when = at(Date.now());
+    if (!mine) { say("This copy's own build time is not read yet; GitHub is asked at " + later(60000) + "."); return; }
+    busy = Date.now(); later(HOUR);                          // asked again within the hour, even if this check never settles
     fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
       .then(function (v) {
-        if (!v || !v.built_at) { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); return; }
-        if (v.built_at <= mine) { say("Checked GitHub at " + when + ": " + (v.built_at === mine ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + next + "."); return; }
-        say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "): opening it.");
-        return fetch(base + "OMNI_COMPASS_LIVE_ENGINE.html", { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : null; })
-          .then(function (html) {
-            var theirs = builtOf(html);
-            if (!html) { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + v.built_at + ").", v.page_url); return; }
-            if (!whole(html)) { again("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page arrived incomplete; this copy stays."); return; }
-            if (!theirs || theirs <= mine) { again("GitHub's stamp names a newer build (" + v.built_at + ") whose page is not served yet."); return; }
-            /* written over this one in place, the newer build's script met this page's own declarations again and
-               stopped (1 November): it opens as a document of its own */
-            if (html.indexOf('id="omniSelfUpdate"') > 0 && window.Blob && window.URL && URL.createObjectURL) fresh(html);
-            else { say("A newer build is on GitHub (" + v.engine + ", built " + theirs + "); this browser opens it from the link below."); note("A newer build of the live engine is on GitHub (" + v.engine + ", built " + theirs + ").", v.page_url); }
-          }, function () { say("A newer build is on GitHub (" + v.engine + ", built " + v.built_at + "), but its page could not be fetched at " + when + "; next check " + next + "."); });
+        if (!v || !v.built_at) { say("GitHub not reached at " + when + "; this copy was built " + mine + "; asked again at " + failed() + "."); return; }
+        if (v.built_at <= mine) { say("Checked GitHub at " + when + ": " + (v.built_at === mine ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + done() + "."); return; }
+        var name = v.engine + ", built " + v.built_at, link = "A newer build of the live engine is on GitHub (" + name + ").";
+        if (v.sha256 && mem("refused") === v.sha256) { say("GitHub's newest build (" + name + ") was opened in this tab and its engine did not start in this browser; this copy stays and does not open that build again; next check " + done() + "."); note(link, v.page_url); return; }
+        if (!(v.bytes > 0) || !/^[0-9a-f]{64}$/.test(v.sha256 || "")) { say("A newer build is on GitHub (" + name + "), but its stamp carries no byte count and sha256 to check its page by; this copy stays; asked again at " + failed() + "."); return; }
+        if (!(window.crypto && crypto.subtle && window.TextDecoder && window.Blob && window.URL && URL.createObjectURL)) { say("A newer build is on GitHub (" + name + "); this browser cannot check its page here, so it opens from the link below; next check " + done() + "."); note(link, v.page_url); return; }
+        say("A newer build is on GitHub (" + name + "): reading its page and checking it against its stamp.");
+        return getPage(v).then(function (html) {
+          /* written over this one in place, the newer build's script met this page's own declarations again and stopped
+             (1 November): it opens as a document of its own, and stays only when its engine starts there (settle, below) */
+          if (html.indexOf('id="omniSelfUpdate"') < 0) { say("A newer build is on GitHub (" + name + "); it carries no self-update of its own, so this browser opens it from the link below; next check " + done() + "."); note(link, v.page_url); return; }
+          say("A newer build is on GitHub (" + name + "): its page arrived whole; opening it.");
+          fails = 0; mem("opening", { sha: v.sha256, back: location.protocol === "blob:" ? mem("home") : location.href, at: Date.now() });
+          fresh(html);
+        }, function (e) { say("A newer build is on GitHub (" + name + "), but " + ((e && e.message) || "its page could not be fetched") + " at " + when + "; this copy stays; asked again at " + failed() + "."); });
       })
-      .catch(function () { say("GitHub not reached at " + when + "; this copy was built " + mine + "; next check " + next + "."); });
+      .catch(function () { say("GitHub not reached at " + when + "; this copy was built " + mine + "; asked again at " + failed() + "."); })
+      .then(function () { busy = 0; });
+  }
+  function settle() {
+    /* a newer build this tab opened stays only when its engine starts here; otherwise the tab goes back to the copy it came
+       from, which keeps that build's sha256 and does not open it again (6 November, the software seat: the opened page took the
+       working copy's place with no way back) */
+    var p = mem("opening");
+    if (!p || location.protocol !== "blob:" || Date.now() - p.at > 600000) return;
+    mem("opening", null);
+    var up = false; try { up = typeof MON !== "undefined" && !!MON.ready; } catch (e) { up = false; }
+    if (up) { if (p.back) mem("home", p.back); return; }
+    mem("refused", p.sha);
+    if (p.back) location.replace(p.back);
   }
   function start() {
+    if (document.readyState === "complete") settle(); else window.addEventListener("load", settle);
     check();
-    setInterval(check, DAY);
-    document.addEventListener("visibilitychange", function () { if (!document.hidden && Date.now() - last >= DAY) check(); });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && due && Date.now() >= due) check(); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();
@@ -1586,9 +1664,13 @@ def self_update(page: str) -> str:
 
 
 def write_version(build: dict) -> None:
-    """The newest build's stamp: the engine, its digest, the commit and the time the page was built, and where the page is."""
+    """The newest build's stamp: the engine, its digest, the commit and the time the page was built, the page's own byte count and
+    sha256 as it stands on disk, and where the page opens. A copy opens a newer page only when it arrives with exactly these bytes
+    (6 November, the software seat: a page cut short, and a page with a fault in its script, each opened over a working copy)."""
+    import hashlib
+    data = PAGE.read_bytes()
     VERSION.write_text(json.dumps({"engine": build.get("engine"), "digest": build.get("digest"), "commit": build.get("commit"),
-                                   "built_at": build.get("built_at"),
+                                   "built_at": build.get("built_at"), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
                                    "page_url": f"{RAW_MAIN}docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"}, indent=1) + "\n",
                        encoding="utf-8")
 
@@ -1662,6 +1744,8 @@ WORDS = ("GAIN", "power given", "STEADY", "LOSS", "the runs disagree", "the runs
 def table_way(file: str):
     """As the page reads it (tableWay): a four-ways table's tag, and whether Omni-Compass is read against its own native in it."""
     m = re.search(r"_4W_(TOP|ORCH|BARE|VS|BOTH)\.md$", file or "")
+    if not m and re.search(r"(^|/)V\d+_SOLO", file or ""):     # Omni-Compass by itself: in place of a controller, as the verdict audit
+        return "SOLO", False                                     # reads it (tools/verdict_audit.py comparison()), never against its native
     return (m.group(1) if m else None), (not m or m.group(1) in ("TOP", "BARE"))
 
 
@@ -1720,7 +1804,7 @@ def appraisal_counts(rec) -> str:
              f"| Raw files checked against their run's own `SHA256SUMS_ALL.txt` | {ok:,} of {files:,} matched; {unmatched} unmatched |",
              f"| Receipts (every judged row of each benchmark's newest table) | {len(recs)}: " + ", ".join(f"{e} {n}" for e, n in sorted(by_eng.items(), key=lambda kv: -int(re.sub(r'\D', '', kv[0]) or 0))) + " |",
              f"| Omni-Compass against its native ({len(omni)} tables), as the tables wrote them | {words(tally(omni, False))}{fl}{words(tally(omni, True)) + ')' if floor is not None else ''} |",
-             f"| The orchestrators' own cost ({len(orch)} four-ways tables: the orchestrator as shipped against the organism alone, and the comparisons where Omni-Compass is on the other side), never a reading of Omni-Compass | {words(tally(orch, False))}{fl}{words(tally(orch, True)) + ')' if floor is not None else ''} |",
+             f"| Set apart as the LOSS ledger sets them ({len(orch)} tables: in place of a controller, Omni-Compass by itself and the four ways' VS; the orchestrator's own, ORCH; two changes at once, BOTH), never a reading of Omni-Compass against its native | {words(tally(orch, False))}{fl}{words(tally(orch, True)) + ')' if floor is not None else ''} |",
              f"| The verdict audit (`results/verdict_audit/VERDICT_AUDIT.md`, the one selection the LOSS ledger reads): standing tables, Omni-Compass against its native | {words(Counter(a_nat))}; {ac['standing_tables_on_the_engine_that_stands']} of {sum(1 for t in au['tables'] if t['status'] == 'standing')} standing tables on the engine that stands ({au['engine_standing']}) |",
              f"| The page's receipts against the audit | " + ("the same, word by word" if not diff else "differ: " + "; ".join(f"{w} {a} on the page, {b} in the audit" for w, (a, b) in diff.items())) + " |",
              f"| LOSS rows of Omni-Compass against its native | {len(audit_losses(au))} in the audit; on the page {len(losses)}: " + ("; ".join(losses) if losses else "none") + " |",
@@ -1749,7 +1833,15 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="rebuild in memory; exit 1 if any record differs from the page")
     ap.add_argument("--no-runs", action="store_true", help="leave out GitHub's running and queued runs")
+    ap.add_argument("--stamp", action="store_true", help="write the stamp every copy reads from the page as it stands, and nothing else")
     a = ap.parse_args()
+    if a.stamp:
+        # the stamp from the page as it is committed: the workflow runs this after every tool that writes the page (tools/headline.py
+        # rewrites section 2b after this build), so its byte count and sha256 are the committed page's
+        write_version(embedded(PAGE.read_text(encoding="utf-8"), "build") or {})
+        v = json.loads(VERSION.read_text(encoding="utf-8"))
+        print(f"the stamp every copy reads: {v['engine']}, built {v['built_at']}, {v['bytes']:,} bytes, sha256 {v['sha256'][:16]}")
+        return 0
     global CHECKING
     CHECKING = a.check
     page = PAGE.read_text(encoding="utf-8")
