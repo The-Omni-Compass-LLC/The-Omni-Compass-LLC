@@ -29,19 +29,19 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | Unit test cases collected under `tests/` | 828 |
 | Function-test files (`tools/function_tests.py --list`) | 68 |
 | C++ parity test files (the sealed twins) | 14 |
-| Checks in `verify.py --quick` at the receipt's commit (415a18f73d83) | 153 PASS, 0 FAIL |
+| Checks in `verify.py --quick` at the receipt's commit (c1e6927a497b) | 153 PASS, 0 FAIL |
 | GitHub workflows (`.github/workflows/`) | 71 |
-| Three-run tables in `results/live/`, all engines | 343 |
-| Of them, by engine, newest first | omni-v25: 93; omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13 |
-| Three-run tables on the engine that stands (omni-v25) | 93 |
+| Three-run tables in `results/live/`, all engines | 345 |
+| Of them, by engine, newest first | omni-v25: 95; omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13 |
+| Three-run tables on the engine that stands (omni-v25) | 95 |
 | Model gate pages (`results/model_gate/`) | 33 |
-| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 158, 31, 25, 107 |
+| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 158, 31, 25, 111 |
 | Drawn figures (`docs/book/figures/`) | 77 |
 | The Operator's, Owner's and Live Engine Manuals (PDF pages) | 661, 2,051, 320 |
-| Files carrying the legal notice (`tools/legal.py --check`) | 1,971 |
+| Files carrying the legal notice (`tools/legal.py --check`) | 1,978 |
 | Muscles in the catalog, in our own models: GAIN, STEADY, LOSS | 1,107: 530, 577, 0 (70 families) |
 | Benchmarks on the benefit board, by the engine of their newest table | 26: omni-v25 23, omni-v3 3 |
-| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 267, 266 without; omni-v12: 6, 6 without |
+| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 281, 280 without; omni-v12: 6, 6 without |
 <!-- end of the repository in numbers -->
 
 ## 2. The grades, piece by piece
