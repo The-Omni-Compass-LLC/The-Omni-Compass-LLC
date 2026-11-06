@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -78,7 +78,7 @@ def title_page(c, version, nfiles, nlines, npages, kind):
              f"Copyright (c) 2026 {OWNER}. All rights reserved. Not open source. Any commercial use,",
              "commercialization, monetization, production use, redistribution or hosted service requires a signed,",
              "paid Omni-Compass Enterprise License. Patent applications, copyright registrations and trademark",
-             "applications have been filed in the United States by The Omni-Compass LLC / Dubra Software."]
+             "applications have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC."]
     y = H - 160
     for s in lines:
         c.drawString(M, y, s); y -= 16

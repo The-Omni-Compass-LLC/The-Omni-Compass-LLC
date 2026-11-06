@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -206,7 +206,7 @@ def audit_published(html_path: Path, files: list, url: str) -> dict:
     body = re.sub(r"<style\b[^>]*>.*?</style>", "", body, flags=re.S | re.I)
     ids = anchors_html(t)
     found = []
-    if "© 2026 The Omni-Compass LLC" not in t[:20000]:
+    if "The Omni-Compass LLC" not in t[:20000] or "© 2026" not in t[:20000]:
         found.append(("notice", "the notice does not open the page", "republish from the newest build"))
     tail = re.sub(r"<script\b[^>]*>.*?</script>", "", t[-60000:], flags=re.S | re.I)
     if "www.omni-compass.com" not in tail:
@@ -299,5 +299,5 @@ def main(argv=None) -> int:
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

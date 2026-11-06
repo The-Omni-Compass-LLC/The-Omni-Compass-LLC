@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -38,9 +38,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-BODY = ("© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. **Evaluation and Simulation use only.** Any commercial "
+BODY = ("© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial "
         "use, commercialization, monetization, production use, redistribution or hosted service of any part of "
-        "Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. Every copy, export, "
+        "Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, "
         "report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`.")
 CLOSE = "All patents, copyrights and trademarks filed in the USA. www.omni-compass.com"
 NOTICE = f"{BODY} {CLOSE}"
@@ -49,14 +49,14 @@ NOTICE = f"{BODY} {CLOSE}"
 # carries it at its top and at its end.
 SPDX = "SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0"
 TOP = f"{BODY} `{SPDX}` {CLOSE}"          # a page's opening notice carries the license tag for the scanners (Black Duck, FOSSA, Snyk)
-MARK = "© 2026 The Omni-Compass LLC"      # a page carrying this carries the notice in this wording or an earlier one
+MARK = "© 2026 Dubra Software Inc. / The Omni-Compass LLC"   # a page carrying this carries the notice (the owners in the founder's order of 6 November)
 PLAIN = re.sub(r"[*`]", "", NOTICE)       # the same words without Markdown, for plain text, PDFs and chat answers
 FILED = "All patents, copyrights and trademarks filed in the USA."
-SHORT = ("© 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. Evaluation and Simulation use only. All patents, copyrights "
+SHORT = ("© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. All patents, copyrights "
          "and trademarks filed in the USA. www.omni-compass.com")
 HEADER = (
     "SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0",
-    "Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.",
+    "Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.",
     "Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid",
     "Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.",
     "All patents, copyrights and trademarks filed in the USA. www.omni-compass.com",
@@ -65,7 +65,7 @@ BUNDLE = ("README.md", "LICENSE", "NOTICE", "DISCLOSURES.md", "PATENTS.md", "TRA
 # the earlier filing sentence, written in two pieces so that --fix, which rewrites it everywhere, cannot rewrite it here
 OLD_FILED = re.compile("All patent " + "applications, copyright registrations and trademark applications")
 REQUIRED = ("omni-compass llc", "dubra software", "all rights reserved", "all patents, copyrights and trademarks", "omni-compass.com")
-# the owners as the founder named them on 6 November: "The Omni-Compass LLC / Dubra Software" (Dubra Software, his own company, owns it with The Omni-Compass LLC)
+# the owners as the founder named them on 6 November: "Dubra Software Inc. / The Omni-Compass LLC" (Dubra Software, his own company, owns it with The Omni-Compass LLC)
 # the two sentences the founder retired from the notice on the evening of 10 October; no page, header, report or program
 # may carry them. Spelled word by word so that this file, which looks for them, carries neither
 RETIRED = (" ".join(("subject", "to", "change")), " ".join(("authority", "of", "record")))

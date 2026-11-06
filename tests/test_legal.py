@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC / Dubra Software. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -21,7 +21,7 @@ OLD_TOP = ("> **PROPRIETARY - EVALUATION AND SIMULATION USE ONLY.** Copyright (c
            "signed, paid **Omni-Compass Enterprise License** from The Omni-Compass LLC. All patent " + "applications, copyright "
            "registrations and trademark applications covering the Omni-Compass engine have been filed in the United States.")
 OLD_END = ("*Evaluation and Simulation use only. Copyright (c) 2026 The Omni-Compass LLC. Commercial use requires a signed, paid\n"
-           "Omni-Compass Enterprise License from The Omni-Compass LLC / Dubra Software. All rights reserved.*")
+           "Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.*")
 
 WORKFLOW = """# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 The Omni-Compass LLC. Evaluation and Simulation use only; any other use requires a signed, paid
@@ -114,7 +114,7 @@ class TestMarkdown(unittest.TestCase):
         struck = " ".join(("Everything", "here", "is", "subject", "to", "change", "at", "any", "time."))
         page = f"# T\n\n> {legal.TOP}\n\nBody. {struck}\n\n---\n\n*{legal.NOTICE}*\n"
         self.assertTrue(any("retired" in p for p in legal.problems("x.md", page, "md")))
-        old_top = "> © 2026 The Omni-Compass LLC / Dubra Software. All rights reserved. " + struck + " See LICENSE."
+        old_top = "> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. " + struck + " See LICENSE."
         fixed, _ = legal.normalize_markdown(f"# T\n\n{old_top}\n\nBody.\n")
         self.assertFalse([r for r in legal.RETIRED if r in legal._flat(fixed)])
         self.assertFalse(legal.problems("x.md", fixed, "md"))
