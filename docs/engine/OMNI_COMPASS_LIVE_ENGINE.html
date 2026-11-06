@@ -108,6 +108,220 @@
 })();
 </script>
 </head><body>
+<div id="omniBg" aria-hidden="true"><canvas class="aisle"></canvas><video id="omniVidA" muted loop playsinline preload="none"></video><video id="omniVidB" muted loop playsinline preload="none"></video><div class="tint"></div></div>
+<script id="omniWallpaper">
+/* The wallpaper under the page (the founder's words of 6 November: "a live image of data centers and rows of clustered stacks ...
+   live movement going through them ... in the background underneath ... the background can't be dark"): decoration only, it
+   shows no measurement. A data-centre aisle drawn in perspective: two rows of server racks, the floor's tiles, cable trays and
+   ceiling lights, the far end bright with haze; the view moves slowly down the aisle, rack lights blink and data runs along the
+   trays. At most 24 frames a second (12 on a touch screen), still while the tab is hidden, drawn once and left still under
+   reduced motion; the dock's Wallpaper switch turns it off and the browser remembers. Blue while Omni-Compass runs; native's
+   orange when the kill switch hands the page to native. */
+(function () {
+  var cv = document.querySelector("#omniBg canvas"); if (!cv || !cv.getContext) return;   // no id: on this page a canvas with an id is a monitor, and this one is decoration
+  var g = cv.getContext("2d"), dpr = 1, W0 = 0, H0 = 0, cam = 0, last = 0, prev = 0, raf = 0, on = true, rm = false, streams = [];
+  var touch = false; try { touch = matchMedia("(pointer: coarse)").matches || innerWidth <= 640; } catch (e) { touch = innerWidth <= 640; }
+  var STEP = 1000 / (touch ? 12 : 24);
+  try { on = localStorage.getItem("omniWall") !== "off"; } catch (e) { on = true; }
+  try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { rm = false; }
+  var RACK = 0.62, AISLE = 1.15, DEPTH = 0.95, HIGH = 2.25, EYE = 1.15, CEIL = 3.0, FAR = 34, SPEED = 0.55;
+  function side() {   // the engine's own side, read from the page's engine where it has started
+    try { if (typeof W !== "undefined" && W && W.killed) return [255, 138, 31]; } catch (e) { /* not started */ }
+    try { if (typeof MASTER !== "undefined" && MASTER && MASTER.off) return [255, 138, 31]; } catch (e) { /* not started */ }
+    return [78, 151, 209];
+  }
+  function hash(i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function css(c, al) { return "rgba(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + "," + (al === undefined ? 1 : al) + ")"; }
+  var HAZE = [22, 54, 86], STEEL = [14, 24, 36], FLOOR = [40, 76, 112], TRAY = [60, 96, 130];   // a night hall: blue haze, dark racks, bright lights
+  function P(x, y, z) { var f = H0 * 0.9; return [W0 / 2 + x / z * f, H0 * 0.46 - (y - EYE) / z * f]; }
+  function fog(z) { return Math.min(1, Math.max(0, (z - 1.2) / (FAR - 1.2))) ** 0.75; }
+  function quad(a, b, c, d) { g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.lineTo(c[0], c[1]); g.lineTo(d[0], d[1]); g.closePath(); }
+  function size() {
+    W0 = innerWidth; H0 = innerHeight; dpr = Math.min(window.devicePixelRatio || 1, touch ? 1 : 1.25);
+    var zm = parseFloat(document.documentElement.style.zoom) || 1; cv.style.width = (W0 / zm) + "px"; cv.style.height = (H0 / zm) + "px";
+    cv.width = Math.round(W0 * dpr); cv.height = Math.round(H0 * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    streams = []; for (var i = 0; i < (touch ? 6 : 12); i++) streams.push({lane: i % 4, z: hash(i + 9) * FAR, v: 3 + hash(i + 3) * 5});
+  }
+  function draw(t) {
+    var rgb = side(), dt = last ? Math.min(0.2, (t - last) / 1000) : 0; last = t; cam += SPEED * dt;
+    // the hall: light haze at the far end, the ceiling a cool grey, the floor lit
+    var bg = g.createLinearGradient(0, 0, 0, H0);
+    bg.addColorStop(0, "#071320"); bg.addColorStop(0.42, css(HAZE)); bg.addColorStop(0.5, css(HAZE)); bg.addColorStop(1, "#0a1a2a");
+    g.fillStyle = bg; g.fillRect(0, 0, W0, H0);
+    var off = cam % RACK, z, i;
+    // the floor's tiles: rows across, lanes along
+    g.lineWidth = 1;
+    for (z = RACK - off; z < FAR; z += RACK) {
+      var a = P(-AISLE - DEPTH, 0, z), b = P(AISLE + DEPTH, 0, z);
+      g.strokeStyle = css(mix(FLOOR, HAZE, fog(z)), 0.55); g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+    }
+    for (i = -3; i <= 3; i++) {
+      var x = i * AISLE / 3, n = P(x, 0, 0.6), f = P(x, 0, FAR);
+      g.strokeStyle = css(FLOOR, 0.5); g.beginPath(); g.moveTo(n[0], n[1]); g.lineTo(f[0], f[1]); g.stroke();
+    }
+    // the ceiling's lights, far to near
+    for (z = (RACK * 3) - (cam % (RACK * 3)); z < FAR; z += RACK * 3) {
+      var l1 = P(-0.35, CEIL, z), l2 = P(0.35, CEIL, z), l3 = P(0.35, CEIL, z + 0.25), l4 = P(-0.35, CEIL, z + 0.25);
+      g.fillStyle = css(mix([170, 215, 255], HAZE, fog(z)), 0.9); quad(l1, l2, l3, l4); g.fill();
+    }
+    // the cable trays above each row, and the data that runs along them toward the viewer
+    [-1, 1].forEach(function (s) {
+      for (var k = 0; k < 2; k++) {
+        var x = s * (AISLE + 0.25 + k * 0.35), n = P(x, CEIL - 0.25, 0.6), f = P(x, CEIL - 0.25, FAR);
+        g.strokeStyle = css(TRAY, 0.75); g.lineWidth = 2; g.beginPath(); g.moveTo(n[0], n[1]); g.lineTo(f[0], f[1]); g.stroke();
+      }
+    });
+    g.lineWidth = 3;
+    streams.forEach(function (s, j) {
+      s.z -= s.v * dt; if (s.z < 0.7) s.z += FAR;
+      var x = (s.lane < 2 ? -1 : 1) * (AISLE + 0.25 + (s.lane % 2) * 0.35), h = P(x, CEIL - 0.25, s.z), tl = P(x, CEIL - 0.25, s.z + 1.6);
+      var gr = g.createLinearGradient(h[0], h[1], tl[0], tl[1]); gr.addColorStop(0, css(rgb, 0.95)); gr.addColorStop(1, css(rgb, 0));
+      g.strokeStyle = gr; g.beginPath(); g.moveTo(h[0], h[1]); g.lineTo(tl[0], tl[1]); g.stroke();
+    });
+    // the racks, far to near on both sides: their faces to the aisle, their tops, their lights
+    var first = Math.floor(cam / RACK), zs = [];
+    for (i = 0; i < Math.ceil(FAR / RACK) + 1; i++) zs.push(i);
+    zs.reverse().forEach(function (k) {
+      var idx = first + k, z0 = idx * RACK - cam, z1 = z0 + RACK * 0.96; if (z1 < 1.0 || z0 > FAR) return;
+      z0 = Math.max(z0, 1.0); var fz = fog(z0), gap = (idx % 9) === 8;   // a cross aisle every ninth rack
+      [-1, 1].forEach(function (s) {
+        if (gap) return;
+        var x = s * AISLE, xb = s * (AISLE + DEPTH), hh = HIGH * (0.92 + 0.08 * hash(idx * 3 + s));
+        var a = P(x, 0, z0), b = P(x, hh, z0), c = P(x, hh, z1), d = P(x, 0, z1);
+        var face = mix(mix([30, 40, 52], [22, 30, 40], hash(idx + s * 7)), HAZE, fz);
+        g.fillStyle = css(face); quad(a, b, c, d); g.fill();
+        g.strokeStyle = css(mix([150, 176, 200], HAZE, fz), 0.8); g.lineWidth = 1; g.stroke();
+        var t1 = P(xb, hh, z0), t2 = P(xb, hh, z1);   // the top, seen from below the ceiling
+        g.fillStyle = css(mix([70, 88, 108], HAZE, fz)); quad(b, t1, t2, c); g.fill();
+        var near = touch ? 10 : 18;
+        if (z0 < near) {   // the servers in the rack: one line a unit, two lights a unit, blinking
+          var units = 22, uc = css(mix([64, 80, 98], HAZE, fz), 0.9);
+          g.strokeStyle = uc; g.lineWidth = 1;
+          for (var u = 1; u < units; u++) {
+            var yy = 0.08 + u * (hh - 0.16) / units, p0 = P(x, yy, z0 + 0.04), p1 = P(x, yy, z1 - 0.04);
+            g.beginPath(); g.moveTo(p0[0], p0[1]); g.lineTo(p1[0], p1[1]); g.stroke();
+            for (var q = 0; q < 2; q++) {
+              var id = idx * 97 + s * 41 + u * 7 + q, lit = hash(id + Math.floor(t / (500 + 1100 * hash(id)))) > 0.35; if (!lit) continue;
+              var zz = z0 + (0.1 + q * 0.12) * (z1 - z0), pp = P(x, yy - (hh - 0.16) / units * 0.5, zz), sz = Math.max(1.5, 7 / zz);
+              var col = hash(id * 1.7) < 0.65 ? rgb : (hash(id * 2.3) < 0.7 ? [80, 230, 140] : [255, 196, 64]);
+              g.fillStyle = css(mix(col, HAZE, fz * 0.7), 1); g.fillRect(pp[0] - sz / 2, pp[1] - sz / 3, sz, Math.max(1.2, sz / 1.6));
+            }
+          }
+        }
+      });
+    });
+    // a soft light in the middle of the aisle, so the cards above read as glass panels on a lit hall
+    var rg = g.createRadialGradient(W0 / 2, H0 * 0.46, 0, W0 / 2, H0 * 0.46, Math.max(W0, H0) * 0.6);
+    rg.addColorStop(0, "rgba(90,160,230,.22)"); rg.addColorStop(1, "rgba(90,160,230,0)"); g.fillStyle = rg; g.fillRect(0, 0, W0, H0);
+  }
+  var holder = document.getElementById("omniBg");   // where a real clip plays over it, the aisle is not drawn
+  function loop(t) { raf = requestAnimationFrame(loop); if (!on || document.hidden || (holder && holder.classList.contains("vid")) || t - prev < STEP - 2) return; prev = t; draw(t); }
+  function start() { size(); cancelAnimationFrame(raf); last = 0; if (rm) { draw(performance.now()); return; } raf = requestAnimationFrame(loop); }
+  function setOn(v) {
+    on = v; try { localStorage.setItem("omniWall", on ? "on" : "off"); } catch (e) { /* not kept */ }
+    document.body.classList.toggle("wallOff", !on);
+    var b = document.getElementById("dWall"); if (b) { b.textContent = on ? "Wallpaper on" : "Wallpaper off"; b.setAttribute("aria-pressed", String(on)); }
+    if (on && rm) draw(performance.now());
+  }
+  function wire() {   // the dock's switch, beside the Tour button
+    var d = document.getElementById("dock"); if (!d || document.getElementById("dWall")) { setOn(on); return; }
+    var b = document.createElement("button"); b.id = "dWall"; b.className = "dkeep"; b.type = "button";
+    b.title = "The moving data centres behind the page (real footage: Wikimedia Foundation, CC BY-SA 3.0; credit in the disclosures): decoration only, it shows no measurement";
+    b.addEventListener("click", function () { setOn(!on); });
+    var t = document.getElementById("dTour"); if (t && t.parentNode === d) d.insertBefore(b, t.nextSibling); else d.appendChild(b);
+    setOn(on);
+  }
+  var t0 = 0; addEventListener("resize", function () { clearTimeout(t0); t0 = setTimeout(start, 200); });
+  function go() { start(); wire(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
+})();
+
+(function () {   // the real clips: one for each band of the page, dark at both ends and blue in the middle, each over its own still frame
+  var SCENES = {"aisles": {"name": "Aisles", "bands": ["wall/aisle1", "wall/aisle2", "wall/blueaisle", "wall/bluetray", "wall/aisle2", "wall/aisle1"]}, "wall": {"name": "Video wall", "bands": ["wall/wall_@"]}, "strips": {"name": "Strips", "bands": ["wall/strips_@"]}, "racks": {"name": "Racks", "bands": ["wall/dark-1", "wall/dark-2", "wall/blue-1", "wall/blue-2", "wall/dark-2", "wall/dark-1"]}};   // docs/engine/wall/: each scenery's loops top to bottom of the whole page, the blue in the middle; "@" is land or port by the screen's shape
+  var ORDER = ["aisles", "wall", "strips", "racks"], scene = "aisles";
+  try { var sv = localStorage.getItem("omniScene"); if (SCENES[sv]) scene = sv; } catch (e) { scene = "aisles"; }
+  var CLIPS = SCENES[scene].bands;
+  var bg = document.getElementById("omniBg"), A = document.getElementById("omniVidA"), B = document.getElementById("omniVidB"), cur = "", seq = 0, want = null, bad = {}, armed = false;
+  if (!bg) return;
+  function native() { try { return (typeof W !== "undefined" && W && W.killed) || (typeof MASTER !== "undefined" && MASTER && MASTER.off); } catch (e) { return false; } }
+  setInterval(function () { bg.classList.toggle("native", !!native()); }, 1000);
+  if (!CLIPS.length) return;
+  var save = false; try { save = !!(navigator.connection && navigator.connection.saveData); } catch (e) { save = false; }
+  var rm = false; try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { rm = false; }
+  var moving = !!(A && B && A.play) && !save && !rm;   // a reader who asks for less motion or to save data sees each clip's still frame
+  var EXT = ".mp4"; try { if (A.canPlayType('video/webm; codecs="vp9"')) EXT = ".webm"; } catch (e) { EXT = ".mp4"; }   // the format this browser plays
+  var ALT = EXT === ".webm" ? ".mp4" : ".webm";
+  [A, B].forEach(function (v) { if (!v) return; v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", ""); });   // a phone plays a muted inline clip by itself
+  function off() {   // the dock's Wallpaper switch, read from the browser before the dock is built
+    if (document.body && document.body.classList.contains("wallOff")) return true;
+    try { return localStorage.getItem("omniWall") === "off"; } catch (e) { return false; }
+  }
+  function part() {   // where the reader is along the whole page, top to bottom, as one of CLIPS.length equal bands
+    var de = document.documentElement, span = Math.max(1, de.scrollHeight - innerHeight), f = Math.min(1, Math.max(0, (window.scrollY || de.scrollTop || 0) / span));
+    return Math.min(CLIPS.length - 1, Math.floor(f * CLIPS.length));
+  }
+  function srcOf(k) { return CLIPS[k].replace("@", innerHeight > innerWidth ? "port" : "land"); }   // a grid or strips made for the screen's shape
+  function hush(v) { if (v && !v.paused) { try { v.pause(); } catch (e) { /* nothing to stop */ } } }
+  function arm() {   // where the browser waits for a tap before any video plays, the reader's first tap, click or key starts it
+    if (armed) return; armed = true;
+    var go = function (ev) { if (ev && ev.isTrusted === false) return;   // the reader's own tap, never a click the page makes itself
+      armed = false; ["touchend", "click", "keydown"].forEach(function (e) { document.removeEventListener(e, go, true); }); settle(); };
+    ["touchend", "click", "keydown"].forEach(function (e) { document.addEventListener(e, go, true); });
+  }
+  function settle() {   // one clip plays at a time: the band's own; the other rests once the dissolve is done
+    if (!moving || document.hidden || off()) { hush(A); hush(B); return; }
+    var t = want; if (!t) { hush(A); hush(B); return; }
+    if (t.classList.contains("on")) hush(t === A ? B : A);
+    if (t.paused && t.getAttribute("src")) { var p = t.play(); if (p && p.catch) p.catch(function () { arm(); }); }
+  }
+  function show(k) {
+    var src = srcOf(k);
+    if (off() || src === cur) return;   // nothing changes while the wallpaper is off; the band is read again when it comes back
+    cur = src; var my = ++seq;
+    bg.style.backgroundImage = 'url("' + src + '.jpg")'; bg.classList.add("vid");   // the band's still frame at once: a real data centre even before, or without, the clip
+    if (!moving || bad[src] || document.hidden) { want = null; A.classList.remove("on"); B.classList.remove("on"); hush(A); hush(B); return; }
+    var front = A.classList.contains("on") ? A : (B.classList.contains("on") ? B : null), back = front === A ? B : A, tried = false;
+    want = back;   // each change has its own number; an older change's events are ignored
+    back.onloadeddata = function () {   // the clip's first frame is in: dissolve to it
+      if (my !== seq) return; back.onloadeddata = null;
+      back.classList.add("on"); (back === A ? B : A).classList.remove("on");
+      setTimeout(function () { if (my === seq) settle(); }, 1300);
+    };
+    back.onerror = function () {
+      if (my !== seq) return;
+      if (!tried) { tried = true; back.src = src + ALT; var q = back.play(); if (q && q.catch) q.catch(function () { arm(); }); return; }   // the other format, once
+      bad[src] = true; want = null; A.classList.remove("on"); B.classList.remove("on"); hush(A); hush(B);   // the still frame stays
+    };
+    back.preload = "auto"; back.src = src + EXT;
+    var p = back.play(); if (p && p.catch) p.catch(function () { arm(); });   // asked to play at once: a phone loads a clip only when asked to play it
+  }
+  var tick = 0; addEventListener("scroll", function () { if (!tick) tick = requestAnimationFrame(function () { tick = 0; show(part()); }); }, {passive: true});
+  addEventListener("resize", function () { show(part()); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { hush(A); hush(B); return; }
+    if (moving && !want) cur = ""; show(part()); settle();
+  });
+  new MutationObserver(function () {   // the dock's Wallpaper switch: off stops the clip, on brings the band's clip back
+    if (off()) { hush(A); hush(B); } else { if (moving && !want) cur = ""; show(part()); settle(); }
+  }).observe(document.body, {attributes: true, attributeFilter: ["class"]});
+  function label() { var b = document.getElementById("dScene"); if (b) b.textContent = "Scenery: " + SCENES[scene].name; }
+  function setScene(n) {   // the dock's Scenery button: the next scenery, remembered by the browser
+    scene = n; CLIPS = SCENES[n].bands; try { localStorage.setItem("omniScene", n); } catch (e) { /* not kept */ }
+    cur = ""; label(); show(part()); settle();
+  }
+  function wireScene() {
+    var d = document.getElementById("dock"); if (!d || document.getElementById("dScene")) { label(); return; }
+    var b = document.createElement("button"); b.id = "dScene"; b.className = "dkeep"; b.type = "button";
+    b.title = "The scenery behind the page: Aisles, Video wall, Strips or Racks (real data-centre footage; decoration only, it shows no measurement)";
+    b.addEventListener("click", function () { setScene(ORDER[(ORDER.indexOf(scene) + 1) % ORDER.length]); });
+    var w = document.getElementById("dWall"); if (w && w.parentNode === d) d.insertBefore(b, w.nextSibling); else d.appendChild(b);
+    label();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(wireScene, 0); }); else setTimeout(wireScene, 0);
+  show(part());   // at once: the still frame shows and the clip loads beside the page while the rest of the page arrives
+})();
+</script>
 <style>
 /* Dark by default, light where the viewer's system asks for it: one set of tokens, each redefined for the light theme. Layout: an engine bay. The organism ring is the hero; the decision cycle, the phase plane, the brain and the verdict follow in the order one decision runs. */
 :root{
@@ -842,6 +1056,35 @@ section.tourOn{outline:3px solid var(--brass);outline-offset:4px;border-radius:6
 @media print{#tourTab,#tourCard{display:none!important}}
 @media (min-width:641px){#tourCard{right:56px}}
 @media (max-width:640px){#tourTab[aria-pressed="true"]{display:none}}
+/* fix_VIDS: the live background under the page (real data-centre clips; the drawn night aisle where none can play), and the page's
+   blocks apart on dark glass cards over it, each with a blue edge, so the racks' lights run between and through them */
+#omniBg{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background:#2a3b4c;background-size:cover;background-position:center;filter:brightness(1.3) saturate(1.2) contrast(1.04)}
+#omniBg.vid canvas{visibility:hidden}
+#omniBg video,#omniBg canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.2s ease}
+#omniBg video{opacity:0}#omniBg video.on{opacity:1}
+#omniBg .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(214,232,255,.10),rgba(214,232,255,.04));transition:background .6s}
+#omniBg.native .tint{background:linear-gradient(180deg,rgba(255,190,120,.16),rgba(255,160,80,.10))}
+html{background:#2a3b4c}
+body{background:transparent}
+.wrap{gap:44px}
+.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.64);border:1px solid rgba(140,200,255,.55);border-radius:12px;box-shadow:0 0 0 12px rgba(7,14,23,.64),0 0 0 13px rgba(140,200,255,.55),0 0 28px 12px rgba(120,190,255,.25)}
+.panel,.toc{background-color:rgba(18,28,38,.66)}
+@media (max-width:640px){.wrap > section,.wrap > header.head,.wrap > nav.toc,.wrap > div.partHead,.wrap > p.note,#wallWrap > div:not(.dock),section.disclose,p.legal{background-color:rgba(7,14,23,.52);box-shadow:0 0 0 6px rgba(7,14,23,.52),0 0 0 7px rgba(140,200,255,.55),0 0 18px 6px rgba(120,190,255,.25)}.panel,.toc{background-color:rgba(18,28,38,.56)}}
+body.wallOff #omniBg{display:none}
+body.wallOff,html:has(body.wallOff){background:var(--bg)}
+@media print{#omniBg{display:none}html{background:#fff}}
+
+
+
+
+
+
+
+
+/* fix_PHONE: the Bills and Receipts table keeps its columns readable and scrolls sideways in its frame on a narrow screen */
+#whRcp{min-width:760px}
+
+
 /* fix_TOUR3: the blue Guided tour tab, just above the dock's Tour button on every screen; it bounces on the landing view */
 #tourTab,#tourTab:not(#x){top:auto;bottom:66px;right:16px;transform:none;writing-mode:horizontal-tb;border:2px solid #9fd0ff;border-radius:24px;padding:10px 18px;background:#1d5fa0;color:#fff;font-size:16px;font-weight:700;letter-spacing:.02em;box-shadow:0 6px 18px rgba(0,0,0,.5)}
 #tourTab .ti{writing-mode:horizontal-tb;margin:0 8px 0 0}
@@ -2548,11 +2791,14 @@ kill     Lᵢ ← L* at once (native)</pre>
   <p><b>Evidence by View.</b> A monitor of the engine and of the runs GitHub ran. Each view says its evidence class. The official Kubernetes and database runs are class L, played back from their own SHA-256-checked files. The engine's harness, the shipped controller on the modelled cluster, the GPU card, the Linux host, the realms table and the grid are class S: our own models, run by the repository's own code. <span data-live="hwState">The GPU place replays one card run second by second and counts the engine that stands's card tables; no CPU package has been measured on real hardware; on Google Cloud and Amazon no set has finished (their first sets, on omni-v10 on 18 October, stopped at the login).</span> The brain, nerves, compass law and verdict on the page are the engine's code, checked against the Python and the C++.</p>
   <p><b>Appraisal.</b> Every view of this page is reproduced from the repository’s own code by an independent path and compared value by value (<code>docs/engine/APPRAISAL.md</code>; rerun with <code>docs/engine/check_live_engine.py</code> and <code>docs/engine/check_records.py</code>). The brain’s mathematics agree to machine precision. The harness views and the live controller are identical to the repository’s own runs on every tick and every plant.</p>
   <p><b>Factory Tune.</b> The engine is presented as The Omni-Compass LLC tuned it and ships it: self-running, set at the factory, every muscle on its own setting, no single setting universal. A licensee may add on, retune, upgrade or tune down any muscle; a changed tune's results are its own (DISCLOSURES.md, section 3).</p>
+  <p id="wallCredit"><b>Background video.</b> The moving data centres behind the page are short loops cut from <a href="https://commons.wikimedia.org/wiki/File:B-roll_of_Wikimedia_Foundation_servers_at_CyrusOne_in_Carrollton,_Texas_-_photographed_in_2015.webm">B-roll of Wikimedia Foundation servers at CyrusOne in Carrollton, Texas - photographed in 2015</a>, by the Wikimedia Foundation, via Wikimedia Commons, licensed <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> (its text: <code>LICENSES/CC-BY-SA-3.0.txt</code>). Changed: thirteen stretches trimmed, each looped with a short dissolve, scaled to 1280 pixels wide, re-encoded without sound, some set side by side as strips or a grid of tiles, one still frame taken from each loop, brightened and shown under a light veil; the dock's Scenery button chooses among Aisles, Video wall, Strips and Racks, each with its blue loops in the middle of the page. The loops (<code>docs/engine/wall/</code>) are shared under the same licence; they are not part of Omni-Compass and the notice above and below does not cover them. They are decoration: they show no measurement, and the dock's Wallpaper switch turns them off.</p>
   <h3>Contact</h3>
   <p class="contact">The Omni-Compass LLC · Main office infrastructure · Toll-free direct <b>1-888-339-9551</b> · System route asset <b>1-888-DEX-YLL-1</b><br>Landline, registered in Florida, <b>321-746-4411</b> · System route access <b>321-PING-411</b> · <a href="https://www.omni-compass.com">www.omni-compass.com</a></p>
 </section>
 
-<script>(() => { const pad = () => { const d = document.getElementById("dock"); if (d) document.body.style.paddingBottom = (d.offsetHeight + 24) + "px"; };
+<script>(() => { const pad = () => { const d = document.getElementById("dock"), t = document.getElementById("tourTab"); if (!d) return;   // fix_PHONE: room below the page for the dock and the Guided tour tab above it
+    let h = d.offsetHeight + 24; if (t && getComputedStyle(t).display !== "none") h += Math.ceil(t.getBoundingClientRect().height) + 16;
+    document.body.style.paddingBottom = h + "px"; };
   window.addEventListener("load", pad); window.addEventListener("resize", pad); document.addEventListener("click", () => setTimeout(pad, 50));
   if (window.ResizeObserver) window.addEventListener("load", () => { const d = document.getElementById("dock"); if (d) new ResizeObserver(pad).observe(d); }); })();</script>
 <p class="legal" id="notice-end" style="margin-top:28px">© 2026 The Omni-Compass LLC. All rights reserved. <b>Evaluation and Simulation use only.</b> Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with LICENSE, NOTICE and DISCLOSURES.md. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p>
@@ -5585,8 +5831,9 @@ function tourNavSay(tok, go) {   // fix_TOUR3: the line between the stops, in th
 function tourPlaceTab() {   // fix_TOUR3: the blue tab sits just above the dock's Tour button, on every screen
   const t = $("tourTab"), d = $("dTour"); if (!t || !d) return; const r = d.getBoundingClientRect();
   if (!r.width) { t.style.left = t.style.bottom = t.style.right = ""; return; }
-  t.style.right = "auto"; t.style.left = Math.round(Math.max(8, Math.min(innerWidth - t.offsetWidth - 8, r.left + r.width / 2 - t.offsetWidth / 2))) + "px";
-  t.style.bottom = Math.round(innerHeight - r.top + 10) + "px";
+  const z = parseFloat(document.documentElement.style.zoom) || 1, tw = t.getBoundingClientRect().width || t.offsetWidth;   // the page's own zoom (the Screen button)
+  t.style.right = "auto"; t.style.left = Math.round(Math.max(8, Math.min(innerWidth - tw - 8, r.left + r.width / 2 - tw / 2)) / z) + "px";
+  t.style.bottom = Math.round((innerHeight - r.top + 10) / z) + "px";
 }
 function tourInvite() { document.body.classList.toggle("tourInvite", !TOUR.on && window.scrollY < innerHeight * 1.5); }   // fix_TOUR3: it bounces on the landing view
 function tourWire() {
