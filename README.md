@@ -337,16 +337,16 @@ it, and nothing older than the newest result stands in front of it. Earlier fron
 <!-- front-page:tables:begin -->
 | Last changed (UTC) | Table | Reading |
 |---|---|---|
-| 2026-11-06 17:38 | [The Numbers a Website May Show, Each With Its Receipt](results/SITE_NUMBERS.md) |  |
-| 2026-11-06 17:38 | [The pages a person would have been sent: native against Omni-Compass on native](results/OVERSIGHT_PAGES.md) |  |
-| 2026-11-06 17:38 | [The Oversight Line: the Pages a Person Would Answer, Native Against Omni-Compass on Native](results/OVERSIGHT.md) |  |
+| 2026-11-06 22:20 | [The Numbers a Website May Show, Each With Its Receipt](results/SITE_NUMBERS.md) |  |
+| 2026-11-06 22:20 | [The pages a person would have been sent: native against Omni-Compass on native](results/OVERSIGHT_PAGES.md) |  |
+| 2026-11-06 22:20 | [The Oversight Line: the Pages a Person Would Answer, Native Against Omni-Compass on Native](results/OVERSIGHT.md) |  |
+| 2026-11-06 22:15 | [All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v25)](results/live/V25_ALL_FOUR.md) |  |
+| 2026-11-06 19:49 | [The injection grid: the Python's 500 injections through every organism and every governor (modelled)](results/injection_grid/INJECTION_GRID_3613462717.md) |  |
+| 2026-11-06 18:24 | [The engine's runs: 500 runs from the jump generator (base 3613462717), one digest](results/engine_runs/ENGINE_RUNS_500_3613462717.md) |  |
 | 2026-11-06 12:20 | [The injection grid: the Python's 500 injections through every organism and every governor (modelled)](results/injection_grid/INJECTION_GRID_3549104563.md) |  |
 | 2026-11-06 10:56 | [The injection grid: the Python's 500 injections through every organism and every governor (modelled)](results/injection_grid/INJECTION_GRID_3543358932.md) |  |
 | 2026-11-06 10:45 | [The engine's runs: 500 runs from the jump generator (base 3549104563), one digest](results/engine_runs/ENGINE_RUNS_500_3549104563.md) |  |
 | 2026-11-06 10:10 | [The engine's runs: 500 runs from the jump generator (base 3506845407), one digest](results/engine_runs/ENGINE_RUNS_500_3506845407.md) |  |
-| 2026-11-06 10:10 | [The engine's runs: 500 runs from the jump generator (base 3505493655), one digest](results/engine_runs/ENGINE_RUNS_500_3505493655.md) |  |
-| 2026-11-06 10:10 | [The Omni index: more for the same, or the same for less](results/OMNI_INDEX.md) |  |
-| 2026-11-06 09:53 | [The engine's runs: 500 runs from the jump generator (base 3543358932), one digest](results/engine_runs/ENGINE_RUNS_500_3543358932.md) |  |
 <!-- front-page:tables:end -->
 
 **Benchmark runs that just finished on GitHub** (a run becomes a result when its three-run set is complete):
@@ -354,16 +354,16 @@ it, and nothing older than the newest result stands in front of it. Earlier fron
 <!-- front-page:runs:begin -->
 | Finished (UTC) | Benchmark | Outcome | Run |
 |---|---|---|---|
-| 2026-11-06 16:59 | six-kube x500 orgs tower reps 97+3 arms native compass split yes window 12000 protocol 4 | success | [42210150128](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42210150128) |
-| 2026-11-06 16:56 | six-kube x500 orgs tower reps 11+5 arms native compass split yes window 12000 protocol 4 | failure | [42208013709](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208013709) |
-| 2026-11-06 16:48 | six-kube x500 orgs tower reps 81+1 arms native compass split yes window 12000 protocol 4 | success | [42210122179](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42210122179) |
-| 2026-11-06 16:47 | six-kube x500 orgs tower reps 63+1 arms native compass split yes window 12000 protocol 4 | success | [42208100096](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208100096) |
-| 2026-11-06 16:45 | six-kube x500 orgs tower reps 95+1 arms native compass split yes window 12000 protocol 4 | success | [42210143539](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42210143539) |
-| 2026-11-06 16:43 | six-kube x500 orgs tower reps 51+1 arms native compass split yes window 12000 protocol 4 | success | [42208087011](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208087011) |
-| 2026-11-06 16:40 | grid | success | [42254617096](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42254617096) |
-| 2026-11-06 16:39 | six-kube x500 orgs tower reps 47+1 arms native compass split yes window 12000 protocol 4 | success | [42208080212](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208080212) |
-| 2026-11-06 16:38 | six-kube x500 orgs tower reps 29+1 arms native compass split yes window 12000 protocol 4 | success | [42208034722](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208034722) |
-| 2026-11-06 16:34 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 247+41 arms native compass split no window 960 protocol 4 | success | [42226262145](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42226262145) |
+| 2026-11-06 22:12 | live-engine | cancelled | [42284837849](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42284837849) |
+| 2026-11-06 21:35 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 411+41 arms native compass split no window 960 protocol 4 | success | [42276408930](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42276408930) |
+| 2026-11-06 21:13 | raw-sweep | success | [42293346267](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42293346267) |
+| 2026-11-06 20:20 | six-kube x500 orgs tower reps 53+9 arms native compass split yes window 12000 protocol 4 | cancelled | [42208093311](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42208093311) |
+| 2026-11-06 20:10 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 370+41 arms native compass split no window 960 protocol 4 | success | [42266809915](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42266809915) |
+| 2026-11-06 19:54 | health | success | [42283495028](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42283495028) |
+| 2026-11-06 19:49 | injection-grid | success | [42270456434](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42270456434) |
+| 2026-11-06 19:47 | big-organism-detached collect | success | [42281842665](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42281842665) |
+| 2026-11-06 18:58 | six-kube x500 orgs tower reps 72+6 arms native compass split yes window 12000 protocol 4 | success | [42210114733](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42210114733) |
+| 2026-11-06 18:50 | six-kube x1 orgs compute_ai_cloud,physics_robotics_autonomous,energy_facility_industrial,stack,tower,spine reps 329+41 arms native compass split no window 960 protocol 4 | success | [42254799200](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42254799200) |
 <!-- front-page:runs:end -->
 
 **Two sides, always shown together, and only two: native is the system as it runs on its own; omni, Omni-Compass on
@@ -562,7 +562,7 @@ counts the babysitting tax in both arms (the alert minutes an on-call page would
 wrote on its own).
 
 <!-- the oversight line (tools/oversight.py) -->
-**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 41 real Kubernetes tests of omni-v25, the minutes an on-call page would be open (the 3 a.m. call) went down 7.4%, fewer in 15 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (218; 218; 205 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 6.5% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.5% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
+**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 43 real Kubernetes tests of omni-v25, the minutes an on-call page would be open (the 3 a.m. call) went down 7.4%, fewer in 16 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (216; 216; 203 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 6.7% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.5% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
 <!-- end of the oversight line -->
 
 ## Check it yourself
