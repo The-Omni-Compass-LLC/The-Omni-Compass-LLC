@@ -528,14 +528,34 @@ def places_block(m) -> list:
     L += [f"**The software both places carry.** Whichever the place, the same software end goes with Omni-Compass, and that is where "
           f"its benefit is measured so far: real software on GitHub's own computers (class L), never bare metal and never a cloud, and "
           f"with no bill in it. **The one number: {_cat_word(h, sv)} {abs(h):.1f}%**, the Omni index, every real product counted once, "
-          f"work, speed and machines scored (`{INDEX_FILE}`, on {idx_eng}). By product: {cat_txt}. The same runs read on work and speed "
-          f"alone, the machines left out, give {_cat_word(sv, sv)} {abs(sv):.1f}%"
-          + (f"; multiplied layer by layer (Kubernetes, then the services on it) they compose to {index_word(w['index'])} {abs(w['index']):.1f}% "
+          f"work, speed and machines scored (`{INDEX_FILE}`, on {idx_eng}). By product: {cat_txt}. Its second readings, each under its own "
+          f"rule and never a headline: the same runs read on work and speed alone, the machines left out, {_cat_word(sv, sv)} {abs(sv):.1f}%"
+          + (f"; multiplied layer by layer (Kubernetes, then the services on it), a composition, {index_word(w['index'])} {abs(w['index']):.1f}% "
              f"(`results/WHOLE_SYSTEM.md`, class S of class L tables)" if w and w.get("index") is not None else "")
           + ". These are one set of tests read three ways, so they never add; none of them is a bare-metal or a cloud bill: those are the "
           "boxes above. Whether the software's gain and the chip's add up on one machine is not yet measured: the organisms on the card "
           "and in the cloud measure it.", ""]
     return L
+
+
+def composed_said(w) -> str:
+    """The composed work, speed and machines by the key (6 November, the editor and mechanism seats: 2b printed "machines -77.7%
+    fewer" where 2a reads the same factor as 77.7% more, power given): each gauge's move with its size in percent of native and no
+    sign, then its word by what the gauge is for (STEADY under the 0.5% floor), then the factor toward the aim and, labelled raw, the
+    change Omni-Compass - native over native with its true sign. Machines that rose are power given, never "fewer"; "fewer" is said
+    only where the machines read GAIN."""
+    def one(name, pct, aim_up, more, less, word_up, word_down, factor):
+        if pct is None:
+            return f"{name} not composed"
+        f = 1 + pct / 100                                      # the record's factor toward the gauge's aim
+        ch = (f - 1) if aim_up else (1 / f - 1)                # the raw change, Omni-Compass - native over native
+        size = 100 * abs(ch)
+        word = K.STEADY if size < 100 * K.SIZE_FLOOR else (word_up if ch > 0 else word_down)
+        return f"{name} {(more if ch > 0 else less).format(f'{size:.1f}%')}, {word} ({factor}, ×{f:.3f}; raw {raw(ch)})"
+    return "; ".join((one("work", w["work"], True, "{} more", "{} less", K.GAIN, K.LOSS, "Omni-Compass's work over native's"),
+                      one("the 95th-percentile response time", w["speed"], False, "{} longer", "{} shorter", K.LOSS, K.GAIN,
+                          "native's time over Omni-Compass's"),
+                      one("machines", w["machines"], False, "{} more", "{} fewer", K.GIVEN, K.GAIN, "native's machines over Omni-Compass's")))
 
 
 def markdown(m) -> str:
@@ -547,14 +567,14 @@ def markdown(m) -> str:
     idx = st["index"]
     if idx and idx.get("engine") == stands:
         w = index_word(float(idx["pct"]))
-        way = "unchanged" if w == K.STEADY else f"{'up' if idx['pct'] > 0 else 'down'} {abs(idx['pct']):.1f}%"
+        way = f"{abs(float(idx['pct'])):.1f}%"                  # one word, then one number: the index has no raw change
         counts = "; ".join(f"{n} {word}" for word, n in st["words"])
         older = (f" {st['older']} still stand on an older engine ({', '.join(st['older_engines'])}) until their {stands} runs land."
                  if st["older"] else "")
-        L.append(f"**On the engine that stands ({stands}), the Omni index reads {w}, {way}**, every real "
+        L.append(f"**On the engine that stands ({stands}), the Omni index reads {w} {way}**, every real "
                  f"test together ([`{INDEX_FILE}`]({INDEX_FILE})), each benchmark run three times (A, B and C) on GitHub's own "
                  f"machines. Of the {st['bench']} benchmarks on the benefit sheet ([`docs/BENEFIT_SHEET.md`](docs/BENEFIT_SHEET.md)), "
-                 f"{st['on']} read {stands}'s own three-run table: {counts}; every LOSS row is named with its cause in "
+                 f"{st['on']} read {stands}'s own three-run table: {counts}; every LOSS row is listed, with its cause where one is written, in "
                  f"[`docs/LOSS_LEDGER.md`](docs/LOSS_LEDGER.md).{older}")
     else:
         led = m["ledger"]
@@ -618,10 +638,9 @@ def markdown(m) -> str:
         sp, mc = 1 + w["speed"] / 100, 1 + w["machines"] / 100           # both native's over Omni-Compass's
         L += ["", f"Beside it: the whole organism at the software end, composed from the tables that stand, each on its own engine "
               f"([`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md), `tools/whole_system.py`; {', '.join(w['engines'])}), the cluster and "
-              f"the services on it, by the rule that counts only what held in all three runs: work {w['work']:.1f}% more, the "
-              f"95th-percentile response time {100 * (1 - 1 / sp):.1f}% shorter (native's time over Omni-Compass's, ×{sp:.3f}), machines "
-              f"{100 * (1 - 1 / mc):.1f}% fewer (native's machines over Omni-Compass's, ×{mc:.3f}); the index over work, speed and machines "
-              f"{index_word(w['index'])} {abs(w['index']):.1f}%. The energy and the cloud's bill are held at native's and never counted: the "
+              f"the services on it, by the rule that counts only what held in all three runs: {composed_said(w)}; the composition's index over "
+              f"work, speed and machines, a second reading under its own rule and never the headline, {index_word(w['index'])} "
+              f"{abs(w['index']):.1f}%. The energy and the cloud's bill are held at native's and never counted: the "
               "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
               "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read its work and its energy STEADY, "
               "its response times LOSS by the mean of the three runs, `results/gpu/V21_A100_CAP_ABC.md`); the chip's own receipt, on "

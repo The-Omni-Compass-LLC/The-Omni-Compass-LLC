@@ -307,6 +307,17 @@ def main():
     cat_r = {c: gmean([1 + t["resource_pct"] / 100 for t in v if t.get("resource_pct") is not None]) for c, v in cats.items()}
     head_r = gmean([cat_r[c] for c in REAL if c in cat_r and cat_r[c]])     # the reading of 4 October, energy scored
     avg = lambda c, m: gmean([t["measures"][m]["ratio"] for t in cats[c] if m in t["measures"]])
+
+    def gloss():
+        """The headline's gloss from its own columns (6 November, the mechanism seat: "on fewer machines" printed beside a machines
+        column that put more machines in for five of the six categories): each clause by the key on the real categories' geometric mean of
+        that column, its change in percent of native from 0.5% up; "fewer machines" only where they read GAIN, a rise power given."""
+        def say(m, gain, loss, same):
+            r = gmean([avg(c, m) for c in REAL if c in cats])
+            ch = None if r is None else (r - 1 if m == "work" else 1 / r - 1)
+            return same if ch is None or abs(ch) < 0.005 else (gain if (ch > 0) == (m == "work") else loss)
+        return ", ".join((say("work", "more work", "less work", "the same work"), say("speed", "faster", "slower", "as fast"),
+                          say("machines", "on fewer machines", "the machines it took shown beside it as power given", "on the same machines")))
     L = ["# The Omni index: more for the same, or the same for less", "",
          "Every measure of every test is a ratio oriented so that above 1 is a GAIN against the system's declared aim with Omni-Compass on "
          "top of native: work (more), speed (a lower response time), machines (fewer: a cut), energy (less: a cut). Below 1 is a LOSS "
@@ -321,7 +332,7 @@ def main():
          "Every number is read from the test's own newest three-run table (`results/live/V<n>_*.json`, the newest engine with all three runs, made by "
          "`tools/confirm_abc.py`, `tools/pgbench_abc.py`, `tools/kafka_abc.py`, `tools/redis_abc.py`, `tools/ycsb_abc.py` and `tools/sysbench_abc.py` from the three archived runs; `tools/omni_index.py`).", "",
          f"## Headline: Omni-Compass on top of native, real software on real computers (the software end, class L; not bare metal and not the chip, which enters as its own category), judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
-         f"{index_word(head, head_s)}** (more work, faster, on fewer machines, for the same energy and the same bill: the software "
+         f"{index_word(head, head_s)}** ({gloss()}, for the same energy and the same bill: the software "
          "end's reading, work, speed and machines as measured, energy as native's where no meter read it)", "",
          f"The reading declared on 4 October, every measure scored, the modelled energy included: **{pw(head_r, index_word(head_r, head_s))}, "
          f"{index_word(head_r, head_s)}**, printed beside the headline so nothing moves out of sight; its energy is a model's estimate, never a meter's.", "",
