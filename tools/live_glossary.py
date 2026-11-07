@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -443,8 +443,9 @@ TERMS = [
     # ------------------------------------------------------------------------------------------------------- the arms
     T("Omni-Compass", A, "A supervisory governor. It always sits on top of a native controller and never in its place: the "
       "Kubernetes pod autoscaler, GPU firmware, cooling, batteries, a grid's tap changer, a robot's servo. It treats each setting "
-      "a native controller already exposes as a muscle and the whole stack as one body. Headline: more work, faster, on fewer "
-      "machines, for the same energy and the same bill.",
+      "a native controller already exposes as a muscle and the whole stack as one body. The aim it is built for, CLAUDE.md's headline "
+      "line, an aim and never a result: more work, faster, on fewer machines, for the same energy and the same bill; what the "
+      "tables read stands in section 2a, the machines it took shown beside the work as power given.",
       [(CL, "Omni-Compass is a **supervisory governor**."),
        (CL, "Headline: more work, faster, on fewer machines, for the same energy and the same bill")]),
     T("native", A, "The whole system by itself with everything it ships with: every muscle under its own native controller. Every "
@@ -518,7 +519,7 @@ TERMS = [
     T("one mechanism, in one place", A, "Omni-Compass acts in one place, the software end, on top of the controllers a stack "
       "already runs, and changes nothing in the chip or the network or the cloud. Its effect travels the whole path the work "
       "travels (the software, the wire, the chip and back), so it is checked at every place: the software end shows the gain, the wire "
-      "and the chip show that it holds and carry the gain to their receipts.",
+      "and the chip are read for whether it holds and carry the gain to their receipts.",
       [(DIS, "Two places are tested because a system runs in only those two; one mechanism makes the gain")],
       aka=["felt along the whole path"]),
     # -------------------------------------------------------------------------------------------- the law and the plug
@@ -555,7 +556,7 @@ TERMS = [
     T("k[d]", L, "The damping: k[d] × velocity meets whatever is shoving the position (a load rising, heat building) with an equal "
       "and opposite push. Chosen for critical damping, k[d] = max(0, 2√(k[p]·τ/dt) − 1)·dt, the reading glides to the centre and "
       "stops, no overshoot, no ringing. Some wires set it at three times that, so a rising load is met before it reaches the wall "
-      "(the Kubernetes governor, the GPU governors, the realms' arms and the grid's runner); the data stores' runners, the "
+      "(the Kubernetes wire, the card's two wires, the realms' arms and the grid's runner); the data stores' runners, the "
       "orchestrator's brain and the other simulators keep the class's critical damping. The page's section 5h lists every wire, "
       "read from the repository at each build.",
       [(LAW, "K_D x velocity: whatever is shoving the position"),
@@ -606,7 +607,7 @@ TERMS = [
       "redistributes.",
       [(CORE, "(7) dB/dt = B_dot ; dB_dot/dt = gamma_c delta S - (omega_B/Q_B) B_dot - omega_B^2 B"),
        (PAGE_F, "Piece 3, Bath")], aka=["the bath", "B_dot"]),
-    T("piece 4, the governor's law", B, "The governor's law (omnicompass/adapter.py, nervous_system.py): "
+    T("piece 4, the governor's law", B, "The supervisory law of the fourth piece (omnicompass/adapter.py, nervous_system.py): "
       "push and the utilisation target ρ* from the state, and the nerves' grants to every organ: one law for every muscle, with "
       "no outside authority.",
       [(PAGE_F, "Piece 4, Governor Law"),
@@ -840,7 +841,7 @@ TERMS = [
     T("a governor's way", A, "The third arm in our models: a governor or orchestrator (the Kubernetes scheduler and its bin-packing "
       "profile, Kueue, Volcano, KAI, Koordinator, CruiseKube, Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster Management, "
       "KubeEdge, Nephio) as the body of the catalog muscles that stand for its knobs, sitting on the organism's clock on the same "
-      "injections; Omni-Compass on top of the governor governs both bodies. Read per muscle, like for like. Its knobs run under "
+      "injections; Omni-Compass, supervisory on top of that product, steers both bodies. Read per muscle, like for like. Its knobs run under "
       "their own native controllers, so it reads native's work index by construction; the governors as their projects ship them "
       "run on real Kubernetes in section 4e (class L).",
       [(IGT, "The governors, the third arm. Each of the fourteen governors and orchestrators"),
@@ -1122,8 +1123,10 @@ TERMS = [
       aka=["switchboard"]),
     T("the monitor wall", W, "Every monitor of the page in one view (section 0), numbered 1 upward in five blocks of about twelve, "
       "each its own subject (Benefit and Organism; Real Runs on GitHub; Brain and Mechanism; Clouds, Chips, Orchestrators and "
-      "Scale; Proof and Telemetry), read left to right; every canvas the page draws is one monitor, its small copy on the wall a tile.",
-      [(MAN, "Every monitor of the page in one view"), ("docs/engine/monitors.json", "every canvas the page draws is one monitor")],
+      "Scale; Proof and Telemetry), read left to right; every monitor is one canvas the page draws, its small copy on the wall a tile; "
+      "the page's other canvases (the wall's own, the sparklines inside panels, the illustrations' live drawings, the background) are "
+      "parts of a monitor or decoration.",
+      [(MAN, "Every monitor of the page in one view"), ("docs/engine/monitors.json", "every monitor is one canvas the page draws")],
       aka=["monitor wall", "the wall", "monitor", "monitors"]),
     T("golden signals", W, "Latency, traffic, errors and saturation: on the wall, the work waiting, the work done, the decisions "
       "past their line and the capacity held.", [(MAN, "Latency, traffic, errors and saturation")], aka=["golden signals"]),

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -117,12 +117,14 @@ def cloud_block() -> list:
     title = t.splitlines()[0].lstrip("# ").strip()
     m = re.search(r"\*\*Read by the one key\*\*.*?\): (.+?)(?:\n\n|$)", t, re.S)
     said = " ".join(m.group(1).split()) if m else "not found in the record"
+    said = re.sub(r"\bEVEN\b", "STEADY", said)   # the record keeps the words of its day; the page reads by today's key
     pairs = re.search(r"vs native, (\d+) paired repetitions", t)
     run = re.search(r"Run (\d+)", t)
     eng = re.search(r"engine \*\*(omni-v\d+)\*\*", t)
     text = (f"**{title}** (`{CLOUD.relative_to(ROOT)}`; run {run.group(1) if run else 'not named'}, engine "
             f"{eng.group(1) if eng else 'not named'}, {pairs.group(1) if pairs else 'not counted'} paired repetitions read). The "
-            f"record's own reading, quoted from it by `python3 tools/results_chapter.py`: \"{said}\"")
+            f"record's own reading, carried from it by `python3 tools/results_chapter.py`, its retired word for no difference beyond the "
+            f"noise written as the key's STEADY: {said}")
     return OW.wrap(text)
 
 
@@ -350,5 +352,5 @@ def main(argv=None) -> int:
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

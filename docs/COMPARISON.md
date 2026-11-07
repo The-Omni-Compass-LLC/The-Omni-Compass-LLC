@@ -1,6 +1,6 @@
 # Omni-Compass compared with what runs data centers today
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 People who run these systems often see "autoscaling" everywhere and assume it all does the same thing. It does not.
 This page sets out, from public descriptions, what each system controls, and where Omni-Compass sits among them.
@@ -64,9 +64,9 @@ against the same stack with Omni-Compass on top, in paired runs (`docs/INTEGRATI
 
 | Against | Result | Kind |
 |---|---|---|
-| Kubernetes as it runs by default (HPA + fixed nodes) | p95 response time −37% to −55%, replicas −12% to −25%, machines in service −17% to −21% | measured on real Kubernetes (kind), 10 paired runs each, `results/live/` |
-| A GPU at its vendor default | +1.3% to +5.1% work per energy, p95 within +10% | modelled card (MLPerf-calibrated), `results/gpu/sim/after` |
-| Today's power practice (every GPU at one fixed cap that leaves room for every CPU at peak) | +1.4% to +5.7% work served, backlog −16% to −28%, never over the site budget | modelled, `results/hardware/NODE_EXCHANGE_*.json` |
+| Kubernetes as it ships (its HPA and scheduler), omni-v25 | the 95th percentile down 41% to 66% on the steady, wandering, all-four and fault tests: faster answers, GAIN in all three of our runs; the replicas it adds shown beside them as power given; the Kubernetes category of the Omni index GAIN 20.5% | measured on real Kubernetes (kind) on GitHub's machines, ten pairs a run, three runs, `results/live/V25_STEADY.md`, `V25_WANDERING.md`, `V25_ALL_FOUR.md`, `V25_FAULTS.md`, `results/OMNI_INDEX.md` |
+| A GPU at its vendor default | 1.3% to 5.1% more work per energy, the 95th percentile within 10% of native's | modelled card (MLPerf-calibrated), an earlier card controller, `results/gpu/sim/after` |
+| Today's power practice (every GPU at one fixed cap that leaves room for every CPU at peak) | 1.4% to 5.7% more work served, the backlog down 16% to 28%, never over the site budget | modelled, `results/hardware/NODE_EXCHANGE_*.json` |
 | A reactive site capper alone | 60-196 minutes over the site budget without Omni-Compass; 0 with it | modelled |
 
 Turbonomic, Borg and Twine cannot be measured here. Against a customer who runs one of them, the comparison is made on
@@ -86,4 +86,4 @@ Where a row above is wrong or out of date, correct it from the maker's own publi
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

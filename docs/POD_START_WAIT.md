@@ -1,6 +1,6 @@
 # The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 One row of the Kubernetes add-on test read LOSS on the engines that stood on 18 October: the mean wait for a serving pod to
 start under KEDA's HTTP add-on. This page is that row's root cause, measured from the runs' own files. It sets out the
@@ -132,7 +132,7 @@ reading. A LOSS is root-caused again and never cut.
   unpacks in well under a second.
 - **The model gate carries the old rig.** The conveyance model's pod start time (`start_time` in `tools/model_gate.py`: 8 s up to
   half busy, rising to 12.4 s near the top) was fitted to the omni-v6 KEDA run's 151 starts. That curve is the empty-node
-  unpacking of section 4 in model form, and it is why the gate reads the pod start wait under conveyance LOSS (+9.0% on
+  unpacking of section 4 in model form, and it is why the gate reads the pod start wait under conveyance LOSS (up 9.0%, a longer wait, on
   omni-v10 and omni-v11, `docs/OMNI_V11.md`). The curve is refit from the first amended-rig KEDA runs' own files, never
   guessed. Until then the model's start-wait row reads this coupling, not the governor.
 
@@ -150,4 +150,4 @@ python3 tools/pod_phases.py addons-run-39108180989 addons-run-39115242861 addons
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

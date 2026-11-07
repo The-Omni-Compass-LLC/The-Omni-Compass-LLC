@@ -1,10 +1,10 @@
 # Statistical validation: every reading reconstructed from its raw values
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `ec8f59bad92e00e2`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v25. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
+Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `a09678d9af2f9f0d`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v26. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
 
 ## The rule
 
@@ -65,4 +65,4 @@ The rows that disagree are not resolved by this report: each is a test unstable 
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
