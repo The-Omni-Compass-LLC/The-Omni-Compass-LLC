@@ -172,6 +172,15 @@ class TestMonographWords(unittest.TestCase):
         self.assertAlmostEqual(MW.OI.gmean(runs), MW.index_record()["head"], places=9)
 
 
+    def test_the_rebuild_keeps_the_words_in_step(self):
+        # the founder's order of 6 November: when a benchmark changes a number, the words that quote it follow by themselves; the
+        # page's rebuild on GitHub writes every block again, checks them, and commits the monograph with the page
+        wf = (ROOT / ".github" / "workflows" / "live-engine.yml").read_text(encoding="utf-8")
+        self.assertIn("python tools/monograph_words.py --fix", wf)
+        self.assertIn("python tools/monograph_words.py --check", wf)
+        self.assertIn("docs/engine/LIVE_ENGINE_MONOGRAPH.md", wf.split("Legal notice checked, the page committed", 1)[1])
+        self.assertIn("monograph_words.py", (ROOT / "verify.py").read_text(encoding="utf-8"))
+
 if __name__ == "__main__":
     unittest.main()
 

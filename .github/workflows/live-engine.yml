@@ -124,6 +124,11 @@ jobs:
           # stamped page as it is committed; it reads the page and never writes it (the editor seat of 6 November: two builds behind, 163
           # LOSS rows against the page's 273)
           python docs/book/build_live_manual.py | tee -a "$GITHUB_STEP_SUMMARY"
+          # the words follow the numbers (the founder's order of 6 November: when a benchmark changes a number, the words that quote it
+          # change with it): every count the live engine monograph quotes is written again from its record (tools/monograph_words.py),
+          # and the benefit sheet from the tables it reads
+          python tools/benefit_sheet.py | tee -a "$GITHUB_STEP_SUMMARY"
+          python tools/monograph_words.py --fix | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The page's engine against the Python and the C++; every record against the repository's own runs
         # the check reads with the access the build had (1 November: without GitHub's token the check's own rebuild read a run's
         # engine from CHANGELOG.md where the build had read it from GitHub's run record, and the two words differed)
@@ -138,6 +143,8 @@ jobs:
           python -m unittest discover -v -s tests -p "test_live_*.py" -t . 2>&1 | tail -60 | tee -a "$GITHUB_STEP_SUMMARY"
           python docs/book/build_live_manual.py --check | tee -a "$GITHUB_STEP_SUMMARY"
           python tools/tour_script.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+          python tools/monograph_words.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+          python tools/claims_check.py --summary | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Legal notice checked, the page committed
         run: |
           git config user.name "github-actions[bot]"
@@ -146,7 +153,7 @@ jobs:
           # every file the rebuild writes goes in with the page (the page, its appraisal, the wall's Grafana dashboard, the GitHub
           # ledger): on 24 October a file the rebuild had rewritten was left out, and every push attempt stopped on it ("cannot pull
           # with rebase: You have unstaged changes", run 40074924675)
-          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md docs/engine/PAGE_WORD_FOR_WORD.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html docs/engine/tour README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json results/OVERSIGHT.md results/OVERSIGHT.json results/SITE_NUMBERS.md results/SITE_NUMBERS.json docs/FAQ.md; do
+          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md docs/engine/PAGE_WORD_FOR_WORD.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html docs/engine/tour README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json results/OVERSIGHT.md results/OVERSIGHT.json results/SITE_NUMBERS.md results/SITE_NUMBERS.json docs/FAQ.md docs/engine/LIVE_ENGINE_MONOGRAPH.md docs/BENEFIT_SHEET.md results/BENEFIT_SHEET.json; do
             [ -e "$f" ] && git add -- "$f"
           done
           git commit -q -m "Live benchmark engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"
