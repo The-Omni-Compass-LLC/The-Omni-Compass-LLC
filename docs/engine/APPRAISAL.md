@@ -26,8 +26,8 @@ the page carries the commit, the time and GitHub's own list of the runs running 
 
 | What | Count |
 |---|---|
-| Three-run tables played back from their raw files (sections 5c and 5d) | 96, with 281 runs |
-| Raw files checked against their run's own `SHA256SUMS_ALL.txt` | 228,687 of 228,687 matched; 0 unmatched |
+| Three-run tables played back from their raw files (sections 5c and 5d) | 96, with 288 runs |
+| Raw files checked against their run's own `SHA256SUMS_ALL.txt` | 235,240 of 235,240 matched; 0 unmatched |
 | Receipts (every judged row of each benchmark's newest table) | 100: omni-v25 95, omni-v12 5 |
 | Omni-Compass against its native (63 tables), as the tables wrote them | 486 GAIN, 181 power given, 584 STEADY, 287 LOSS, 188 the runs disagree, 30 the runs differ, 655 shown, 201 tuning (the page applies the floor of 0.5% at load; after it: 450 GAIN, 145 power given, 720 STEADY, 223 LOSS, 188 the runs disagree, 30 the runs differ, 655 shown, 201 tuning) |
 | Set apart as the LOSS ledger sets them (37 tables: in place of a controller, Omni-Compass by itself and the four ways' VS; the orchestrator's own, ORCH; two changes at once, BOTH), never a reading of Omni-Compass against its native | 200 GAIN, 65 power given, 199 STEADY, 247 LOSS, 58 the runs disagree, 335 shown (the page applies the floor of 0.5% at load; after it: 185 GAIN, 43 power given, 318 STEADY, 165 LOSS, 58 the runs disagree, 335 shown) |
