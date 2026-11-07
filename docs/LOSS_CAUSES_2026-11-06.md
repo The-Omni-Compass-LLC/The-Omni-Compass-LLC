@@ -104,7 +104,8 @@ The batch stream through each scheduler, Omni-Compass on top against the schedul
 | The plain batch stream | 41753030885 | 0 | 0 | up 0.6%, EVEN |
 
 Koordinator's two rigs flip a tenth as often and still rise, so this page does not write their cause: on them the rows stay
-without one until they are read. The plain batch stream never flips; its queue's row is the governor's own processor
+without one until they are read. They were read on 7 November (`docs/LOSS_CAUSES_2026-11-07.md`): the conveyance's cycle, and
+the processor Koordinator reclaims for its batch jobs given to the web service. The plain batch stream never flips; its queue's row is the governor's own processor
 (`docs/LOSS_CAUSES_2026-11-05.md`, section 1).
 
 ## 3. The cause, and what decides it

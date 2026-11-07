@@ -209,6 +209,34 @@ for _name in FLIPPED:
     if _name != "KAI":                  # the batch stream through the KAI scheduler started the same 3 web pods in both arms
         CAUSES[(25, _name, "pod start wait")] = FLIP_START
 
+# Koordinator's two batch-stream tables, read from their own runs on 7 November (docs/LOSS_CAUSES_2026-11-07.md): the target
+# flipped a tenth as often there, so the web service's rows and the queue's are the conveyance's, and the pod starts the flips'
+KOORD_PAGE = "docs/LOSS_CAUSES_2026-11-07.md"
+KOORD_NEXT = ("the next version, through the model gate first: the conveyance's raise sized so the shared host stays under its "
+              "hand-back line, a hand-back that steps a limit down by what the host is over rather than to the operator's, and no "
+              "raise into processor another workload is owed (Koordinator's batch processor counted as what its pods may use, no "
+              "raise while another workload's pods wait); then the benchmark's three runs on that engine")
+KOORD_CYCLE = ("an engine fault found in the files: the conveyance's cycle on the shared host (one raise, 2.8 more cores a pod on a "
+               "four-core host, jumps the band from 70% to 75% busy, and the hand-back puts every raised limit back to the operator's "
+               "500m at once): 28 to 81 raises and 24 to 70 hand-backs an arm; in the minutes with a hand-back, about 36% of all, the "
+               "web service's 95th percentile ran 11.9% to 15.9% slower and its 99th 9.7% to 13.8% slower than native's in the same "
+               "minutes, while in the minutes the raise held its mean ran 25.7% to 28.9% faster and its 95th percentile 8.4% to 11.6% "
+               "faster (60 repetitions in six runs)", KOORD_PAGE, "", KOORD_NEXT)
+KOORD_RECLAIM = ("an engine fault found in the files: the conveyance reads the processor Koordinator reclaims for its best-effort "
+                 "jobs as idle and gives it to the web service's pods (a batch pod asks only for Koordinator's batch processor, so "
+                 "the conveyance counts it as using nothing); Koordinator's batch processor at the window's end 11.4% smaller on the "
+                 "cgroup root and 10.8% smaller plain (30 repetitions each), and the queue's jobs waited longer for a place and "
+                 "finished later: a trade between muscles the engine's strictest rule never makes", KOORD_PAGE, "", KOORD_NEXT)
+KOORD_START = ("the target's flips (the same page, section 4): in the 37 repetitions where the governor wrote the web service's "
+               "target, native started 6 web pods and Omni-Compass 67; in the 23 where it wrote none, 3 and 6 (the omni-v25 fault of "
+               "docs/LOSS_CAUSES_2026-11-06.md)", KOORD_PAGE, "omni-v26", FLIP_NEXT)
+for _name in ("KOORDINATOR", "KOORDINATOR_CGROUP"):
+    for _g in ("response time", "time over the response line", "alert minutes"):
+        CAUSES[(25, _name, _g)] = KOORD_CYCLE
+    for _g in ("batch: queue finished", "queue: job"):
+        CAUSES[(25, _name, _g)] = KOORD_RECLAIM
+    CAUSES[(25, _name, "pod start wait")] = KOORD_START
+
 
 def newest_tables():
     """Each benchmark's newest whole table: (engine number, benchmark name, path)."""

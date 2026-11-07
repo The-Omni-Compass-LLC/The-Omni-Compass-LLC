@@ -35,7 +35,7 @@ GROUPS = {
     "engine_v26": ["OMNI_V26.json", "tools/omni_version.py", "docs/OMNI_V26.md", "omni_controller/controller.py",
                    "tests/test_neighbour_hold.py", "tools/batch_flip_model.py", "results/model_gate/BATCH_FLIP_INPUTS.json",
                    "results/model_gate/V26_BATCH_FLIP.md", "results/model_gate/V26_VS_V25.md",
-                   "docs/LOSS_CAUSES_2026-11-06.md"],   # another workload's waiting pods hold native's target
+                   "docs/LOSS_CAUSES_2026-11-06.md", "docs/LOSS_CAUSES_2026-11-07.md"],   # another workload's waiting pods hold native's target
     "engine_v25": ["OMNI_V25.json", "tools/omni_version.py", "docs/OMNI_V25.md", "tools/run_kafka.py", "omni_controller/controller.py",
                    ".github/workflows/kafka.yml", "results/model_gate/V25_VS_V24.md"],   # the Kafka wire's producer before the governor's thread
     "engine_v24": ["OMNI_V24.json", "tools/omni_version.py", "docs/OMNI_V24.md", "omni_controller/controller.py",

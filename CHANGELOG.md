@@ -2,6 +2,17 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-07: Koordinator's rows read from their own files (no engine change; omni-v26 stands)
+- `docs/LOSS_CAUSES_2026-11-07.md`, from the 60 repetitions of Koordinator's two batch-stream tables on omni-v25: the web
+  service's 95th and 99th percentile, time over the line and alert minutes are the conveyance's cycle on the shared host (one
+  raise jumps the band from 70% to 75% busy and the hand-back puts every limit back at once: in the minutes with a hand-back the
+  95th percentile ran 11.9% to 15.9% slower than native's, in the minutes the raise held 8.4% to 11.6% faster); the queue's rows
+  are the processor Koordinator reclaims for its best-effort jobs, which the conveyance read as idle (Koordinator's batch
+  processor at the window's end 10.8% to 11.4% smaller); the pod start waits are the target's flips, fixed in omni-v26.
+- The ledger: Koordinator's 21 rows carry their causes (16 without one before; the 5 queue rows of one table keyed until now to
+  the control plane's reads, suspected and unmeasured); 80 rows on omni-v25 still carry no cause. The conveyance's two faults
+  are on the next version's list, through the model gate first.
+
 ## 2026-11-07: omni-v26 stands: another workload's waiting pods hold native's target
 - **The fault** (read from the omni-v25 runs' own files, `docs/LOSS_CAUSES_2026-11-06.md`): when a service's target stood below
   native's and pods waited, the decision returned native's target without starting the immune hand-back's hold, so the next
