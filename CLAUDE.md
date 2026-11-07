@@ -1,6 +1,6 @@
 # CLAUDE.md: standing orders for any session working on this repository
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 These are the founder's orders, gathered from the full working record. They load every session. Follow them unless
 the founder overrides one in the conversation.
@@ -46,9 +46,24 @@ the founder overrides one in the conversation.
 - Scaling: floor of 2 machines, no ceiling, every machine usable. Traffic tests step by one (1 2 3 2 3 4 …).
 - Nothing is hardwired. Anything that doesn't work is removed, not just switched off.
 
-## The engine: Omni v25 stands (v24, v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
+## The engine: Omni v26 stands (v25, v24, v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`) stands on main from 3 November, night, under the founder's
+- **Omni v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files; `docs/OMNI_V26.md`) stands on main from 7 November, under the founder's
+  standing order that every fault found is fixed and lands as the next version, told, not asked, and his order of 6 November ("Just get
+  everything else push, and push"): omni-v25 with one fault fixed in the Kubernetes governor (`omni_controller/controller.py`), read from
+  the omni-v25 runs' own files (`docs/LOSS_CAUSES_2026-11-06.md`). When a service's target stood below native's and pods waited, the
+  decision returned native's target but did not start the immune hand-back's hold (only the fast check started it, and it skips a target
+  already at native's), so the next decision with no pod waiting failed up again: on the batch rigs a batch queue's normal waiting flipped
+  the web service's target between 30% and 50% every one or two decisions (304 flips over 30 repetitions of the KAI scheduler's four ways),
+  and the flips kept extra web pods in room the queue was owed (the queue up to 6.8% later; the web's 95th percentile up 5% to 38% by rig).
+  The decision now starts the hold itself when the waiting pods include those of a workload no autoscaler governs (a batch queue's; never
+  a DaemonSet's, never another governed service's), and the fail-up is not taken again while it runs (`tests/test_neighbour_hold.py`).
+  The model gate against omni-v25 (`results/model_gate/V26_VS_V25.md`): all twelve models identical, 104 readings, no LOSS; the batch
+  queue's replay (`results/model_gate/V26_BATCH_FLIP.md`, `tools/batch_flip_model.py`, class S): target writes down 83.5%, flips down
+  88.6%, the time below native's target while the queue's pods waited down 78.2%. A first form that also counted another governed
+  service's waiting pods read a LOSS in the cloud model at 15 s (the 95th percentile up 2.7%) and was refused by the gate. Every
+  benchmark runs again on it from 14:31 UTC on 7 November.
+- **Omni v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`) stood on main from 3 November, night, to 7 November, under the founder's
   standing order that every fault found is fixed and lands as the next version, told, not asked, and his order of 3 November ("go into
   the GitHub ... grade and see where it's at ... keep pushing"): omni-v24 with one fault fixed in the Kafka wire (`tools/run_kafka.py`).
   From omni-v22 the governor's thread opened its own Kafka client (the arrivals' reader) at its start while the main thread forked the
@@ -1210,8 +1225,8 @@ the founder overrides one in the conversation.
 ## Repository
 
 - Referee and underwriter level. Only finals up front; old material goes to `docs/history` / `archive/` or is removed.
-  One version is always the main one; `main` and the working branch, `v25` (the engine that stands, 3 November), stay in
-  sync, and `v24`, `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v25` (made at omni-v25's push; the runs started from `gpu-omni-v24` stay omni-v24's record),
+  One version is always the main one; `main` and the working branch, `v26` (the engine that stands, 7 November), stay in
+  sync, and `v25`, `v24`, `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v26` (made at omni-v26's push; the runs started from `gpu-omni-v25` stay omni-v25's record),
   levelled with main at every landing, its head the one exact commit the founder's next GPU rental starts from (the last rental ran
   7770532ed5, omni-v21 with the GPU rig's readiness barrier, 30 October). `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
   is history** (the founder's order of 17 October: "We won long past 5"): it is never merged into `main` and `main` is
@@ -1253,4 +1268,4 @@ the founder overrides one in the conversation.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

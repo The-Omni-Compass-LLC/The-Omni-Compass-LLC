@@ -1,6 +1,6 @@
 # Running the GPU test yourself, step by step
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 > **Before you wire anything:** read [`DISCLOSURES.md`](../DISCLOSURES.md). Omni-Compass acts only through the wires it is given; it cannot be slapped on. If your paired receipts differ from the published benchmarks in direction, the first presumption is wiring: check the installation with section 4.5 of the manual (*Wired right or wired wrong*).
 
@@ -197,15 +197,16 @@ A table from the GPU's own power meter:
 - native against Omni watching only, and native against Omni governing;
 - the preregistered primary result: work per energy, in requests served per kilojoule, with its 95% interval.
 
-It ends with one verdict line, one of:
-- **GAIN, proven**;
-- **LOSS, proven**;
-- **not proven**;
-- **more requests per kJ, fails the service guardrail**.
+It ends with one verdict line, chosen by rule (`tools/gpu_reps.py`, `label`), one of:
+- **SUPERIOR WITHIN GUARDRAILS**: more requests per kJ (GAIN, clear of the noise) with every service guardrail held;
+- **ENERGY IMPROVEMENT WITH SERVICE TRADEOFF**: more requests per kJ, clear of the noise, with a service guardrail failed;
+- **AWAY FROM ITS AIM**: fewer requests per kJ, clear of the noise;
+- **NONINFERIOR / INCONCLUSIVE** or **NOT ESTABLISHED**: no difference beyond the noise, with the guardrails held or not;
+- **NOT ATTRIBUTABLE: WATCH DIFFERS FROM NATIVE**, or **INVALID**.
 
 Whatever it says is the answer, and it is the first number in this project that Omni-Compass's own code did not
 compute.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

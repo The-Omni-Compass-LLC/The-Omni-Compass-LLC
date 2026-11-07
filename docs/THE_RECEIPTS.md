@@ -1,6 +1,6 @@
 # The receipts, in their totality: what every result shows, and what it does not
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 A **receipt** here is a result file in this repository made by a paired run: the system as it runs on its own
 (native) and the same system with Omni-Compass on top, the same work in both arms, the rules written down before the
@@ -49,6 +49,9 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 | Robustness: the two-hour run | L | omni-v25 | **GAIN AND LOSS** | 8.9% LOSS | `results/live/V25_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run | L | omni-v25 | **GAIN AND LOSS** | 1.5% LOSS | `results/live/V25_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots | S | omni-v25 | **GAIN** | 3.8% GAIN | `results/live/V25_MUJOCO.md` |
@@ -71,9 +74,6 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Kafka, the consumer group's size | L | omni-v25 | **GAIN, power given** | 218.6% GAIN | `results/live/V25_KAFKA.md` |
 | Drone swarms, the three untouched cells | S | omni-v25 | **GAIN** | 2.9% GAIN | `results/live/V25_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries | S | omni-v25 | **GAIN** | 1.4% GAIN | `results/live/V25_CITYLEARN.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 <!-- end of results: sheet -->
 
 ### Through a cloud (L)
@@ -81,11 +81,12 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 <!-- results: cloud (tools/results_chapter.py) -->
 **Azure Kubernetes Service, the steady set of 100 paired repetitions on omni-v18: the bill, the machines, the service**
 (`results/live/AKS_STEADY_100_OMNI_V18.md`; run 40069633316, engine omni-v18, 97 paired repetitions read). The record's own
-reading, quoted from it by `python3 tools/results_chapter.py`: "the compute bill at list price up 1.2% by the mean of the 97
-pairs, its 95% interval across zero (−$0.0007 to +$0.0021 a repetition): power given, not beyond the noise; machines billed up
-1.2%, the same; the response time's 99th percentile GAIN (down 11.0%, its interval clear of zero); every other service gauge
-EVEN or not beyond the noise; failed requests up 3.9% by the mean, its interval across zero. The stopping rule read the bill at
-every look and never decided it, so the set ran to the paid cap of 100."
+reading, carried from it by `python3 tools/results_chapter.py`, its retired word for no difference beyond the noise written as
+the key's STEADY: the compute bill at list price up 1.2% by the mean of the 97 pairs, its 95% interval across zero (−$0.0007 to
++$0.0021 a repetition): power given, not beyond the noise; machines billed up 1.2%, the same; the response time's 99th
+percentile GAIN (down 11.0%, its interval clear of zero); every other service gauge STEADY or not beyond the noise; failed
+requests up 3.9% by the mean, its interval across zero. The stopping rule read the bill at every look and never decided it, so
+the set ran to the paid cap of 100.
 <!-- end of results: cloud -->
 
 ### A physical meter (P)
@@ -168,4 +169,4 @@ outside body.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

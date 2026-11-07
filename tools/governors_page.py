@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -185,7 +185,7 @@ def key_rows(table, limit=14):
 
 
 def engine_of(table) -> str:
-    """The engine the table's runs carried, short (omni-v25), or the engine that stands when the table does not say."""
+    """The engine the table's runs carried, short (omni-v26, say), or the engine that stands when the table does not say."""
     import re
     for r in table.get("runs", []):
         if isinstance(r, dict) and r.get("engine"):
@@ -408,5 +408,5 @@ def main(argv=None):
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

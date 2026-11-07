@@ -1,6 +1,6 @@
 # The Oversight Line: the Pages a Person Would Answer, Native Against Omni-Compass on Native
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 > "They don't need a 3 a.m. call and they don't need [anyone] to turn knobs when OmniCompass is ... self-gauging" (the founder, 3 November 2026)
 
@@ -82,7 +82,7 @@ The bill is the sum of its lines, B = Σₖ cₖ, and each line's change counts 
 
 ## What is not claimed
 
-- **Not a 20% (13% + 7%).** The 12.9% is the software end's second reading of the Omni index (work and speed, on GitHub's machines), not a bill; 7% is a share of a bill, not a gain. A reading and a share do not add; the people line enters G only through ΔB, as above.
+- **Not a 20% (13% + 7%).** That sum is an outside reading on the remove list (`docs/WEBSITE_CLAIMS.md`): a "13%" set beside a 7% share of a bill. The 13% is no measured share of any bill (nearest to it in the record stood omni-v21's second reading of the index, a reading of work and speed on GitHub's machines that a later engine replaced); 7% is a share of a bill, not a gain. A reading and a share do not add, whatever the reading: on omni-v25 the Omni index reads 20.4% and its second reading 94.0% (`results/OMNI_INDEX.md`), neither of them a bill; the people line enters G only through ΔB, as above.
 - **Not the people removed.** The record counts pages, not heads or salaries. An on-call rotation is staffed whether or not it is paged; what falls is the time the pages take, the triage and the hand tuning after them.
 - **Not every page gone, and never nobody.** Pages fell in most tests and to none in some, not in all. A person keeps the kill switch (one hand, instant, security only), sets the response line and chooses the profile.
 
@@ -106,4 +106,4 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

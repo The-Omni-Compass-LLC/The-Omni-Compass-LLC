@@ -1,6 +1,6 @@
 # The Unified Circle Principle
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Omni-Compass begins with one idea: a system that is closed, bounded and pulled toward a center cannot run away, and
 everything it does is a return. I call this the closed circle. This chapter states the principle as I hold it, in its
@@ -406,7 +406,8 @@ different parts of a stack are not added into one bill: the invoice is one gain,
 The value a customer sees comes in three forms, each on its own line of the receipt:
 
 1. **Work per energy** - more finished work per kilowatt-hour.
-2. **Capacity** - the same work on fewer machines in service; it becomes a cost reduction when the released machines are
+2. **Capacity** - the same work with fewer machines in service (a kind of benefit, not a result: on omni-v25 the whole
+   organism's composition reads its machines 77.7% more, power given, `results/WHOLE_SYSTEM.md`); it becomes a cost reduction when the released machines are
    returned to the cloud or switched off by the platform around Omni-Compass.
 3. **Service** - faster responses and fewer breaches at the same load.
 
@@ -429,4 +430,4 @@ and the method of those runs is the manual's section 13, the same method every t
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

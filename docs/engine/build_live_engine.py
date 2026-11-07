@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -254,8 +254,11 @@ def ledger(camp: dict | None = None) -> dict:
         for x in (q.read_text(encoding="utf-8").splitlines() if q.exists() else []):
             if "|" in x and not x.startswith("#"):
                 label, kv = x.split("|", 1)
-                steps = dict(p.split("=", 1) for p in kv.split(";") if "=" in p).get("load_steps")
-                sets.append({"label": label, "key": f"burst {steps}" if steps else label})
+                kvd = dict(p.split("=", 1) for p in kv.split(";") if "=" in p)
+                steps, rates = kvd.get("load_steps"), kvd.get("rate_steps")
+                # the key is the words GitHub's run title carries: a burst by its load steps, a work-meter set by its rate steps
+                # (6 November, the mechanism seat: both work-meter tuning cases ran to the end and read "none yet")
+                sets.append({"label": label, "key": f"burst {steps}" if steps else f"work meter {rates}" if kvd.get("loadgen") == "meter" and rates else label})
         queues[wf] = sets
     data["queues"] = queues
     return data
@@ -1506,6 +1509,11 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     if (z < 0) return "";
     try { return (JSON.parse(html.slice(a + BUILD.length, z)) || {}).built_at || ""; } catch (e) { return ""; }
   }
+  function idOf(html) {
+    /* the identity a page carries in its head (the stamp's page_id, written by the build's stamp); "" for a page with none or with zeros */
+    var T = '<meta name="omni-page-id" content="', k = (html || "").indexOf(T), c = k < 0 ? "" : html.substr(k + T.length, 64);
+    return /^[0-9a-f]{64}$/.test(c) && !/^0+$/.test(c) ? c : "";
+  }
   function compiles(html) {
     /* every script the page runs compiles in this browser, read and never run (6 November, the software seat: a newer page with
        one fault in its script opened as a dead page over a working copy); the records are data, left to the page. "" when every
@@ -1539,8 +1547,9 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
           if (got > v.bytes) { rd.cancel(); throw new Error("its page arrived longer than its stamp says"); }
           if (head !== null) {
             head += dec.decode(x.value, { stream: true });
-            var theirs = builtOf(head);
-            if (theirs || head.length > 8e6) { head = null; if (theirs && theirs !== v.built_at) { rd.cancel(); throw new Error("the page GitHub serves is not that build yet (it carries the build of " + theirs + ")"); } }
+            var theirs = builtOf(head), tid = v.page_id ? idOf(head) : "";
+            if (tid && tid !== v.page_id) { rd.cancel(); throw new Error("the page GitHub serves is not that build yet (it carries another page's identity)"); }
+            if (theirs || head.length > 8e6) { head = null; if (theirs && theirs !== v.built_at && !tid) { rd.cancel(); throw new Error("the page GitHub serves is not that build yet (it carries the build of " + theirs + ")"); } }
           }
           return pump();
         });
@@ -1551,7 +1560,7 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
       return crypto.subtle.digest("SHA-256", bytes).then(function (h) {
         if (hex(h) !== v.sha256) throw new Error("its page arrived changed (its sha256 is not its stamp's)");
         var html = new TextDecoder("utf-8").decode(bytes), bad;
-        if (builtOf(html) !== v.built_at) throw new Error("the page GitHub serves is not that build");
+        if (v.page_id ? idOf(html) !== v.page_id : builtOf(html) !== v.built_at) throw new Error("the page GitHub serves is not that build");
         if ((bad = compiles(html))) throw new Error("its script does not compile in this browser (" + bad + ")");
         return html;
       });
@@ -1573,13 +1582,23 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
        instead, and only one that arrives whole by its stamp (6 November, the software seat: this way opened any page it fetched) */
     if (window.crypto && crypto.subtle && window.TextDecoder)
       fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (v) { return v && v.built_at && v.bytes > 0 && /^[0-9a-f]{64}$/.test(v.sha256 || "") ? getPage(v) : null; })
-        .then(function (html) { if (html) fresh(html); }).catch(function () {});
+        .then(function (v) { return v && v.built_at && v.bytes > 0 && /^[0-9a-f]{64}$/.test(v.sha256 || "") && mem("refused") !== v.sha256 ? getPage(v).then(function (html) { return {v: v, html: html}; }) : null; })
+        .then(function (x) {   /* noted before it opens, as the main path notes it, so a build whose engine does not start sends the tab back (6 November, the software seat) */
+          if (!x) return; mem("opening", { sha: x.v.sha256, back: location.protocol === "blob:" ? mem("home") : location.href, at: Date.now() }); fresh(x.html); }).catch(function () {});
     return;
   }
   function own() {
     var el = document.getElementById("build");
     try { return (JSON.parse(el.textContent) || {}).built_at || ""; } catch (e) { return ""; }
+  }
+  function ownId() { var m = document.querySelector('meta[name="omni-page-id"]'); return idOf(m ? '<meta name="omni-page-id" content="' + (m.getAttribute("content") || "") + '">' : ""); }
+  function started() { try { return typeof MON !== "undefined" && !!MON.ready; } catch (e) { return false; } }
+  function homeLink(href) {
+    /* a tab that opened the newest build stands at a temporary blob: address, which cannot be reloaded, bookmarked or restored (6 November,
+       the software seat): beside the engine chip, the address it came from, which opens the newest build again */
+    var host = document.querySelector(".tbSub") || document.body, a = document.getElementById("omniHome");
+    if (!a) { a = document.createElement("a"); a.id = "omniHome"; a.style.cssText = "margin-left:10px;font-size:12px;text-decoration:underline"; host.appendChild(a); }
+    a.href = href; a.textContent = "This tab's address is temporary: reload, bookmark or share from the original address";
   }
   function note(text, href) {
     var d = document.createElement("div");
@@ -1612,7 +1631,10 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     fetch(base + "LIVE_ENGINE_VERSION.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
       .then(function (v) {
         if (!v || !v.built_at) { say("GitHub not reached at " + when + "; this copy was built " + mine + "; asked again at " + failed() + "."); return; }
-        if (v.built_at <= mine) { say("Checked GitHub at " + when + ": " + (v.built_at === mine ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + done() + "."); return; }
+        /* the page's own identity decides, never the clock alone (6 November, the software seat: four different pages carried one build time, so
+           copies of three of them never loaded the newest); the build time decides only where this copy or the stamp carries no identity */
+        var id = ownId(), same = id && /^[0-9a-f]{64}$/.test(v.page_id || "") ? v.page_id === id : v.built_at === mine;
+        if (same || v.built_at < mine) { say("Checked GitHub at " + when + ": " + (same ? "this is GitHub's newest build (" + v.engine + ", built " + mine + ")" + (started() ? "" : "; its engine has not started in this browser") : "this copy (built " + mine + ") is newer than GitHub's newest (" + v.engine + ", built " + v.built_at + ")") + "; next check " + done() + "."); return; }
         var name = v.engine + ", built " + v.built_at, link = "A newer build of the live engine is on GitHub (" + name + ").";
         if (v.sha256 && mem("refused") === v.sha256) { say("GitHub's newest build (" + name + ") was opened in this tab and its engine did not start in this browser; this copy stays and does not open that build again; next check " + done() + "."); note(link, v.page_url); return; }
         if (!(v.bytes > 0) || !/^[0-9a-f]{64}$/.test(v.sha256 || "")) { say("A newer build is on GitHub (" + name + "), but its stamp carries no byte count and sha256 to check its page by; this copy stays; asked again at " + failed() + "."); return; }
@@ -1638,7 +1660,7 @@ SELF_UPDATE = """<script id="omniSelfUpdate">
     if (!p || location.protocol !== "blob:" || Date.now() - p.at > 600000) return;
     mem("opening", null);
     var up = false; try { up = typeof MON !== "undefined" && !!MON.ready; } catch (e) { up = false; }
-    if (up) { if (p.back) mem("home", p.back); return; }
+    if (up) { if (p.back) { mem("home", p.back); homeLink(p.back); } return; }
     mem("refused", p.sha);
     if (p.back) location.replace(p.back);
   }
@@ -1670,9 +1692,34 @@ def write_version(build: dict) -> None:
     import hashlib
     data = PAGE.read_bytes()
     VERSION.write_text(json.dumps({"engine": build.get("engine"), "digest": build.get("digest"), "commit": build.get("commit"),
-                                   "built_at": build.get("built_at"), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
+                                   "built_at": build.get("built_at"), "page_id": (lambda m, p: p if m and m.group(1).decode() == p else None)(PAGE_ID.search(data), page_id(data)), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
                                    "page_url": f"{RAW_MAIN}docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"}, indent=1) + "\n",
                        encoding="utf-8")
+
+
+PAGE_ID = re.compile(rb'<meta name="omni-page-id" content="([0-9a-f]{64})">')   # the page's identity tag, in its head
+
+
+def page_id(data: bytes) -> str:
+    """The page's own identity, which every copy compares with the stamp's (6 November, the software seat: four different pages carried one
+    build time, so copies of three of them never loaded the newest): the sha256 of the page's bytes with its identity tag read as 64 zeros,
+    so the identity can stand inside the page it names. Two pages that differ in one byte differ in it; the time plays no part. "" for a
+    page without the tag."""
+    import hashlib
+    if not PAGE_ID.search(data):
+        return ""
+    return hashlib.sha256(PAGE_ID.sub(b'<meta name="omni-page-id" content="' + b"0" * 64 + b'">', data, count=1)).hexdigest()
+
+
+def stamp_page_id(path: Path = None) -> str:
+    """Writes the page's identity into its own tag (64 characters for 64, so its byte count stays) and returns it: run after every writer of
+    the page and before the stamp. Running it again changes nothing."""
+    path = path or PAGE
+    data = path.read_bytes()
+    m, pid = PAGE_ID.search(data), page_id(data)
+    if m and m.group(1).decode() != pid:
+        path.write_bytes(data[:m.start(1)] + pid.encode() + data[m.end(1):])
+    return pid
 
 
 def factory_beat() -> tuple:
@@ -1707,6 +1754,7 @@ def stamp_fallbacks(page: str, build: dict) -> str:
     if n.isdigit():
         head = re.sub(r'(<code id="engJson">)[^<]*(?=<)', lambda m: m.group(1) + f"OMNI_V{n}.json", head)
         head = re.sub(r'(<code id="engDoc">)[^<]*(?=<)', lambda m: m.group(1) + f"docs/OMNI_V{n}.md", head)
+        head = re.sub(r'(<code data-engdoc="1">)[^<]*(?=<)', lambda m: m.group(1) + f"docs/OMNI_V{n}.md", head)
     return head + tail
 
 
@@ -1768,7 +1816,17 @@ def appraisal_counts(rec) -> str:
     b, R, S = rec["build"], rec["runs"], rec["scen"]
     runs = [r for bm in R["benchmarks"] for r in bm["runs"]]
     files, ok, unmatched = sum(r["checked"] for r in runs), sum(r["ok"] for r in runs), sum(len(r.get("unmatched") or []) for r in runs)
-    recs = S["receipts"]; floor = rec["build"].get("floor")
+    def _once(r):   # the page's load rule: a keyless exact copy of a keyed row of the same table is one row, its word counted once
+        rid = lambda x: (x.get("s"), x.get("g"), tuple(x.get("abc") or []), x.get("w"))
+        keyed = {rid(x) for x in r.get("rows") or [] if x.get("key")}
+        cnt, rows = dict(r.get("count") or {}), []
+        for x in r.get("rows") or []:
+            if x.get("key") or rid(x) not in keyed:
+                rows.append(x)
+            elif cnt.get(x["w"], 0) > 0:
+                cnt[x["w"]] -= 1
+        return {**r, "rows": rows, "count": cnt}
+    recs = [_once(r) for r in S["receipts"]]; floor = rec["build"].get("floor")
     by_eng = Counter(r["engine"] for r in recs)
 
     def tally(rs, floored):
@@ -1838,9 +1896,24 @@ def main() -> int:
     if a.stamp:
         # the stamp from the page as it is committed: the workflow runs this after every tool that writes the page (tools/headline.py
         # rewrites section 2b after this build), so its byte count and sha256 are the committed page's
-        write_version(embedded(PAGE.read_text(encoding="utf-8"), "build") or {})
+        import hashlib
+        page, prev = PAGE.read_text(encoding="utf-8"), {}
+        try:
+            prev = json.loads(VERSION.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            pass
+        bd = embedded(page, "build") or {}
+        if bd and prev.get("sha256") and prev["sha256"] != hashlib.sha256(PAGE.read_bytes()).hexdigest() and prev.get("built_at") == bd.get("built_at"):
+            # the page's bytes changed after the build its record names (6 November, the editor seat: a page carrying the 09:42 fixes
+            # said "built 03:33 at af612472"): these bytes are a new build, so its record takes this moment and this checkout's commit,
+            # and the title page, the banner, 2e, 4a and the stamp below all follow it
+            bd = {**bd, "built_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "commit": git("rev-parse", "HEAD")}
+            PAGE.write_text(inject(page, "build", bd), encoding="utf-8")
+            print(f"the page changed after the build it named ({prev['built_at']}): its build record now reads {bd['built_at']} at {bd['commit'][:12]}")
+        stamp_page_id(PAGE)   # the page's identity, after every writer of the page (section 2b and the build record included): 64 characters for 64
+        write_version(bd)
         v = json.loads(VERSION.read_text(encoding="utf-8"))
-        print(f"the stamp every copy reads: {v['engine']}, built {v['built_at']}, {v['bytes']:,} bytes, sha256 {v['sha256'][:16]}")
+        print(f"the stamp every copy reads: {v['engine']}, built {v['built_at']}, {v['bytes']:,} bytes, sha256 {v['sha256'][:16]}, page {(v.get('page_id') or 'without identity')[:16]}")
         return 0
     global CHECKING
     CHECKING = a.check
@@ -1879,6 +1952,13 @@ def main() -> int:
             bad.append("the static fallbacks (the engine's name and digest in the markup)")
         if self_update(page) != page:
             bad.append("the self-update (the page's link to its newest build on GitHub, and its script)")
+        try:
+            import hashlib
+            st = json.loads(VERSION.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            st = {}
+        if st.get("sha256") != hashlib.sha256(PAGE.read_bytes()).hexdigest() or st.get("built_at") != pb.get("built_at"):
+            bad.append("the stamp (docs/engine/LIVE_ENGINE_VERSION.json names other bytes or another build time than the page: run --stamp)")
         print("every record on the page is the repository's own run" if not bad else "differs from the repository's own run: " + ", ".join(bad))
         for k in bad:
             if k not in rec:          # the appraisal's counts are a file, not a record: named above, no record to compare
@@ -1892,6 +1972,7 @@ def main() -> int:
     page = stamp_fallbacks(page, rec["build"])   # the markup's fallbacks follow the build record, never a hand
     page = self_update(page)                     # every copy of the page follows the newest build on GitHub
     PAGE.write_text(page, encoding="utf-8")
+    stamp_page_id(PAGE)                          # the page's identity in its own head, before the stamp names it
     write_version(rec["build"])                  # the stamp every copy reads
     write_appraisal(rec)                      # the appraisal's counts follow the records, never a hand
     b = rec["build"]

@@ -1,6 +1,6 @@
 # The main engine and the tuning bench: one tuned engine, every knob turnable
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The founder's order of 22 October, evening: the live benchmark engine and the main benchmark engine are two different things. The live
 engine gives the buttons, knobs and monitors that turn every muscle and mechanism up or down, in or out, on or off; the real
@@ -13,7 +13,7 @@ No outside party has reviewed or approved these results.
 
 ## 1. Two things, never one
 
-**The main engine** is the engine that stands (omni-v25, `OMNI_V25.json`, `python3 tools/omni_version.py`) at its factory tune:
+**The main engine** is the engine that stands (omni-v26, `OMNI_V26.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
 at the factory beat for its place, every 10 s on site and every 60 s through a cloud (omni-v24), with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
 a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds
@@ -153,7 +153,7 @@ the engine version, configuration, hardware or model, workload and measurement b
 | Native baseline | The system's documented configuration and behavior without Omni-Compass governing it. | each benchmark's native arm, as its project ships it |
 | Factory profile | The complete, versioned set of Omni-Compass default settings shipped together. | θ*, sections 1 and 2: the engine's defaults and `realms/muscle_cards_v5.csv` |
 | Candidate profile | A proposed combination of settings undergoing evaluation. | a tune of the search grid (`tools/tune_study.py`) or a candidate engine in the model gate (`tools/model_gate.py`) |
-| Active profile | The settings actually governing the current run. | the governor's own audit of its arguments; the live engine's bench line (section 1 of the page's wall) |
+| Active profile | The settings actually governing the current run. | Omni-Compass's own audit of its arguments; the live engine's bench line (section 1 of the page's wall) |
 | Custom profile | An identifiable configuration differing from the released factory profile. | any knob turned on the bench or set on the control panel (`tools/omni_control.py`) |
 | Live tuning bench | The interface that operates the engine's controls and displays their effects through the connected backend. | `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` with `tools/omni_control.py` |
 | Harness | The machinery that supplies workloads, executes comparisons, checks requirements and records results. | `scripts/kind_bench.sh`, the paired cloud scripts, `tools/live_reps.py`, `tools/confirm_abc.py`, `cpp/` |
@@ -166,7 +166,7 @@ the engine version, configuration, hardware or model, workload and measurement b
 The physiological terms are engineering analogies; each points to concrete code, signals, actuators and checks, named in the right
 column.
 
-**Fixed tuning, continuously changing behavior.** Let x be the governed system's state, z the governor's internal state, y its
+**Fixed tuning, continuously changing behavior.** Let x be the supervised system's state, z Omni-Compass's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval, Δ ∈ {10, 15, 30, 60, 90, 120} s on
 the bench's six buttons (the factory's beat by place since omni-v24: 10 s on site, 60 s through a cloud). At decision k:
 
@@ -261,4 +261,4 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
