@@ -81,9 +81,16 @@ def build() -> dict:
         sentence=f"On work and speed alone, the same runs: GAIN, {_dir(s)} {_pct(s)} (real software on GitHub's machines; not a bill).")
     k8 = next((v for k, v in (idx.get("categories") or {}).items() if k.startswith("Real Kubernetes")), None)
     if k8 is not None:
+        kt = [t for t in idx.get("tests") or [] if str(t.get("category", "")).startswith("Real Kubernetes")]
+        # a test that reads LOSS by the index's own rule is named in the same sentence (the website seat of 7 November: the
+        # sentence left out the fairness test's LOSS that docs/WEBSITE_CLAIMS.md and both fix sheets require)
+        kl = [t for t in kt if t.get("index_pct") is not None and t["index_pct"] <= -0.5]
+        kls = "; ".join(f"{t['test'].split(':')[0].strip().lower()}, {_dir(t['index_pct'])} {_pct(t['index_pct'])}" for t in kl)
+        tail = (f"; {'one reads' if len(kl) == 1 else str(len(kl)) + ' read'} LOSS: {kls}" if kl else "")
         add(id="kubernetes", word="GAIN", value_pct=round(k8, 1), direction=_dir(k8), cls="L", place=soft, engine=eng,
             receipt="results/OMNI_INDEX.md", what="real Kubernetes, by the index's rule (work, speed and machines)",
-            sentence=f"Real Kubernetes: GAIN, {_dir(k8)} {_pct(k8)} by the index's rule (GitHub's machines).")
+            losses=[{"test": t["test"], "value_pct": round(t["index_pct"], 1), "source": t.get("source")} for t in kl],
+            sentence=f"Real Kubernetes: GAIN, {_dir(k8)} {_pct(k8)} by the index's rule ({len(kt)} tests on GitHub's machines){tail}.")
     p, g = ov["pooled"], ov.get("pages") or {}
     add(id="alert_minutes", word=p["reading"].split(" ")[0], reading=p["reading"], value_pct=round(100 * p["change"], 1),
         direction=_dir(p["change"]), cls="L", place=soft, engine=ov["engine"], receipt="results/OVERSIGHT.md",
@@ -161,6 +168,8 @@ def build() -> dict:
     arms = four_arms(tb, a10)
     for ln in arms["sentences"]:
         nums.append(ln)
+    for n in nums:                                  # every reading says why its word reads so (the founder's order of 6 November)
+        n["why"] = why(n)
     return {"notice": PLAIN, "source": "tools/site_numbers.py", "four_arms": arms["arms"],
             "rule": ("Every number a page shows comes from 'show', with its word first, its class, its place, its engine and its "
                      "receipt, in its own sentence. Nothing in 'not_for_the_site' is shown as a result. Our own model (class S) "
@@ -173,6 +182,36 @@ def build() -> dict:
 
 
 AKS = "results/live/AKS_STEADY_100_OMNI_V18.json"
+
+# what each gauge on the site is for (its aim), so the word is read from the aim and never from the sign of the number
+AIMS = {
+    "omni_index": "the index scores the work done, the response time and the machines against native's: above native is more work, a faster answer or fewer machines",
+    "work_and_speed": "the same runs scored on the work done and the response time alone: above native is more work or a faster answer",
+    "kubernetes": "the index's rule on the Kubernetes tests: above native is more work, a faster answer or fewer machines",
+    "alert_minutes": "the minutes a person on call would have a page open: fewer minutes mean less waiting on a person",
+    "pages": "the pages a person would be sent: fewer pages mean less oversight",
+    "chip_energy_per_request": "the energy the card's own meter read for each request served: less energy for each request served is more work from each joule",
+    "chip_work_for_the_bill": "the work done for each dollar of the card's rental: more work for the bill helps",
+    "cloud_bill": "the cloud's bill is a resource spent, read beside the work it bought",
+    "arm_b_vs_a": "the work done for each dollar on the chip, Omni-Compass on native (B) against native (A)",
+    "arm_d_vs_c": "the cloud, Omni-Compass on native (D) against native (C), gauge by gauge",
+}
+VERDICT = {
+    "GAIN": "the change helps the system, so it reads GAIN",
+    "LOSS": "the change hurts the system, so it reads LOSS",
+    "power given": "more of a resource was spent beside the work it bought, so it reads power given, never a loss",
+    "STEADY": "no change beyond the 0.5% floor, so it reads STEADY",
+    "the runs disagree": "the three runs moved in opposite directions, so the test is unstable there and no word is given",
+    "one run": "one run so far, so there is no three-run reading yet",
+}
+
+
+def why(n: dict) -> str:
+    """The reason a reading's word reads so: what its gauge is for, then whether the change helps or hurts the system."""
+    w = str(n.get("word") or "")
+    v = next((VERDICT[k] for k in VERDICT if w.startswith(k)), "")
+    a = AIMS.get(n.get("id"), n.get("what") or "")
+    return "; ".join(x for x in (a, v) if x) + "."
 D_GAUGES = (("compute bill at list price ($)", "the bill", "usd"), ("machines billed, machine-hours", "machine-hours", "h"),
             ("response time (ms), mean", "the mean response time", "ms"), ("response time (ms), 95th percentile", "the 95th percentile", "ms"),
             ("response time (ms), 99th percentile", "the 99th percentile", "ms"), ("failed requests (%)", "failed requests", "%"),
@@ -255,9 +294,9 @@ def markdown(d: dict) -> str:
     L = ["# The Numbers a Website May Show, Each With Its Receipt", "",
          "Written by `tools/site_numbers.py` from the repository's own records; `results/SITE_NUMBERS.json` is the same in a "
          "form a page reads. " + d["rule"], "",
-         "| Number | Word | Class | Where | Engine | Receipt |", "|---|---|---|---|---|---|"]
+         "| Number | Word | Why it reads so | Class | Where | Engine | Receipt |", "|---|---|---|---|---|---|---|"]
     for n in d["show"]:
-        L.append(f"| {n['sentence']} | {n.get('reading') or n['word']} | {n['cls']} | {n['place']} | {n['engine']} | `{n['receipt']}` |")
+        L.append(f"| {n['sentence']} | {n.get('reading') or n['word']} | {n.get('why', '')} | {n['cls']} | {n['place']} | {n['engine']} | `{n['receipt']}` |")
     fa = d.get("four_arms") or {}
     if fa:
         L += ["", "## The four arms, A, B, C and D, each from its receipt", "",
