@@ -8,7 +8,8 @@ its pod start waits, and the queue's rows (finished, job wait, turnaround, jobs 
 `docs/LOSS_CAUSES_2026-11-06.md` (section 2) found that the web service's target flips on these rigs a tenth as often as on the
 other batch rigs, so it did not write their cause. This page reads them from the runs' own files on the branch `raw`: the
 governor's audit (`audit.jsonl`), each request's response time (`latency.csv`), the cluster's capture (`capture.csv`), the
-jobs (`jobs.json`) and Koordinator's batch processor at the window's end (`batch_queue_end.json`).
+jobs (`jobs.json`) and Koordinator's batch processor at the window's end (`batch_queue_end.json`). Every number below is read
+again from those files by `python3 tools/koordinator_causes.py` (a checkout whose git holds the branch `raw`).
 
 Runs: Koordinator on the cgroup root (`results/live/V25_KOORDINATOR_CGROUP.md`) 42173258848, 42173278954 and 42185612749;
 Koordinator (`results/live/V25_KOORDINATOR.md`) 41800261877, 41800269022 and 41802293120; ten repetitions each, 60 in all.
@@ -21,7 +22,7 @@ Almost everything the governor wrote on these rigs is the conveyance (`omni_cont
 pod's processor limit an arm (to 3,300m for a machine's one serving pod, 1,650m for two) while the shared host stood under 70%
 busy, and nearly as many hand-backs, 24 to 70 an arm, each putting every raised limit back to the operator's 500m with the
 reason "the shared host at its top (busy 0.79 to 0.92) beside another workload's room" (the omni-v13 rule). The web service's
-target was written 0 to 13 times an arm.
+target was written 0 to 7 times an arm.
 
 ## 2. The web service's rows: the conveyance's cycle
 
