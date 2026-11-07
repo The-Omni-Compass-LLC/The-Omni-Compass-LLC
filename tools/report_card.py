@@ -77,13 +77,17 @@ def counts() -> list[tuple[str, str]]:
     by_eng = collections.Counter(r["engine"] for r in rows)
     led = (ROOT / "docs" / "LOSS_LEDGER.md").read_text(encoding="utf-8")
     sec = led.split("## Against my own native", 1)[1].split("\n## ", 1)[0]
-    loss = collections.Counter(); nocause = collections.Counter()
+    loss = collections.Counter(); nocause = collections.Counter(); second = collections.Counter()
     for ln in sec.splitlines():
         if ln.startswith("| omni-v"):
             c = [x.strip() for x in ln.strip().strip("|").split("|")]
             loss[c[0]] += 1
-            if not c[4] or re.search(r"not yet|none written|no cause", c[4], re.I):
+            # without a cause: none written, or only a suspicion; a cause found in the files that names a second one suspected
+            # beside it is a cause, counted apart (7 November: the batch rigs' queue rows read as without a cause by "not yet")
+            if not c[4] or re.match(r"(not yet|none written|no cause|suspected)", c[4], re.I):
                 nocause[c[0]] += 1
+            elif re.search(r"not yet measured|suspected", c[4], re.I):
+                second[c[0]] += 1
     from tools import organism_words as OW
     mus = OW.muscles()
     import csv
@@ -116,7 +120,8 @@ def counts() -> list[tuple[str, str]]:
         ("Benchmarks on the benefit board, by the engine of their newest table",
          f"{len(rows)}: " + ", ".join(f"{k} {v}" for k, v in sorted(by_eng.items(), key=lambda t: -int(t[0].split('-v')[1])))),
         ("LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written",
-         "; ".join(f"{k}: {v}, {nocause.get(k, 0)} without" for k, v in sorted(loss.items(), key=lambda t: -int(t[0].split('-v')[1])))),
+         "; ".join(f"{k}: {v}, {nocause.get(k, 0)} without" + (f" ({second[k]} more with a cause found and a second suspected, not yet measured)" if second.get(k) else "")
+                   for k, v in sorted(loss.items(), key=lambda t: -int(t[0].split('-v')[1])))),
     ]
     return out
 
