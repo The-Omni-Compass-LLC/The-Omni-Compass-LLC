@@ -1,6 +1,6 @@
 # The live benchmark engine, appraised: does the page show the repository's mechanism as it is?
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The question an underwriter asks of a picture of a mechanism: is every moving part the repository's own, run as the
 repository runs it, and does every word on the page say only what the parts do? This appraisal answers it for
@@ -49,9 +49,9 @@ the page carries the commit, the time and GitHub's own list of the runs running 
 | Section 2, on top of the HPA | the shipped controller as `pilot/selfpilot.py run_day` wires it | `pilot/selfpilot.py run_day`, seeds 3000 and 3001 | machines and pods waiting identical on every one of 1,440 ticks; writes identical (25) | `docs/engine/check_records.py` |
 | Section 1, the immune system | Omni-Compass's organism reading its own immune system: every room against its twin, the heat debt, the body giving back | the same run of `realms/harness.py`'s organism with the readings taken as `max_body_step` reads them (read only: the organism's record is identical with and without them) | run A: 7 decisions with an inflamed room (`pump_speed`), heat debt 1,109 W fading to 21 W, the pools' 26 extra machines handed back; runs B and C: none | `docs/engine/export_harness_trace.py` |
 | Section 4, the official runs | each three-run table's runs A, B and C played back from their raw files (`docs/engine/export_runs.py`) | every file's SHA-256 against the run's own `SHA256SUMS_ALL.txt`; every Kubernetes repetition scored by `tools/live_reps.py arm_gauges` on its own files, the mean over repetitions against the run's own `LIVE_REPS.json` | every run's files and their match in the counts above, written at every build (on 21 October: 81 tables, 243 runs, 165,095 of 165,095 files); the scorer's means equal each run's result to 4.2 × 10⁻¹⁶ | `docs/engine/build_live_engine.py --check` |
-| Section 3, a GPU card | `realms/gpu_card.py` (inside the omni-v21 fingerprint, unchanged since omni-v8), native and Omni-Compass on top, the card as shipped and under an operator's cap, AI and compute-bound work | `realms/gpu_card.run` untouched, every arm, seeds 5100, 5101 and 5102 | the run's own result identical; every second's energy and requests add up to it | `docs/engine/check_records.py` |
+| Section 3, a GPU card | `realms/gpu_card.py` (inside the omni-v25 fingerprint, unchanged since omni-v8), native and Omni-Compass on top, the card as shipped and under an operator's cap, AI and compute-bound work | `realms/gpu_card.run` untouched, every arm, seeds 5100, 5101 and 5102 | the run's own result identical; every second's energy and requests add up to it | `docs/engine/check_records.py` |
 | Section 3, Linux, one host | `tools/model_gate.py`'s conveyance model, the shipped `Muscles.convey` and `quota.py` on the CFS quota | `tools/model_gate.py worker_convey` untouched, seeds 3000, 3001 and 3002 | its own result line identical; requests and the host's busy share add up to it | `docs/engine/check_records.py` |
-| Section 3, every muscle on omni-v8 | the realms runner's own table of 1,107 muscles and seven organisms, native and the max | `results/realms_v5/REALMS_V5.json` (omni-v8, commit 9819a903c, seeds 3000 to 3009), read by `docs/engine/export_scenarios.py` | 527 GAIN, 159 the same as native, 421 at their limit on native, 0 LOSS; all seven organisms GAIN under all three loads | `docs/engine/export_scenarios.py` |
+| Section 3, every muscle on omni-v8 | the realms runner's own table of 1,107 muscles and seven organisms, native and the max | `results/realms_v5/REALMS_V5.json` (omni-v8, commit 9819a903c, seeds 3000 to 3009), read by `docs/engine/export_scenarios.py` | 530 GAIN, 156 the same as native, 421 at their limit on native, 0 LOSS (the record as read again by the one key on 24 October); all seven organisms GAIN under all three loads | `docs/engine/export_scenarios.py` |
 | Section 4, the receipts | every judged row of each benchmark's newest table (`results/live/V*_*.md`) | the receipts themselves, read row by row by `docs/engine/export_scenarios.py` | the counts above, written at every build: every word, Omni-Compass against its native apart from the orchestrators' own cost, every LOSS row named | `docs/engine/export_scenarios.py` |
 
 ## Grades
@@ -73,17 +73,17 @@ the page carries the commit, the time and GitHub's own list of the runs running 
 
 | View | GAIN in all three runs | STEADY | Power given |
 |---|---|---|---|
-| Each muscle alone (realms harness, the line) | misses −18% to −27%; the waiting line cleared 24% to 27% sooner | work | energy +0.003% |
-| One organism (realms harness, the climb) | misses −5% to −6%; energy −0.0005% | work | none |
-| Live controller on top of the HPA (model cluster) | none | machines (−4% to −8%), power, pods waiting, response time, time over the line | none |
+| Each muscle alone (realms harness, the line) | misses down 18% to 27%, fewer misses; the waiting line cleared 24% to 27% sooner | work | energy up 0.003% |
+| One organism (realms harness, the climb) | misses down 5% to 6%, fewer misses; energy down 0.0005%, a cut | work | none |
+| Live controller on top of the HPA (model cluster) | none | machines (down 4% to 8%, inside the noise), power, pods waiting, response time, time over the line | none |
 | Live controller, the cloud's tune-down (model cluster) | none | every gauge | none |
 | A GPU card, the card as shipped (`realms/gpu_card.py`) | none | every gauge: at the max the card's limit is its top; at the tune-down the one step tried is refused (LOSS read on its cost) | none |
-| A GPU card under an operator's 105 W cap, compute-bound | response time −8% to −11% | requests, energy, time over the line | none |
-| Linux, one host (the CFS-quota conveyance model) | requests served +64%; response time −53% mean and at the 95th percentile | alert minutes | host CPU +31%, limits +167%, pods +18%; pod start wait rose 6% to 8%, one value a run and so no interval: shown, not judged (the model's: a busier host starts pods slower; STEADY on real Kubernetes) |
-| Every muscle of the catalog on omni-v8, each alone (realms runner) | 527 muscles (493 faster, 409 fewer misses, 33 more work) | 159 the same as native, 421 at their limit on native | **0 LOSS** under any load |
-| The seven organisms on omni-v8 (realms runner) | all seven under all three loads: misses −1.1% to −8.8%; on the climb five also more work | work | energy +0.000% to +0.05% |
+| A GPU card under an operator's 105 W cap, compute-bound | response time down 8% to 11%, faster | requests, energy, time over the line | none |
+| Linux, one host (the CFS-quota conveyance model) | requests served up 64%, more work; response time down 53%, mean and at the 95th percentile, faster | alert minutes | host CPU up 31%, limits up 167%, pods up 18%; pod start wait rose 6% to 8%, one value a run and so no interval: shown, not judged (the model's: a busier host starts pods slower; STEADY on real Kubernetes) |
+| Every muscle of the catalog on omni-v8, each alone (realms runner) | 530 muscles (493 faster, 445 fewer misses, 12 more work) | 156 the same as native, 421 at their limit on native | **0 LOSS** under any load |
+| The seven organisms on omni-v8 (realms runner) | all seven under all three loads: misses down 1.1% to 8.8%, fewer misses | work | energy up 0.00% to 0.05% |
 | The receipts of each benchmark's newest table (classes L and S) | the counts above | the counts above | the counts above, every LOSS row of Omni-Compass against its native named with its table and its three runs |
-| Real Kubernetes, omni-v10 (class L, `results/live/V10_GOLDILOCKS.md`, `V10_KEDA_REQUESTS.md`, `V10_KEDA_CPU_REQUESTS.md`, `V10_CRUISEKUBE.md`, `V10_CAPACITY.md`) | response time −51% to −73% at the 95th percentile on Goldilocks and both KEDA setups; KEDA HTTP replicas −13% to −19%, pods started −17% to −24% | machines, failed requests; CruiseKube and fixed capacity on every gauge | parked-worker energy +1.4% to +2.4%; LOSS: the KEDA HTTP pod start wait |
+| Real Kubernetes, omni-v10 (class L, `results/live/V10_GOLDILOCKS.md`, `V10_KEDA_REQUESTS.md`, `V10_KEDA_CPU_REQUESTS.md`, `V10_CRUISEKUBE.md`, `V10_CAPACITY.md`) | response time down 51% to 73% at the 95th percentile on Goldilocks and both KEDA setups, faster; KEDA HTTP replicas down 13% to 19% and pods started down 17% to 24%, a cut | machines, failed requests; CruiseKube and fixed capacity on every gauge | parked-worker energy up 1.4% to 2.4%; LOSS: the KEDA HTTP pod start wait |
 
 ## Material findings for the owner
 
@@ -96,20 +96,21 @@ the page carries the commit, the time and GitHub's own list of the runs running 
    limits, CPU clocks and admission gates, and one setting off: the HPA target, 70% in the harness against 50% in the
    repository's real runs. Correcting it is a change inside the engine's fingerprint, the next engine version.
 3. **No cut in the cloud bill is shown yet.** The real Azure bill (`results/live/AKS_BILL.md`, an earlier engine, four
-   repetitions) reads machines billed −0.6%, STEADY; Azure's own autoscaler ran that light load on fewer than two workers.
-   The one gauge clear of the noise there was fewer replicas (−3.7%, GAIN).
+   repetitions) reads machines billed down 0.6% with the allocation law and up 0.8% with the compass law, both STEADY,
+   inside the noise; Azure's own autoscaler ran that light load on fewer than two workers. The one gauge clear of the noise
+   there was the replicas: down 3.7% with the allocation law, fewer replicas for the same work, a cut, GAIN in that one run.
 4. **`pilot/selfpilot.py` no longer runs its omni day on a machine without `kubectl`**: the controller now starts a
    `kubectl proxy` when it builds its reader. The check stubs that one call; the simulated cluster answers every read.
    A one-line repair (`--no-api-proxy` in its arguments) is the owner's to make.
-5. **The verdict's rule depends on the noise more than on the cost.** omni-v17 (its verdict omni-v11's, byte for byte) refuses any step whose interval of cost
-   lies wholly above zero. Where the cost carries no noise (the GPU card's model) it refuses a step costing +0.14% a
-   request, well inside the 2% allowance, so the card never leaves native at the tune-down and the recorded +3.4%
+5. **The verdict's rule depends on the noise more than on the cost.** omni-v25 (its verdict omni-v11's, byte for byte) refuses any step whose interval of cost
+   lies wholly above zero. Where the cost carries no noise (the GPU card's model) it refuses a step costing 0.14% a
+   request, well inside the 2% allowance, so the card never leaves native at the tune-down and the recorded 3.4% more
    requests per kJ (`results/sim/gpu_two_wire`, written under omni-v6's medians) does not stand on any engine since. Where the
    cost is noisy (σ 0.46 of log response time on the Google 2011 day and 0.43 with the load swinging, measured on 19
    October inside each window of 200 requests of the omni-v10 runs' latency.csv;
    the σ 0.05 and 0.25 written here before did not come from those files and are withdrawn), with 200 requests a side
-   as the Kubernetes controller measures, a step costing +3% passes about 31% of the time (the medians alone: 45%),
-   +5% about 15% and +10% about 1%, while a free step is kept about 59% of the time (2,000 modelled trials each, class S).
+   as the Kubernetes controller measures, a step costing 3% passes about 31% of the time (the medians alone: 45%),
+   one costing 5% about 15% and one costing 10% about 1%, while a free step is kept about 59% of the time (2,000 modelled trials each, class S).
    The page's verdict lab opens on that measured noise. Any change to the
    rule is the next engine version, the owner's to order.
 6. **CityLearn's LOSS rows were root-caused and repaired, and its omni-v10 table reads no LOSS** (88 STEADY, 27 GAIN, 1 power
@@ -117,9 +118,9 @@ the page carries the commit, the time and GitHub's own list of the runs running 
    2023 small challenge districts, the only ones that simulate outages; the repair leaves an outage building's battery native
    (its charge is its building's reserve), reads the coming hour and glides at the speed that cuts the bill most with no LOSS
    (omni-v8 to omni-v10, `docs/OMNI_V10.md`).
-7. **The Linux model's pod start wait rises** (+6% to +8%, one value a run and so no interval, shown and not judged; +8.8% in `results/model_gate/MODEL_GATE.md` over ten seeds):
+7. **The Linux model's pod start wait rises** (up 6% to 8%, one value a run and so no interval, shown and not judged; up 8.8% in `results/model_gate/MODEL_GATE.md` over ten seeds):
    the raised limits keep the host busier and its start time is fitted to rise with the busy share. The two repairs
-   written for it were refused by the model gate. On real Kubernetes it reads STEADY on KEDA on CPU and requests and LOSS on KEDA's HTTP add-on (+13% to +21%, the test machine, `docs/POD_START_WAIT.md`; the kind rig pre-pulls the image from 18 October).
+   written for it were refused by the model gate. On real Kubernetes it reads STEADY on KEDA on CPU and requests and LOSS on KEDA's HTTP add-on (up 13% to 21%, a longer wait, the test machine, `docs/POD_START_WAIT.md`; the kind rig pre-pulls the image from 18 October).
 8. **The page replays recorded runs.** The harness and controller views are the repository's runs, recorded on seeds
    3000, 3001 and 3002 and replayed; they cannot be stressed by hand. The stress-test model can (native alone and Omni-Compass on top of the same native, side by side), and is labelled as drawn.
 
@@ -131,4 +132,4 @@ not prove the code's results hold outside the models it runs on, which is what t
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

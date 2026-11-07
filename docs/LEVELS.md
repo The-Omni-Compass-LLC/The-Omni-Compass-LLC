@@ -1,6 +1,6 @@
 # Every level: Omni-Compass on top of the muscle, the organism, the cluster, the service, the plant, the cloud
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -18,8 +18,8 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 | The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v25 | L | 18 | 22 | 11 | 7 | 6 | **yes: 13, listed below** |
 | A muscle inside a running service: database, broker, cache | omni-v25 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
 | A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v25 | independent simulator | 101 | 165 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
-| The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs (results/grid_v8/) are going |
-| The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back |
+| The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs on it are dispatched (results/grid_v25/DISPATCHED.json) |
+| The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7; one set on omni-v18 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of 97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise (results/live/AKS_STEADY_100_OMNI_V18.md) |
 | A group of clusters | not run | none yet | – | – | – | – | – | no run at this level yet, real or modelled, on the engine that stands (`k8s_fleet/` holds a model of an earlier engine) |
 
 ## Each level
@@ -153,13 +153,13 @@ Tables: `results/live/V25_CITYLEARN.md`, `results/live/V25_PANDAPOWER.md`, `resu
 ### The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies)
 
 Native at this level: the organism's native controllers around Kubernetes with its HPA. Engine: older engines' tables; the grid runs again on the engine that stands. Evidence: L, the cluster; S, the organism.
-No table on the engine that stands yet; the grid's runs (results/grid_v8/) are going.
+No table on the engine that stands yet; the grid's runs on it are dispatched (results/grid_v25/DISPATCHED.json).
 Tables: `results/live/SIX_KUBE.md`, `results/live/V3_SIX_KUBE.md`, `results/live/V3_BIG_ORGANISM.md`.
 
 ### The cluster in a cloud: Azure Kubernetes Service, the bill
 
-Native at this level: Azure's own cluster autoscaler and the HPA. Engine: single runs, omni-v5 to omni-v7. Evidence: L, the bill metered.
-No three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back.
+Native at this level: Azure's own cluster autoscaler and the HPA. Engine: single runs, omni-v5 to omni-v7; one set on omni-v18. Evidence: L, the bill metered.
+No three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of 97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise (results/live/AKS_STEADY_100_OMNI_V18.md).
 Tables: `results/live/AKS_BILL.md`, `results/live/raw/run-38981149348/`.
 
 ### A group of clusters
@@ -169,4 +169,4 @@ No run at this level yet, real or modelled, on the engine that stands (`k8s_flee
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

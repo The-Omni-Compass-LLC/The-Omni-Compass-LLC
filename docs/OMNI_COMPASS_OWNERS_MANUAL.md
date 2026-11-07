@@ -1,6 +1,6 @@
 # THE OMNI-COMPASS OWNER'S MANUAL
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ## The Master Manual: The Governor, Its Mechanism, Its Results, and How to Wire It onto Your Stack
 
@@ -15,7 +15,7 @@ book of this text is `docs/OMNI_COMPASS_OWNERS_MANUAL.pdf` (`python3 docs/book/b
 **October 2026**
 **The Omni-Compass LLC**
 
-All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by The Omni-Compass LLC.
+All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC.
 
 ---
 
@@ -66,9 +66,11 @@ one body, the organism: every muscle driven as far as its own limit and never pa
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
-organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
-every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
+organism: never less work or health than native (`DISCLOSURES.md`, section 3). The one headline is an aim, not a result.
+The aim: more work, faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers
+already in place, every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds. The record reads
+the work and the speed (the Omni index, `results/OMNI_INDEX.md`); the machines are not yet fewer: the whole organism's
+composition reads them more, power given (`results/WHOLE_SYSTEM.md`).
 
 **What the record shows so far.** Every claim is a paired comparison of native and Omni-Compass on top of native, and since
 23 October of Omni-Compass direct beside them, on the same machines with the same work, run three separate times (A, B and C)
@@ -153,7 +155,7 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
 - **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
-- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, the machines it took read beside it, a rise power given), and the wire and the chip are read for whether it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
 
@@ -177,7 +179,7 @@ result is what Omni-Compass did.
 **What a muscle and an organism are.** A muscle is one setting a native controller exposes (a pool's size, a power cap, a
 clock ceiling, a replica count, a battery's charge rate) together with the gauges that show what it does. Most companies
 build deep control for one field, and a fleet manager such as Meta's Twine schedules one kind of work (containers) over a
-very large fleet. Omni-Compass's proposition is different in kind: cross-sector governance, one governor over the shared
+very large fleet. Omni-Compass's proposition is different in kind: cross-sector supervision, one supervisor over the shared
 functional needs of otherwise separate realms. An organism is a stack of muscles from many sectors governed as one body:
 the four realms (Compute / AI / Cloud; Physics / Robotics / Autonomous; Energy / Facility / Industrial; Distribution /
 Specialized), the four stacked together, and the whole tower of 1,107 distinct muscles in 70 families. The benchmark of an
@@ -275,7 +277,7 @@ saving on a particular system. The only number that applies to your system is th
 on your own receipt. Before Omni-Compass writes to any production system, it must run in watch mode, pass the wire
 check, and be covered by a signed Omni-Compass Enterprise License.
 
-**Rights and changes.** © 2026 The Omni-Compass LLC. All rights reserved. The Omni-Compass LLC reserves the right to
+**Rights and changes.** © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. The Omni-Compass LLC reserves the right to
 change this manual, the software it describes and their terms at any time, without notice. Every copy, export or printout
 of this manual carries this notice, `LICENSE`, `NOTICE` and `DISCLOSURES.md` unchanged. All patents, copyrights and
 trademarks filed in the USA. www.omni-compass.com
@@ -767,18 +769,18 @@ installed is a quarter off the bill.
 - **The engine on this checkout:** omni-v25, fingerprint cf56fc0a7b707452 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
-  - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, power given +0.011%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, power given +0.009%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, power given +0.010%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, power given +0.002%; the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
-  - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, power given +0.039%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, power given +0.046%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, power given +0.021%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, power given +0.026%; the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
-  - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, power given +0.038%; Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, power given +0.045%; Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, power given +0.030%; Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, power given +0.006%; the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
-- The grid (source: results/grid_v5/GRID.md): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%; power given +0.000% to +0.065%; with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
+  - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, energy STEADY, up 0.011% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, energy STEADY, up 0.009% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, energy STEADY, up 0.010% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, energy STEADY, up 0.002% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
+  - the organisms under the climb load: the spine: GAIN (fewer misses), misses down 0.632 pp, energy STEADY, up 0.039% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.390 pp, energy STEADY, up 0.046% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.317 pp, energy STEADY, up 0.021% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.217 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.460 pp, energy STEADY, up 0.026% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.349 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.094 pp, energy the same
+  - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, energy STEADY, up 0.038% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, energy STEADY, up 0.045% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, energy STEADY, up 0.030% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, energy STEADY, up 0.006% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
+- The grid (source: results/grid_v5/GRID.md, its signs put in words): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work STEADY, the same (raw +0.000%); energy STEADY, up 0.000% to 0.065% (under the 0.5% floor); with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
 - **The four arms** (`results/TWO_BILLS.md`): **A**, the chip native, and **B**, the chip with Omni-Compass on native (omni-v23, three runs): B against A, the bill STEADY, under the floor (the three runs' mean 0.01%), the work done the runs disagree, work per dollar the runs disagree; **C**, the cloud native, and **D**, the cloud with Omni-Compass on native (omni-v18, 97 paired repetitions on Azure): D against C, the bill up 1.21%, inside the noise; Google and Amazon wired, not yet run.
-- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v25, each named in its table): 20.4% GAIN on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), 94.0% GAIN on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: 20.9% GAIN. Source: results/OMNI_INDEX.md.
-  - Real messaging (Apache Kafka, GitHub): 218.6% GAIN
-  - Real Kubernetes (GitHub): 20.5% GAIN
-  - Real database (PostgreSQL behind PgBouncer, GitHub): 1.4% power given
-  - Real database cache (MongoDB under YCSB, GitHub): 4.8% power given
-  - Real cache (Redis, GitHub): 6.8% power given
-  - Real database buffer pool (MySQL under sysbench, GitHub): 9.5% power given
+- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v25, each named in its table): GAIN 20.4% on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), GAIN 94.0% on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: GAIN 20.9%. Source: results/OMNI_INDEX.md.
+  - Real messaging (Apache Kafka, GitHub): GAIN 218.6%
+  - Real Kubernetes (GitHub): GAIN 20.5%
+  - Real database (PostgreSQL behind PgBouncer, GitHub): power given 1.4%
+  - Real database cache (MongoDB under YCSB, GitHub): power given 4.8%
+  - Real cache (Redis, GitHub): power given 6.8%
+  - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
 **On the engine that stands (omni-v25): 23 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
@@ -1473,6 +1475,9 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---:|---|---|
 | Every real test together: the Omni index (omni-v25) | **GAIN AND LOSS** | 20% GAIN | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 | Robustness: the two-hour run (omni-v25) | **GAIN AND LOSS** | 8.9% LOSS | mean response cut 29% to 33% (GAIN); p95 cut 24% to 34% (GAIN); time over the line cut 25% to 32% (GAIN); failed requests cut 6.6% to 8.7% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 13% to 17% (GAIN); replicas up 39% to 59% (power given); pods started up 100% to 258% (power given); pod start wait, total (s) up 116% to 326% (LOSS); pod start wait, mean (s) up 8% to 53% (LOSS) | `results/live/V25_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run (omni-v25) | **GAIN AND LOSS** | 1.5% LOSS | mean response cut 37% to 42% (GAIN); p95 cut 41% to 56% (GAIN); time over the line cut 31% to 33% (GAIN); failed requests cut 3.5% to 6.9% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 20% (GAIN); replicas up 21% to 22% (power given); pods started up 93% to 135% (power given); pod start wait, total (s) up 126% to 164% (LOSS); pod start wait, mean (s) up 15% to 16% (LOSS); robust: failed requests in the 300 s after the kill (%) up 11% to 15% (LOSS); robust: time over the line in the 300 s after the kill (% of samples) up 1.7% to 4.3% (LOSS) | `results/live/V25_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots (omni-v25) | **GAIN** | 3.8% GAIN | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V25_MUJOCO.md` |
@@ -1495,9 +1500,6 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | Kafka, the consumer group's size (omni-v25) | **GAIN, power given** | 219% GAIN | work inside the line up 16% to 23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 98% to 100% (GAIN); median cut 1% to 23% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 83% to 98% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 4% to 14% (GAIN); consumers running up 78% to 229% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 1% to 13% (power given); host CPU-seconds up 1% to 13% (power given) | `results/live/V25_KAFKA.md` |
 | Drone swarms, the three untouched cells (omni-v25) | **GAIN** | 2.9% GAIN | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V25_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries (omni-v25) | **GAIN** | 1.4% GAIN | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V25_CITYLEARN.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
 
 <!-- end of the evidence -->
 
@@ -1588,7 +1590,7 @@ profile. The physiological words of this book
 (muscle, organism, nervous system, defensive system, health) are engineering analogies, each pointing to concrete code, signals,
 actuators and checks (`docs/FACTORY_PROFILE.md`, section 2).
 
-**A fixed tune governing a changing system.** Let x be the governed system's state, z the governor's internal state, y its
+**A fixed tune supervising a changing system.** Let x be the supervised system's state, z the supervisor's internal state, y its
 observations, θ the complete configuration profile and Δ the full governing decision interval. The public interval choices on
 the bench are Δ ∈ {10, 15, 20, 30, 60, 90, 120} s (the controller itself takes any value from 5 to 120 s, `--interval`). At decision
 k, with tₖ₊₁ = tₖ + Δ, the general contract is:
@@ -2188,7 +2190,7 @@ on is read as someone else's.
 
 What follows from a foreign value is deliberately conservative. The governor does not restore over it, because an
 operator who changed a knob by hand meant to, and a second controller that changed it is a conflict to be reported, not
-won. The lever is left where it was found, the audit records the value and the time, and the governor goes on governing
+won. The lever is left where it was found, the audit records the value and the time, and Omni-Compass goes on supervising
 the other levers. A reader of the receipts who finds such a record knows at once that two hands were on the stack, and
 the paired run that contains it is read with that in mind.
 
@@ -3187,8 +3189,8 @@ paired receipts, this section is a wiring instruction, not a claim of savings.
 
 **On autopilot: why nobody babysits it.** Omni-Compass is an autopilot: a closed-loop supervisory controller that runs,
 steers and corrects itself inside the system it governs, as a self-driving car's controller does inside the car. Once
-the paired trial on a muscle has passed and the governor is set to govern, nobody turns a knob and nobody has to react.
-Every change is the governor's own, and the governor audits itself: every write is read back from the system, every
+the paired trial on a muscle has passed and Omni-Compass is set to write, nobody turns a knob and nobody has to react.
+Every change is Omni-Compass's own, and it audits itself: every write is read back from the system, every
 machine it gives back is kept only after its own paired trial shows the response time holds, every reading, decision and
 reason is in its audit, and it hands every setting back at the end; nobody has to check its work either. It holds the response time at the centre of its band, under the line, and acts as the reading approaches the
 line, so the correction lands before the line is crossed, not after a person is paged. What a native stack pays in
@@ -3222,7 +3224,7 @@ three: every setting at native, read back, with no record left.
   every governor registers itself with the exact command that puts every setting back
   (`omni_controller.controller --restore-only`, which restores from the snapshot annotations on the objects themselves,
   so it needs no memory of the dead process), and renews a lease every decision. The watchdog
-  (`tools/omni_switch.py watchdog`), run as its own service beside the governors, finds any governor whose process is gone
+  (`tools/omni_switch.py watchdog`), run as its own service beside Omni-Compass's processes, finds any of them that is gone
   or whose lease is older than its limit (five decision periods, at least two minutes), stops a hung one, runs its
   recorded restore command, and records what it did. The robustness benchmark (section 16, in preparation) kills the
   governor outright in the middle of a governed run and measures how many seconds pass before every setting is back and
@@ -3316,7 +3318,7 @@ is deliberately not the governor's to hold. It lives in a ConfigMap owned by ano
 team, in practice); while its key reads true, every expansion the governor would make is blocked and every contraction is
 still allowed, so a governor under a hold can only give capacity back, never take more. The governor reads the hold on
 every decision and records in its audit that it read it; it has no verb that could write it. The kill switch (section 11)
-is the blunter instrument beside it: the hold constrains a running governor, the switch stops every governor on the machine
+is the blunter instrument beside it: the hold constrains a running Omni-Compass, the switch stops every Omni-Compass process on the machine
 and hands everything back. An operator who suspects anything untoward uses the switch first, reads the audit second, and
 rotates the governor's identity third; the hold is for the slower case of a change window or an incident elsewhere during
 which no one wants capacity added.
@@ -3802,11 +3804,12 @@ reviewed or approved these results.
 
 <!-- results: grid (tools/results_chapter.py) -->
 **The grid** (the seven organisms at 1, 10 and 100 copies, each at 1, 10 and 100 runs). Its one written report is engine
-omni-v5's ([`results/grid_v5/GRID.md`](../results/grid_v5/GRID.md)); its modelled squares read, in the report's own words:
-"modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work +0.000%;
-power given +0.000% to +0.065%". The squares with the real cluster inside are read gauge by gauge in the same report. The grid
-has been sent on every engine since, omni-v6 to omni-v25 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has
-been written yet; until one is, the grid is read only on omni-v5.
+omni-v5's ([`results/grid_v5/GRID.md`](../results/grid_v5/GRID.md)); its modelled squares read, in the report's own summary with
+its signs put in words: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer
+misses; work STEADY, the same (raw +0.000%); energy STEADY, up 0.000% to 0.065% (under the 0.5% floor). The squares with the
+real cluster inside are read gauge by gauge in the same report. The grid has been sent on every engine since, omni-v6 to
+omni-v25 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has been written yet; until one is, the grid is read
+only on omni-v5.
 <!-- end of results: grid -->
 
 ![Flowchart: one tick of the grid conductor (grid.yml, every 15 minutes, on its newest code). It starts nothing while an Azure run, a grid report or a verify waits for a runner; it reads every started run back from its name and never starts one twice; it releases the reruns of every benchmark on the engine that stands (A of every benchmark, then B, then C), the next set of each cloud queue whose switch is on, and every grid square not yet started, up to what GitHub runs plus a margin. Nothing is cancelled.](book/figures/f_conductor.svg)
@@ -3820,11 +3823,12 @@ wired as Azure is and not yet run (their queues switched off). What a bill must 
 <!-- results: cloud (tools/results_chapter.py) -->
 **Azure Kubernetes Service, the steady set of 100 paired repetitions on omni-v18: the bill, the machines, the service**
 (`results/live/AKS_STEADY_100_OMNI_V18.md`; run 40069633316, engine omni-v18, 97 paired repetitions read). The record's own
-reading, quoted from it by `python3 tools/results_chapter.py`: "the compute bill at list price up 1.2% by the mean of the 97
-pairs, its 95% interval across zero (−$0.0007 to +$0.0021 a repetition): power given, not beyond the noise; machines billed up
-1.2%, the same; the response time's 99th percentile GAIN (down 11.0%, its interval clear of zero); every other service gauge
-EVEN or not beyond the noise; failed requests up 3.9% by the mean, its interval across zero. The stopping rule read the bill at
-every look and never decided it, so the set ran to the paid cap of 100."
+reading, carried from it by `python3 tools/results_chapter.py`, its retired word for no difference beyond the noise written as
+the key's STEADY: the compute bill at list price up 1.2% by the mean of the 97 pairs, its 95% interval across zero (−$0.0007 to
++$0.0021 a repetition): power given, not beyond the noise; machines billed up 1.2%, the same; the response time's 99th
+percentile GAIN (down 11.0%, its interval clear of zero); every other service gauge STEADY or not beyond the noise; failed
+requests up 3.9% by the mean, its interval across zero. The stopping rule read the bill at every look and never decided it, so
+the set ran to the paid cap of 100.
 <!-- end of results: cloud -->
 
 ### 16.3b The cloud is a wire: three pieces, two places, one organism (a composition, class S of L and P)
@@ -3964,17 +3968,18 @@ stands; until its table lands, this one is omni-v8's.
 | **LOSS**, or GAIN and LOSS | **0** |
 
 Each organism under each load: the change in decisions over the line (Omni-Compass's count against native's), the
-largest change in work over the three loads, and the largest power given (the organism's energy against native's).
+largest change in work over the three loads, and the largest rise in energy (the organism's energy against native's; under
+the 0.5% floor it reads STEADY).
 
-| Organism (muscles) | Over the line: its own load | the climb | work waiting in line | Work, largest change | Power given, largest |
+| Organism (muscles) | Over the line: its own load | the climb | work waiting in line | Work, largest change | Energy, largest rise |
 |---|---:|---:|---:|---|---:|
-| The spine (267) | GAIN, down 6.1% | GAIN, down 7.9% | GAIN, down 8.8% | STEADY, 0.003% (under the 0.5% floor) | power given, up 0.04% |
-| Compute / AI / Cloud (540) | GAIN, down 3.6% | GAIN, down 7.0% | GAIN, down 8.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.05% |
-| Physics / Robotics / Autonomous (404) | GAIN, down 2.5% | GAIN, down 3.2% | GAIN, down 2.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.03% |
-| Energy / Facility / Industrial (480) | GAIN, down 7.5% | GAIN, down 2.7% | GAIN, down 8.3% | STEADY, 0.000% (under the 0.5% floor) | power given, up 0.00% |
-| Distribution / Specialized (484) | GAIN, down 2.8% | GAIN, down 7.2% | GAIN, down 4.7% | STEADY, 0.003% (under the 0.5% floor) | power given, up 0.03% |
-| The four stacked (1,908) | GAIN, down 3.6% | GAIN, down 4.8% | GAIN, down 4.3% | STEADY, 0.002% (under the 0.5% floor) | power given, up 0.00% |
-| The whole tower (1,107) | GAIN, down 1.9% | GAIN, down 1.4% | GAIN, down 1.1% | STEADY, 0.000% (under the 0.5% floor) | power given, up 0.00% |
+| The spine (267) | GAIN, down 6.1% | GAIN, down 7.9% | GAIN, down 8.8% | STEADY, 0.003% (under the 0.5% floor) | STEADY, up 0.039% (under the 0.5% floor) |
+| Compute / AI / Cloud (540) | GAIN, down 3.6% | GAIN, down 7.0% | GAIN, down 8.3% | STEADY, 0.002% (under the 0.5% floor) | STEADY, up 0.046% (under the 0.5% floor) |
+| Physics / Robotics / Autonomous (404) | GAIN, down 2.5% | GAIN, down 3.2% | GAIN, down 2.3% | STEADY, 0.002% (under the 0.5% floor) | STEADY, up 0.030% (under the 0.5% floor) |
+| Energy / Facility / Industrial (480) | GAIN, down 7.5% | GAIN, down 2.7% | GAIN, down 8.3% | STEADY, 0.000% (under the 0.5% floor) | STEADY, the same |
+| Distribution / Specialized (484) | GAIN, down 2.8% | GAIN, down 7.2% | GAIN, down 4.7% | STEADY, 0.003% (under the 0.5% floor) | STEADY, up 0.026% (under the 0.5% floor) |
+| The four stacked (1,908) | GAIN, down 3.6% | GAIN, down 4.8% | GAIN, down 4.3% | STEADY, 0.002% (under the 0.5% floor) | STEADY, the same |
+| The whole tower (1,107) | GAIN, down 1.9% | GAIN, down 1.4% | GAIN, down 1.1% | STEADY, 0.000% (under the 0.5% floor) | STEADY, the same |
 <!-- end of results: realms -->
 
 <!-- results: simulators (tools/results_chapter.py) -->
@@ -4029,6 +4034,9 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 | Robustness: the two-hour run | L | omni-v25 | **GAIN AND LOSS** | 8.9% LOSS | `results/live/V25_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run | L | omni-v25 | **GAIN AND LOSS** | 1.5% LOSS | `results/live/V25_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots | S | omni-v25 | **GAIN** | 3.8% GAIN | `results/live/V25_MUJOCO.md` |
@@ -4051,9 +4059,6 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Kafka, the consumer group's size | L | omni-v25 | **GAIN, power given** | 218.6% GAIN | `results/live/V25_KAFKA.md` |
 | Drone swarms, the three untouched cells | S | omni-v25 | **GAIN** | 2.9% GAIN | `results/live/V25_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries | S | omni-v25 | **GAIN** | 1.4% GAIN | `results/live/V25_CITYLEARN.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 <!-- end of results: sheet -->
 
 **Running now and next.** Every benchmark runs again on omni-v25, the engine that stands, released by the conductor
@@ -4178,7 +4183,7 @@ The software and this manual are licensed under the Omni-Compass Evaluation Lice
 simulation use only. Everything else - commercial use, production use, operating any system beyond evaluation,
 redistribution, a hosted or managed service, incorporation into a product or service, or using the software or its
 results to build a competing product - requires a written Omni-Compass Enterprise License signed by The Omni-Compass
-LLC and paid for. All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by The Omni-Compass LLC. No patent or trademark license is granted for any other use. Contributions are accepted only on the
+LLC and paid for. All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC. No patent or trademark license is granted for any other use. Contributions are accepted only on the
 terms in `.github/CONTRIBUTING.md`, which assign their rights to The Omni-Compass LLC.
 
 The copyright in Omni-Compass belongs to The Omni-Compass LLC. The source is visible under the Evaluation License,
@@ -4203,7 +4208,7 @@ test on every build (`cmake -S cpp -B cpp/build && cmake --build cpp/build`).
 | Law | Python | C++ | Proven by |
 |---|---|---|---|
 | core engine | `omnicompass/core.py` | `cpp/src/core.cpp` | 500 frozen fixtures |
-| governor | `omnicompass/adapter.py` | `cpp/src/governor.cpp` | `tests/test_cpp_governor_parity.py` |
+| the supervisory loop (the adapter) | `omnicompass/adapter.py` | `cpp/src/governor.cpp` | `tests/test_cpp_governor_parity.py` |
 | safety shield | `omnicompass/shield.py` | `cpp/src/shield.cpp` | `tests/test_cpp_shield_parity.py` |
 | HPA replica law | `fleet/harness.py` | `cpp/src/hpa.cpp` | `tests/test_cpp_hpa_parity.py` |
 | closure law | `omnicompass/closure.py` | `cpp/src/closure.cpp` | `tests/test_cpp_closure_parity.py` |
@@ -4286,7 +4291,7 @@ any one of the three can tell whether the files in front of them are the files t
 | Idle at once | the work done and demand at zero: the pedal lifted all the way in one move, every safety check still holding |
 | Kill switch | security only: one switch in a human hand that turns every governor on the machine off at once; never the reset |
 | Lease | the record every governor renews each decision; a lease older than its limit, or a dead process, makes the watchdog hand back for it |
-| Watchdog | the service beside the governors that hands back for any governor that died or hung without doing it itself |
+| Watchdog | the service beside Omni-Compass's processes that hands back for any of them that died or hung without doing it itself |
 | Verdict | the paired trial on the muscle itself that allows a slow knob to move only where the cost is within 2%; "left native" where no step passes |
 | Slack gate | v3's rule: a motion axis busy more than half the time at full speed keeps its speed native |
 | Tuning case | the one workload, cell or swarm the rules were fitted on; shown in every table and never counted |
@@ -4521,7 +4526,7 @@ appear in the three-run tables of this manual, with their source and their direc
 | time over the response line (share of samples) | the same, against the preregistered line | measured | the aim is lower |
 | failed requests, lost messages | the same | measured | any increase is marked |
 | alert minutes: whole minutes whose 95th percentile, failed requests counted over, was over the line | the probe's own records, minute by minute | measured | the aim is lower: the minutes an on-call page would be open |
-| settings commands the governor wrote on its own | the governor's audit | measured | shown, not judged (no person touched either arm) |
+| settings commands Omni-Compass wrote on its own | its own audit | measured | shown, not judged (no person touched either arm) |
 | the governor's additions decided while the service was still inside its line (% of its additions) | the governor's audit | measured | shown, not judged |
 | worker machines in service, mean; node-hours | the cluster's own node records every 15 s | measured (machine-hours on kind; Azure's own count on AKS) | the aim is lower |
 | compute bill at list price | Azure's own machine count × list price per family | measured (a real bill) | the aim is lower |
@@ -4685,4 +4690,4 @@ Licensing, pilots and the Omni-Compass Enterprise License: **The Omni-Compass LL
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

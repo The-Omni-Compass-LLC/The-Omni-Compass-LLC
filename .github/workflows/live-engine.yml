@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -42,6 +42,10 @@ on:
       - "scripts/gpu_campaign_profiles.json"
       - "docs/engine/**"
       - "!docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"   # its own commit never starts it again (20 October: it had rebuilt itself every 7 minutes)
+      - "!docs/engine/PAGE_WORD_FOR_WORD.md"           # written by this job (docs/book/build_live_manual.py), never a reason to run it
+      - "docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md"      # the guided tour's words (tools/tour_script.py reads each stop from it)
+      - "tools/tour_script.py"
+      - "docs/book/build_live_manual.py"
       - ".github/workflows/live-engine.yml"
   workflow_run:
     workflows: [front-page]
@@ -55,7 +59,7 @@ permissions:
   contents: write
   actions: read
 env:
-  OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+  OMNI_NOTICE: '© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
 jobs:
   build:
     # a front-page run that skipped or failed has nothing new for the page
@@ -110,10 +114,16 @@ jobs:
           python tools/site_numbers.py | tee -a "$GITHUB_STEP_SUMMARY"
           # the website's one-file copy follows every rebuild (the founder's words of 1 November: "people need to click updated new
           # shit and it needs to keep on updating"): docs/live/index.html is rebuilt from the page each time, never left behind it
-          python docs/engine/build_standalone.py | tee -a "$GITHUB_STEP_SUMMARY"
-          # the stamp every copy reads, written last from the page as it is committed (its byte count and sha256 after every writer
+          # the stamp every copy reads, written from the page as it is committed (its identity, byte count and sha256 after every writer
           # above, section 2b's included): a copy opens a newer page only when it arrives with exactly those bytes
           python docs/engine/build_live_engine.py --stamp | tee -a "$GITHUB_STEP_SUMMARY"
+          # the website's copy is built from the stamped page, so it carries the page's identity and knows itself the newest (6 November,
+          # the software seat: built before the stamp, it would read every visit as a newer build and fetch the whole page)
+          python docs/engine/build_standalone.py | tee -a "$GITHUB_STEP_SUMMARY"
+          # the page word for word (docs/engine/PAGE_WORD_FOR_WORD.md, Appendix L of the Live Benchmark Engine Manual), written from the
+          # stamped page as it is committed; it reads the page and never writes it (the editor seat of 6 November: two builds behind, 163
+          # LOSS rows against the page's 273)
+          python docs/book/build_live_manual.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: The page's engine against the Python and the C++; every record against the repository's own runs
         # the check reads with the access the build had (1 November: without GitHub's token the check's own rebuild read a run's
         # engine from CHANGELOG.md where the build had read it from GitHub's run record, and the two words differed)
@@ -123,6 +133,11 @@ jobs:
           python docs/engine/check_live_engine.py | tee -a "$GITHUB_STEP_SUMMARY"
           python docs/engine/check_records.py --seed 3000 3001 3002 | tee -a "$GITHUB_STEP_SUMMARY"
           python docs/engine/build_live_engine.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+          # the page tests on the page about to be committed (6 November, the software seat: no workflow ran tests/test_live_*.py; a page
+          # its stamp did not name, or whose script did not compile, could be committed)
+          python -m unittest discover -v -s tests -p "test_live_*.py" -t . 2>&1 | tail -60 | tee -a "$GITHUB_STEP_SUMMARY"
+          python docs/book/build_live_manual.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+          python tools/tour_script.py --check | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Legal notice checked, the page committed
         run: |
           git config user.name "github-actions[bot]"
@@ -131,7 +146,7 @@ jobs:
           # every file the rebuild writes goes in with the page (the page, its appraisal, the wall's Grafana dashboard, the GitHub
           # ledger): on 24 October a file the rebuild had rewritten was left out, and every push attempt stopped on it ("cannot pull
           # with rebase: You have unstaged changes", run 40074924675)
-          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html docs/engine/tour README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json results/OVERSIGHT.md results/OVERSIGHT.json results/SITE_NUMBERS.md results/SITE_NUMBERS.json docs/FAQ.md; do
+          for f in docs/engine/OMNI_COMPASS_LIVE_ENGINE.html docs/engine/LIVE_ENGINE_VERSION.json docs/engine/APPRAISAL.md docs/engine/PAGE_WORD_FOR_WORD.md deploy/grafana/omni-compass-wall.json docs/engine/github_ledger.json docs/live/index.html docs/engine/tour README.md results/TWO_BILLS.md results/TWO_BILLS.json docs/WORK_PER_BILL.md results/WORK_PER_BILL.json results/OVERSIGHT.md results/OVERSIGHT.json results/SITE_NUMBERS.md results/SITE_NUMBERS.json docs/FAQ.md; do
             [ -e "$f" ] && git add -- "$f"
           done
           git commit -q -m "Live benchmark engine rebuilt from the engine that stands and the repository's own results" || echo "::notice::the page is unchanged"

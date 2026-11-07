@@ -1,6 +1,6 @@
 # The max, formally: definitions, what the code guarantees, and what the runs measure
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 This page states the engine's default brain, the max (`realms/compass_arm_v5.py`, `V5CFG`, engine omni-v5 by
 `tools/omni_version.py`), in definitions and properties. Each property carries its class: **V** a property of the code,
@@ -125,18 +125,23 @@ noise"; clear intervals of opposite signs read "the runs disagree" (`tools/readi
 
 ## 3. What the runs measure (classes S, L, P)
 
-- **S, the muscles alone, 1,107 muscles, preregistered seeds 3000-3009, both loads** (`results/realms_v5/`, commit
-  `eea291501848`, digest `5648f2902f1fae68`, every muscle its own card, section 5): 527 toward their aims, 421 at their limit on
-  native (V3: the max writes nothing), 159 no difference beyond the noise, **0 LOSS or power given, 0 mixed**.
+- **S, the muscles alone, 1,107 muscles, preregistered seeds 3000-3009, both loads** (omni-v5's run, commit
+  `eea291501848`, digest `5648f2902f1fae68`, every muscle its own card, section 5; its record is `docs/OMNI_V5.md`, the no-harm
+  proof): 527 GAIN, 421 STEADY at their limit on native (V3: the max writes nothing), 159 STEADY, no difference beyond the
+  noise, **0 LOSS or power given, 0 mixed**. `results/realms_v5/REALMS_V5.md` now holds the run on omni-v8 of 17 October,
+  read again by the one key on 24 October: 530 GAIN, 421 at their limit on native, 156 STEADY, the same as native, 0 LOSS.
 - **S, inside the organisms, the same seeds, three loads**: every organism with fewer misses as a whole under every load, and
   **0 plants with less work or more misses** in every organism under every load (0 of the 1,908 in the four stacked). Misses (the share of
   plant decisions over their line) fall 1.9% to 7.5% under each organism's own load, 1.4% to 7.2% under the climb (the
   load stepping 1 2 3 2 3 4 ... to twice its own) and 1.1% to 8.3% with work waiting in line, against 1.6% to 6.4%,
   0.9% to 3.5% and 1.0% to 7.2% with one global setting for every muscle (digest `9be48445`, the same seeds), and the
-  power given and the wear fall with them (Compute under its own load: power given +0.06% to +0.01%, wear +0.35% to
-  +0.06%). Every row is reported in `results/realms_v5/REALMS_V5.md`.
+  power given and the wear fall with them (`docs/OMNI_V5.md`; on the omni-v8 run, an engine that no longer stands (omni-v25 stands), Compute under its own load
+  takes 0.01% more energy than native and 0.06% more wear, power given). Every row of that run is reported in
+  `results/realms_v5/REALMS_V5.md`.
 - **L, real software**: `docs/THE_RECEIPTS.md`, receipt by receipt.
-- **P, a physical meter on a real chip**: not yet produced on the current governor (`docs/THE_SEAT.md`, section 5).
+- **P, a physical meter on a real chip**: the card's own meter on the Lambda runs (`results/gpu/`); on one A10 on omni-v23
+  the energy for each request served fell 0.8% to 1.8%, less energy for the same work, GAIN in all three of our runs
+  (`results/gpu/V23_A10_CAP_FULL_ABC.md`).
 
 ## 4. The living body: why plants read LOSS, and the version that cures them (the engine since 12 October, night)
 
@@ -247,7 +252,7 @@ own load, about 1.9 under the climb, 1.7 to 1.8 with work waiting in line):
 | 7200-7209 (the cards checked here, on untouched seeds) | 0.074 → 0.087 points | 0.145 → 0.282 points | 0.086 → 0.149 points | 0 |
 
 Work is unchanged within a millionth, and the power given is lower than the global setting's in the organisms where it
-moves at all (Compute under its own load +0.058% → +0.011%). The preregistered result, on seeds the search never read,
+moves at all (Compute under its own load, from 0.058% to 0.011% more energy than native's). The preregistered result, on seeds the search never read,
 is section 3.
 
 ## 6. Limits, stated plainly
@@ -271,4 +276,4 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

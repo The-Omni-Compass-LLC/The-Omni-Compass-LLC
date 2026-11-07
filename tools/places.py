@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -84,8 +84,8 @@ TERMS = (
      "Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the "
      "chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the "
      "software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the "
-     "effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and "
-     "the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those "
+     "effect is checked at every place: the software end shows the gain (more work, faster, the machines it took read beside it, a rise "
+     "power given), and the wire and the chip are read for whether it holds and carry the gain to their bills. Two places are tested because a system runs in only those "
      "two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same "
      "cars."),
 )
@@ -175,5 +175,5 @@ def main(argv=None) -> int:
 if __name__ == "__main__":
     sys.exit(main())
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

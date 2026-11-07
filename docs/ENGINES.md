@@ -1,6 +1,6 @@
 # Which engine is which
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 There is **one** engine. Every other engine-looking file in this repository is either its required C++ twin or a frozen
 copy of where it came from. Nothing else runs.
@@ -24,7 +24,7 @@ Copies of this repository passed around as zips (the XPASS packages) carry chang
 - an adapter that defaults to CLAIM1, takes the target sign from the starting state and adds a disruption budget. Its
   C++ governor was only partly ported, which is where the reported Python/C++ mismatches came from.
 
-None of these enter before the GPU counted run run (the engine is frozen for it, `docs/GPU_PREREGISTRATION.md`). Any of
+None of these enter before the GPU counted run (the engine is frozen for it, `docs/GPU_PREREGISTRATION.md`). Any of
 them can be adopted afterwards only as a full change: Python and C++ together, the parity tests and `verify.py` green,
 and a new mechanism id.
 
@@ -35,4 +35,4 @@ added beside it. Older states are in git history and `docs/HISTORY.md`, not in e
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

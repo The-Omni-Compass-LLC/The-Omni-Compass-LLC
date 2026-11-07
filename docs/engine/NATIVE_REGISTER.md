@@ -1,6 +1,6 @@
 # The native register: native's real settings, knob by knob
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The founder's order of 17 October: native's numbers must be real measurements. The realms harness sets native from
 "round engineering figures for the class of machine, not measurements of any product" (`realms/presets.py`, its own
@@ -46,7 +46,7 @@ Twenty-four of the live benchmark engine page's sixty muscles meet that rule.
 2. **One harness setting is off against the real runs: the HPA target.** The harness's native runs every pool at 70%;
    the repository's real Kubernetes native ran at 50%. A native with more spare capacity changes what the max can add
    and what it can hand back. Setting it from the receipts is a change to `realms/presets.py`, which sits inside the
-   omni-v10 fingerprint: the next engine version, the model gate first, every realms result run again.
+   fingerprint of the engine that stands (omni-v25, `OMNI_V25.json`): the next engine version, the model gate first, every realms result run again.
 3. **Axes, loops and batteries are not yet measured.** Their rows stay assumptions, marked so, until a real machine's
    setting is read.
 4. **The cloud bill needs a heavier load.** Azure's own autoscaler ran the real light load on fewer than two workers;
@@ -63,4 +63,4 @@ Each **M** row is read on the machine when its run starts; until then its number
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

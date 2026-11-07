@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -362,6 +362,10 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "layout_check.py")], capture_output=True, text=True)
     check("the repository is lined up: the declared root, every link and every named path present (tools/layout_check.py)",
           r.returncode == 0, r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "claims_check.py")], capture_output=True, text=True)
+    check("every published word reads by the one key: no EVEN, no bare signed number as a reading, no direction against its number, "
+          "no 'fewer machines' said as a result, no govern root twice in a breath, no retired headline (tools/claims_check.py)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "lint_names.py")], capture_output=True, text=True)
     check("every Python file compiles and reads no name that nothing defines (tools/lint_names.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
@@ -489,6 +493,13 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "unicode_math.py"), "--check"], capture_output=True, text=True)
     check("every formula the two manuals print is written in Unicode, never LaTeX markup (the founder's order of 15 October; "
           "tools/unicode_math.py --check)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "docs" / "book" / "build_live_manual.py"), "--check"], capture_output=True, text=True)
+    check("the page word for word (docs/engine/PAGE_WORD_FOR_WORD.md) is the live engine page as it stands, its build stamp and its "
+          "LOSS count the page's (docs/book/build_live_manual.py --check; the editor seat of 6 November: two builds behind)",
+          r.returncode == 0, (r.stdout + r.stderr)[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "tour_script.py"), "--check"], capture_output=True, text=True)
+    check("every quotation in the guided tour is on the page (tools/tour_script.py --check; the editor seat of 6 November: the 2a "
+          "stop quoted a dock line the page had dropped)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
     r = subprocess.run([sys.executable, "-m", "unittest", "-q", "tests.test_readings", "tests.test_summary"], cwd=ROOT,
                        capture_output=True, text=True)
     check("the words rule (a reading's word set by the gauge's aim, never its sign; a resource that rose is power given, never a "

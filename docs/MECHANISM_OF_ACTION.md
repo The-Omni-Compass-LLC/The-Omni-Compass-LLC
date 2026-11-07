@@ -1,6 +1,6 @@
 # Omni-Compass: mechanism of action, from the equations to the muscles
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Every statement here is tied to code in this repository, and the measured numbers are reproduced by
 `python tools/mechanism.py`, which writes `results/MECHANISM_OF_ACTION.json`. The engine files are frozen. Their SHA-256
@@ -240,9 +240,13 @@ chillers), one at a time, and back at once when the wall is reached.
 
 **What is proved, measured and open.** The order (8.6)-(8.8) is checked through the real actuator by
 `tests/test_staging_order.py` (the emptiest idles first, the warmest wakes first, two always in service, every machine usable, no pod moved).
-The gate (8.5) is checked by `tests/test_node_release_gate.py`. On real Kubernetes the law gave the same work 55-65%
-faster on 29-36% fewer machines (sets 22-27) and 48% more work on the same machines (the capacity test); its run under
-demand that wanders (up, spike, part way down, back up, idle) is in progress. Open: an order across different kinds of
+The gate (8.5) is checked by `tests/test_node_release_gate.py`. On real Kubernetes, in the single-run sets 22 to 27 of
+September (an engine before omni-v1, `results/live/LIVE_REPS_22.md` to `results/live/LIVE_REPS_27.md`: the road, never read
+with the engine that stands), the law gave the same work with the 95th percentile down 53% to 65% and the machines in
+service down 29% to 37%. On the engine that stands (omni-v25, `results/OMNI_INDEX.md`), all four in one run reads the work
+up 43.5% on the same machines (machines STEADY, the same), demand that wanders is `results/live/V25_WANDERING.md`, and,
+composed across every layer, the machines read ×0.5626: Omni-Compass's 1.78 times native's, power given
+(`results/WHOLE_SYSTEM.md`, section 3). Open: an order across different kinds of
 unit (a battery before a generator, a CPU before a GPU) is not wired; each pool is ordered within itself.
 
 ## 9. The state each muscle carries, and the modes as a state machine
@@ -340,4 +344,4 @@ Without that proof it reads LESS WORK PER ENERGY.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
