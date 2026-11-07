@@ -25,23 +25,23 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 <!-- the repository in numbers (tools/report_card.py) -->
 | Piece | Count |
 |---|---:|
-| Engine files in the fingerprint (omni-v25) | 65, 63 of them omni-v24's bytes |
-| Unit test cases collected under `tests/` | 836 |
+| Engine files in the fingerprint (omni-v26) | 65, 64 of them omni-v25's bytes |
+| Unit test cases collected under `tests/` | 860 |
 | Function-test files (`tools/function_tests.py --list`) | 68 |
 | C++ parity test files (the sealed twins) | 14 |
-| Checks in `verify.py --quick` at the receipt's commit (6199e483a197) | 153 PASS, 0 FAIL |
+| Checks in `verify.py --quick` at the receipt's commit (098ffb073261) | 157 PASS, 0 FAIL |
 | GitHub workflows (`.github/workflows/`) | 71 |
 | Three-run tables in `results/live/`, all engines | 345 |
 | Of them, by engine, newest first | omni-v25: 95; omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13 |
-| Three-run tables on the engine that stands (omni-v25) | 95 |
-| Model gate pages (`results/model_gate/`) | 33 |
-| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 160, 31, 25, 111 |
+| Three-run tables on the engine that stands (omni-v26) | 0 (the newest are omni-v25's) |
+| Model gate pages (`results/model_gate/`) | 35 |
+| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 161, 31, 26, 123 |
 | Drawn figures (`docs/book/figures/`) | 77 |
-| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 661, 2,054, 320 |
-| Files carrying the legal notice (`tools/legal.py --check`) | 1,981 |
+| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 661, 2,072, 355 |
+| Files carrying the legal notice (`tools/legal.py --check`) | 2,027 |
 | Muscles in the catalog, in our own models: GAIN, STEADY, LOSS | 1,107: 530, 577, 0 (70 families) |
 | Benchmarks on the benefit board, by the engine of their newest table | 26: omni-v25 23, omni-v3 3 |
-| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 281, 202 without; omni-v12: 6, 6 without |
+| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 281, 162 without; omni-v12: 6, 6 without |
 <!-- end of the repository in numbers -->
 
 ## 2. The grades, piece by piece

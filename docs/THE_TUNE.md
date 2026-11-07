@@ -13,7 +13,7 @@ No outside party has reviewed or approved these results.
 
 ## 1. Two things, never one
 
-**The main engine** is the engine that stands (omni-v25, `OMNI_V25.json`, `python3 tools/omni_version.py`) at its factory tune:
+**The main engine** is the engine that stands (omni-v26, `OMNI_V26.json`, `python3 tools/omni_version.py`) at its factory tune:
 the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
 at the factory beat for its place, every 10 s on site and every 60 s through a cloud (omni-v24), with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
 a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds

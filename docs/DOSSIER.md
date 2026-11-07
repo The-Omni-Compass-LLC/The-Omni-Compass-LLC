@@ -4,7 +4,7 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `f53efbdf854`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so. The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; the engine that stands is omni-v25, and its figure of record is the Omni index, **GAIN 20.4%** (its second reading, work and speed alone, GAIN 94.0%), in `results/OMNI_INDEX.md`.
+Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `136fd5fa21`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so. The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; the engine that stands is omni-v26, and its figure of record is the Omni index, **GAIN 20.4%** (its second reading, work and speed alone, GAIN 94.0%), in `results/OMNI_INDEX.md`.
 
 ## 1. The mechanism, and proof that it is the one that ran
 
@@ -13,7 +13,7 @@ Every mechanism, harness, receipt and result, read from the files named beside i
 | The whole repository re-runs and checks itself (`python3 verify.py`) | **PASS** | `results/VERIFY_RECEIPT.txt` |
 | The eight-line engine and its six states, fingerprinted (`omnicompass/core.py`) | sha256 `bd615f156169f679…` | `RELEASE_MANIFEST.json` |
 | Python and C++20 twins of every law, proven equal and sealed | seal intact: 17 Python/C++ twins | `results/SEAL.json` |
-| The mechanism's identity against the code | mechanism identity matches the code | `results/MECHANISM_IDENTITY.json` |
+| The mechanism's identity against the code |  | `results/MECHANISM_IDENTITY.json` |
 | The engine's convergence to its pole under the bounded command | proved | `docs/TRACKING_THEOREM.md` |
 | Safety shield: its four properties over 2,000,000 random and adversarial cases run on their own (3 November 2026), 100,000 on every push and 1,000,000 in a full check | 0 violations | `tests/test_shield_properties.py`, `verify.py` |
 | The compass law (push and pull, 5% cushions, fail up, plug contract) on every muscle, the card and Kubernetes | one law, one file | `omnicompass/compass_law.py` |

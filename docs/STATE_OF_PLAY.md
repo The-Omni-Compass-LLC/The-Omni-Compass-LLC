@@ -16,7 +16,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v25, fingerprint cf56fc0a7b707452 (65 files).
+- **The engine on this checkout:** omni-v26, fingerprint 75d3c22eed4473b9 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, energy STEADY, up 0.011% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, energy STEADY, up 0.009% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, energy STEADY, up 0.010% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, energy STEADY, up 0.002% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
@@ -32,11 +32,14 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - Real cache (Redis, GitHub): power given 6.8%
   - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
-**On the engine that stands (omni-v25): 23 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v25 | 8.9% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v25 | 1.5% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v25 | 3.8% | GAIN | S |
@@ -59,9 +62,6 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 | Kafka, the consumer group's size | omni-v25 | 218.6% | GAIN, power given | L |
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -69,7 +69,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ## The engine that stands
 
-**omni-v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files; `docs/OMNI_V25.md`), on main from 3 November: omni-v24 with one fault fixed in the Kafka wire: the producer is started before the governor's thread, because from omni-v22 that thread opened its own Kafka client while the producer was forked, the producer inherited a lock the thread held and never sent a message, and every Kafka run on GitHub since 30 October stopped at the job's 150-minute limit with nothing handed in; a producer that overruns its schedule now stops its workload with the reason. The governor's decisions are byte for byte omni-v24's (53 of the wire's 58 definitions identical, the brain among them). Everything else it runs is omni-v24's (`docs/OMNI_V24.md`, on main from 1 to 3 November): omni-v23 with the heartbeat
+**omni-v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files; `docs/OMNI_V26.md`), on main from 7 November: omni-v25 with one fault fixed in the Kubernetes governor: when a service's target stood below native's and pods waited, the decision returned native's target without starting the immune hand-back's hold, so the next decision with no pod waiting failed up again and a batch queue's normal waiting flipped the web service's target every one or two decisions; the decision now starts the hold itself when the waiting pods include those of a workload no autoscaler governs, and the fail-up is not taken again while it runs (`docs/LOSS_CAUSES_2026-11-06.md`; the model gate against omni-v25 identical on all 104 readings, no LOSS). Everything else it runs is omni-v25's (`docs/OMNI_V25.md`, on main from 3 to 7 November: the Kafka wire's producer started before the governor's thread) and omni-v24's (`docs/OMNI_V24.md`, on main from 1 to 3 November): omni-v23 with the heartbeat
 it ships with read from the place it runs in, on the founder's orders that the factory beat is the best beat the sweeps read and that
 it is found and then locked. With no beat set, the Kubernetes governor reads the cluster's nodes once at its start: on site (kind, the
 owner's own machines) it decides every 10 s; through a cloud (a node that names a public cloud's machine) every 60 s; a reading that

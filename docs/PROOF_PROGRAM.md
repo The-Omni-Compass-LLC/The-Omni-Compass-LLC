@@ -16,7 +16,7 @@ register (`docs/REGISTER.md`) and a chapter in the manual (`docs/OMNI_COMPASS_MA
    On the engine that stands, where Omni cannot improve a knob, the knob stays native. The 2% verdict is the engine's
    trigger.
 3. **The engine is frozen.** Omni v3 (`OMNI_V3.json`, digest `b53d05449ee04c4b`), the engine of this program's day; the engine that
-   stands is now omni-v25 (`OMNI_V25.json`), and every v3 result below is v3's own, never read across engines. Nothing in this program changes a
+   stands is now omni-v26 (`OMNI_V26.json`), and every v3 result below is v3's own, never read across engines. Nothing in this program changes a
    rule, a gain, a guard, a preset or a muscle. A change would make the next version and every result would run again.
 4. **Preregistered.** Rules frozen on one tuning case, written down and pushed before the untouched cases run.
 5. **Three runs, three readings.** A, B and C as separate GitHub runs on the same commit. Every judged row reads

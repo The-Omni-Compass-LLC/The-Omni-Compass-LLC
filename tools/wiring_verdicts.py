@@ -1051,7 +1051,7 @@ def main(check=False):
           "from their tables. Inside the modelled realms every muscle carries its own card since omni-v5 (`realms/muscle_cards_v5.csv`, "
           "`docs/FORMAL_V5.md` section 5); the trade between muscles judged on the whole organism is the next version's work.", "",
           "**Where the brain's verdict stood when this table was written (the live wires on Omni v3), knob by knob.** Every wire in this table is now in the fingerprint of the "
-          "engine that stands, omni-v25 (`OMNI_V25.json`: `tools/knob_verdict.py`, `tools/store_brain.py`, the five store runners, the card's "
+          "engine that stands, omni-v26 (`OMNI_V26.json`: `tools/knob_verdict.py`, `tools/store_brain.py`, the five store runners, the card's "
           "`omni_controller/gpu_compass.py`, the robot, swarm, building, grid and processor runners), and omni-v22 brought the five store wires to "
           "the max: what a wire's own rule asks goes through unclamped, up to the operator's cover, never below native (`docs/OMNI_V22.md`). "
           "Who decided, in real time, whether a knob pays before it is written, "

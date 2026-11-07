@@ -2,7 +2,7 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Every claim, its evidence status and the command that reproduces it. The modelled results (class S, our own models) use the synthetic stack model in `omnicompass/stack_sim.py` and the fleet harness (`fleet/`); they are not measurements of any production system, and a model is never offered as proof. This register is the record of those models from before omni-v1; the record of the engine that stands, omni-v25, on real software is `results/OMNI_INDEX.md`.
+Every claim, its evidence status and the command that reproduces it. The modelled results (class S, our own models) use the synthetic stack model in `omnicompass/stack_sim.py` and the fleet harness (`fleet/`); they are not measurements of any production system, and a model is never offered as proof. This register is the record of those models from before omni-v1; the record of the engine that stands, omni-v26, on real software is `results/OMNI_INDEX.md`.
 
 | ID | Claim | Status | Reproduce |
 |---|---|---|---|

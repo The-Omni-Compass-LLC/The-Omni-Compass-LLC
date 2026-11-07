@@ -6,7 +6,7 @@
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The catalog of the muscles, explained: what each is for, what Omni-Compass reads and writes on it, how it is
 wired, and which organisms it belongs to, listed heaviest hitter first in the four realms they live in (tools/heavy_hitters.py,
-the founder's order of 1 November). Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v25, carries: the v5 law at its
+the founder's order of 1 November). Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v26, carries: the v5 law at its
 default, the max); writes docs/MUSCLE_CATALOG.md.
 
     python3 tools/muscle_catalog.py
