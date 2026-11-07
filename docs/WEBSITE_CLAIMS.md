@@ -25,11 +25,11 @@ Omni-Compass on native in the same place, is being measured. On one A10 card (om
 machines alone) the bill moved +1.2%, inside the noise, and the work was not counted. No bill saving is claimed yet."
 Source: `docs/WORK_PER_BILL.md` (`tools/work_per_bill.py`, from `results/TWO_BILLS.json`).
 
-**3. Less oversight (fewer pages to answer).** "The minutes a person on call would have a page open, over the 41 Kubernetes tests on
-GitHub's machines (omni-v25): 492.9 alert minutes on native, 456.4 with Omni-Compass on top, down 7.4% (our arithmetic over the
-tables, each test weighed by its own minutes). Fewer pages in 15 of the 41 tests, to none at all in 3, the same in 2, more in 24; each
-test's word is its own table's. Every change the governor makes is its own, logged with its reason and read back, and after a crash
-every setting walks back to native by itself."
+**3. Less oversight (fewer pages to answer).** "The minutes a person on call would have a page open, over the 43 Kubernetes tests on
+GitHub's machines (omni-v25): 493.0 alert minutes on native, 456.4 with Omni-Compass on top, down 7.4% (our arithmetic over the
+tables, each test weighed by its own minutes): fewer minutes of a person paged help the system, so it reads GAIN. Fewer pages in 16 of
+the 43 tests, to none at all in 3, the same in 3, more in 24; each test's word is its own table's. Every change Omni-Compass makes is
+its own, logged with its reason and read back, and after a crash every setting walks back to native by itself."
 Source: `results/OVERSIGHT.md` (each test's own `results/live/V25_*.json`).
 
 Not to be said, because it was never measured: "your operations team shrinks", "it replaces the human in the loop", "you need fewer
