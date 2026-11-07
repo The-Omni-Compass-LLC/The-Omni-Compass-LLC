@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -160,16 +160,20 @@ def build():
     for level, ev, stems, native in TABLE_LEVELS:
         levels.append(table_level(level, ev, stems, native))
     six = [p for p in ("SIX_KUBE.md", "V3_SIX_KUBE.md", "V3_BIG_ORGANISM.md") if (LIVE / p).exists()]
+    grids = sorted((ROOT / "results").glob("grid_v[0-9]*"), key=lambda g: int(re.sub(r"\D", "", g.name) or 0))
+    grid = f"results/{grids[-1].name}/" if grids else "results/"      # the newest engine's grid, where its runs are dispatched
     levels.append({"level": "The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies)",
                    "engine": "older engines' tables; the grid runs again on the engine that stands", "evidence": "L, the cluster; S, the organism",
                    "tables": [f"results/live/{p}" for p in six], "native": "the organism's native controllers around Kubernetes with its HPA",
                    "count": None, "against": [],
-                   "note": "no table on the engine that stands yet; the grid's runs (results/grid_v8/) are going"})
-    levels.append({"level": "The cluster in a cloud: Azure Kubernetes Service, the bill", "engine": "single runs, omni-v5 to omni-v7",
+                   "note": f"no table on the engine that stands yet; the grid's runs on it are dispatched ({grid}DISPATCHED.json)"})
+    levels.append({"level": "The cluster in a cloud: Azure Kubernetes Service, the bill", "engine": "single runs, omni-v5 to omni-v7; one set on omni-v18",
                    "evidence": "L, the bill metered", "tables": ["results/live/AKS_BILL.md", "results/live/raw/run-38981149348/"],
                    "native": "Azure's own cluster autoscaler and the HPA", "count": None, "against": [],
-                   "note": "no three-run table yet: eight single runs at the tune-down, machines billed −6.5% to +7.6%, every one STEADY; "
-                           "the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back"})
+                   "note": "no three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one "
+                           "STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of "
+                           "97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise "
+                           "(results/live/AKS_STEADY_100_OMNI_V18.md)"})
     levels.append({"level": "A group of clusters", "engine": "not run", "evidence": "none yet", "tables": [],
                    "native": "each cluster's own autoscaler", "count": None, "against": [],
                    "note": "no run at this level yet, real or modelled, on the engine that stands (`k8s_fleet/` holds a model of an earlier engine)"})

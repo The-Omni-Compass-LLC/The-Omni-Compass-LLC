@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 import sys; sys.path.insert(0, str(ROOT))  # noqa: E402
-from tools.readings import judged, with_own_runs, in_gel_words, classify, aim as gel_aim  # noqa: E402  (the words every table uses)
+from tools.readings import judged, with_own_runs, in_gel_words, classify, aim as gel_aim, even_floor, EVEN_FLOOR, SIZE_FLOOR  # noqa: E402  (the words every table uses)
 from realms.harness import STACK, TOWER, ORGANISM_ALIAS, organism_sizes  # noqa: E402
 OUT = ROOT / "docs" / "DOSSIER.md"
 FIG = ROOT / "docs" / "dossier"
@@ -123,6 +123,50 @@ def pct_ci(d):
     return 100 * d["diff"] / d["base"], 100 * d["ci95"][0] / d["base"], 100 * d["ci95"][1] / d["base"]
 
 
+def standing_line():
+    """Where the record of the engine that stands lives: this dossier carries the tables of omni-v3 and the engines before it,
+    each named, so a reader is told which engine stands and where its own figure of record is (results/OMNI_INDEX.json)."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import omni_version  # noqa: E402
+    stands = "omni-" + next(iter(omni_version.VERSIONS))
+    idx = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text())
+    return (f"The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; "
+            f"the engine that stands is {stands}, and its figure of record is the Omni index, **GAIN {idx['headline_pct']:.1f}%** "
+            f"(its second reading, work and speed alone, GAIN {idx['service_headline_pct']:.1f}%), in `results/OMNI_INDEX.md`.")
+
+
+# why a change reads its word, said beside it (the founder's order: a reader is told why a minus can be a GAIN and a plus a
+# LOSS): for each gauge, what a fall means and what a rise means
+WHY = {
+    "response time (ms), 95th percentile": ("faster answers", "slower answers"),
+    "response time (ms), mean": ("faster turnaround", "slower turnaround"),
+    "p95_ms": ("faster answers", "slower answers"),
+    "worker nodes in service, mean": ("fewer machines in service, a cut", "more machines in service"),
+    "energy (Wh)": ("less modelled energy, a cut", "more modelled energy"),
+    "failed requests (%)": ("fewer failed requests", "more failed requests"),
+    "work_inside_line_tps": ("less work inside the line", "more work inside the line"),
+    "work_inside_line_mps": ("less work inside the line", "more work inside the line"),
+    "work_inside_line_rps": ("less work inside the line", "more work inside the line"),
+    "work_inside_line_ops": ("less work inside the line", "more work inside the line"),
+    "hit_rate": ("fewer hits", "more hits"),
+    "servers_alive_mean": ("fewer connections held open for the same work, a cut", "more connections held open"),
+    "consumers_mean": ("fewer consumers running, a cut", "more consumers running"),
+    "maxmemory_mb_mean": ("less memory held, a cut", "more memory held"),
+    "cache_mb_mean": ("less cache held for the same work, a cut", "more cache held"),
+    "pool_mb_mean": ("less buffer pool held for the same work, a cut", "more buffer pool held"),
+    "cpu_seconds": ("less host processor time, a cut", "more host processor time"),
+}
+
+
+def size_words(p):
+    """The three runs' changes as a direction in words and a size with no sign: 'down 64% to 66%', 'up 0.3%'."""
+    sizes = sorted(abs(x) for x in p)
+    digits = 1 if sizes[-1] < 1 else 0
+    lo, hi = f"{sizes[0]:.{digits}f}%", f"{sizes[-1]:.{digits}f}%"
+    way = "down" if sum(p) < 0 else "up"
+    return f"{way} {lo}" if lo == hi else f"{way} {lo} to {hi}"
+
+
 def main():
     FIG.mkdir(parents=True, exist_ok=True)
     commit = sh("git", "rev-parse", "--short", "HEAD")
@@ -135,7 +179,8 @@ def main():
          f"Every mechanism, harness, receipt and result, read from the files named beside it. Built by "
          f"`tools/dossier.py` at commit `{commit}`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, "
          "**L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by "
-         "the people who wrote the law is not an independent test; where a result is a model it says so.", ""]
+         "the people who wrote the law is not an independent test; where a result is a model it says so. "
+         f"{standing_line()}", ""]
 
     # ------------------------------------------------------------------ 1. integrity
     L += ["## 1. The mechanism, and proof that it is the one that ran", "",
@@ -173,15 +218,31 @@ def main():
 
     HIGHER_KEYS = {CAP, CAP_NOW, "work_inside_line_tps", "work_inside_line_mps", "work_inside_line_rps", "work_inside_line_ops", "hit_rate"}
 
+    def span(p):
+        """The three runs' changes in words: the direction (down or up), then the sizes from the smallest to the largest, never
+        a bare sign; runs that went both ways are printed as they lie, labelled raw."""
+        lo, hi = min(p), max(p)
+        if lo < 0 < hi:
+            return f"raw {lo:+.1f}% to {hi:+.1f}%"
+        a, b = sorted((abs(lo), abs(hi)))
+        d = 0 if b >= 10 else 1
+        size = f"{b:.{d}f}%" if f"{a:.{d}f}" == f"{b:.{d}f}" else f"{a:.{d}f}% to {b:.{d}f}%"
+        return f"{'down' if hi <= 0 else 'up'} {size}"
+
     def cell(row, key):
-        """A row's cell: its range over the three runs and its word, GAIN, LOSS or power given, by what the gauge is for; STEADY
-        where it did not move beyond the noise."""
+        """A row's cell: its word first, GAIN, LOSS or power given by what the gauge is for, then the direction in words and
+        the range over the three runs (the founder's order of 6 November: the word, then the direction, then the size); a
+        judged change whose mean is under the 0.5% floor reads STEADY, under the floor; STEADY where it did not move beyond
+        the noise."""
         if row is None:
             return "not taken"
         p = pct_runs(row); rd = row["reading"]
         aim_ = "higher" if key in HIGHER_KEYS else gel_aim("lower", key)
         if judged(rd):
-            return f"**{min(p):+.0f}% to {max(p):+.0f}%, {in_gel_words(rd, p, aim_)}**"
+            m = sum(abs(v) for v in p) / len(p)
+            if m < 100 * SIZE_FLOOR:
+                return even_floor(max(abs(v) for v in p) / 100) if max(abs(v) for v in p) < 100 * SIZE_FLOOR else f"{EVEN_FLOOR} (the mean {m:.2f}%)"
+            return f"**{in_gel_words(rd, p, aim_)}, {span(p)}**"
         try:
             c = classify(rd, aim_)
         except ValueError:
@@ -211,7 +272,10 @@ def main():
           "replications): native Kubernetes (its HPA and scheduler) against the same Kubernetes with Omni-Compass on top, a "
           "fresh six-worker cluster per arm, order rotated, the same work sent to both arms. A row reads **GAIN** or **LOSS in all three of our runs** "
           "(by what the gauge is for, never by its sign: a response time cut is a GAIN; machines or energy up is **power given**) only when all three "
-          "runs move the same way with every 95% interval clear of zero; otherwise it reads STEADY, no difference beyond the noise, which is the result. Every Omni arm ends with every setting handed back and "
+          "runs move the same way with every 95% interval clear of zero and the mean change is 0.5% or more (under that floor it reads STEADY, "
+          "under the floor); otherwise it reads STEADY, no difference beyond the noise, which is the result "
+          "(the rule these tables were read by on omni-v3; the 0.5% floor of the one key came on 24 October, `docs/HOW_TO_READ_THE_RESULTS.md`). "
+          "Each cell gives the word first, then the direction and the size over the three runs, then why. Every Omni arm ends with every setting handed back and "
           f"read back. Steady runs: {runs_line}; the other tests' runs are named in their tables.", "",
           "![Kubernetes on v3](dossier/k8s_v3.png)", "",
           "| Test | Work | Response time (p95; the batch queue's mean) | Machines in service | Energy (declared model) | Failed requests | Table |", "|---|---|---|---|---|---|---|"]
@@ -222,8 +286,9 @@ def main():
                  f"{cell(rows.get(FAILED), FAILED)} | `results/live/V3_{key}.md` |")
     L += ["", "Energy on kind is a declared model: the machines are containers on one runner, so a machine out of service cuts "
           "modelled watts, not a metered bill. Omni-Compass gives a machine back only after a paired trial shows the service no "
-          "slower without it (the verdict, `omnicompass/verdict.py`); on these clusters one machine fewer made requests 30-45% "
-          "slower in most trials, so the machines stayed and were spent on speed and work. The v1 tables (`results/live/V1_*.md`, "
+          "slower without it (the verdict, `omnicompass/verdict.py`): where a trial passed, the machines in service fell (the steady "
+          "steps, the batch queue and the Google trace above, a GAIN), and where none passed they stayed at native's and were spent on "
+          "speed and work (the wandering demand, all four in one run, the faults and the noisy neighbour, STEADY). The v1 tables (`results/live/V1_*.md`, "
           "`docs/OMNI_V1.md`) read the same; the sets before v1 are in `docs/history/`.", ""]
 
     # ------------------------------------------------------------------ 3. The real database on v3
@@ -257,8 +322,9 @@ def main():
          "| Workload | Work inside the 500 ms line | End-to-end p95 | Consumers running (the resource held) | Host CPU-seconds (the compass's own cost) |",
          ("work_inside_line_mps", "p95_ms", "consumers_mean", "cpu_seconds"),
          "On the counted set that stands (the brain's own verdict on the knob, amendment 2, run on 10 October: `docs/RERUN_2026-10-10.md`), "
-         "the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst` (0.3% on the tuning workload, "
-         "shown and not counted), a GAIN in all three of our runs, with work, latency and CPU STEADY; `heavy` and `light` read STEADY on every "
+         "the consumer count was handed back where the queue allowed: consumers running cut 0.8% on `burst`, a GAIN in all three of our runs "
+         "(fewer consumers held for the same work), with work, latency and CPU STEADY (on the tuning workload, shown and not counted, the cut "
+         "was 0.3% in each run: STEADY, under the 0.5% floor); `heavy` and `light` read STEADY on every "
          "gauge. No message went unconsumed in any arm; every count was handed back. The earlier counted sets are kept whole in "
          "`docs/history/V3_KAFKA_set1.md` and `V3_KAFKA_set2.md`. Table: `results/live/V3_KAFKA.md`."),
         ("V3_REDIS.json", "## 3c. A real cache: Redis, the operator's memory ceiling, Omni v3, three runs (evidence class L)",
@@ -270,8 +336,9 @@ def main():
          ("work_inside_line_rps", "hit_rate", "p95_ms", "maxmemory_mb_mean", "cpu_seconds"),
          "On the counted set that stands (the brain's own verdict on the knob, amendment 2), every untouched workload reads STEADY on every "
          "gauge: under the resource objective the verdict left the ceiling where the operator set it, as the preregistration expected "
-         "before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (+4% to +5%) and in the hit "
-         "rate with memory given (+19% to +26%, power given). The earlier counted sets are kept whole in `docs/history/V3_REDIS_set1.md` "
+         "before the runs. The tuning workload, shown and never counted, bought a GAIN in work inside the line (up 4.4% to 4.9%: more requests "
+         "answered inside the line) and in the hit rate (up 4.4% to 5.0%), with memory given (the ceiling held up 19% to 26%, power given). The earlier "
+         "counted sets are kept whole in `docs/history/V3_REDIS_set1.md` "
          "and `V3_REDIS_set2.md`. Table: `results/live/V3_REDIS.md`."),
         ("V3_YCSB.json", "## 3d. A real database's storage-engine cache: MongoDB under YCSB, the operator's cache size, Omni v3, three runs (evidence class L)",
          "MongoDB 8.0 as its publisher ships it with the operator's WiredTiger cache of 512 MB is native; omni is the compass law on one knob, "
@@ -326,8 +393,8 @@ def main():
           "(`.github/workflows/aks-metered.yml`, `docs/K8S_COMPASS_PREREGISTRATION.md`, the bill on a real cloud). Transcribed "
           "from the receipts they cite:", "",
           "| Test | Fleet | Bill | Response time | Reading | Receipt |", "|---|---|---|---|---|---|",
-          "| Steady load, 5 pairs | 4 workers | −4.7%, interval across zero | inside the noise | STEADY, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |",
-          "| A burst sized to the cluster, 5 pairs | 4 workers | +5.0%, interval across zero | p99 −34% clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill STEADY, inside the noise | `results/live/V1_AKS_BURST.md` |", "",
+          "| Steady load, 5 pairs | 4 workers | down 4.7% ($0.0636 to $0.0606), its interval across zero | inside the noise | STEADY, no difference beyond the noise on any gauge | `results/live/V1_AKS_STEADY.md` |",
+          "| A burst sized to the cluster, 5 pairs | 4 workers | up 5.0% ($0.1044 to $0.1096), its interval across zero | the 99th percentile down 34% (5,975 to 3,967 ms), clear of the noise in this one run (a GAIN in one run, not a reading of three); p95 inside the noise | the bill STEADY, inside the noise | `results/live/V1_AKS_BURST.md` |", "",
           "One machine is a quarter of a 4-worker fleet, so only a cut of about 30% or more can clear the noise there; the "
           "expected machine cut is a few percent. The fleet that can show one machine (40 workers in nine machine "
           "families, the subscription's per-family allowance being 10 vCPUs) is preregistered and dispatched on v3; its "
@@ -364,13 +431,15 @@ def main():
     style(ax, "The card's firmware with Omni on top, against the firmware alone (model, geometric means)", "change (%)")
     ax.legend(fontsize=8, frameon=False)
     fig.tight_layout(); fig.savefig(FIG / "gpu_model.png", facecolor=SURF); plt.close(fig)
-    L += ["## 4b. The GPU governor on the modelled card: each base alone, and with Omni on top (evidence class S)", "",
+    L += ["## 4b. Omni-Compass on the modelled card: each base alone, and with Omni on top (evidence class S)", "",
           "Omni-Compass never runs the card. It sits on the card's own firmware (or on an operator's power cap) and moves the "
           "clock ceiling and the power limit, which that base already accepts (`omni_controller/gpu_compass.py`, the same law "
           "in `realms/gpu_card.py`). A step down is taken only after a paired trial on the card shows it adds at most 2% to "
           "the card's own time on a request (`omnicompass/verdict.py`); where no step passes, the card runs as it does alone.", "",
           "![The modelled card](dossier/gpu_model.png)", "",
-          "| Work | Base | Energy (tuning / fresh) | Median response | p95 | p99 |", "|---|---|---:|---:|---:|---:|"]
+          "Each cell is the raw change against the base alone, the geometric mean over the seeds, its sign as it lies (a minus is less "
+          "energy or a shorter response); it is a model, class S, and carries no word of its own.", "",
+          "| Work | Base | Energy, raw change (tuning / fresh) | Median response, raw change | p95, raw change | p99, raw change |", "|---|---|---:|---:|---:|---:|"]
     for m, w in WORKN:
         for top, base in (("omni", "firmware + Omni vs firmware alone"), ("cap_omni", "105 W cap + Omni vs the cap alone")):
             L.append(f"| {w} | {base} | " + " | ".join(f"{a[(m, top, k)]:+.2f}% / {b[(m, top, k)]:+.2f}%"
@@ -393,12 +462,13 @@ def main():
           "Each organism runs native (its own controllers) and with the compass law on every muscle, same seed, same load, "
           "same clock. Size is the number of copies of the organism governed together on one clock (1,000 copies of the four "
           "stacked is 1.7 million modelled muscles); runs are the first N of the same paired set, so 1, 10, 100 and 1,000 "
-          "nest. 84 of 90 cells are done; the six left (100 and 1,000 runs at 1,000 copies) are beyond the machines "
-          "available and say so.", "",
+          "nest. 78 of the 90 cells are done (`results/scale/GRID.md`); the twelve left (1,000 runs at 100 copies, 100 runs at 1,000 "
+          "copies) say so in the grid, and 1,000 runs at 1,000 copies is not run, beyond the machines available.", "",
           "![Work per energy](dossier/grid_wpe.png)", "", "![Time over the line](dossier/grid_viol.png)", "",
           "The full grid with every cell: `results/scale/GRID.md`; the receipts, one per size: `results/scale/receipts/`. "
-          "Work per energy is up in every cell, a GAIN, the same figure at every size (+0.07% for Physics to +0.37% for Energy, "
-          "the four stacked and the tower); the time over the service line is at or under native's in every cell, so the "
+          "Work per energy rose in every cell, by about the same at every size (up 0.06% to 0.40%: about 0.07% for Physics and 0.36% "
+          "for Energy, the four stacked and the tower), every cell under the founder's 0.5% floor, so by the one key it reads STEADY, "
+          "under the floor; the time over the service line is at or under native's in every cell, so the "
           "band-first rule holds and every cell of 10 runs or more reads GAIN within the guardrails by the preregistered rule. "
           "Every knob was handed back in every run.", ""]
 
@@ -406,17 +476,21 @@ def main():
     L += [f"## 6. The {_SZ[TOWER]} muscles and the four realms, Omni v3 (evidence class S)", "",
           f"The catalog (`realms/catalog.csv`): {_SZ[TOWER]} muscles in 59 families, {_SZ['compute_ai_cloud']} in Compute / AI / Cloud, {_SZ['physics_robotics_autonomous']} in Physics / Robotics / "
           f"Autonomous, {_SZ['energy_facility_industrial']} in Energy / Facility / Industrial and {_SZ['distribution_specialized']} in Distribution / Specialized ({_SZ[STACK]:,} counting a muscle "
-          "once per realm, a shared spine of 257). Every muscle alone and every organism whole ran as A, B and C on v3 and "
-          "reproduced to the last digit (`results/realms/REALMS.md`): 0 muscles with a LOSS, every organism GAIN within the "
-          "guardrails (work per energy +0.1% to +0.3%, work STEADY, time over the line not above native's). On v2 the "
+          "once per realm, a shared spine of 257; the catalog that stands holds 1,107 muscles in 70 families, `realms/catalog_v5.csv`). Every muscle alone and every organism whole ran on v3 (`results/realms/REALMS.md`; "
+          "its A, B and C reproduced to the last digit, `docs/history/OWNERS_MANUAL_RESULTS_V1_V3.md`): no muscle with less work per "
+          "energy, 124 GAIN within the guardrails, 9 that cut energy by trading service for it (GAIN AND LOSS) and the rest STEADY; "
+          "every organism GAIN within the guardrails by the preregistered rule, its work per energy up 0.1% to 0.3% (under the 0.5% "
+          "floor, so STEADY, under the floor, by the one key), work STEADY, time over the line not above native's. On v2 the "
           "Physics realm and the tower read GAIN AND LOSS (a service traded for energy); the cause was a missing do-no-harm gate on speed knobs, "
           "which made v3 (`docs/OMNI_V3.md`). Three independent simulators with their own native controllers are wired the "
           "same way and read by the same rule: the power grid (`results/live/V3_PANDAPOWER.md`: energy drawn and net import "
           "cut in all 11 SimBench grids with ZIP loads, a GAIN; the energy dissipated in the lines up in 4 and tap operations 4 → 8 a year "
-          "in one, power given), robot arms (`results/live/V3_MUJOCO.md`: Gen3 peak torque cut 29%, tracking error cut 21%, energy per takt "
-          "cut 0.8%, each a GAIN; the Panda's copper heating up 14%, power given; two arms left native, STEADY) and CityLearn "
-          "(`results/live/V3_CITYLEARN.md`: electricity bought, peak and unevenness cut in all 11 battery districts, a GAIN; the bill up in "
-          "7, power given). Every row stands in every table, whichever way it went.", ""]
+          "in one, power given), robot arms (`results/live/V3_MUJOCO.md`: on the Gen3 peak torque cut 29%, tracking error cut 21%, copper "
+          "heating cut 11% and energy per takt cut 0.8%, each a GAIN in all three of our runs; the iiwa and the UR5e left native by the "
+          "paired trial, STEADY) and CityLearn (`results/live/V3_CITYLEARN.md`, the 11 districts with electric batteries: the daily peak "
+          "cut in all 11 and the daily unevenness in 10, a GAIN; electricity bought cut in 4 and under the 0.5% floor in the other 7, "
+          "STEADY; the highest peak cut in 5 and up in 3, power given; the bill STEADY in 10, seven of them under the floor, and cut in "
+          "1). Every row stands in every table, whichever way it went.", ""]
 
     # ------------------------------------------------------------------ 7. Harnesses and receipts
     L += ["## 7. Harnesses and receipts", "", "| Harness | What it proves | Receipt |", "|---|---|---|",
@@ -427,13 +501,13 @@ def main():
           "| `tools/run_kil.py`, workflows `six-kube`, `big-organism`, `big-organism-detached`; `tools/six_kube_report.py` | the six organisms with a real cluster inside at 1 to 1,000 copies, on GitHub and on a rented machine; the clock rule | `results/live/V1_SIX_KUBE.md`, `V3_SIX_KUBE.md`, `V1_BIG_ORGANISM.md` |",
           "| `tools/run_pgbench.py`, workflow `pgbench` | a real database behind its pooler, one knob through the pooler's console | `results/live/V3_PGBENCH.md` |",
           "| `tools/run_kafka.py`, workflow `kafka` | a real message broker as shipped, one knob (the consumer group's size) read from the consumers' own records | `results/live/V3_KAFKA.md` |",
-          "| `tools/run_redis.py`, workflow `redis` | a real cache as shipped, one knob (the memory ceiling) through its own console, growing only while the cache is full | the three-run table V3_REDIS.md in `results/live/` when its runs land |",
+          "| `tools/run_redis.py`, workflow `redis` | a real cache as shipped, one knob (the memory ceiling) through its own console, growing only while the cache is full | `results/live/V3_REDIS.md` |",
           "| `tools/run_swarm.py`, workflow `swarm` | Omni on top of each drone's shipped autopilot in gym-pybullet-drones, collisions voiding the cell | `results/live/V3_SWARM.md` |",
           "| `tools/run_scale.py`, `tools/pool_scale.py`, workflow `six`; `tools/grid.py` | the six organisms at every run count and size | `results/scale/GRID.md`, `results/scale/receipts/` |",
           "| `tools/run_realms.py`, workflow `realms` | every muscle alone and every organism whole | `results/realms/REALMS.md` |",
           "| `tools/run_pandapower.py`, `run_mujoco.py`, `run_citylearn.py` | Omni on top of an independent simulator's own controller | `results/live/V3_PANDAPOWER.md`, `V3_MUJOCO.md`, `V3_CITYLEARN.md` |",
           "| `tools/omni_index.py` | the one combined number, read only from the three-run tables | `results/OMNI_INDEX.md` |",
-          "| `scripts/gpu_rented_run.sh`, `tools/gpu_wire_check.py` | one command on a rented card: wire check, smoke, the organisms with the card inside, the preregistered counted run | the founder's runs, to come |",
+          "| `scripts/gpu_rented_run.sh`, `tools/gpu_wire_check.py` | one command on a rented card: wire check, smoke, the organisms with the card inside, the preregistered counted run | `results/gpu/` (the card runs on rented cards, omni-v21 and omni-v23) |",
           "| workflow `archive-run` | every finished run's files copied with the code onto the branch `raw`, one SHA-256 manifest per repetition | `results/live/raw/run-<id>/` (opened by `scripts/raw_archive.sh`) |",
           "| `verify.py`, `tools/release_manifest.py` | everything above re-runs and checks itself; the manifest fingerprints the result | `results/VERIFY_RECEIPT.txt`, `RELEASE_MANIFEST.json` |", "",
           "The rules for each run were written and committed before it ran (`docs/*_PREREGISTRATION.md`); every row is reported, "
@@ -441,15 +515,16 @@ def main():
 
     # ------------------------------------------------------------------ 8. Open
     L += ["## 8. What is not yet shown", "",
-          "- A cloud bill or energy cut on real machines: the 4-worker Azure fleet reads STEADY, inside the noise, as a fleet too small "
-          "to show one machine must; the 40-worker fleet runs are the test of that.",
-          "- The real card on the current governor: every earlier card result ran on a controller since replaced and is obsolete; "
-          "the one-card, card-inside-the-organisms and eight-card runs are the founder's, on rented cards, at one named commit.",
-          "- The grid stops at 100 copies and 100 runs (the founder's order of 12 October, to cut the time and the bill): no 1,000 "
-          "copies and no 1,000 runs are run on any engine from that day; the v3 cells at 1,000 above stand as they were run.",
-          "- The queue in `docs/REGISTER.md` section 4 (drone swarms on gym-pybullet-drones and Kafka done; Redis running): PX4 and "
-          "ArduPilot swarms, YCSB and HammerDB, Spark, OpenSearch, fio, Open-RMF, the 24-hour robustness run, Basilisk, Orekit and "
-          "GMAT, RocketPy, Cantera.", ""]
+          "- A cloud bill or energy cut on real machines: the 4-worker Azure fleet on v1 reads STEADY, inside the noise, as a fleet too "
+          "small to show one machine must; the steady set of 100 pairs on omni-v18 read the compute bill up 1.2% by the mean of its 97 "
+          "pairs, its interval across zero: power given, not beyond the noise (`results/live/AKS_STEADY_100_OMNI_V18.md`).",
+          "- The real card on the engine that stands: the card runs on rented cards so far ran omni-v21 and omni-v23 (`results/gpu/`: "
+          "the one card, the one card fully loaded and the eight-card machine); every card result before them ran on a controller "
+          "since replaced and is obsolete.",
+          "- Paid cloud and card runs stop at 100 copies and 100 repetitions (the founder's order of 12 October, to cut the time and "
+          "the bill); on GitHub's own machines the 1,000 tier stands again (his distinction of 15 October, `scripts/dispatch_grid.py`), "
+          "a cell beyond a free runner's memory or time listed as pending runner capacity; the v3 cells at 1,000 above stand as they were run.",
+          "- The queue in `docs/REGISTER.md` section 4: every open benchmark still to run, in order, each row with its own status.", ""]
     OUT.write_text("\n".join(_legal_stamp(with_own_runs(L))) + "\n", encoding="utf-8")
     print(OUT)
 

@@ -1,6 +1,6 @@
 # Canonical engine declaration
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 One engine runs Omni-Compass, and every result in this repository comes from it. This page names it, gives its
 equations exactly as the code computes them, and names every other form as a variant. Where any document, manual, chart
@@ -13,7 +13,7 @@ or filing states the equations differently, this page and the file it fingerprin
 | Name | `symmetric_verified` (`omnicompass/configurations.py`, `DEFAULT`) |
 | Code | `omnicompass/core.py` (Python), `cpp/src/core.cpp` (C++ twin, sealed in `results/SEAL.json`) |
 | Fingerprint | SHA-256 of `omnicompass/core.py`, recorded in `results/PREREGISTRATION.json` and `RELEASE_MANIFEST.json`; checked by `verify.py` |
-| Evidence | every simulation, benchmark, live Kubernetes run and GPU harness in this repository |
+| Evidence | every model, benchmark, live Kubernetes run and GPU harness in this repository |
 
 State: E (deviation), U (coherence), I[U] (unmet-need integral), S (structural stress), B and Ḃ (the bath).
 
@@ -39,8 +39,8 @@ being rewritten. Every evidence claim names the mechanism id that produced it; "
 
 | Configuration | Mechanism id | Role |
 |---|---|---|
-| `symmetric_verified` | `29d9808dfb8f626ad5de17a8a1efa37411dbab08a64af4b276143b466f7ce21c` | canonical |
-| `printed_eight_line` | `cd333dc166fb7684ec0fca71f5f50488041e47825ee47d1ea667bec1f3d2259d` | named alternative embodiment |
+| `symmetric_verified` | `b10f1b4128ff7fc76b8865e0d1c486817fe56ec347f8d105bcaa657904cb61f2` | canonical |
+| `printed_eight_line` | `623934cc31e964120aa7e8a22d17927fef9a7588e599b089b8ae545ec240ef12` | named alternative embodiment |
 
 On the frozen 500-fixture population (`benchmarks/core_evidence.py`, seed 223387268), both are executable and neither
 is a stand-in for the other:
@@ -95,4 +95,4 @@ and tested, or the printed form should be benchmarked first (section 3).
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

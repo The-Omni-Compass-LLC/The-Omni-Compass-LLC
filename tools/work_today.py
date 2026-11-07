@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -18,6 +18,7 @@ whatever the governor did. Nothing here is a new measurement.
 import argparse
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -41,7 +42,7 @@ def _word(reading: str) -> str:
 
 def build() -> dict:
     idx = json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8"))
-    counted, blind = [], []
+    counted, blind, taken_out = [], [], []
     for t in idx["tests"]:
         w = t["measures"].get("work")
         row = {"place": "the software end (GitHub's machines, class L)", "category": t["category"], "test": t["test"], "source": t["source"]}
@@ -59,7 +60,8 @@ def build() -> dict:
         r = next((x for x in o["rows"] if x["pair"] == "Omni on native against native" and x["gauge"] == "requests"), None)
         if r:
             rel = [r["runs"][k]["rel"] for k in ("A", "B", "C")]
-            counted.append({"place": "the software end (GitHub's machines, class L)", "category": "Omni-Compass's own orchestrator showing",
+            taken_out.append({"why": "the verdict audit took its table out of the count (results/verdict_audit/VERDICT_AUDIT.json, status taken out): shown, never counted",
+                            "place": "the software end (GitHub's machines, class L)", "category": "Omni-Compass's own orchestrator showing",
                             "test": "18 steps of 25 s, clients stepping 1 2 3 2 3 4 …", "what": "the requests served a step by clients that send again as soon as they are answered", "source": "results/orchestrator/V21_THREE_ARMS_ABC.json",
                             "ratio": 1 + sum(rel) / 3, "change": sum(rel) / 3, "runs": rel, "reading": r["reading"], "word": _word(r["reading"])})
     wpb = json.loads((ROOT / "results" / "WORK_PER_BILL.json").read_text(encoding="utf-8"))
@@ -76,7 +78,7 @@ def build() -> dict:
     for r in counted:
         tally[r["word"]] = tally.get(r["word"], 0) + 1
     return {"question": "we need to see if we're doing more work at the end of the day. That's all that matters when we're governing.",
-            "said": "the founder, 2 November 2026", "counted": counted, "blind": blind, "tally": tally,
+            "said": "the founder, 2 November 2026", "counted": counted, "blind": blind, "taken_out": taken_out, "tally": tally,
             "sources": ["results/OMNI_INDEX.json", "results/orchestrator/V21_THREE_ARMS_ABC.json", "results/WORK_PER_BILL.json"]}
 
 
@@ -91,8 +93,8 @@ def markdown(d: dict) -> str:
          f"**The answer today: more work in {len(grew)} of the {len(c)} tests that counted their work, less work in "
          f"{t.get('LOSS', 0) or 'none'}.** The work held in {t.get('STEADY', 0)}: each of those offers its load at a fixed rate, the same "
          f"in both arms, so the most either arm can do is answer all of it inside the line. In {t.get('the runs disagree', 0)} the runs "
-         f"disagree. {len(b)} more tests could not show more work whatever the governor did: they sent a fixed load or did not count "
-         "the work.", "",
+         f"disagree. {len(b)} more tests could not show more work whatever Omni-Compass did: they sent a fixed load or did not count "
+         "the work." + (f" {len(d.get('taken_out') or [])} more, taken out of the count by the verdict audit, is shown at the end and never counted." if d.get("taken_out") else ""), "",
          "## The tests that counted their work", "",
          "| Where | Test | What the work is | Work, Omni-Compass on native against native | Reading (the one key) | Record |", "|---|---|---|---|---|---|"]
     for r in c:
@@ -102,15 +104,24 @@ def markdown(d: dict) -> str:
         L.append(f"| {r['place']}, {r['category']} | {r['test']} | {r['what']} | {size}{runs} | {r['reading']} | `{r['source']}` |")
     L += ["", "## The tests that could not show more work", "",
           "A test that sends the same fixed load to both arms, or reads only time, misses and machines, cannot show more work, however "
-          "well the system is governed: it shows the same work done faster, with fewer alert minutes or on fewer machines. To answer "
+          "well the system is supervised: it can show only the same work done faster, with fewer alert minutes or with fewer machines in "
+          "service. To answer "
           "the question in these tests too, each needs a load whose work grows when the system serves faster (the work meter, "
           "`LOADGEN=meter` in `scripts/kind_bench.sh`, as every cloud set carries from 31 October).", "",
           "| Where | Test | Why it could not show more work | Record |", "|---|---|---|---|"]
     for r in b:
         L.append(f"| {r['place']}, {r['category']} | {r['test']} | {r['why']} | `{r['source']}` |")
-    L += ["", "Engines: each record names the engine it ran on (the software end's tables on omni-v21, the chip on omni-v23, the cloud "
-          "on omni-v18); every benchmark runs again on omni-v24, and this page is written again from the records when they land "
-          "(`python3 tools/work_today.py`).", "", OWN_RUNS]
+    if d.get("taken_out"):
+        L += ["", "## The test taken out of the count", "",
+              "| Where | Test | Work, Omni-Compass on native against native | Reading (the one key) | Why it is not counted | Record |", "|---|---|---|---|---|---|"]
+        for r in d["taken_out"]:
+            runs = (" (runs: " + ", ".join(("up " if x > 0 else "down ") + _pct(x) for x in r["runs"]) + ")") if r.get("runs") else ""
+            L.append(f"| {r['place']}, {r['category']} | {r['test']} | {('up ' if r['change'] > 0 else 'down ') + _pct(r['change'])}{runs} | {r['reading']} | {r['why']} | `{r['source']}` |")
+    soft = sorted({int(x) for x in re.findall(r"/V(\d+)_", " ".join(r["source"] for r in c + b if r["place"].startswith("the software end")))})
+    L += ["", "Engines: each record names the engine it ran on (the software end's tables on "
+          + (", ".join(f"omni-v{v}" for v in soft) or "the engines their files name") + ", the chip and the cloud on the engines their "
+          "rows name above); every benchmark runs again on the engine that stands, and this page is written again from the records when "
+          "they land (`python3 tools/work_today.py`).", "", OWN_RUNS]
     return "\n".join(stamp(L)) + "\n"
 
 
