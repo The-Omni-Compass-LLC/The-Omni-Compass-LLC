@@ -648,6 +648,51 @@ def b_page_records():
             f"tables with {n(len(rs))} runs, and {n(ok)} of {n(files)} raw files matched their runs' own sums")
 
 
+MANUAL = ROOT / "docs" / "OMNI_COMPASS_LIVE_ENGINE_MANUAL.md"
+
+
+@lru_cache(None)
+def manual_chapters() -> dict:
+    """{anchor: chapter} as the Live Engine Manual names them ("This chapter reads the page's section …, (`#s-…`)")."""
+    out, chapter = {}, None
+    for line in MANUAL.read_text(encoding="utf-8").splitlines():
+        h = re.match(r"## (\d+)\. ", line)
+        if h:
+            chapter = h.group(1)
+        m = re.match(r"This chapter reads the page's sections? .*?\(`#(s-[\w-]+)`", line)
+        if m and chapter:
+            for a in re.findall(r"`#(s-[\w-]+)`", line):
+                out.setdefault(a, chapter)
+    return out
+
+
+@block("page_sections", PAGE, MANUAL)
+def b_page_sections():
+    """Every section of the page in its own order: its number and title, its anchor, the monitors it draws (each monitor's
+    number on the wall, its name and its evidence class, from the page's own monitor registry), the page's code and the
+    Python each monitor names in its wiring, and the Live Engine Manual's chapter that reads it."""
+    page = page_text()
+    reg = {m["id"]: m for m in embedded("monitors")["monitors"]}
+    secs = [(m.start(), m.group(1)) for m in re.finditer(r'<section[^>]*id="(s-[^"]+)"', page)]
+    if not secs:
+        raise RecordError("the page carries no section anchors")
+    chapters = manual_chapters()
+    L = ["| Section | Anchor | Monitors (number on the wall, name, class) | The page's code; the Python it ports or reads | "
+         "Live Engine Manual |", "|---|---|---|---|---|"]
+    for i, (at, sid) in enumerate(secs):
+        chunk = page[at:secs[i + 1][0] if i + 1 < len(secs) else len(page)]
+        h = re.search(r'<h[1-4][^>]*>\s*<span class="sn">([^<]*)</span>(.*?)</h[1-4]>', chunk, re.S)
+        num, title = (h.group(1).strip(), re.sub(r"<[^>]+>", "", h.group(2)).strip()) if h else ("", sid)
+        mons = [reg[c] for c in dict.fromkeys(re.findall(r'<canvas[^>]*id="([^"]+)"', chunk)) if c in reg]
+        shown = "; ".join(f"{m['n']} {m['name']} ({m['cls']})" for m in mons) or "none (text, tables and controls)"
+        code = sorted({c.strip() for m in mons for c in str((m.get("wire") or {}).get("code", "")).split(",") if c.strip()})
+        py = sorted({p for m in mons for p in (m.get("wire") or {}).get("python") or []})
+        wire = "; ".join(x for x in (", ".join(f"`{c}`" for c in code), ", ".join(f"`{p}`" for p in py)) if x) or "—"
+        ch = chapters.get(sid)
+        L.append(f"| {num} {title} | `#{sid}` | {shown} | {wire} | {'chapter ' + ch if ch else 'not named'} |")
+    return "\n".join(L)
+
+
 @lru_cache(None)
 def appraisal_rows():
     """The appraisal's counts as docs/engine/build_live_engine.py wrote them between its markers at its last build."""
