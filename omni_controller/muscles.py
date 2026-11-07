@@ -80,23 +80,52 @@ def milli(v):
     return float(v[:-1]) if v.endswith("m") else float(v) * 1000.0
 
 
+# Koordinator's reclaimed processor (its best-effort and mid tiers): a pod of those tiers asks for its CPU here and nowhere
+# else, written in millicores ("1k" is one core)
+BATCH_CPU = ("kubernetes.io/batch-cpu", "kubernetes.io/mid-cpu")
+
+
+def qty(v):
+    """A Kubernetes quantity as a plain number: 1k = 1000, 1M = 10⁶, 500m = 0.5."""
+    v = str(v).strip()
+    scale = {"k": 1e3, "M": 1e6, "G": 1e9, "m": 1e-3}
+    return float(v[:-1]) * scale[v[-1]] if v and v[-1] in scale else float(v or 0)
+
+
+def requested_m(container):
+    """The CPU (milli) a container asks for: its request, and its request of Koordinator's reclaimed processor (omni-v27)."""
+    req = (container.get("resources", {}) or {}).get("requests", {}) or {}
+    return milli(req.get("cpu", "0") or "0") + sum(qty(req.get(r, "0") or "0") for r in BATCH_CPU)
+
+
 def claim_m(container):
     """The CPU (milli) a container may use: its own limit where it has one, else its request (omni-v13). A limit is the
-    container's own room up to which the kernel lets it burst; that room is its muscle's, never idle for another."""
+    container's own room up to which the kernel lets it burst; that room is its muscle's, never idle for another. omni-v27:
+    Koordinator's best-effort pod asks for its CPU only in Koordinator's reclaimed processor, so it is read there too. Read as
+    nothing before, its CPU was conveyed to the serving pods: on Koordinator's rigs on omni-v25 its batch processor stood 11%
+    smaller at the window's end and the queue waited longer for a place (docs/LOSS_CAUSES_2026-11-07.md)."""
     res = container.get("resources", {}) or {}
     req = milli((res.get("requests", {}) or {}).get("cpu", "0") or "0")
     lim = (res.get("limits", {}) or {}).get("cpu")
-    return max(req, milli(lim)) if lim else req
+    cpu = max(req, milli(lim)) if lim else req
+    for r in BATCH_CPU:
+        breq = qty((res.get("requests", {}) or {}).get(r, "0") or "0")
+        blim = (res.get("limits", {}) or {}).get(r)
+        cpu += max(breq, qty(blim)) if blim else breq
+    return cpu
 
 
 def has_room(pod):
     """A pod with room of its own: a container whose limit is above its request, the CPU between them the pod's to burst
-    into (omni-v13). Conveyed to another muscle on a host with no idle CPU, that room is a trade the engine never makes."""
-    for c in pod["spec"]["containers"]:
-        res = c.get("resources", {}) or {}
-        if claim_m(c) > milli((res.get("requests", {}) or {}).get("cpu", "0") or "0"):
-            return True
-    return False
+    into (omni-v13; Koordinator's reclaimed processor counted as CPU, omni-v27). Conveyed to another muscle on a host with no
+    idle CPU, that room is a trade the engine never makes."""
+    return any(claim_m(c) > requested_m(c) for c in pod["spec"]["containers"])
+
+
+def node_own(pod):
+    """A DaemonSet's pod belongs to its node: Pending while a new machine joins, it waits for that machine, never for another
+    workload's room."""
+    return any(o.get("kind") == "DaemonSet" for o in (pod.get("metadata") or {}).get("ownerReferences", []) or [])
 
 
 def ref(s):
@@ -135,6 +164,9 @@ class Muscles:
         self.period = float(getattr(a, "interval", 60.0) or 0.0) or 60.0
         self.pace = self.period / 60.0
         self.pushes = 0          # decisions this side has acted on: the clock of the rules below
+        # omni-v27: (namespace, matchLabels) of every workload an HPA scales, as the controller's last decision read them (a
+        # callable, read only when a pod waits unplaced); None before the first decision
+        self.served = None
 
     def _per(self, sec):
         """Decisions in sec seconds at this decision period (never fewer than one)."""
@@ -522,9 +554,18 @@ class Muscles:
         from omni_controller.capacity import HostCpuSampler, KIND_SCALE_OUT_BUSY_LIMIT, one_host
         node_items = self.k.get("get", "nodes", "-o", "json")["items"]
         alloc = {n["metadata"]["name"]: milli(n["status"]["allocatable"]["cpu"]) for n in node_items}
-        pods = [p for p in self.k.get("get", "pods", "-A", "-o", "json")["items"]
-                if p["status"].get("phase") in ("Running", "Pending") and p["spec"].get("nodeName")]
+        every = self.k.get("get", "pods", "-A", "-o", "json")["items"]
+        pods = [p for p in every if p["status"].get("phase") in ("Running", "Pending") and p["spec"].get("nodeName")]
+        # omni-v27: the pods waiting for a place (Pending, on no machine yet), a DaemonSet's aside (it waits for its own node)
+        unplaced = [p for p in every if p["status"].get("phase") == "Pending" and not p["spec"].get("nodeName") and not node_own(p)]
+        served = []
+        if unplaced and callable(self.served):
+            try:
+                served = self.served() or []
+            except Exception:
+                served = []
         shared = one_host(node_items)
+        host_m = max(alloc.values()) if alloc else 0.0   # on one host every node reports the machine's whole CPU
         if not hasattr(self, "host_cpu"):
             self.host_cpu = HostCpuSampler()
         busy = self.host_cpu.sample() if shared else None
@@ -535,6 +576,7 @@ class Muscles:
         out = {}
         held = set()
         handed = False
+        owed_n = 0
         for ns, name in targets:
             self.gain[(ns, name)] = 1.0
             dep = self.k.get("get", "deployment", name, "-n", ns, "-o", "json")
@@ -567,13 +609,40 @@ class Muscles:
             give_back = contended and busy >= KIND_SCALE_OUT_BUSY_LIMIT
             cushion = contended and busy >= KIND_SCALE_OUT_BUSY_LIMIT - BAND[0]
             handed = handed or give_back
+            # omni-v27, two faults of the conveyance found on omni-v25's Koordinator rigs (docs/LOSS_CAUSES_2026-11-07.md).
+            # (1) Another workload's pods wait for a place (unplaced, of no workload an HPA scales, this one's included): the
+            # host's unused CPU is the room they are owed, never idle; nothing is raised, and each limit given steps back by
+            # half its raise at every pass until they are placed (as omni-v26 holds native's target for them).
+            governed = lambda p: any(p["metadata"].get("namespace", "default") == sns and all(
+                (p["metadata"].get("labels", {}) or {}).get(k_) == v_ for k_, v_ in ssel.items()) for sns, ssel in served)
+            owed = [p for p in unplaced if not mine(p) and not governed(p)]
+            owed_n = max(owed_n, len(owed))
+            # (2) On a shared host beside another workload's room, the step is sized to the band: a raise gives the serving
+            # pods together no more than the host's room under the band's cushion line (70% busy) at each pass, and at the
+            # top each limit given gives back half its raise at each pass, never all of it at once. Before, one raise gave a
+            # pod 2.8 more cores on a four-core host, the next reading found the host past 75%, and the hand-back put every
+            # limit back to the operator's at once: on Koordinator's rigs it cycled 28 to 81 times an arm, and in the minutes
+            # it handed back the web service's 95th percentile ran 12% to 16% slower than native's.
+            line = KIND_SCALE_OUT_BUSY_LIMIT - BAND[0]
+            cur_of = lambda p: milli(p["spec"]["containers"][0].get("resources", {}).get("limits", {}).get("cpu", tmpl))
+            n_serving = sum(len(ps) for ps in serving.values())
+            step_up = (max(0.0, (line - busy) * host_m) / n_serving) if contended and not cushion and n_serving else None
             got = []
             for node, ps in serving.items():
                 a_j = alloc.get(node, 0.0)
                 share = (BAND[1] * a_j - other.get(node, 0.0)) / len(ps)
-                want = int(min(max(base, math.floor(share / 10.0) * 10), BAND[1] * a_j)) if engaged and not give_back else int(base)
+                full = int(min(max(base, math.floor(share / 10.0) * 10), BAND[1] * a_j))
                 for p in ps:
-                    cur = milli(p["spec"]["containers"][0].get("resources", {}).get("limits", {}).get("cpu", tmpl))
+                    cur = cur_of(p)
+                    if not engaged:
+                        want = int(base)
+                    elif owed or give_back:
+                        half = math.floor(max(0.0, cur - base) / 20.0) * 10      # half the raise, in steps of 10m
+                        want = min(full, int(base) if half < 2 * self.a.cap_min_change_m else int(cur - half))   # a small rest at once
+                    elif step_up is not None:
+                        want = int(max(base, min(full, max(cur, base) + math.floor(step_up / 10.0 + 1e-9) * 10)))
+                    else:
+                        want = full
                     if obs.get("security_block", 0.0) > 0.5 and want > cur:
                         got.append(cur); continue  # shield I1: no expansion during a security hold
                     if (busy_hold or cushion) and want > cur:
@@ -589,7 +658,9 @@ class Muscles:
                         got.append(cur); continue                   # held: admission refused this raise and nothing changed
                     try:
                         self._resize(p, ns, f"{permitted}m", (
-                            f"convey: the shared host at its top (busy {busy:.2f}) beside another workload's room, operator's limit {permitted}m in place"
+                            f"convey: another workload's {len(owed)} pod(s) wait for a place, half the raise back, limit {permitted}m in place"
+                            if engaged and owed else
+                            f"convey: the shared host at its top (busy {busy:.2f}) beside another workload's room, half the raise back, limit {permitted}m in place"
                             if give_back else f"convey: {node} idle CPU to its {len(ps)} serving pod(s), limit {permitted}m in place"
                             if engaged else f"convey: response time calm, operator's limit {permitted}m in place"))
                     except Exception as error:
@@ -611,9 +682,9 @@ class Muscles:
             # promise in queue terms (target x request / limit) while the limit is larger
             self.gain[(ns, name)] = (sum(got) / len(got) / base) if got and base > 0 else 1.0
             self.base[(ns, name)] = base
-        if held or handed:
-            self.audit({"convey": "handed back" if handed else "held", "machines": sorted(held),
-                        "host_busy": None if busy is None else round(busy, 3), "shared_host": shared})
+        if held or handed or owed_n:
+            self.audit({"convey": "owed" if owed_n else "handed back" if handed else "held", "machines": sorted(held),
+                        "host_busy": None if busy is None else round(busy, 3), "shared_host": shared, "others_waiting": owed_n})
         return out
 
     def _convey_engaged(self):

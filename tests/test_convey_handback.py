@@ -3,7 +3,8 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""omni-v13, the conveyance (omni_controller/muscles.py, convey): another muscle's room is never conveyed.
+"""omni-v13, the conveyance (omni_controller/muscles.py, convey): another muscle's room is never conveyed; omni-v27, the step
+sized to the band.
 
 1. Every other pod on a machine is counted by what it may use: its own limit where it has one, its request where it has
    none (omni-v12 and before counted requests alone, so a batch pod's room between its request and its limit read idle).
@@ -13,10 +14,28 @@
 
 KubeRay's rig with the organism alone, 20 October (docs/OMNI_V13.md): the web pods' limits were raised to 3,700m in the
 queue's first half minute and kept through the saturated queue; the batch pods hashed 7.6% slower, the queue finished
-0.7% later (LOSS in all three runs) and the web served no faster while the queue ran."""
+0.7% later (LOSS in all three runs) and the web served no faster while the queue ran.
+3. omni-v27: beside another workload's room the serving pods together take no more than the host's room under the band's
+   cushion line (70% busy) at each pass, and at the top each limit given gives back half its raise at each pass. omni-v13 gave
+   the whole share at once and handed it all back at once: on Koordinator's rigs on omni-v25 the hand-back and the raise cycled
+   28 to 81 times an arm, and in the minutes with a hand-back the web service's 95th percentile ran 12% to 16% slower than
+   native's (docs/LOSS_CAUSES_2026-11-07.md)."""
 import unittest
 
 from tests.test_convey_shared_host import Cluster, Stat, muscles, node, pod
+
+
+def passes(m, stat, n):
+    """n passes of the conveyance on a host whose busy share stays as the Stat gives it; the outputs, one a pass."""
+    outs = []
+    for _ in range(n):
+        outs.append(m.convey())
+        stat.advance()
+    return outs
+
+
+def limits(c):
+    return {p["metadata"]["name"]: p["spec"]["containers"][0]["resources"]["limits"]["cpu"] for p in c.pods if p["metadata"]["labels"]["app"] == "web"}
 
 
 def batch(name, node_name):
@@ -33,18 +52,27 @@ class Handback(unittest.TestCase):
 
     def test_other_pods_are_counted_by_their_own_limit(self):
         """Under the cushion the arithmetic runs, every other pod counted by its limit: w2 carries a batch pod (500m
-        requested, 1 core limit), so web-2 may have 0.95 x 4000 - 1000 = 2800m, not the 3300m omni-v12 conveyed."""
+        requested, 1 core limit), so web-2 may have 0.95 x 4000 - 1000 = 2800m, not the 3300m omni-v12 conveyed. omni-v27:
+        the host 40% busy has 0.30 x 4000 = 1200m under the cushion line, 400m a serving pod at each pass, so the share is
+        reached in steps of 400m, never at once."""
         c, stat = self.kind([batch("b-1", "w2")]), Stat(0.40)
         m, events = muscles(c, stat)
-        self.assertEqual(m.convey(), {"default/web-1": 3500, "default/web-2": 2800, "default/web-3": 3800})
+        first = m.convey(); stat.advance()
+        self.assertEqual(first, {"default/web-1": 900, "default/web-2": 900, "default/web-3": 900})
+        passes(m, stat, 10)
+        self.assertEqual(limits(c), {"web-1": "3500m", "web-2": "2800m", "web-3": "3800m"})
 
-    def test_the_top_with_another_workloads_room_hands_every_limit_back(self):
+    def test_the_top_with_another_workloads_room_hands_every_raise_back_by_halves(self):
+        """omni-v27: at the top each limit given gives back half its raise at each pass (3700m -> 2100m -> 1300m -> 900m ...),
+        down to the operator's 500m while the host stays at its top; omni-v13 put every limit back to 500m at once."""
         c, stat = self.kind([batch("b-1", "w2"), batch("b-2", "w3")], limit="3700m"), Stat(0.80)
         m, events = muscles(c, stat)
-        out = m.convey()
-        self.assertEqual(out, {"default/web-1": 500, "default/web-2": 500, "default/web-3": 500})
+        outs = passes(m, stat, 8)
+        self.assertEqual(outs[0], {"default/web-1": 2100, "default/web-2": 2100, "default/web-3": 2100})
+        self.assertEqual(outs[1], {"default/web-1": 1300, "default/web-2": 1300, "default/web-3": 1300})
+        self.assertEqual(limits(c), {"web-1": "500m", "web-2": "500m", "web-3": "500m"})
         whys = [why for args, why in c.writes if args[0] == "patch"]
-        self.assertTrue(whys and all("at its top" in w for w in whys))
+        self.assertTrue(whys and all("at its top" in w and "half the raise back" in w for w in whys))
         self.assertTrue(any(e.get("convey") == "handed back" for e in events))
 
     def test_within_the_cushion_nothing_is_raised_and_nothing_handed_back(self):
@@ -59,10 +87,12 @@ class Handback(unittest.TestCase):
         held = [e for e in events if e.get("convey") == "held"]
         self.assertTrue(held and held[0]["machines"] == ["w2", "w3"])
 
-    def test_under_the_cushion_the_room_is_conveyed_again(self):
+    def test_under_the_cushion_the_room_is_conveyed_again_in_steps_of_the_room(self):
+        """Under the cushion line the room is conveyed again, the serving pods together taking the host's room under the line
+        at each pass: at 65% busy, 0.05 x 4000 = 200m, 60m a pod (in steps of 10m)."""
         c, stat = self.kind([batch("b-1", "w2")]), Stat(0.65)
         m, events = muscles(c, stat)
-        self.assertEqual(m.convey(), {"default/web-1": 3500, "default/web-2": 2800, "default/web-3": 3800})
+        self.assertEqual(m.convey(), {"default/web-1": 560, "default/web-2": 560, "default/web-3": 560})
 
     def test_a_host_with_no_room_but_its_own_keeps_the_v7_rule(self):
         """Only the serving pods and pods without room of their own (a limit equal to the request, or none): the host's

@@ -430,6 +430,9 @@ class Controller:
         self.target_at = {}            # (ns, hpa) -> when I last set its target
         self.nodes_restored = False
         self.m = Muscles(self.k, a, self.audit)
+        # omni-v27: the conveyance reads which workloads an HPA scales from the last decision's snapshot, only when a pod waits
+        # unplaced (a workload no autoscaler governs waiting for a place is owed the host's unused CPU)
+        self.m.served = lambda: [x for x in (self._selector_of(h) for h in (getattr(self, "_snap", None) or {}).get("hpas") or []) if x]
         if a.native_muscles:
             self.audit({"native_muscles": sorted(a.native_muscles), "why": "left native by the operator (--native): never written"})
         self.cl = None
