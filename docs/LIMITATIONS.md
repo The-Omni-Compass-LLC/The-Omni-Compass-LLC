@@ -1,10 +1,10 @@
 # Limitations and threats to validity
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 What the three-run tables can and cannot support (this page's counts were read on omni-v11's tables, the newest when it was
-written; omni-v21's are the newest of most tests today, and omni-v25, the engine that stands since 3 November, runs every
-benchmark again), written the way a referee reads a
+written; omni-v25, which stood from 3 to 7 November, has its own three-run table of every test that had one on omni-v21,
+`results/live/V25_*.md`, and omni-v26, the engine that stands since 7 November, runs every one of them again), written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
 and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
@@ -24,7 +24,7 @@ code. No outside party has reviewed or approved these results.
   goes first. With three pairs a run (the data stores) the order cannot balance (two to one). Where it was checked (the
   Redis tail, `docs/TAIL_LATENCY.md`) the difference held in both orders.
 - **The machine moves between runs.** GitHub's free machines differ from run to run. On MySQL's update workload the
-  throughput was +0.3% in every pair of run B and −0.4% in every pair of run C, so the row reads "the runs disagree": a
+  throughput was up 0.3% in every pair of run B and down 0.4% in every pair of run C, so the row reads "the runs disagree": a
   machine-level effect larger than the change, under an offered rate that pins throughput near 98% of what is offered.
 - **One machine under kind.** Every Kubernetes node in the kind tests is a container on one runner; the governor counts that
   machine's processor once (omni-v6) and the served image is pulled onto every worker before each arm (18 October). A
@@ -43,10 +43,12 @@ code. No outside party has reviewed or approved these results.
 ## 3. Construct validity: does each gauge measure what its name says?
 
 - **Energy in the Kubernetes and swarm tables is a declared model**, not a meter (evidence class S inside a live test).
-  No physical meter has measured Omni-Compass yet (class P: none), so less energy is **undetermined**.
+  The only physical meter that has read Omni-Compass is the card's own (class P, the Lambda runs, `results/gpu/`); no meter
+  at the wall or on a server's own power has, so less energy there is **undetermined**.
 - **Node-hours on kind are not a bill.** The cloud bill is measured only in the cloud (Azure, running).
-- **The modelled muscles and organisms are our own models** (class S): 1,107 muscles, 527 GAIN, 0 LOSS
-  (`results/realms_v5/REALMS_V5.md`) say what our models do, never what a real plant does.
+- **The modelled muscles and organisms are our own models** (class S): 1,107 muscles, 530 GAIN, 0 LOSS
+  (`results/realms_v5/REALMS_V5.md`, read again by the one key on 24 October) say what our models do, never what a real
+  plant does.
 - **A margin no gauge judges, and a fault it hid.** In the drone swarm the judged safety gauge is the near miss (two drones
   under half the 0.3 m keep-out, 0.15 m). The closest approach is shown, not judged. With Omni-Compass on top it fell from
   about 0.30 m to as low as 0.156 m (run C, the short cell). There was no near miss and no collision in any counted run, but
@@ -70,7 +72,11 @@ code. No outside party has reviewed or approved these results.
   with probability 0.025, so a false GAIN or LOSS in a row has probability 2 × 0.025³ ≈ 3.1 × 10⁻⁵. Over the 1,039 judged
   rows of the omni-v11 tables the expected number of false readings is at most 0.03. Of those rows, 613 are in tests that
   carry noise; the other 241 are in deterministic simulators, which reproduce to the digit. Over the 613 the expectation is
-  0.02. Runs share the harness, so they are not fully independent of it; the number is a guide, not a guarantee.
+  0.02. Runs share the harness, so they are not fully independent of it; the number is a guide, not a guarantee. These
+  counts were read before the one key of 24 October: since then a mean change of 0.5% or more reads its word **by the mean
+  of our three runs**, with the count of runs beyond the noise beside it, so a row can read GAIN or LOSS without every
+  interval clear of zero; only a row that reads **in all three of our runs** carries the strength computed here
+  (`docs/HOW_TO_READ_THE_RESULTS.md`).
 - **STEADY is not zero.** A row reads STEADY when the test could not resolve a change; `docs/POWER.md` gives, for every judged
   row, the smallest change all three runs would detect. Many data-store rows (three pairs a run) cannot resolve a change
   under 10% of native; STEADY there means "no change larger than that", and nothing finer is claimed.
@@ -99,4 +105,4 @@ take a day or more to land, so the newest tables of some benchmarks are an older
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

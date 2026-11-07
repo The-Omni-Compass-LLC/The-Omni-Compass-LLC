@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -86,11 +86,14 @@ def moved(what, x, unit, nd=3):
 
 
 def energy_moved(e, nd=3):
-    """The energy beside its word: a rise is power given and wears its '+', a fall is a cut."""
+    """The energy beside its word, the word first (the founder's order of 6 November): under the 0.5% floor STEADY, a rise from it
+    power given, a fall from it a cut (GAIN); the direction in words, never a sign."""
     x = 100 * e
     if abs(x) < 0.5 * 10 ** -nd:
         return "energy the same"
-    return f"power given +{x:.{nd}f}%" if x > 0 else f"energy cut {abs(x):.{nd}f}%"
+    if abs(x) < 0.5:
+        return f"energy STEADY, {'up' if x > 0 else 'down'} {abs(x):.{nd}f}% (under the 0.5% floor)"
+    return f"power given, the energy up {x:.{nd}f}%" if x > 0 else f"GAIN, the energy cut {abs(x):.{nd}f}%"
 
 
 def num(x, loss=False, nd=1):
@@ -100,8 +103,8 @@ def num(x, loss=False, nd=1):
 
 
 def num_word(x, loss=False, nd=1):
-    """The number and its word: '+4.3% GAIN', '+0.1% power given', '−2.0% LOSS'."""
-    return "no number" if x is None else f"{num(x, loss, nd)} {word_of_pct(x, loss)}"
+    """The word and its number, the word first (the founder's order of 6 November): 'GAIN 4.3%', 'power given 0.1%'."""
+    return "no number" if x is None else f"{word_of_pct(x, loss)} {num(x, loss, nd)}"
 
 
 def evidence(bench: str) -> str:
@@ -217,7 +220,8 @@ def grid_part():
     except OSError:
         return []
     m = re.search(r"^\*\*(Across the grid: .*?)\*\*$", text, re.M)
-    return [f"The grid (source: results/grid_v5/GRID.md): {m.group(1)}"] if m else []
+    from tools.organism_words import grid_words   # the report's signs put in words, written once
+    return [f"The grid (source: results/grid_v5/GRID.md, its signs put in words): {grid_words(m.group(1))}"] if m else []
 
 
 def build(markdown=False):

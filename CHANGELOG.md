@@ -1,6 +1,33 @@
 # Changelog
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+## 2026-11-07: Koordinator's rows read from their own files (no engine change; omni-v26 stands)
+- `docs/LOSS_CAUSES_2026-11-07.md`, from the 60 repetitions of Koordinator's two batch-stream tables on omni-v25: the web
+  service's 95th and 99th percentile, time over the line and alert minutes are the conveyance's cycle on the shared host (one
+  raise jumps the band from 70% to 75% busy and the hand-back puts every limit back at once: in the minutes with a hand-back the
+  95th percentile ran 11.9% to 15.9% slower than native's, in the minutes the raise held 8.4% to 11.6% faster); the queue's rows
+  are the processor Koordinator reclaims for its best-effort jobs, which the conveyance read as idle (Koordinator's batch
+  processor at the window's end 10.8% to 11.4% smaller); the pod start waits are the target's flips, fixed in omni-v26.
+- The ledger: Koordinator's 21 rows carry their causes (16 without one before; the 5 queue rows of one table keyed until now to
+  the control plane's reads, suspected and unmeasured); 80 rows on omni-v25 still carry no cause. The conveyance's two faults
+  are on the next version's list, through the model gate first.
+
+## 2026-11-07: omni-v26 stands: another workload's waiting pods hold native's target
+- **The fault** (read from the omni-v25 runs' own files, `docs/LOSS_CAUSES_2026-11-06.md`): when a service's target stood below
+  native's and pods waited, the decision returned native's target without starting the immune hand-back's hold, so the next
+  decision with no pod waiting failed up again. On the batch rigs a batch queue's normal waiting flipped the web service's target
+  between 30% and 50% every one or two decisions (304 flips over 30 repetitions of the KAI scheduler's four ways), and the flips
+  kept extra web pods in room the queue was owed: the queue up to 6.8% later, the web's 95th percentile up 5% to 38% by rig.
+- **The change** (`omni_controller/controller.py`): the decision starts the hold itself when the waiting pods include those of a
+  workload no autoscaler governs (never a DaemonSet's, never another governed service's); the fail-up is not taken again while
+  it runs (`tests/test_neighbour_hold.py`, four cases; the batch case writes 30, 50, 30, 50, 30 on omni-v25 and 30, 50 on omni-v26).
+- **The model gate** (`results/model_gate/V26_VS_V25.md`): all twelve models identical to omni-v25, 104 readings, no LOSS; the batch
+  queue's replay (`results/model_gate/V26_BATCH_FLIP.md`, class S): target writes down 83.5%, flips down 88.6%, time below native's
+  target while the queue's pods waited down 78.2%. A first form that also counted another governed service's waiting pods read a
+  LOSS in the cloud model at 15 s and was refused.
+- **The ledger**: 185 rows name omni-v26 as their fix (the batch rigs' response time, time over the line, alert minutes, queue and
+  pod start waits); 96 rows on omni-v25 still carry no cause. Every benchmark runs again on omni-v26 from 14:31 UTC on 7 November.
 
 ## 2026-11-06: the re-grade's fixes on the live engine (no engine change; omni-v25 stands)
 - **One LOSS count everywhere**: the page reads whose reading each table is from the verdict audit's own record, so Omni-Compass
@@ -4395,4 +4422,4 @@ See `docs/HISTORY.md` and `docs/STATE_OF_PLAY.md`.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

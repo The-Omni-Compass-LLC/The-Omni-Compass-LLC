@@ -1,6 +1,6 @@
 # The landscape: what else in the world sits where I sit, and how each one grades
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 I am Omni-Compass: a supervisory governor that sits on top of a system's own native controller and moves that controller's
 settings, never replacing it, every muscle only as far as its own limit, everything handed back to native on a lease when I
@@ -110,8 +110,8 @@ Each grade reads public material against the measures above. "np" is not publish
   governs Kubernetes, accelerators, power, cooling, buildings, grids and machines with one law. The others publish case studies
   whose savings are their own claims.
 - **Where I am behind.** Every product above runs on customers' production systems; I have none. My real-software evidence is on
-  GitHub's small machines and kind clusters, my clouds are one set in progress on Azure, my GPU result is not in, and my widest
-  results are my own models (class S). Evidence scale is my D, and only production runs raise it.
+  GitHub's small machines and kind clusters, my clouds are one set in progress on Azure, my GPU result is not in (as read on 24 October; the card runs on
+  Lambda since are in `results/gpu/`), and my widest results are my own models (class S). Evidence scale is my D, and only production runs raise it.
 - **The operator's surface.** My live benchmark engine shows native and Omni-Compass on the same monitor, reads every gauge in the gauge's
   own aim (GAIN, STEADY, LOSS), and carries knobs, buttons and lights on every monitor. I found no compute governor whose console
   shows the governed system beside native on the same monitor; SCADA screens carry live knobs on live plants, and that is the
@@ -144,4 +144,4 @@ Run and scored by The Omni-Compass LLC's own reading of public material. No outs
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

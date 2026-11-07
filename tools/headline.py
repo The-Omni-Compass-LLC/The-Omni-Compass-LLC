@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -43,6 +43,8 @@ BEGIN, END = "<!-- headline: written by tools/headline.py from the result files;
 SIGNAL = {"red": ("REDLINING", "docs/engine/signals/redlining.svg", "the red stop-sign octagon"),
           "lead": ("STEADY", "docs/engine/signals/steady.svg", "the yellow yield diamond"),
           "ok": ("GAINING", "docs/engine/signals/accelerating.svg", "the green circle")}
+# a result's word is the key's, never a lamp's (6 November, the editor seat): the shape stays, the word is GAIN, STEADY or LOSS
+RESULT_WORD = {"red": K.LOSS, "lead": K.STEADY, "ok": K.GAIN}
 SHEET = ROOT / "results" / "BENEFIT_SHEET.json"
 INDEX_FILE = "results/OMNI_INDEX.md"
 # the two sides, and only two (the founder's order of 25 October 2026: Omni-Compass is never by itself); a record's other pairs
@@ -146,12 +148,18 @@ def standing(stands: str):
     idx = next((r for r in rows if r.get("file") == INDEX_FILE), None)
     bench = [r for r in rows if r.get("file") != INDEX_FILE]
     on = [r for r in bench if r.get("engine") == stands]
-    words = {}
+    try:   # each table's evidence class as the verdict audit reads it (class S: an outside simulator run by our own runner)
+        cls_of = {t["file"]: t.get("class") for t in json.loads((ROOT / "results" / "verdict_audit" / "VERDICT_AUDIT.json").read_text(encoding="utf-8")).get("tables") or []}
+    except (OSError, ValueError):
+        cls_of = {}
+    words, s_words = {}, {}
     for r in on:
         words[r["benefit"]] = words.get(r["benefit"], 0) + 1
+        if cls_of.get(r.get("file")) == "S":
+            s_words[r["benefit"]] = s_words.get(r["benefit"], 0) + 1
     order = [w for w in WORD_ORDER if w in words] + sorted(w for w in words if w not in WORD_ORDER)
     older = sorted({r.get("engine", "not named") for r in bench if r.get("engine") != stands}, key=lambda e: (len(e), e))
-    return {"index": idx, "bench": len(bench), "on": len(on), "words": [(w, words[w]) for w in order],
+    return {"index": idx, "bench": len(bench), "on": len(on), "words": [(w, words[w]) for w in order], "s_words": s_words,
             "older": len(bench) - len(on), "older_engines": older}
 
 
@@ -187,6 +195,19 @@ def loss_ledger():
 def azure_now(stands: str):
     """Where the Azure sets stand, from the run ledger's own row (docs/RUN_LEDGER.md, section 3), never typed here: the newest set
     it names with its engine and run, its state, and whether the engine that stands's sets queue behind it."""
+    try:   # the page's own build ledger first, the one the cloud bill table reads (6 November, the mechanism seat)
+        pg = PAGE.read_text(encoding="utf-8")
+        tag = '<script type="application/json" id="build">'
+        a = pg.index(tag) + len(tag)
+        led = (json.loads(pg[a:pg.index("</script>", a)]).get("ledger") or {}).get("workflows") or {}
+        done = [r for r in led.get("aks-metered.yml") or [] if r.get("conclusion") == "success" and r.get("raw")]
+    except (OSError, ValueError):
+        done = []
+    if done:
+        r = max(done, key=lambda x: x.get("created") or "")
+        name = re.sub(r"^aks-metered\s+", "", r.get("title") or "").split(" dial")[0].strip()
+        return {"state": "ran to the end", "engine": r.get("engine") or "an engine not named", "name": name, "run": str(r["id"]),
+                "behind": False, "ended": (r.get("updated") or "")[:10]}
     f = ROOT / "docs" / "RUN_LEDGER.md"
     if not f.exists():
         return None
@@ -328,11 +349,15 @@ def work_for_the_bill() -> list:
          "[`docs/WORK_PER_BILL.md`](docs/WORK_PER_BILL.md) (`tools/work_per_bill.py`).", ""]
     bm, cl, t = d["places"].get("bare_metal"), d["places"].get("cloud"), d.get("total") or {}
     items = []
+    # the word, then the direction in words, then the size with no sign, then why; the signed change only labelled raw (the founder's words of 6 November)
+    way = lambda x: "unchanged" if abs(x) < 5e-5 else f"{'up' if x > 0 else 'down'} {abs(x) * 100:.2f}%"
+    why = lambda g: "each dollar bought more work" if g >= 0.005 else "each dollar bought less work" if g <= -0.005 else "under the 0.5% floor"
     if bm:
-        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G " + ", ".join(f"run {r['run']} {pct(r['G'])} {word(r['G'])}" for r in bm["runs"])
-                     + f"; the three runs by the one key **{bm['reading']}** (their mean {pct(bm['mean_G'])})")
+        items.append(f"bare metal, {bm['engine'].split(' (')[0]}: G, the work for each dollar, " + ", ".join(f"run {r['run']} {word(r['G'])}, {way(r['G'])} ({why(r['G'])})" for r in bm["runs"])
+                     + f"; the three runs by the one key **{bm['reading']}** (their mean raw {pct(bm['mean_G'])})")
     if cl:
-        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): b {pct(cl['b'])}, inside the noise, the work not counted in that set, so G(cloud) not yet read"
+        bw = "power given" if cl['b'] >= 0.005 else "GAIN, a cut" if cl['b'] <= -0.005 else "STEADY"   # the bill is a resource spent: a rise power given, never a LOSS
+        items.append(f"through the cloud, {cl['engine']} at the tune-down on the machines alone ({cl['repetitions']} paired repetitions): the bill {bw}, {way(cl['b'])} (raw {pct(cl['b'])}), inside the noise, the work not counted in that set, so G(cloud) not yet read"
                      if cl.get("G") is None else f"through the cloud, {cl['engine']}: G {pct(cl['G'])}")
     items.append("both places together: read only for an owner's own spend in each, once the cloud's G is read")
     L += ["Today: " + "; ".join(items) + ".", ""]
@@ -377,7 +402,7 @@ def places_block(m) -> list:
               f"we're governing\"): more work in {t.get('GAIN', 0)} of the {len(c)} tests that counted their work, less work in "
               f"{t.get('LOSS', 0) or 'none'}; the work held in {t.get('STEADY', 0)}, each offering its load at a fixed rate; in "
               f"{t.get('the runs disagree', 0)} the runs disagree; {len(d['blind'])} tests sent a fixed load or did not count the work, "
-              "so they could not show more work. Every row and its record: [`results/WORK_TODAY.md`](results/WORK_TODAY.md) "
+              "so they could not show more work" + (f"; {len(d['taken_out'])} more, taken out of the count by the verdict audit, is shown there and not counted" if d.get("taken_out") else "") + ". Every row and its record: [`results/WORK_TODAY.md`](results/WORK_TODAY.md) "
               "(`tools/work_today.py`).", ""]
     money = lambda x: f"${x:.4f}"
     if chip.get("per_run"):
@@ -568,7 +593,10 @@ def markdown(m) -> str:
     if idx and idx.get("engine") == stands:
         w = index_word(float(idx["pct"]))
         way = f"{abs(float(idx['pct'])):.1f}%"                  # one word, then one number: the index has no raw change
-        counts = "; ".join(f"{n} {word}" for word, n in st["words"])
+        say = {K.GAIN_AND_LOSS: "with GAIN rows and LOSS rows both", K.GAIN_GIVEN: "GAIN with power given"}
+        sw = st.get("s_words") or {}
+        counts = "; ".join(f"{n} {say.get(word, word)}" + (f" ({'all' if sw[word] == n else sw[word]} class S, outside simulators run by our own runner, never proof)" if sw.get(word) else "")
+                           for word, n in st["words"])
         older = (f" {st['older']} still stand on an older engine ({', '.join(st['older_engines'])}) until their {stands} runs land."
                  if st["older"] else "")
         L.append(f"**On the engine that stands ({stands}), the Omni index reads {w} {way}**, every real "
@@ -595,18 +623,18 @@ def markdown(m) -> str:
              f"on {eng}, the newest engine with its three runs in (the engine that stands, {stands}, runs it again)")
     A = m["arms"]
     L += ["", f"One real test of the whole loop, {where}, three runs on GitHub's own machines, on {A['where']}: native is "
-          f"{A['native']}, and the other side is {A['on_native']}. It is one test, not the figure of record: the verdict audit took its table "
+          f"{A['native']}, and the other side is {A['on_native']}. It is one test and a second reading, never the figure of record: the verdict audit took its table "
           "out of the count and keeps it in the record ([`results/verdict_audit/VERDICT_AUDIT.json`](results/verdict_audit/VERDICT_AUDIT.json)). On top of native, "
           f"Omni-Compass did {100 * s0['work']:.1f}% more work than native, its 95th-percentile response time "
           f"{100 * abs(s0['p95']):.1f}% {'shorter' if s0['p95'] < 0 else 'longer'}."]
-    L += ["", "| Arm | Signal | Work | Response, 95th percentile | Machines | Units |", "|---|---|---|---|---|---|",
-          f"| **Native**: {A['native']}, on {A['where']} | {img('lead')} the baseline | the baseline | the baseline | the baseline | the baseline |"]
+    L += ["", "| Arm | Word | Work | Response, 95th percentile | Machines | Units |", "|---|---|---|---|---|---|",
+          f"| **Native**: {A['native']}, on {A['where']} | the yardstick, shown and not judged | the baseline | the baseline | the baseline | the baseline |"]
     for s in m["scen"]:
         r = s["rows"]
-        L.append(f"| **{s['name']}**: {A['on_native']}, {s['how']} | {img(s['signal'])} **{SIGNAL[s['signal']][0]}** | "
+        L.append(f"| **{s['name']}**: {A['on_native']}, {s['how']} | {img(s['signal'])} **{RESULT_WORD[s['signal']]}** | "
                  + " | ".join(said(r[g], g) if r[g] else "not read" for g, _ in GAUGES) + " |")
-    L += ["", f"The signals: {img('ok')} GAINING, a GAIN and no LOSS; {img('lead')} STEADY, every row STEADY; {img('red')} "
-          "REDLINING, a LOSS. Each word carries its size with no sign; the raw change, Omni-Compass − native over native, stands apart "
+    L += ["", f"The words: {img('ok')} GAIN (the green circle), a GAIN and no LOSS row; {img('lead')} STEADY (the yellow diamond), every row STEADY; {img('red')} "
+          "LOSS (the red octagon), a LOSS row. Each word carries its size with no sign; the raw change, Omni-Compass − native over native, stands apart "
           "with its true sign, labelled raw. Units are the service's own copies: Omni-Compass adds them to buy the work and the speed, power given, "
           f"never a LOSS. Source: [`{m['path']}`]({m['path']}), three runs on GitHub's own machines (A, B and C from one commit); runs "
           f"{', '.join(f'{k} {v}' for k, v in rec['runs'].items())}; commit `{rec['commit'][:12]}`. The record's other arm, Omni-Compass "
@@ -620,15 +648,22 @@ def markdown(m) -> str:
           "(`docs/THE_TUNE.md`, section 8). A component's own percent is a supporting measurement, never the bill. Where a price or a "
           "component is missing the bill reads unresolved; no price is assumed.", "",
           "| Route | Bill, native → Omni-Compass → saving | Supporting measurements |", "|---|---|---|"]
-    on = m["scen"][0]["rows"]["machines"]
+    # the route's supporting measurement is the composition that stands (results/WHOLE_SYSTEM.md), never the test the verdict audit took
+    # out of the count (6 November, the mechanism seat: the route read "3.2% fewer" machines from omni-v21's orchestrator test)
+    w0 = m["whole"]
+    mc = (composed_said({"work": None, "speed": None, "machines": w0["machines"]}).split(" not composed; ")[-1]
+          if w0 and w0.get("machines") is not None else None)
+    sup = (f"machines, Omni-Compass on native, as the whole organism's composition reads them (a second reading, class S of class L tables, "
+           f"[`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md)): {mc}" if mc else "machines not yet composed")
     L.append(f"| **On-site**: the software on your own bare metal | **unresolved** in dollars: no machine-hour or energy price is declared; "
-             f"the chip's own energy on {chip_engine()} is in the bare-metal box above | machines, Omni-Compass on top of native: {said(on, 'machines')} |")
+             f"the chip's own energy on {chip_engine()} is in the bare-metal box above | {sup} |")
     az = m["azure_now"]
-    az_txt = (f"the run ledger's newest Azure set is the {az['engine']} {az['name'] + ' ' if az['name'] else ''}set (run {az['run']}); Azure runs one set at a time"
+    az_txt = (f"the newest Azure set to run to the end with its raw files is the {az['engine']} {az['name'] + ' ' if az['name'] else ''}set (run {az['run']}, {az['ended']}, the run ledger in section 4d); its three-run table is not yet written"
+              + " (`docs/RUN_LEDGER.md`, section 3; `scripts/azure_queue.txt`)") if az and az.get("ended") else (f"the run ledger's newest Azure set is the {az['engine']} {az['name'] + ' ' if az['name'] else ''}set (run {az['run']}); Azure runs one set at a time"
               + (f", and the {m['stands']} sets queue behind it" if az["behind"] else "")
               + " (`docs/RUN_LEDGER.md`, section 3; `scripts/azure_queue.txt`)") if az else f"no {m['stands']} Azure set has run yet (`scripts/azure_queue.txt`)"
     cloud = (f"read in [`{m['azure'][-1].relative_to(ROOT).as_posix()}`]({m['azure'][-1].relative_to(ROOT).as_posix()})" if m["azure"]
-             else f"**unresolved**: not yet measured on {m['stands']}; {az_txt}; Google, Amazon "
+             else f"**unresolved**: the cloud's bill not yet read from a three-run table on {m['stands']}; {az_txt}; Google, Amazon "
                   "and the clouds a tester builds are wired and not yet run")
     L.append(f"| **Through the cloud**: the cloud's build, its bare metal at the back end, the software | {cloud} | the software end's, as on-site; "
              f"the provider's energy is not metered to the tenant |")
@@ -729,7 +764,9 @@ def place_readme(text: str, block: str) -> str:
     if BEGIN in text:
         a = text.index(BEGIN); z = text.index(END, a) + len(END)
         return text[:a] + block + text[z:]
-    tag = "**More work, faster, on fewer machines, for the same energy and the same bill, on top of the stack you already run.**"
+    tag = ("**The aim, in the founder's words: more work, faster, on fewer machines, for the same energy and the same bill, on top of "
+           "the stack you already run.** It is an aim, not a result: the record reads the work and the speed (the Omni index below); "
+           "the machines are not yet fewer, and the whole organism's composition reads them more, power given (`results/WHOLE_SYSTEM.md`).")
     i = text.index(tag) + len(tag)
     return text[:i] + "\n\n" + block + text[i:]
 
@@ -771,5 +808,5 @@ def main(argv) -> int:
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -188,6 +188,17 @@ def word_for(gauge, est):
     if r > 1.0:
         return readings.GAIN
     return readings.LOSS if AIM[gauge] in ("higher", "lower") else readings.GIVEN
+
+
+def composed_gloss(total):
+    """The index's gloss from the headline row's own totals (without the card, by the index's rule), each composed gauge by its
+    word (6 November: "on fewer machines" stood beside a machines total that read power given): "fewer machines" only where the
+    machines read GAIN, a rise power given."""
+    say = {"work": {readings.GAIN: "more work", readings.LOSS: "less work", readings.STEADY: "the same work"},
+           "speed": {readings.GAIN: "faster", readings.LOSS: "slower", readings.STEADY: "as fast"},
+           "machines": {readings.GAIN: "on fewer machines", readings.GIVEN: "the machines it took shown beside it as power given",
+                        readings.STEADY: "on the same machines"}}
+    return ", ".join(say[g].get(word_for(g, total.get(g)), f"{g} not composed") for g in COMPOSED)
 
 
 def pct(r):
@@ -514,6 +525,18 @@ def beside():
 
 
 # ----------------------------------------------------------------------------------------------------------------------- the page
+def _modelled_words(name, x, rise, fall):
+    """A modelled change against native in words (the founder's order of 6 November): the gauge, the direction, the size with no
+    sign, and its word by what the gauge is for; under the 0.5% floor STEADY."""
+    if not x:
+        return f"{name} the same (STEADY)"
+    size = f"{100 * abs(x):.3f}%" if 100 * abs(x) >= 0.0005 else "less than 0.001%"
+    said = f"{name} {'up' if x > 0 else 'down'} {size}"
+    if abs(x) < readings.SIZE_FLOOR:
+        return f"{said} (STEADY, under the {100 * readings.SIZE_FLOOR:g}% floor)"
+    return f"{said} ({rise if x > 0 else fall})"
+
+
 def test_line(t):
     parts = []
     for g in GAUGES:
@@ -621,11 +644,11 @@ def main(argv=None):
     L.append("")
     L.append("What is composed (the founder's order of 31 October 2026). The whole organism is shown at the software end: **work, speed and machines "
              "are composed**. **The energy and the bill are held at native's** (exactly 1, shown beside, never composed): on the cluster the energy is a "
-             "declared model of the machines row, never a meter, so composing it would count the fewer machines twice and claim a saving at the chip that "
+             "declared model of the machines row, never a meter, so composing it would count the machines twice and claim a change at the chip that "
              "no meter read; the cloud is the wire and its bill is kept exactly as native's, the benefit being more work for the same bill. **The chip and "
              "the wire enter as exactly 1 on every gauge**: the chip is kept exactly as native runs it (its own meter at the factory tune reads it so, "
              "section 2), and the cloud's runs are the check that the software end's benefit holds through the wire. The index over the gauges is the "
-             "mean of the three composed gauges' logs: more work, faster, on fewer machines, for the same power and the same bill.")
+             f"mean of the three composed gauges' logs: {composed_gloss(results[(SCOPE_WITHOUT, 'index')][1])}, for the same power and the same bill.")
     L.append("")
     L.append("Two readings of the same numbers. **By the index's rule** a gauge of a test enters only when its three-run reading is GAIN, LOSS or power "
              "given in all three of our runs; a STEADY gauge, a disagreement, or a table of one run enters as exactly 1 with no variance (nothing inside the "
@@ -778,9 +801,11 @@ def main(argv=None):
     if rv:
         for org, o in rv["organisms"].items():
             m = o["misses_pp"]
+            from wiring_verdicts import pp_words, floor_words   # the organisms' figures in words, by the one key's floor, written once
             L.append(f"- The organisms, our own models (class S, `{rv['source']}`, commit {rv['commit']}): {'the spine' if org == 'spine' else 'the whole tower'} "
-                     f"({o['n']} muscles) under its own load: {o['label'].lower().replace('_', ' ')}, misses {m[0]:+.3f} pp ({m[1]:+.3f} to {m[2]:+.3f}), "
-                     f"work {100 * o['work'][0]:+.2f}%, power given {100 * o['energy'][0]:+.3f}%. A model's energy is not a meter's; these rows are shown, not composed.")
+                     f"({o['n']} muscles) under its own load: {readings.labelled(o['label'])}, {pp_words(*m[:3])}, "
+                     f"{floor_words('work', o['work'][0], False)}, {floor_words('energy', o['energy'][0], True)}. A model's energy is not a meter's; "
+                     "these rows are shown, not composed.")
     sk = side.get("six_kube_v3")
     if sk:
         for key, r in sk["p95"].items():

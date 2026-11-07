@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -18,8 +18,8 @@ from tools import site_audit as SA  # noqa: E402
 
 class TheRules(unittest.TestCase):
     def test_a_headings_anchor_is_githubs(self):
-        self.assertEqual(SA.slug("The engine that stands: omni-v25 (the Kafka wire's producer before the governor's thread)"),
-                         "the-engine-that-stands-omni-v25-the-kafka-wires-producer-before-the-governors-thread")
+        self.assertEqual(SA.slug("The engine that stands: omni-v26 (another workload's waiting pods hold native's target)"),
+                         "the-engine-that-stands-omni-v26-another-workloads-waiting-pods-hold-natives-target")
         self.assertEqual(SA.slug("**Bold** and `code` · 10 s"), "bold-and-code--10-s")
         text = "# Title\n\n## Same\n\n## Same\n\n```\n## not a heading\n```\n<a id=\"kept\"></a>\n"
         self.assertEqual(SA.anchors_md(text), {"title", "same", "same-1", "kept"})
@@ -42,5 +42,5 @@ class EveryPage(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only; any commercialization or
 # monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com

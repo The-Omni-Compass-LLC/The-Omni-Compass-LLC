@@ -1,6 +1,6 @@
 # The documents
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ## Start here: the documents by reader
 
@@ -12,7 +12,7 @@ class (P a physical meter, L live software, S our own models) and its original r
 |---|---|---|
 | CEO, board, strategic acquirer | [Due diligence](DUE_DILIGENCE.md) | [State of play](STATE_OF_PLAY.md), [claims register](CLAIMS_REGISTER.md), [every LOSS kept](LOSS_LEDGER.md), [limitations](LIMITATIONS.md) |
 | CFO, investment committee | [Benefit sheet](BENEFIT_SHEET.md) | [The Omni index](../results/OMNI_INDEX.md), [evidence ledger](EVIDENCE_LEDGER.md), [the cloud bill's setup](AZURE_SETUP.md) |
-| CTO, chief architect | [Mechanism of action](MECHANISM_OF_ACTION.md) | [Canonical engine](CANONICAL_ENGINE.md), [the engine that stands, omni-v25](OMNI_V25.md), [formal status](FORMAL_STATUS.md), [wiring verdicts](WIRING_VERDICTS.md) |
+| CTO, chief architect | [Mechanism of action](MECHANISM_OF_ACTION.md) | [Canonical engine](CANONICAL_ENGINE.md), [the engine that stands, omni-v26](OMNI_V26.md), [formal status](FORMAL_STATUS.md), [wiring verdicts](WIRING_VERDICTS.md) |
 | Engineering, SRE, operations | [The Operator's Manual](OMNI_COMPASS_MANUAL.md) | [Integration manual](INTEGRATION_MANUAL.md), [pilot protocol](PILOT_PROTOCOL.md), [the benchmark harness](HARNESS.md) |
 | Security, legal, IP | [Repository standards](REPOSITORY_STANDARDS.md) | [Security policy](../SECURITY.md), [threat model](THREAT_MODEL.md), [safety case](SAFETY_CASE.md), [license](../LICENSE), [disclosures](../DISCLOSURES.md) |
 | Independent benchmark referee | [How to read the results](HOW_TO_READ_THE_RESULTS.md) | [The referee's audit pack](audit/README.md), [the verdict audit](../results/verdict_audit/VERDICT_AUDIT.md), [every reading recomputed](audit/STATISTICAL_VALIDATION.md), [preregistrations](K8S_COMPASS_PREREGISTRATION.md) |
@@ -103,4 +103,4 @@ Folders: [`specs/`](specs) (contracts and specifications), [`realm_study/`](real
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

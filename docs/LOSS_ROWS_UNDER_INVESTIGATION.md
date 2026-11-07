@@ -1,6 +1,6 @@
 # LOSS rows under investigation: the rows whose cause is not yet established, and what is known of each
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Every row of every three-run table is shown, LOSS included (the founder's order of 11 October). Where a LOSS row of Omni-Compass
 against its native has a page in `docs/` that states its cause (as `docs/POD_START_WAIT.md` does for the pod start wait under
@@ -13,7 +13,7 @@ approved these results.
 ## Job turnaround under Armada, Omni-Compass on the organism alone (V12_ARMADA_4W_BARE.md): under investigation since 21 October 2026
 
 **The row.** `results/live/V12_ARMADA_4W_BARE.md`, the four-ways comparison BARE (Omni-Compass on the organism alone against the
-organism alone, Kubernetes' own scheduler under both): job turnaround **LOSS in all three of our runs** (+5.1%, +8.9%, +9.1%), on
+organism alone, Kubernetes' own scheduler under both): job turnaround **LOSS in all three of our runs** (up 5.1%, 8.9% and 9.1%: the jobs took longer), on
 omni-v12. The same table's other rows are its own; the table stands as recorded.
 
 **What is known.** The arm with Omni-Compass raised the web pods' CPU limits (conveyance) while the batch queue ran on the same
@@ -31,10 +31,15 @@ benchmark, then B, then C). If the row reads STEADY or GAIN there, the cause was
 closes with that reading; if it reads LOSS again, the rig's own files are read repetition by repetition as KubeRay's were, and the
 cause written here.
 
+**Read again on omni-v25.** The row reads **LOSS in all three of our runs** again: job turnaround up 15.6%, 23.8% and 23.0%,
+the jobs took longer (`results/live/V25_ARMADA_4W_BARE.md`), on an engine that carries omni-v13's repair; the same table
+reads the alert minutes up 10.4% to 13.0%, LOSS in all three of our runs. So the conveyance omni-v13 repaired is not the
+whole cause, and the rig's own files are next, repetition by repetition. The cause is still not established.
+
 ## Alert minutes under Open Cluster Management, Omni-Compass on top (V12_OCM_4W_TOP.md): under investigation since 21 October 2026
 
 **The row.** `results/live/V12_OCM_4W_TOP.md`, the four-ways comparison TOP (Omni-Compass on top of Open Cluster Management against
-Open Cluster Management as shipped): alert minutes **LOSS in all three of our runs** (+5.7%, +6.1%, +45.5%), on omni-v12. The
+Open Cluster Management as shipped): alert minutes **LOSS in all three of our runs** (up 5.7%, 6.1% and 45.5%: more minutes over the line), on omni-v12. The
 third run's size is far from the other two; the three intervals are each clear of zero, so the rule reads LOSS and the row stands.
 
 **What is known.** An alert minute is a minute in which the service's response time stood over its line (`tools/live_reps.py`,
@@ -53,6 +58,11 @@ in question.
 line, minute by minute; and, before they land, a reading of run C's own audit (`results/live/raw/run-<id>/`), which is the next
 step of this investigation.
 
+**Read again on omni-v25.** The row reads **LOSS in all three of our runs** again: alert minutes up 17.9%, 25.6% and 12.1%,
+more minutes over the line (`results/live/V25_OCM_4W_TOP.md`), the same table's job turnaround up 20.7% to 29.9%, LOSS in all
+three. The scorer fault of 21 October is repaired, so it is not the cause; Omni-Compass's own audit beside the response line,
+minute by minute, is the next step. The cause is still not established.
+
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

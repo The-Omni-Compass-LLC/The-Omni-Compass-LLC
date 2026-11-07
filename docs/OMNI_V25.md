@@ -1,8 +1,9 @@
 # Omni v25: the Kafka wire's producer started before the governor's thread; a stalled producer stops its workload, never the job's clock
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Omni v25 (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files) is omni-v24 with one fault fixed in the Kafka wire
+Omni v25 (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files) stood on main from 3 November, night, to 7 November, when omni-v26
+(`docs/OMNI_V26.md`, another workload's waiting pods hold native's target) took its place. It is omni-v24 with one fault fixed in the Kafka wire
 (`tools/run_kafka.py`, one of the eight runners in the fingerprint since omni-v15) and one comment corrected in the Kubernetes
 governor (`omni_controller/controller.py`). No rule, gain, guard, preset, card or law moves; do no harm keeps its strictest form;
 the governor's decisions are byte for byte omni-v24's. On the founder's standing order that every fault found is fixed and lands
@@ -66,4 +67,4 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

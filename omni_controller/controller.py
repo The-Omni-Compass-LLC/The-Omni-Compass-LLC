@@ -354,6 +354,7 @@ def snapshot(k: Kube, active_only: bool = False):
                if line.strip() and (not active_only or line.split()[0] in names))
     hpas = k.get("get", "hpa", "-A", "-o", "json")["items"]
     return {"nodes": len(ready), "open": open_n if active_only else len(ready), "alloc_m": alloc, "req_m": req, "used_m": used, "pending": pending, "hpas": hpas,
+            "pods": pods,
             "pool": pool}
 
 
@@ -617,6 +618,71 @@ class Controller:
         tpl = dep["spec"]["template"]["spec"]
         req = sum(to_milli(c.get("resources", {}).get("requests", {}).get("cpu", "0")) for c in tpl.get("containers", []))
         return req if req > 0 else None
+
+    def _selector_of(self, h):
+        """(namespace, matchLabels) of the workload an HPA scales, read once a decision; None where it cannot be read."""
+        ref = (h.get("spec") or {}).get("scaleTargetRef") or {}
+        ns = h["metadata"]["namespace"]
+        if ref.get("kind") != "Deployment" or not ref.get("name"):
+            return None
+        cache = getattr(self, "_sel_cache", None)
+        if cache is None or cache[0] != self.decisions:
+            cache = self._sel_cache = (self.decisions, {})
+        key = (ns, ref["name"])
+        if key not in cache[1]:
+            try:
+                dep = self.k.get("get", "deployment", ref["name"], "-n", ns, "-o", "json")
+                sel = ((dep.get("spec") or {}).get("selector") or {}).get("matchLabels") or None
+            except Exception:
+                sel = None
+            cache[1][key] = (ns, sel) if sel else None
+        return cache[1][key]
+
+    def _others_waiting(self, h, s):
+        """The pods of a workload no autoscaler governs, waiting (omni-v26): every Pending pod in the snapshot that belongs to no
+        service an HPA scales (this one's included) and to no DaemonSet. A batch queue's pods are such a workload's: they queue
+        by design, and the room they wait for is theirs first. Another service an HPA scales keeps its own rule (the fast
+        check's hand-back, omni-v19), and a DaemonSet's pod belongs to its node and waits for a machine that is joining. Where
+        this service's own selector cannot be read, every waiting pod but a DaemonSet's counts: the neighbour is protected
+        first. 0 where the snapshot carries no pod list."""
+        pods = s.get("pods")
+        if not pods:
+            return 0
+        mine = self._selector_of(h)
+        served = [x for x in (self._selector_of(hh) for hh in s.get("hpas") or []) if x] if mine else []
+
+        def governed(p):
+            md = p.get("metadata") or {}
+            labels = md.get("labels") or {}
+            return any(md.get("namespace", "default") == ns and all(labels.get(k_) == v_ for k_, v_ in sel.items())
+                       for ns, sel in served)
+
+        def node_own(p):
+            # a DaemonSet's pod belongs to its node: Pending while a new machine joins, it waits for that machine, never for
+            # another workload's room, so a machine being added never starts the hold
+            return any(o.get("kind") == "DaemonSet" for o in (p.get("metadata") or {}).get("ownerReferences", []) or [])
+        return sum(1 for p in pods if (p.get("status") or {}).get("phase") == "Pending" and not governed(p) and not node_own(p))
+
+    def _hold_for_waiting(self, key, others):
+        """The immune hand-back's hold, started from the decision (omni-v26): when the decision returns a service's target to
+        native's because pods wait while it stood below native's, and some of them are a workload's no autoscaler governs (a
+        batch queue's), the fail-up is not taken again while the hold runs (ten minutes, doubled for each hold in a row up to two hours, halved after a quiet one:
+        the hand-back's own clock, _pods_wait_handback and _held_native). Before omni-v26 only the fast check started the hold,
+        and it skips a target already at native's, which the decision had just written: the next decision with no pod waiting
+        failed up again, and a batch queue's normal waiting flipped the target every one or two decisions (the KAI scheduler's
+        four ways on omni-v25: 304 flips over 30 repetitions; docs/LOSS_CAUSES_2026-11-06.md). Kubernetes' autoscaler takes a
+        lower target at once and a higher one after its window, so the flips kept extra pods in room the queue was owed."""
+        now = time.time()
+        until, _ = self.pod_hold.get(key, (0.0, 0.0))
+        if until > now:
+            return False
+        n = self.hold_n.get(key, 0)
+        hold = min(7200.0, 600.0 * (2 ** n))
+        self.pod_hold[key], self.hold_n[key] = (now + hold, hold), n + 1
+        self.audit({"immune": {"hpa": f"{key[0]}/{key[1]}", "others_waiting": int(others), "hold_s": int(hold), "in_a_row": n + 1,
+                               "held": "a workload no autoscaler governs waits for the room: native's target, the fail-up not "
+                                       "taken again while the hold runs (omni-v26)"}})
+        return True
 
     def _placeable_target(self, h, s, lo_t, hi_t, rise=1.0):
         """The fail-up's target (omni-v19): the cover's floor lo_t where the machines in service can place the pods it asks
@@ -1510,6 +1576,13 @@ class Controller:
                         # More pods answer neither, so fail up is native's own target, as on the card, where fail up is
                         # the card's own settings
                         x = hi_t; back = x != self.compass_law_x.get((ns, name), hi_t)
+                        if back and s["pending"] > 0:
+                            # the target stood below native's and pods wait: where some are a workload's no autoscaler
+                            # governs (a batch queue's), the room is theirs first, and the hand-back's hold keeps native's
+                            # target (omni-v26)
+                            others = self._others_waiting(h, s)
+                            if others:
+                                self._hold_for_waiting((ns, name), others)
                     elif x < hi_t and self.compass_law.p < self.compass_law.band.center and obs["slo_clean"] and s["pending"] == 0:
                         # responses back inside the band, nothing waiting. If the demand that called the extra pods has
                         # stopped growing (a fault, a spike that passed), they were for it only: the operator's own

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -51,6 +51,11 @@ def _pc(x):
     return f"{abs(x) * 100:.1f}%"
 
 
+def _word(pct):
+    """The one key's word for an index in percent (tools/readings.py: under the 0.5% floor STEADY)."""
+    return "GAIN" if pct >= 0.5 else "LOSS" if pct <= -0.5 else "STEADY"
+
+
 def markdown(f: dict) -> str:
     chip, cloud, ov = f["chip"], f["cloud"], f["ov"]
     p = (ov.get("pooled") or {})
@@ -59,11 +64,13 @@ def markdown(f: dict) -> str:
          "page that holds the whole story. Our own models (class S) are never offered as proof; live software is class L and a "
          "physical meter class P.", "",
          "**What is Omni-Compass, in one sentence?** A supervisory governor: one brain that sits on top of the controllers a stack "
-         "already runs (the Kubernetes autoscaler, a card's power firmware, a database's pools) and turns their settings toward "
-         "more work, faster, on fewer machines, never past any part's own limit; it never replaces them and is never in the data "
-         "path (`DISCLOSURES.md`).", "",
-         f"**What does it show today, in one number?** The Omni index, every real test weighed together: **{f['index']:.1f}% GAIN** "
-         f"(work, speed and machines; its second reading, work and speed alone, {f['service']:.1f}%), over {f['index_tests']} real "
+         "already runs (the Kubernetes autoscaler, a card's power firmware, a database's pools) and turns their settings toward the "
+         "founder's aim, more work, faster, on fewer machines, never past any part's own limit; it never replaces them and is never "
+         "in the data path (`DISCLOSURES.md`). The aim is not yet the result: the record reads the work and the speed, and the "
+         "whole organism's composition reads the machines more, not fewer, power given (`results/WHOLE_SYSTEM.md`).", "",
+         f"**What does it show today, in one number?** The Omni index, every real test weighed together: **{_word(f['index'])} "
+         f"{abs(f['index']):.1f}%** (work, speed and machines; its second reading, work and speed alone, {_word(f['service'])} "
+         f"{abs(f['service']):.1f}%), over {f['index_tests']} real "
          f"tests on GitHub's own machines, on the tables of {f['index_engines']} (`results/OMNI_INDEX.md`). The engine that stands is "
          f"{f['standing']}; every benchmark runs again on it, and the index is written again as its tables land.", "",
          "**Does it do more work for the bill?** The one equation is G = (1 + ΔW) / (1 + ΔB) − 1, the work for each dollar against "
@@ -73,21 +80,22 @@ def markdown(f: dict) -> str:
          + (f"Through the cloud (Azure, {cloud.get('engine')}) the set read the bill but not the work, so G is not read there yet; "
             "the sets with the work meter are queued." if cloud else ""), "",
          (f"**Does it take pages away from the people on call?** Over {ov['count']['tests']} real Kubernetes tests on {ov['engine']}, "
-          f"the minutes an on-call page would be open fell from {p.get('native', 0):.1f} to {p.get('omni', 0):.1f} a repetition, "
-          f"down {_pc(p.get('change', 0))} ({p.get('reading', 'by the mean')}), fewer in {ov['count']['fewer']} tests and to none in "
-          f"{ov['count']['to_zero']}; the governor wrote its own settings with no person touching either arm. What that is worth is "
+          f"{p.get('reading', 'by the mean')} pooled: the minutes an on-call page would be open {'down' if p.get('change', 0) < 0 else 'up'} "
+          f"{_pc(p.get('change', 0))}, from {p.get('native', 0):.1f} to {p.get('omni', 0):.1f} a repetition (fewer minutes, fewer pages); "
+          f"test by test fewer in {ov['count']['fewer']} (to none in {ov['count']['to_zero']}), the same in {ov['count'].get('same', 0)}, "
+          f"more in {ov['count'].get('more', 0)}; Omni-Compass wrote its own settings with no person touching either arm. What that is worth is "
           "the owner's people share times that fall (`results/OVERSIGHT.md`)." if ov.get("count") else ""), "",
          (f"**Has it ever done harm?** Every LOSS row is kept and listed: {f['loss_all']} rows read LOSS across their three runs in "
           f"the newest tables, {f['loss_own']} of them Omni-Compass on top of its own native, each with its cause where one is written "
           "and the version that fixed it where one did (`docs/LOSS_LEDGER.md`). A LOSS at the factory tune is a fault to fix, never a "
           "number to accept; the open ones are on the next version's list (`docs/CHANGE_CONTROL.md`)." if f["loss_all"] is not None else ""), "",
          "**What does a person still do?** Hold the kill switch (one hand, instant, security only), set each service's response line "
-         "and choose the profile. Everything else the governor does on its own: reads every gauge, writes only through the two-way "
+         "and choose the profile. Everything else Omni-Compass does on its own: reads every gauge, writes only through the two-way "
          "plug, reads each write back, records its reason, and hands every setting back to native at the reset, after a crash "
          "gradually (the lease).", "",
          "**Where does it run, and where does the benefit live?** At the software end, wired in at any of three places: on site, "
          "through a cloud, or at the chip. The benefit is made and measured at the software end; at the chip and in the cloud's bill "
-         "the record shows that it holds and what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). "
+         "the record is read for whether it holds (a place holds when its runs read no LOSS) and for what the work per joule or per dollar does (`docs/HOW_TO_READ_THE_RESULTS.md`). "
          "GitHub's runners are never called bare metal.", "",
          "**What is not claimed?** No outside party has reviewed or approved these results; no model result is offered as proof; no "
          "figure without a record (a \"20% drain\", a 2.9% \"stack tax\", a projected percentage) is written anywhere "

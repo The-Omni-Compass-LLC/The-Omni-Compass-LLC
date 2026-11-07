@@ -1,6 +1,6 @@
 # Related work: where the idea of Omni-Compass comes from, and what it adds
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 `docs/COMPARISON.md` sets Omni-Compass beside the systems that run data centres today (the Kubernetes autoscalers, Borg,
 Twine, Turbonomic, the power managers). This page sets it beside the published ideas it is built from, so a referee can
@@ -16,7 +16,7 @@ its operator set, and native keeps running underneath.
   (S. J. Qin and T. A. Badgwell, "A survey of industrial model predictive control technology", *Control Engineering
   Practice* 11(7), 2003). Omni-Compass has the same layering: the native autoscaler, pool or firmware is the regulatory
   loop; Omni-Compass is the supervisory layer.
-- **Reference and command governors.** A governor modifies the reference given to a loop that is already stable, so that
+- **Reference and command governors.** Such a scheme modifies the reference given to a loop that is already stable, so that
   constraints hold, and leaves the loop itself alone (E. Garone, S. Di Cairano and I. Kolmanovsky, "Reference and command
   governors for systems with constraints: a survey on theory and applications", *Automatica* 75, 2017). This is the
   closest formal relative of Omni-Compass: it moves a setting, inside a cover, on top of native.
@@ -86,4 +86,4 @@ gives each claim's standing, and `docs/LIMITATIONS.md` what the measurements can
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

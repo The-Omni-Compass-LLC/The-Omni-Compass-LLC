@@ -1,6 +1,6 @@
 # The field: every product that reads, shows or acts on the systems Omni-Compass governs, and the benchmark each one takes
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 This page is the map the founder asked for: the products that read, show or act on computing, cloud, AI and GPU, energy,
 facility and industrial systems, sorted by what each one does with what it reads, and for each one the benchmark that
@@ -16,7 +16,7 @@ The seven-measure grades of the closest products are in `docs/LANDSCAPE.md`; wha
 maker's publications, is in `docs/COMPARISON.md`; the formal seat is in `docs/THE_SEAT.md`. Read on 24 October 2026 by The
 Omni-Compass LLC from public material; no outside party has reviewed it.
 
-Omni-Compass, in every row below, is this repository's supervisory governor (omni-v25 stands, `README.md`): it sits on top
+Omni-Compass, in every row below, is this repository's supervisory governor (omni-v26 stands, `README.md`): it sits on top
 of a system's native controllers, reads the whole body each beat (every 60 s on the main engine; a dial from 5 to 120 s, the fast checks every 5 s), decides by the compass law, writes each setting
 through a two-way plug that reads every write back, audits every decision, hands every setting back to native gradually
 after a crash (the lease), and has a separate, instant kill switch for security. It never replaces native.
@@ -95,7 +95,7 @@ or 5.
 | SCADA and HMI (Inductive Automation's Ignition, AVEVA) | the supervisory screen over plant controllers, setpoints bound to the controllers' tags [24] | a person acts | commercial (trial software) | not tried | beside: a person's command is never a lever (`docs/REGISTER.md`, section 4) |
 
 No console is an arm, and "instead" has no meaning for one. One test does matter: a person's write through a console during
-a governed run is kept, because the governor reads native's own setting each beat and hands back on the lease. That is a
+a supervised run is kept, because Omni-Compass reads native's own setting each beat and hands back on the lease. That is a
 robustness test (`docs/ROBUSTNESS_PREREGISTRATION.md`), not a comparison.
 
 ## 3. Native controllers and schedulers: the muscles' own loops
@@ -275,7 +275,7 @@ gauges), a trial run that is never counted, then its A, B and C on the engine th
 | The closest commercial products, graded from public material | `docs/LANDSCAPE.md` | read 24 October 2026 |
 | Borg, Twine, Turbonomic and the native systems, compared by publication | `docs/COMPARISON.md`, `docs/THE_SEAT.md`, `docs/RELATED_WORK.md` | publications only |
 
-Every table above is its own engine's record; the engine that stands is omni-v25 (`README.md`), and every benchmark runs
+Every table above is its own engine's record; the engine that stands is omni-v26 (`README.md`), and every benchmark runs
 again on it. None of the commercial optimizers of section 4 has been run here.
 
 ## Sources
@@ -366,4 +366,4 @@ Read from public material by The Omni-Compass LLC. No outside party has reviewed
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
