@@ -1869,48 +1869,8 @@ def b_injection_grid():
 
 
 # ---- the release, the receipt and the seal
-@block("release_manifest", MANIFEST)
-def b_release_manifest():
-    m = load(MANIFEST)
-    r = m["verification_receipt"]
-    return (f"release `{m['release_id']}`, written at commit `{m['written_at_commit'][:12]}` on {m['written_at']}; its receipt "
-            f"`{r['file']}` (SHA-256 {short(r['sha256'])}) marked " + ("passed" if r.get("passed") else "not passed"))
-
-
-@block("verify_receipt", RECEIPT)
-def b_verify_receipt():
-    t = RECEIPT.read_text(encoding="utf-8")
-    head = re.match(r"verify\.py( --quick)? at commit ([0-9a-f]{7,40}), (\S+)", t)
-    passes, fails = len(re.findall(r"^PASS", t, re.M)), len(re.findall(r"^FAIL", t, re.M))
-    last = [x for x in t.strip().splitlines() if x.strip()][-1].strip()
-    core = re.search(r"C\+\+ core vs (\d+) fixtures\s+\(max abs ([0-9.e+-]+)\)", t)
-    gov = re.findall(r"C\+\+ vs Python governor \((\w+), a step every 60 s\): (\d+) directives, discrete mismatches = 0", t)
-    seal = re.search(r"seal: all (\d+) Python/C\+\+ twins unchanged", t)
-    shield = re.search(r"shield properties over ([\d,]+) cases: \{([^}]*)\}", t)
-    neg = len(re.findall(r"PASS\s+negative control", t))
-    if not head:
-        raise RecordError("results/VERIFY_RECEIPT.txt does not open with verify.py's own line")
-    parts = [f"`verify.py{head.group(1) or ''}` at commit `{head.group(2)[:12]}` on {head.group(3).rstrip(',')}: {n(passes)} "
-             f"checks PASS, {n(fails)} FAIL, the last line \"{last}\""]
-    if core:
-        parts.append(f"the C++ core against {core.group(1)} fixtures to a largest absolute difference of {core.group(2)}")
-    if gov:
-        parts.append(f"the C++ twins against the Python in {len(gov)} profiles, {n(int(gov[0][1]))} directives each with 0 discrete "
-                     "mismatches")
-    if seal:
-        parts.append(f"all {seal.group(1)} Python/C++ twins unchanged under the seal")
-    if shield:
-        bad = sum(int(x) for x in re.findall(r":\s*(\d+)", shield.group(2)))
-        parts.append(f"the shield's {len(re.findall(r':', shield.group(2)))} properties over {shield.group(1)} cases, "
-                     f"{'none violated' if not bad else f'{bad} violations'}")
-    lines = t.splitlines()
-    counted = []
-    for i, line in enumerate(lines):
-        m = re.match(r"PASS\s+negative control: parity test detects (.+)$", line)
-        if m and i and (c := re.search(r"mismatches = (\d+)", lines[i - 1])):
-            counted.append(f"{m.group(1)}, {n(int(c.group(1)))} mismatches")
-    parts.append(f"{n(neg)} negative controls, each caught" + (f" ({'; '.join(counted)})" if counted else ""))
-    return "; ".join(parts)
+# the release manifest and the verification receipt are rewritten by every release, so the monograph names them and quotes
+# no figure from them (the release check of 7 November: a block that quotes the release can never be in step with it)
 
 
 @block("seal", SEAL, lambda: engine()["path"])

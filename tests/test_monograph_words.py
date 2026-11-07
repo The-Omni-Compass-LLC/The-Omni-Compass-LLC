@@ -76,7 +76,7 @@ class TestMonographWords(unittest.TestCase):
         names = {b["name"] for b in self.blocks}
         for need in ("validity", "loss_all", "loss_by_engine", "loss_causes", "flip_rows", "flip_tables", "audit_tables",
                      "index_headline", "index_categories", "index_interval", "index_leave_one_out", "oversight", "four_arms_table",
-                     "engine_runs", "core_runs", "injection_grid", "release_manifest", "appraisal_counts"):
+                     "engine_runs", "core_runs", "injection_grid", "appraisal_counts"):
             self.assertIn(need, names)
 
     def test_every_source_exists(self):
