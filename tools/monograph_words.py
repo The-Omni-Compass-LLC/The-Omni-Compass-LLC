@@ -211,11 +211,11 @@ def reading(r: dict) -> str:
     return f"{rd} ({', '.join(f'run {t} {run_size(x)}' for t, x in zip('ABC', r['runs']))})"
 
 
-WHY = {("time waited, missed or failed", GAIN): "less time waited, missed or failed than native",
-       ("time waited, missed or failed", LOSS): "more time waited, missed or failed than native",
+WHY = {("time waited, missed or failed", GAIN): "less time waited, missed or failed",
+       ("time waited, missed or failed", LOSS): "more time waited, missed or failed",
        ("work done", GAIN): "more work done than native", ("work done", LOSS): "less work done than native",
        ("resource spent or held", GAIN): "less of the resource held: a cut",
-       ("resource spent or held", GIVEN): "more of the resource held: what Omni-Compass put in, shown beside what it bought",
+       ("resource spent or held", GIVEN): "more resource held, put in for what it bought",
        ("work per resource", GAIN): "more work for each unit of the resource",
        ("work per resource", GIVEN): "less work for each unit of the resource: power given",
        ("a count that must never rise", LOSS): "a count that must never rise rose in a run"}
@@ -571,12 +571,13 @@ def sources_of(name: str) -> list:
 
 
 # ---- the validity line and the engine
-@block("validity", lambda: engine()["path"], AUDIT)
+@block("validity", lambda: engine()["path"], AUDIT, STAMP)
 def b_validity():
-    e, a = engine(), audit()
-    return (f"Valid for {e['name']} (`{e['path'].name}`, digest `{e['digest']}`, {e['files']} fingerprinted files) and the verdict "
-            f"audit's record `{a['digest']}` (`results/verdict_audit/VERDICT_AUDIT.json`); every count marked in this monograph is "
-            "written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.")
+    e, a, v = engine(), audit(), load(STAMP)
+    return (f"Valid for {e['name']} (`{e['path'].name}`, digest `{e['digest']}`, {e['files']} fingerprinted files), the verdict "
+            f"audit's record `{a['digest']}` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built {v['built_at']} at commit "
+            f"`{v['commit'][:12]}` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its "
+            "record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.")
 
 
 @block("engine", lambda: engine()["path"])
@@ -653,44 +654,352 @@ MANUAL = ROOT / "docs" / "OMNI_COMPASS_LIVE_ENGINE_MANUAL.md"
 
 @lru_cache(None)
 def manual_chapters() -> dict:
-    """{anchor: chapter} as the Live Engine Manual names them ("This chapter reads the page's section …, (`#s-…`)")."""
+    """{anchor: chapter} as the Live Engine Manual names them ("This chapter reads the page's section …" or "… appendix …",
+    then the anchor)."""
     out, chapter = {}, None
     for line in MANUAL.read_text(encoding="utf-8").splitlines():
         h = re.match(r"## (\d+)\. ", line)
         if h:
             chapter = h.group(1)
-        m = re.match(r"This chapter reads the page's sections? .*?\(`#(s-[\w-]+)`", line)
+        m = re.match(r"This chapter reads the page's (?:sections?|appendix(?:es)?) .*?\(`#((?:s-[\w-]+)|title-page)`", line)
         if m and chapter:
-            for a in re.findall(r"`#(s-[\w-]+)`", line):
+            for a in re.findall(r"`#((?:s-[\w-]+)|title-page)`", line):
                 out.setdefault(a, chapter)
     return out
+
+
+# ---- the page's own script, read as a browser reads it: which code writes into each section, and which records it reads
+BUILDER = ROOT / "docs" / "engine" / "build_live_engine.py"
+JS_IDENT = r"[A-Za-z_$][\w$]*"
+JS_DECL = re.compile(r"\bfunction\s*\*?\s*(" + JS_IDENT + r")\s*\(")
+JS_EXPR = re.compile(r"(?<![\w$.])(" + JS_IDENT + r")\s*[:=]\s*(?:async\s+)?(?:function\b\s*\*?\s*(?:" + JS_IDENT
+                     + r")?\s*\(|\((?:[^()]|\([^()]*\))*\)\s*=>|" + JS_IDENT + r"\s*=>)")
+JS_REGEX_AFTER = set("(,=:[!&|?{};+-*%<>~^")
+JS_REGEX_WORDS = {"return", "typeof", "case", "do", "else", "in", "of", "new", "delete", "void", "throw", "yield", "await",
+                  "instanceof"}
+
+
+def js_mask(js: str) -> str:
+    """The script with the text of every string, template, comment and regular expression blanked, its length kept, so its
+    braces can be matched (a template's ${…} stays code)."""
+    out, i, n, stack, depth, last, word = list(js), 0, len(js), [], 0, "", ""
+    while i < n:
+        c = js[i]
+        if stack and stack[-1] == "tpl":
+            if c == "\\":
+                out[i:i + 2] = "  "[:len(out[i:i + 2])]; i += 2; continue
+            if c == "`":
+                stack.pop(); last = "`"; i += 1; continue
+            if c == "$" and js[i + 1:i + 2] == "{":
+                stack.append(depth); depth += 1; i += 2; last = "{"; continue
+            out[i] = c if c == "\n" else " "; i += 1; continue
+        if c in " \t\r\n":
+            i += 1; continue
+        if js.startswith("//", i) or js.startswith("/*", i):
+            j = (js.find("\n", i) if js[i + 1] == "/" else js.find("*/", i + 2) + 2)
+            j = n if j < (1 if js[i + 1] == "/" else 2) else j
+            for k in range(i, j):
+                out[k] = js[k] if js[k] == "\n" else " "
+            i = j; continue
+        if c in "'\"":
+            j = i + 1
+            while j < n and js[j] != c and js[j] != "\n":
+                j += 2 if js[j] == "\\" else 1
+            for k in range(i + 1, min(j, n)):
+                out[k] = " "
+            i, last, word = j + 1, c, ""; continue
+        if c == "`":
+            stack.append("tpl"); i += 1; continue
+        if c == "/" and (last == "" or last in JS_REGEX_AFTER or word in JS_REGEX_WORDS):
+            j, cls = i + 1, False
+            while j < n and js[j] != "\n" and (js[j] != "/" or cls):
+                if js[j] == "\\":
+                    j += 1
+                elif js[j] in "[]":
+                    cls = js[j] == "["
+                j += 1
+            for k in range(i + 1, min(j, n)):
+                out[k] = " "
+            j += 1
+            while j < n and js[j].isalpha():
+                j += 1
+            i, last, word = j, "/", ""; continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            if stack and stack[-1] == depth - 1:
+                stack.pop(); depth -= 1; i += 1; last = "}"; continue
+            depth -= 1
+        if c.isalnum() or c in "_$":
+            j = i
+            while j < n and (js[j].isalnum() or js[j] in "_$"):
+                j += 1
+            word, last, i = js[i:j], "a", j; continue
+        last, word = c, ""
+        i += 1
+    return "".join(out)
+
+
+def js_close(m: str, at: int, open_: str = "{", close: str = "}") -> int:
+    d = 0
+    for k in range(at, len(m)):
+        if m[k] == open_:
+            d += 1
+        elif m[k] == close:
+            d -= 1
+            if d == 0:
+                return k
+    return len(m) - 1
+
+
+def js_functions(m: str) -> dict:
+    """{name: [(start, end)]}: every named function of the masked script (declarations, and functions or arrows given a name
+    or a property), with its body's span."""
+    out = defaultdict(list)
+    for x in list(JS_DECL.finditer(m)) + list(JS_EXPR.finditer(m)):
+        name = x.group(1)
+        if name in ("if", "for", "while", "return", "switch", "catch"):
+            continue
+        if m[x.end() - 2:x.end()] != "=>":
+            k = js_close(m, m.index("(", x.end() - 1), "(", ")")
+            b = m.find("{", k)
+            out[name].append((b, js_close(m, b)))
+            continue
+        k = x.end()
+        while k < len(m) and m[k] in " \t\r\n":
+            k += 1
+        if m[k:k + 1] == "{":
+            out[name].append((k, js_close(m, k)))
+            continue
+        d, j = 0, k                        # an expression body: to the first , or ; at its own depth
+        while j < len(m) and not (d == 0 and m[j] in ",;)]}"):
+            d += (m[j] in "([{") - (m[j] in ")]}")
+            j += 1
+        out[name].append((k, j))
+    return out
+
+
+@lru_cache(None)
+def page_script() -> str:
+    page, blocks, pos = page_text(), [], 0
+    while True:                            # a script ends at its first </script, whatever its text holds, as an HTML parser reads it
+        a = page.find("<script", pos)
+        if a < 0:
+            break
+        b = page.index(">", a) + 1
+        z = page.index("</script", b)
+        if "application/json" not in page[a:b]:
+            blocks.append(page[b:z])
+        pos = z + 9
+    return "\n".join(blocks)
+
+
+@lru_cache(None)
+def page_records_ids() -> tuple:
+    return tuple(re.findall(r'<script type="application/json" id="([^"]+)">', page_text()))
+
+
+@lru_cache(None)
+def page_wiring() -> dict:
+    """{function: (the element ids it reaches, the records it reads, the page's functions it calls)}, read from the page's
+    script: a record is read by getElementById or REC with its id, or through a name the script binds to one record at its
+    top level."""
+    js, recs = page_script(), set(page_records_ids())
+    m = js_mask(js)
+    depth, d = [], 0
+    for ch in m:
+        d += (ch == "{") - (ch == "}")
+        depth.append(d)
+    reads = lambda text: {r for r in re.findall(r"(?:getElementById|REC)\(\s*[\"'](\w+)[\"']", text) if r in recs}
+    bound = {}
+    for x in re.finditer(r"(?<![\w$.])(?:const|let|var)\s+(" + JS_IDENT + r")\s*=", m):
+        if x.start() and depth[x.start() - 1] != 0:
+            continue
+        d, j = 0, x.end()
+        while j < len(m) and not (d == 0 and m[j] in ",;)]}"):
+            d += (m[j] in "([{") - (m[j] in ")]}")
+            j += 1
+        r = reads(js[x.end():j])
+        if len(r) == 1:
+            bound[x.group(1)] = r.pop()
+    out, fns = {}, js_functions(m)
+    for name, spans in fns.items():
+        ids, rs, calls = set(), set(), set()
+        for a, z in spans:
+            body, mb = js[a:z + 1], m[a:z + 1]
+            calls |= set(re.findall(r"(?<![\w$.])(" + JS_IDENT + r")\s*\(", mb)) & set(fns)
+            ids |= set(re.findall(r"(?:\$|getElementById)\(\s*[\"']([\w-]+)[\"']\s*\)", body))
+            for q in re.findall(r"querySelector(?:All)?\(\s*[\"']([^\"']+)[\"']", body):
+                ids |= set(re.findall(r"#([\w-]+)", q))
+            rs |= reads(body) | {r for nm, r in bound.items() if re.search(r"(?<![\w$.])" + re.escape(nm) + r"\b", mb)}
+        out[name] = (frozenset(ids), frozenset(rs), frozenset(calls - {name}))
+    return out
+
+
+@lru_cache(None)
+def page_sections_read() -> list:
+    """[(anchor, number, title, chunk, the functions it owns, the records its code reads)] in the page's order. A function
+    writes into a section when it reaches an element of it, or a data-live sentence in it; it is the section's own where most
+    of the elements it reaches are there. The section's records are those its writers read, with those of the helpers they
+    call one call deep (a helper reaching no element), and those its data-rec fields read at load."""
+    page, wires = page_text(), page_wiring()
+    secs = [(m.start(), m.group(1)) for m in re.finditer(r'<(?:section|header)[^>]*\bid="((?:s-[^"]+)|title-page)"', page)]
+    if not secs:
+        raise RecordError("the page carries no section anchors")
+    end = page.find("<script", secs[-1][0])
+    rows = []
+    for i, (at, sid) in enumerate(secs):
+        chunk = page[at:secs[i + 1][0] if i + 1 < len(secs) else end]
+        h = re.search(r'<h[1-4][^>]*>\s*<span class="sn">([^<]*)</span>(.*?)</h[1-4]>', chunk, re.S)
+        num, title = (h.group(1).strip(), re.sub(r"<[^>]+>", "", h.group(2)).strip()) if h else ("", sid)
+        rows.append([sid, num, title, chunk, set(re.findall(r'\bid="([^"]+)"', chunk)),
+                     set(re.findall(r'data-live="([^"]+)"', chunk)), set(re.findall(r'data-rec="(\w+)[.\w]*"', chunk))])
+    owner = {}
+    for f, (ids, _r, _c) in wires.items():
+        hits = [len(ids & r[4]) for r in rows]
+        if max(hits, default=0):
+            owner[f] = hits.index(max(hits))
+    out = []
+    for k, (sid, num, title, chunk, ids, lives, drec) in enumerate(rows):
+        touch = {f for f, (fi, _r, _c) in wires.items() if fi & ids} | {f for f in lives if f in wires}
+        helpers = {c for f in touch for c in wires[f][2] if not wires[c][0]}
+        own = sorted({f for f, o in owner.items() if o == k} | {f for f in lives if f in wires})
+        recs = sorted({r for f in touch | helpers for r in wires[f][1]} | (drec & set(page_records_ids())))
+        out.append((sid, num, title, chunk, own, recs))
+    return out
+
+
+@lru_cache(None)
+def record_writers() -> dict:
+    """{record: the code and files that write it}: the builder's records() return, each value traced to the builder's
+    function or the export script that writes it, the tools and results files that function reads, and the record's own
+    file, source or tool where it names one."""
+    src = BUILDER.read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    fns = {f.name: f for f in tree.body if isinstance(f, ast.FunctionDef)}
+    rec_fn = fns.get("records")
+    if rec_fn is None:
+        raise RecordError("docs/engine/build_live_engine.py carries no records()")
+    alias = {a.asname or a.name: a.name for node in ast.walk(rec_fn) if isinstance(node, ast.Import) for a in node.names}
+    by_file = {}                           # "h.json" -> the export module whose main() wrote it
+    for node in ast.walk(rec_fn):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "main" \
+                and isinstance(node.func.value, ast.Name):
+            for c in ast.walk(node):
+                if isinstance(c, ast.Constant) and isinstance(c.value, str) and c.value.endswith(".json"):
+                    by_file[c.value] = alias.get(node.func.value.id, node.func.value.id)
+    var_file = {}
+    for node in ast.walk(rec_fn):
+        if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Tuple):
+            names = [e.id for e in node.targets[0].elts if isinstance(e, ast.Name)]
+            files = [c.value for c in ast.walk(node.value) if isinstance(c, ast.Constant) and isinstance(c.value, str)
+                     and c.value.endswith(".json")]
+            if len(names) == len(files):
+                var_file.update(zip(names, files))
+    ret = next(n.value for n in ast.walk(rec_fn) if isinstance(n, ast.Return) and isinstance(n.value, ast.Dict))
+
+    def refs(fn) -> list:
+        seg = ast.get_source_segment(src, fn) or ""
+        mods = set(re.findall(r"\btools[./]([a-z_0-9]+)", seg))
+        for g in re.findall(r"from tools import ([\w, ]+)", seg):
+            mods |= {x.strip().split(" as ")[0] for x in g.split(",")}
+        out = [f"tools/{x}.py" for x in sorted(mods) if (ROOT / "tools" / f"{x}.py").exists()]
+        for q in re.findall(r'ROOT((?:\s*/\s*"[^"]+")+)', seg):
+            path = "/".join(re.findall(r'"([^"]+)"', q))
+            if (ROOT / path).is_file() and path not in out:
+                out.append(path)
+        return out
+
+    out = {}
+    for k, v in zip(ret.keys, ret.values):
+        key, w = k.value, []
+        if isinstance(v, ast.Call) and isinstance(v.func, ast.Name) and v.func.id in fns and v.func.id != "pack_controller":
+            w = [f"`docs/engine/build_live_engine.py` `{v.func.id}()`"] + [f"`{x}`" for x in refs(fns[v.func.id])]
+        else:
+            name = v.args[0].id if isinstance(v, ast.Call) and v.args and isinstance(v.args[0], ast.Name) else \
+                (v.id if isinstance(v, ast.Name) else None)
+            mod = by_file.get(var_file.get(name, ""))
+            if mod and (ROOT / "docs" / "engine" / f"{mod}.py").exists():
+                w = [f"`docs/engine/{mod}.py`"]
+            elif isinstance(v, ast.Dict) or name in ("build", "reg"):
+                w = ["`docs/engine/build_live_engine.py` `records()`"]
+        d = embedded(key) if key in page_records_ids() else {}
+        for f in ("file", "source", "tool", "table", "law"):
+            x = d.get(f) if isinstance(d, dict) else None
+            if isinstance(x, str) and (ROOT / x).is_file() and f"`{x}`" not in w:
+                w.append(f"`{x}`")
+        out[key] = w or ["`docs/engine/build_live_engine.py`"]
+    return out
+
+
+def record_meta(key: str) -> str:
+    """The engine, base, batch or seed a record names, in its own fields."""
+    d = embedded(key)
+    eng = lambda e: (e.get("version") if isinstance(e, dict) else e or "").split(" (")[0] if e else ""
+    out = []
+    if key == "runs":
+        c = Counter(b.get("engine") for b in d.get("benchmarks", []))
+        out.append("; ".join(f"{e} {k} tables" for e, k in sorted(c.items(), key=lambda kv: -kv[1])))
+    elif key == "build":
+        out.append(f"{d['engine']}; the organisms {d['realms_engine']}")
+    elif key == "dial":
+        out.append(series(sorted(set((d.get("engine_of_beat") or {}).values()))))
+    elif key == "scenarios":
+        out.append(eng((d.get("run") or {}).get("engine")))
+    elif key == "injgrid":
+        b = d.get("batch") or {}
+        out.append(f"batch {b.get('base')}" + (f"; {eng((d.get('run') or {}).get('engine'))}" if (d.get("run") or {}).get("engine") else ""))
+    elif isinstance(d, dict) and d.get("engine"):
+        out.append(eng(d["engine"]))
+    if key == "engineruns":
+        out.append(f"base {d['base']}")
+    if key in ("coremc", "cpptwin") and d.get("seed") is not None:
+        out.append(f"seed {d['seed']}")
+    if key == "audit":
+        out.append(f"record `{d['digest']}`")
+    return "; ".join(x for x in out if x) or "names none"
 
 
 @block("page_sections", PAGE, MANUAL)
 def b_page_sections():
     """Every section of the page in its own order: its number and title, its anchor, the monitors it draws (each monitor's
-    number on the wall, its name and its evidence class, from the page's own monitor registry), the page's code and the
-    Python each monitor names in its wiring, and the Live Engine Manual's chapter that reads it."""
-    page = page_text()
+    number on the wall, its name and its evidence class, from the page's own monitor registry), the page's own code that
+    writes into it, the records that code reads, and the Live Engine Manual's chapter that reads it."""
     reg = {m["id"]: m for m in embedded("monitors")["monitors"]}
-    secs = [(m.start(), m.group(1)) for m in re.finditer(r'<section[^>]*id="(s-[^"]+)"', page)]
-    if not secs:
-        raise RecordError("the page carries no section anchors")
     chapters = manual_chapters()
-    L = ["| Section | Anchor | Monitors (number on the wall, name, class) | The page's code; the Python it ports or reads | "
-         "Live Engine Manual |", "|---|---|---|---|---|"]
-    for i, (at, sid) in enumerate(secs):
-        chunk = page[at:secs[i + 1][0] if i + 1 < len(secs) else len(page)]
-        h = re.search(r'<h[1-4][^>]*>\s*<span class="sn">([^<]*)</span>(.*?)</h[1-4]>', chunk, re.S)
-        num, title = (h.group(1).strip(), re.sub(r"<[^>]+>", "", h.group(2)).strip()) if h else ("", sid)
+    L = ["| Section | Anchor | Monitors (number, name, class) | The page's own code | Records read | Live Engine Manual |",
+         "|---|---|---|---|---|---|"]
+    for sid, num, title, chunk, own, recs in page_sections_read():
         mons = [reg[c] for c in dict.fromkeys(re.findall(r'<canvas[^>]*id="([^"]+)"', chunk)) if c in reg]
-        shown = "; ".join(f"{m['n']} {m['name']} ({m['cls']})" for m in mons) or "none (text, tables and controls)"
-        code = sorted({c.strip() for m in mons for c in str((m.get("wire") or {}).get("code", "")).split(",") if c.strip()})
-        py = sorted({p for m in mons for p in (m.get("wire") or {}).get("python") or []})
-        wire = "; ".join(x for x in (", ".join(f"`{c}`" for c in code), ", ".join(f"`{p}`" for p in py)) if x) or "—"
+        shown = "; ".join(f"{m['n']} {re.sub(r' · Class [A-Z]$', '', m['name'])} ({m['cls'].split(' (')[0]})" for m in mons) or "none"
+        code = ", ".join(f"`{f}`" for f in own) or "—"
         ch = chapters.get(sid)
-        L.append(f"| {num} {title} | `#{sid}` | {shown} | {wire} | {'chapter ' + ch if ch else 'not named'} |")
+        L.append(f"| {num} {title} | `#{sid}` | {shown} | {code} | {', '.join(f'`{r}`' for r in recs) or 'none'} | "
+                 f"{'chapter ' + ch if ch else 'not named'} |")
     return "\n".join(L)
+
+
+@block("page_records_table", PAGE, BUILDER)
+def b_page_records_table():
+    """Every record the page carries, in the page's order: the Python that writes it, and its engine, base, batch or seed."""
+    read = {r for *_x, recs in page_sections_read() for r in recs}
+    w = record_writers()
+    L = ["| Record | Written by | Engine, base, batch or seed |", "|---|---|---|"]
+    for r in page_records_ids():
+        L.append(f"| `{r}`{'' if r in read else ' (read by no section: the page script reads it at load)'} | "
+                 f"{'; '.join(w.get(r, ['—']))} | {record_meta(r)} |")
+    return "\n".join(L)
+
+
+@block("page_lag", PAGE, lambda: newest_by_written("results/engine_runs/ENGINE_RUNS_*.json")[0], lambda: newest_grid()[0])
+def b_page_lag():
+    er, ig = embedded("engineruns"), embedded("injgrid")
+    _p, newest = newest_by_written("results/engine_runs/ENGINE_RUNS_*.json")
+    _q, grid = newest_grid()
+    say = lambda what, on_page, on_file: (f"{what} {on_page}, the newest on file" if on_page == on_file else
+                                          f"{what} {on_page}, where the newest on file is {on_file}")
+    return (say("the Python's runs of base", er.get("base"), newest.get("base")) + "; "
+            + say("the injection grid of batch", (ig.get("batch") or {}).get("base"), (grid.get("batch") or {}).get("base")))
 
 
 @lru_cache(None)
@@ -910,6 +1219,16 @@ def b_index_loss_table():
     return "\n".join(L)
 
 
+@block("index_loss_strong", AUDIT, INDEX_JSON)
+def b_index_loss_strong():
+    stems = {Path(t["source"]).stem for t in index_tests()}
+    rows = sorted((r for r in native_losses() if r["table"] in stems and (r.get("evidence") or {}).get("strength") == "strong"),
+                  key=lambda r: order_key(r["table"]))
+    if not rows:
+        return "none of them strong"
+    return "; ".join(f"{gauge_name(r)} in {named(r['table'])}, {reading(r)}" for r in rows)
+
+
 # ---- the LOSS ledger
 @block("loss_all", LEDGER, AUDIT, "tools/loss_ledger.py")
 def b_loss_all():
@@ -1023,6 +1342,53 @@ def b_loss_stores_rows():
     return "\n".join(L)
 
 
+@block("loss_stores_range", AUDIT, INDEX_JSON)
+def b_loss_stores_range():
+    rows = [r for r in native_losses() if place(r["table"]) == "stores"]
+    st = Counter((r.get("evidence") or {}).get("strength") or "not given" for r in rows)
+    def span(rs):
+        v = sorted(((r.get("evidence") or {}).get("mean_pct") for r in rs if (r.get("evidence") or {}).get("mean_pct") is not None),
+                   key=abs)
+        return (f"{updown(v[0])} {pct(v[0], 2)}" if len(v) == 1 or v[0] == v[-1] else
+                f"{updown(v[0])} {pct(v[0], 2)} to {updown(v[-1])} {pct(v[-1], 2)}") if v else "no size"
+    time = [r for r in rows if r.get("direction") == "time waited, missed or failed"]
+    work = [r for r in rows if r.get("direction") == "work done"]
+    out = [f"each LOSS by the mean of our three runs, {series([f'{n(k)} {w}' for w, k in st.most_common()])}",
+           f"the {plural(len(time), 'response time', 'response times')} longer by the mean of the three runs, {span(time)}"]
+    if work:
+        out.append(f"the {plural(len(work), 'work row', 'work rows')} lower, {span(work)}")
+    shipped = [r for r in rows if base_of(r["table"])[0] == "REDIS_SHIPPED"]
+    if shipped:
+        out.append("Redis as shipped: " + "; ".join(f"`{r['section']}` {STORE_GAUGE.get(r['gauge'], r['gauge'])}, {reading(r)}"
+                                                    for r in shipped))
+    return "; ".join(out)
+
+
+A100_V21 = ("results/gpu/V21_A100_CAP_ABC.json", "results/gpu/V21_A100_CAP_FULL_ABC.json")
+
+
+@block("a100_v21_losses", *A100_V21)
+def b_a100_v21_losses():
+    rows = []
+    for f in A100_V21:
+        d = load(ROOT / f)
+        part = "at the operator's cap" if "FULL" not in f else "at the full load"
+        for g, r in d["rows"].items():
+            if str(r.get("reading", "")).startswith(LOSS):
+                runs = ", ".join(f"run {t} {run_size(x)}" for t, x in zip("ABC", r["runs"]))
+                rows.append((part, g, r["reading"], runs))
+    if not rows:
+        raise RecordError("the A100 tables on omni-v21 carry no LOSS row")
+    words = {w for _, _, w, _ in rows}
+    one = len(words) == 1
+    groups = []
+    for part in dict.fromkeys(p for p, *_ in rows):
+        items = [f"{g}{'' if one else ', ' + w} ({runs})" for p, g, w, runs in rows if p == part]
+        groups.append(f"{part}, " + "; ".join(items))
+    head = f"{n(len(rows))} LOSS rows" + (f", each {next(iter(words))}" if one else "")
+    return head + ": " + "; ".join(groups)
+
+
 @block("loss_causes", LEDGER, "tools/loss_ledger.py", AUDIT)
 def b_loss_causes():
     rows = ledger_native()
@@ -1036,7 +1402,9 @@ def b_loss_causes():
     if c["flip_queue"]:
         parts.append(f"{n(c['flip_queue'])} queue rows that name the same flip, the control plane's reads suspected beside it")
     if c["suspected"]:
-        parts.append(f"{n(c['suspected'])} queue rows suspected, not yet measured (the control plane's reads at the 10 s beat)")
+        sus = sorted({x[0] for x in rows if x[4] == "suspected"}, key=order_key)
+        parts.append(f"{n(c['suspected'])} queue rows suspected, not yet measured (the control plane's reads at the 10 s beat; "
+                     f"{series([named(x, ref=True) for x in sus])})")
     if c["beat"]:
         parts.append(f"{n(c['beat'])} measured (the plain batch queue: Omni-Compass's own processor on a shared runner)")
     if c["other"]:
@@ -1061,6 +1429,15 @@ def b_flip_rows():
             f"{plural(len({x[0] for x in queue}), 'table', 'tables')} name it beside the control plane's reads "
             f"({grouped([x[2] for x in queue], ', ')}); together {n(len(web) + len(queue))} of the {n(len(rows))} rows against "
             f"native, and {n(len(fix))} name {nxt} as their fix")
+
+
+@block("flip_split", LEDGER, "tools/loss_ledger.py")
+def b_flip_split():
+    rows = ledger_native()
+    web = sum(1 for x in rows if x[4] == "flip")
+    queue = sum(1 for x in rows if x[4] == "flip_queue")
+    return (f"{n(web)} rows with the fault as their one written cause and {n(queue)} queue rows that name it beside a suspected "
+            "second cause")
 
 
 @block("flip_tables", LEDGER, "tools/loss_ledger.py")
@@ -1201,9 +1578,11 @@ def b_oversight_runs_table():
 
 @block("oversight_count", OVERSIGHT)
 def b_oversight_count():
-    c = load(OVERSIGHT)["count"]
-    return (f"fewer in {n(c['fewer'])} tests, falling to none in {n(c['to_zero'])}; the same in {n(c['same'])}; more in "
-            f"{n(c['more'])}")
+    d = load(OVERSIGHT)
+    c = d["count"]
+    same = [named(Path(r["record"]).stem) for r in d["rows"] if str(r.get("reading", "")).startswith(f"{STEADY}, the same")]
+    return (f"fewer in {n(c['fewer'])} tests, falling to none in {n(c['to_zero'])}; the same in {n(c['same'])}"
+            + (f" ({series(same)})" if len(same) == c["same"] else "") + f"; more in {n(c['more'])}")
 
 
 @block("oversight_loss_all_three", OVERSIGHT)
@@ -1622,8 +2001,25 @@ def b_catalogue_cards():
 @block("wiring_families", RECIPES)
 def b_wiring_families():
     with RECIPES.open(encoding="utf-8") as f:
-        k = sum(1 for _ in csv.DictReader(f))
-    return f"{n(k)} families, one row each"
+        rows = list(csv.DictReader(f))
+
+    def kind(live):
+        s = live.strip().lower()
+        if s.startswith("live:"):
+            return "live"
+        if s.startswith("live"):
+            return "part"
+        if s.startswith("modelled"):
+            return "modelled"
+        if "read-only" in s:
+            return "read"
+        if "written" in s:
+            return "written"
+        raise RecordError(f"a wiring family's live column reads neither live, modelled, read-only nor written: {live[:60]}")
+
+    c = Counter(kind(r["live"]) for r in rows)
+    return (f"{n(len(rows))} families, one row each; by its live column {n(c['live'])} have run live, {n(c['part'])} in part, "
+            f"{n(c['written'])} are written, {n(c['read'])} {'is' if c['read'] == 1 else 'are'} read only and {n(c['modelled'])} are modelled")
 
 
 @lru_cache(None)
