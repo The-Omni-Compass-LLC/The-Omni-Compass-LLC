@@ -1,17 +1,22 @@
 # THE OMNI-COMPASS LIVE BENCHMARK ENGINE MANUAL
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ## How to Read the Live Benchmark Engine: Its Monitors, Gauges and Knobs, Native beside Omni-Compass
 
 **October 2026**
 **The Omni-Compass LLC**
 
-All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by The Omni-Compass LLC.
+All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC.
 
 ---
 
 # FRONT MATTER
+
+
+> **The monograph.** What the live benchmark engine is for, and what it does and does not show, is written at a referee's level in
+> `docs/engine/LIVE_ENGINE_MONOGRAPH.md`: purpose, the stack and every module, the mechanism, the evidence, the receipts on omni-v25,
+> reproduction and limits. This manual is how to read the page; the monograph is why the page exists and what stands behind it.
 
 ## The Problem and the Answer
 
@@ -39,9 +44,11 @@ one body, the organism: every muscle driven as far as its own limit and never pa
 below native; where it cannot bring a muscle a GAIN, that muscle stays native. It acts before a line is crossed instead of
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
-organism: never less work or health than native (`DISCLOSURES.md`, section 3). The aim is the one headline: more work,
-faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers already in place,
-every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds.
+organism: never less work or health than native (`DISCLOSURES.md`, section 3). The one headline is an aim, not a result.
+The aim: more work, faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers
+already in place, every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds. The record reads
+the work and the speed (the Omni index, `results/OMNI_INDEX.md`); the machines are not yet fewer: the whole organism's
+composition reads them more, power given (`results/WHOLE_SYSTEM.md`).
 
 **Where the page shows it.** The live benchmark engine page plays every benchmark back from its own SHA-256-checked files, native
 beside Omni-Compass on top of native, lane by lane, and runs the engine's own runs in the page: the Python's seeded runs, and
@@ -120,7 +127,7 @@ Omni-Compass is software. It always sits on top of a native controller. A system
 - **Hold.** Omni-Compass on top of native harms nothing in that place: every judged gauge (the work done, the response time, the minutes over the line, the pods waiting, the failures) reads STEADY or GAIN against native by the one key, and a resource that rose (the bill, the machine-hours, the energy) is read beside it as power given. A place holds when its runs read no LOSS.
 - **Where the benefit lives.** At the software end, where it is made and measured, with no bill in it. It shows through on the two bills, native against Omni-Compass on native: on bare metal the work done inside the machine's own bill (each dollar, and each joule of the chip's own meter), and through the cloud the work done inside the cloud's own bill (each dollar). The chip and the wire themselves add no gain of their own: they are where Omni-Compass must hold. A benchmark that holds is the proof of no harm in its place; the benefit is shown where it lives and explained for the rest.
 - **Work for the bill.** The one number every receipt is read for: the work done for each dollar of the bill, E = W / B (written once in `results/TWO_BILLS.md`), in each place native against Omni-Compass on native, G = E(Omni-Compass on native) / E(native) − 1 = (1 + ΔW) / (1 + ΔB) − 1 ≈ ΔW − ΔB, ΔW the change in the work done and ΔB the change in the bill. A bill that rises is power given; there is more work for the bill when the work rises more than the bill (ΔW > ΔB, G > 0). Both arms pay the same prices, so a place's price level cancels in its G. A system that runs in one place reads that place's G alone; an owner who runs work in both weighs them by its own native spend S(p), G(total) = Σₚ S(p)(1 + ΔW(p)) / Σₚ S(p)(1 + ΔB(p)) − 1 (`docs/WORK_PER_BILL.md`).
-- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, on fewer machines), and the wire and the chip show that it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
+- **One mechanism, in one place, felt along the whole path.** Omni-Compass acts in one place, the software end, on top of the controllers a stack already runs; it changes nothing in the chip and nothing in the network or the cloud. Its effect travels the whole path the work travels: a request starts in the software, crosses the wire (the owner's own racks or a cloud's machines), is computed on the chip and comes back. So the effect is checked at every place: the software end shows the gain (more work, faster, the machines it took read beside it, a rise power given), and the wire and the chip are read for whether it holds and carry the gain to their bills. Two places are tested because a system runs in only those two; one mechanism makes the gain, the way a city's traffic signals make more trips an hour on the same roads and the same cars.
 
 <!-- end of the places -->
 
@@ -192,7 +199,7 @@ files, the raw files GitHub archived with their SHA-256 lists, the two other man
 ## Notice and Disclaimer
 
 This manual describes the live benchmark engine page as `docs/engine/build_live_engine.py` builds it on the engine that stands
-(omni-v25, `OMNI_V25.json`). The page names its engine on its own `<html>` element (`data-engine`), and the engine its words
+(omni-v26, `OMNI_V26.json`). The page names its engine on its own `<html>` element (`data-engine`), and the engine its words
 were written for (`data-prose`); where the records stand on a newer engine than the words, a banner under the wall says so
 (`#engBanner`). The build stamps the engine that stands on the page and rebuilds every record, and `--check` fails a page whose
 engine differs; where the page you are reading names a newer engine, the page is right and this manual is realigned with it in
@@ -362,7 +369,7 @@ played back.
 **What this manual covers.** Every section of the page in the page's own order; every gauge, with its side, its aim and its
 word; every control, with its backend, its effects and its limits; the factory profile against the active one; the two tickers
 that show the mechanism of action; the trace from any tile to the record it came from; and what to do when a tile reads LOSS.
-It covers the page as built on omni-v25; a later engine renames itself on the page's title block and this book is realigned in
+It covers the page as built on omni-v26; a later engine renames itself on the page's title block and this book is realigned in
 the same push.
 
 **What this manual does not cover.** How the engine is built, its equations beyond the ones the page itself prints, the
@@ -679,7 +686,7 @@ The **profile** group holds three buttons, and the profile box (`#fuseProfile`) 
   candidate**, the dial's buttons and the muscles' own switches (the card's, the panel's and the cluster console's) refuse a press with
   a line in the log, and the request line reads "none sent". The note reads "HELD at decision n: the heartbeat … s, the dial on …,
   every muscle driven (or so many left native) and every knob held as set; restore the factory profile to turn them again". Unheld, the note reads "every knob turns; the
-  factory profile is the released one (omni-v25: the heartbeat 10 s on site and 60 s through a cloud, every muscle on its card); no other profile is released".
+  factory profile is the released one (omni-v26: the heartbeat 10 s on site and 60 s through a cloud, every muscle on its card); no other profile is released".
 - **Return to native** hands governance back: the reset, the operator's control (`tools/omni_control.py`, `POST /v1/reset`).
   On the page every setting goes to native's own controller and every Omni-Compass side follows native, as with the kill switch,
   but the switch then reads "OFF by the reset · native alone · press to turn ON" and the event log names the reset. A second
@@ -977,7 +984,7 @@ native and on the Omni-Compass side, its ceiling, floor, size, τ and sensing de
 | its sensing delay | +0 to +6 decisions | +0 | decisions between what the muscle does and what its controllers read |
 
 The group's switch reads **Omni-Compass governs it** and, pressed, hands the muscles in scope back to native's own controller
-while every other muscle stays governed; pressed again, Omni-Compass governs them again. The kill switch hands every muscle back
+while every other muscle stays with Omni-Compass; pressed again, it takes them back. The kill switch hands every muscle back
 at once.
 
 ### 2.23 A changed tune is not a result
@@ -1225,7 +1232,7 @@ introduction stands there under the section's number and title, so the sections 
 Native is orange everywhere and Omni-Compass blue, and every monitor, section and part carries its signal and its word: red
 REDLINING, yellow STEADY, green GAINING.
 
-### 3.2 The sections, as built on omni-v25
+### 3.2 The sections, as built on omni-v26
 
 Appendix A lists every section with its anchor and the chapter of this book that reads it. In the page's order:
 
@@ -1281,9 +1288,10 @@ This chapter reads the page's section 2a, **Scorecard** (`#s-bottom`).
 
 The scorecard (`#s-bottom`), the first section of the page's Part 2, asks one question: is Omni-Compass a benefit? It answers
 with one light and one number for each way to run a workload, against native alone on the same work, read from the
-repository's own records. The line at its head (`#blHead`) puts the answer in one sentence: Omni-Compass on native, with its
-signal word and its change in work against native in the real three-run test. The same number stands in the dock at the foot of
-the screen ("vs native, more work (3 real runs): on native").
+repository's own records. The line at its head (`#blHead`) gives the figure of record first: the Omni index, every real test
+together, Omni-Compass on native against native alone, with its word, its size and the LOSS rows its tables hold, each in section
+2d. Every other number in the section is a second reading. The dock at the foot of the screen carries the same figure once it is
+unfolded (it opens folded).
 
 ### 4.2 How to read it
 
@@ -2272,7 +2280,7 @@ This chapter reads the page's section 4e, **Orchestrators and Governors** (`#s-o
 
 ### 22.1 What they are
 
-The governors and orchestrators that sit between the work and the cluster: batch schedulers and job
+These products sit between the work and the cluster: batch schedulers and job
 queues (Kueue, Volcano, the KAI scheduler, Armada), multi-cluster governors (Karmada, Open Cluster Management), the default
 Kubernetes scheduler and its bin-packing profile, the co-location and rightsizing controllers (Koordinator, Crane, CruiseKube,
 Goldilocks), the GPU and edge orchestrators (KubeRay, KubeEdge, Nephio) and Gödel. Each runs live on real Kubernetes as its
@@ -2284,7 +2292,7 @@ project ships it, native and with Omni-Compass on top of it; Omni-Compass never 
 preregistration, its rig on GitHub, runs A, B and C, and its three-run table as it lands. **Orchestration Stack**, live:
 Omni-Compass on top, the governor native as shipped, Kubernetes and its nodes beneath, the work dots moving at the live
 engine's demand (a picture of the flow, not a measurement, replaced by the governor's readings the moment its three runs
-land). **Governor and Orchestrator Catalog**: what each governs, native as shipped, Omni-Compass on top, and what the repository holds
+land). **Governor and Orchestrator Catalog**: what each one controls, native as shipped, Omni-Compass on top, and what the repository holds
 today. Click a governor (a tile, a row of the road or of the catalog) to hold it in every view.
 
 ### 22.3 Four-Way Comparison
@@ -2303,7 +2311,7 @@ both lanes.
 
 ### 22.4 Orchestra Organism
 
-The eighth organism: every governor's catalog muscles, each governor's a body of its own and all of
+The eighth organism: every governor's catalog muscles, each product's a body of its own and all of
 them together one body, native and with Omni-Compass on top (modelled, class S; `tools/run_orchestra.py`,
 `results/orchestra/ORCHESTRA.md`). It is a grouping of catalog rows like the seven, never an engine file.
 
@@ -2543,9 +2551,9 @@ it ran and on how many processes close the line.
   the twenty scenarios above.
 - **Way**: *Omni-Compass on native*; *a governor on the organism* (each of the fourteen: the Kubernetes scheduler with its
   bin-packing profile, Kueue, Volcano, KAI, Koordinator, CruiseKube, Crane, KubeRay, Gödel, Armada, Karmada, Open Cluster
-  Management, KubeEdge and Nephio); *Omni-Compass on top of a governor*. The orchestra already holds every governor's muscles,
+  Management, KubeEdge and Nephio); *Omni-Compass on top of a governor*. The orchestra already holds the muscles of all of them,
   so on it only Omni-Compass on native is offered.
-- **Against**: native, and, for Omni-Compass on top of a governor, the governor on the organism too, so Omni-Compass's own
+- **Against**: native, and, for Omni-Compass on top of a governor, that product on the organism too, so Omni-Compass's own
   effect on that governed stack is read alone.
 - **Runs**: 1, 10, 100 or 500. **Organisms stacked**: 1, 10, 100 or 500. Every cell is the one batch cut down: 100 runs are
   the first 100 of the batch's 500, 10 the first 10, 1 the first; and each run carries a stack of 500 organisms, of which 100
@@ -2580,7 +2588,7 @@ word. A click on a cell selects it.
   beside. Its line names the first way, the rank of Omni-Compass on native, and the ranks held by the ways with Omni-Compass on
   top; the rows with Omni-Compass are drawn in its colour. A click on a way selects it. In our models a governor's knobs run
   under their own native controllers, so a governor's way reads native's work index by construction. What it moves is the share
-  over the line and the power of its knobs, and its rank says so. The governors as their projects ship them, governing real
+  over the line and the power of its knobs, and its rank says so. The governors as their projects ship them, running real
   workloads, are read on real Kubernetes in the page's section 4e (class L): fourteen named, twelve with a rig built, eleven run the four
   ways.
 - **Organisms on the Same Injections**: the chosen way and cell on every organism, so each organism's reaction to the same
@@ -2614,10 +2622,11 @@ This chapter reads the page's section 5d, **Whole Organism** (`#s-whole`).
 
 The section opens with **What Each Place Shows: the Benefit, or That It Holds** (`#placesHold`). The software end (Kubernetes,
 the orchestrators and governors, the services) is where Omni-Compass decides and works; its benchmark shows the benefit. The chip
-(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark shows that it holds: no harm to its heat,
-its power or its service, read by the card's own meter. The cloud (the wire and the provider's own software) carries the software
-end's work and bills it by machine-hours; its benchmark shows that it holds: the bill not raised beyond the noise and the service
-not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
+(a processor or GPU card) is hardware whose own controls Omni-Compass turns; its benchmark is to show whether it holds: no harm to
+its heat, its power or its service, read by the card's own meter. Today the card's tables hold LOSS rows on that meter, each in
+section 2d, so the set does not yet read that it holds. The cloud (the wire and the provider's own software) carries the software
+end's work and bills it by machine-hours; its benchmark is to show whether it holds: the bill not raised beyond the noise and the
+service not harmed, and where the work can grow its yardstick is the work per dollar, the work answered within the line divided by the bill, against native.
 Inside the chip or the provider's own code nothing can be measured from outside, and nothing is claimed.
 
 ### 28.1 The two places a system runs
@@ -2941,7 +2950,7 @@ under the same rule, the engine's setting for the rest (`realms/muscle_cards_v5.
 
 In the words of `docs/FACTORY_PROFILE.md`, the page is the **live tuning bench**: the interface that operates the engine's
 controls and displays their effects through the connected backend. The **factory profile** is the complete, versioned set of
-Omni-Compass default settings shipped together; on the engine that stands it is omni-v25's (`OMNI_V25.json`): the governor's
+Omni-Compass default settings shipped together; on the engine that stands it is omni-v26's (`OMNI_V26.json`): the governor's
 full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start, the fast checks
 every 5 s, every muscle on the card found for it and on the engine's own setting
 otherwise. The **active profile** is the settings actually governing the current run. An adjustment on the bench produces an
@@ -3063,7 +3072,7 @@ the hold doubling for each hand-back in a row up to 160; it takes the muscle bac
 than native's by 5%. Where native is not stronger it stays, because redlining less than native is still a benefit against native.
 The red is still wired on its side, so that if a muscle does redline there (a fault, a bug), it is seen at once. That is the kill
 switch's purpose: when something redlines that Omni-Compass itself cannot stop, one press hands every muscle back to native in the
-same instant. The engine that stands, omni-v25, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
+same instant. The engine that stands, omni-v26, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
 C++ twin `cpp/src/immune.cpp`, proven alike on 200 seeded scripts, and the nervous system's `native_hold`; on Kubernetes each
 service's autoscaler target, native's twin the operator's own target), beside the SLO reflex and the pod reflex of the Kubernetes
 governor (`omni_controller/controller.py`); the page's live model (class S) applies the same rule, with the engine's own numbers, to
@@ -3178,7 +3187,7 @@ This chapter reads the page's appendix G, **Disclosures, Law and Contact** (`#s-
 The page closes on its appendix G, **Disclosures, Law and Contact** (`#s-disclose`), before the closing legal
 notice (`#notice-end`). It opens with the live tuning engine box (`#tuningBench`): **THIS PAGE IS A LIVE TUNING ENGINE. THE
 BENCHMARKS ARE ONE TUNED ENGINE.** Every knob, button and monitor on the page can be turned in real time (the heartbeat at 10, 15,
-30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native), and turning any
+20, 30, 60, 90 or 120 s, the dial between the max and the tune-down, the pedal, each muscle driven or left native), and turning any
 knob can change every metric, either way; what the page shows at any setting other than the factory tune demonstrates that range
 and is never a benchmark result. Every benchmark result is one engine at its one factory tune, chosen by the declared rule of
 `docs/THE_TUNE.md`; a tune other than the factory tune is the tuner's own, and its results are its own. No profile on the page is
@@ -3254,7 +3263,7 @@ Every number on the wall can be walked back to the file it came from.
 ### 43.2 The engine's name and the profile
 
 Every table and every monitor names the engine it ran on; the page's title block names the engine
-the page stands on (omni-v25). A table on an older engine stands only until its runs on the engine that stands land, and the
+the page stands on (omni-v26). A table on an older engine stands only until its runs on the engine that stands land, and the
 board says which it is. Nothing is read across engines. Every result the page plays ran the factory profile of the engine its
 table names; the control panel names the profile governing the live model now, with its fingerprint (section 2.7), and a
 candidate or custom profile there is never a result of record.
@@ -3428,9 +3437,9 @@ A copy whose page, engine or records differ from what these print is not a copy 
   the lease's walk back, the kill switch.
 - **Dial.** The max (every muscle to its own limit, never below native; the default) or the tune-down (never more than native).
 - **Engine that stands.** The engine version on main, named on the page's title block and in `python3 tools/omni_version.py`;
-  omni-v25 for this edition.
+  omni-v26 for this edition.
 - **Factory profile.** The complete, versioned set of Omni-Compass default settings shipped together; on the engine that
-  stands, omni-v25's, the heartbeat 10 s on site and 60 s through a cloud (60 s on the page's own model), every muscle on its card.
+  stands, omni-v26's, the heartbeat 10 s on site and 60 s through a cloud (60 s on the page's own model), every muscle on its card.
   Every result on the engine that stands is this profile's; every earlier result is its own engine's.
 - **Fingerprint (of a profile).** The page's FNV-1a hash of every setting of the mechanism, the heartbeat and every muscle's body
   included, with the dial and the muscles left native once either leaves the factory's: one identity for one set of settings.
@@ -3685,4 +3694,4 @@ production use.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

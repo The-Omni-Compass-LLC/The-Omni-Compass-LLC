@@ -1,6 +1,6 @@
 # The factory profile, the live tuning bench and the bill: the common language
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The founder's orders of 24 October 2026, late night: one complete factory-tuned profile becomes the packaged baseline, once every
 mechanism is verified and every knob has been simulated and tuned together for the most benefit; "we ain't got to the basic yet";
@@ -27,7 +27,7 @@ becomes a new factory configuration only after validation and a new release decl
 Every result identifies the engine version, the configuration, the hardware or model, the workload and the measurement boundary that
 produced it.
 
-**Where it stands today.** The released factory profile is omni-v25's (`OMNI_V25.json`, `python3 tools/omni_version.py`): the
+**Where it stands today.** The released factory profile is omni-v26's (`OMNI_V26.json`, `python3 tools/omni_version.py`): the
 governor's full decision at the factory beat for its place, every 10 s on site and every 60 s through a cloud, read from the
 cluster's own nodes at its start (`omni_controller/controller.py`, `factory_beat`; a beat set with `--interval` always kept), the
 fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`, kept only where it won twice and never
@@ -71,7 +71,7 @@ shows.
 
 ## 3. The mathematics: a fixed tune governing a changing system
 
-Let x be the governed system's state, z the governor's internal state, y its observations, θ the complete configuration profile,
+Let x be the supervised system's state, z the engine's internal state, y its observations, θ the complete configuration profile,
 and Δ the full governing decision interval. The public interval choices on the bench are
 
   Δ ∈ {10, 15, 20, 30, 60, 90, 120} s
@@ -210,4 +210,4 @@ expose deliberate, traceable adjustment through the live benchmark engine.
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

@@ -1,6 +1,6 @@
 # The report card: every section and piece of the repository, graded on its record
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Graded again on 3 November 2026, evening (items 20, 28, 29, 32, 35 and 41 brought up to the batch pushed that night: the books' references, the live page's labels, the cloud check's back-off, the wall meter without a shell, the babysitting tax measured), on the founder's order ("go into the GitHub ... grade and see where it's at, where
 we're at"), from the repository on main at the commit this page is pushed with and from GitHub's own run records of the day.
@@ -25,23 +25,23 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 <!-- the repository in numbers (tools/report_card.py) -->
 | Piece | Count |
 |---|---:|
-| Engine files in the fingerprint (omni-v25) | 65, 63 of them omni-v24's bytes |
-| Unit test cases collected under `tests/` | 836 |
+| Engine files in the fingerprint (omni-v26) | 65, 64 of them omni-v25's bytes |
+| Unit test cases collected under `tests/` | 860 |
 | Function-test files (`tools/function_tests.py --list`) | 68 |
 | C++ parity test files (the sealed twins) | 14 |
-| Checks in `verify.py --quick` at the receipt's commit (6199e483a197) | 153 PASS, 0 FAIL |
+| Checks in `verify.py --quick` at the receipt's commit (098ffb073261) | 157 PASS, 0 FAIL |
 | GitHub workflows (`.github/workflows/`) | 71 |
 | Three-run tables in `results/live/`, all engines | 345 |
 | Of them, by engine, newest first | omni-v25: 95; omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13 |
-| Three-run tables on the engine that stands (omni-v25) | 95 |
-| Model gate pages (`results/model_gate/`) | 33 |
-| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 160, 31, 25, 111 |
+| Three-run tables on the engine that stands (omni-v26) | 0 (the newest are omni-v25's) |
+| Model gate pages (`results/model_gate/`) | 35 |
+| Pages in `docs/` (top level), preregistrations, engine pages, history pages | 161, 31, 26, 123 |
 | Drawn figures (`docs/book/figures/`) | 77 |
-| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 661, 2,054, 320 |
-| Files carrying the legal notice (`tools/legal.py --check`) | 1,981 |
+| The Operator's, Owner's and Live Engine Manuals (PDF pages) | 661, 2,072, 355 |
+| Files carrying the legal notice (`tools/legal.py --check`) | 2,027 |
 | Muscles in the catalog, in our own models: GAIN, STEADY, LOSS | 1,107: 530, 577, 0 (70 families) |
 | Benchmarks on the benefit board, by the engine of their newest table | 26: omni-v25 23, omni-v3 3 |
-| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 281, 202 without; omni-v12: 6, 6 without |
+| LOSS rows against Omni-Compass's own native (the ledger), by engine; of them without a cause written | omni-v25: 281, 162 without; omni-v12: 6, 6 without |
 <!-- end of the repository in numbers -->
 
 ## 2. The grades, piece by piece
@@ -69,7 +69,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | 19 | Azure, the bill | `results/live/AKS_STEADY_100_OMNI_V18.md`, `scripts/azure_queue.txt` | **Incomplete** | The omni-v18 set: the bill up 1.2% by the mean of 97 pairs, inside the noise, power given, the work not counted. The omni-v21 steady set (run 40940616527, at the tune-down) runs its repetitions one at a time: 73 passed, 25 failed, the 98th running at this grading; the sets at the max with the work meter, which read the work for each dollar, start when it ends | Its table at its end; the failed repetitions' cause (on the open list); the work meter's three runs |
 | 20 | Google Cloud, Amazon | `scripts/google_queue.txt`, `scripts/amazon_queue.txt`, `cloud-check.yml` | **Not run** | Wired as Azure's sets run; both queues on behind their $0 check, which failed every hour for each (12 times each in GitHub's last 100 finished runs): Google's key not stored whole, Amazon's account on the Free plan; nothing rented. From this grading's push the conductor waits longer after each failure in a row (an hour, then two, four, eight and sixteen, then a day), so a blocker only the owner can clear is read once a day, and a check started by hand is read at the next tick (`scripts/dispatch_grid.py`, `check_retry_min`) | Google's key stored whole; Amazon's account on the Paid plan |
 | 21 | The CPU package on bare metal (`cpu-power`) | `tools/run_cpu_power.py` | **Not run** | GitHub's machines are virtual: no frequency governor, no energy meter | A bare-metal machine |
-| 22 | The Omni index and the benefit sheet | `results/OMNI_INDEX.md`, `docs/BENEFIT_SHEET.md`, `tools/headline.py` | **A−** | 26 benchmarks, 23 on omni-v21 and 3 on omni-v3; the index GAIN AND LOSS, 5.0% GAIN by its rule (work, speed and machines), 12.9% GAIN on work and speed alone, on real software on GitHub's own machines; every row's words beside its number | The 3 rows on omni-v3; every row on omni-v24 as its tables land |
+| 22 | The Omni index and the benefit sheet | `results/OMNI_INDEX.md`, `docs/BENEFIT_SHEET.md`, `tools/headline.py` | **A−** | 26 benchmarks, 23 on omni-v21 and 3 on omni-v3; the index GAIN AND LOSS, 5.0% GAIN by its rule (work, speed and machines), 12.9% GAIN on work and speed alone, on real software on GitHub's own machines, at this grading on omni-v21's tables (on omni-v25's tables since, the index reads GAIN 20.4% and its second reading GAIN 94.0%: `results/OMNI_INDEX.md`, the headline of record); every row's words beside its number | The 3 rows on omni-v3; every row on omni-v24 as its tables land |
 | 23 | The whole system composed, every layer | `results/WHOLE_SYSTEM.md` | **B+** | A composition across engines and classes, said so on the page | The stacked run that replaces the composition |
 | 24 | Every level on one page | `docs/LEVELS.md` | **B** | Nine levels; the cloud has no three-run table; a group of clusters is not run | A cloud three-run table; a run at the group level |
 | 25 | The register of every muscle and benchmark | `docs/REGISTER.md` | **A−** | 1,107 muscles in 70 families; 207 numbered rows, 15 written as not yet run | The 15, one or two at a time |
@@ -105,4 +105,4 @@ a person still has to act (the 101 omni-v12 LOSS rows without a cause, the pages
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

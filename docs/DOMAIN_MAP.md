@@ -1,6 +1,6 @@
 # Omni-Compass Domain Map
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Every system Omni-Compass can sit on, what it reads, what it pushes, the reflexes that bound it, and where it stands.
 
@@ -123,7 +123,7 @@ Omni-Compass can be the boundary layer AI runs inside. It cannot be the thing th
 | Grid connection limits for new data centres | power smoothing, demand response, stay under contracted power | Direct |
 | Carbon reporting and reduction | carbon-aware placement and timing, measured energy | Direct |
 | On-call burnout and alert fatigue | hold the levers people turn at night; fewer alerts, each one meaning something | Direct |
-| Autoscalers fighting each other | single authority | Direct (proven in simulation) |
+| Autoscalers fighting each other | single authority | Direct (shown in our own models, class S, never offered as proof) |
 | Latency and SLO breaches under load | headroom governance, fast scheduling floor | Direct |
 | Noisy neighbours, unfair tenants | quotas and growth permissions | Direct |
 | Hardware failures | early drain on failure signs | Direct |
@@ -150,4 +150,4 @@ Each connector follows the same path as compute: wired, benchmarked against toda
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

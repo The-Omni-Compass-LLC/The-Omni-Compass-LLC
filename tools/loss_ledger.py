@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
@@ -178,9 +178,9 @@ for _sys in ("KAI", "KUEUE", "VOLCANO", "BINPACK", "VANILLA", "KOORDINATOR"):
 # the tables whose governor's audit was read and showed the target flipping (Armada and KubeRay on top, and Koordinator's rigs,
 # flipped a tenth as often or less and take no cause from it)
 FLIP_PAGE = "docs/LOSS_CAUSES_2026-11-06.md"
-FLIP_NEXT = ("omni-v26, through the model gate: the decision that returns native's target because a pod waits starts the same "
-             "hold as the immune hand-back, so the fail-up is not taken again while the room is spoken for; then the benchmark's "
-             "three runs on that engine")
+FLIP_NEXT = ("the benchmark's three runs on omni-v26 (docs/OMNI_V26.md: the decision that returns native's target because the pods "
+             "of a workload no autoscaler governs wait starts the immune hand-back's hold; its model gate identical on all 104 readings, "
+             "and the batch queue's replay, class S, the target's flips down 88.6%)")
 FLIP = ("an engine fault found in the files: when a pod waits while the web service's target stands at the fail-up's floor, the "
         "decision returns native's target without starting the immune hand-back's hold (omni_controller/controller.py, \"past the "
         "wall, but not from load\"), and the fast check that starts the hold skips a target already at native's; so the next "
@@ -189,20 +189,53 @@ FLIP = ("an engine fault found in the files: when a pod waits while the web serv
         "the hold caught on 21 times; run 41810759693, repetition 2: 13 target writes in 270 s, the hold only at 274.5 s, with 5 "
         "of the queue's pods waiting and all 7 web pods Ready); the flips keep extra web pods that hold room the queue was owed, "
         "its busy minutes last longer, and the web service's response time over the whole window rises with them; after the queue "
-        "the same arms serve 41% to 54% faster than native in all 30 repetitions", FLIP_PAGE, "", FLIP_NEXT)
+        "the same arms serve 41% to 54% faster than native in all 30 repetitions", FLIP_PAGE, "omni-v26", FLIP_NEXT)
 FLIP_QUEUE = ("the web service's target flips (the same page): the batch queue's own waiting pods toggle the web service's "
               "fail-up, and the extra web pods it keeps take room and processor from the queue (the KAI scheduler's four ways: in "
               "the 15 repetitions where the queue ran long and the flips were nearly all the governor wrote, the queue finished 0.1% "
-              "to 6.8% later); the control plane's reads at the 10 s beat are suspected beside it, not yet measured", FLIP_PAGE, "",
+              "to 6.8% later); the control plane's reads at the 10 s beat are suspected beside it, not yet measured", FLIP_PAGE, "omni-v26",
               FLIP_NEXT + "; the control plane's processor read beside the queue in the next runs")
 FLIPPED = [f"{_s}_4W_BARE" for _s in ("KAI", "VOLCANO", "KUEUE", "GODEL", "BINPACK", "ARMADA", "KARMADA", "OCM", "KUBERAY")] \
     + [f"{_s}_4W_TOP" for _s in ("KAI", "VOLCANO", "KUEUE", "GODEL", "BINPACK", "KARMADA", "OCM")] \
     + ["KAI", "VOLCANO", "KUEUE", "BINPACK", "VANILLA"]
+FLIP_START = ("the starts are the flips' extra pods (the same page, section 4): Omni-Compass's arm starts web pods native's never "
+              "started (one run of ten repetitions a rig: native 0 to 6, Omni-Compass 7 to 41, from each repetition's capture), each "
+              "Ready 2 to 3 s after it was made, a wait native never paid because it never started the pod", FLIP_PAGE, "omni-v26", FLIP_NEXT)
 for _name in FLIPPED:
     for _g in ("response time", "time over the response line", "alert minutes"):
         CAUSES[(25, _name, _g)] = FLIP
     for _g in ("batch: queue finished", "queue: job"):
         CAUSES[(25, _name, _g)] = FLIP_QUEUE
+    if _name != "KAI":                  # the batch stream through the KAI scheduler started the same 3 web pods in both arms
+        CAUSES[(25, _name, "pod start wait")] = FLIP_START
+
+# Koordinator's two batch-stream tables, read from their own runs on 7 November (docs/LOSS_CAUSES_2026-11-07.md): the target
+# flipped a tenth as often there, so the web service's rows and the queue's are the conveyance's, and the pod starts the flips'
+KOORD_PAGE = "docs/LOSS_CAUSES_2026-11-07.md"
+KOORD_NEXT = ("the next version, through the model gate first: the conveyance's raise sized so the shared host stays under its "
+              "hand-back line, a hand-back that steps a limit down by what the host is over rather than to the operator's, and no "
+              "raise into processor another workload is owed (Koordinator's batch processor counted as what its pods may use, no "
+              "raise while another workload's pods wait); then the benchmark's three runs on that engine")
+KOORD_CYCLE = ("an engine fault found in the files: the conveyance's cycle on the shared host (one raise, 2.8 more cores a pod on a "
+               "four-core host, jumps the band from 70% to 75% busy, and the hand-back puts every raised limit back to the operator's "
+               "500m at once): 28 to 81 raises and 24 to 70 hand-backs an arm; in the minutes with a hand-back, about 36% of all, the "
+               "web service's 95th percentile ran 11.9% to 15.9% slower and its 99th 9.7% to 13.8% slower than native's in the same "
+               "minutes, while in the minutes the raise held its mean ran 25.7% to 28.9% faster and its 95th percentile 8.4% to 11.6% "
+               "faster (60 repetitions in six runs)", KOORD_PAGE, "", KOORD_NEXT)
+KOORD_RECLAIM = ("an engine fault found in the files: the conveyance reads the processor Koordinator reclaims for its best-effort "
+                 "jobs as idle and gives it to the web service's pods (a batch pod asks only for Koordinator's batch processor, so "
+                 "the conveyance counts it as using nothing); Koordinator's batch processor at the window's end 11.4% smaller on the "
+                 "cgroup root and 10.8% smaller plain (30 repetitions each), and the queue's jobs waited longer for a place and "
+                 "finished later: a trade between muscles the engine's strictest rule never makes", KOORD_PAGE, "", KOORD_NEXT)
+KOORD_START = ("the target's flips (the same page, section 4): in the 37 repetitions where the governor wrote the web service's "
+               "target, native started 6 web pods and Omni-Compass 67; in the 23 where it wrote none, 3 and 6 (the omni-v25 fault of "
+               "docs/LOSS_CAUSES_2026-11-06.md)", KOORD_PAGE, "omni-v26", FLIP_NEXT)
+for _name in ("KOORDINATOR", "KOORDINATOR_CGROUP"):
+    for _g in ("response time", "time over the response line", "alert minutes"):
+        CAUSES[(25, _name, _g)] = KOORD_CYCLE
+    for _g in ("batch: queue finished", "queue: job"):
+        CAUSES[(25, _name, _g)] = KOORD_RECLAIM
+    CAUSES[(25, _name, "pod start wait")] = KOORD_START
 
 
 def newest_tables():

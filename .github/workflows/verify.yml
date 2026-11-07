@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 name: verify
 on: [push, pull_request]
 env:
-  OMNI_NOTICE: '© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+  OMNI_NOTICE: '© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
 # the token reads the code and nothing else: this workflow pushes nothing, starts nothing and reads no other run
 # (docs/THREAT_MODEL.md, T9)
 permissions:
@@ -39,6 +39,30 @@ jobs:
           sudo tar -xzf /tmp/actionlint.tgz -C /usr/local/bin actionlint
       - run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release && cmake --build cpp/build -j2
       - run: python verify.py --quick
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+  page-tests:
+    # the live engine page's own tests on every push and pull request, on their own and in a minute (6 November, the software seat: no
+    # workflow ran tests/test_live_*.py by themselves): the records, the contents, the monitors, the glossary, the self-update, the page's
+    # identity against its stamp, and every script the page runs compiled by node
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: The page tests (tests/test_live_*.py)
+        shell: bash
+        run: python -m unittest discover -v -s tests -p "test_live_*.py" -t . 2>&1 | tail -60 | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Legal notice at the end of this job's report
         if: always()
         run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"

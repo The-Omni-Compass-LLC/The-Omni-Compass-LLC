@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
-# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The catalog of the muscles, explained: what each is for, what Omni-Compass reads and writes on it, how it is
 wired, and which organisms it belongs to, listed heaviest hitter first in the four realms they live in (tools/heavy_hitters.py,
-the founder's order of 1 November). Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v25, carries: the v5 law at its
+the founder's order of 1 November). Read from realms/catalog_v5.csv (the catalog the engine that stands, omni-v26, carries: the v5 law at its
 default, the max); writes docs/MUSCLE_CATALOG.md.
 
     python3 tools/muscle_catalog.py

@@ -1,8 +1,11 @@
 # Handoff: where everything is and how to run it
 
-> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The full manual: the book `docs/OMNI_COMPASS_MANUAL.pdf` (built by `python3 docs/book/build_book.py`; text in `docs/book/OMNI_COMPASS_BOOK.md`), and the short manual `docs/OMNI_COMPASS_MANUAL.md`. Everything below is on `main`. Anyone (a person or another AI) can pick it up from here.
+
+**Written on 6 October, on Omni v2, and kept for its commands.** The engine that stands is omni-v25 (`OMNI_V25.json`);
+where everything stands now is `docs/STATE_OF_PLAY.md`, and the figure of record, the Omni index, is in `results/OMNI_INDEX.md`.
 
 ## The engine
 
@@ -14,10 +17,13 @@ The full manual: the book `docs/OMNI_COMPASS_MANUAL.pdf` (built by `python3 docs
 | Wire check | `tools/gpu_wire_check.py` | proves both card wires follow, read back and go home before anything runs |
 | Realm muscles under the compass | `realms/compass_arm.py` | the compass on every one of the modelled muscles |
 
-## The six organisms
+## The organisms
 
-1 Compute (430 muscles) · 2 Physics (376) · 3 Energy (470) · 4 Distribution (440) · 5 the four stacked with every
-duplicate kept (1,716) · 6 the whole tower, every muscle once (945). (Omni v2; v1 was 345, 262, 282, 337, 1,226 and 656.) Each is run native, then with Omni on top.
+Seven since 16 October (`tools/run_realms_v5.py`, `realms/catalog_v5.csv`): the spine (267 muscles, every muscle in all
+four realms) · Compute (540) · Physics (404) · Energy (480) · Distribution (484) · the four stacked (1,908) · the whole
+tower, every muscle once (1,107 in 70 families). On 6 October, on Omni v2, there were six: 1 Compute (430 muscles) ·
+2 Physics (376) · 3 Energy (470) · 4 Distribution (440) · 5 the four stacked with every duplicate kept (1,716) · 6 the
+whole tower, every muscle once (945) (v1 was 345, 262, 282, 337, 1,226 and 656). Each is run native, then with Omni on top.
 
 ## How to run each benchmark
 
@@ -40,15 +46,26 @@ and 1,000 runs. Examples used: 1,000 runs at 1x = runs_per_shard 100, 10 shards;
 1000x = 5 x 20 shards, workers 1. The same grid on any machine: `bash scripts/scale_ladder.sh`.
 
 **Real Kubernetes (GitHub, free, about 1 hour):** Actions -> `benchmark-reps` -> Run workflow, inputs
-`duration_s 900`, `arms "native omni"`, `loadgen open`. Set 24 (run 36983865216): machines -32%, p95 -60%, 0 failures.
+`duration_s 900`, `arms "native omni"`, `loadgen open`. Set 24 (run 36983865216, the engine before v1): `results/live/LIVE_REPS_24.md`.
 
-## Results so far
+## Results on 6 October (engines that no longer stand)
 
-- Real Kubernetes, sets 23 and 24: about a third fewer machines, responses about 60% faster, zero failed requests.
-- Real GPU (A10): work per energy +3.6% (proven), p95 +58.5% higher (wiring, corrected in GPU amendments 6-7). Modelled card, firmware alone vs firmware with Omni on top (`results/sim/gpu_two_wire/`, the verdict with a 2% allowance): AI token generation energy −3.3% / −3.7%, median under +1%; compute-bound energy −0.7% / −0.5%. Read `DISCLOSURES.md` first.
-- Six organisms, 1,000 runs at 1x (GitHub): work per energy +0.21% to +0.30%, every knob handed back; time over the
-  service line about +0.2 points above native in every organism (not a win by the band-first rule). Round 6 (`docs/REALMS_PREREGISTRATION.md`) found the cause and corrects it; checked on 20 paired seeds per organism, every organism now spends less time over the line than native with work per energy +0.09% to +0.20%; the grid is rerun on it.
-- The real card on Lambda: running (first valid run on the two-wire engine); results come back as the tar.gz.
+Each is its own engine's record, never read as omni-v25's; the engine that stands reads its own (`results/OMNI_INDEX.md`,
+where the machines it takes are shown beside the work as power given, `results/WHOLE_SYSTEM.md`).
+
+- Real Kubernetes on kind, sets 23 and 24 (the engine before v1): set 24 read machines in service down 31.6%, the 95th
+  percentile down 60.1%, zero failed requests (`results/live/LIVE_REPS_24.md`).
+- Real GPU (A10), 2 October: work per energy up 3.6%, the 95th percentile up 58.5%, slower, LOSS (wiring, corrected in GPU
+  amendments 6-7), on a card controller since replaced: obsolete (`results/gpu/run-20261002T082232Z/GPU_REPS.md`). Modelled
+  card, firmware alone vs firmware with Omni on top (`results/sim/gpu_two_wire/`, class S, the verdict with a 2% allowance):
+  AI token generation energy down 3.3% / 3.7%, the median slower by under 1%; compute-bound energy down 0.7% / 0.5%. Read
+  `DISCLOSURES.md` first.
+- Six organisms, 1,000 runs at 1x (GitHub, before round 6): work per energy up 0.21% to 0.30%, every knob handed back;
+  time over the service line about 0.2 points above native in every organism (not a win by the band-first rule). Round 6
+  (`docs/REALMS_PREREGISTRATION.md`) found the cause and corrects it; checked on 20 paired seeds per organism, every
+  organism then spent less time over the line than native with work per energy up 0.09% to 0.20%; the grid was run again
+  on it (`results/scale/v1/GRID.md`).
+- The real card on Lambda: the runs since are in `results/gpu/`.
 
 ## Open work
 
@@ -59,4 +76,4 @@ and 1,000 runs. Examples used: 1,000 runs at 1x = runs_per_shard 100, 10 shards;
 
 ---
 
-*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
