@@ -1,0 +1,119 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "annotations": {
+            "deployment.kubernetes.io/revision": "1",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"php-apache\",\"namespace\":\"default\"},\"spec\":{\"selector\":{\"matchLabels\":{\"run\":\"php-apache\"}},\"template\":{\"metadata\":{\"labels\":{\"run\":\"php-apache\"}},\"spec\":{\"containers\":[{\"image\":\"registry.k8s.io/hpa-example\",\"lifecycle\":{\"preStop\":{\"exec\":{\"command\":[\"sleep\",\"5\"]}}},\"name\":\"php-apache\",\"ports\":[{\"containerPort\":80}],\"readinessProbe\":{\"periodSeconds\":2,\"tcpSocket\":{\"port\":80}},\"resources\":{\"limits\":{\"cpu\":\"500m\"},\"requests\":{\"cpu\":\"200m\"}}}]}}}}\n",
+            "omnicompass.io/original-cpu-limit": "500m",
+            "omnicompass.io/original-own-replicas": "1",
+            "omnicompass.io/replica-range": "1,10",
+            "omnicompass.io/target-utilization": "50"
+        },
+        "creationTimestamp": "2026-11-08T07:45:17Z",
+        "generation": 13,
+        "name": "php-apache",
+        "namespace": "default",
+        "resourceVersion": "3175",
+        "uid": "78a5a66f-d972-44f9-a2ed-c73531af997a"
+    },
+    "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 9,
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "run": "php-apache"
+            }
+        },
+        "strategy": {
+            "rollingUpdate": {
+                "maxSurge": "25%",
+                "maxUnavailable": "25%"
+            },
+            "type": "RollingUpdate"
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "run": "php-apache"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "registry.k8s.io/hpa-example",
+                        "imagePullPolicy": "Always",
+                        "lifecycle": {
+                            "preStop": {
+                                "exec": {
+                                    "command": [
+                                        "sleep",
+                                        "5"
+                                    ]
+                                }
+                            }
+                        },
+                        "name": "php-apache",
+                        "ports": [
+                            {
+                                "containerPort": 80,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "periodSeconds": 2,
+                            "successThreshold": 1,
+                            "tcpSocket": {
+                                "port": 80
+                            },
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m"
+                            },
+                            "requests": {
+                                "cpu": "200m"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "terminationGracePeriodSeconds": 30
+            }
+        }
+    },
+    "status": {
+        "availableReplicas": 9,
+        "conditions": [
+            {
+                "lastTransitionTime": "2026-11-08T07:47:39Z",
+                "lastUpdateTime": "2026-11-08T07:47:39Z",
+                "message": "Deployment has minimum availability.",
+                "reason": "MinimumReplicasAvailable",
+                "status": "True",
+                "type": "Available"
+            },
+            {
+                "lastTransitionTime": "2026-11-08T07:48:36Z",
+                "lastUpdateTime": "2026-11-08T07:48:36Z",
+                "message": "ReplicaSet \"php-apache-7ccb58999\" has successfully progressed.",
+                "reason": "NewReplicaSetAvailable",
+                "status": "True",
+                "type": "Progressing"
+            }
+        ],
+        "observedGeneration": 13,
+        "readyReplicas": 9,
+        "replicas": 9,
+        "terminatingReplicas": 0,
+        "updatedReplicas": 9
+    }
+}
