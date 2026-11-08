@@ -1,0 +1,23 @@
+# Seven organisms, 10 runs, 10x size, work waiting in line (25% of the run's own work at the start)
+
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Evidence class **S** (models). Commit `afaf94a6e932`, seeds 7000-7009, 10 copies of each organism on one clock, 104 s on 4 workers. Native: each organism's own controllers. Omni: the v5 muscle law (`realms/compass_arm_v5.py`), engine omni-v26, catalog `realms/catalog_v5.csv`, the four stacked as each realm's own body on one clock (the native identical to each realm's). Harness `tools/run_scale.py`.
+
+Band first (the founder's rule): no win unless the time over the service line is no higher than native's (violations, mean over runs, at or under 0 pp).
+
+| # | Organism | Muscles | Label | Band first | Work | Misses (pp) | Power given | Work per energy | Knobs handed back |
+|---|---|---:|---|---|---:|---:|---:|---:|---|
+| 7 | The spine, the muscles every stack runs on | 2670 | **FEWER MISSES** | held | +0.000% (+0.000 to +0.000) | -0.283 (-0.291 to -0.276) | +0.068% (+0.067 to +0.069) | -0.068% (-0.068 to -0.067) | True |
+
+## The stack cut down: the same 10-copy runs read at their first 1, 10 and 100 copies
+
+The stack of copies is one organism; the first m copies of it are read from the same run, plant for plant, so a rung holds those copies and no others (the founder's order of 25 October).
+
+| # | Organism | Copies | Work | Misses (pp) | Power given | Work per energy |
+|---|---|---|---:|---:|---:|---:|
+| 7 | The spine, the muscles every stack runs on | the first 1 of 10 | +0.000% (+0.000 to +0.000) | -0.338 (-0.386 to -0.291) | +0.033% (+0.027 to +0.039) | -0.033% (-0.039 to -0.027) |
+
+---
+
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
