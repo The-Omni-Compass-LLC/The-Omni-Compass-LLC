@@ -243,7 +243,7 @@ chillers), one at a time, and back at once when the wall is reached.
 The gate (8.5) is checked by `tests/test_node_release_gate.py`. On real Kubernetes, in the single-run sets 22 to 27 of
 September (an engine before omni-v1, `results/live/LIVE_REPS_22.md` to `results/live/LIVE_REPS_27.md`: the road, never read
 with the engine that stands), the law gave the same work with the 95th percentile down 53% to 65% and the machines in
-service down 29% to 37%. On the engine that stands (omni-v25, `results/OMNI_INDEX.md`), all four in one run reads the work
+service down 29% to 37%. On omni-v25 (`results/OMNI_INDEX.md`; omni-v26, the engine that stands, runs it again), all four in one run reads the work
 up 43.5% on the same machines (machines STEADY, the same), demand that wanders is `results/live/V25_WANDERING.md`, and,
 composed across every layer, the machines read ×0.5626: Omni-Compass's 1.78 times native's, power given
 (`results/WHOLE_SYSTEM.md`, section 3). Open: an order across different kinds of

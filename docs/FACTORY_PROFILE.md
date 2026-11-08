@@ -27,7 +27,7 @@ becomes a new factory configuration only after validation and a new release decl
 Every result identifies the engine version, the configuration, the hardware or model, the workload and the measurement boundary that
 produced it.
 
-**Where it stands today.** The released factory profile is omni-v25's (`OMNI_V25.json`, `python3 tools/omni_version.py`): the
+**Where it stands today.** The released factory profile is omni-v26's (`OMNI_V26.json`, `python3 tools/omni_version.py`): the
 governor's full decision at the factory beat for its place, every 10 s on site and every 60 s through a cloud, read from the
 cluster's own nodes at its start (`omni_controller/controller.py`, `factory_beat`; a beat set with `--interval` always kept), the
 fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`, kept only where it won twice and never

@@ -185,7 +185,7 @@ def key_rows(table, limit=14):
 
 
 def engine_of(table) -> str:
-    """The engine the table's runs carried, short (omni-v25), or the engine that stands when the table does not say."""
+    """The engine the table's runs carried, short (omni-v26, say), or the engine that stands when the table does not say."""
     import re
     for r in table.get("runs", []):
         if isinstance(r, dict) and r.get("engine"):

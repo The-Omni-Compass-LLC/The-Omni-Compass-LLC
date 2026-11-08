@@ -104,7 +104,8 @@ The batch stream through each scheduler, Omni-Compass on top against the schedul
 | The plain batch stream | 41753030885 | 0 | 0 | up 0.6%, EVEN |
 
 Koordinator's two rigs flip a tenth as often and still rise, so this page does not write their cause: on them the rows stay
-without one until they are read. The plain batch stream never flips; its queue's row is the governor's own processor
+without one until they are read. They were read on 7 November (`docs/LOSS_CAUSES_2026-11-07.md`): the conveyance's cycle, and
+the processor Koordinator reclaims for its batch jobs given to the web service. The plain batch stream never flips; its queue's row is the governor's own processor
 (`docs/LOSS_CAUSES_2026-11-05.md`, section 1).
 
 ## 3. The cause, and what decides it
@@ -123,11 +124,7 @@ a batch system leaves its pods waiting.
 immune system's comparison with native's twin, which read "native not stronger: stays" at every decision of the repetition read.
 And it is not the count of every waiting pod, which is the rule's protection of the neighbour, not its fault.
 
-**What decides it.** omni-v26, through the model gate first. The decision that returns native's target because a pod waits
-starts the same hold as the hand-back (ten minutes, doubled for each hold in a row, halved after a quiet one), so the fail-up is
-not taken again while the room is spoken for. The model gate's cluster carries a batch neighbour whose pods wait as these runs'
-captures show. Then the benchmarks' three runs on that engine. The conveyance's step, sized to the band, is read in the same
-gate.
+**What decides it.** omni-v26 (`docs/OMNI_V26.md`), landed on 7 November through the model gate. The decision that returns native's target because pods wait starts the same hold as the hand-back (ten minutes, doubled for each hold in a row, halved after a quiet one) when the waiting pods include those of a workload no autoscaler governs, so the fail-up is not taken again while the room is spoken for; another governed service keeps its own rule, and a DaemonSet's pod never starts the hold. Its model gate against omni-v25 (`results/model_gate/V26_VS_V25.md`) read all twelve models identical, 104 readings, no LOSS. The batch queue's replay (`results/model_gate/V26_BATCH_FLIP.md`, `tools/batch_flip_model.py`, class S, open loop) put these runs' own timelines through both governors: the target's flips down 88.6% and the time below native's target while the queue's pods waited down 78.2%. The benchmarks' three runs on omni-v26 decide the rows. The conveyance's step, sized to the band, stays on the next version's list.
 
 The rows that carry this cause in the ledger (`tools/loss_ledger.py`, keyed with omni-v25) are the web service's response time,
 time over the response line and alert minutes on the tables read above where the target flipped: on the organism alone, the KAI
@@ -135,7 +132,41 @@ scheduler's, Volcano's, Kueue's, Gödel's, the bin-packing profile's, Armada's, 
 on top of the orchestrator, the KAI scheduler's, Volcano's, Kueue's, Gödel's, the bin-packing profile's, Karmada's and Open
 Cluster Management's; and the
 batch stream through the KAI scheduler, Volcano, Kueue, the bin-packing profile and the default scheduler. Their size is each
-table's own. The same tables' pod start waits and failed requests were not read here and stay without a cause until they are.
+table's own; their pod start waits carry the cause of section 4. Their failed requests were not read here and stay without a cause until they are.
+
+## 4. The pod start waits on the same rigs
+
+The same tables read the web service's pod start wait LOSS: on most of them native's arm started no web pod inside the window in
+most repetitions, so its total reads zero and Omni-Compass's arm reads a few seconds ("0 to 2.4 s"). The starts are the flips' extra
+pods. Each start waits 2 to 3 s for its container and its readiness probe, a wait native never paid because it never started the pod.
+Counted from each repetition's capture (`capture.csv`, every rise in the web service's replicas), one run of ten repetitions each:
+
+| Rig | Way | Web pods started, native | Web pods started, Omni-Compass |
+|---|---|---|---|
+| The KAI scheduler | on the organism alone (three runs) | 1, 1, 2 | 13, 21, 20 |
+| Volcano | on the organism alone | 2 | 16 |
+| Kueue | on the organism alone | 1 | 13 |
+| Gödel | on the organism alone | 3 | 14 |
+| The bin-packing profile | on the organism alone | 1 | 17 |
+| Armada | on the organism alone | 6 | 23 |
+| Karmada | on the organism alone | 4 | 31 |
+| Open Cluster Management | on the organism alone | 3 | 27 |
+| KubeRay | on the organism alone | 0 | 13 |
+| The KAI scheduler | on top of it | 2 | 7 |
+| Volcano | on top of it | 0 | 9 |
+| Kueue | on top of it | 0 | 11 |
+| Gödel | on top of it | 3 | 11 |
+| The bin-packing profile | on top of it | 2 | 17 |
+| Karmada | on top of it | 1 | 34 |
+| Open Cluster Management | on top of it | 0 | 41 |
+| Volcano | the batch stream | 0 | 10 |
+| Kueue | the batch stream | 1 | 9 |
+| The bin-packing profile | the batch stream | 6 | 19 |
+| The default scheduler | the batch stream | 3 | 11 |
+
+The batch stream through the KAI scheduler started the same 3 web pods in both arms in the run read, so its pod start rows do not
+take this cause. On Armada on the organism alone (run 41828277526, repetitions 1 to 3) the pod watch shows each of Omni-Compass's
+starts Ready 2 to 3 s after it was made, none of them waiting for a place.
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 

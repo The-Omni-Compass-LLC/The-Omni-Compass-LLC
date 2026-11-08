@@ -57,7 +57,7 @@ id `b10f1b4128ff…`; the printed configuration `printed_eight_line`, id `623934
 ## Layer 3: live external software
 
 The kind sets 21 to 27 below ran on the engines before omni-v1 and are kept as their record; "clear of the noise" is that
-day's "proven" (an interval clear of zero). The live record of the engine that stands, omni-v25, is `results/OMNI_INDEX.md`.
+day's "proven" (an interval clear of zero). The live record of the engine that stands, omni-v26, is `results/OMNI_INDEX.md`.
 
 | Class | Statement | Where |
 |---|---|---|

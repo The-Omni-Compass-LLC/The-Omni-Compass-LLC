@@ -766,7 +766,7 @@ installed is a quarter off the bill.
 
 **Where things stand, read from the result files.** Written by `python3 tools/summary.py --fix` from the files it names; `verify.py` fails a push in which this block no longer matches them. Nothing in it is typed by hand. The live results run on the engines named in their own tables, and every one of them runs again on the newest engine.
 
-- **The engine on this checkout:** omni-v25, fingerprint cf56fc0a7b707452 (65 files).
+- **The engine on this checkout:** omni-v26, fingerprint 75d3c22eed4473b9 (65 files).
 - The muscles and the seven organisms on engine omni-v8 at the max (evidence class S, our own models; run 2026-10-17 15:39 UTC, commit 9819a903cba3, 1107 muscles; source: results/realms_v5/REALMS_V5.md):
   - every muscle alone, over its loads: STEADY 577, GAIN 530
   - the organisms under the normal load: the spine: GAIN (fewer misses), misses down 0.145 pp, energy STEADY, up 0.011% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.070 pp, energy STEADY, up 0.009% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.121 pp, energy STEADY, up 0.010% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.118 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.067 pp, energy STEADY, up 0.002% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.092 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
@@ -782,11 +782,14 @@ installed is a quarter off the bill.
   - Real cache (Redis, GitHub): power given 6.8%
   - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
-**On the engine that stands (omni-v25): 23 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v25 | 8.9% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v25 | 1.5% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v25 | 3.8% | GAIN | S |
@@ -809,9 +812,6 @@ installed is a quarter off the bill.
 | Kafka, the consumer group's size | omni-v25 | 218.6% | GAIN, power given | L |
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -1453,10 +1453,8 @@ the two a stack takes, more work or fewer machines, is decided by the stack, and
 ### 3.5 Where the evidence stands today, read honestly
 
 Every number below is from a three-run table, each row naming the engine its table ran on; the evidence class of each is in
-the table it points to. The engine that stands is **omni-v25** (`OMNI_V25.json`, digest `cf56fc0a7b707452`, 65 files;
-`docs/OMNI_V24.md`, on main since 1 November): the factory beat for its place, a decision every 10 s on site and every 60 s
-through a cloud, read from the cluster's own nodes at its start; every table below is an earlier engine's own record, named in its
-row, until omni-v24's three runs of each benchmark land. Before it: omni-v23 (`docs/OMNI_V23.md`, 31 October to 1 November), a
+the table it points to. The engine that stands is **omni-v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files;
+`docs/OMNI_V26.md`, on main since 7 November): omni-v25 with one fault fixed in the Kubernetes governor: when a service's target stood below native's and pods waited, the decision returned native's target without starting the immune hand-back's hold, so the next decision with no pod waiting failed up again and a batch queue's normal waiting flipped the web service's target every one or two decisions; the decision now starts the hold itself when the waiting pods include those of a workload no autoscaler governs, and the fail-up is not taken again while it runs (`docs/LOSS_CAUSES_2026-11-06.md`; the model gate against omni-v25 identical on all 104 readings, no LOSS); every table below is an earlier engine's own record, named in its row, until omni-v26's three runs of each benchmark land. Before it: omni-v25 (`docs/OMNI_V25.md`, 3 to 7 November), the Kafka wire's producer started before the governor's thread; omni-v24 (`docs/OMNI_V24.md`, 1 to 3 November), the factory beat for its place, a decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start; omni-v23 (`docs/OMNI_V23.md`, 31 October to 1 November), a
 knob whose own-scale writes the cluster refuses handed back to native's own autoscaler; omni-v22 (`docs/OMNI_V22.md`, 30 to 31
 October), the five data stores' wires at the max, each spend gated on the store's own account of what a miss costs and on the
 host's room, never below native (`tools/store_brain.py`); omni-v21 (`docs/OMNI_V21.md`, 25 to 30 October), the immune system
@@ -1540,7 +1538,7 @@ is published as Omni-Compass 1.0, with the older fingerprints kept as the road t
 "Versioned" has a precise meaning here. The engine is a fixed set of files (63 on v21), and `OMNI_V21.json` holds one
 SHA-256 for each of them and one digest over all of them; `OMNI_V20.json` back to `OMNI_V5.json`, `OMNI_V3.json`, `OMNI_V2.json`
 and `OMNI_V1.json` do the same for the earlier sets. `python3 tools/omni_version.py` hashes the files in a checkout and prints
-which fingerprint they match (for this edition, `omni-v25 (digest cf56fc0a7b707452, 65 files)`), or, when they match none,
+which fingerprint they match (for this edition, `omni-v26 (digest 75d3c22eed4473b9, 65 files)`), or, when they match none,
 which files differ from the nearest; with `--commit <sha>` it asks the same of any pushed commit, which is how every
 three-run table checks that its runs A, B and C were on the same engine before it combines them, and refuses if they were
 not. The versions differ in exactly the ways their records name, and a reader can check that from the fingerprints rather
@@ -1582,7 +1580,7 @@ machinery that supplies workloads, executes comparisons, checks requirements and
 the complete, versioned set of Omni-Compass default settings shipped together: the governing rules, gains, margins, the
 decision interval and every other default. A **candidate profile** is a proposed combination of settings under evaluation; the
 **active profile** is the settings actually governing the current run; a **custom profile** is an identifiable configuration
-that differs from the released factory profile. The released factory profile is omni-v25's (`OMNI_V25.json`): the governor's
+that differs from the released factory profile. The released factory profile is omni-v26's (`OMNI_V26.json`): the governor's
 full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start (a beat set by
 hand always kept), the fast checks every 5 s, every muscle on the card found for it (`realms/muscle_cards_v5.csv`) and on the
 engine's own setting otherwise; every result on the engine that stands runs on it, and every earlier result on its own engine's
@@ -3808,7 +3806,7 @@ omni-v5's ([`results/grid_v5/GRID.md`](../results/grid_v5/GRID.md)); its modelle
 its signs put in words: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer
 misses; work STEADY, the same (raw +0.000%); energy STEADY, up 0.000% to 0.065% (under the 0.5% floor). The squares with the
 real cluster inside are read gauge by gauge in the same report. The grid has been sent on every engine since, omni-v6 to
-omni-v25 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has been written yet; until one is, the grid is read
+omni-v26 (`results/grid_v*/DISPATCHED.json`), and no report of those runs has been written yet; until one is, the grid is read
 only on omni-v5.
 <!-- end of results: grid -->
 
@@ -4061,7 +4059,7 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Buildings and batteries (CityLearn), the districts with batteries | S | omni-v25 | **GAIN** | 1.4% GAIN | `results/live/V25_CITYLEARN.md` |
 <!-- end of results: sheet -->
 
-**Running now and next.** Every benchmark runs again on omni-v25, the engine that stands, released by the conductor
+**Running now and next.** Every benchmark runs again on omni-v26, the engine that stands, released by the conductor
 (`scripts/dispatch_grid.py`, `scripts/reruns.txt`: A of every benchmark, then B, then C), the steady and wandering Kubernetes
 tests among them; Azure one run at a time in its region (the steady set, the bursts 1 4 1 6 1 9 and 1 6 1 8 1 6, the real day;
 A, B and C); the grid with the real cluster inside on GitHub's free runners. The runs of earlier engines already started

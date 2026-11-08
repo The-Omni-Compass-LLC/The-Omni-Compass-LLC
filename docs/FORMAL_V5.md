@@ -135,7 +135,7 @@ noise"; clear intervals of opposite signs read "the runs disagree" (`tools/readi
   plant decisions over their line) fall 1.9% to 7.5% under each organism's own load, 1.4% to 7.2% under the climb (the
   load stepping 1 2 3 2 3 4 ... to twice its own) and 1.1% to 8.3% with work waiting in line, against 1.6% to 6.4%,
   0.9% to 3.5% and 1.0% to 7.2% with one global setting for every muscle (digest `9be48445`, the same seeds), and the
-  power given and the wear fall with them (`docs/OMNI_V5.md`; on the omni-v8 run, an engine that no longer stands (omni-v25 stands), Compute under its own load
+  power given and the wear fall with them (`docs/OMNI_V5.md`; on the omni-v8 run, an engine that no longer stands (omni-v26 stands), Compute under its own load
   takes 0.01% more energy than native and 0.06% more wear, power given). Every row of that run is reported in
   `results/realms_v5/REALMS_V5.md`.
 - **L, real software**: `docs/THE_RECEIPTS.md`, receipt by receipt.

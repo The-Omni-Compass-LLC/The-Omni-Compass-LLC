@@ -591,6 +591,24 @@ def b_engine_name():
     return engine()["name"]
 
 
+def tables_engine() -> dict:
+    """The engine the software end's tables ran on: the newest engine any test of the Omni index was read on (results/OMNI_INDEX.json).
+    It is not always the engine that stands: a new version stands from its landing, and its own three runs land after it (the
+    founder's order: no result is read across engines, and each receipt carries the engine it ran on)."""
+    ks = [int(m.group(1)) for t in load(INDEX_JSON).get("tests") or []
+          if (m := re.match(r"V(\d+)_", Path(str(t.get("source", ""))).name))]
+    if not ks:
+        raise RecordError("results/OMNI_INDEX.json names no test's table")
+    return {"n": max(ks), "name": f"omni-v{max(ks)}"}
+
+
+@block("tables_engine", INDEX_JSON)
+def b_tables_engine():
+    t, e = tables_engine(), engine()
+    return t["name"] if t["n"] == e["n"] else (f"{t['name']} (the engine that stands, {e['name']}, landed after these runs; its own "
+                                              "three runs have not landed yet)")
+
+
 def gate_path():
     k = engine()["n"]
     return ROOT / "results" / "model_gate" / f"V{k}_VS_V{k - 1}.json"
@@ -1397,8 +1415,10 @@ def b_loss_causes():
     written = total - c["none"]
     parts = []
     if c["flip"]:
-        parts.append(f"{n(c['flip'])} an engine fault of {engine()['name']} found in the files (the web service's autoscaler target "
-                     "flipping at the fail-up's floor)")
+        te, e = tables_engine(), engine()
+        fixed = (f", fixed in {e['name']} (`docs/OMNI_V{e['n']}.md`), whose own runs have not landed yet" if e["n"] > te["n"] else "")
+        parts.append(f"{n(c['flip'])} an engine fault of {te['name']} found in the files (the web service's autoscaler target "
+                     f"flipping at the fail-up's floor){fixed}")
     if c["flip_queue"]:
         parts.append(f"{n(c['flip_queue'])} queue rows that name the same flip, the control plane's reads suspected beside it")
     if c["suspected"]:
@@ -1422,13 +1442,14 @@ def b_flip_rows():
     rows = ledger_native()
     web = [x for x in rows if x[4] == "flip"]
     queue = [x for x in rows if x[4] == "flip_queue"]
-    nxt = f"omni-v{engine()['n'] + 1}"
+    nxt = f"omni-v{tables_engine()['n'] + 1}"          # the fix is the version after the rows' own engine
     fix = [x for x in rows if x[3] and nxt in (x[3][2] + " " + x[3][3])]
     return (f"{n(len(web))} rows on {plural(len({x[0] for x in web}), 'table', 'tables')} carry the fault as their cause, all on "
             f"the web service ({grouped([x[2] for x in web], ', ')}), and {n(len(queue))} queue rows on "
             f"{plural(len({x[0] for x in queue}), 'table', 'tables')} name it beside the control plane's reads "
             f"({grouped([x[2] for x in queue], ', ')}); together {n(len(web) + len(queue))} of the {n(len(rows))} rows against "
-            f"native, and {n(len(fix))} name {nxt} as their fix")
+            f"native, and {n(len(fix))} name {nxt} as their fix"
+            + (f", the engine that stands since its landing" if engine()["n"] == tables_engine()["n"] + 1 else ""))
 
 
 @block("flip_split", LEDGER, "tools/loss_ledger.py")
