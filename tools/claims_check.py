@@ -27,6 +27,12 @@ Checks (each finding: file:line, the check, the words):
   repeat     a root of "govern" twice within six words (the founder's order of 6 November: "supervisory" for what
              Omni-Compass does, "governor" for the products it sits on, never the same word twice in one breath)
   stale      a retired figure presented as the headline: the Omni index at 5.0% or 12.9% (omni-v21's readings)
+  governor   Omni-Compass named as a governor or said to govern, in prose ("supervisory governor", "Omni-Compass governs",
+             "Omni-Compass is a governor", "Omni-Compass's governor"): "supervisory" for what Omni-Compass does, "governor" only
+             for the products it sits on (the order of 6 November); a code identifier in backticks keeps its name
+  less       "less machines", "less replicas", "less pods": a count is fewer, never less
+  mixed      "GAIN AND LOSS" or "net LOSS" as a reading: neither is a word of the key; a mixed table is told by its counts
+             ("14 rows GAIN, 3 rows LOSS"), each row by its own word
 
   python3 tools/claims_check.py            (exit 0: every word in line; exit 1: one line per finding)
   python3 tools/claims_check.py --summary  (the count by check and by file)
@@ -60,7 +66,15 @@ CHECKS = {
     "fewer": re.compile(r"\bon fewer machines\b", re.I),
     "repeat": re.compile(r"\b[Gg]overn\w*\b(?:\W+\w+){0,5}?\W+[Gg]overn\w*\b"),
     "stale": re.compile(r"Omni index[^.\n]{0,80}?\b(?:5\.0|12\.9)\s?%|\b(?:5\.0|12\.9)\s?%[^.\n]{0,40}?Omni index"),
+    "governor": re.compile(r"\bsupervisory governor|\bOmni-Compass\b[^.;:!?\n]{0,40}?\b[Gg]overn(?:s|ed|ing)?\b"
+                           r"|\bOmni-Compass\b(?:'s)?,?\s+(?:is|as|acts as|becomes|the)\s+(?:(?:a|an|the|its own)\s+)?(?:[\w-]+\s+){0,2}?governor\b"
+                           r"|\bOmni-Compass(?:'s|’s)\s+(?:own\s+)?(?:[\w-]+\s+)?governor\b", re.I),
+    "less": re.compile(r"\bless (?:machines|replicas|pods)\b", re.I),
+    "mixed": re.compile(r"\bGAIN AND LOSS\b|\bnet LOSS\b"),
 }
+# the checks read in prose only: a code identifier in backticks keeps its own name (omni_controller's `governor`)
+PROSE_ONLY = {"governor"}
+CODE = re.compile(r"`[^`\n]*`")
 # proper names in which the word stands twice by its own right (a section's or a product's own title)
 REPEAT_NAMES = re.compile(r"Governor Heartbeat|Self-Governed|governors_page|Orchestrators and Governors")
 # the founder's aim may be quoted as the aim: "the aim: more work, faster, on fewer machines"
@@ -148,8 +162,9 @@ def tour_lines() -> list[tuple[str, str]]:
 
 def scan(name: str, text: str, findings: list):
     for n, line in enumerate(text.splitlines(), 1):
+        prose = CODE.sub(lambda c: " " * len(c.group(0)), line)
         for key, rx in CHECKS.items():
-            for m in rx.finditer(line):
+            for m in rx.finditer(prose if key in PROSE_ONLY else line):
                 hit = m.group(0)
                 if key == "repeat" and REPEAT_NAMES.search(line[max(0, m.start() - 30):m.end() + 30]):
                     continue
@@ -182,4 +197,4 @@ def main(argv: list[str]) -> int:
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
-# © 2026 The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
