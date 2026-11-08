@@ -109,7 +109,9 @@ LEDGER_CACHE = HERE / "github_ledger.json"
 from tools.repo import NAME as REPO   # noqa: E402  (the repository, written once in tools/repo.py)
 from tools.repo import HOME, RAW_MAIN   # noqa: E402  (main's files as GitHub serves them, for the page's self-update)
 LEDGER_GAUGES = ["machines billed, machine-hours", "compute bill at list price ($)", "worker nodes in service, mean", "response time (ms), 95th percentile",
-                 "failed requests (%)", "time over the response line (% of samples)"]
+                 "failed requests (%)", "time over the response line (% of samples)", "response time (ms), 99th percentile",
+                 "work inside the response line (requests a second; the capacity test's own gauge)",
+                 "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"]
 
 
 CHECKING = False      # --check: a check reads and compares, it never fetches or writes anything
@@ -211,7 +213,10 @@ def ledger(camp: dict | None = None) -> dict:
                 if msgs:
                     r["reason"] = " ".join(dict.fromkeys(msgs))
                     r["reason_read"] = f"the job's error annotations, read {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}"
-            if wf == "aks-metered.yml" and r["raw"] and r["conclusion"] == "success":   # the bill as the run's own LIVE_REPS.json reads it
+            # the bill as the run's own LIVE_REPS.json reads it: every run whose aggregate handed in a receipt, a run GitHub marks failure
+            # (a repetition or more failed, the rest paired) included, with its conclusion named (8 November: the omni-v18 set of 97
+            # paired repetitions, the cloud's standing receipt, was missing from the bill table because GitHub marks it failure)
+            if wf == "aks-metered.yml" and r["raw"] and r["conclusion"] in ("success", "failure"):
                 src = f"{ref}:{pre}run-{r['id']}/live-reps-aks/LIVE_REPS.json"
                 try:
                     lr = json.loads(git("show", src) or "{}")
@@ -219,7 +224,14 @@ def ledger(camp: dict | None = None) -> dict:
                     lr = {}
                 arm = next(iter((lr.get("paired") or {}).values()), {})
                 if arm:
-                    r["result"] = {"reps": len((lr.get("repetitions") or {}).get("native") or []),
+                    rb = lr.get("repetitions") or {}
+                    akey = next(iter(lr.get("paired") or {}))
+                    # the repetitions paired in this receipt (both arms measured), as its own tables count them (tools/live_reps.py)
+                    paired = len(set(rb.get(akey.split("|")[0]) or []) & set(rb.get(akey.split("|")[-1] if "|" in akey else "native") or []))
+                    from tools import azure_record as AR   # what the set is and how it counts, from its title (tools/azure_record.py, written once)
+                    the_set, counts = AR.kind(r["title"])
+                    r["result"] = {"reps": paired, "set": the_set, "counts": counts, "conclusion": r["conclusion"], "note": AR.NOTES.get(r["id"]),
+                                   "dial": "max" if "dial max" in r["title"] else "save" if "dial save" in r["title"] else "default",
                                    "gauges": {g: {k: arm[g].get(k) for k in ("native", "omni", "ci95", "significant")} for g in LEDGER_GAUGES if g in arm}}
                     # the machines Azure billed every 15 s in each arm of each repetition (billed_nodes.csv), for the bill monitor's replay
                     billed = []
@@ -247,6 +259,15 @@ def ledger(camp: dict | None = None) -> dict:
         m = re.match(r"omni-v(\d+)$", r.get("engine") or "")
         return bool(m) and int(m.group(1)) >= 8
     data["workflows"] = {wf: [r for r in rs if recent(r)] for wf, rs in data["workflows"].items()}
+    # every Azure run that handed in a receipt, on every engine, is in one record (tools/azure_record.py); the page names how many
+    # ran before omni-v8 and where they stand, so none is out of sight (the founder's words of 8 November: "I don't care what version")
+    rec = ROOT / "results" / "live" / "AZURE_RECORD.json"
+    if rec.exists():
+        ar = json.loads(rec.read_text(encoding="utf-8"))
+        older = [x for x in ar.get("runs", []) if not recent(x)]
+        data["azure_record"] = {"file": "results/live/AZURE_RECORD.md", "runs": len(ar.get("runs", [])),
+                                "older": len(older), "older_engines": sorted({x.get("engine") or "no declared engine" for x in older}),
+                                "counted": sum(x.get("counts") == "counted set" for x in ar.get("runs", []))}
     queues = {}
     for wf, f in (("aks-metered.yml", "azure_queue.txt"), ("gke-metered.yml", "google_queue.txt"), ("eks-metered.yml", "amazon_queue.txt")):
         q = ROOT / "scripts" / f

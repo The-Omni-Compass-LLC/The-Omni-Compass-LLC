@@ -370,6 +370,10 @@ def main():
     check("every count the live engine monograph quotes is in step with the record that holds it (tools/monograph_words.py --check; "
           "the page's rebuild writes them again with --fix)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "azure_record.py"), "--check"], capture_output=True, text=True)
+    check("every Azure run that handed in a receipt is in the Azure record, each under its own engine, every number its receipt's own "
+          "(tools/azure_record.py --check; the page's rebuild writes it again)",
+          r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "lint_names.py")], capture_output=True, text=True)
     check("every Python file compiles and reads no name that nothing defines (tools/lint_names.py)",
           r.returncode == 0, (r.stdout.strip().splitlines() or [r.stderr[-300:]])[-1])
