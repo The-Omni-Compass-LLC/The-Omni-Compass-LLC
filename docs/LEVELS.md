@@ -16,7 +16,7 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 | The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
 | The cluster: real Kubernetes, native its own HPA and scheduler | omni-v25 | L | 41 | 39 | 12 | 23 | 14 | **yes: 37, listed below** |
 | The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v25 | L | 18 | 22 | 11 | 7 | 6 | **yes: 13, listed below** |
-| A muscle inside a running service: database, broker, cache | omni-v25 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
+| A muscle inside a running service: database, broker, cache | omni-v25, omni-v26 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
 | A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v25 | independent simulator | 101 | 165 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
 | The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs on it are dispatched (results/grid_v26/DISPATCHED.json) |
 | The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7; one set on omni-v18 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of 97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise (results/live/AKS_STEADY_100_OMNI_V18.md) |
@@ -104,8 +104,8 @@ Goes the other way:
 
 ### A muscle inside a running service: database, broker, cache
 
-Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v25. Evidence: L.
-Tables: `results/live/V25_REDIS.md`, `results/live/V25_REDIS_SERVICE.md`, `results/live/V25_KAFKA.md`, `results/live/V25_KAFKA_SERVICE.md`, `results/live/V25_PGBENCH.md`, `results/live/V25_SYSBENCH.md`, `results/live/V25_YCSB.md`.
+Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v25, omni-v26. Evidence: L.
+Tables: `results/live/V25_REDIS.md`, `results/live/V25_REDIS_SERVICE.md`, `results/live/V26_KAFKA.md`, `results/live/V25_KAFKA_SERVICE.md`, `results/live/V25_PGBENCH.md`, `results/live/V25_SYSBENCH.md`, `results/live/V25_YCSB.md`.
 
 Goes the other way:
 
