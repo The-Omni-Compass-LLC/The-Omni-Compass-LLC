@@ -263,11 +263,15 @@ class Conductor(unittest.TestCase):
         self.assertEqual(g.azure_to_start(q, {steady: 3, x: 3, y: 3}, set()), [])
         self.assertEqual(g.azure_title({"dial": "max", "replica_ceiling": "0"}), "aks-metered steady replica room 0 dial max eastus Standard_D2s_v4")
         own = g.azure_queue(g.AZURE_QUEUE)                                 # the repository's own queue reads: the work meter's tuning
-        self.assertEqual([(r, n) for r, n, _, _ in own], [("A", "work meter tuning case"), ("A", "work meter tuning case 2")])
+        self.assertEqual([(r, n) for r, n, _, _ in own], [("A", "work meter tuning case"), ("A", "work meter tuning case 2"),
+                                                          ("A", "work meter"), ("B", "work meter"), ("C", "work meter")])
         # the tuning case first, run once (31 October, night: the cloud judged by its work per dollar), then its second at the lower
-        # rates once the rig waits for the autoscaler's reading in every arm (4 November); the four sets of the open load wait
-        # behind the meter's, commented
+        # rates once the rig waits for the autoscaler's reading in every arm (4 November); then the counted set at the rates frozen
+        # on the two runs of the second (8 November), A, B and C under the stopping rule, counted apart from the tuning case by its
+        # title; the four sets of the open load wait behind the meter's, commented
         self.assertIn("2 4 6 8 10 12 16 20", own[1][2])
+        self.assertEqual(own[2][2], "aks-metered work meter 2 4 6 8 10 12 16 20 to the cap, stopping rule dial max eastus Standard_D2s_v4")
+        self.assertNotEqual(own[2][2], own[1][2])
         for _, _, title, kv in own:
             self.assertTrue(title.startswith("aks-metered ") and " dial max " in title, title)
             # the replica room read live, as on kind: the operator's cap no longer pinned by the struck rule of 14 October
