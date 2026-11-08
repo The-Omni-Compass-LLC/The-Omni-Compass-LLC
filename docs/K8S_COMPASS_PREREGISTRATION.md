@@ -1485,6 +1485,34 @@ readings and the claim that a cloud set must show that Omni-Compass holds stand 
 behind the meter's; the founder's words of 4 November ("All the clouds. Especially the clouds") are their word to start, and
 each starts once the meter's counted set has its three runs, the order the amendment of 31 October gives.
 
+## Amendment (8 November 2026, written before the counted set with the work meter runs): the counted rates, frozen on the tuning cases
+
+The second tuning case ran twice, once on each engine that stood when the queue started it (run 41914478995 on omni-v25, 4
+November; run 42408759289 on omni-v26, 7 November), each one paired repetition at the max over 1,200 s at the rates 2 4 6 8
+10 12 16 20 a second, never counted. Both arms entered the window with the autoscaler reading (the amendment of 4 November).
+The share of each step's requests answered inside the line (500 ms), read from each arm's own `work_meter.json`:
+
+| Rate a second | 2 | 4 | 6 | 8 | 10 | 12 | 16 | 20 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| native, run 41914478995 | 96% | 94% | 95% | 85% | 88% | 78% | 23% | 19% |
+| Omni-Compass on native, run 41914478995 | 99% | 98% | 94% | 97% | 94% | 97% | 92% | 86% |
+| native, run 42408759289 | 93% | 96% | 94% | 90% | 92% | 76% | 27% | 19% |
+| Omni-Compass on native, run 42408759289 | 95% | 91% | 94% | 86% | 77% | 92% | 81% | 88% |
+
+By the work meter's own capacity rule (`tools/capacity_report.py`: the highest rate before the first step with fewer than 95%
+answered inside the line or more than 1% failed), native served 2 and 0 a second, Omni-Compass 4 and 2. So the counted rates
+are the second tuning case's, **2 4 6 8 10 12 16 20 a second over 1,200 s**: they start at native's capacity and reach five
+times Omni-Compass's, as the amendment of 31 October asks (from below what native serves inside the line to above what
+Omni-Compass serves). Read plainly, native's answers fall away above 10 a second (under 80% inside the line at 12, under 30% at 16
+and 20), while Omni-Compass still answered 86% to 88% inside the line at 20 a second; the range may therefore not reach the
+rate at which Omni-Compass saturates, so the work it reads above native's is a floor of what it serves, never more. Nothing
+else changes: the counted set is A, B and C, each up to 100 paired repetitions under the stopping rule of 19 October, at the max,
+on the engine that stands when each run starts; its looks read the work per dollar of the bill in place of the bill, a rise
+GAIN and a fall power given, and the work inside the line falling is harm that keeps the set running, beside the 95th percentile
+and the failed requests (`tools/stop_rule.py`, as the amendment of 31 October, night, wrote it); the claim is that Omni-Compass
+holds (every judged gauge STEADY or GAIN in each run's own word). The set's line is added to `scripts/azure_queue.txt` with
+this amendment; the four sets of the open load still wait behind it.
+
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---

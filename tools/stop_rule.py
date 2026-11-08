@@ -8,7 +8,9 @@ to its cap of repetitions (100, the founder's order of 12 October) and stops ear
 already read, so no money is spent measuring what is known.
 
 At each look (after 10, 20, 40 and 70 paired repetitions by default), on the repetitions 1 to that look only:
-  the bill  the paired change of the machine-hours billed, with its 99% interval (Student's t; four looks at 1% each keep
+  the bill  the paired change of the machine-hours billed (on a work-meter set, the work per dollar of the bill in its place,
+            a rise GAIN and a fall power given, and the work inside the line falling is harm as well: the amendment of 31
+            October, night), with its 99% interval (Student's t; four looks at 1% each keep
             the whole rule's error under 5%, Bonferroni);
   decided   the interval clears zero (a cut: GAIN; a rise: power given), or it holds zero and its half-width is within
             the precision (2% of native's bill by default): STEADY, measured to that precision;
@@ -36,6 +38,10 @@ from omnicompass.student_t import coverage  # noqa: E402  (P(|T| ≤ t), the sam
 
 BILL = "machines billed, machine-hours"
 HARM = ("response time (ms), 95th percentile", "failed requests (%)")
+# a work-meter set (docs/K8S_COMPASS_PREREGISTRATION.md, the amendment of 31 October, night: "its looks read the work per dollar"):
+# the look reads the work per dollar of the bill in place of the bill, and the work inside the line falling is harm as well
+WORK = "work inside the response line (requests a second; the capacity test's own gauge)"
+WORK_DOLLAR = "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"
 LEVEL = 0.99
 LOOKS = (10, 20, 40, 70)
 PRECISION = 0.02
@@ -68,12 +74,14 @@ def look(native: dict, omni: dict, n: int, precision: float = PRECISION) -> dict
     reps = sorted(set(native) & set(omni), key=int)[:n]
     if len(reps) < n:
         return {"n": len(reps), "decided": False, "why": f"only {len(reps)} paired repetitions finished, the look needs {n}"}
-    diffs = [omni[r][BILL] - native[r][BILL] for r in reps if not math.isnan(omni[r].get(BILL, float("nan")) - native[r].get(BILL, float("nan")))]
+    meter = all(WORK_DOLLAR in native[r] and WORK_DOLLAR in omni[r] for r in reps)
+    key, name = (WORK_DOLLAR, "the work per dollar") if meter else (BILL, "the bill")
+    diffs = [omni[r][key] - native[r][key] for r in reps if not math.isnan(omni[r].get(key, float("nan")) - native[r].get(key, float("nan")))]
     if len(diffs) < n:
-        return {"n": len(diffs), "decided": False, "why": "a repetition carries no bill"}
-    base = sum(native[r][BILL] for r in reps) / n
+        return {"n": len(diffs), "decided": False, "why": f"a repetition carries no {'work per dollar' if meter else 'bill'}"}
+    base = sum(native[r][key] for r in reps) / n
     m, lo, hi = interval(diffs)
-    out = {"n": n, "bill_pct": m / base * 100, "lo_pct": lo / base * 100, "hi_pct": hi / base * 100}
+    out = {"n": n, "measure": name, "bill_pct": m / base * 100, "lo_pct": lo / base * 100, "hi_pct": hi / base * 100}
     harm = []
     for k in HARM:
         d = [omni[r][k] - native[r][k] for r in reps if k in omni[r] and k in native[r]]
@@ -81,14 +89,21 @@ def look(native: dict, omni: dict, n: int, precision: float = PRECISION) -> dict
             _, hl, _ = interval(d)
             if hl > 0:
                 harm.append(k)
+    if meter:   # the work done is judged higher: its 99% interval wholly below zero is a LOSS
+        d = [omni[r][WORK] - native[r][WORK] for r in reps if WORK in omni[r] and WORK in native[r]]
+        if len(d) >= 2 and interval(d)[2] < 0:
+            harm.append(WORK)
     if harm:
         out.update(decided=False, why="a LOSS reads at this look (" + ", ".join(harm) + "): the set runs on to measure it in full")
     elif lo > 0 or hi < 0:
-        out.update(decided=True, word="GAIN, a cut" if hi < 0 else "power given", why="the bill's 99% interval clears zero")
-    elif (hi - lo) / 2 <= precision * base:
-        out.update(decided=True, word="STEADY", why=f"the bill's 99% interval holds zero within ±{precision * 100:g}% of native's bill")
+        if meter:   # work bought with each dollar: a rise GAIN, a fall power given (the amendment of 31 October, night)
+            out.update(decided=True, word="GAIN" if lo > 0 else "power given", why="the work per dollar's 99% interval clears zero")
+        else:
+            out.update(decided=True, word="GAIN, a cut" if hi < 0 else "power given", why="the bill's 99% interval clears zero")
+    elif (hi - lo) / 2 <= precision * abs(base):
+        out.update(decided=True, word="STEADY", why=f"{name}'s 99% interval holds zero within ±{precision * 100:g}% of native's")
     else:
-        out.update(decided=False, why="the bill's 99% interval is wider than the precision and holds zero: not yet read")
+        out.update(decided=False, why=f"{name}'s 99% interval is wider than the precision and holds zero: not yet read")
     return out
 
 
@@ -110,7 +125,7 @@ def decide(native: dict, omni: dict, rep: int, looks=LOOKS, precision: float = P
             break
         r = look(native, omni, n, precision)
         if r.get("decided"):
-            return False, f"stopped at the look after {n} repetitions: {r['word']} ({r['bill_pct']:+.2f}%, 99% interval {r['lo_pct']:+.2f}% to {r['hi_pct']:+.2f}%), {r['why']}"
+            return False, f"stopped at the look after {n} repetitions: {r.get('measure', 'the bill')} {r['word']} ({r['bill_pct']:+.2f}%, 99% interval {r['lo_pct']:+.2f}% to {r['hi_pct']:+.2f}%), {r['why']}"
     return True, "runs: no look so far has decided"
 
 
@@ -125,10 +140,11 @@ def main(argv=None) -> int:
     looks = tuple(int(x) for x in a.looks.split(",") if x.strip())
     native, omni = arms(Path(a.root))
     if a.report:
-        print(f"Stopping rule: looks at {', '.join(map(str, looks))} paired repetitions, 99% intervals, precision ±{a.precision * 100:g}% of native's bill.")
+        print(f"Stopping rule: looks at {', '.join(map(str, looks))} paired repetitions, 99% intervals, precision ±{a.precision * 100:g}% of native's "
+              "bill (of native's work per dollar on a work-meter set).")
         for n in looks:
             r = look(native, omni, n, a.precision)
-            pct = f" bill {r['bill_pct']:+.2f}% (99% interval {r['lo_pct']:+.2f}% to {r['hi_pct']:+.2f}%)" if "bill_pct" in r else ""
+            pct = f" {r.get('measure', 'the bill')} {r['bill_pct']:+.2f}% (99% interval {r['lo_pct']:+.2f}% to {r['hi_pct']:+.2f}%)" if "bill_pct" in r else ""
             print(f"- look after {n}:{pct} {'decided: ' + r['word'] if r.get('decided') else 'not decided'}; {r['why']}")
             if r.get("decided"):
                 break

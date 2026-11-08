@@ -25,6 +25,24 @@ def arms(n, cut=0.0, sd=0.01, harm=0.0, seed=1):
 
 
 class StopRule(unittest.TestCase):
+    def test_a_meter_set_reads_the_work_per_dollar(self):
+        # the amendment of 31 October, night: on a work-meter set the looks read the work per dollar, a rise GAIN; the bill
+        # rising beside it does not stop the set as power given, and the work falling is harm that keeps it running
+        rng = random.Random(7)
+        nat, omni = {}, {}
+        for r in range(1, 31):
+            b = 1.0 + rng.gauss(0, 0.05)
+            nat[str(r)] = {S.BILL: b, P95: 500.0, FAIL: 1.0, S.WORK: 5.0, S.WORK_DOLLAR: 5.0 / b}
+            omni[str(r)] = {S.BILL: b * 1.3, P95: 500.0, FAIL: 1.0, S.WORK: 9.0 + rng.gauss(0, 0.1), S.WORK_DOLLAR: (9.0 + rng.gauss(0, 0.1)) / (b * 1.3)}
+        go, why = S.decide(nat, omni, 11)
+        self.assertFalse(go)
+        self.assertIn("the work per dollar GAIN", why)
+        for r in omni:
+            omni[r][S.WORK] = 3.0 + rng.gauss(0, 0.05)
+            omni[r][S.WORK_DOLLAR] = omni[r][S.WORK] / omni[r][S.BILL]
+        self.assertIn(S.WORK, S.look(nat, omni, 10)["why"])
+        self.assertTrue(S.decide(nat, omni, 11)[0])
+
     def test_t_point(self):
         self.assertAlmostEqual(S.t_point(9), 3.250, places=2)       # the two-sided 99% point at 9 degrees of freedom
         self.assertAlmostEqual(S.t_point(1000), 2.581, places=2)
