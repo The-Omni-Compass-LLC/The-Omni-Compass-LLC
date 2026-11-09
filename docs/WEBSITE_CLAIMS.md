@@ -89,7 +89,7 @@ and touches no data, cache or network.
 | "Independent engineering analysis", a "Peer Review" page, an "Underwriting Verdict", a valuation, competitors ranked or valued | no outside party has reviewed or approved these results, and the company values and ranks no one. Omni-Compass sits on top of the native controllers and products a system already runs, and never replaces them |
 | a footer "PROVIDED FOR INFORMATIONAL AND COMMERCIALIZATION PURPOSES ONLY" | "PROVIDED FOR EVALUATION AND SIMULATION USE ONLY", with the full legal notice at the top and the end of every page |
 | "perfect pipelining", "guarantees a deterministic state", "regulates data admissibility at the gateway" | Omni-Compass works in the control plane: no request or byte passes through it, and no determinism is claimed |
-| "a definitive, referee-level underwriting opinion"; "Approved as a high-viability architectural asset"; "the architectural review is formally closed" (an outside AI's text, 2 November) | no underwriter, auditor or outside referee has reviewed or approved anything, and every results page says so: "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results." Its figures are the rows above (+13.1%, +5.3%, $100 M → $84 M, $16 M, 33% more work, a 20% "tax" whose parts, 2.9% + 10% + 7%, make 19.9%). Its "alerts drop to zero" is not the record: on omni-v21 thirteen three-run tables read the alert minutes, eleven GAIN (seven in all three runs, four by the mean of the three), one STEADY (CruiseKube) and one where the runs disagree (the batch queue), none at zero (`results/live/V21_*.md`). Other companies' products (CAST AI, Turbonomic) said to be "cleaning up human negligence" is a claim the company never makes |
+| "a definitive, referee-level underwriting opinion"; "Approved as a high-viability architectural asset"; "the architectural review is formally closed" (an outside AI's text, 2 November) | no underwriter, auditor or outside referee has reviewed or approved anything, and every results page says so: "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results." Its figures are the rows above (+13.1%, +5.3%, $100 M → $84 M, $16 M, 33% more work, a 20% "tax" whose parts, 2.9% + 10% + 7%, make 19.9%). Its "alerts drop to zero" is not the record: on omni-v21 thirteen three-run tables read the alert minutes, eleven GAIN (seven in all three runs, four by the mean of the three), one STEADY (CruiseKube) and one where the runs disagree (the batch queue), none at zero (`results/live/V21_*.md`). Other companies' products (CAST AI, Turbonomic) said to be "cleaning up human negligence" is a claim the company never makes |
 
 ## The industry landscape page
 
@@ -108,7 +108,7 @@ of them.
 
 ## On every page
 
-"Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results." And the legal notice
+"Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results." And the legal notice
 at the top and the end, as `tools/legal.py` writes it.
 
 ---
