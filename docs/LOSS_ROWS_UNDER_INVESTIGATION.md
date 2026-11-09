@@ -7,7 +7,7 @@ against its native has a page in `docs/` that states its cause (as `docs/POD_STA
 KEDA's HTTP add-on), the live engine names that page beside the row (section 1d). This page holds the rows whose cause is **not yet
 established**: what each row read, when it was raised, what is known, what is suspected and not yet shown, and what decides it.
 A suspicion is written as a suspicion. Nothing here is a result; the rows stand as their tables read them until the engine that
-stands has run the benchmark again three times. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or
+stands has run the benchmark again three times. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or
 approved these results.
 
 ## Job turnaround under Armada, Omni-Compass on the organism alone (V12_ARMADA_4W_BARE.md): under investigation since 21 October 2026

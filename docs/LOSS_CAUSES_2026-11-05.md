@@ -56,7 +56,7 @@ not the whole of it.
 **What decides it.** The control plane's processor read beside the queue in the next runs, and the next version through the
 model gate (the same count of the governor's own load, its reads included).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

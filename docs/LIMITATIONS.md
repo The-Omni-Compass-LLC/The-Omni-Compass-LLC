@@ -6,12 +6,12 @@ What the three-run tables can and cannot support (this page's counts were read o
 written; omni-v25, which stood from 3 to 7 November, has its own three-run table of every test that had one on omni-v21,
 `results/live/V25_*.md`, and omni-v26, the engine that stands since 7 November, runs every one of them again), written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
-and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
+and how far a result travels. Each limitation names what would remove it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
 ## 1. Independence
 
-- **Every run is ours.** The harnesses, the runs, the tables and this page are The Omni-Compass LLC's own; no outside party
+- **Every run is ours.** The harnesses, the runs, the tables and this page are Dubra Software Inc. / The Omni-Compass LLC's own; no outside party
   has run, reproduced or reviewed them. What reduces the dependence on us: every table is rebuilt from its raw receipts by a
   public command and compared byte for byte (`tools/reproduce.py`, `reproduce.yml`), every rule was written before its
   runs (`docs/DEVIATIONS.md` lists every later change with its timing), and every raw file carries its SHA-256.
