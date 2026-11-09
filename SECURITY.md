@@ -4,7 +4,7 @@
 
 ## Reporting a vulnerability
 
-Report a suspected vulnerability privately to The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
+Report a suspected vulnerability privately to Dubra Software Inc. / The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
 pull request or discussion. Include the version and commit, what you saw, how to reproduce it, and its likely impact. We
 acknowledge reports, keep the reporter informed, and coordinate disclosure: a fix or a mitigation is published before the
 details are, and the reporter is credited if they wish. Please give us a reasonable time to fix before any disclosure, do
