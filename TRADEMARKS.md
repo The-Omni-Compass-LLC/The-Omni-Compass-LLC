@@ -7,7 +7,7 @@
 ## The marks
 
 "Omni-Compass", "OmniCompass", the Omni-Compass compass rose with its ring of Greek letters, and the related names, logos
-and trade dress (the "Marks") are trademarks of The Omni-Compass LLC; trademark applications have been filed in the
+and trade dress (the "Marks") are trademarks of Dubra Software Inc. / The Omni-Compass LLC; trademark applications have been filed in the
 United States. Neither the evaluation license (`LICENSE`) nor publication of this repository grants any license to the
 Marks. A license to use them is granted only in a signed Omni-Compass Enterprise License, and only as it states.
 
@@ -22,7 +22,7 @@ Marks. A license to use them is granted only in a signed Omni-Compass Enterprise
 - Using any Mark, or anything confusingly similar, in the name of a product, service, company, domain, account, package,
   repository, fork or derivative.
 - Using the logo or the compass rose, or altering any Mark.
-- Suggesting endorsement, sponsorship, certification, partnership or affiliation by The Omni-Compass LLC.
+- Suggesting endorsement, sponsorship, certification, partnership or affiliation by Dubra Software Inc. / The Omni-Compass LLC.
 - Using a Mark in advertising, comparative claims or sales material without a signed license.
 
 ## Other companies' marks
@@ -33,7 +33,7 @@ Omni-Compass was tested with; it states no affiliation, endorsement or certifica
 
 ## Reporting misuse
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ---
 
