@@ -28,7 +28,7 @@ CANONICAL = "Dubra Software Inc. / The Omni-Compass LLC"
 # The negative lookbehind makes normalization idempotent.
 STANDALONE = re.compile(
     r"(?<!Dubra Software Inc\. / )The Omni-Compass LLC"
-    r"|(?<!Dubra Software Inc\. / )(?<!The )Omni Compass LLC"
+    r"|(?<!Dubra Software Inc\. / )(?:The )?Omni Compass LLC"
 )
 VERSIONED = re.compile(r"OMNI_V\d+\.md$")
 ROOT_PUBLICATIONS = (
