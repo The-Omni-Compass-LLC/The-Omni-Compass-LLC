@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+name: Canonical corporate attribution
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "*.md"
+      - "docs/**/*.md"
+      - ".github/*.md"
+      - "LICENSE"
+      - "NOTICE"
+      - "CITATION.cff"
+      - "codemeta.json"
+      - "pyproject.toml"
+      - "tools/company_attribution.py"
+      - "tests/test_company_attribution.py"
+      - ".github/workflows/company-attribution.yml"
+  pull_request:
+    paths:
+      - "*.md"
+      - "docs/**/*.md"
+      - ".github/*.md"
+      - "LICENSE"
+      - "NOTICE"
+      - "CITATION.cff"
+      - "codemeta.json"
+      - "pyproject.toml"
+      - "tools/company_attribution.py"
+      - "tests/test_company_attribution.py"
+      - ".github/workflows/company-attribution.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "37 12 * * *"
+
+permissions:
+  contents: read
+
+env:
+  OMNI_NOTICE: '© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+
+jobs:
+  attribution:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - name: Fetch exact commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check canonical company name in active publications
+        run: python3 tools/company_attribution.py --check
+      - name: Test normalization, machine-readable metadata and manuals
+        run: python3 -m unittest -v tests.test_company_attribution
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
