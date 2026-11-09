@@ -1014,7 +1014,7 @@ modelled grid (`six`) is run again on the new engine too (its numbers are expect
 unchanged but for comments, headers and one label's name), because no result is read across engine versions.
 
 ---
-*Evaluation and Simulation use only. Copyright (c) 2026 The Omni-Compass LLC. Commercial use, commercialization or
+*Evaluation and Simulation use only. Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. Commercial use, commercialization or
 monetization of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC.
 All rights reserved. See `LICENSE` and `NOTICE` at the root of this repository. All patents, copyrights and trademarks
 filed in the USA. www.omni-compass.com*
@@ -1075,7 +1075,7 @@ shows (its processor use, the requests waiting, the response times), as in every
   each shape is in its table. Cost: about $4 to $6 a set of five at list price; three sets of each shape, about $30 for
   both. Time: about nine hours a set.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## In the cloud, the bill at native's work (the founder's order, 2026-10-14, night, before any run of it)
 
@@ -1174,7 +1174,7 @@ So the omni arm can hold no more pods and no more machines than native's autosca
 stay. The bill and the machines aim lower (a cut is GAIN); work, response time, failures and alert minutes must read EVEN
 or GAIN. The receipt's commands row shows how often a machine was parked or woken.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## Amendment (2026-10-16): the spine, the seventh organism with the cluster inside
 
@@ -1485,7 +1485,7 @@ readings and the claim that a cloud set must show that Omni-Compass holds stand 
 behind the meter's; the founder's words of 4 November ("All the clouds. Especially the clouds") are their word to start, and
 each starts once the meter's counted set has its three runs, the order the amendment of 31 October gives.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

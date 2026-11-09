@@ -58,7 +58,7 @@ squares stay exactly as they are.
 Cost: GitHub's own runners (no charge). Time: each repetition about 3.6 hours (the four stacked) and 2.6 hours (the whole
 tower) on one runner; ten of each about four hours of wall clock.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

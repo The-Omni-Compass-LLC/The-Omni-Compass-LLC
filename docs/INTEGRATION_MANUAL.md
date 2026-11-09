@@ -11,7 +11,7 @@
 > section 9.4.
 
 How to wire Omni-Compass into your own systems yourself, from watching only to running your stack from the top. This
-manual ships in the box with the code and the license. Nobody from The Omni-Compass LLC needs to be on site.
+manual ships in the box with the code and the license. Nobody from Dubra Software Inc. / The Omni-Compass LLC needs to be on site.
 
 Read section 1 once, then take the levels in section 4 in order. Each level has a pass condition; go to the next
 level only when it holds. The OFF switch (section 2) works at every level.
@@ -38,7 +38,7 @@ level only when it holds. The OFF switch (section 2) works at every level.
 only to evaluate it and to reproduce its published results, including in shadow or test mode on systems you own or
 control (`LICENSE`, section 1). Every other use, commercial or not (running it for your business or in production,
 selling it, hosting it, or building it into a product or service), needs a signed, paid Omni-Compass Enterprise
-License from The Omni-Compass LLC. The copyright, patent and trademark notices, the `LICENSE`, the `NOTICE` and
+License from Dubra Software Inc. / The Omni-Compass LLC. The copyright, patent and trademark notices, the `LICENSE`, the `NOTICE` and
 `DISCLOSURES.md` stay with every copy.
 
 ---
