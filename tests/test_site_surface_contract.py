@@ -26,7 +26,8 @@ class WebsiteSurfaceContract(unittest.TestCase):
         for surface, keys in self.published["surfaces"].items():
             with self.subTest(surface=surface):
                 self.assertTrue(set(keys) <= ids)
-        self.assertIn("Where", self.published["virtual_guide_scripts"]["where_numbers_come_from"].title() or "Where")
+        self.assertIn("named paired-run receipt",
+                      self.published["virtual_guide_scripts"]["where_numbers_come_from"])
         self.assertIn("not a whole-system bill reduction",
                       self.published["virtual_guide_scripts"]["where_numbers_come_from"])
         self.assertIn("adverse results", self.published["evidence_rule"])
