@@ -29,6 +29,26 @@ class PublicBenchmarkContract(unittest.TestCase):
         cls.bills = load("results/TWO_BILLS.json")
         cls.rows = {row["id"]: row for row in cls.feed["show"]}
 
+    def test_website_tour_and_commercial_contract_are_traceable(self):
+        """Site-copy requirements must retain valid source, scope and proposal labels."""
+        alignment = (ROOT / "docs/WEBSITE_GITHUB_ALIGNMENT_CONTRACT.md").read_text(encoding="utf-8")
+        proposal = (ROOT / "docs/COMMERCIAL_TERMS_PROPOSAL.md").read_text(encoding="utf-8")
+        front = (ROOT / "START_HERE.md").read_text(encoding="utf-8")
+        for name in ("Homepage hero", "Ticker / animated statistics",
+                     "Virtual guide", "Whitepaper / mathematics",
+                     "Investor / press", "results/SITE_NUMBERS.json",
+                     "results/OMNI_INDEX.json", "results/TWO_BILLS.json"):
+            self.assertIn(name, alignment, name)
+        self.assertIn("25% of verified, attributable net savings", proposal)
+        self.assertIn("5% royalty", proposal)
+        self.assertIn("extra_goodput_pct", proposal)
+        self.assertIn("not an executed license", proposal)
+        for name in ("docs/WEBSITE_GITHUB_ALIGNMENT_CONTRACT.md",
+                     "docs/COMMERCIAL_TERMS_PROPOSAL.md"):
+            self.assertIn(name, front)
+        self.assertIn("Dubra Software Inc. / The Omni-Compass LLC", alignment)
+        self.assertIn("Dubra Software Inc. / The Omni-Compass LLC", proposal)
+
     def test_major_manuals_show_current_evidence_correction(self):
         """A current Markdown manual must expose the controlled receipt addendum."""
         addendum = ROOT / "docs/audits/MANUAL_EVIDENCE_CORRIGENDUM_2026-11-09.md"
