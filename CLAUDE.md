@@ -5,6 +5,8 @@
 These are the founder's orders, gathered from the full working record. They load every session. Follow them unless
 the founder overrides one in the conversation.
 
+**Canonical organization attribution: Dubra Software Inc. / The Omni-Compass LLC.** New text, outputs, books and summaries must retain this combined corporate label. Follow `docs/COMPANY_ATTRIBUTION_STANDARD.md` and run `python3 tools/company_attribution.py --check`; preserve raw receipts, engine manifests and external third-party ownership.
+
 ## What Omni is
 
 - Omni-Compass is a **supervisory governor**. It always sits **on top of a native controller**: the Kubernetes HPA,
