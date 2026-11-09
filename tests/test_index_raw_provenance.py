@@ -113,6 +113,53 @@ class IndexRawProvenance(unittest.TestCase):
                     )
 
 
+class PhysicalAndCloudBillProvenance(unittest.TestCase):
+    """Keep P-class chip, L-class Azure and computed work-per-dollar separate."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.data = json.loads((ROOT / "results/TWO_BILLS.json").read_text(encoding="utf-8"))
+
+    def test_gpu_work_per_dollar_uses_each_paired_rental_window(self):
+        chip = self.data["chip"]
+        self.assertIn("omni-v23", chip["engine"])
+        self.assertEqual(len(chip["per_run"]), 3)
+        self.assertEqual(len(chip["runs"]), 3)
+        diffs = []
+        for pair in chip["per_run"]:
+            with self.subTest(pair=pair):
+                for arm in ("native", "omni"):
+                    record = pair[arm]
+                    self.assertGreater(record["bill"], 0)
+                    self.assertGreater(record["work"], 0)
+                    self.assertAlmostEqual(
+                        record["work"] / record["bill"],
+                        record["per_dollar"], places=7)
+                diffs.append(
+                    pair["omni"]["per_dollar"] / pair["native"]["per_dollar"] - 1)
+        self.assertGreater(diffs[0], 0)
+        self.assertGreater(diffs[1], 0)
+        self.assertLess(diffs[2], 0,
+                        "historical adverse work-per-dollar run must remain visible")
+        self.assertIn("the runs disagree",
+                      chip["rows"]["work per dollar (requests served per $)"]["reading"])
+
+    def test_azure_bill_has_no_completed_work_claim(self):
+        cloud = self.data["cloud"]
+        self.assertEqual(cloud["engine"], "omni-v18")
+        self.assertEqual(cloud["repetitions"], 97)
+        self.assertIsNone(cloud["work_key"],
+                          "unmeasured work cannot be used to infer cloud work/$")
+        self.assertFalse(cloud["work"],
+                         "unmeasured work cannot become a measured cloud benefit")
+        bill = cloud["bill"]
+        self.assertAlmostEqual(
+            bill["omni"] - bill["native"], bill["diff"], places=10)
+        self.assertLess(bill["ci95"][0], 0)
+        self.assertGreater(bill["ci95"][1], 0,
+                           "historical interval crosses zero; bill effect unresolved")
+
+
 if __name__ == "__main__":
     unittest.main()
 
