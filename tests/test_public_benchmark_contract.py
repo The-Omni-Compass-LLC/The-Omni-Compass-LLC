@@ -29,6 +29,41 @@ class PublicBenchmarkContract(unittest.TestCase):
         cls.bills = load("results/TWO_BILLS.json")
         cls.rows = {row["id"]: row for row in cls.feed["show"]}
 
+    def test_index_geometric_aggregation_reproduces_record(self):
+        """Recalculate from published per-test scores without importing the index generator.
+
+        This is a source-integrity check, not independent validation of the
+        experiments or of the selection/weighting policy.
+        """
+        def geomean(values):
+            self.assertTrue(values, "missing scored evidence")
+            for value in values:
+                self.assertTrue(math.isfinite(value) and value > 0,
+                                f"geometric mean requires finite positive ratios: {value}")
+            return math.exp(sum(math.log(v) for v in values) / len(values))
+
+        groups = {}
+        for test in self.index["tests"]:
+            groups.setdefault(test["category"], []).append(test)
+        self.assertEqual(set(groups), set(self.index["categories"]))
+        self.assertEqual(set(groups), set(self.index["service_categories"]))
+        for category, tests in groups.items():
+            with self.subTest(category=category):
+                ratios = [1 + t["index_pct"] / 100 for t in tests
+                          if t.get("index_pct") is not None]
+                service = [1 + t["service_pct"] / 100 for t in tests
+                           if t.get("service_pct") is not None]
+                self.assertAlmostEqual(100 * (geomean(ratios) - 1),
+                                       self.index["categories"][category], places=8)
+                self.assertAlmostEqual(100 * (geomean(service) - 1),
+                                       self.index["service_categories"][category], places=8)
+        for field, key in (("headline_pct", "categories"),
+                           ("service_headline_pct", "service_categories")):
+            values = [1 + self.index[key][category] / 100 for category in groups]
+            self.assertAlmostEqual(100 * (geomean(values) - 1),
+                                   self.index[field], places=8,
+                                   msg=f"{field} is inconsistent with category scores")
+
     def test_index_and_kubernetes_match_generated_feed(self):
         index = self.index
         self.assertTrue(math.isfinite(index["headline_pct"]))
