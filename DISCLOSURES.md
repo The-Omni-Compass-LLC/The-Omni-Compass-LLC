@@ -9,16 +9,16 @@ and every report point here. Where any other page seems to say more than this pa
 
 1. Omni-Compass, its engine, its mathematics, its software and its documentation are the property of The Omni-Compass
    LLC. All patents, copyrights and trademarks covering them have been filed in the
-   United States by The Omni-Compass LLC. No filing number is stated here, and no grant, registration or approval is
+   United States by Dubra Software Inc. / The Omni-Compass LLC. No filing number is stated here, and no grant, registration or approval is
    claimed.
 2. The software is licensed for evaluation and simulation only (`LICENSE`). Running it in production, on any system
    beyond evaluation, or in any product or service, requires a signed, paid Omni-Compass Enterprise License.
 3. Names of other companies and products (NVIDIA, Kubernetes, Red Hat OpenShift, Amazon EKS, Google GKE, Microsoft
    AKS, Karpenter, Lambda and others) are the property of their owners. They identify the systems Omni-Compass was
    tested with or connects to. No affiliation, endorsement or certification by any of them is stated or implied.
-4. All rights reserved. The Omni-Compass LLC reserves the right to change the software, the documentation, the results
+4. All rights reserved. Dubra Software Inc. / The Omni-Compass LLC reserves the right to change the software, the documentation, the results
    and the terms at any time, without notice. Every copy, fork, export, report, archive or printout of any part of
-   Omni-Compass carries the README's notice, `LICENSE`, `NOTICE` and this page unchanged. The Omni-Compass LLC,
+   Omni-Compass carries the README's notice, `LICENSE`, `NOTICE` and this page unchanged. Dubra Software Inc. / The Omni-Compass LLC,
    www.omni-compass.com
 
 ## 2. What a result is, and what it is not
@@ -82,7 +82,7 @@ output comes out ahead, judged on the organism and on every muscle's health, is 
 built and proven in our own models first (the model gate), every benchmark is run again on it, and no result claims it
 before its runs exist.
 
-**The factory tune: one tuned engine, and a tuning bench.** The engine in this repository is presented as The Omni-Compass LLC
+**The factory tune: one tuned engine, and a tuning bench.** The engine in this repository is presented as Dubra Software Inc. / The Omni-Compass LLC
 tuned and ships it: self-running, set at the factory. Every muscle in the catalog is wired and runs on the setting found for it
 (its own card where one was found on development seeds and kept under the strict rule, 364 muscles in
 `realms/muscle_cards_v5.csv`; the engine's own setting for every other), frozen and fingerprinted by version (`python3
@@ -98,7 +98,7 @@ on any engine, where the mixture, the intake, the exhaust, the firing or the pis
 of Omni-Compass can change every metric, up or down, in any direction a tuner chooses**: one engine for many vessels, tuned many
 ways, for many outputs. A licensee may add on, retune, upgrade or tune down any muscle or combination (the dial, the cards, the
 bands and the service lines are exposed); a changed tune is the licensee's own, and so are its results. The factory tune is published only where it reads no LOSS: a LOSS found
-in The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
+in Dubra Software Inc. / The Omni-Compass LLC's own runs is treated as a fault in the mechanism or its wiring, found and fixed before the result is
 published, never as a number to live with (the founder's order of 23 October 2026). The one place a LOSS is meant to be seen
 is the live benchmark engine, when a person turns its knobs away from the factory tune (the dial, the heartbeat, the sizes, the load)
 to watch the system react and the brain hold or recover: that showing is the proof that the factory tune is the best state found, and that a turned knob never breaks the engine:
@@ -164,7 +164,7 @@ Therefore:
 
 ## 7. Privacy and data
 
-Omni-Compass contains no telemetry. It sends nothing to The Omni-Compass LLC or anyone else, and makes no network
+Omni-Compass contains no telemetry. It sends nothing to Dubra Software Inc. / The Omni-Compass LLC or anyone else, and makes no network
 connection of its own except to the systems an operator points it at. Its logs and receipts stay on the operator's
 machines.
 
