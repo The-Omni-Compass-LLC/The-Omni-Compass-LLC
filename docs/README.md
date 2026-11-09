@@ -2,6 +2,8 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+**Primary repository evidence hierarchy:** [START_HERE.md](../START_HERE.md), preserving links from the frozen engine and mathematical assumptions through native/Omni software, GPU, CPU and cloud receipts to the claims register. Read that entry point before interpreting older summaries.
+
 ## Start here: the documents by reader
 
 A navigation layer, top down, the way an IP asset is read at a board meeting. It is not a substitute for the evidence and not an
