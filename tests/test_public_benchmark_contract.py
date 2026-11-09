@@ -107,6 +107,27 @@ class PublicBenchmarkContract(unittest.TestCase):
         self.assertIn("arm_d_work_per_dollar",
                       {r["id"] for r in self.feed["not_for_the_site"]})
 
+    def test_standing_engine_is_distinguished_from_benchmark_engine(self):
+        """A current release does not redate the measurements in an earlier index."""
+        versions = sorted(int(p.stem.removeprefix("OMNI_V")) for p in ROOT.glob("OMNI_V*.json")
+                          if p.stem.removeprefix("OMNI_V").isdigit())
+        self.assertTrue(versions, "no frozen engine manifest")
+        current = versions[-1]
+        manifest = load(f"OMNI_V{current}.json")
+        self.assertEqual(manifest["version"], f"omni-v{current}")
+        source_versions = {
+            int(re.search(r"/V(\\d+)_", t["source"]).group(1))
+            for t in self.index["tests"]
+        }
+        self.assertEqual(len(source_versions), 1, "software index mixes engine versions")
+        source = next(iter(source_versions))
+        self.assertLessEqual(source, current)
+        self.assertIn(f"omni-v{source}", self.rows["omni_index"]["engine"])
+        if current != source:
+            self.assertNotIn(f"omni-v{current}", self.rows["omni_index"]["sentence"],
+                             "old measurements cannot be relabeled as current")
+        self.assertTrue((ROOT / f"docs/OMNI_V{current}.md").is_file())
+
     def test_public_words_and_receipts_are_present(self):
         self.assertEqual(self.feed["source"], "tools/site_numbers.py")
         for path in ("LICENSE", "NOTICE", "DISCLOSURES.md",
