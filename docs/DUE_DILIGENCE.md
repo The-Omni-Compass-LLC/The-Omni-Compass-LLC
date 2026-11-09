@@ -25,7 +25,7 @@ Answers reference the Claims Register (C-numbers) and the Technical Manual.
 **What does it cost to run?** C5.
 
 ## Adoption
-**How is it introduced without risk?** A week of shadow with no write rights, then one muscle at a time with the reset tested at each handover, then 30 days paired against native in three runs, native on in every arm (docs/PILOT_PROTOCOL.md); on a production system only under a pilot agreement signed with The Omni-Compass LLC, and live customer traffic only under the Enterprise License.
+**How is it introduced without risk?** A week of shadow with no write rights, then one muscle at a time with the reset tested at each handover, then 30 days paired against native in three runs, native on in every arm (docs/PILOT_PROTOCOL.md); on a production system only under a pilot agreement signed with Dubra Software Inc. / The Omni-Compass LLC, and live customer traffic only under the Enterprise License.
 
 ## Referees
 **Was it tuned on the test data?** No. Law, shield and baselines were frozen and fingerprinted before the held-out seeds 346410161 and 360555127 (results/PREREGISTRATION.json).

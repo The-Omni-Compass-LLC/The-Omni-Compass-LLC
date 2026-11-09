@@ -121,7 +121,7 @@ owner, not a claim.
 
 ---
 
-© 2026 The Omni-Compass LLC. Evaluation and Simulation use only; any other use requires a signed, paid Omni-Compass
+© 2026 Dubra Software Inc. / The Omni-Compass LLC. Evaluation and Simulation use only; any other use requires a signed, paid Omni-Compass
 Enterprise License. All rights reserved. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 ---
