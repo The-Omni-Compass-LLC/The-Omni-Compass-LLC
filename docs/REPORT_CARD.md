@@ -12,7 +12,7 @@ the band, no raise into processor another workload is owed), read no LOSS in its
 and Kubernetes and clouds"). Every count in section 1 is computed by `python3 tools/report_card.py` at that commit, never typed;
 every reading is the record's own, by the one key (`tools/readings.py`), and names the file that holds it. Which results carry to
 omni-v26 because nothing they run has moved is computed by `python3 tools/carry.py` (`results/CARRY.md`). A grading is dated: its
-counts and readings are true at its commit, and the next grading replaces them. Run and scored by The Omni-Compass LLC's own code.
+counts and readings are true at its commit, and the next grading replaces them. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code.
 No outside party has reviewed or approved these results.
 
 **How a grade is given.** A: the record is complete on the engine that stands, every check of it is green, and no LOSS row
