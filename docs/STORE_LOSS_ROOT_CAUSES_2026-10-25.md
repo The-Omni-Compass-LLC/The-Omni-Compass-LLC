@@ -38,7 +38,7 @@ omni-v15's cap band was gated), and sysbench's model is set from a short real ru
 at k = 3 (the old key, reproduced), +4.523% at k = 2, +4.771% at k = 1 and +3.397% at k = 0 (the key as it stands, the founder's
 order of 24 October). It is information, not a proposal to change the key.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

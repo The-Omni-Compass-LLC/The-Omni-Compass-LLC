@@ -178,7 +178,7 @@ pooler's candidate holds servers +28.2% (power given) and its seconds below nati
 percentiles GAIN or STEADY, the memory held power given (201 to 304 MB against 62 to 66 MB); no LOSS row. MySQL's and MongoDB's
 accounts are read for real on the first runs of the next engine, and a closed-loop model of each is set from those files.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 
