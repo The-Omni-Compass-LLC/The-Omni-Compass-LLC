@@ -5,7 +5,7 @@
 This page summarizes the standard terms of the Omni-Compass Enterprise License, the paid license that every production
 use, commercial use, hosted service, distribution, OEM or embedded use, and every other commercialization or monetization
 of Omni-Compass requires (`LICENSE`, section 5). It is a summary for evaluation and planning. It is not an offer, and it
-binds no one: only an Enterprise License signed by The Omni-Compass LLC and the licensee, with its order form, grants any
+binds no one: only an Enterprise License signed by Dubra Software Inc. / The Omni-Compass LLC and the licensee, with its order form, grants any
 right, and that signed agreement controls over this page in every respect.
 
 ## 1. What can be licensed
@@ -51,11 +51,11 @@ is an offer.
 
 ## 5. Intellectual property
 
-1. The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
+1. Dubra Software Inc. / The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
    receives the rights its order form lists, for its term, and no others.
-2. **Patent license.** The Enterprise License includes a license under The Omni-Compass LLC's patent rights in the filed
+2. **Patent license.** The Enterprise License includes a license under Dubra Software Inc. / The Omni-Compass LLC's patent rights in the filed
    applications, and in any patent issuing from them, for the licensed scope.
-3. **Infringement indemnity.** The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
+3. **Infringement indemnity.** Dubra Software Inc. / The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
    version, used as licensed, infringes that party's intellectual property, and pays the damages finally awarded or the
    settlement it agrees, subject to prompt notice, control of the defense and the usual exclusions (modifications,
    combinations, unlicensed use, versions superseded by an offered fix). Remedies may include a license, a modification
@@ -92,7 +92,7 @@ license scope).
 ## 9. Compliance, audit and insurance
 
 1. Each party complies with export-control, sanctions and anti-corruption law.
-2. The licensee reports usage against the licensed scope as the order form provides, and The Omni-Compass LLC may verify
+2. The licensee reports usage against the licensed scope as the order form provides, and Dubra Software Inc. / The Omni-Compass LLC may verify
    it on reasonable notice, no more than once a year.
 3. Insurance, where the order form requires it, is carried by each party at the limits stated there.
 
@@ -113,7 +113,7 @@ the signed agreement for the licensee and its scope.
 
 ## 12. How to obtain one
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
 (`LICENSE`, section 1.4): watch mode, the wire check, and paired receipts on its own load.
 
 ---
