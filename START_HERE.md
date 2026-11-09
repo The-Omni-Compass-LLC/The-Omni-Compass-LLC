@@ -43,7 +43,7 @@ Read [mechanism of action](docs/MECHANISM_OF_ACTION.md), [canonical engine](docs
 
 [Documentation index by reader](docs/README.md) → [evidence registry](docs/EVIDENCE_LEDGER.md) → [claims register](docs/CLAIMS_REGISTER.md) → [benchmark referee audit](docs/audit/README.md) → [referee cross-version standard](docs/REFEREE_VERSION_AND_BENCHMARK_STANDARD.md) → [report card](docs/REPORT_CARD.md). The original experiment remains the primary authority when a summary conflicts with it.
 
-**Independence:** run and scored by The Omni-Compass LLC's own code unless a specific third-party replication receipt establishes otherwise. A++ is a target for review quality, not an independently conferred grade. Do not present a GitHub file move, check, or model as a physical benchmark.
+**Independence:** run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code unless a specific third-party replication receipt establishes otherwise. A++ is a target for review quality, not an independently conferred grade. Do not present a GitHub file move, check, or model as a physical benchmark.
 
 ---
 
