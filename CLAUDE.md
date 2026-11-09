@@ -371,7 +371,7 @@ the founder overrides one in the conversation.
   set by the gauge's aim; a resource spent that rose is power given); EVEN, no difference beyond the noise (an interval includes zero: that is the result, say so); the runs disagree (clear runs
   pointing different ways: the test is unstable there, look into it). Never write "confirmed" or "not confirmed"
   (the founder's order of 11 October: nobody outside approved these results); every three-run table says "Run and
-  scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results."
+  scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results."
   (`tools/readings.py`).
 - Evidence classes: P (physical meter), L (live software), S (our own models). Never present S as proof.
 
@@ -446,7 +446,7 @@ the founder overrides one in the conversation.
 
 ## Legal, on every output
 
-- At the top and end of every output: © 2026 The Omni-Compass LLC; all rights reserved; evaluation and simulation use
+- At the top and end of every output: © 2026 Dubra Software Inc. / The Omni-Compass LLC; all rights reserved; evaluation and simulation use
   only; any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License; then **all**
   patents, copyrights and trademarks filed in the USA (say "filed", never give numbers), followed by www.omni-compass.com
   and nothing after it (the founder's wording of 10 October: the word "all" before patents and "all rights reserved"
