@@ -10,7 +10,7 @@ This is a joint presentation and affiliation label. It does not itself prove an 
 
 ## Inclusion rules
 
-1. **Active prose:** replace stand-alone organizational attributions `Dubra Software Inc. / The Omni-Compass LLC` or `Omni Compass LLC` with the canonical form, but do not duplicate it where the combined name is already present. Preserve the product name **Omni-Compass**, the repository owner slug `The-Omni-Compass-LLC`, and all website/API links.
+1. **Active prose:** normalize historical LLC-only publisher names to the canonical combined form, but do not duplicate it where the combined name is already present. Preserve the product name **Omni-Compass**, the repository owner slug `The-Omni-Compass-LLC`, and all website/API links.
 2. **Generator inputs:** use `tools/legal.py` as the canonical legal-notice source; `tools/company_attribution.py --check` identifies standalone company aliases in scoped active publication files. Maintain the standard in `CITATION.cff`, `codemeta.json`, `pyproject.toml` and the three principal Markdown manuals.
 3. **Archival exclusions:** do not rewrite immutable measurement receipts, signed or fingerprinted engine source, historical snapshots, original external documents, binary PDFs, raw CSV/JSON telemetry or Git data merely to change narrative attribution. Their original bytes are evidence. Publish the canonical association in the current document hierarchy and addenda instead.
 4. **New exports:** build the current manuals from their Markdown sources, verify copyright and license banners, preserve hyperlinks and citations, regenerate PDFs, and run the existing release checks before claiming an updated PDF. Do not assert a binary file was changed until it was built and committed.
