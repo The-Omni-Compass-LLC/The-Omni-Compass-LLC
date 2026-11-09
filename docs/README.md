@@ -6,6 +6,8 @@
 
 **Canonical publication identity:** **Dubra Software Inc. / The Omni-Compass LLC**. See [corporate attribution standard](COMPANY_ATTRIBUTION_STANDARD.md) and the [automated check](../tools/company_attribution.py).
 
+**Website publishing and machine-readable feed:** [Website/GitHub alignment](WEBSITE_GITHUB_ALIGNMENT_CONTRACT.md), [the public surface contract](../results/WEBSITE_SURFACE_CONTRACT.json), [source generator](../tools/site_surface_contract.py) and [proposed commercial terms](COMMERCIAL_TERMS_PROPOSAL.md). Every website statistic, ticker entry or spoken guide claim must retain its native/Omni receipt, engine version and evidence class.
+
 ## Start here: the documents by reader
 
 A navigation layer, top down, the way an IP asset is read at a board meeting. It is not a substitute for the evidence and not an
