@@ -116,7 +116,7 @@ class PublicBenchmarkContract(unittest.TestCase):
         manifest = load(f"OMNI_V{current}.json")
         self.assertEqual(manifest["version"], f"omni-v{current}")
         source_versions = {
-            int(re.search(r"/V(\\d+)_", t["source"]).group(1))
+            int(re.search(r"/V(\d+)_", t["source"]).group(1))
             for t in self.index["tests"]
         }
         self.assertEqual(len(source_versions), 1, "software index mixes engine versions")
