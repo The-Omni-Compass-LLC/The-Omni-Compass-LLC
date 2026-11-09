@@ -219,7 +219,7 @@ and beats as `--pace-periods 60,10`): no LOSS against native or against 60 s (ag
 (`docs/OMNI_V24.md`): the factory beat for its place, read from the cluster's own nodes. The real runs of this preregistration read
 it from omni-v24's campaign on: the compass arm on kind at the factory's 10 s, 60 s one of the dial's arms.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 The record of this amendment's run (written into the repository on 2 November 2026, the founder's order that every number stands on its record): `results/model_gate/V23_LADDER_CORRECTED.md`, rendered by `tools/beat_ladder.py` from `results/model_gate/V23_LADDER_CORRECTED_SOURCE.json`. On site the runs ran on the omni-v23 tree (commit a278eac262); through a cloud on the candidate tree of 31 October (commit ebf83ecaf9), which runs every pace exactly as omni-v23 (it writes the cover's floor as a knob at the factory's 0.6 and strikes the machines-only rule; every run sets its own beat and none passes the machines-only flag).
 

@@ -133,7 +133,7 @@ scheduler's pass. Nothing else changes.
 on GitHub's machines (`kind-orchestrators.yml`, `docs/BATCH_QUEUE_PREREGISTRATION.md`, amendment 6), where the batch stream goes
 through each orchestrator on the same kind rig.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the
 rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 ---

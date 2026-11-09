@@ -5,7 +5,7 @@
 > **Before you wire anything:** read [`DISCLOSURES.md`](../DISCLOSURES.md). Omni-Compass acts only through the wires it is given; it cannot be slapped on. If your paired receipts differ from the published benchmarks in direction, the first presumption is wiring: check the installation with section 4.5 of the manual (*Wired right or wired wrong*).
 
 A pilot is the one proof our own runs cannot give: Omni-Compass on top of the licensee's own native controllers, on the
-licensee's own systems and work, read against native by the licensee's own engineers. Every result The Omni-Compass LLC
+licensee's own systems and work, read against native by the licensee's own engineers. Every result Dubra Software Inc. / The Omni-Compass LLC
 publishes was run and scored by its own code, and every table says that no outside party has reviewed or approved it. A
 pilot run by this protocol is how that changes. The protocol was rewritten on 31 October 2026 for the engine that stands:
 native stays on in every arm, Omni-Compass moves native's knobs and never replaces native, and the readings are the
@@ -132,7 +132,7 @@ result.
 ## Reporting
 
 Every row is reported, LOSS included, in the key's words, with the run it came from. The readings, the captures and their
-SHA-256 sums go to the licensee and to The Omni-Compass LLC as the pilot agreement says. Where the pilot's direction
+SHA-256 sums go to the licensee and to Dubra Software Inc. / The Omni-Compass LLC as the pilot agreement says. Where the pilot's direction
 differs from the published benchmarks, the first presumption is the wiring (section 4.5 of the manual), and the pilot
 goes on once the wiring is checked.
 
