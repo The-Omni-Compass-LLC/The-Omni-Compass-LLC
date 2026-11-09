@@ -45,6 +45,8 @@ class PublicBenchmarkContract(unittest.TestCase):
                 # Check front matter only: manual bodies are large and preserve history.
                 front = (ROOT / path).read_text(encoding="utf-8")[:2000]
                 self.assertIn("Evidence-currency notice (9 November 2026)", front)
+                self.assertGreater(front.index("Evidence-currency notice"), front.index("SPDX-License-Identifier"),
+                                   "legal notice must precede the editorial correction")
                 self.assertIn(
                     "audits/MANUAL_EVIDENCE_CORRIGENDUM_2026-11-09.md", front)
                 self.assertIn("does not certify", front)
