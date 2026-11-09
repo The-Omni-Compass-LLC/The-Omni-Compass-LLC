@@ -4,6 +4,8 @@
 
 **Primary repository evidence hierarchy:** [START_HERE.md](../START_HERE.md), preserving links from the frozen engine and mathematical assumptions through native/Omni software, GPU, CPU and cloud receipts to the claims register. Read that entry point before interpreting older summaries.
 
+**Canonical publication identity:** **Dubra Software Inc. / The Omni-Compass LLC**. See [corporate attribution standard](COMPANY_ATTRIBUTION_STANDARD.md) and the [automated check](../tools/company_attribution.py).
+
 ## Start here: the documents by reader
 
 A navigation layer, top down, the way an IP asset is read at a board meeting. It is not a substitute for the evidence and not an
