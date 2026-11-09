@@ -7,7 +7,7 @@
 ## How to Read the Live Benchmark Engine: Its Monitors, Gauges and Knobs, Native beside Omni-Compass
 
 **October 2026**
-**The Omni-Compass LLC**
+**Dubra Software Inc. / The Omni-Compass LLC**
 
 All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC.
 
@@ -105,7 +105,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ## Where Omni-Compass Sits, and What Each Benchmark Shows
@@ -211,7 +211,7 @@ so on), and the anchors do not move when sections are renumbered.
 
 The published benchmarks the page plays are the record of what Omni-Compass did on the systems, loads and engine they name,
 each with its evidence class. Where a result on any other system differs from them, or anything on the page looks wrong, the
-first presumption is the wiring, the settings, or how Omni-Compass was implemented or read, not the law (`DISCLOSURES.md`, section 4). Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+first presumption is the wiring, the settings, or how Omni-Compass was implemented or read, not the law (`DISCLOSURES.md`, section 4). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## Foreword
 
@@ -1312,7 +1312,7 @@ The first table (`#blArms`) reads a real test, three runs on GitHub's own machin
 full form, 18 steps of 25 s with the clients stepping 1 2 3 2 3 4 …, native against Omni-Compass on top of native. Its columns
 are the way to run it, the light, the change against native and what else moved. It has two rows, one for each side.
 
-- **Native Alone** is the yardstick: Kubernetes' published autoscaling rule as The Omni-Compass LLC wrote it, a description
+- **Native Alone** is the yardstick: Kubernetes' published autoscaling rule as Dubra Software Inc. / The Omni-Compass LLC wrote it, a description
   of the rule and not Kubernetes' code, on Omni-Compass's own orchestrator and test machines, with no Kubernetes. It is shown,
   not judged: every other row is read against it, and it carries no reading of its own.
 - **Omni-Compass on Native**, Omni-Compass on top of that rule, carries as the big number the mean change in work done (requests
@@ -1326,7 +1326,7 @@ are the way to run it, the light, the change against native and what else moved.
 
 The note under the table names the record (on this build `results/orchestrator/V21_THREE_ARMS_ABC.json`, of which the page
 carries only the pair Omni-Compass on native against native, and only those two sides' totals), what it ran, the engine, the
-commit, the three runs and the file, with the line "Run and scored by The Omni-Compass LLC's own code. No outside party has
+commit, the three runs and the file, with the line "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results."
 
 ### 4.4 The Software End Carried to Each Place
@@ -1388,7 +1388,7 @@ counted apart, because do no harm is judged by them, each with its cause where o
 
 Under the index stands one real test of the whole loop, three runs on GitHub's own machines (A, B and C from one
 commit), class L, on Omni-Compass's own orchestrator (`omni_orchestrator`), the organism run without Kubernetes: native is
-Kubernetes' published autoscaling rule on the muscles, as written by The Omni-Compass LLC, and the other side is Omni-Compass on
+Kubernetes' published autoscaling rule on the muscles, as written by Dubra Software Inc. / The Omni-Compass LLC, and the other side is Omni-Compass on
 top of the same rule. It is one test, not the figure of record. Its table gives each side's signal, then work, the 95th-percentile
 response time, the machines and the units (the service's own copies), each with its reading, its size with no sign, the raw change
 apart with its true sign, and every run's own change. Native's row is the baseline in every column. Units that rose are power
@@ -3366,7 +3366,7 @@ changed profile would do on a real system until that profile is validated and re
 
 ## 46. License and Commercial Terms
 
-The live benchmark engine page, this manual and every part of the repository are the property of The Omni-Compass LLC; all rights
+The live benchmark engine page, this manual and every part of the repository are the property of Dubra Software Inc. / The Omni-Compass LLC; all rights
 reserved; all patents, copyrights and trademarks filed in the USA. Use is evaluation and simulation only under `LICENSE`
 (`LicenseRef-OmniCompass-Evaluation-1.0`); any commercial use, commercialization, monetization, production use,
 redistribution or hosted service requires a signed, paid Omni-Compass Enterprise License (`ENTERPRISE_LICENSE.md`). The
@@ -3688,10 +3688,10 @@ cause and the knob that answers it.
 
 ## Contact
 
-Licensing, pilots, evaluations and the Omni-Compass Enterprise License: **The Omni-Compass LLC**. Owner and developer: AJ Dubra.
+Licensing, pilots, evaluations and the Omni-Compass Enterprise License: **Dubra Software Inc. / The Omni-Compass LLC**. Owner and developer: AJ Dubra.
 Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1. Landline, registered in
 Florida: 321-746-4411. www.omni-compass.com. Repository: github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC. Any use beyond
-evaluation and simulation requires a signed, paid Omni-Compass Enterprise License. Write to The Omni-Compass LLC before any
+evaluation and simulation requires a signed, paid Omni-Compass Enterprise License. Write to Dubra Software Inc. / The Omni-Compass LLC before any
 production use.
 
 ---
