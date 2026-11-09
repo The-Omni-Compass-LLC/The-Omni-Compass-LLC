@@ -6,6 +6,8 @@
 
 **Corporate affiliation:** **Dubra Software Inc. / The Omni-Compass LLC** is the canonical attribution in this active repository. [Publisher naming standard](docs/COMPANY_ATTRIBUTION_STANDARD.md) and [automated checker](tools/company_attribution.py) govern future documents.
 
+**Website → engineering synchronization:** [Website/GitHub alignment contract](docs/WEBSITE_GITHUB_ALIGNMENT_CONTRACT.md) maps the homepage, tour, ticker, guides, carousels, visuals, benchmark claims and publication checks to their evidence; [proposed commercial terms](docs/COMMERCIAL_TERMS_PROPOSAL.md) separates the 25% verified-savings participation, possible 5% hardware-embedding royalty and extra goodput in the same time. These are documentation and proposed commercial terms, not confirmation of a production website deployment.
+
 ## A. Identity, ownership and standing engine
 
 1. [README and project orientation](README.md), [license](LICENSE), [notice](NOTICE), [disclosures](DISCLOSURES.md), and [agent rules](AGENTS.md).
