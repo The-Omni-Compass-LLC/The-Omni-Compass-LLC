@@ -15,7 +15,7 @@ reference for that work in both books. The printed
 book of this text is `docs/OMNI_COMPASS_OWNERS_MANUAL.pdf` (`python3 docs/book/build_book.py --owner`).
 
 **October 2026**
-**The Omni-Compass LLC**
+**Dubra Software Inc. / The Omni-Compass LLC**
 
 All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC.
 
@@ -42,7 +42,7 @@ The number is how much more work was done for the same demand, the mean of our t
 The whole workload, composed layer by layer (a model of measurements, class S of class L and P; section 16.3b): **GAIN 42.0%** over work, speed and machines, the cloud's layer entering as exactly 1 (it holds), every interval carried (+32.5% to +52.2% with the gauges correlated; `results/WHOLE_SYSTEM.md`). It is the composition's index, not a price: a bill is the sum of the costs inside a declared boundary, and neither route's bill is resolved yet (section 3.8). Every real test together, the Omni index of Omni-Compass on native reads **GAIN 20.4%**, work, speed and machines read together, its categories from real messaging **GAIN 218.6%** to the database's buffer pool **power given 9.5%** (section 16.6).
 <!-- end of the bottom line -->
  Run and scored
-by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **What the whole industry faces.** Every computing system in service, from one server to a cloud region, from a GPU to a
 building's chillers, a grid feeder or a robot cell, is run by a stack of native controllers: the Kubernetes autoscalers and
@@ -83,7 +83,7 @@ On real machines (class L, live software), the combined Omni index, work, speed 
 The 1,107 muscles of the catalog are
 modelled (class S) and are never shown as proof of hardware. The engine is written twice, in Python and in C++, and the
 Python's 500 seeded runs through the C++ harness are identical to the last bit (`cpp/tools/engine_runs.cpp`; GitHub
-reruns the 500 on every change to the harness, the engine's C++ or the page, and every verify reruns 50 of them). Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+reruns the 500 on every change to the harness, the engine's C++ or the page, and every verify reruns 50 of them). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved
 these results.
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
@@ -91,7 +91,7 @@ run on. It does not make a system immune to failure, delay or drift: it keeps ea
 by row, what it did against native. A result on another system is that system's own, from its own paired runs; where it
 differs, the first presumption is the wiring (`DISCLOSURES.md`, section 4).
 
-**What is protected, and how.** Omni-Compass belongs to The Omni-Compass LLC. Its source, manuals and records are its
+**What is protected, and how.** Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. Its source, manuals and records are its
 copyrighted work; all patents, copyrights and trademarks filed in the USA. The repository is licensed for Evaluation and
 Simulation use only (`LICENSE`); any commercial use, monetization or production use requires a signed, paid Omni-Compass
 Enterprise License (`ENTERPRISE_LICENSE.md`). What a licensee acquires is the working whole: the engine, the wiring and the
@@ -133,7 +133,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ## Where Omni-Compass Sits, and What Each Benchmark Shows
@@ -279,14 +279,14 @@ saving on a particular system. The only number that applies to your system is th
 on your own receipt. Before Omni-Compass writes to any production system, it must run in watch mode, pass the wire
 check, and be covered by a signed Omni-Compass Enterprise License.
 
-**Rights and changes.** © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. The Omni-Compass LLC reserves the right to
+**Rights and changes.** © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Dubra Software Inc. / The Omni-Compass LLC reserves the right to
 change this manual, the software it describes and their terms at any time, without notice. Every copy, export or printout
 of this manual carries this notice, `LICENSE`, `NOTICE` and `DISCLOSURES.md` unchanged. All patents, copyrights and
 trademarks filed in the USA. www.omni-compass.com
 
 **THE PUBLISHED BENCHMARKS ARE THE RECORD OF WHAT OMNI-COMPASS DID ON THE SYSTEMS, LOADS AND ENGINE THEY NAME, EACH WITH ITS EVIDENCE CLASS. WHERE A RESULT ON ANY OTHER SYSTEM DIFFERS FROM THEM, OR ANYTHING LOOKS WRONG, THE FIRST PRESUMPTION IS THE WIRING, THE SETTINGS, OR HOW OMNI-COMPASS WAS IMPLEMENTED OR READ, NOT THE LAW. CHECK THOSE FIRST (THE MANUAL'S "WIRED RIGHT OR WIRED WRONG") BEFORE DRAWING ANY CONCLUSION ABOUT OMNI-COMPASS.**
 
-**The factory tune.** The engine in this repository is presented as The Omni-Compass LLC tuned it and ships it: a
+**The factory tune.** The engine in this repository is presented as Dubra Software Inc. / The Omni-Compass LLC tuned it and ships it: a
 self-running engine, set at the factory. Every muscle in the catalog is wired, and each runs on the setting found for it:
 its own card where one was found on development seeds and kept under the strict rule (364 muscles,
 `realms/muscle_cards_v5.csv`), the engine's own setting for every other muscle, all frozen and fingerprinted by version
@@ -365,7 +365,7 @@ there's Omni by itself", 23 October); there is no other arm and no other name. E
 the first run, and every row is shown, losses included. Each reading is one word, **GAIN**, **STEADY** or **LOSS**,
 decided by what the gauge is for. A result from our own model is labeled as a model; a result from live software is
 labeled as live software; only a meter speaks for hardware. Where we lost, the book says so, and we went to find out
-why. Nobody outside The Omni-Compass LLC has reviewed or approved these results, and every table says that too.
+why. Nobody outside Dubra Software Inc. / The Omni-Compass LLC has reviewed or approved these results, and every table says that too.
 
 **What this book holds.** This manual is the whole of it: what the governor is, the mathematics it runs on, how its
 nervous system reads and writes, how it is wired to each kind of machine, how to turn it on one level at a time, how to
@@ -383,7 +383,7 @@ and every table can be rebuilt from them by the tool it names.
 anything. Then wire it one level at a time, watch it before you let it write, and judge it by your own receipts.
 
 **AJ Dubra**
-Founder, The Omni-Compass LLC
+Founder, Dubra Software Inc. / The Omni-Compass LLC
 
 ## The Three Manuals: the Owner's, the Operator's and the Live Benchmark Engine's
 
@@ -465,7 +465,7 @@ will find, the following discipline throughout, because it is the discipline the
    that is shown and never counted, then applied unchanged to untouched cases. Any amendment made after a result has been
    seen is written into the preregistration with its time and reason, and the table that carries the result says so.
 3. **Three separate runs, one rule.** Every result is run three times as separate GitHub runs (A, B and C) on the same
-   frozen engine and profile, and every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree**. Nobody outside The Omni-Compass LLC has
+   frozen engine and profile, and every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree**. Nobody outside Dubra Software Inc. / The Omni-Compass LLC has
    reviewed or approved these results, and every three-run table says so.
 4. **Every row, losses included.** A row that went against Omni-Compass is in the table beside the rows that went for it.
    When Omni-Compass loses, the first suspect is our own wiring, native setup or scoring; when that is fixed, the test is
@@ -508,7 +508,7 @@ Every question has a place in this book, and the places outside it are few and n
 | A setting or an audit line | the Operator's Manual, Appendices K and L (every setting and every record, field by field); the source itself in this book's Source appendix |
 | How the engine works | Part II (the mechanism of action), Part III (the physics), Appendix C (the equations in full), the Source appendix |
 | What a result elsewhere means | `DISCLOSURES.md`, section 4 (the front matter): the first presumption is the wiring, the settings or the reading, never the law |
-| A licensing, pilot or Enterprise License question | The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida; www.omni-compass.com; the chapters "Licensing: Questions and Answers" and "The Enterprise License: Standard Terms" |
+| A licensing, pilot or Enterprise License question | Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida; www.omni-compass.com; the chapters "Licensing: Questions and Answers" and "The Enterprise License: Standard Terms" |
 | A security finding | the process in `SECURITY.md` (the chapter "Security Policy"): a private report, never a public issue |
 | Anything else about running the software | `.github/SUPPORT.md` in the repository, and the toll-free line above |
 
@@ -734,7 +734,7 @@ it, read back, and the record removed.
 | a meter that is blind or late | nothing: blind means hold; it moves nothing it cannot see | section 7.3 |
 | your results point the other way from the published ones | presume the wiring first, not the law | `DISCLOSURES.md`, section 4 |
 
-**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
 **What the letters of the number mean.** Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1); science and software people read each part on sight. Read in order, DEX-YLL-1 is the way the engine runs:
@@ -815,7 +815,7 @@ installed is a quarter off the bill.
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
@@ -3665,7 +3665,7 @@ start from the same fresh cluster, run for 900 s after a 120 s warm-up, and end 
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Steady work** (`results/live/V25_STEADY.md`, omni-v25): **GAIN, power given**, by the index's rule 30.8% GAIN. Mean response
@@ -3718,7 +3718,7 @@ inputs (the settings commands it wrote, the targets it held) beside the service'
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs**
@@ -3779,7 +3779,7 @@ The founder's order of 23 October: native, Omni-Compass on native and Omni-Compa
 | C | the batch job beside the service | 2,174 | 0 | 0 | 205.7 | 12.0 | 19.2 |
 | C | the drills | 3,306 | 0 | 0 | 209.9 | 14.5 | 19.6 |
 
-No request failed and none was answered wrong in any arm of any run (9,160 to 11,156 requests answered an arm). The means of the three runs, which the bottom line carries: Omni-Compass on native against native, work +8.5%, the 95th percentile 13.0% faster, machines 3.2% fewer, serving units 4.0% more; Omni-Compass direct against native, work +6.0%, the 95th percentile 9.9% faster, machines 2.8% fewer, serving units 3.5% more; Omni-Compass direct against Omni-Compass on native, work −2.3%, the 95th percentile 3.6% slower, machines 0.5% more, serving units 0.5% fewer. 1 rows read LOSS, each shown in the table: Omni direct against Omni on native, Work (requests a step). The test runs again on the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+No request failed and none was answered wrong in any arm of any run (9,160 to 11,156 requests answered an arm). The means of the three runs, which the bottom line carries: Omni-Compass on native against native, work +8.5%, the 95th percentile 13.0% faster, machines 3.2% fewer, serving units 4.0% more; Omni-Compass direct against native, work +6.0%, the 95th percentile 9.9% faster, machines 2.8% fewer, serving units 3.5% more; Omni-Compass direct against Omni-Compass on native, work −2.3%, the 95th percentile 3.6% slower, machines 0.5% more, serving units 0.5% fewer. 1 rows read LOSS, each shown in the table: Omni direct against Omni on native, Work (requests a step). The test runs again on the engine that stands. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 <!-- end of the three arms -->
 
 ### 16.2 The organisms with the real cluster inside, and the grid
@@ -3791,7 +3791,7 @@ stands, and until their tables land these are omni-v3's.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **The six organisms with the real cluster inside, 10 and 100 copies** (`results/live/V3_SIX_KUBE.md`, omni-v3): **GAIN, power
@@ -3870,7 +3870,7 @@ noise). The stacked run that replaces the composition is preregistered (`docs/WH
 | On site: the software end × the bare metal | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%** |
 | Through the cloud: the software end × the cloud's wire × the bare metal at the back end | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%**; bill **STEADY 0.0%** |
 
-By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 41.9%** (+32.5% to +52.1%) on site and **GAIN 41.9%** (+32.5% to +52.1%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 3.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 41.9%** (+32.5% to +52.1%) on site and **GAIN 41.9%** (+32.5% to +52.1%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 3.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 <!-- end of the routes -->
 
 ### 16.4 A real database, a real message broker, a real cache
@@ -3887,7 +3887,7 @@ do-no-harm reading, not a missing one.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Redis, the cache's memory ceiling** (`results/live/V25_REDIS.md`, omni-v25): **GAIN, power given**, by the index's rule 6.8%
@@ -3926,7 +3926,7 @@ never judged.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robustness: the two-hour run** (`results/live/V25_ROBUST_LONG.md`, omni-v25): **GAIN AND LOSS**, by the index's rule 8.9%
@@ -3946,7 +3946,7 @@ reviewed or approved these results.
 ### 16.5 The modelled realms and the independent simulators
 
 Every result here is evidence class S: a statement about a published model under its own native controller, never about
-hardware, and never counted in the Omni index. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
+hardware, and never counted in the Omni index. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed
 or approved these results.
 
 ![Receipt chart: the seven organisms under the three loads (the own load, the climb and the line), from results/realms_v5/REALMS_V5.md. Left, the change in misses in percentage points with its 95% interval, a fall read GAIN; right, the power given as a share of native's energy. Every organism reads GAIN (fewer misses) under all three loads; the organisms are class S, our own models.](book/figures/r_realms.svg)
@@ -3986,7 +3986,7 @@ the 0.5% floor it reads STEADY).
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robot arms (MuJoCo), the three untouched robots** (`results/live/V25_MUJOCO.md`, omni-v25): **GAIN**, by the index's rule
@@ -4184,9 +4184,9 @@ simulation use only. Everything else - commercial use, production use, operating
 redistribution, a hosted or managed service, incorporation into a product or service, or using the software or its
 results to build a competing product - requires a written Omni-Compass Enterprise License signed by The Omni-Compass
 LLC and paid for. All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC. No patent or trademark license is granted for any other use. Contributions are accepted only on the
-terms in `.github/CONTRIBUTING.md`, which assign their rights to The Omni-Compass LLC.
+terms in `.github/CONTRIBUTING.md`, which assign their rights to Dubra Software Inc. / The Omni-Compass LLC.
 
-The copyright in Omni-Compass belongs to The Omni-Compass LLC. The source is visible under the Evaluation License,
+The copyright in Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. The source is visible under the Evaluation License,
 which is not an open-source license; seeing the source grants no right beyond it. The owner of a copyright may
 grant it under more than one license at once (the Evaluation License to everyone, a paid Enterprise License to a
 customer), may set the terms of each new version, and may assign the copyright; copies already received keep the
@@ -4686,7 +4686,7 @@ Nothing in this chain requires a credential, a licence key or a word from us; th
 
 ## Contact
 
-Licensing, pilots and the Omni-Compass Enterprise License: **The Omni-Compass LLC.**
+Licensing, pilots and the Omni-Compass Enterprise License: **Dubra Software Inc. / The Omni-Compass LLC.**
 
 ---
 
