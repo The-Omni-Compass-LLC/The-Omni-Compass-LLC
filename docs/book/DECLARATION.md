@@ -178,7 +178,7 @@ runs through every page of this book.
 
 ## Availability and the rights boundary
 
-Time is of the essence. Omni-Compass is available from The Omni-Compass LLC for controlled technical evaluation,
+Time is of the essence. Omni-Compass is available from Dubra Software Inc. / The Omni-Compass LLC for controlled technical evaluation,
 research collaboration, pilot integration, strategic engagement and separately licensed commercial deployment. The
 same rights boundary applies at every level of use: inspection, local execution, simulation, research,
 benchmarking, observe-only, shadow mode, supervised control, bounded autopilot, hybrid control, direct-to-muscle
