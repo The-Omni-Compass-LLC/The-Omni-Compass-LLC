@@ -89,7 +89,7 @@ class PublicBenchmarkContract(unittest.TestCase):
         self.assertEqual(arms["C"]["engine"], arms["D"]["engine"])
         self.assertEqual(arms["A"]["class"], "P")
         self.assertEqual(arms["C"]["class"], "L")
-        self.assertEqual(arms["A"]["engine"], self.bills["chip"]["engine"])
+        self.assertEqual(arms["A"]["engine"], self.bills["chip"]["engine"].split(" ")[0])
         self.assertEqual(arms["C"]["engine"], self.bills["cloud"]["engine"])
         self.assertEqual(len(arms["A"]["runs"]), len(arms["B"]["runs"]))
         self.assertEqual([r["run"] for r in arms["A"]["runs"]],
