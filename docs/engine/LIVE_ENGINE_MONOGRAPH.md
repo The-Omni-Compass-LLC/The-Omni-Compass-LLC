@@ -2,7 +2,7 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 Dubra Software Inc. / The Omni-Compass LLC, 7 November 2026.
 
@@ -907,7 +907,7 @@ A reader checks a copy by the manual's chapter 47:
 
 ### 8.6 What the record establishes
 
-In every layer Omni-Compass sits above the native controller, in the control plane, writing settings it already accepts and the four other kinds of section 2.2. Where native has room the live record reads GAIN: every Kubernetes test of the index but the noisy neighbour, and Kafka; Redis, MySQL and PostgreSQL read GAIN on their service and power given on the index; MongoDB took cache and its service read STEADY. The headline, <!-- monograph: index_headline (tools/monograph_words.py) -->GAIN, up 20.4%<!-- end of monograph: index_headline -->, carries its interval and its reading with each category left out (section 4.8). <!-- monograph: loss_against_native (tools/monograph_words.py) -->287<!-- end of monograph: loss_against_native --> rows read LOSS against native, every one shown; the ledger attributes <!-- monograph: flip_split (tools/monograph_words.py) -->78 rows with the fault as their one written cause and 67 queue rows that name it beside a suspected second cause<!-- end of monograph: flip_split --> to one fault of the engine that stands (section 3.9), a diagnosis mostly from one run each that omni-v26's three runs are to test, and the rest have a suspected or measured cause or none yet (threats T1, T2). Each can be re-derived from the raw receipts with sections 8.1 to 8.5; none has yet been re-derived outside The Omni-Compass LLC (threat T29).
+In every layer Omni-Compass sits above the native controller, in the control plane, writing settings it already accepts and the four other kinds of section 2.2. Where native has room the live record reads GAIN: every Kubernetes test of the index but the noisy neighbour, and Kafka; Redis, MySQL and PostgreSQL read GAIN on their service and power given on the index; MongoDB took cache and its service read STEADY. The headline, <!-- monograph: index_headline (tools/monograph_words.py) -->GAIN, up 20.4%<!-- end of monograph: index_headline -->, carries its interval and its reading with each category left out (section 4.8). <!-- monograph: loss_against_native (tools/monograph_words.py) -->287<!-- end of monograph: loss_against_native --> rows read LOSS against native, every one shown; the ledger attributes <!-- monograph: flip_split (tools/monograph_words.py) -->78 rows with the fault as their one written cause and 67 queue rows that name it beside a suspected second cause<!-- end of monograph: flip_split --> to one fault of the engine that stands (section 3.9), a diagnosis mostly from one run each that omni-v26's three runs are to test, and the rest have a suspected or measured cause or none yet (threats T1, T2). Each can be re-derived from the raw receipts with sections 8.1 to 8.5; none has yet been re-derived outside Dubra Software Inc. / The Omni-Compass LLC (threat T29).
 
 ## 9. Threats to Validity
 
@@ -977,7 +977,7 @@ Each limit is numbered once, with the sections that carry its evidence, and hold
 
 ### 9.4 The record and the page
 
-**T29. One source.** Every run, rule, scorer, check, load and native setting is The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->99 amendments in 18 preregistrations: 79 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
+**T29. One source.** Every run, rule, scorer, check, load and native setting is Dubra Software Inc. / The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->99 amendments in 18 preregistrations: 79 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
 
 **T30. Reproduction.** Sums show files unchanged, not a right measurement; the newest byte-for-byte rebuild found one table not identical; the release check passes only at a release commit; a receipt needs about ten gigabytes of raw folders (8.1, 8.4, 8.5).
 

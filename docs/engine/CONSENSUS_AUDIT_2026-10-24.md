@@ -146,7 +146,7 @@ Each is set out in full in its seat's report, with the line, the evidence and th
   - V6 a file path running 12 px off the phone;
   - V7 to V11 phone overprints in the dashboards, the immune monitor, the phase planes, the pipeline, the quote board and the benefit board.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 
