@@ -5,7 +5,7 @@
 The founder's solid-A directive of 26 October 2026 asks for an A that survives an independent review, earned by evidence: no gain
 made up, no loss hidden, no proof invented, no controller action forced, no measurement changed to raise a grade. This folder
 holds what has been executed for it, each file written by a tool from the repository's own records, and says plainly what has
-not yet been executed. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+not yet been executed. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 | File | What it is | Written by | Status |
 |---|---|---|---|
