@@ -33,7 +33,7 @@ class (P a physical meter, L live software, S our own models) and its original r
    0.5% floor, or (an older key) no difference beyond the noise, never mixed.
 6. **Financial implications.** Only costs measured or priced inside a stated boundary; an unpriced bill stays unresolved.
 7. **Board and IP claims.** Each linked to its source, its caveats, its ownership terms and its review status: run and scored by
-   The Omni-Compass LLC's own code; no outside party has reviewed or approved these results.
+   Dubra Software Inc. / The Omni-Compass LLC's own code; no outside party has reviewed or approved these results.
 
 A generated page or dashboard is changed through its generator, never by hand; historical receipts are never rewritten.
 
