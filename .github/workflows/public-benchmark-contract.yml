@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+name: Public benchmark evidence contract
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "results/OMNI_INDEX.json"
+      - "results/OMNI_INDEX.md"
+      - "results/SITE_NUMBERS.json"
+      - "results/SITE_NUMBERS.md"
+      - "results/TWO_BILLS.json"
+      - "docs/WEBSITE_CLAIMS.md"
+      - "docs/OMNI_V*.md"
+      - "OMNI_V*.json"
+      - "tools/site_numbers.py"
+      - "tests/test_public_benchmark_contract.py"
+      - ".github/workflows/public-benchmark-contract.yml"
+  pull_request:
+    paths:
+      - "results/OMNI_INDEX.json"
+      - "results/OMNI_INDEX.md"
+      - "results/SITE_NUMBERS.json"
+      - "results/SITE_NUMBERS.md"
+      - "results/TWO_BILLS.json"
+      - "docs/WEBSITE_CLAIMS.md"
+      - "docs/OMNI_V*.md"
+      - "OMNI_V*.json"
+      - "tools/site_numbers.py"
+      - "tests/test_public_benchmark_contract.py"
+      - ".github/workflows/public-benchmark-contract.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "21 13 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify-public-receipts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check generated public numbers without changing them
+        run: python3 tools/site_numbers.py --check
+      - name: Check public figures, sources, adverse rows, and version labels
+        run: python3 -m unittest -v tests.test_public_benchmark_contract
+      - name: Evidence summary
+        if: always()
+        shell: bash
+        run: |
+          echo "### Public benchmark evidence contract" >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: \`$GITHUB_SHA\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Only provenance and data-feed consistency were checked." >> "$GITHUB_STEP_SUMMARY"
+          echo "No physical GPU, CPU, Kubernetes or cloud experiment was run." >> "$GITHUB_STEP_SUMMARY"
+          echo "No measured headline or results file was modified." >> "$GITHUB_STEP_SUMMARY"
+
+# © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
