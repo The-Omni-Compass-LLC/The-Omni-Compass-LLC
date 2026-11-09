@@ -43,6 +43,9 @@ def active_paths(root: Path = ROOT):
     for item in (root / "docs").glob("*.md"):
         if not VERSIONED.fullmatch(item.name):
             result.add(item)
+    for folder in ("book", "specs", "engine", "audit", "audits"):
+        for item in (root / "docs" / folder).glob("*.md"):
+            result.add(item)
     for item in (root / ".github").glob("*.md"):
         result.add(item)
     for name in ROOT_PUBLICATIONS:
