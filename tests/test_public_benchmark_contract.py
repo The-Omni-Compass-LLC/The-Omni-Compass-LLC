@@ -29,6 +29,26 @@ class PublicBenchmarkContract(unittest.TestCase):
         cls.bills = load("results/TWO_BILLS.json")
         cls.rows = {row["id"]: row for row in cls.feed["show"]}
 
+    def test_major_manuals_show_current_evidence_correction(self):
+        """A current Markdown manual must expose the controlled receipt addendum."""
+        addendum = ROOT / "docs/audits/MANUAL_EVIDENCE_CORRIGENDUM_2026-11-09.md"
+        self.assertTrue(addendum.is_file(), "dated manual correction missing")
+        correction = addendum.read_text(encoding="utf-8")
+        for key in ("OMNI_V26.json", "results/OMNI_INDEX.json",
+                    "results/TWO_BILLS.json", "docs/ENGINE_PROOFS.md",
+                    "docs/LOSS_LEDGER.md"):
+            self.assertIn(key, correction)
+        for path in ("docs/OMNI_COMPASS_MANUAL.md",
+                     "docs/OMNI_COMPASS_OWNERS_MANUAL.md",
+                     "docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md"):
+            with self.subTest(manual=path):
+                # Check front matter only: manual bodies are large and preserve history.
+                front = (ROOT / path).read_text(encoding="utf-8")[:2000]
+                self.assertIn("Evidence-currency notice (9 November 2026)", front)
+                self.assertIn(
+                    "audits/MANUAL_EVIDENCE_CORRIGENDUM_2026-11-09.md", front)
+                self.assertIn("does not certify", front)
+
     def test_machine_readable_editorial_summary_tracks_current_receipts(self):
         """The crawler-facing overview may not promote an obsolete index to current."""
         guide = (ROOT / "llms.txt").read_text(encoding="utf-8")
