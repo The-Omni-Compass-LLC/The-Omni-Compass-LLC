@@ -5,7 +5,7 @@
 > **Specification, carried from the package XPASS27 (2026-10-01).** It specifies a contract or a measurement; any result
 > it quotes is as of that package. Current results: `docs/STATE_OF_PLAY.md` and the tables in `results/`.
 
-> **License notice:** Omni-Compass is source-available for **evaluation and simulation only** under the root `LICENSE`; it is **not open source**. Production use, commercialization, monetization, hosted/SaaS/API use, customer-facing use, and commercial embedding/integration require a separate written paid license from **The Omni-Compass LLC**. The root `LICENSE` controls.
+> **License notice:** Omni-Compass is source-available for **evaluation and simulation only** under the root `LICENSE`; it is **not open source**. Production use, commercialization, monetization, hosted/SaaS/API use, customer-facing use, and commercial embedding/integration require a separate written paid license from **Dubra Software Inc. / The Omni-Compass LLC**. The root `LICENSE` controls.
 
 
 ## Status
