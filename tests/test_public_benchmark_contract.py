@@ -56,7 +56,14 @@ class PublicBenchmarkContract(unittest.TestCase):
         guide = (ROOT / "llms.txt").read_text(encoding="utf-8")
         index_value = round(self.index["headline_pct"], 1)
         service_value = round(self.index["service_headline_pct"], 1)
-        current_sentence = ("published software-only index on omni-v25")
+        measured_versions = {
+            int(re.search(r"/V(\d+)_", test["source"]).group(1))
+            for test in self.index["tests"]
+        }
+        self.assertEqual(len(measured_versions), 1,
+                         "crawler-facing index combines different engine versions")
+        measured_version = next(iter(measured_versions))
+        current_sentence = f"published software-only index on omni-v{measured_version}"
         self.assertIn(current_sentence, guide,
                       "crawler guide must distinguish benchmark V25 from standing engine V26")
         self.assertIn(f"+{index_value:.1f}%", guide)
@@ -153,7 +160,10 @@ class PublicBenchmarkContract(unittest.TestCase):
         for t in self.index["tests"]:
             with self.subTest(source=t.get("source")):
                 self.assertTrue((ROOT / t["source"]).is_file(), "index entry has no underlying JSON")
-                self.assertRegex(t["source"], r"/V25_", "a V25 index cannot silently mix engine versions")
+                measured_version = re.search(r"omni-v(\d+)", self.rows["omni_index"]["engine"])
+                self.assertIsNotNone(measured_version, "benchmark row must identify its engine")
+                self.assertRegex(t["source"], rf"/V{measured_version.group(1)}_",
+                                 "index must not mix different engine versions")
 
     def test_gpu_and_cloud_are_not_mislabeled_v25(self):
         arms = self.feed["four_arms"]
