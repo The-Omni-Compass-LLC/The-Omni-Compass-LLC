@@ -7,8 +7,8 @@ professional, respectful and truthful. Harassment, discrimination, personal atta
 information, and misrepresenting results are not tolerated. Results are reported with their evidence class, and no
 one may present a simulation as a hardware measurement.
 
-The Omni-Compass LLC maintains this repository and may remove content, close threads, or block participants who do not
-follow this code. Report conduct concerns to The Omni-Compass LLC through the contact in `.github/SUPPORT.md`.
+Dubra Software Inc. / The Omni-Compass LLC maintains this repository and may remove content, close threads, or block participants who do not
+follow this code. Report conduct concerns to Dubra Software Inc. / The Omni-Compass LLC through the contact in `.github/SUPPORT.md`.
 
 ---
 
