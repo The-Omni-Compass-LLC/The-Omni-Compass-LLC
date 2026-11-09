@@ -29,6 +29,22 @@ class PublicBenchmarkContract(unittest.TestCase):
         cls.bills = load("results/TWO_BILLS.json")
         cls.rows = {row["id"]: row for row in cls.feed["show"]}
 
+    def test_machine_readable_editorial_summary_tracks_current_receipts(self):
+        """The crawler-facing overview may not promote an obsolete index to current."""
+        guide = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        index_value = round(self.index["headline_pct"], 1)
+        service_value = round(self.index["service_headline_pct"], 1)
+        current_sentence = ("published software-only index on omni-v25")
+        self.assertIn(current_sentence, guide,
+                      "crawler guide must distinguish benchmark V25 from standing engine V26")
+        self.assertIn(f"+{index_value:.1f}%", guide)
+        self.assertIn(f"+{service_value:.1f}%", guide)
+        self.assertIn("The old omni-v21 readings", guide)
+        self.assertIn("historical, not the current headline", guide)
+        self.assertIn("not raw throughput increases or cloud bill savings", guide)
+        self.assertIn("not a physical whole-system measurement", guide)
+        self.assertIn("results/OMNI_INDEX.json", guide)
+
     def test_index_geometric_aggregation_reproduces_record(self):
         """Recalculate from published per-test scores without importing the index generator.
 
