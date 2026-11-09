@@ -37,6 +37,8 @@ Read [mechanism of action](docs/MECHANISM_OF_ACTION.md), [canonical engine](docs
 4. Compare native and Omni on identical permitted workloads. Distinguish P physical metering, L exercised software, and S simulations. A successful dispatch or workflow run is not a positive measured outcome.
 5. Preserve historical result paths, versioned JSON manifests and run artifacts. Reorganize **navigation first**; migrate a file only with an explicit old-to-new mapping, reference scan, all affected generators/tests adjusted, and passing verification. A move that breaks an old receipt's citation destroys evidence rather than improving the hierarchy.
 
+**Current ten-discipline referee assessment:** [November 9 ten-lens audit](docs/audits/TEN_LENS_REFEREE_AUDIT_2026-11-09.md), including separate grades, physical receipts, math/physics scope and A+ remediation thresholds.
+
 ## E. Presentation and due diligence
 
 [Documentation index by reader](docs/README.md) → [evidence registry](docs/EVIDENCE_LEDGER.md) → [claims register](docs/CLAIMS_REGISTER.md) → [benchmark referee audit](docs/audit/README.md) → [referee cross-version standard](docs/REFEREE_VERSION_AND_BENCHMARK_STANDARD.md) → [report card](docs/REPORT_CARD.md). The original experiment remains the primary authority when a summary conflicts with it.
