@@ -108,7 +108,7 @@ native, the work per dollar read beside the bill (the founder's words of 31 Octo
 that night: "We just need to show we hold"; the words for every place, `DISCLOSURES.md`, section 10). The engine is the same on every cloud; what differs is the wire to it: this workflow, the paired script, the
 queue and the kubeconfig check.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

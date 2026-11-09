@@ -93,7 +93,7 @@ Energy and the bill are not judged here: the cap is fixed in both arms. The cap 
 machine, shared by the seven kind nodes, not separate machines; a rented cloud run (Azure's managed Kubernetes) is the
 place for machines. Evidence class **L** (the real thing: a real cluster, real requests, every answer counted).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 
