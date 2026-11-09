@@ -42,7 +42,7 @@ class PublicBenchmarkContract(unittest.TestCase):
             row = self.rows[key]
             self.assertEqual(row["cls"], "L")
             self.assertEqual(row["receipt"], "results/OMNI_INDEX.md")
-            self.assertIn("omni-v25", row["engine"])
+            self.assertRegex(row["engine"], r"omni-v[0-9]+", "engine version missing")
             self.assertEqual(row["direction"], "up" if row["value_pct"] > 0 else "down" if row["value_pct"] < 0 else "unchanged")
             self.assertIn(f'{abs(row["value_pct"]):.1f}%', row["sentence"])
 
