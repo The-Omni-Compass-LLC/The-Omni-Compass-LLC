@@ -24,7 +24,7 @@ Every number on this page is read from its record when the page is written (`pyt
 
 **What comes next?** Every benchmark's three runs on the engine that stands, the cloud sets that count the work, Google's and Amazon's sets on the founder's word, and the next version's list (`docs/CHANGE_CONTROL.md`).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 
