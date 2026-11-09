@@ -4,6 +4,8 @@
 
 **Purpose.** The stable entry point for engineers, independent referees, physicists, mathematicians, operators and counsel. Read from source and assumptions to run receipts and finally to claims. This map adds navigation rather than relocating historical files or silently breaking benchmark references. It reports the evidence state checked on **9 November 2026**, not a live telemetry feed.
 
+**Corporate affiliation:** **Dubra Software Inc. / The Omni-Compass LLC** is the canonical attribution in this active repository. [Publisher naming standard](docs/COMPANY_ATTRIBUTION_STANDARD.md) and [automated checker](tools/company_attribution.py) govern future documents.
+
 ## A. Identity, ownership and standing engine
 
 1. [README and project orientation](README.md), [license](LICENSE), [notice](NOTICE), [disclosures](DISCLOSURES.md), and [agent rules](AGENTS.md).
