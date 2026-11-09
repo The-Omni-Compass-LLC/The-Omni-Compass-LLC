@@ -6,7 +6,7 @@ The founder's order of 23 October 2026: "I want to build my own components ... t
 only be to replace ... Kubernetes, and whatever orchestration ... Go ahead and build such a thing." This page is what was built
 that day and what its first showing read. It is a first showing on one host, class L (live software, every piece a real
 process), one run of each arm: it shows that the mechanism works end to end and how it behaved here, not yet a three-run
-reading. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+reading. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 1. What it is
 
@@ -223,7 +223,7 @@ host.
 | Omni direct against native | **GAIN in all three** (up 7.3%, 5.7%, 9.4%) | **GAIN in all three** (down 9.8%, 15.7%, 10.8%) | STEADY (down 2.2%, 3.1%, 2.2%) | STEADY (up 6.9%, down 0.3%, up 9.0%) |
 | Omni direct against Omni on native | STEADY (up 2.0%, 0.4%, 1.9%) | STEADY (down 0.9%, 4.1%, 3.6%) | STEADY | STEADY (down 3.7%, 8.5%, 1.7%) |
 
-No LOSS in any pair in any run; nothing failed and nothing wrong in any arm of any run (28,528 to 34,837 requests a run across the three arms), the batch job and the drills included. Both Omni-Compass arms do more work than native, answer faster, and pay for it in units (power given); Omni direct and Omni on native read STEADY against each other on every gauge in the three runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+No LOSS in any pair in any run; nothing failed and nothing wrong in any arm of any run (28,528 to 34,837 requests a run across the three arms), the batch job and the drills included. Both Omni-Compass arms do more work than native, answer faster, and pay for it in units (power given); Omni direct and Omni on native read STEADY against each other on every gauge in the three runs. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 
 ## 3. What it covers, and what it does not yet
