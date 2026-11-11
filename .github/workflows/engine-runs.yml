@@ -86,9 +86,23 @@ jobs:
           python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
           git add results/engine_runs/ results/core_runs/
           git commit -q -m "The Python's runs and the core's Monte Carlo from the jump generator: base $BASE, checked in the live benchmark engine's own code (engine-runs run $GITHUB_RUN_ID)"
+          # the monograph quotes the newest set (tools/monograph_words.py): written again on the branch as it stands after the
+          # rebase and committed beside the set, so no release check finds it one set behind (11 November: every set pushed to
+          # a branch had left the monograph stale and the next release check failed on it); a push that fails drops it and retries
           for attempt in 1 2 3 4 5 6; do
-            git pull -q --rebase && git push && exit 0
-            git rebase --abort 2>/dev/null || true
+            if git pull -q --rebase; then
+              made=0
+              python3 tools/monograph_words.py --fix > /dev/null
+              if ! git diff --quiet -- docs/engine/LIVE_ENGINE_MONOGRAPH.md; then
+                git add docs/engine/LIVE_ENGINE_MONOGRAPH.md
+                git commit -q -m "The live engine monograph quotes the new set (tools/monograph_words.py --fix, engine-runs run $GITHUB_RUN_ID)"
+                made=1
+              fi
+              git push && exit 0
+              if [ "$made" = 1 ]; then git reset -q --hard HEAD~1; fi
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
           done
           echo "::error::the record could not be pushed after six attempts"; exit 1
