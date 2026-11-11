@@ -728,11 +728,11 @@ Native shows in orange and Omni-Compass in blue; each monitor's light is a red o
 <!-- monograph: page_sections (tools/monograph_words.py) -->
 | Section | Anchor | Monitors (number, name, class) | The page's own code | Records read | Live Engine Manual |
 |---|---|---|---|---|---|
-| 0 Monitor Wall | `#s-wall` | none | `auxBuild`, `auxRender`, `drawWall`, `engineBanner`, `lampSweep` | `beatsweep`, `build`, `cpuhost`, `fleet`, `gpurun`, `monitors`, `runs` | chapter 1 |
+| 0 Monitor Wall | `#s-wall` | none | `auxBuild`, `auxRender`, `drawWall`, `engineBanner`, `lampSweep`, `tourFollow` | `beatsweep`, `build`, `cpuhost`, `fleet`, `gpurun`, `monitors`, `runs` | chapter 1 |
 | 1 Control Panel | `#s-health` | none | `beatSweepShow`, `cmdEcho`, `fuseBuild`, `fuseCmdsBuild`, `fuseMetricsRender`, `fuseSync`, `fuseTab`, `fuseTabsInit`, `igRender`, `jgPaint`, `jgSetup`, `jgTick`, `mechBuild`, `mechLive`, `mechSync`, `mechTab`, `monToc`, `rptOpen`, `swMirror`, `swSet` | `build`, `coremc`, `dial`, `engineruns`, `injgrid`, `monitors`, `scenarios`, `whole` | chapter 2 |
-| 2a Scorecard | `#s-bottom` | none | `bottomRender` | `fleet`, `onnative`, `whole` | chapter 4 |
+| 2a Scorecard | `#s-bottom` | none | `bottomRender` | `audit`, `fleet`, `onnative`, `whole` | chapter 4 |
 | 2b Benefit Against Native | `#s-answer` | none | `answerCheck`, `armsLive` | `bills`, `build`, `onnative` | chapter 5 |
-| 2c Benefit Board | `#s-board` | 1 Benefit by Domain (L/S); 4 Benefit by Gauge Family (L/S); 3 Market Map (L/S); 20 Quote Board (L/S) | `buildFamTable`, `buildFleet`, `drawBenefit`, `drawFam`, `drawQuotes`, `drawTradeMap`, `fxCursor`, `tally`, `tradeWire` | `build`, `fleet`, `gpurun`, `scen` | chapter 6 |
+| 2c Benefit Board | `#s-board` | 1 Benefit by Domain (L/S); 4 Benefit by Gauge Family (L/S); 3 Market Map (L/S); 20 Quote Board (L/S) | `buildFamTable`, `buildFleet`, `drawBenefit`, `drawFam`, `drawQuotes`, `drawTradeMap`, `fxCursor`, `tally`, `tradeWire` | `audit`, `build`, `fleet`, `gpurun`, `scen` | chapter 6 |
 | 2d LOSS Register | `#s-loss` | none | `buildAudit`, `buildLossKnobs` | `audit`, `coremc`, `gpurun`, `scen`, `whole` | chapter 7 |
 | 2e Status Board | `#s-status` | none | `hbRender`, `hbTick` | `audit`, `build`, `fleet`, `glossary`, `gpurun`, `scen`, `whole` | chapter 8 |
 | 3a Live Organism | `#s-engines` | 5 Native Organism Ring (S); 6 Omni-Compass Organism Ring (S); 11 Immune System (S); 35 Body Parts on the Band (S) | `buildImm`, `drawImm`, `drawSwarm`, `factoryBeat`, `factoryBeatCloud`, `tNarrate`, `updateImmune`, `updateScan` | `build`, `harness`, `runs` | chapter 9 |
@@ -751,7 +751,7 @@ Native shows in orange and Omni-Compass in blue; each monitor's light is a red o
 | 4e Orchestrators and Governors | `#s-orch` | 42 Road to a Result (L); 24 Orchestration Stack (L) | `buildFour`, `buildOrch`, `buildOrchDetail`, `buildOrchestra`, `drawOrch`, `drawOrchRoad`, `orchSelect` | `build`, `fleet` | chapter 22 |
 | 4f GPU and CPU Hardware | `#s-stacks` | 43 Metered A100 Run (P); 44 CPU Host Model (S); 45 8-Card GPU Node (S); 46 Stack Models (S) | `buildMech`, `cpuInit`, `cpuStands`, `drawCpuHost`, `drawGpu8`, `drawGpuRun`, `drawSStrip`, `gpuInit`, `gpuStands`, `mechSame`, `setStack`, `updateStack` | `bills`, `build`, `cpuhost`, `gpurun`, `scen` | chapter 23 |
 | 4g CI Pipeline | `#s-github` | 59 GitHub Actions in Flight (L) | `drawCi` | `build` | chapter 24 |
-| 5a Python Runs and Monte Carlo | `#s-proof` | 50 Three-Way Run Check (S); 51 Held-Out Scenario Replay (S); 52 Engine Core Monte Carlo (S) | `drawHeld`, `drawMC`, `drawProof`, `hoInit`, `hoNote`, `mcLinkPaint`, `mcLinkedRun`, `mcRender`, `mcSetup`, `mcSysSetup`, `ownOpen`, `proofInit`, `proofSets`, `proofTable` | `build`, `coremc`, `engineruns`, `heldout`, `monitors`, `scen`, `whole` | chapter 25 |
+| 5a Python Runs and Monte Carlo | `#s-proof` | 50 Three-Way Run Check (S); 51 Held-Out Scenario Replay (S); 52 Engine Core Monte Carlo (S) | `drawHeld`, `drawMC`, `drawProof`, `hoInit`, `hoNote`, `mcLinkPaint`, `mcLinkedRun`, `mcRender`, `mcSetup`, `mcSysSetup`, `ownOpen`, `proofInit`, `proofPrint`, `proofSets`, `proofTable` | `build`, `coremc`, `engineruns`, `heldout`, `monitors`, `scen`, `whole` | chapter 25 |
 | 5b C++ Twin | `#s-cpp` | none | `cppRender`, `find` | `cpptwin` | chapter 26 |
 | 5c Scenarios and Injection Grid | `#s-scn` | none | `scnRender` | `injgrid`, `scenarios` | chapter 27 |
 | 5d Whole Organism | `#s-whole` | 2 Stack Composition (S) | `buildWhole`, `drawWhole` | `audit`, `build`, `coremc`, `fleet`, `scen`, `whole` | chapter 28 |
@@ -766,7 +766,7 @@ Native shows in orange and Omni-Compass in blue; each monitor's light is a red o
 | C Problem and Answer | `#s-problem` | none | `buildBottom`, `factoryBeat`, `factoryBeatCloud` | `audit`, `build`, `fleet`, `gpurun`, `harness`, `runs`, `scen`, `whole` | chapter 37 |
 | D Executive Summary and Reading Key | `#s-read` | none | `buildKeyEx`, `fillSumIndex` | `audit`, `build`, `fleet`, `gpurun`, `harness`, `runs`, `scen`, `whole` | chapter 38 |
 | E Monitor List | `#s-monlist` | none | `monInventory`, `mvShow` | `monitors` | chapter 39 |
-| F Glossary and Index | `#s-glossary` | none | `glInit`, `glRender`, `pad`, `screenFit`, `screenWire`, `secSigSweep`, `tourLight`, `tourOff`, `tourOn`, `tourPlaceCard`, `tourPlaceTab`, `tourPoint`, `tourRate`, `tourReveal`, `tourShow`, `tourWire`, `wire`, `wireScene` | `build`, `fleet`, `glossary`, `onnative`, `whole` | chapter 40 |
+| F Glossary and Index | `#s-glossary` | none | `glInit`, `glRender`, `pad`, `screenFit`, `screenWire`, `secSigSweep`, `tourLight`, `tourOff`, `tourOn`, `tourPlaceCard`, `tourPlaceTab`, `tourPoint`, `tourRate`, `tourReveal`, `tourShow`, `tourWire`, `wire`, `wireScene` | `audit`, `build`, `fleet`, `glossary`, `onnative`, `whole` | chapter 40 |
 | G Disclosures, Law and Contact | `#s-disclose` | none | `hwState` | `build`, `gpurun` | chapter 41 |
 <!-- end of monograph: page_sections -->
 

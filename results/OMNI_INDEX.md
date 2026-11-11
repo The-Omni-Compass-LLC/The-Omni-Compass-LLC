@@ -61,6 +61,16 @@ Read: every column points the same way: a plus is a GAIN against the system's de
 | Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `read_write`: the buffer pool's size, three paired repetitions, three runs | **10.6% power given** | 15.7% GAIN | 1.7% GAIN | 31.6% GAIN | 52.3% power given | 7.1% GAIN | `results/live/V25_SYSBENCH.json` |
 | Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `update_index`: the buffer pool's size, three paired repetitions, three runs | **12.2% power given** | 19.7% GAIN | 36.2% GAIN | 5.2% GAIN | 58.6% power given | 3.4% GAIN | `results/live/V25_SYSBENCH.json` |
 
+## On a newer engine, outside the index until every test lands
+
+Each test below has its three-run table on a newer engine than the index's; it is scored by the same rule and shown under its own engine, and joins the index with the rest of its engine's tables, never alone.
+
+| Category | Test | Score by the index's rule | Service reading | Source |
+|---|---|---:|---:|---|
+| Real messaging (Apache Kafka, GitHub) | Kafka `burst`: the consumer group's size, three paired repetitions, three runs | 218.8% GAIN | 1574.9% GAIN | `results/live/V26_KAFKA.json` |
+| Real messaging (Apache Kafka, GitHub) | Kafka `heavy`: the consumer group's size, three paired repetitions, three runs | 220.4% GAIN | 1364.3% GAIN | `results/live/V26_KAFKA.json` |
+| Real messaging (Apache Kafka, GitHub) | Kafka `light`: the consumer group's size, three paired repetitions, three runs | 224.0% GAIN | 1647.5% GAIN | `results/live/V26_KAFKA.json` |
+
 ---
 
 *© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

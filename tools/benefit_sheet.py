@@ -308,6 +308,25 @@ def from_index():
                      "gain": s_["gain"], "loss": s_["loss"], "given": s_["given"], "words": in_words(s_["items"]),
                      "what": "the index's category: its untouched workloads together (work, p95, the resource held, host CPU)",
                      "file": f"results/live/{f}", "parts": s_["parts"]})
+    # a newer engine's tables, scored by the index's own rule and shown in their own rows until that engine has every test's
+    # table (tools/omni_index.py outside(); the index itself stays on one engine, never mixed)
+    inside = {c["source"] for c in cases}
+    later = {}
+    for c in wv.real_stacks(wv.load_index(), pick=omni_index.newest):
+        if not c["counted"] or c["source"] in inside or "Kubernetes" in c["domain"]:
+            continue
+        f = c["source"].rsplit("/", 1)[-1]
+        g, l_, gv = (len(c["judged"][k]) for k in ("gain", "loss", "given"))
+        s_ = later.setdefault(f, {"ratios": [], "gain": 0, "loss": 0, "given": 0, "parts": [], "items": []})
+        s_["ratios"].append(1 + (c["resource_pct"] or 0.0) / 100.0); s_["gain"] += g; s_["loss"] += l_; s_["given"] += gv; s_["items"] += items_of(c["judged"])
+        s_["parts"].append({"case": c["workload"], "pct": c["resource_pct"] or 0.0, "benefit": benefit_word(g, l_, gv), "loss": l_, "words": in_words(items_of(c["judged"]))})
+    for f, s_ in later.items():
+        n = re.match(r"V(\d+)_", f).group(1)
+        rows.append({"date": updated(LIVE / f), "benchmark": names.get(re.sub(r"^V\d+_", "V7_", f), f) + f", on omni-v{n}, outside the index until every test has its omni-v{n} table",
+                     "benefit": benefit_word(s_["gain"], s_["loss"], s_["given"]), "pct": pct(gmean(s_["ratios"])),
+                     "gain": s_["gain"], "loss": s_["loss"], "given": s_["given"], "words": in_words(s_["items"]),
+                     "what": "scored by the index's own rule, shown under its own engine, never folded into the index",
+                     "file": f"results/live/{f}", "parts": s_["parts"]})
     return rows
 
 

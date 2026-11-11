@@ -177,10 +177,13 @@ def workload_gauge(gauges, key):
     return None
 
 
-def tests():
+def tests(pick=None):
+    """Every test the index counts, each on its table on the index's one engine (pick, counted by default); outside() reads the
+    same tests on their newest tables, scored by the same rule, for the rows a newer engine's tables stand in until it has them all."""
+    pick = pick or counted
     out = []
     for cat, name, f, measures, work in SOURCES:
-        f = counted(f)
+        f = pick(f)
         path = LIVE / f
         if not path.exists():
             continue
@@ -194,7 +197,7 @@ def tests():
         out.append({"category": cat, "test": name, "source": f"results/live/{f}", "runs": [x["run"] for x in data["runs"]],
                     "v1": bool(data.get("v1")), "measures": r})
     for cat, fname, label, measures_ in WORKLOAD_TABLES:
-      fname = counted(fname)
+      fname = pick(fname)
       db = LIVE / fname
       if not db.exists():
         continue
@@ -225,6 +228,13 @@ def tests():
         s = gmean([m["ratio"] for k, m in t["measures"].items() if k in SERVICE])
         t["service_pct"] = 100 * (s - 1) if s else None
     return out
+
+
+def outside():
+    """The tests a newer engine has run so far, each on its own newest table and scored by the index's own rule, outside the
+    headline until that engine has every test's table (index_engine): shown under their own engine, never folded in."""
+    inside = {t["source"] for t in tests()}
+    return [t for t in tests(newest) if t["source"] not in inside]
 
 
 # The second reading, declared 2026-10-09 at the founder's question about the cache (docs/K8S_COMPASS_PREREGISTRATION.md, the
@@ -418,13 +428,24 @@ def main():
         sx = "not taken" if t["service_pct"] is None else with_word(1 + t['service_pct'] / 100, index_word(1 + t['service_pct'] / 100, 1 + t['service_pct'] / 100))
         L.append(f"| {t['category']} | {t['test']} | **{ix}** | {sx} | {cell('work')} | {cell('speed')} | {cell('machines')} | "
                  f"{cell('energy')} | `{t['source']}` |")
+    out_ = outside()
+    if out_:
+        L += ["", f"## On a newer engine, outside the index until every test lands", "",
+              "Each test below has its three-run table on a newer engine than the index's; it is scored by the same rule and shown "
+              "under its own engine, and joins the index with the rest of its engine's tables, never alone.", "",
+              "| Category | Test | Score by the index's rule | Service reading | Source |", "|---|---|---:|---:|---|"]
+        for t in out_:
+            ix = "" if t["index_pct"] is None else with_word(1 + t['index_pct'] / 100, index_word(1 + t['index_pct'] / 100, None if t['service_pct'] is None else 1 + t['service_pct'] / 100))
+            sx = "not taken" if t["service_pct"] is None else with_word(1 + t['service_pct'] / 100, index_word(1 + t['service_pct'] / 100, 1 + t['service_pct'] / 100))
+            L.append(f"| {t['category']} | {t['test']} | {ix} | {sx} | `{t['source']}` |")
     (ROOT / "results" / "OMNI_INDEX.md").write_text("\n".join(_legal_stamp(with_own_runs(L))) + "\n")
     (ROOT / "results" / "OMNI_INDEX.json").write_text(json.dumps(
         {"headline_pct": None if head is None else 100 * (head - 1),
          "resource_headline_pct_4_october": None if head_r is None else 100 * (head_r - 1),
          "service_headline_pct": None if head_s is None else 100 * (head_s - 1),
          "categories": {c: None if g is None else 100 * (g - 1) for c, g in cat_g.items()},
-         "service_categories": {c: None if g is None else 100 * (g - 1) for c, g in cat_s.items()}, "tests": ts}, indent=1) + "\n")
+         "service_categories": {c: None if g is None else 100 * (g - 1) for c, g in cat_s.items()}, "tests": ts,
+         "index_engine": None if index_engine() is None else f"omni-v{index_engine()}", "outside_index": out_}, indent=1) + "\n")
     print("\n".join(L))
     return 0
 

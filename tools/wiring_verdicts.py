@@ -189,9 +189,10 @@ DECLARED_COST = {"V7_KAFKA.json": "consumers", "V7_REDIS.json": "memory"}
 
 
 def load_index():
-    """The two index readings per test, keyed by (file, workload or None)."""
+    """The two index readings per test, keyed by (file, workload or None): the tests it counts, and a newer engine's tests
+    outside it (omni_index.outside), each keyed by its own table."""
     out = {}
-    for t in omni_index.tests():
+    for t in omni_index.tests() + omni_index.outside():
         f = t["source"].rsplit("/", 1)[-1]
         m = re.search(r"`([a-z_]+)`", t["test"])
         out[(f, m.group(1) if m else None)] = (t.get("index_pct"), t.get("service_pct"))
@@ -222,12 +223,13 @@ def judge_rows(rows, names, keys_order=None):
     return out
 
 
-def real_stacks(index):
+def real_stacks(index, pick=None):
+    pick = pick or omni_index.counted
     cases = []
-    # every test is read on the newest engine's table that holds it (omni_index.newest, as the index reads it); the names and
+    # every test is read on the table the index reads (omni_index.counted: one engine for every test); the names and
     # the notes stay keyed by the test's first file
     for name, f in K8S_TESTS:
-        fn = omni_index.newest(f)
+        fn = pick(f)
         p = LIVE / fn
         if not p.exists():
             continue
@@ -240,7 +242,7 @@ def real_stacks(index):
                       "counted": True, "judged": j, "verdict": v, "resource_pct": res, "service_pct": svc, "why": why,
                       "source": f"results/live/{fn.replace('.json', '.md')}", "runs": [r["run"] for r in d["runs"]]})
     for cat, f, knob, names in WORKLOAD_STACKS:
-        fn = omni_index.newest(f)
+        fn = pick(f)
         p = LIVE / fn
         if not p.exists():
             continue
