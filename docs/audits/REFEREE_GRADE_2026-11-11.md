@@ -78,17 +78,17 @@ Where the LOSS rows in all three runs sit:
 | V25_BINPACK | 3 |
 | V25_BINPACK_4W_TOP | 3 |
 
-They are the batch queue sharing a cluster with a web service under the governors (pod start waits, the queue finishing later, job turnaround), on omni-v25. omni-v26 was landed to fix that fault (`docs/OMNI_V26.md`); its reruns of those governors finished on GitHub on 8 November, but no omni-v26 table was written, because the job that writes the tables (front-page) failed on every run from 9 to 11 November on a stale release manifest. The manifest was replaced on 11 November; until those tables land, do no harm is not shown on these workloads.
+They are the batch queue sharing a cluster with a web service under the governors (pod start waits, the queue finishing later, job turnaround), on omni-v25. omni-v26 was landed to fix that fault (`docs/OMNI_V26.md`); its reruns of those governors finished on GitHub on 8 November, but no omni-v26 table has been written from them: the omni-v25 tables were written in one tabling pass over that campaign's archived runs (6 November), and that pass has not been run for omni-v26. Until those tables land, do no harm is not shown on these workloads.
 
 ## 3. What sign-off needs, in order
 
-1. **Table omni-v26's governor and Kubernetes runs** (free, already run): the batch-queue LOSS rows either clear or are root-caused again.
+1. **Table omni-v26's governor and Kubernetes runs** (free, already run; the tabling pass over their archived files): the batch-queue LOSS rows either clear or are root-caused again.
 2. **Close the Kubernetes beat question** (free, running: `docs/PACE_PREREGISTRATION.md`, amendment 7), and land the beat that reads best as the next version through the model gate; then every Kubernetes test again on it.
 3. **State the headline with its leave-one-out**, or name a primary endpoint per product before the next campaign, so one product cannot carry the whole.
 4. **Control for many comparisons**: declare the primary gauge of each test before its runs, and read the rest as secondary; a word earned with no run beyond the noise is reported as such.
 5. **Measure the two places beyond the software end**: the cloud's work for each dollar over three runs on one engine, and the chip's own meter on the engine that stands (both paid: each needs the owner's approval first).
 6. **An outside replication**: a party with no stake runs the published recipe on its own machines and writes what it finds. Nothing else turns this record into something an underwriter can sign.
-7. **Keep main green**: the release check failed on every push to main from 9 to 11 November; it passed on 11 November.
+7. **Keep main green**: GitHub's release check failed on every push to main from 9 to 11 November, and the job that refreshes the front page failed with it on a stale release manifest; both were repaired on 11 November.
 
 ## Reproduce
 
