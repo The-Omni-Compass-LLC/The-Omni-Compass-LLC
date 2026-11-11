@@ -766,7 +766,7 @@ TERMS = [
     T("the give-back trial", P, "Every give-back is tried in its own paired trial, while the service is calm: the muscle with and "
       "without it, under the same load (the knob at native first, the reference, then one step past the deepest step already "
       "allowed), and undone if the muscle loses by it.",
-      [(PAGE_F, "every give-back is tried in its own paired trial (the muscle with and without it, under the same load) and undone if the muscle loses by it"),
+      [(PAGE_F, "every give-back below native is tried in its own paired trial (the muscle with and without it, under the same load) and undone if the muscle loses by it"),
        ("omnicompass/verdict.py", "then at one step past the deepest step already")],
       aka=["give-back trial", "give-back", "give-backs"]),
     T("the model gate", P, "Every change to the engine or a live controller runs first in our own models (class S), against the "
@@ -963,14 +963,14 @@ TERMS = [
       "cpp/src/immune.cpp): over its line three decisions, stuck, and native's twin lower by more than 5%, the knob is handed to "
       "native for 10 decisions, doubling up to 160; where native is not stronger Omni-Compass stays. The page's live model applies "
       "the same rule, with the engine's own numbers, to every muscle it draws.",
-      [(PAGE_F, "GAINING: low in its band with room to climb, or Omni-Compass ahead of native now (a GAIN)"),
-       (PAGE_F, "STEADY: inside its band, or level with native (STEADY, a change under 0.5%)"),
+      [(PAGE_F, "GAINING: low in its band with room to climb, or a GAIN"),
+       (PAGE_F, "STEADY: inside its band, or level with native (a change under 0.5%)"),
        (MAN, "| Yellow | STEADY |")], aka=["traffic signal", "traffic light", "light", "lights"]),
     T("GAINING", W, "Green on the traffic signal: low in its band with room to climb, or Omni-Compass ahead of native now (a GAIN).",
-      [(PAGE_F, "GAINING: low in its band with room to climb, or Omni-Compass ahead of native now (a GAIN)")], aka=["GAINING"]),
+      [(PAGE_F, "GAINING: low in its band with room to climb, or a GAIN")], aka=["GAINING"]),
     T("REDLINING", W, "Red on the traffic signal, blinking red and black: at the top of its band and holding there, or Omni-Compass "
       "behind native now (a LOSS). Red means LOSS and the alarm only, never native.",
-      [(PAGE_F, "REDLINING: at the top of its band and holding there, blinking red and black, or Omni-Compass behind native now (a LOSS)")],
+      [(PAGE_F, "REDLINING, blinking red and black: at the top of its band and holding there, or a LOSS row")],
       aka=["REDLINING"]),
     T("OVER THE LINE", W, "Red on the traffic signal, blinking red and white: past the top of its band, the alarm. Omni-Compass's own "
       "law hands a muscle back toward native before its line (the fail-up at the band's 95% wall), so this light is what a line "
@@ -1070,9 +1070,9 @@ TERMS = [
     T("contract, this decision", W, "The decision on screen in the symbols of the factory profile's mathematics: k, Δ, θ, the "
       "settings requested u[req](k), commanded u[cmd](k) = Π[C](u[req](k)) and acknowledged u[ack](k) = R(u[cmd](k)), computed on the "
       "live model.", [(FP, "u[cmd](k) = Π[C](u[req](k))"), (PAGE_F, "contract, this decision")], aka=["the contract"]),
-    T("governor request", D, "The row under the fuse box's master switches: after every press, the request "
-      "a running governor takes for it through its control panel (tools/omni_control.py), with its role; the page sends nothing.",
-      [(PAGE_F, "governor request")], aka=["governor request", "the same press"]),
+    T("controller request", D, "The row under the fuse box's master switches: after every press, the request "
+      "a running Omni-Compass controller takes for it through its control panel (tools/omni_control.py), with its role; the page sends nothing.",
+      [(PAGE_F, "controller request")], aka=["controller request", "the same press"]),
     T("Prometheus Metrics", W, "The fuse box's tab that prints the live model in Prometheus's text exposition format, with the "
       "series a running system serves beside each one and the PromQL the Grafana wall draws it with.",
       [(PAGE_F, "Prometheus Metrics Endpoint")], aka=["Metrics tab", "Prometheus"]),
@@ -1087,7 +1087,7 @@ TERMS = [
       aka=["AUX", "the auxiliary input", "Auxiliary Input Board", "AUX slots"]),
     T("Commands", D, "The fuse box's tab that lists every control beside the request a running governor takes for it and its "
       "role; the mechanism's knobs and the plant's conditions have none.",
-      [(PAGE_F, "Governor API Commands")], aka=["Commands tab"]),
+      [(PAGE_F, "Controller API Commands")], aka=["Commands tab"]),
     T("the monitor wall stack", W, "deploy/wall: Prometheus, Grafana with the Omni-Compass wall loaded, Alertmanager with the "
       "governor's alert rules, node_exporter and the governor's exporter, in one command; it reads and writes nothing.",
       [("deploy/wall/README.md", "One command stands up the wall an operations team already knows how to read")], aka=["deploy/wall"]),

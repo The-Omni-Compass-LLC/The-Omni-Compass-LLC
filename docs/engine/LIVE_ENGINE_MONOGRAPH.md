@@ -6,7 +6,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 Dubra Software Inc. / The Omni-Compass LLC, 7 November 2026.
 
-**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 fingerprinted files), the verdict audit's record `a09678d9af2f9f0d` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-08 01:46 UTC at commit `bf9868379271` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
+**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 fingerprinted files), the verdict audit's record `a09678d9af2f9f0d` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-11 07:31 UTC at commit `4748eba5e0db` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
 
 ## Abstract
 
@@ -107,7 +107,7 @@ Q4 comes first in logic; on the page Q1 leads. Do no harm is judged on the rows 
 
 ### 1.3 What the engine is: one page and its copies
 
-The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-08 01:46 UTC carries 25 records; it plays back 96 three-run tables with 288 runs, and 235,240 of 235,240 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
+The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-11 07:31 UTC carries 25 records; it plays back 96 three-run tables with 288 runs, and 235,240 of 235,240 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
 
 ### 1.4 How the page is fed and rebuilt
 
@@ -115,7 +115,7 @@ One workflow, `.github/workflows/live-engine.yml`, rebuilds the page on a push t
 
 ### 1.5 The self-update and its stamp
 
-Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-08 01:46 UTC, 61,707,024 bytes, SHA-256 `e41b47f647dfa963…`, page identity `320ca1b915d2f844…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
+Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-11 07:31 UTC, 61,765,556 bytes, SHA-256 `92197bc4197b9be8…`, page identity `9c40d8d61ce8c21a…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
 
 ### 1.6 What runs live, what plays back, and the three evidence classes
 
@@ -622,7 +622,7 @@ Each layer ℓ is measured with the layer under it native, and the ratios multip
 
   H(g) = ∏ℓ Hℓ(g),  log H(g) = Σℓ log Hℓ(g),  read as H(g) − 1.  (5.1)
 
-Its index is the geometric mean over work, speed and machines; energy and the bill are held at native's, and the chip, the cloud and the machine layer enter as exactly 1, so it composes the cluster and its services. It reads <!-- monograph: whole_system (tools/monograph_words.py) -->GAIN, up 41.9% (×1.4194; gauges independent, up 33.7% to up 50.6%; gauges correlated, up 32.5% to up 52.1%); work GAIN, 27.5% more; speed GAIN, native's 298.6% longer, that is, the 95th-percentile response 74.9% shorter; machines and resources held power given, native's 43.7% below Omni-Compass's (×0.5626), that is, 77.7% more held; the cluster's 23 tests and the services' 17 (`results/WHOLE_SYSTEM.md`, class S: a composition of measured layers, never one stacked run)<!-- end of monograph: whole_system -->. No run stacked the layers, so the product assumes a layer's ratio holds when its neighbours also carry Omni-Compass; on the products' four ways <!-- monograph: whole_separability (tools/monograph_words.py) -->22 of 33 pairs of orchestrator and gauge agree within the noise; 11 do not<!-- end of monograph: whole_separability --> (threat T24).
+Its index is the geometric mean over work, speed and machines; energy and the bill are held at native's, and the chip, the cloud and the machine layer enter as exactly 1, so it composes the cluster and its services. It reads <!-- monograph: whole_system (tools/monograph_words.py) -->GAIN, up 42.9% (×1.4286; gauges independent, up 28.5% to up 58.8%; gauges correlated, up 27.3% to up 60.3%); work GAIN, 27.5% more; speed GAIN, native's 300.1% longer, that is, the 95th-percentile response 75.0% shorter; machines and resources held power given, native's 42.9% below Omni-Compass's (×0.5713), that is, 75.0% more held; the cluster's 23 tests and the services' 17 (`results/WHOLE_SYSTEM.md`, class S: a composition of measured layers, never one stacked run)<!-- end of monograph: whole_system -->. No run stacked the layers, so the product assumes a layer's ratio holds when its neighbours also carry Omni-Compass; on the products' four ways <!-- monograph: whole_separability (tools/monograph_words.py) -->22 of 33 pairs of orchestrator and gauge agree within the noise; 11 do not<!-- end of monograph: whole_separability --> (threat T24).
 
 ### 5.11 The LOSS ledger: the rows against native, and their causes as written
 
@@ -719,7 +719,7 @@ A metrics dashboard closes no loop; the Kubernetes Dashboard's writes are manual
 
 ## 7. The Page, Section by Section
 
-The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-08 01:46 UTC, 61,707,024 bytes, SHA-256 `e41b47f647dfa963…`, page identity `320ca1b915d2f844…`<!-- end of monograph: page_stamp --> in that order.
+The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-11 07:31 UTC, 61,765,556 bytes, SHA-256 `92197bc4197b9be8…`, page identity `9c40d8d61ce8c21a…`<!-- end of monograph: page_stamp --> in that order.
 
 ### 7.1 The sections, their monitors and their code
 
@@ -795,13 +795,13 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 |---|---|---|
 | `ctlrec` | `docs/engine/export_controller_trace.py` | names none |
 | `build` | `docs/engine/build_live_engine.py` `records()` | omni-v26; the organisms omni-v8 |
-| `runs` | `docs/engine/export_runs.py` | omni-v25 91 tables; omni-v12 5 tables |
+| `runs` | `docs/engine/export_runs.py` | omni-v25 90 tables; omni-v12 5 tables; omni-v26 1 tables |
 | `fleet` | `docs/engine/build_live_engine.py` `fleet()`; `tools/omni_index.py`; `results/BENEFIT_SHEET.json`; `results/OMNI_INDEX.md`; `results/OMNI_INDEX.json`; `results/STEERING.json` | names none |
 | `whole` | `docs/engine/export_whole.py`; `results/WHOLE_SYSTEM.md`; `tools/whole_system.py` | names none |
 | `gpurun` | `docs/engine/export_gpu_run.py`; `results/gpu/run-20261024T091235Z/GPU_REPS.md` | omni-v18 |
 | `cpuhost` | `docs/engine/export_cpu_model.py`; `results/sim/cpu_power_model/CPU_POWER.md` | omni-v12 |
 | `monitors` | `docs/engine/build_live_engine.py` `records()`; `docs/engine/monitors.json` | names none |
-| `engineruns` | `results/engine_runs/ENGINE_RUNS_500_3750291471.json`; `tools/engine_runs.py` | omni-v26; base 3750291471 |
+| `engineruns` | `results/engine_runs/ENGINE_RUNS_500_3945082204.json`; `tools/engine_runs.py` | omni-v26; base 3945082204 |
 | `heldout` | `docs/engine/export_heldout.py`; `benchmarks/stack_benchmark.py` | names none |
 | `cpptwin` | `docs/engine/export_cpp_twins.py` | seed 3000 |
 | `beatsweep` | `docs/engine/build_live_engine.py` `beat_sweep()`; `tools/heartbeat_sweep.py`; `tools/model_gate.py`; `results/model_gate/HEARTBEAT_SWEEP.json` | names none |
@@ -809,9 +809,9 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 | `coremc` | `docs/engine/build_live_engine.py` `core_mc()`; `results/core_evidence.json`; `benchmarks/core_evidence.py` | seed 223387268 |
 | `onnative` | `docs/engine/build_live_engine.py` `on_native_abc()`; `tools/headline.py`; `tools/orchestrator_abc.py`; `results/orchestrator/V21_THREE_ARMS_ABC.json` | omni-v21 |
 | `scenarios` | `docs/engine/build_live_engine.py` `scenarios20()`; `tools/scenarios_20.py`; `tools/whole_system.py`; `results/scenarios/SCENARIOS_20.json` | omni-v23 |
-| `glossary` | `docs/engine/build_live_engine.py` `glossary()`; `tools/live_glossary.py`; `docs/engine/glossary.json` | omni-v25 |
-| `injgrid` | `docs/engine/build_live_engine.py` `injection_grid()`; `tools/injection_grid.py`; `results/injection_grid/INJECTION_GRID_3750291471.json` | batch 3750291471; omni-v26 |
-| `audit` | `docs/engine/build_live_engine.py` `verdict_audit()`; `tools/loss_ledger.py`; `tools/verdict_audit.py`; `results/verdict_audit/DISCREPANCIES.json`; `results/verdict_audit/VERDICT_AUDIT.md` | record `a09678d9af2f9f0d` |
+| `glossary` | `docs/engine/build_live_engine.py` `glossary()`; `tools/live_glossary.py`; `docs/engine/glossary.json` | omni-v26 |
+| `injgrid` | `docs/engine/build_live_engine.py` `injection_grid()`; `tools/injection_grid.py`; `results/injection_grid/INJECTION_GRID_3945082204.json` | batch 3945082204; omni-v26 |
+| `audit` | `docs/engine/build_live_engine.py` `verdict_audit()`; `tools/loss_ledger.py`; `tools/verdict_audit.py`; `results/verdict_audit/DISCREPANCIES.json`; `results/verdict_audit/VERDICT_AUDIT.md` | record `01279fb868740470` |
 | `lawwires` | `docs/engine/build_live_engine.py` `law_wires()`; `omnicompass/compass_law.py` | names none |
 | `field` | `docs/engine/build_live_engine.py` `field()`; `docs/THE_FIELD.md` | names none |
 | `bills` | `docs/engine/build_live_engine.py` `bills()`; `tools/site_numbers.py`; `tools/two_bills.py`; `tools/work_per_bill.py`; `results/TWO_BILLS.json`; `results/WORK_PER_BILL.json`; `results/OVERSIGHT.json`; `results/SITE_NUMBERS.json` | names none |
@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3750291471, where the newest on file is 3945082204; the injection grid of batch 3750291471, where the newest on file is 3945082204<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3945082204, the newest on file; the injection grid of batch 3945082204, the newest on file<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
@@ -977,7 +977,7 @@ Each limit is numbered once, with the sections that carry its evidence, and hold
 
 ### 9.4 The record and the page
 
-**T29. One source.** Every run, rule, scorer, check, load and native setting is Dubra Software Inc. / The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->100 amendments in 18 preregistrations: 80 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
+**T29. One source.** Every run, rule, scorer, check, load and native setting is Dubra Software Inc. / The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->101 amendments in 18 preregistrations: 81 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
 
 **T30. Reproduction.** Sums show files unchanged, not a right measurement; the newest byte-for-byte rebuild found one table not identical; the release check passes only at a release commit; a receipt needs about ten gigabytes of raw folders (8.1, 8.4, 8.5).
 

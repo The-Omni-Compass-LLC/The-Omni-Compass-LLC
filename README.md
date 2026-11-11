@@ -45,7 +45,7 @@ Today: bare metal, omni-v23: G, the work for each dollar, run 1 GAIN, up 1.46% (
 
 **The seven organisms in the four arms.** Each organism runs native and with Omni-Compass on native, in each place: fourteen runs on bare metal (A and B) and fourteen through the cloud (C and D), each read by its bill and the work inside it. On bare metal each organism runs with one card inside at 1, 10 and 100 copies, and on the eight-card machine at 1, 10 and 100 copies (every rental on the founder's word).
 
-| Organism | A: bare metal, native | B: bare metal, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |
+| Organism | A: the chip, native | B: the chip, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |
 |---|---|---|---|---|
 | The spine | run with one A10 inside at 1, 10, 100 copies, on omni-v23; not yet on omni-v26 | 26 rows STEADY, 2 rows power given, 2 rows LOSS against A (`results/gpu/V23_A10_STACKS_FULL_ABC.json`) | not yet run (Azure queued, its switch on; Google's switch on, Amazon's on, each behind its $0 check) | not yet run (Azure queued, its switch on; Google's switch on, Amazon's on, each behind its $0 check) |
 | Compute, AI and cloud | run with one A10 inside at 1, 10, 100 copies, on omni-v23; not yet on omni-v26 | 30 rows STEADY against A (`results/gpu/V23_A10_STACKS_FULL_ABC.json`) | not yet run (Azure queued, its switch on; Google's switch on, Amazon's on, each behind its $0 check) | not yet run (Azure queued, its switch on; Google's switch on, Amazon's on, each behind its $0 check) |

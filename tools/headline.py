@@ -528,7 +528,7 @@ def places_block(m) -> list:
           "runs on bare metal (A and B) and fourteen through the cloud (C and D), each read by its bill and the work inside it. On bare "
           "metal each organism runs with one card inside at 1, 10 and 100 copies, and on the eight-card machine at 1, 10 and 100 copies "
           f"({NOT_RENTED.replace('not yet run; ', '')}).", "",
-          "| Organism | A: bare metal, native | B: bare metal, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |",
+          "| Organism | A: the chip, native | B: the chip, Omni-Compass on native | C: the cloud, native | D: the cloud, Omni-Compass on native |",
           "|---|---|---|---|---|"]
     for key, name in ORG:
         o = by_org.get(key)
