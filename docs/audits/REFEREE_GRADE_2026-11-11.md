@@ -16,7 +16,7 @@ Written by `tools/referee_sweep.py`; every number below is computed from the rep
 | Do no harm against native | C+ | 295 rows GAIN in all three runs, 86 LOSS in all three runs, most in the batch-queue governor tests omni-v26 was built to fix and has not yet tabled |
 | The chip and the cloud | D | the one A10 card's three runs disagree, no other card result stands; the cloud's bill moved inside the noise and its work was not counted |
 | Independence | not yet graded | nobody outside the company has run, read or checked any of it; an underwriter signs on an outside party's replication, not on ours |
-| Test coverage of the engine | B | 71% of 11,424 statements run under the tests (omni-v23); the database runners run whole only in their own benchmarks |
+| Test coverage of the engine | B | 71% of 11,501 statements run under the tests (omni-v26); the database runners run whole only in their own benchmarks |
 
 **Overall:** as an engineering mechanism, A-. As evidence a buyer or an underwriter could sign on today, C+. The gap is not the code; it is the evidence around it.
 

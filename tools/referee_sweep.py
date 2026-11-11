@@ -100,7 +100,8 @@ def wiring():
 def coverage():
     t = (ROOT / "docs" / "ENGINE_COVERAGE.md").read_text(encoding="utf-8")
     m = re.search(r"\*\*(\d+)% of the engine's ([\d,]+) statements run under the tests\*\*", t)
-    e = re.search(r"measured on (omni-v\d+)", t) or re.search(r"engine it was measured on \((omni-v\d+)", t)
+    e = (re.search(r"engine that stands \((omni-v\d+)\)", t) or re.search(r"measured on (omni-v\d+)", t)
+         or re.search(r"engine it was measured on \((omni-v\d+)", t))
     return {"pct": int(m.group(1)) if m else None, "statements": m.group(2) if m else None, "engine": e.group(1) if e else None}
 
 
