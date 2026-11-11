@@ -133,7 +133,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ## Where Omni-Compass Sits, and What Each Benchmark Shows
@@ -784,10 +784,11 @@ installed is a quarter off the bill.
   - Real cache (Redis, GitHub): power given 6.8%
   - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
-**On the engine that stands (omni-v26): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 1 of 27 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | omni-v26 | 221.1% | GAIN, power given | L |
 | Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
@@ -815,7 +816,7 @@ installed is a quarter off the bill.
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
-Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
@@ -3666,7 +3667,7 @@ start from the same fresh cluster, run for 900 s after a 120 s warm-up, and end 
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Steady work** (`results/live/V25_STEADY.md`, omni-v25): **GAIN, power given**, by the index's rule 30.8% GAIN. Mean response
@@ -3719,7 +3720,7 @@ inputs (the settings commands it wrote, the targets it held) beside the service'
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs**
@@ -3792,7 +3793,7 @@ stands, and until their tables land these are omni-v3's.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **The six organisms with the real cluster inside, 10 and 100 copies** (`results/live/V3_SIX_KUBE.md`, omni-v3): **GAIN, power
@@ -3888,9 +3889,15 @@ do-no-harm reading, not a missing one.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
+- **Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table**
+  (`results/live/V26_KAFKA.md`, omni-v26): **GAIN, power given**, by the index's rule 221.1% GAIN. Work inside the line up 16% to
+  23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 92% to 100% (GAIN); median cut 0% to 30% (GAIN); mean cut 96% to 98% (GAIN);
+  messages waiting, most cut 82% to 99% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 2%
+  to 14% (GAIN); consumers running up 73% to 215% (power given); consumers most at once up 150% to 300% (power given); host CPU
+  busy up 2% to 14% (power given); host CPU-seconds up 2% to 15% (power given).
 - **Redis, the cache's memory ceiling** (`results/live/V25_REDIS.md`, omni-v25): **GAIN, power given**, by the index's rule 6.8%
   LOSS. Work inside the line up 16% to 27% (GAIN); hit rate up 16% to 27% (GAIN); p95 cut 0% to 96% (GAIN); mean cut 40% to 71%
   (GAIN); host CPU busy cut 3% to 30% (GAIN); host CPU-seconds cut 3% to 31% (GAIN); CPU per 1,000 inside the line cut 23% to 43%
@@ -3927,7 +3934,7 @@ never judged.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robustness: the two-hour run** (`results/live/V25_ROBUST_LONG.md`, omni-v25): **GAIN AND LOSS**, by the index's rule 8.9%
@@ -3987,7 +3994,7 @@ the 0.5% floor it reads STEADY).
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robot arms (MuJoCo), the three untouched robots** (`results/live/V25_MUJOCO.md`, omni-v25): **GAIN**, by the index's rule
@@ -4035,6 +4042,7 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
 | The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
 | The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |

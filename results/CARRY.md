@@ -4,7 +4,7 @@
 
 Every benchmark's newest three-run table, the engine files its runner imports (followed import by import through the fingerprint), and whether any of them has moved since the table's own engine. A result **carries** when every one of those files has the same bytes on its engine and on omni-v26: the engine that stands runs exactly the code the table measured, and the benchmark need not run again for the version number alone. A result **runs again** when one moved; the files that moved are named. A carried record stays its own engine's, under its own engine's name. Written by `python3 tools/carry.py` from the fingerprints (`OMNI_V<n>.json`) and the tables; `verify.py` fails a push where it differs (the founder's order of 7 November, evening).
 
-On omni-v26: 0 on the engine that stands, 23 carry, 93 run again.
+On omni-v26: 1 on the engine that stands, 22 carry, 93 run again.
 
 | Benchmark | Its newest table | Its engine | The runner | Engine files it runs | Moved since its engine | On omni-v26 |
 |---|---|---|---|---:|---|---|
@@ -52,7 +52,7 @@ On omni-v26: 0 on the engine that stands, 23 carry, 93 run again.
 | GODEL_4W_TOP | `results/live/V25_GODEL_4W_TOP.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |
 | GODEL_4W_VS | `results/live/V25_GODEL_4W_VS.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |
 | GOLDILOCKS | `results/live/V25_GOLDILOCKS.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |
-| KAFKA | `results/live/V25_KAFKA.json` | omni-v25 | `tools/run_kafka.py` | 7 | none | **carries** |
+| KAFKA | `results/live/V26_KAFKA.json` | omni-v26 | `tools/run_kafka.py` | 7 | none | **on the engine that stands** |
 | KAFKA_SERVICE | `results/live/V25_KAFKA_SERVICE.json` | omni-v25 | `tools/run_kafka.py` | 7 | none | **carries** |
 | KAI | `results/live/V25_KAI.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |
 | KAI_4W_BARE | `results/live/V25_KAI_4W_BARE.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |

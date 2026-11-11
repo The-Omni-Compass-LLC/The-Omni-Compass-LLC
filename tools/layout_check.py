@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_ALLOWED = {
     # the front door
-    "README.md", "CHANGELOG.md", "CITATION.cff", "SECURITY.md",
+    "README.md", "START_HERE.md", "CHANGELOG.md", "CITATION.cff", "SECURITY.md",
     # a person's own system for the Monte Carlo 500 (the live engine's button, monte-carlo.yml)
     "systems",
     # the license and the intellectual property
