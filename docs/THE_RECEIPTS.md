@@ -95,7 +95,7 @@ the set ran to the paid cap of 100.
 <!-- results: chips (tools/results_chapter.py) -->
 Every three-run table of a card's own meter (class P) in `results/gpu/`, written from the tables by `python3
 tools/results_chapter.py`, newest engine first: the headline gauges in the table's own words, then how all its rows read by the
-one key; every row stands in the table. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or
+one key; every row stands in the table. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or
 approved these results.
 
 - **The organisms on the eight-card machine: six organisms, each on its own A100, three runs on rented machines**

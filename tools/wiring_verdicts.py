@@ -49,6 +49,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import stamp as legal_stamp                       # noqa: E402
+from tools.company_attribution import normalize as canonical_name  # noqa: E402  (the publisher's one name, written once)
 from tools.readings import with_own_runs, receipt_key, row_gain, word as gel_word, aim as gel_aim, classify as gel_classify, labelled, LABEL_SHOWN, SIZE_FLOOR  # noqa: E402
 from tools import omni_index                                       # noqa: E402
 from tools.grid_v5 import kube_verdict                             # noqa: E402  (a square's line in GAIN, STEADY and LOSS)
@@ -1082,7 +1083,7 @@ def main(check=False):
           "latency / work) or energy per request inside the line | give back only (the ceiling cannot go above the top; the top always free) | "
           "outside the engine; built 10 October, waiting for a machine on the metal, no run yet |", ""]
 
-    md = "\n".join(legal_stamp(with_own_runs(L))) + "\n"
+    md = canonical_name("\n".join(legal_stamp(with_own_runs(L))) + "\n")   # a publication: the publisher's one name
 
     # the CSV
     buf = io.StringIO()

@@ -525,7 +525,8 @@ def main():
           "the bill); on GitHub's own machines the 1,000 tier stands again (his distinction of 15 October, `scripts/dispatch_grid.py`), "
           "a cell beyond a free runner's memory or time listed as pending runner capacity; the v3 cells at 1,000 above stand as they were run.",
           "- The queue in `docs/REGISTER.md` section 4: every open benchmark still to run, in order, each row with its own status.", ""]
-    OUT.write_text("\n".join(_legal_stamp(with_own_runs(L))) + "\n", encoding="utf-8")
+    from tools.company_attribution import normalize as canonical_name
+    OUT.write_text(canonical_name("\n".join(_legal_stamp(with_own_runs(L))) + "\n"), encoding="utf-8")
     print(OUT)
 
 

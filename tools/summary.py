@@ -308,7 +308,8 @@ def standing_block():
 
 def fix_pages(check=False):
     """Writes the standing block into every page that carries its markers (check: says which pages are stale)."""
-    block, bad = standing_block(), []
+    from tools.company_attribution import normalize as canonical_name   # the publisher's one name, written once
+    block, bad = canonical_name(standing_block()), []
     for rel in BLOCK_PAGES:
         p = ROOT / rel
         text = p.read_text(encoding="utf-8")

@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import stamp as legal_stamp                       # noqa: E402
 from tools.readings import receipt_key, with_own_runs, landed      # noqa: E402
+from tools.company_attribution import normalize as canonical_name  # noqa: E402
 
 OUT = ROOT / "docs" / "LEVELS.md"
 LIVE = ROOT / "results" / "live"
@@ -230,7 +231,7 @@ def render(levels):
 
 
 def main(argv):
-    md = render(build())
+    md = canonical_name(render(build()))
     if "--check" in argv:
         same = OUT.exists() and OUT.read_text() == md
         print("levels: docs/LEVELS.md " + ("matches the files" if same else "differs from the files: run python3 tools/levels.py"))

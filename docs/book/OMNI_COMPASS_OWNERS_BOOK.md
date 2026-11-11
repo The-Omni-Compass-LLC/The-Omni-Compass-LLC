@@ -28,7 +28,7 @@ The number is how much more work was done for the same demand, the mean of our t
 The whole workload, composed layer by layer (a model of measurements, class S of class L and P; section 60.6): **GAIN 42.0%** over work, speed and machines, the cloud's layer entering as exactly 1 (it holds), every interval carried (+32.5% to +52.2% with the gauges correlated; `results/WHOLE_SYSTEM.md`). It is the composition's index, not a price: a bill is the sum of the costs inside a declared boundary, and neither route's bill is resolved yet (section 76.8). Every real test together, the Omni index of Omni-Compass on native reads **GAIN 20.4%**, work, speed and machines read together, its categories from real messaging **GAIN 218.6%** to the database's buffer pool **power given 9.5%** (section 60.11).
 <!-- end of the bottom line -->
  Run and scored
-by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **What the whole industry faces.** Every computing system in service, from one server to a cloud region, from a GPU to a
 building's chillers, a grid feeder or a robot cell, is run by a stack of native controllers: the Kubernetes autoscalers and
@@ -69,7 +69,7 @@ On real machines (class L, live software), the combined Omni index, work, speed 
 The 1,107 muscles of the catalog are
 modelled (class S) and are never shown as proof of hardware. The engine is written twice, in Python and in C++, and the
 Python's 500 seeded runs through the C++ harness are identical to the last bit (`cpp/tools/engine_runs.cpp`; GitHub
-reruns the 500 on every change to the harness, the engine's C++ or the page, and every verify reruns 50 of them). Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved
+reruns the 500 on every change to the harness, the engine's C++ or the page, and every verify reruns 50 of them). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved
 these results.
 
 **What is not claimed.** No new physics, no new model of computation, and no promise for any system Omni-Compass was not
@@ -77,7 +77,7 @@ run on. It does not make a system immune to failure, delay or drift: it keeps ea
 by row, what it did against native. A result on another system is that system's own, from its own paired runs; where it
 differs, the first presumption is the wiring (`DISCLOSURES.md`, section 4).
 
-**What is protected, and how.** Omni-Compass belongs to The Omni-Compass LLC. Its source, manuals and records are its
+**What is protected, and how.** Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. Its source, manuals and records are its
 copyrighted work; all patents, copyrights and trademarks filed in the USA. The repository is licensed for Evaluation and
 Simulation use only (`LICENSE`); any commercial use, monetization or production use requires a signed, paid Omni-Compass
 Enterprise License (`ENTERPRISE_LICENSE.md`). What a licensee acquires is the working whole: the engine, the wiring and the
@@ -147,7 +147,7 @@ there's Omni by itself", 23 October); there is no other arm and no other name. E
 the first run, and every row is shown, losses included. Each reading is one word, **GAIN**, **STEADY** or **LOSS**,
 decided by what the gauge is for. A result from our own model is labeled as a model; a result from live software is
 labeled as live software; only a meter speaks for hardware. Where we lost, the book says so, and we went to find out
-why. Nobody outside The Omni-Compass LLC has reviewed or approved these results, and every table says that too.
+why. Nobody outside Dubra Software Inc. / The Omni-Compass LLC has reviewed or approved these results, and every table says that too.
 
 **What this book holds.** This manual is the whole of it: what the governor is, the mathematics it runs on, how its
 nervous system reads and writes, how it is wired to each kind of machine, how to turn it on one level at a time, how to
@@ -165,7 +165,7 @@ and every table can be rebuilt from them by the tool it names.
 anything. Then wire it one level at a time, watch it before you let it write, and judge it by your own receipts.
 
 **AJ Dubra**
-Founder, The Omni-Compass LLC
+Founder, Dubra Software Inc. / The Omni-Compass LLC
 
 ## Preface
 
@@ -219,7 +219,7 @@ will find, the following discipline throughout, because it is the discipline the
    that is shown and never counted, then applied unchanged to untouched cases. Any amendment made after a result has been
    seen is written into the preregistration with its time and reason, and the table that carries the result says so.
 3. **Three separate runs, one rule.** Every result is run three times as separate GitHub runs (A, B and C) on the same
-   frozen engine and profile, and every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree**. Nobody outside The Omni-Compass LLC has
+   frozen engine and profile, and every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree**. Nobody outside Dubra Software Inc. / The Omni-Compass LLC has
    reviewed or approved these results, and every three-run table says so.
 4. **Every row, losses included.** A row that went against Omni-Compass is in the table beside the rows that went for it.
    When Omni-Compass loses, the first suspect is our own wiring, native setup or scoring; when that is fixed, the test is
@@ -421,7 +421,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 
@@ -602,7 +602,7 @@ it, read back, and the record removed.
 | a meter that is blind or late | nothing: blind means hold; it moves nothing it cannot see | section 32.3 |
 | your results point the other way from the published ones | presume the wiring first, not the law | `DISCLOSURES.md`, section 4 |
 
-**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
 **What the letters of the number mean.** Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1); science and software people read each part on sight. Read in order, DEX-YLL-1 is the way the engine runs:
@@ -654,10 +654,11 @@ installed is a quarter off the bill.
   - Real cache (Redis, GitHub): power given 6.8%
   - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
-**On the engine that stands (omni-v26): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 1 of 27 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | omni-v26 | 221.1% | GAIN, power given | L |
 | Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
@@ -685,7 +686,7 @@ installed is a quarter off the bill.
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
@@ -964,7 +965,7 @@ differs.
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
 | It does no harm: never a LOSS against native | **Not shown**: 287 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
 | More work, faster, on real Kubernetes | **Shown** (L, omni-v25) | All four at once: work inside the response line up 31% to 65% (`results/live/V25_ALL_FOUR.md`); the 95th percentile cut in 8 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
-| More work, faster, on databases and caches | **Small** (L, omni-v25) | Redis, the cache's memory ceiling: GAIN, power given, 6.8% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.4% LOSS; MySQL, the buffer pool's size: GAIN, power given, 9.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 4.8% LOSS; Kafka, the consumer group's size: GAIN, power given, 218.6% GAIN (`docs/BENEFIT_SHEET.md`) |
+| More work, faster, on databases and caches | **Small** (L, omni-v26) | Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table: GAIN, power given, 221.1% GAIN; Redis, the cache's memory ceiling: GAIN, power given, 6.8% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.4% LOSS; MySQL, the buffer pool's size: GAIN, power given, 9.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 4.8% LOSS; Kafka, the consumer group's size: GAIN, power given, 218.6% GAIN (`docs/BENEFIT_SHEET.md`) |
 | Fewer machines | **Shown in 1 test** (L, omni-v25) | a queue of jobs: machines cut 12% to 19%, machine-hours cut 12% to 19%, machines after the queue cut 21% to 32% |
 | A smaller cloud bill | **Not shown** | Azure, omni-v18, 97 paired repetitions: the bill up 1.2%, inside the noise, and the work not counted (`results/live/AKS_STEADY_100_OMNI_V18.md`); Google and Amazon wired and not yet run |
 | Less energy for the work, on the chip | **GAIN in all three of our runs** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: energy per served request in runs A, B and C GAIN, 1.79%; GAIN, 1.35%; GAIN, 0.78% (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: STEADY, under the floor (the three runs' mean 0.12%) (`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |
@@ -1016,7 +1017,7 @@ names, with their SHA-256 sums, and the table's own tool rebuilds the table from
 `tools/redis_abc.py`, and the like). `python3 tools/omni_version.py --commit <sha>` names the engine a run's commit carries.
 `python3 verify.py` runs every test and check the repository holds.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 3. The Referee's Grades, Category by Category, and the Plan to Raise Each
 
@@ -1024,7 +1025,7 @@ Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
 
 Our own grading of Omni-Compass in twenty categories, the way a referee or an underwriter would grade a study and a
 product: the grade given on the morning of 19 October, the grade the evidence supports now, the highest grade the
-category can reach, and what reaching it takes. These are The Omni-Compass LLC's own grades; no outside party has graded,
+category can reach, and what reaching it takes. These are Dubra Software Inc. / The Omni-Compass LLC's own grades; no outside party has graded,
 reviewed or approved them. A category with no measurement yet is **Undetermined**, never failed, and is graded once its
 measurement exists.
 
@@ -1319,8 +1320,8 @@ placement, the learned GPU power cap and NVIDIA's platform power budget. A model
 
 ### 5.4 Who owns Omni-Compass, and on what terms it is seen
 
-- **The copyright in Omni-Compass belongs to The Omni-Compass LLC.** Contributions are accepted only on the terms of
-  `.github/CONTRIBUTING.md`, which assign their rights to The Omni-Compass LLC.
+- **The copyright in Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC.** Contributions are accepted only on the terms of
+  `.github/CONTRIBUTING.md`, which assign their rights to Dubra Software Inc. / The Omni-Compass LLC.
 - **The source is visible under the Omni-Compass Evaluation License (`LICENSE`): evaluation and Simulation use only.**
   It is not an open-source license. Any commercial use, commercialization, monetization, production use,
   redistribution or hosted service requires a signed, paid Omni-Compass Enterprise License. Seeing the source grants
@@ -1346,7 +1347,7 @@ one exact commit, after the CPU side is done (`docs/GPU_RUN_GUIDE.md`, `docs/GPU
 no energy saving on real machines is claimed. The seat is claimed by design and by the receipts on this page; it is held
 when the receipts cover it.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 6. The Unified Circle Principle
 
@@ -1838,7 +1839,7 @@ runs through every page of this book.
 
 ### 11.12 Availability and the rights boundary
 
-Time is of the essence. Omni-Compass is available from The Omni-Compass LLC for controlled technical evaluation,
+Time is of the essence. Omni-Compass is available from Dubra Software Inc. / The Omni-Compass LLC for controlled technical evaluation,
 research collaboration, pilot integration, strategic engagement and separately licensed commercial deployment. The
 same rights boundary applies at every level of use: inspection, local execution, simulation, research,
 benchmarking, observe-only, shadow mode, supervised control, bounded autopilot, hybrid control, direct-to-muscle
@@ -2117,7 +2118,7 @@ preregistration amended on record (`results/LOCK_AMENDMENTS.json`). Until then t
 
 ### 13.5 For filings
 
-Which form a patent or copyright filing claims as the principal embodiment is a decision for The Omni-Compass LLC and
+Which form a patent or copyright filing claims as the principal embodiment is a decision for Dubra Software Inc. / The Omni-Compass LLC and
 its counsel. Whatever that decision, the software described by this repository runs the canonical engine of section 13.1,
 and a filing that claims the printed form should name `symmetric_verified` as the embodiment that has been implemented
 and tested, or the printed form should be benchmarked first (section 13.3).
@@ -2615,8 +2616,7 @@ each a raw change with its sign (work served up, backlog and latency down: more 
 
 
 
-Not a global-stability proof of the forced six-state system. Proofs and their evidence classes:
-`docs/TRACKING_THEOREM.md`; every statement's class: `docs/EVIDENCE_LEDGER.md`.
+Not a global-stability proof of the forced six-state system. For exact domain assumptions and machine-proof obligations read `docs/ENGINE_PROOFS.md`, then `docs/TRACKING_THEOREM.md` and `docs/EVIDENCE_LEDGER.md`. A claim called T is conditional on the specified solver/interval-arithmetic certificate, equations, numerical semantics and parameter box; this summary does not independently rerun those certificates.
 
 Held:
 
@@ -2626,11 +2626,13 @@ Held:
   parameter box F[bar] = 16.86 < 25, so this holds over the box in continuous time (Theorem 2).
 - (T, constant computed) Sampled-data RK4 controller: e_(k+1) = 0.88 eₖ + dₖ; with epsilon_h computed over the
   frozen fixtures (V), the ultimate bound 0.0315 lies inside the 0.10 basin (Theorem 3).
-- (T continuous, V discrete) Admissible box forward invariant (Theorem 4).
+- (T continuous, V on frozen fixtures; conditional computer-assisted T for named coordinates) Admissibility: the later `docs/ENGINE_PROOFS.md` states E1–E2 (E), S1 (S), I1 (I[U]) and U1–U5 (U) over its declared admissible start set, with outward-rounded intervals / SMT obligations. The RK4 sampled U-error ultimate bound is at most 0.0677 on that set. This is **not** the older claim of monotone discrete U error and not a global closed-loop external plant theorem.
+- (T conditional on the named engine proof) B1 bounds the damped bath under bounded S; it does **not** supply an explicit numerical bath-amplitude bound or convergence of the full forced system.
 
 Open:
 
-- epsilon_h and discrete invariance proved over the whole box (interval arithmetic).
+- Independent rerun and machine checking of the stated whole-domain certificates on the current frozen engine, including exact hypotheses, floating-point semantics and non-vacuous premises. The **older blanket open statement** about all discrete bounds is superseded only for E1–E2, S1, I1, U1–U5 and B1 on their declared domains; it is not a new proof of unrestricted six-state convergence.
+- CERT-10 for every start in the admissible domain; the current worst-case U5 entry argument guarantees at least nine macro-steps, not ten. Starts below S₋ are excluded.
 - Inheritance embedding / intertwining residual against a real plant (Closed Structure Def. 11.1): instrumented in
   the GPU bench (`tools/gpu_reps.py`, representation fidelity), not yet measured on a card.
 - Mapping of monograph Theorem 5.6 onto (E,U,I[U],S,B).
@@ -2912,7 +2914,7 @@ is section 20.3.
   digit); with the max writing, a room twin is native's room under native's heat as the brain reconstructs it, not a
   meter.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 21. The Mechanism of Action
 
@@ -3543,7 +3545,7 @@ Every benchmark runs again on omni-v26 from 14:31 UTC on 7 November 2026 (`scrip
 `scripts/dispatch_grid.py`). The omni-v25 runs started before that moment run to their end as omni-v25's record; nothing is
 cancelled.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 27. The Engines and Their Audit
 
@@ -3620,7 +3622,7 @@ that gates every machine release.
 
 The engine is the set of files whose bytes decide what Omni-Compass does: the brain, the compass law, the verdict, the live
 governors, the harness the models run in, and the wires that fasten the brain to an outside simulator. Their SHA-256
-digests together make the engine's fingerprint (the engine that stands, `OMNI_V25.json`: 65 files, digest `cf56fc0a7b707452`).
+digests together make the engine's fingerprint (the engine that stands, `OMNI_V26.json`: 65 files, digest `75d3c22eed4473b9`).
 `python3 tools/omni_version.py` reads the tree and names the engine it holds, or says which file differs from every
 declared engine.
 
@@ -6298,7 +6300,7 @@ paired receipts, this section is a wiring instruction, not a claim of savings.
 > section 45.4.
 
 How to wire Omni-Compass into your own systems yourself, from watching only to running your stack from the top. This
-manual ships in the box with the code and the license. Nobody from The Omni-Compass LLC needs to be on site.
+manual ships in the box with the code and the license. Nobody from Dubra Software Inc. / The Omni-Compass LLC needs to be on site.
 
 Read section 47.1 once, then take the levels in section 47.4 in order. Each level has a pass condition; go to the next
 level only when it holds. The OFF switch (section 47.2) works at every level.
@@ -6325,7 +6327,7 @@ level only when it holds. The OFF switch (section 47.2) works at every level.
 only to evaluate it and to reproduce its published results, including in shadow or test mode on systems you own or
 control (`LICENSE`, section 1). Every other use, commercial or not (running it for your business or in production,
 selling it, hosting it, or building it into a product or service), needs a signed, paid Omni-Compass Enterprise
-License from The Omni-Compass LLC. The copyright, patent and trademark notices, the `LICENSE`, the `NOTICE` and
+License from Dubra Software Inc. / The Omni-Compass LLC. The copyright, patent and trademark notices, the `LICENSE`, the `NOTICE` and
 `DISCLOSURES.md` stay with every copy.
 
 ---
@@ -7428,7 +7430,7 @@ differs.
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
 | It does no harm: never a LOSS against native | **Not shown**: 287 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
 | More work, faster, on real Kubernetes | **Shown** (L, omni-v25) | All four at once: work inside the response line up 31% to 65% (`results/live/V25_ALL_FOUR.md`); the 95th percentile cut in 8 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
-| More work, faster, on databases and caches | **Small** (L, omni-v25) | Redis, the cache's memory ceiling: GAIN, power given, 6.8% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.4% LOSS; MySQL, the buffer pool's size: GAIN, power given, 9.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 4.8% LOSS; Kafka, the consumer group's size: GAIN, power given, 218.6% GAIN (`docs/BENEFIT_SHEET.md`) |
+| More work, faster, on databases and caches | **Small** (L, omni-v26) | Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table: GAIN, power given, 221.1% GAIN; Redis, the cache's memory ceiling: GAIN, power given, 6.8% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.4% LOSS; MySQL, the buffer pool's size: GAIN, power given, 9.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 4.8% LOSS; Kafka, the consumer group's size: GAIN, power given, 218.6% GAIN (`docs/BENEFIT_SHEET.md`) |
 | Fewer machines | **Shown in 1 test** (L, omni-v25) | a queue of jobs: machines cut 12% to 19%, machine-hours cut 12% to 19%, machines after the queue cut 21% to 32% |
 | A smaller cloud bill | **Not shown** | Azure, omni-v18, 97 paired repetitions: the bill up 1.2%, inside the noise, and the work not counted (`results/live/AKS_STEADY_100_OMNI_V18.md`); Google and Amazon wired and not yet run |
 | Less energy for the work, on the chip | **GAIN in all three of our runs** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: energy per served request in runs A, B and C GAIN, 1.79%; GAIN, 1.35%; GAIN, 0.78% (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: STEADY, under the floor (the three runs' mean 0.12%) (`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |
@@ -7440,7 +7442,7 @@ differs.
 ### 52.2 Receipt by receipt
 
 "In all three" means the same sign in runs A, B and C with every 95% interval clear of zero; STEADY means a change under
-the 0.5% floor, or no change at all (the key, `tools/readings.py`). Run and scored by The Omni-Compass LLC's own code. No
+the 0.5% floor, or no change at all (the key, `tools/readings.py`). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No
 outside party has reviewed or approved these results.
 
 #### 52.2.1 Real software and our own models (L and S)
@@ -7452,6 +7454,7 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
 | The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
 | The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
@@ -7497,7 +7500,7 @@ the set ran to the paid cap of 100.
 <!-- results: chips (tools/results_chapter.py) -->
 Every three-run table of a card's own meter (class P) in `results/gpu/`, written from the tables by `python3
 tools/results_chapter.py`, newest engine first: the headline gauges in the table's own words, then how all its rows read by the
-one key; every row stands in the table. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or
+one key; every row stands in the table. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or
 approved these results.
 
 - **The organisms on the eight-card machine: six organisms, each on its own A100, three runs on rented machines**
@@ -7566,7 +7569,7 @@ that is done).
 - A loss in all three runs is reported as it stands, its cause looked for in our own wiring, setup and scoring first,
   and the next set run on the fix.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any
 outside body.
 
@@ -7601,7 +7604,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ### 53.2 Where Omni-Compass sits, and what each benchmark shows
@@ -7798,7 +7801,7 @@ interval clear of zero), **by the mean of our three runs** (the mean moved 0.5% 
 beside it), **STEADY, under the floor** or **STEADY, the same**, or **the runs disagree** (runs of 0.5% or more pointing opposite
 ways: the test is unstable there and is looked into). Every table was read again from its own data by that rule on 24
 October (`tools/reread.py`). Nothing reads "confirmed" or "not
-confirmed": nobody outside The Omni-Compass LLC has reviewed or approved these results. The `V<n>_` in a table's name (`V10_`, `V11_`, `V12_` and so on) is the engine the runs carried (`python3 tools/omni_version.py --commit <sha>`);
+confirmed": nobody outside Dubra Software Inc. / The Omni-Compass LLC has reviewed or approved these results. The `V<n>_` in a table's name (`V10_`, `V11_`, `V12_` and so on) is the engine the runs carried (`python3 tools/omni_version.py --commit <sha>`);
 a table never mixes engines, and a reading is never carried from one engine to another. Every LOSS and every power given is in the table beside
 the GAINs. On the omni-v11 tables there is no LOSS. Power given appears in the grid's dissipated energy in four grids, the tap
 operations in one, PgBouncer's connections, MySQL's pool from its factory size, Redis's memory and CityLearn's distance from net
@@ -7928,10 +7931,10 @@ and where every number stands today are in the Owner's Manual, chapter 3, *Where
 
 
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 The founder's orders of 9 and 13 October 2026: next to every benchmark, say whether Omni-Compass on top was a benefit to the system and by how much, in one number whose sign always means the same thing, and say it in **GAIN**, **STEADY** and **LOSS**, judged by what each gauge is for and never by the sign of its number (the key: `docs/HOW_TO_READ_THE_RESULTS.md`). **On this sheet the sign is the system's own declared aims, gauge by gauge: a plus is a GAIN; a minus is a LOSS on work, speed, misses or failures, and power given on a resource spent (energy, machines, memory).** The number carries its word. Beside it every change judged across our three runs is written out with which way it went and its word: "p95 cut 65% (GAIN)", "memory ceiling held up 215% (power given)". An operator whose aims differ reads the same numbers the other way.
@@ -7948,37 +7951,39 @@ Every row names the engine its table ran on (read from the table). Results are n
 
 | Date | Benchmark | Engine | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---|---|---:|---|---|
-| 2026-11-07 | Every real test together: the Omni index | omni-v25 | **GAIN AND LOSS** | **20% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
-| 2026-11-07 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | **GAIN, power given** | **5.3% GAIN** | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
-| 2026-11-07 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | **GAIN** | **155% GAIN** | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
-| 2026-11-07 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | **GAIN** | **0.3% GAIN** | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
-| 2026-11-07 | Robustness: the two-hour run | omni-v25 | **GAIN AND LOSS** | **8.9% LOSS** | mean response cut 29% to 33% (GAIN); p95 cut 24% to 34% (GAIN); time over the line cut 25% to 32% (GAIN); failed requests cut 6.6% to 8.7% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 13% to 17% (GAIN); replicas up 39% to 59% (power given); pods started up 100% to 258% (power given); pod start wait, total (s) up 116% to 326% (LOSS); pod start wait, mean (s) up 8% to 53% (LOSS) | `results/live/V25_ROBUST_LONG.md` |
-| 2026-11-07 | Robustness: the governor killed outright mid-run | omni-v25 | **GAIN AND LOSS** | **1.5% LOSS** | mean response cut 37% to 42% (GAIN); p95 cut 41% to 56% (GAIN); time over the line cut 31% to 33% (GAIN); failed requests cut 3.5% to 6.9% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 20% (GAIN); replicas up 21% to 22% (power given); pods started up 93% to 135% (power given); pod start wait, total (s) up 126% to 164% (LOSS); pod start wait, mean (s) up 15% to 16% (LOSS); robust: failed requests in the 300 s after the kill (%) up 11% to 15% (LOSS); robust: time over the line in the 300 s after the kill (% of samples) up 1.7% to 4.3% (LOSS) | `results/live/V25_ROBUST_KILL.md` |
-| 2026-11-07 | Robot arms (MuJoCo), the three untouched robots | omni-v25 | **GAIN** | **3.8% GAIN** | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V25_MUJOCO.md` |
-| 2026-11-07 | Redis, the cache's memory ceiling | omni-v25 | **GAIN, power given** | **6.8% power given** | work inside the line up 16% to 27% (GAIN); hit rate up 16% to 27% (GAIN); p95 cut 0% to 96% (GAIN); mean cut 40% to 71% (GAIN); host CPU busy cut 3% to 30% (GAIN); host CPU-seconds cut 3% to 31% (GAIN); CPU per 1,000 inside the line cut 23% to 43% (GAIN); process_cpu_seconds cut 7% to 14% (GAIN); memory ceiling held up 273% to 428% (power given); memory used up 249% to 411% (power given); p99 cut 1.3% to 1.6% (GAIN) | `results/live/V25_REDIS.md` |
-| 2026-11-07 | Real Kubernetes, steady work | omni-v25 | **GAIN, power given** | **31% GAIN** | mean response cut 47% to 49% (GAIN); p95 cut 65% to 66% (GAIN); p99 cut 71% to 72% (GAIN); time over the line cut 99% to 100% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% (GAIN); pods started cut 12% to 20% (GAIN); pod start wait, total (s) cut 16% to 23% (GAIN); replicas up 2.7% to 5.5% (power given) | `results/live/V25_STEADY.md` |
-| 2026-11-07 | Real Kubernetes, faults | omni-v25 | **GAIN AND LOSS** | **25% GAIN** | mean response cut 33% to 50% (GAIN); p95 cut 41% to 56% (GAIN); p99 cut 13% to 62% (GAIN); time over the line cut 22% to 29% (GAIN); failed requests cut 8% to 11% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 12% to 21% (GAIN); pod start wait, total (s) up 98% to 113% (LOSS); replicas up 23% to 31% (power given); pods started up 67% to 104% (power given) | `results/live/V25_FAULTS.md` |
-| 2026-11-07 | Real Kubernetes, demand that wanders | omni-v25 | **GAIN AND LOSS** | **23% GAIN** | mean response cut 33% to 39% (GAIN); p95 cut 44% to 50% (GAIN); time over the line cut 24% to 27% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 18% (GAIN); failed requests up 0.2% to 4.4% (LOSS); pod start wait, total (s) up 74% to 176% (LOSS); replicas up 23% to 34% (power given); pods started up 72% to 108% (power given) | `results/live/V25_WANDERING.md` |
-| 2026-11-07 | Real Kubernetes, all four at once | omni-v25 | **GAIN AND LOSS** | **29% GAIN** | work inside the line up 31% to 65% (GAIN); mean response cut 34% to 43% (GAIN); p95 cut 44% to 55% (GAIN); p99 cut 9% to 35% (GAIN); time over the line cut 26% to 33% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 15% to 26% (GAIN); failed requests up 1.3% to 5.3% (LOSS); pod start wait, total (s) up 94% to 117% (LOSS); replicas up 6% to 12% (power given); pods started up 71% to 102% (power given) | `results/live/V25_ALL_FOUR.md` |
-| 2026-11-07 | Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **23% GAIN** | parked-worker energy up 1.3% to 1.7% (power given); standby-model energy up 1.3% to 1.7% (power given); mean response cut 35% to 38% (GAIN); p95 cut 40% to 44% (GAIN); p99 cut 29% to 38% (GAIN); time over the line cut 77% to 87% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 94% to 100% (GAIN); replicas up 35% to 39% (power given); pods started up 144% to 176% (power given); pod start wait, total (s) up 205% to 227% (LOSS); pod start wait, mean (s) up 24% to 34% (LOSS) | `results/live/V25_GOLDILOCKS.md` |
-| 2026-11-07 | Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **0.9% LOSS** | parked-worker energy cut 0.3% to 0.9% (GAIN); mean response up 2.8% to 4.0% (LOSS); p95 up 1.4% to 2.7% (LOSS); p99 up 0.1% to 7.7% (LOSS); replicas up 2.9% to 5.3% (power given) | `results/live/V25_CRUISEKUBE.md` |
-| 2026-11-07 | Real Kubernetes, a queue of jobs | omni-v25 | **GAIN AND LOSS** | **9.0% GAIN** | machines cut 12% to 19% (GAIN); machine-hours cut 12% to 19% (GAIN); standby-model energy cut 8% to 13% (GAIN); mean response cut 7.0% to 9.1% (GAIN); p99 cut 0.1% to 1.7% (GAIN); pods started cut 100% (GAIN); pod start wait, total (s) cut 100% (GAIN); pod start wait, mean (s) cut 100% (GAIN); machines after the queue cut 21% to 32% (GAIN); time over the line up 0.4% to 2.3% (LOSS); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) up 0.0% to 3.7% (LOSS); queue finished up 2.6% to 2.9% (LOSS) | `results/live/V25_BATCH.md` |
-| 2026-11-07 | Real Kubernetes, a public day of demand (Google 2011) | omni-v25 | **GAIN AND LOSS** | **35% GAIN** | mean response cut 49% to 50% (GAIN); p95 cut 59% to 60% (GAIN); p99 cut 45% to 47% (GAIN); time over the line cut 76% to 77% (GAIN); failed requests cut 10% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 59% to 63% (GAIN); pod start wait, total (s) up 139% to 2381% (LOSS); pod start wait, mean (s) up 11% to 576% (LOSS); replicas up 13% to 29% (power given); pods started up 107% to 175% (power given) | `results/live/V25_TRACE_GOOGLE2011.md` |
-| 2026-11-07 | Real Kubernetes, a noisy neighbour | omni-v25 | **GAIN AND LOSS** | **2.3% LOSS** | failed requests cut 16% to 25% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 2.4% to 8.0% (GAIN); second app: response time (ms), 99th percentile cut 17% to 34% (GAIN); p95 up 0% to 17% (LOSS); pod start wait, total (s) up 9% to 31% (LOSS); pod start wait, mean (s) up 1% to 26% (LOSS); second app: response time (ms), 95th percentile up 4% to 13% (LOSS); second app: time over the response line (% of samples) up 0.1% to 3.0% (LOSS); replicas up 4.9% to 6.0% (power given); pods started up 4% to 10% (power given) | `results/live/V25_FAIRNESS.md` |
-| 2026-11-07 | Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **28% GAIN** | parked-worker energy up 1.8% to 2.4% (power given); standby-model energy up 1.8% to 2.4% (power given); mean response cut 47% to 48% (GAIN); p95 cut 44% to 47% (GAIN); p99 cut 17% to 24% (GAIN); time over the line cut 72% to 77% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 57% to 70% (GAIN); replicas cut 7% to 11% (GAIN); pods started cut 7% to 14% (GAIN); pod start wait, mean (s) up 7% to 21% (LOSS) | `results/live/V25_KEDA_REQUESTS.md` |
-| 2026-11-07 | Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **9.0% GAIN** | parked-worker energy up 1.3% to 1.5% (power given); standby-model energy up 1.3% to 1.5% (power given); mean response cut 26% to 29% (GAIN); p95 cut 32% to 39% (GAIN); p99 cut 24% to 31% (GAIN); time over the line cut 72% to 87% (GAIN); replicas up 21% to 30% (power given); pods started up 44% to 75% (power given); pod start wait, total (s) up 47% to 85% (LOSS) | `results/live/V25_KEDA_CPU_REQUESTS.md` |
-| 2026-11-07 | Power grids (SimBench), both load models | omni-v25 | **GAIN, power given** | **5.8% GAIN** | energy the loads drew cut 1.3% to 1.5% (GAIN); energy dissipated in lines and transformers cut 0.5% to 2.4% (GAIN); net import from the upstream grid cut 1% to 15% (GAIN); tap operations cut 16% to 38% (GAIN); energy dissipated in lines and transformers up 0.6% to 1.5% (power given); tap operations up 100% (power given) | `results/live/V25_PANDAPOWER.md` |
-| 2026-11-07 | PostgreSQL, the pooler's pool size | omni-v25 | **GAIN AND LOSS** | **1.4% LOSS** | median up 0.1% to 1.8% (LOSS); connections held open up 0% to 25% (power given); connections most at once up 0% to 85% (power given); host CPU busy up 0.3% to 1.5% (power given); host CPU-seconds up 0.2% to 1.5% (power given); CPU per 1,000 inside the line up 0.4% to 1.8% (power given); p95 cut 3.4% to 5.2% (GAIN); p99 cut 9% to 58% (GAIN); median cut 0.5% to 0.7% (GAIN); mean cut 2% to 16% (GAIN) | `results/live/V25_PGBENCH.md` |
-| 2026-11-07 | MySQL, the buffer pool's size | omni-v25 | **GAIN, power given** | **9.5% power given** | p99 cut 1% to 55% (GAIN); pool held up 15% to 141% (power given); pages holding data up 12% to 114% (power given); p95 cut 0% to 31% (GAIN); mean cut 1% to 31% (GAIN); host CPU busy cut 0.2% to 7.4% (GAIN); host CPU-seconds cut 0.2% to 7.4% (GAIN); CPU per 1,000 inside the line cut 0% to 36% (GAIN); work inside the line up 1% to 50% (GAIN) | `results/live/V25_SYSBENCH.md` |
-| 2026-11-07 | MongoDB, the storage engine's cache size | omni-v25 | **GAIN AND LOSS** | **4.8% LOSS** | cache size held up 0% to 177% (power given); cache in use up 0% to 167% (power given); p99 up 0.5% to 1.7% (LOSS); mean up 0.3% to 1.9% (LOSS); host CPU busy up 3.4% to 8.4% (power given); host CPU-seconds up 4% to 11% (power given); CPU per 1,000 inside the line up 4% to 11% (power given); p99 cut 0.4% to 1.8% (GAIN); mean cut 0.1% to 2.0% (GAIN); host CPU busy cut 3% to 16% (GAIN); host CPU-seconds cut 3% to 18% (GAIN); CPU per 1,000 inside the line cut 3% to 18% (GAIN) | `results/live/V25_YCSB.md` |
-| 2026-11-07 | Kafka, the consumer group's size | omni-v25 | **GAIN, power given** | **219% GAIN** | work inside the line up 16% to 23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 98% to 100% (GAIN); median cut 1% to 23% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 83% to 98% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 4% to 14% (GAIN); consumers running up 78% to 229% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 1% to 13% (power given); host CPU-seconds up 1% to 13% (power given) | `results/live/V25_KAFKA.md` |
-| 2026-11-07 | Drone swarms, the three untouched cells | omni-v25 | **GAIN** | **2.9% GAIN** | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V25_SWARM.md` |
-| 2026-11-07 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | **GAIN** | **1.4% GAIN** | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V25_CITYLEARN.md` |
+| 2026-11-11 | Every real test together: the Omni index | omni-v25 | **GAIN AND LOSS** | **20% GAIN** | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| 2026-11-08 | Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | omni-v26 | **GAIN, power given** | **221% GAIN** | work inside the line up 16% to 23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 92% to 100% (GAIN); median cut 0% to 30% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 82% to 99% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 2% to 14% (GAIN); consumers running up 73% to 215% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 2% to 14% (power given); host CPU-seconds up 2% to 15% (power given) | `results/live/V26_KAFKA.md` |
+| 2026-11-06 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | **GAIN, power given** | **5.3% GAIN** | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
+| 2026-11-06 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | **GAIN** | **155% GAIN** | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
+| 2026-11-06 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | **GAIN** | **0.3% GAIN** | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
+| 2026-11-06 | Robustness: the two-hour run | omni-v25 | **GAIN AND LOSS** | **8.9% LOSS** | mean response cut 29% to 33% (GAIN); p95 cut 24% to 34% (GAIN); time over the line cut 25% to 32% (GAIN); failed requests cut 6.6% to 8.7% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 13% to 17% (GAIN); replicas up 39% to 59% (power given); pods started up 100% to 258% (power given); pod start wait, total (s) up 116% to 326% (LOSS); pod start wait, mean (s) up 8% to 53% (LOSS) | `results/live/V25_ROBUST_LONG.md` |
+| 2026-11-06 | Robustness: the governor killed outright mid-run | omni-v25 | **GAIN AND LOSS** | **1.5% LOSS** | mean response cut 37% to 42% (GAIN); p95 cut 41% to 56% (GAIN); time over the line cut 31% to 33% (GAIN); failed requests cut 3.5% to 6.9% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 18% to 20% (GAIN); replicas up 21% to 22% (power given); pods started up 93% to 135% (power given); pod start wait, total (s) up 126% to 164% (LOSS); pod start wait, mean (s) up 15% to 16% (LOSS); robust: failed requests in the 300 s after the kill (%) up 11% to 15% (LOSS); robust: time over the line in the 300 s after the kill (% of samples) up 1.7% to 4.3% (LOSS) | `results/live/V25_ROBUST_KILL.md` |
+| 2026-11-06 | Robot arms (MuJoCo), the three untouched robots | omni-v25 | **GAIN** | **3.8% GAIN** | energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN) | `results/live/V25_MUJOCO.md` |
+| 2026-11-06 | Redis, the cache's memory ceiling | omni-v25 | **GAIN, power given** | **6.8% power given** | work inside the line up 16% to 27% (GAIN); hit rate up 16% to 27% (GAIN); p95 cut 0% to 96% (GAIN); mean cut 40% to 71% (GAIN); host CPU busy cut 3% to 30% (GAIN); host CPU-seconds cut 3% to 31% (GAIN); CPU per 1,000 inside the line cut 23% to 43% (GAIN); process_cpu_seconds cut 7% to 14% (GAIN); memory ceiling held up 273% to 428% (power given); memory used up 249% to 411% (power given); p99 cut 1.3% to 1.6% (GAIN) | `results/live/V25_REDIS.md` |
+| 2026-11-06 | Real Kubernetes, steady work | omni-v25 | **GAIN, power given** | **31% GAIN** | mean response cut 47% to 49% (GAIN); p95 cut 65% to 66% (GAIN); p99 cut 71% to 72% (GAIN); time over the line cut 99% to 100% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 100% (GAIN); pods started cut 12% to 20% (GAIN); pod start wait, total (s) cut 16% to 23% (GAIN); replicas up 2.7% to 5.5% (power given) | `results/live/V25_STEADY.md` |
+| 2026-11-06 | Real Kubernetes, faults | omni-v25 | **GAIN AND LOSS** | **25% GAIN** | mean response cut 33% to 50% (GAIN); p95 cut 41% to 56% (GAIN); p99 cut 13% to 62% (GAIN); time over the line cut 22% to 29% (GAIN); failed requests cut 8% to 11% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 12% to 21% (GAIN); pod start wait, total (s) up 98% to 113% (LOSS); replicas up 23% to 31% (power given); pods started up 67% to 104% (power given) | `results/live/V25_FAULTS.md` |
+| 2026-11-06 | Real Kubernetes, demand that wanders | omni-v25 | **GAIN AND LOSS** | **23% GAIN** | mean response cut 33% to 39% (GAIN); p95 cut 44% to 50% (GAIN); time over the line cut 24% to 27% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 16% to 18% (GAIN); failed requests up 0.2% to 4.4% (LOSS); pod start wait, total (s) up 74% to 176% (LOSS); replicas up 23% to 34% (power given); pods started up 72% to 108% (power given) | `results/live/V25_WANDERING.md` |
+| 2026-11-06 | Real Kubernetes, all four at once | omni-v25 | **GAIN AND LOSS** | **29% GAIN** | work inside the line up 31% to 65% (GAIN); mean response cut 34% to 43% (GAIN); p95 cut 44% to 55% (GAIN); p99 cut 9% to 35% (GAIN); time over the line cut 26% to 33% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 15% to 26% (GAIN); failed requests up 1.3% to 5.3% (LOSS); pod start wait, total (s) up 94% to 117% (LOSS); replicas up 6% to 12% (power given); pods started up 71% to 102% (power given) | `results/live/V25_ALL_FOUR.md` |
+| 2026-11-06 | Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **23% GAIN** | parked-worker energy up 1.3% to 1.7% (power given); standby-model energy up 1.3% to 1.7% (power given); mean response cut 35% to 38% (GAIN); p95 cut 40% to 44% (GAIN); p99 cut 29% to 38% (GAIN); time over the line cut 77% to 87% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 94% to 100% (GAIN); replicas up 35% to 39% (power given); pods started up 144% to 176% (power given); pod start wait, total (s) up 205% to 227% (LOSS); pod start wait, mean (s) up 24% to 34% (LOSS) | `results/live/V25_GOLDILOCKS.md` |
+| 2026-11-06 | Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **0.9% LOSS** | parked-worker energy cut 0.3% to 0.9% (GAIN); mean response up 2.8% to 4.0% (LOSS); p95 up 1.4% to 2.7% (LOSS); p99 up 0.1% to 7.7% (LOSS); replicas up 2.9% to 5.3% (power given) | `results/live/V25_CRUISEKUBE.md` |
+| 2026-11-06 | Real Kubernetes, a queue of jobs | omni-v25 | **GAIN AND LOSS** | **9.0% GAIN** | machines cut 12% to 19% (GAIN); machine-hours cut 12% to 19% (GAIN); standby-model energy cut 8% to 13% (GAIN); mean response cut 7.0% to 9.1% (GAIN); p99 cut 0.1% to 1.7% (GAIN); pods started cut 100% (GAIN); pod start wait, total (s) cut 100% (GAIN); pod start wait, mean (s) cut 100% (GAIN); machines after the queue cut 21% to 32% (GAIN); time over the line up 0.4% to 2.3% (LOSS); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) up 0.0% to 3.7% (LOSS); queue finished up 2.6% to 2.9% (LOSS) | `results/live/V25_BATCH.md` |
+| 2026-11-06 | Real Kubernetes, a public day of demand (Google 2011) | omni-v25 | **GAIN AND LOSS** | **35% GAIN** | mean response cut 49% to 50% (GAIN); p95 cut 59% to 60% (GAIN); p99 cut 45% to 47% (GAIN); time over the line cut 76% to 77% (GAIN); failed requests cut 10% to 18% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 59% to 63% (GAIN); pod start wait, total (s) up 139% to 2381% (LOSS); pod start wait, mean (s) up 11% to 576% (LOSS); replicas up 13% to 29% (power given); pods started up 107% to 175% (power given) | `results/live/V25_TRACE_GOOGLE2011.md` |
+| 2026-11-06 | Real Kubernetes, a noisy neighbour | omni-v25 | **GAIN AND LOSS** | **2.3% LOSS** | failed requests cut 16% to 25% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 2.4% to 8.0% (GAIN); second app: response time (ms), 99th percentile cut 17% to 34% (GAIN); p95 up 0% to 17% (LOSS); pod start wait, total (s) up 9% to 31% (LOSS); pod start wait, mean (s) up 1% to 26% (LOSS); second app: response time (ms), 95th percentile up 4% to 13% (LOSS); second app: time over the response line (% of samples) up 0.1% to 3.0% (LOSS); replicas up 4.9% to 6.0% (power given); pods started up 4% to 10% (power given) | `results/live/V25_FAIRNESS.md` |
+| 2026-11-06 | Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **28% GAIN** | parked-worker energy up 1.8% to 2.4% (power given); standby-model energy up 1.8% to 2.4% (power given); mean response cut 47% to 48% (GAIN); p95 cut 44% to 47% (GAIN); p99 cut 17% to 24% (GAIN); time over the line cut 72% to 77% (GAIN); alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) cut 57% to 70% (GAIN); replicas cut 7% to 11% (GAIN); pods started cut 7% to 14% (GAIN); pod start wait, mean (s) up 7% to 21% (LOSS) | `results/live/V25_KEDA_REQUESTS.md` |
+| 2026-11-06 | Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | **GAIN AND LOSS** | **9.0% GAIN** | parked-worker energy up 1.3% to 1.5% (power given); standby-model energy up 1.3% to 1.5% (power given); mean response cut 26% to 29% (GAIN); p95 cut 32% to 39% (GAIN); p99 cut 24% to 31% (GAIN); time over the line cut 72% to 87% (GAIN); replicas up 21% to 30% (power given); pods started up 44% to 75% (power given); pod start wait, total (s) up 47% to 85% (LOSS) | `results/live/V25_KEDA_CPU_REQUESTS.md` |
+| 2026-11-06 | Power grids (SimBench), both load models | omni-v25 | **GAIN, power given** | **5.8% GAIN** | energy the loads drew cut 1.3% to 1.5% (GAIN); energy dissipated in lines and transformers cut 0.5% to 2.4% (GAIN); net import from the upstream grid cut 1% to 15% (GAIN); tap operations cut 16% to 38% (GAIN); energy dissipated in lines and transformers up 0.6% to 1.5% (power given); tap operations up 100% (power given) | `results/live/V25_PANDAPOWER.md` |
+| 2026-11-06 | PostgreSQL, the pooler's pool size | omni-v25 | **GAIN AND LOSS** | **1.4% LOSS** | median up 0.1% to 1.8% (LOSS); connections held open up 0% to 25% (power given); connections most at once up 0% to 85% (power given); host CPU busy up 0.3% to 1.5% (power given); host CPU-seconds up 0.2% to 1.5% (power given); CPU per 1,000 inside the line up 0.4% to 1.8% (power given); p95 cut 3.4% to 5.2% (GAIN); p99 cut 9% to 58% (GAIN); median cut 0.5% to 0.7% (GAIN); mean cut 2% to 16% (GAIN) | `results/live/V25_PGBENCH.md` |
+| 2026-11-06 | MySQL, the buffer pool's size | omni-v25 | **GAIN, power given** | **9.5% power given** | p99 cut 1% to 55% (GAIN); pool held up 15% to 141% (power given); pages holding data up 12% to 114% (power given); p95 cut 0% to 31% (GAIN); mean cut 1% to 31% (GAIN); host CPU busy cut 0.2% to 7.4% (GAIN); host CPU-seconds cut 0.2% to 7.4% (GAIN); CPU per 1,000 inside the line cut 0% to 36% (GAIN); work inside the line up 1% to 50% (GAIN) | `results/live/V25_SYSBENCH.md` |
+| 2026-11-06 | MongoDB, the storage engine's cache size | omni-v25 | **GAIN AND LOSS** | **4.8% LOSS** | cache size held up 0% to 177% (power given); cache in use up 0% to 167% (power given); p99 up 0.5% to 1.7% (LOSS); mean up 0.3% to 1.9% (LOSS); host CPU busy up 3.4% to 8.4% (power given); host CPU-seconds up 4% to 11% (power given); CPU per 1,000 inside the line up 4% to 11% (power given); p99 cut 0.4% to 1.8% (GAIN); mean cut 0.1% to 2.0% (GAIN); host CPU busy cut 3% to 16% (GAIN); host CPU-seconds cut 3% to 18% (GAIN); CPU per 1,000 inside the line cut 3% to 18% (GAIN) | `results/live/V25_YCSB.md` |
+| 2026-11-06 | Kafka, the consumer group's size | omni-v25 | **GAIN, power given** | **219% GAIN** | work inside the line up 16% to 23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 98% to 100% (GAIN); median cut 1% to 23% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 83% to 98% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 4% to 14% (GAIN); consumers running up 78% to 229% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 1% to 13% (power given); host CPU-seconds up 1% to 13% (power given) | `results/live/V25_KAFKA.md` |
+| 2026-11-06 | Drone swarms, the three untouched cells | omni-v25 | **GAIN** | **2.9% GAIN** | energy per mission cut 13% to 17% (GAIN); fleet energy over the window cut 13% to 17% (GAIN); missions per charge at the autopilot's reserve up 14% to 21% (GAIN) | `results/live/V25_SWARM.md` |
+| 2026-11-06 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | **GAIN** | **1.4% GAIN** | electricity bought cut 3% to 14% (GAIN); daily peak draw cut 3% to 17% (GAIN); highest peak cut 2.7% to 4.4% (GAIN); ramping cut 3% to 10% (GAIN); daily load unevenness cut 0.9% to 6.0% (GAIN); monthly load unevenness cut 0.8% to 2.3% (GAIN); electricity bill cut 16% (GAIN); carbon cut 12% (GAIN); distance from zero net energy cut 1.0% (GAIN) | `results/live/V25_CITYLEARN.md` |
 
 ### 54.1 The parts behind a row
 
 Where a row sums several workloads, grids, districts, cells or robots, each part with its own number, the same way round:
 
+- **Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table**: burst 219% GAIN (GAIN, power given: work inside the line up 23% (GAIN); p95 cut 100% (GAIN); p99 cut 92% to 99% (GAIN); median cut 11% to 15% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 82% to 97% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 13% to 14% (GAIN); consumers running up 146% to 215% (power given); consumers most at once up 250% to 300% (power given); host CPU busy up 6.1% to 7.4% (power given); host CPU-seconds up 5.8% to 7.3% (power given)); heavy 220% GAIN (GAIN, power given: work inside the line up 16% to 17% (GAIN); p95 cut 99% (GAIN); p99 cut 99% to 100% (GAIN); median cut 0.3% to 2.5% (GAIN); mean cut 96% (GAIN); messages waiting, most cut 90% to 94% (GAIN); messages waiting, mean cut 96% to 97% (GAIN); CPU per 1,000 inside the line cut 12% to 13% (GAIN); consumers running up 73% to 138% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 2.0% to 2.8% (power given); host CPU-seconds up 1.9% to 2.7% (power given)); light 224% GAIN (GAIN, power given: work inside the line up 17% (GAIN); p95 cut 100% (GAIN); p99 cut 100% (GAIN); median cut 19% to 30% (GAIN); mean cut 97% to 98% (GAIN); messages waiting, most cut 94% to 99% (GAIN); messages waiting, mean cut 97% to 98% (GAIN); CPU per 1,000 inside the line cut 1.8% to 7.5% (GAIN); consumers running up 160% to 186% (power given); consumers most at once up 300% (power given); host CPU busy up 9% to 14% (power given); host CPU-seconds up 9% to 15% (power given)).
 - **The six organisms with the real cluster inside, 10 and 100 copies**: compute_ai_cloud at 10 copies 14% GAIN (GAIN: p95 cut 50% (GAIN); time over the line cut 32% (GAIN)); physics_robotics_autonomous at 10 copies 0%: STEADY (STEADY: STEADY: nothing moved 0.5% or more across our three runs); energy_facility_industrial at 10 copies 5.0% GAIN (GAIN, power given: time over the line cut 33% (GAIN); replicas up 0.6% (power given)); distribution_specialized at 10 copies 16% GAIN (GAIN: p95 cut 52% (GAIN); time over the line cut 36% (GAIN)); tower at 10 copies 11% GAIN (GAIN: p95 cut 42% (GAIN); time over the line cut 20% (GAIN); failed requests cut 8.4% (GAIN)); stack at 10 copies 2.8% GAIN (GAIN: time over the line cut 12% (GAIN); failed requests cut 8.5% (GAIN)); compute_ai_cloud at 100 copies 1.3% GAIN (GAIN: time over the line cut 9.8% (GAIN)); physics_robotics_autonomous at 100 copies 1.1% GAIN (GAIN: time over the line cut 8.4% (GAIN)); energy_facility_industrial at 100 copies 2.1% GAIN (GAIN: time over the line cut 15% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN)); distribution_specialized at 100 copies 8.2% GAIN (GAIN: p95 cut 32% (GAIN); time over the line cut 22% (GAIN)); tower at 100 copies 1.3% GAIN (GAIN: time over the line cut 8.7% (GAIN)); stack at 100 copies 2.3% GAIN (GAIN: time over the line cut 15% (GAIN)).
 - **The big organisms with the real cluster inside, 1,000 copies on Azure**: tower at 1000 copies 159% GAIN (GAIN: p95 cut 98% (GAIN); p99 cut 98% (GAIN)); stack at 1000 copies 151% GAIN (GAIN: p95 cut 95% (GAIN); p99 cut 97% (GAIN)).
 - **Robot arms (MuJoCo), the three untouched robots**: kinova_gen3 12% GAIN (GAIN: energy per takt cut 0.8% (GAIN); copper heating per cycle cut 11% (GAIN); mechanical work per cycle cut 6.6% (GAIN); peak joint torque cut 29% (GAIN); tracking error, RMS cut 21% (GAIN); end-point error at the waypoints cut 11% (GAIN)); kuka_iiwa_14 (left native by the engine's own trial) 0%: STEADY (STEADY: STEADY: nothing moved); universal_robots_ur5e (left native by the engine's own trial) 0%: STEADY (STEADY: STEADY: nothing moved).
@@ -8002,10 +8007,10 @@ Where a row sums several workloads, grids, districts, cells or robots, each part
 
 
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 The founder's order of 17 October: Omni-Compass is shown on top at every level, on every gauge, and every level's gauges should go the same way; where one does not, it is named here and taken to the founder. Each row is built from its result files by `tools/levels.py`; nothing is typed in. A count is of judged gauges (a table's rows that read a word), each under its own table's rule (the three runs, or the realms result's ten seeds); **power given** is a resource put in, shown and never called a loss. Every row names the engine its tables ran on, and no reading is carried from one engine to another.
@@ -8016,7 +8021,7 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 | The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
 | The cluster: real Kubernetes, native its own HPA and scheduler | omni-v25 | L | 41 | 39 | 12 | 23 | 14 | **yes: 37, listed below** |
 | The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v25 | L | 18 | 22 | 11 | 7 | 6 | **yes: 13, listed below** |
-| A muscle inside a running service: database, broker, cache | omni-v25 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
+| A muscle inside a running service: database, broker, cache | omni-v25, omni-v26 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
 | A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v25 | independent simulator | 101 | 165 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
 | The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs on it are dispatched (results/grid_v26/DISPATCHED.json) |
 | The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7; one set on omni-v18 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of 97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise (results/live/AKS_STEADY_100_OMNI_V18.md) |
@@ -8104,8 +8109,8 @@ Goes the other way:
 
 #### 55.1.5 A muscle inside a running service: database, broker, cache
 
-Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v25. Evidence: L.
-Tables: `results/live/V25_REDIS.md`, `results/live/V25_REDIS_SERVICE.md`, `results/live/V25_KAFKA.md`, `results/live/V25_KAFKA_SERVICE.md`, `results/live/V25_PGBENCH.md`, `results/live/V25_SYSBENCH.md`, `results/live/V25_YCSB.md`.
+Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v25, omni-v26. Evidence: L.
+Tables: `results/live/V25_REDIS.md`, `results/live/V25_REDIS_SERVICE.md`, `results/live/V26_KAFKA.md`, `results/live/V25_KAFKA_SERVICE.md`, `results/live/V25_PGBENCH.md`, `results/live/V25_SYSBENCH.md`, `results/live/V25_YCSB.md`.
 
 Goes the other way:
 
@@ -8171,7 +8176,7 @@ No run at this level yet, real or modelled, on the engine that stands (`k8s_flee
 
 
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `136fd5fa21`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so. The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; the engine that stands is omni-v26, and its figure of record is the Omni index, **GAIN 20.4%** (its second reading, work and speed alone, GAIN 94.0%), in `results/OMNI_INDEX.md`.
 
@@ -8679,7 +8684,7 @@ start from the same fresh cluster, run for 900 s after a 120 s warm-up, and end 
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Steady work** (`results/live/V25_STEADY.md`, omni-v25): **GAIN, power given**, by the index's rule 30.8% GAIN. Mean response
@@ -8732,7 +8737,7 @@ inputs (the settings commands it wrote, the targets it held) beside the service'
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs**
@@ -8793,7 +8798,7 @@ The founder's order of 23 October: native, Omni-Compass on native and Omni-Compa
 | C | the batch job beside the service | 2,174 | 0 | 0 | 205.7 | 12.0 | 19.2 |
 | C | the drills | 3,306 | 0 | 0 | 209.9 | 14.5 | 19.6 |
 
-No request failed and none was answered wrong in any arm of any run (9,160 to 11,156 requests answered an arm). The means of the three runs, which the bottom line carries: Omni-Compass on native against native, work +8.5%, the 95th percentile 13.0% faster, machines 3.2% fewer, serving units 4.0% more; Omni-Compass direct against native, work +6.0%, the 95th percentile 9.9% faster, machines 2.8% fewer, serving units 3.5% more; Omni-Compass direct against Omni-Compass on native, work −2.3%, the 95th percentile 3.6% slower, machines 0.5% more, serving units 0.5% fewer. 1 rows read LOSS, each shown in the table: Omni direct against Omni on native, Work (requests a step). The test runs again on the engine that stands. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+No request failed and none was answered wrong in any arm of any run (9,160 to 11,156 requests answered an arm). The means of the three runs, which the bottom line carries: Omni-Compass on native against native, work +8.5%, the 95th percentile 13.0% faster, machines 3.2% fewer, serving units 4.0% more; Omni-Compass direct against native, work +6.0%, the 95th percentile 9.9% faster, machines 2.8% fewer, serving units 3.5% more; Omni-Compass direct against Omni-Compass on native, work −2.3%, the 95th percentile 3.6% slower, machines 0.5% more, serving units 0.5% fewer. 1 rows read LOSS, each shown in the table: Omni direct against Omni on native, Work (requests a step). The test runs again on the engine that stands. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 <!-- end of the three arms -->
 
 ### 60.4 The organisms with the real cluster inside, and the grid
@@ -8805,7 +8810,7 @@ stands, and until their tables land these are omni-v3's.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **The six organisms with the real cluster inside, 10 and 100 copies** (`results/live/V3_SIX_KUBE.md`, omni-v3): **GAIN, power
@@ -8884,7 +8889,7 @@ noise). The stacked run that replaces the composition is preregistered (`docs/WH
 | On site: the software end × the bare metal | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%** |
 | Through the cloud: the software end × the cloud's wire × the bare metal at the back end | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%**; bill **STEADY 0.0%** |
 
-By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 41.9%** (+32.5% to +52.1%) on site and **GAIN 41.9%** (+32.5% to +52.1%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 76.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 41.9%** (+32.5% to +52.1%) on site and **GAIN 41.9%** (+32.5% to +52.1%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 76.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 <!-- end of the routes -->
 
 ### 60.7 A real database, a real message broker, a real cache
@@ -8901,9 +8906,15 @@ do-no-harm reading, not a missing one.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
+- **Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table**
+  (`results/live/V26_KAFKA.md`, omni-v26): **GAIN, power given**, by the index's rule 221.1% GAIN. Work inside the line up 16% to
+  23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 92% to 100% (GAIN); median cut 0% to 30% (GAIN); mean cut 96% to 98% (GAIN);
+  messages waiting, most cut 82% to 99% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 2%
+  to 14% (GAIN); consumers running up 73% to 215% (power given); consumers most at once up 150% to 300% (power given); host CPU
+  busy up 2% to 14% (power given); host CPU-seconds up 2% to 15% (power given).
 - **Redis, the cache's memory ceiling** (`results/live/V25_REDIS.md`, omni-v25): **GAIN, power given**, by the index's rule 6.8%
   LOSS. Work inside the line up 16% to 27% (GAIN); hit rate up 16% to 27% (GAIN); p95 cut 0% to 96% (GAIN); mean cut 40% to 71%
   (GAIN); host CPU busy cut 3% to 30% (GAIN); host CPU-seconds cut 3% to 31% (GAIN); CPU per 1,000 inside the line cut 23% to 43%
@@ -8940,7 +8951,7 @@ never judged.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robustness: the two-hour run** (`results/live/V25_ROBUST_LONG.md`, omni-v25): **GAIN AND LOSS**, by the index's rule 8.9%
@@ -8960,7 +8971,7 @@ reviewed or approved these results.
 ### 60.9 The modelled realms and the independent simulators
 
 Every result here is evidence class S: a statement about a published model under its own native controller, never about
-hardware, and never counted in the Omni index. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
+hardware, and never counted in the Omni index. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed
 or approved these results.
 
 ![Receipt chart: the seven organisms under the three loads (the own load, the climb and the line), from results/realms_v5/REALMS_V5.md. Left, the change in misses in percentage points with its 95% interval, a fall read GAIN; right, the power given as a share of native's energy. Every organism reads GAIN (fewer misses) under all three loads; the organisms are class S, our own models.](figures/r_realms.svg)
@@ -9000,7 +9011,7 @@ the 0.5% floor it reads STEADY).
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robot arms (MuJoCo), the three untouched robots** (`results/live/V25_MUJOCO.md`, omni-v25): **GAIN**, by the index's rule
@@ -9048,6 +9059,7 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
 | The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
 | The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
@@ -9194,10 +9206,10 @@ published as Omni-Compass 1.0, and the older fingerprints go to `docs/history` a
 
 
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 Omni-Compass is wired **out of** every muscle: it reads every reading. It is wired **into** a knob only where the paired measurement shows no gauge of the muscle read **LOSS** against native. Where the measurement shows nothing (**STEADY**), or shows a LOSS, the muscle stays native and Omni only watches it: one wire out, no wire in. This is not a new rule. It is what the engine does on the muscle itself before it moves anything (`omnicompass/verdict.py`: the paired trial, and the verdict **left native** where no step is allowed), and it is the watch arm of every realms run (`docs/REALMS_PREREGISTRATION.md`: the governor reads every period and writes nothing). This page applies the same principle to every published result, one verdict per knob, so that an operator can see which knobs earn a wire in and which stay native. The founder's order of 9 October 2026: where Omni cannot beat native, the muscle lives by itself; we only wire out of it.
@@ -9635,7 +9647,7 @@ This page judges after the fact, from published tables. The founder's order of 9
 > **Before you wire anything:** read [`DISCLOSURES.md`](../../DISCLOSURES.md). Omni-Compass acts only through the wires it is given; it cannot be slapped on. If your paired receipts differ from the published benchmarks in direction, the first presumption is wiring: check the installation with section 42.5 of the manual (*Wired right or wired wrong*).
 
 A pilot is the one proof our own runs cannot give: Omni-Compass on top of the licensee's own native controllers, on the
-licensee's own systems and work, read against native by the licensee's own engineers. Every result The Omni-Compass LLC
+licensee's own systems and work, read against native by the licensee's own engineers. Every result Dubra Software Inc. / The Omni-Compass LLC
 publishes was run and scored by its own code, and every table says that no outside party has reviewed or approved it. A
 pilot run by this protocol is how that changes. The protocol was rewritten on 31 October 2026 for the engine that stands:
 native stays on in every arm, Omni-Compass moves native's knobs and never replaces native, and the readings are the
@@ -9762,7 +9774,7 @@ result.
 #### 62.1.10 Reporting
 
 Every row is reported, LOSS included, in the key's words, with the run it came from. The readings, the captures and their
-SHA-256 sums go to the licensee and to The Omni-Compass LLC as the pilot agreement says. Where the pilot's direction
+SHA-256 sums go to the licensee and to Dubra Software Inc. / The Omni-Compass LLC as the pilot agreement says. Where the pilot's direction
 differs from the published benchmarks, the first presumption is the wiring (section 42.5 of the manual), and the pilot
 goes on once the wiring is checked.
 ### 62.2 Omni-Compass shadow pilot kit
@@ -10754,7 +10766,7 @@ script is removed, and the cells already run at 1,000 copies stand as they were 
 
 ---
 
-*Evaluation and Simulation use only. Copyright (c) 2026 The Omni-Compass LLC. Commercial use, commercialization or
+*Evaluation and Simulation use only. Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. Commercial use, commercialization or
 monetization of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC.
 All rights reserved. See `LICENSE` and `NOTICE` at the root of this repository. All patents, copyrights and trademarks
 filed in the USA. www.omni-compass.com*
@@ -11921,7 +11933,7 @@ modelled grid (`six`) is run again on the new engine too (its numbers are expect
 unchanged but for comments, headers and one label's name), because no result is read across engine versions.
 
 ---
-*Evaluation and Simulation use only. Copyright (c) 2026 The Omni-Compass LLC. Commercial use, commercialization or
+*Evaluation and Simulation use only. Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. Commercial use, commercialization or
 monetization of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC.
 All rights reserved. See `LICENSE` and `NOTICE` at the root of this repository. All patents, copyrights and trademarks
 filed in the USA. www.omni-compass.com*
@@ -11982,7 +11994,7 @@ shows (its processor use, the requests waiting, the response times), as in every
   each shape is in its table. Cost: about $4 to $6 a set of five at list price; three sets of each shape, about $30 for
   both. Time: about nine hours a set.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ### 66.40 In the cloud, the bill at native's work (the founder's order, 2026-10-14, night, before any run of it)
 
@@ -12081,7 +12093,7 @@ So the omni arm can hold no more pods and no more machines than native's autosca
 stay. The bill and the machines aim lower (a cut is GAIN); work, response time, failures and alert minutes must read EVEN
 or GAIN. The receipt's commands row shows how often a machine was parked or woken.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ### 66.44 Amendment (2026-10-16): the spine, the seventh organism with the cluster inside
 
@@ -12391,7 +12403,35 @@ readings and the claim that a cloud set must show that Omni-Compass holds stand 
 behind the meter's; the founder's words of 4 November ("All the clouds. Especially the clouds") are their word to start, and
 each starts once the meter's counted set has its three runs, the order the amendment of 31 October gives.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+### 66.60 Amendment (8 November 2026, written before the counted set with the work meter runs): the counted rates, frozen on the tuning cases
+
+The second tuning case ran twice, once on each engine that stood when the queue started it (run 41914478995 on omni-v25, 4
+November; run 42408759289 on omni-v26, 7 November), each one paired repetition at the max over 1,200 s at the rates 2 4 6 8
+10 12 16 20 a second, never counted. Both arms entered the window with the autoscaler reading (the amendment of 4 November).
+The share of each step's requests answered inside the line (500 ms), read from each arm's own `work_meter.json`:
+
+| Rate a second | 2 | 4 | 6 | 8 | 10 | 12 | 16 | 20 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| native, run 41914478995 | 96% | 94% | 95% | 85% | 88% | 78% | 23% | 19% |
+| Omni-Compass on native, run 41914478995 | 99% | 98% | 94% | 97% | 94% | 97% | 92% | 86% |
+| native, run 42408759289 | 93% | 96% | 94% | 90% | 92% | 76% | 27% | 19% |
+| Omni-Compass on native, run 42408759289 | 95% | 91% | 94% | 86% | 77% | 92% | 81% | 88% |
+
+By the work meter's own capacity rule (`tools/capacity_report.py`: the highest rate before the first step with fewer than 95%
+answered inside the line or more than 1% failed), native served 2 and 0 a second, Omni-Compass 4 and 2. So the counted rates
+are the second tuning case's, **2 4 6 8 10 12 16 20 a second over 1,200 s**: they start at native's capacity and reach five
+times Omni-Compass's, as the amendment of 31 October asks (from below what native serves inside the line to above what
+Omni-Compass serves). Read plainly, native's answers fall away above 10 a second (under 80% inside the line at 12, under 30% at 16
+and 20), while Omni-Compass still answered 86% to 88% inside the line at 20 a second; the range may therefore not reach the
+rate at which Omni-Compass saturates, so the work it reads above native's is a floor of what it serves, never more. Nothing
+else changes: the counted set is A, B and C, each up to 100 paired repetitions under the stopping rule of 19 October, at the max,
+on the engine that stands when each run starts; its looks read the work per dollar of the bill in place of the bill, a rise
+GAIN and a fall power given, and the work inside the line falling is harm that keeps the set running, beside the 95th percentile
+and the failed requests (`tools/stop_rule.py`, as the amendment of 31 October, night, wrote it); the claim is that Omni-Compass
+holds (every judged gauge STEADY or GAIN in each run's own word). The set's line is added to `scripts/azure_queue.txt` with
+this amendment; the four sets of the open load still wait behind it.
+
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 67. The Pod Start Wait on One Shared Host
 
@@ -12549,7 +12589,7 @@ python3 tools/pod_phases.py addons-run-39108180989 addons-run-39115242861 addons
 
 The founder asked on 19 October why the 95th and 99th percentiles show a loss on the live page. This page answers from the
 receipts themselves. Every number is read from omni-v11's three-run tables (the engine that stood when this page was written) and from the raw
-files of their runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these
+files of their runs. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these
 results.
 
 **Read with the tables that stand.** This page reads omni-v11's tables of 19 October. On the newest tables (omni-v21) a tail
@@ -14885,10 +14925,11 @@ Each figure is in percent of native's mean in the least favourable of the three 
 
 Generated by `python3 tools/deviations.py` from the preregistrations in `docs/`; `tools/deviations.py --check`, run by `verify.py`, fails a push where this register is not what they give. Each amendment's reason, and what it changed, is written in the preregistration it amends; this register is the index to all of them, newest first. The timing is the amendment's own statement in its heading. Earlier windows, runs and tables keep the rule they ran under, and a three-run table never pools runs from either side of an amendment that changes what it reads.
 
-99 amendments in 18 preregistrations: 79 before the runs it governs; 13 not stated in its heading; 7 after runs began.
+100 amendments in 18 preregistrations: 80 before the runs it governs; 13 not stated in its heading; 7 after runs began.
 
 | Date | Preregistration | Amendment | Timing |
 |---|---|---|---|
+| 2026-11-08 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (8 November 2026, written before the counted set with the work meter runs): the counted rates, frozen on the tuning cases | before the runs it governs |
 | 2026-11-04 | `docs/K8S_COMPASS_PREREGISTRATION.md` | Amendment (4 November 2026, written before the second tuning case and before any counted set with the work meter runs): both arms enter the window with the autoscaler reading; the rates read again lower | before the runs it governs |
 | 2026-11-01 | `docs/GPU_PREREGISTRATION.md` | Amendment 16 (2026-11-01, declared before any run of it): the stacks with the card fully loaded | before the runs it governs |
 | 2026-10-31 | `docs/SOLO_PREREGISTRATION.md` | Amendment 2 (31 October 2026, written before the runs it governs): Omni direct keeps every muscle Omni-Compass cannot be | before the runs it governs |
@@ -14997,12 +15038,12 @@ What the three-run tables can and cannot support (this page's counts were read o
 written; omni-v25, which stood from 3 to 7 November, has its own three-run table of every test that had one on omni-v21,
 `results/live/V25_*.md`, and omni-v26, the engine that stands since 7 November, runs every one of them again), written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
-and how far a result travels. Each limitation names what would remove it. Run and scored by The Omni-Compass LLC's own
+and how far a result travels. Each limitation names what would remove it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
 ### 71.1 Independence
 
-- **Every run is ours.** The harnesses, the runs, the tables and this page are The Omni-Compass LLC's own; no outside party
+- **Every run is ours.** The harnesses, the runs, the tables and this page are Dubra Software Inc. / The Omni-Compass LLC's own; no outside party
   has run, reproduced or reviewed them. What reduces the dependence on us: every table is rebuilt from its raw receipts by a
   public command and compared byte for byte (`tools/reproduce.py`, `reproduce.yml`), every rule was written before its
   runs (`docs/DEVIATIONS.md` lists every later change with its timing), and every raw file carries its SHA-256.
@@ -15130,7 +15171,9 @@ id `b10f1b4128ff…`; the printed configuration `printed_eight_line`, id `623934
 | V | Saturated micro steps: 0 of 100 000 (nearest target), 5 of 100 000 (wrong target). | same |
 | T | The admissible box A (E interval, abs(U − sigma) <= abs(U0 − sigma), S between S0 and S[plus]) is forward invariant in continuous time. | Thm 4 |
 | V | Discrete invariance of A: 0 failures over 100 000 micro steps of the frozen fixtures, both targets. | `results/TRACKING_BOUNDS.json` |
-| O | Discrete invariance and epsilon_h proved over the whole box (interval arithmetic). | — |
+| T (conditional, computer-assisted) | The later executed-RK4 proof claims E1–E2, S1, I1 and U1–U5 over their **declared admissible parameter/start box**, with SMT and outward-rounded interval enclosures; U enters an error ball with radius at most 0.0677. This supersedes the older blanket whole-box-open label **only for these explicitly named obligations** and still requires independent certificate rerun. | `docs/ENGINE_PROOFS.md`; `docs/TRACKING_THEOREM.md` §3–4 |
+| T (conditional, computer-assisted) | Bath mode B1 has spectral radius at most 0.99995 under the stated stable linear forcing hypotheses; boundedness is conditional, and no numerical amplitude ceiling or full-system convergence follows. | `docs/ENGINE_PROOFS.md` B1 |
+| O | CERT-10 for **every** admissible initial state (the certified worst-case entry argument currently guarantees nine macro dwell steps), initial states below S₋, and unrestricted closed-loop external-plant stability. | `docs/ENGINE_PROOFS.md` §5 |
 | O | Global stability of the forced six-state system. | `docs/FORMAL_STATUS.md` |
 | V | 500 / 500 frozen fixtures satisfy CONVEY-5 and CERT-10 (dwell predicates, not external certification). | `results/core_evidence.json` |
 | V | Frozen 500-fixture comparison: symmetric_verified final error 7.48e-5, integrated abs(u) 0.878, peak 13.93; printed_eight_line 5.13e-6, 11.79, 18.87. Both executable; not interchangeable. | `results/MECHANISM_IDENTITY.json` |
@@ -15338,7 +15381,7 @@ Where a row above is wrong or out of date, correct it from the maker's own publi
 
 
 <!-- how to read this receipt (tools/readings.py) -->
-**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+**How to read this receipt.** Every judged row reads one of three words, decided by what its gauge is for and never by the plus or minus sign of its number. **GAIN**: the gauge moved toward its declared aim against native (more work done, a shorter wait, fewer misses or failures, or a resource cut). **STEADY**: native and Omni-Compass within 0.5% of each other (the mean of the three runs' changes under the 0.5% floor, or no change at all), or the knob is at its limit on native. **LOSS**: the gauge moved away from its aim (less work done, a longer wait, more misses or failures). A resource spent or held (energy, the power drawn and its peaks and swings, machines, memory, processor time, a bill, wear) that fell is a cut, a GAIN; one that rose is **power given**, what Omni-Compass put in to buy the work and the speed shown beside it, always shown and never called a loss; work bought with each unit of a resource (work per energy) that fell is power given too. So a minus can read GAIN (a response time cut) and a plus can read LOSS (failed requests up). A change of 0.5% or more, the mean of the three runs' changes, reads GAIN, LOSS or power given: **in all three of our runs** where A, B and C moved the same way with every interval clear of zero, otherwise **by the mean of our three runs**, with the count of runs beyond the noise beside it; **the runs disagree** names runs that moved 0.5% or more in opposite directions, a test unstable there; **shown, not judged** is a gauge declared shown only. The output follows the input: every reading is the result of the tune, the wiring and the load it names, and where a reading elsewhere differs the first presumption is the wiring (`DISCLOSURES.md`, section 4). The full key, letter by letter: `docs/HOW_TO_READ_THE_RESULTS.md`. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end: how to read this receipt -->
 
 Current facts only. Earlier states, failures and chronology are kept whole in `docs/HISTORY.md`. The release this page
@@ -15367,10 +15410,11 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - Real cache (Redis, GitHub): power given 6.8%
   - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
 
-**On the engine that stands (omni-v26): 0 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 1 of 27 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | omni-v26 | 221.1% | GAIN, power given | L |
 | Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
@@ -15398,7 +15442,7 @@ the live evidence and the verification receipt), which `verify.py` checks agains
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
@@ -15635,6 +15679,7 @@ to ask of a row (whose load, which native, which window, what was spent to buy w
 | What (engine, three runs each) | Benefit? | How much | Every change judged across our three runs, in words | Table |
 |---|---|---:|---|---|
 | Every real test together: the Omni index (omni-v25) | **GAIN AND LOSS** | 20% GAIN | the six real categories together; each stack's own words are in its row | `results/OMNI_INDEX.md` |
+| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table (omni-v26) | **GAIN, power given** | 221% GAIN | work inside the line up 16% to 23% (GAIN); p95 cut 99% to 100% (GAIN); p99 cut 92% to 100% (GAIN); median cut 0% to 30% (GAIN); mean cut 96% to 98% (GAIN); messages waiting, most cut 82% to 99% (GAIN); messages waiting, mean cut 96% to 98% (GAIN); CPU per 1,000 inside the line cut 2% to 14% (GAIN); consumers running up 73% to 215% (power given); consumers most at once up 150% to 300% (power given); host CPU busy up 2% to 14% (power given); host CPU-seconds up 2% to 15% (power given) | `results/live/V26_KAFKA.md` |
 | The six organisms with the real cluster inside, 10 and 100 copies (omni-v3) | **GAIN, power given** | 5.3% GAIN | p95 cut 32% to 52% (GAIN); time over the line cut 8% to 36% (GAIN); replicas up 0.6% (power given); failed requests cut 8.4% to 8.5% (GAIN); parked-worker energy cut 0.3% (GAIN); standby-model energy cut 0.3% (GAIN) | `results/live/V3_SIX_KUBE.md` |
 | The big organisms with the real cluster inside, 1,000 copies on Azure (omni-v3) | **GAIN** | 155% GAIN | p95 cut 95% to 98% (GAIN); p99 cut 97% to 98% (GAIN) | `results/live/V3_BIG_ORGANISM.md` |
 | The 945 modelled muscles as one tower, every muscle written at once (omni-v3) | **GAIN** | 0.3% GAIN | work per energy up 0.3% (GAIN) | `results/realms/REALMS.md` |
@@ -15887,7 +15932,7 @@ Answers reference the Claims Register (C-numbers) and the Technical Manual.
 **What does it cost to run?** C5.
 
 ### 78.5 Adoption
-**How is it introduced without risk?** A week of shadow with no write rights, then one muscle at a time with the reset tested at each handover, then 30 days paired against native in three runs, native on in every arm (docs/PILOT_PROTOCOL.md); on a production system only under a pilot agreement signed with The Omni-Compass LLC, and live customer traffic only under the Enterprise License.
+**How is it introduced without risk?** A week of shadow with no write rights, then one muscle at a time with the reset tested at each handover, then 30 days paired against native in three runs, native on in every arm (docs/PILOT_PROTOCOL.md); on a production system only under a pilot agreement signed with Dubra Software Inc. / The Omni-Compass LLC, and live customer traffic only under the Enterprise License.
 
 ### 78.6 Referees
 **Was it tuned on the test data?** No. Law, shield and baselines were frozen and fingerprinted before the held-out seeds 346410161 and 360555127 (results/PREREGISTRATION.json).
@@ -15901,9 +15946,9 @@ simulation use only. Everything else - commercial use, production use, operating
 redistribution, a hosted or managed service, incorporation into a product or service, or using the software or its
 results to build a competing product - requires a written Omni-Compass Enterprise License signed by The Omni-Compass
 LLC and paid for. All patents, copyrights and trademarks covering the Omni-Compass engine, its mathematics and its software have been filed in the United States by Dubra Software Inc. / The Omni-Compass LLC. No patent or trademark license is granted for any other use. Contributions are accepted only on the
-terms in `.github/CONTRIBUTING.md`, which assign their rights to The Omni-Compass LLC.
+terms in `.github/CONTRIBUTING.md`, which assign their rights to Dubra Software Inc. / The Omni-Compass LLC.
 
-The copyright in Omni-Compass belongs to The Omni-Compass LLC. The source is visible under the Evaluation License,
+The copyright in Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. The source is visible under the Evaluation License,
 which is not an open-source license; seeing the source grants no right beyond it. The owner of a copyright may
 grant it under more than one license at once (the Evaluation License to everyone, a paid Enterprise License to a
 customer), may set the terms of each new version, and may assign the copyright; copies already received keep the
@@ -15940,7 +15985,7 @@ section 2.2).
 use; operating any system beyond evaluation; offering it, or its function, as a hosted, managed or software-as-a-service
 offering; redistributing it; incorporating it, or any part or derivative of it, into a product, service, appliance or
 firmware; using it or its results to build or train a competing product (`LICENSE`, sections 3 and 5). The Enterprise
-License is a written agreement signed by The Omni-Compass LLC and paid for; its standard terms are summarized in
+License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
@@ -15961,7 +16006,7 @@ Omni-Compass engine, its mathematics and its software have been filed in the Uni
 **May I use the name or the compass rose?** Only to refer to Omni-Compass accurately (`TRADEMARKS.md`).
 
 **May I contribute?** Contributions require the contributor license agreement (`.github/CLA.md`): every contribution
-is assigned to The Omni-Compass LLC, with a patent license from the contributor.
+is assigned to Dubra Software Inc. / The Omni-Compass LLC, with a patent license from the contributor.
 
 **Does Omni-Compass send data anywhere?** No. The software contains no telemetry and makes no network connection of
 its own except to the systems an operator points it at (a Kubernetes API, `nvidia-smi`, a meter command).
@@ -15970,15 +16015,15 @@ its own except to the systems an operator points it at (a Kubernetes API, `nvidi
 (`pyproject.toml`, `REUSE.toml`, `.fossa.yml`, `.snyk`, `sbom/`); third-party components are listed in
 `THIRD_PARTY_NOTICES.md`.
 
-**Can the terms change?** Yes. The Omni-Compass LLC reserves the right to change the software, its documentation, its
+**Can the terms change?** Yes. Dubra Software Inc. / The Omni-Compass LLC reserves the right to change the software, its documentation, its
 results and these terms at any time, without notice; a changed version applies to copies obtained and uses made after it
 is published (`LICENSE`, section 9). A signed Enterprise License governs its own term.
 
 **Which law governs?** The laws of the State of Delaware and the federal laws of the United States, with exclusive
 venue in the Delaware state courts and the United States District Court for the District of Delaware (`LICENSE`,
-section 19). The Omni-Compass LLC is based in Florida.
+section 19). Dubra Software Inc. / The Omni-Compass LLC is based in Florida.
 
-**Who do I contact?** The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who do I contact?** Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## 81. Third-Party Notices
 
@@ -16012,7 +16057,7 @@ where an operator has installed them. Their names are the property of their owne
 This page summarizes the standard terms of the Omni-Compass Enterprise License, the paid license that every production
 use, commercial use, hosted service, distribution, OEM or embedded use, and every other commercialization or monetization
 of Omni-Compass requires (`LICENSE`, section 5). It is a summary for evaluation and planning. It is not an offer, and it
-binds no one: only an Enterprise License signed by The Omni-Compass LLC and the licensee, with its order form, grants any
+binds no one: only an Enterprise License signed by Dubra Software Inc. / The Omni-Compass LLC and the licensee, with its order form, grants any
 right, and that signed agreement controls over this page in every respect.
 
 ### 82.1 What can be licensed
@@ -16058,11 +16103,11 @@ is an offer.
 
 ### 82.5 Intellectual property
 
-1. The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
+1. Dubra Software Inc. / The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
    receives the rights its order form lists, for its term, and no others.
-2. **Patent license.** The Enterprise License includes a license under The Omni-Compass LLC's patent rights in the filed
+2. **Patent license.** The Enterprise License includes a license under Dubra Software Inc. / The Omni-Compass LLC's patent rights in the filed
    applications, and in any patent issuing from them, for the licensed scope.
-3. **Infringement indemnity.** The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
+3. **Infringement indemnity.** Dubra Software Inc. / The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
    version, used as licensed, infringes that party's intellectual property, and pays the damages finally awarded or the
    settlement it agrees, subject to prompt notice, control of the defense and the usual exclusions (modifications,
    combinations, unlicensed use, versions superseded by an offered fix). Remedies may include a license, a modification
@@ -16099,7 +16144,7 @@ license scope).
 ### 82.9 Compliance, audit and insurance
 
 1. Each party complies with export-control, sanctions and anti-corruption law.
-2. The licensee reports usage against the licensed scope as the order form provides, and The Omni-Compass LLC may verify
+2. The licensee reports usage against the licensed scope as the order form provides, and Dubra Software Inc. / The Omni-Compass LLC may verify
    it on reasonable notice, no more than once a year.
 3. Insurance, where the order form requires it, is carried by each party at the limits stated there.
 
@@ -16120,7 +16165,7 @@ the signed agreement for the licensee and its scope.
 
 ### 82.12 How to obtain one
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
 (`LICENSE`, section 1.4): watch mode, the wire check, and paired receipts on its own load.
 
 ## 83. Patents and Trademarks
@@ -16165,7 +16210,7 @@ infringement. Everyone who downloads, forks, scans or runs this software is on n
 #### 83.2.1 The marks
 
 "Omni-Compass", "OmniCompass", the Omni-Compass compass rose with its ring of Greek letters, and the related names, logos
-and trade dress (the "Marks") are trademarks of The Omni-Compass LLC; trademark applications have been filed in the
+and trade dress (the "Marks") are trademarks of Dubra Software Inc. / The Omni-Compass LLC; trademark applications have been filed in the
 United States. Neither the evaluation license (`LICENSE`) nor publication of this repository grants any license to the
 Marks. A license to use them is granted only in a signed Omni-Compass Enterprise License, and only as it states.
 
@@ -16180,7 +16225,7 @@ Marks. A license to use them is granted only in a signed Omni-Compass Enterprise
 - Using any Mark, or anything confusingly similar, in the name of a product, service, company, domain, account, package,
   repository, fork or derivative.
 - Using the logo or the compass rose, or altering any Mark.
-- Suggesting endorsement, sponsorship, certification, partnership or affiliation by The Omni-Compass LLC.
+- Suggesting endorsement, sponsorship, certification, partnership or affiliation by Dubra Software Inc. / The Omni-Compass LLC.
 - Using a Mark in advertising, comparative claims or sales material without a signed license.
 
 #### 83.2.4 Other companies' marks
@@ -16191,7 +16236,7 @@ Omni-Compass was tested with; it states no affiliation, endorsement or certifica
 
 #### 83.2.5 Reporting misuse
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## 84. Security Policy
 
@@ -16199,7 +16244,7 @@ The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-955
 
 ### 84.1 Reporting a vulnerability
 
-Report a suspected vulnerability privately to The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
+Report a suspected vulnerability privately to Dubra Software Inc. / The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
 pull request or discussion. Include the version and commit, what you saw, how to reproduce it, and its likely impact. We
 acknowledge reports, keep the reporter informed, and coordinate disclosure: a fix or a mitigation is published before the
 details are, and the reporter is credited if they wish. Please give us a reasonable time to fix before any disclosure, do
@@ -16919,7 +16964,7 @@ update all"). It is omni-v7 (`docs/OMNI_V7.md`) with one change to one wire, mad
 and the cause was found to be ours. Its fingerprint is `OMNI_V8.json` (digest `f93d233136a1f902`, 46 files); of those 46 files,
 45 are omni-v7's bytes, and the one that differs is the CityLearn runner. Every benchmark runs again on it (`scripts/reruns.txt`;
 the conductor's reruns, grid and Azure queues restarted on it the same day), and every omni-v7 table stands as omni-v7's result
-until its three runs on v8 land; results from two versions are never pooled. Run and scored by The Omni-Compass LLC's own code.
+until its three runs on v8 land; results from two versions are never pooled. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code.
 No outside party has reviewed or approved these results.
 
 | # | Change | Where | What it tightens |
@@ -17247,7 +17292,7 @@ receipt now reads every score by the one key, as every table already did.
 Its fingerprint is `OMNI_V10.json` (digest `4bf39b0d707784de`, 47 files). Forty-six files are omni-v9's bytes and one differs (the CityLearn
 runner). The change was proven in our own runs of CityLearn and in the model gate before it was pushed. Every benchmark runs again on
 it. Every earlier table stands as its own engine's result until its three runs on v10 land, and results from two versions are never
-pooled. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+pooled. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 | # | Change | Where | What it does |
 |---|---|---|---|
@@ -17433,7 +17478,7 @@ reading that had machines. Every setting, gain, preset and muscle is omni-v10's,
 Its fingerprint is `OMNI_V11.json` (digest `745aa53ec8eeb67b`, 47 files). Forty-six files are omni-v10's bytes; one differs, the
 Kubernetes governor (`omni_controller/controller.py`). The change was proven in a unit test that reproduces the fault and in the
 model gate before it was pushed. Every benchmark runs again on it. Every earlier table stands as its own engine's result until its
-three runs on v11 land, and results from two versions are never pooled. Run and scored by The Omni-Compass LLC's own code. No
+three runs on v11 land, and results from two versions are never pooled. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No
 outside party has reviewed or approved these results.
 
 | # | Change | Where | What it does |
@@ -17514,7 +17559,7 @@ swarm table counts only on a commit that carries it. Both changes were proven in
 landed (`results/model_gate/V12_VS_V11.md`, `results/model_gate/V12_SWARM_REFLEX.md`). Every benchmark runs again on omni-v12, A, B
 and C, from the conductor's campaign of 20 October, 00:30 UTC. Every earlier table stands as its own engine's result until its
 three runs on v12 land, and results from two versions are never pooled. The readings below are our own models (evidence class
-S), never a benchmark result. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these
+S), never a benchmark result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these
 results.
 
 | # | Change | Where | The fault it fixes |
@@ -17592,7 +17637,7 @@ Its fingerprint is `OMNI_V13.json` (digest `0088837333c6f0fc`, 47 files). Forty-
 (`omni_controller/muscles.py`). The change was proven in its tests (`tests/test_convey_handback.py`) and in the model gate before
 it landed (`results/model_gate/V13_VS_V12.md`). Every benchmark runs again on omni-v13, A, B and C. Every earlier table stands as
 its own engine's result until its three runs on v13 land, and results from two versions are never pooled. The readings from
-the model gate below are our own models (evidence class S), never a benchmark result. Run and scored by The Omni-Compass LLC's
+the model gate below are our own models (evidence class S), never a benchmark result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's
 own code. No outside party has reviewed or approved these results.
 
 | # | Change | Where | The fault it fixes |
@@ -17689,7 +17734,7 @@ Its fingerprint is `OMNI_V14.json` (digest `7afba44615fcff8f`, 47 files). Forty-
 governor (`omni_controller/controller.py`) and its muscles (`omni_controller/muscles.py`). Every benchmark runs again on
 omni-v14, A, B and C. Every earlier table stands as its own engine's result until its three runs on v14 land, and results from
 two versions are never pooled. The readings from the model gate are our own models (evidence class S), never a benchmark result.
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 | # | Change | Where | Why |
 |---|---|---|---|
@@ -17801,7 +17846,7 @@ on an observation stream that now carries the line's clear flag; `results/SEAL.j
 A, B and C; none started before omni-v16 replaced it, because the grid's conductor read omni-v15's commits as no engine (its own
 copy of the version tool's scope predated the eight wires; fixed on 22 October, `CHANGELOG.md`). Every earlier table stands as its own engine's result until its three runs on v15 land, and results from two
 versions are never pooled. The readings from the model gate are our own models (evidence class S), never a benchmark result. Run
-and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 | # | Change | Where | Why |
 |---|---|---|---|
@@ -17918,7 +17963,7 @@ omni-v15's bytes (the five changed: `omnicompass/adapter.py`, `omnicompass/edge.
 `omni_controller/muscles.py`, `omni_controller/capacity.py`; the brain's C++ twin `cpp/src/governor.cpp` with it, sealed).
 Read in the model gate against omni-v15 on the same seeds before it was pushed (`results/model_gate/V16_VS_V15.md`), and the
 pace read alone on a plant that moves every 5 s (`results/model_gate/V16_PACE.md`). The readings from the model gate are our own
-models (evidence class S), never a benchmark result. Run and scored by The Omni-Compass LLC's own code. No outside party has
+models (evidence class S), never a benchmark result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 #### 88.12.1 Why
@@ -18048,7 +18093,7 @@ fewer than two readings, a fault the dial's own ladder found at 90 and 120 s bef
 of the governor counts seconds since omni-v16, so the dial changes only how often it looks. Read in the model gate against
 omni-v16 on the same seeds (`results/model_gate/V17_VS_V16.md`), and every beat read beside native and beside 60 s on a plant
 that moves every 5 s (`results/model_gate/V17_LADDER.md`), before it was pushed. The readings from the model gate are our own
-models (evidence class S), never a benchmark result. Run and scored by The Omni-Compass LLC's own code. No outside party has
+models (evidence class S), never a benchmark result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 #### 88.13.1 Why a dial, and why 60 s for the main engine
@@ -18287,7 +18332,7 @@ dry run (the default) shows the price and rents nothing. The GPU runs on Lambda 
 
 The three-run reading is the full form on GitHub's machines from one commit, on one host each; no cloud machine has run it yet. The comparison of Omni direct against Kubernetes itself on the kind rig is the next
 step. The trade between muscles judged on the organism stays the next version's work, through the model gate. Run and scored by
-The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 ### 88.15 Omni v19: Omni-Compass by itself, a pod muscle of its own
 
 
@@ -18302,7 +18347,7 @@ omni-v18, decision for decision (the model gate below). Preregistered before any
 gate against omni-v18 on the same seeds (`results/model_gate/V19_VS_V18.md`), by itself against omni-v18 by itself arm by arm
 (`results/model_gate/SOLO_V19_VS_V18.md`) and by itself beside native and beside Omni-Compass and native
 (`results/model_gate/SOLO_V19.md`) before it was committed. The readings are our own models (evidence class S), never a benchmark
-result. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 #### 88.15.1 Why it is omni-v19: one name, two engines
 
@@ -18422,7 +18467,7 @@ it stands), and `ARM=solo` joins the kind sets beside native and Omni-Compass an
 #### 88.15.10 What it does not claim
 
 No real run of the arm by itself has been made yet: every reading on this page is our own model (class S). The trade between
-muscles judged on the organism stays the next version's work, through the model gate. Run and scored by The Omni-Compass LLC's own
+muscles judged on the organism stays the next version's work, through the model gate. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 ### 88.16 Omni v20: the data stores' wires fixed at their causes
 
@@ -18439,7 +18484,7 @@ found by tracing why the Omni index read +4.32% before the 0.5% key of 24 Octobe
 (`docs/STORE_LOSS_ROOT_CAUSES_2026-10-25.md`): seven data-store rows, each with 0 or 1 of its three runs clear of the noise, that
 the new key now counts. Three were faults in our own wiring, two were the test machine. The fixes were read in the store gate
 (`tools/store_gate.py`, `results/model_gate/STORE_GATE.md`) before they were committed. The gate's readings are our own model
-(evidence class S), never a benchmark result. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed
+(evidence class S), never a benchmark result. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed
 or approved these results.
 
 #### 88.16.1 What changed
@@ -18499,7 +18544,7 @@ stores first in meaning: sysbench, Kafka, YCSB, Redis and pgbench. A fourth pgbe
 the runner's drift, is written as a proposed amendment in `docs/POSTGRES_PREREGISTRATION.md`, not yet in force. Tests:
 `tests/test_store_wires.py` (each check fails on omni-v19's runners and passes on omni-v20's) and `tests/test_store_gate.py`.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 ### 88.17 Omni v21: the immune system knows itself, knob by knob
 
 
@@ -18556,7 +18601,7 @@ served down 2.1%, alert minutes up 9.8%), and the card's 95th and 99th percentil
 
 Every benchmark runs again on omni-v21 from the moment it reaches main; nothing is read across engines.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 ### 88.18 Omni v22: the data stores' wires at the max, through each store's own account of a miss
 
 
@@ -18629,7 +18674,7 @@ closed-loop model of each store, set from those runs' own files, is the next mod
 Every benchmark runs again on omni-v22 from the moment it reaches main; nothing is read across engines. The store benchmarks run
 first, every table at the counted 30 s a notch (`scripts/reruns.txt`).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 ### 88.19 Omni v23: Omni direct keeps every muscle Omni-Compass cannot be: a knob whose writes are refused goes back to native's own controller
 
 
@@ -18826,7 +18871,7 @@ record; nothing is cancelled. On kind, which is on site, the compass arm decides
 60 s, as on omni-v23. The real runs of the pace preregistration (amendment 3's arms) read the factory beat beside the dial's
 other beats. The card governor on the chips (`omni_controller/gpu_governor.py`) keeps its own clock and is unchanged.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 ### 88.21 Omni v25: the Kafka wire's producer started before the governor's thread; a stalled producer stops its workload, never the job's clock
 
 
@@ -18892,7 +18937,7 @@ Every benchmark runs again on omni-v25 from 21:00 UTC on 3 November 2026 (`scrip
 campaign, `scripts/dispatch_grid.py`), Kafka among them for the first time since omni-v21. The omni-v24 runs started before that
 moment run to their end as omni-v24's record; nothing is cancelled.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 89. History
 
@@ -21642,7 +21687,7 @@ Every glossary term where the book defines or discusses it, every muscle family,
 
 ## Contact
 
-The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
+Dubra Software Inc. / The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
 
 ---
 

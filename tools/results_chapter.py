@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools import organism_words as OW  # noqa: E402
+from tools.company_attribution import normalize as canonical_name  # noqa: E402  (the publisher's one name, written once)
 
 MANUAL = ROOT / "docs" / "OMNI_COMPASS_OWNERS_MANUAL.md"
 REFEREE = ROOT / "docs" / "REFEREE_SUMMARY.md"
@@ -319,7 +320,7 @@ def put(text: str) -> str:
             continue
         if a < 0 or z < 0 or z < a:
             raise SystemExit(f"a page carries a broken marker pair for results: {name}")
-        text = text[:a] + "\n".join([begin(name)] + make() + [end(name)]) + text[z + len(end(name)):]
+        text = text[:a] + canonical_name("\n".join([begin(name)] + make() + [end(name)])) + text[z + len(end(name)):]   # the publisher's one name
     return text
 
 

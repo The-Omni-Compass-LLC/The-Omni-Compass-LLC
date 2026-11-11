@@ -777,9 +777,16 @@ def receipt_pages(root: Path = ROOT):
     return out
 
 
-def _with_receipt_key(text: str) -> str:
-    """The text with the block in place: replaced where its markers stand, else inserted after the notice under the title."""
+def _with_receipt_key(text: str, page: str = "") -> str:
+    """The text with the block in place: replaced where its markers stand, else inserted after the notice under the title. On a
+    publication (any page outside results/, where the records keep their bytes) the block names the publisher by its one name
+    (tools/company_attribution.py)."""
     block = "\n".join(receipt_key())
+    if page and not page.startswith("results/"):
+        import importlib.util as _u                                  # the checker by its path: this file runs as a script too
+        _sp = _u.spec_from_file_location("company_attribution", ROOT / "tools" / "company_attribution.py")
+        _m = _u.module_from_spec(_sp); _sp.loader.exec_module(_m)
+        block = _m.normalize(block)
     if RECEIPT_BEGIN in text and RECEIPT_END in text:
         a = text.index(RECEIPT_BEGIN)
         b = text.index(RECEIPT_END) + len(RECEIPT_END)
@@ -807,7 +814,7 @@ def check_receipts(root: Path = ROOT):
     bad = []
     for p in receipt_pages(root):
         t = (root / p).read_text()
-        if RECEIPT_BEGIN not in t or RECEIPT_END not in t or _with_receipt_key(t) != t:
+        if RECEIPT_BEGIN not in t or RECEIPT_END not in t or _with_receipt_key(t, p) != t:
             bad.append(p)
     return bad
 
@@ -816,8 +823,17 @@ KEY_PAGES = ("README.md", "docs/HOW_TO_READ_THE_RESULTS.md", "docs/OMNI_COMPASS_
              "docs/OMNI_COMPASS_OWNERS_MANUAL.md", "docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md")
 
 
+def _canonical(text: str) -> str:
+    """A publication's text with the publisher's one name (tools/company_attribution.py, loaded by its path: this file runs as a
+    script too)."""
+    import importlib.util as _u
+    _sp = _u.spec_from_file_location("company_attribution", ROOT / "tools" / "company_attribution.py")
+    _m = _u.module_from_spec(_sp); _sp.loader.exec_module(_m)
+    return _m.normalize(text)
+
+
 def _with_key(text: str) -> str:
-    block = "\n".join(key_block())
+    block = _canonical("\n".join(key_block()))   # every key page is a publication
     if KEY_BEGIN in text and KEY_END in text:
         a = text.index(KEY_BEGIN)
         b = text.index(KEY_END) + len(KEY_END)
@@ -856,7 +872,7 @@ def main(argv=None):
                     f.write_text(n); print(f"the key rewritten in {p}")
         for p in receipt_pages():
             f = ROOT / p
-            t = f.read_text(); n = _with_receipt_key(t)
+            t = f.read_text(); n = _with_receipt_key(t, p)
             if n != t:
                 f.write_text(n); print(f"how to read this receipt written in {p}")
         return 0

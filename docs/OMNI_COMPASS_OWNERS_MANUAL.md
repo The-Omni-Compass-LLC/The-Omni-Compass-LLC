@@ -39,7 +39,7 @@ The number is how much more work was done for the same demand, the mean of our t
 | Omni-Compass on native | green, GAINING | **GAIN 8.5%** in all three of our runs (raw A +10.3%, B +8.2%, C +7.0%) | the 95th percentile **GAIN 13.0%** in all three of our runs (raw A −12.6%, B −14.2%, C −12.0%); machines **GAIN 3.2%** by the mean of our three runs, beyond the noise in 1 of 3 (raw A −2.0%, B −2.8%, C −4.8%); serving units **power given 4.0%** by the mean of our three runs, beyond the noise in 1 of 3 (raw A +3.3%, B +5.0%, C +3.7%) |
 | Omni-Compass direct (Omni-Compass alone on the muscles, no Kubernetes) | green, GAINING | **GAIN 6.0%** by the mean of our three runs, beyond the noise in 2 of 3 (raw A +10.0%, B +5.3%, C +2.8%) | the 95th percentile **GAIN 9.9%** by the mean of our three runs, beyond the noise in 1 of 3 (raw A −14.3%, B −7.6%, C −7.6%); machines **GAIN 2.8%** by the mean of our three runs, beyond the noise in 0 of 3 (raw A −3.0%, B −2.8%, C −2.6%); serving units **power given 3.5%** by the mean of our three runs, beyond the noise in 1 of 3 (raw A +4.6%, B +4.0%, C +1.8%) |
 
-The whole workload, composed layer by layer (a model of measurements, class S of class L and P; section 16.3b): **GAIN 42.0%** over work, speed and machines, the cloud's layer entering as exactly 1 (it holds), every interval carried (+32.5% to +52.2% with the gauges correlated; `results/WHOLE_SYSTEM.md`). It is the composition's index, not a price: a bill is the sum of the costs inside a declared boundary, and neither route's bill is resolved yet (section 3.8). Every real test together, the Omni index of Omni-Compass on native reads **GAIN 20.4%**, work, speed and machines read together, its categories from real messaging **GAIN 218.6%** to the database's buffer pool **power given 9.5%** (section 16.6).
+The whole workload, composed layer by layer (a model of measurements, class S of class L and P; section 16.3b): **GAIN 42.9%** over work, speed and machines, the cloud's layer entering as exactly 1 (it holds), every interval carried (+27.3% to +60.4% with the gauges correlated; `results/WHOLE_SYSTEM.md`). It is the composition's index, not a price: a bill is the sum of the costs inside a declared boundary, and neither route's bill is resolved yet (section 3.8). Every real test together, the Omni index of Omni-Compass on native reads **GAIN 20.4%**, work, speed and machines read together, its categories from real messaging **GAIN 218.6%** to the database's buffer pool **power given 9.5%** (section 16.6).
 <!-- end of the bottom line -->
  Run and scored
 by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
@@ -133,7 +133,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 ## Where Omni-Compass Sits, and What Each Benchmark Shows
@@ -816,7 +816,7 @@ installed is a quarter off the bill.
 | Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 <!-- end of where things stand -->
 
@@ -3667,7 +3667,7 @@ start from the same fresh cluster, run for 900 s after a 120 s warm-up, and end 
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Steady work** (`results/live/V25_STEADY.md`, omni-v25): **GAIN, power given**, by the index's rule 30.8% GAIN. Mean response
@@ -3720,7 +3720,7 @@ inputs (the settings commands it wrote, the targets it held) beside the service'
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **A service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs**
@@ -3793,7 +3793,7 @@ stands, and until their tables land these are omni-v3's.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **The six organisms with the real cluster inside, 10 and 100 copies** (`results/live/V3_SIX_KUBE.md`, omni-v3): **GAIN, power
@@ -3863,16 +3863,16 @@ noise). The stacked run that replaces the composition is preregistered (`docs/WH
 <!-- the routes (tools/index_words.py) -->
 | Place | Measured so far (every interval carried, without the card's old run) |
 |---|---|
-| The software end: the cluster and the services on it (class L) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%** |
+| The software end: the cluster and the services on it (class L) | work **GAIN 27.5%**; speed **GAIN 300.6%**; machines **power given 42.9%**; energy **STEADY 0.0%** |
 | The bare metal: the card and the machine | not in the headline scope: the machine's own layer is not yet run, and the card's own three runs are read on their own bill (`results/TWO_BILLS.md`) |
 | The cloud's wire | it holds: the layer enters as exactly 1 on every gauge, its bill kept as native's |
 
 | Route | Light | The whole workload against native (its index; the gauges correlated) | Gauge by gauge |
 |---|---|---|---|
-| On site: the software end × the bare metal | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%** |
-| Through the cloud: the software end × the cloud's wire × the bare metal at the back end | green, GAINING | **GAIN 42.0%** (+32.5% to +52.2%) | work **GAIN 27.5%**; speed **GAIN 299.1%**; machines **power given 43.7%**; energy **STEADY 0.0%**; bill **STEADY 0.0%** |
+| On site: the software end × the bare metal | green, GAINING | **GAIN 42.9%** (+27.3% to +60.4%) | work **GAIN 27.5%**; speed **GAIN 300.6%**; machines **power given 42.9%**; energy **STEADY 0.0%** |
+| Through the cloud: the software end × the cloud's wire × the bare metal at the back end | green, GAINING | **GAIN 42.9%** (+27.3% to +60.4%) | work **GAIN 27.5%**; speed **GAIN 300.6%**; machines **power given 42.9%**; energy **STEADY 0.0%**; bill **STEADY 0.0%** |
 
-By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 41.9%** (+32.5% to +52.1%) on site and **GAIN 41.9%** (+32.5% to +52.1%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 3.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+By the index's rule (only what held the same way in all three of our runs enters) the same routes read **GAIN 42.9%** (+27.3% to +60.3%) on site and **GAIN 42.9%** (+27.3% to +60.3%) through the cloud. The bare metal enters both routes as no change until it is measured, so both routes today are the software end's and, through the cloud, the wire holding. Neither is a bill in money (section 3.8): a bill is the sum of the costs inside a declared boundary, and no figure is written for a place before its runs read it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 <!-- end of the routes -->
 
 ### 16.4 A real database, a real message broker, a real cache
@@ -3889,7 +3889,7 @@ do-no-harm reading, not a missing one.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table**
@@ -3934,7 +3934,7 @@ never judged.
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robustness: the two-hour run** (`results/live/V25_ROBUST_LONG.md`, omni-v25): **GAIN AND LOSS**, by the index's rule 8.9%
@@ -3994,7 +3994,7 @@ the 0.5% floor it reads STEADY).
 Written from the newest three-run table of each test by `python3 tools/results_chapter.py`, from the benefit sheet's record
 (`results/BENEFIT_SHEET.json`); `verify.py` fails a push where it differs. Each line names the test, its table and the engine
 its runs were on, its reading, and then every judged gauge with the span of the three runs' changes (the span of the three point
-estimates, not an interval), in the key's words. Run and scored by The Omni-Compass LLC's own code. No outside party has
+estimates, not an interval), in the key's words. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 - **Robot arms (MuJoCo), the three untouched robots** (`results/live/V25_MUJOCO.md`, omni-v25): **GAIN**, by the index's rule
