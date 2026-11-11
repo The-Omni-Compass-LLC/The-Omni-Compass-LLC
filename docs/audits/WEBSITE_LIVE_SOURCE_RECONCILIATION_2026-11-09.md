@@ -1,4 +1,5 @@
 # LIVE versus FALLBACK website source: numerical reconciliation and acceptance contract
+
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 **Date:** November 9, 2026. **Scope:** GitHub source-of-truth verification for the website's disputed benchmark values. This document does not claim to have changed or redeployed the separate website. Do not use a source-indicator color as evidence of benchmark correctness.
@@ -33,4 +34,7 @@ The service-only reading substitutes each test's `service_pct`. This is an index
 **Next required action outside this repository:** Correct the website provider/endpoint mapping to the maintained `SITE_NUMBERS` contract, update its version/schema validation, and remove its dependency on the intentionally withdrawn `ABC_TABLE` measured endpoint. Only a successful browser/API integration test can establish the Receipts indicator is truly LIVE.
 
 ---
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+---
+
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

@@ -140,6 +140,32 @@ def newest(fname):
     return found[-1][1] if found else fname
 
 
+_INDEX_ENGINE = []
+
+
+def index_engine():
+    """The one engine the index reads every test on (8 November: an index that mixes engines reads a result across versions,
+    tests/test_public_benchmark_contract.py): the newest engine with a whole three-run table for every test the index counts.
+    A newer engine's tables join the index together, the moment its last test's table lands whole; until then each stands in
+    its own row (the benefit sheet, the manuals) under its own engine, and the index stays on the engine that has them all."""
+    if not _INDEX_ENGINE:
+        have = None
+        for f in [x[2] for x in SOURCES] + [x[1] for x in WORKLOAD_TABLES]:
+            base = re.sub(r"^V\d+_", "", f)
+            ns = {int(m.group(1)) for x in LIVE.glob("V*_" + base)
+                  if (m := re.fullmatch(r"V(\d+)_" + re.escape(base), x.name)) and whole(x)}
+            if ns:
+                have = ns if have is None else have & ns
+        _INDEX_ENGINE.append(max(have) if have else None)
+    return _INDEX_ENGINE[0]
+
+
+def counted(fname):
+    """The table the index reads for a test: its table on the index's one engine (index_engine), else its newest whole one."""
+    n, base = index_engine(), re.sub(r"^V\d+_", "", fname)
+    return f"V{n}_{base}" if n is not None and (LIVE / f"V{n}_{base}").exists() else newest(fname)
+
+
 def workload_gauge(gauges, key):
     """One measure's gauge from a workload table: key, or a tuple of keys read in order, the first whose three runs all hold a
     value (store fix of 25 October: a table written from runs that record the CPU apart reads the stack's own CPU-seconds,
@@ -154,7 +180,7 @@ def workload_gauge(gauges, key):
 def tests():
     out = []
     for cat, name, f, measures, work in SOURCES:
-        f = newest(f)
+        f = counted(f)
         path = LIVE / f
         if not path.exists():
             continue
@@ -168,7 +194,7 @@ def tests():
         out.append({"category": cat, "test": name, "source": f"results/live/{f}", "runs": [x["run"] for x in data["runs"]],
                     "v1": bool(data.get("v1")), "measures": r})
     for cat, fname, label, measures_ in WORKLOAD_TABLES:
-      fname = newest(fname)
+      fname = counted(fname)
       db = LIVE / fname
       if not db.exists():
         continue
@@ -288,10 +314,12 @@ def engines_sentence(ts):
         m = re.match(r"results/live/V(\d+)_", t["source"])
         by.setdefault(int(m.group(1)) if m else 0, set()).add(t["test"].split(" `")[0])
     parts = [f"{len(v)} on omni-v{k}" for k, v in sorted(by.items(), reverse=True)]
-    return ("Each test is read from its own newest three-run table: " + ", ".join(parts) + " (omni-v8, omni-v9 and omni-v10 changed only the "
-            "CityLearn runner and the interval table, omni-v11 the Kubernetes governor's hold on a reading with no machine in service); "
-            "a test stands on an older engine's table only until its three runs on the engine that stands land, no table is pooled across engines, and every row "
-            "below names its table.")
+    newer = sorted({int(m.group(1)) for x in LIVE.glob("V*_*.json") if (m := re.fullmatch(r"V(\d+)_.*\.json", x.name))
+                    and int(m.group(1)) > max(by)})
+    return ("Every test is read on one engine, the newest with every test's three-run table whole: " + ", ".join(parts) + "; an index never mixes "
+            "engines, so a newer engine's tables join it together once its last test's table lands" +
+            (f" (omni-v{newer[-1]}'s tables so far stand in their own rows, the benefit sheet's, under their own engine)" if newer else "") +
+            "; no table is pooled across engines, and every row below names its table.")
 
 
 def main():
@@ -329,7 +357,7 @@ def main():
          "about the chip: it is shown beside every test and scored as native's, the same juice (the founder's words of 31 "
          "October: \"more work ... for that same juice and for that same bill\"), never dropped, because a geometric mean of "
          "fewer measures would weigh the rest more and read higher with nothing gained. Modelled muscles are shown beside it, never inside it. "
-         "Every number is read from the test's own newest three-run table (`results/live/V<n>_*.json`, the newest engine with all three runs, made by "
+         "Every number is read from one engine's three-run tables (`results/live/V<n>_*.json`, the newest engine with every test's three runs whole, made by "
          "`tools/confirm_abc.py`, `tools/pgbench_abc.py`, `tools/kafka_abc.py`, `tools/redis_abc.py`, `tools/ycsb_abc.py` and `tools/sysbench_abc.py` from the three archived runs; `tools/omni_index.py`).", "",
          f"## Headline: Omni-Compass on top of native, real software on real computers (the software end, class L; not bare metal and not the chip, which enters as its own category), judged across our three runs (a change of 0.5% or more): **{pw(head, index_word(head, head_s))}, "
          f"{index_word(head, head_s)}** ({gloss()}, for the same energy and the same bill: the software "

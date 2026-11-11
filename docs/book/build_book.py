@@ -744,9 +744,13 @@ def md_flow(lines, shift=0, story=None, strip=False):
     return story
 
 
+from tools.company_attribution import normalize as _canonical_name   # noqa: E402  (the publisher's one name, written once)
+
 # ---------------------------------------------------------------- sources
 def read(rel):
-    return (ROOT / rel).read_text(encoding="utf-8")
+    # every bound page carries the publisher's one name (docs/COMPANY_ATTRIBUTION_STANDARD.md, tools/company_attribution.py): a
+    # bound record keeps every number and word it holds; only a standalone company name takes the canonical form
+    return _canonical_name((ROOT / rel).read_text(encoding="utf-8"))
 
 
 def split_h1(text):
@@ -1904,7 +1908,7 @@ def build():
     story += [FlushFloats(), Spacer(1, 8), KeepTogether([GoldRule(FW, 1.2, 10),
               Paragraph(inline(BANNER_MD[2:]), ParagraphStyle("end", parent=BODY, alignment=TA_LEFT))])]
     doc.multiBuild(story, canvasmaker=INDEX.getCanvasMaker())
-    OUT_MD.write_text(book_links(normalize_markdown("\n".join(md_parts) + "\n")[0]), encoding="utf-8")   # the notice on top and at the end
+    OUT_MD.write_text(_canonical_name(book_links(normalize_markdown("\n".join(md_parts) + "\n")[0])), encoding="utf-8")   # the notice on top and at the end
     seen = sorted(set(UNRESOLVED))
     print(f"references not resolved to the book's numbering: {len(seen)}" + "".join("\n  " + s for s in seen))
     print(OUT_PDF, doc.page, "pages")

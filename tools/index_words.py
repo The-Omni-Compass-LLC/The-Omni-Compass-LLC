@@ -42,7 +42,7 @@ GAUGE_NAMES = {"p95_ms": "the 95th percentile", "machines": "machines", "units":
 ARMS_BLOCK = ("<!-- the three arms (tools/index_words.py) -->", "<!-- end of the three arms -->")
 ROUTES = ("<!-- the routes (tools/index_words.py) -->", "<!-- end of the routes -->")
 ARMS_MD = ROOT / "results" / "orchestrator" / "V21_THREE_ARMS_ABC.md"
-OWN = ("Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.")
+OWN = ("Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.")
 SHORT = OrderedDict([("Real Kubernetes (GitHub)", "real Kubernetes"),
                      ("Real database (PostgreSQL behind PgBouncer, GitHub)", "the database behind its pooler"),
                      ("Real messaging (Apache Kafka, GitHub)", "real messaging"),

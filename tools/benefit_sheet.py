@@ -43,6 +43,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import stamp as legal_stamp                       # noqa: E402
+from tools.company_attribution import normalize as canonical_name  # noqa: E402  (the publisher's one name, written once)
 from tools.readings import with_own_runs, receipt_key, row_gain, landed, word as gel_word, aim as gel_aim, GAIN, STEADY, LOSS, GIVEN, GAIN_AND_LOSS, GAIN_GIVEN, reading_kind  # noqa: E402
 from tools import omni_index                                       # noqa: E402
 from tools import wiring_verdicts as wv                            # noqa: E402
@@ -638,12 +639,12 @@ def main(check=False):
           "- **The governor's own share of the machine** (`results/live/V3_OWN_COST.md`): 0.6% to 1.3% of one core at every size; shown, not a benchmark against native.",
           card_line(),
           "- **The index's second reading** (service alone, `results/OMNI_INDEX.md`): a second true number for the same tests, not repeated here; this sheet carries the preregistered one.", ""]
-    md = "\n".join(legal_stamp(with_own_runs(L))) + "\n"
+    md = canonical_name("\n".join(legal_stamp(with_own_runs(L))) + "\n")   # a publication: the publisher's one name
     js = json.dumps({"rows": rows}, indent=1) + "\n"
     book = MANUAL.read_text(encoding="utf-8") if MANUAL.exists() else ""
     if M_BEGIN in book and M_END in book:
         a, z = book.index(M_BEGIN), book.index(M_END) + len(M_END)
-        book = book[:a] + manual_block(rows) + book[z:]
+        book = book[:a] + canonical_name(manual_block(rows)) + book[z:]
     if check:
         bad = [str(p.relative_to(ROOT)) for p, text in ((OUT_MD, md), (OUT_JSON, js), (MANUAL, book)) if not p.exists() or p.read_text() != text]
         if M_BEGIN not in book:

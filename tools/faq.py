@@ -24,7 +24,7 @@ OUT = ROOT / "docs" / "FAQ.md"
 sys.path.insert(0, str(ROOT / "tools"))
 from legal import stamp  # noqa: E402
 
-OWN_RUNS = "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results."
+OWN_RUNS = "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results."
 
 
 def _j(rel):

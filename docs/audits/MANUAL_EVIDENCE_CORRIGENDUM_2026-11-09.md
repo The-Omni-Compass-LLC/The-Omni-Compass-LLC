@@ -1,4 +1,5 @@
 # Current evidence addendum for all Omni-Compass manuals
+
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 **As of 2026-11-09; current repository evidence boundary.** This is an editorial correction and source-reference sheet, not a new benchmark, a replacement raw receipt, an updated binary manual PDF, or an external certification. Where an earlier manual headline or unqualified statement conflicts with the version-tagged underlying receipts, the original receipt, generator and this **dated** clarification control interpretation. Regenerate this addendum whenever the engine or index changes. A stale addendum cannot establish later run status.
@@ -33,4 +34,7 @@ The three primary Markdown manuals are `docs/OMNI_COMPASS_MANUAL.md`, `docs/OMNI
 Source navigation: `START_HERE.md`; `docs/README.md`; `docs/audits/TEN_LENS_REFEREE_AUDIT_2026-11-09.md`; `docs/REFEREE_VERSION_AND_BENCHMARK_STANDARD.md`; `docs/ENGINE_PROOFS.md`; `results/OMNI_INDEX.json`; `results/TWO_BILLS.json`; `docs/RUN_LEDGER.md`.
 
 ---
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+---
+
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

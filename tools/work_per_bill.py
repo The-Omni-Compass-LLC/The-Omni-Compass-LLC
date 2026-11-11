@@ -50,6 +50,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.legal import stamp  # noqa: E402
 from tools.readings import HIGHER, OWN_RUNS, three_run_reading  # noqa: E402
+from tools.company_attribution import normalize as canonical_name  # noqa: E402
 
 SRC = ROOT / "results" / "TWO_BILLS.json"
 OUT_JSON = ROOT / "results" / "WORK_PER_BILL.json"
@@ -383,7 +384,7 @@ def markdown(d: dict) -> str:
           "the cloud the work was not counted in the one set read so far. The sets that will decide it are running or queued on the "
           "engine that stands, and each lands here by itself when its table does (`python3 tools/two_bills.py`, then this page).", "",
           OWN_RUNS]
-    return "\n".join(stamp(L)) + "\n"
+    return canonical_name("\n".join(stamp(L)) + "\n")   # a publication: the publisher's one name (tools/company_attribution.py)
 
 
 def main(argv=None) -> int:

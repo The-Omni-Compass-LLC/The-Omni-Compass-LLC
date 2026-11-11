@@ -1339,7 +1339,7 @@ def b_loss_cluster_by_gauge():
 
 @block("loss_stores", AUDIT, INDEX_JSON)
 def b_loss_stores():
-    counted = {Path(OI.newest(f)).stem for _, f, _, _ in OI.WORKLOAD_TABLES}
+    counted = {Path(OI.counted(f)).stem for _, f, _, _ in OI.WORKLOAD_TABLES}
     rows = [r for r in native_losses() if place(r["table"]) == "stores"]
     a = [r for r in rows if r["table"] in counted]
     b = [r for r in rows if r["table"] not in counted]

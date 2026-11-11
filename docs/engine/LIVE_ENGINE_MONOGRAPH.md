@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3750291471, where the newest on file is 3779126077; the injection grid of batch 3750291471, the newest on file<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3750291471, where the newest on file is 3945082204; the injection grid of batch 3750291471, where the newest on file is 3945082204<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
@@ -848,7 +848,7 @@ The folders held about ten gigabytes; not run here, for want of disk. `.github/w
 
 ### 8.2 Re-running each benchmark
 
-<!-- monograph: workflows (tools/monograph_words.py) -->71 workflows<!-- end of monograph: workflows --> hold the automation; the campaign releases run A of every entry in `scripts/reruns.txt`, then B, then C. None was run here. The limit is the workflow's `timeout-minutes`; the time is its newest successful run's, start to last update, queue included, from GitHub's run record of 7 November.
+<!-- monograph: workflows (tools/monograph_words.py) -->73 workflows<!-- end of monograph: workflows --> hold the automation; the campaign releases run A of every entry in `scripts/reruns.txt`, then B, then C. None was run here. The limit is the workflow's `timeout-minutes`; the time is its newest successful run's, start to last update, queue included, from GitHub's run record of 7 November.
 
 | Benchmark | Workflow (`.github/workflows/`) | Native | Limit | Newest run's time | Cost |
 |---|---|---|---|---|---|
@@ -862,7 +862,7 @@ The folders held about ten gigabytes; not run here, for want of disk. `.github/w
 
 ### 8.3 The Python 500 and its C++ twin
 
-Two seeded sets of 500 runs check that the Python, the C++ and the page compute the same mathematics. `tools/engine_runs.py` draws run k's seed as seedₖ = base + k·0x9E3779B9 mod 2³² into a mulberry32 stream; a run is a day of the core's decisions, steps of the compass law and one give-back trial, and one SHA-256 digest covers the receipts, which the C++ harness and the page's port must equal. The record: <!-- monograph: engine_runs (tools/monograph_words.py) -->the newest record, base 3779126077, written 2026-11-08T01:22:08Z on omni-v26: 500 runs, 288 decisions of the brain, 80 steps of the compass law and one give-back trial each, digest `0525071bf38388d5…`; the C++ harness gave the same digest on the same draws, 500 of 500 runs agreeing to 1e-9, largest difference 0.0e+00 (`results/engine_runs/ENGINE_RUNS_500_3779126077.md`, the newest of 172 sets on file)<!-- end of monograph: engine_runs -->. With B that base and `T=$(mktemp -d)`:
+Two seeded sets of 500 runs check that the Python, the C++ and the page compute the same mathematics. `tools/engine_runs.py` draws run k's seed as seedₖ = base + k·0x9E3779B9 mod 2³² into a mulberry32 stream; a run is a day of the core's decisions, steps of the compass law and one give-back trial, and one SHA-256 digest covers the receipts, which the C++ harness and the page's port must equal. The record: <!-- monograph: engine_runs (tools/monograph_words.py) -->the newest record, base 3945082204, written 2026-11-09T10:50:39Z on omni-v26: 500 runs, 288 decisions of the brain, 80 steps of the compass law and one give-back trial each, digest `f1c25ba4f9c95f90…`; the C++ harness gave the same digest on the same draws, 500 of 500 runs agreeing to 1e-9, largest difference 0.0e+00 (`results/engine_runs/ENGINE_RUNS_500_3945082204.md`, the newest of 176 sets on file)<!-- end of monograph: engine_runs -->. With B that base and `T=$(mktemp -d)`:
 
 ```
 cmake -S cpp -B "$T" -DCMAKE_BUILD_TYPE=Release && cmake --build "$T" --target oc_engine_runs oc_core_runs
@@ -871,7 +871,7 @@ python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html 
 python3 tools/core_runs.py --runs 500 --base B --cpp "$T"/oc_core_runs --out "$T"/cr.json
 ```
 
-Here the build took 8 s, each `engine_runs.py` line 16 s and `core_runs.py` 3 s; both digests equalled the records'. **The core's Monte Carlo** runs native (u = 0, the plant left to its double well) beside Omni-Compass on top; a run is conveyed after 5 macro steps in a row in one basin, |U ∓ 1| ≤ 0.10, and certified at 10. The numpy set (`benchmarks/core_evidence.py`, 4 s): <!-- monograph: core_evidence (tools/monograph_words.py) -->seed 223387268: Omni-Compass on top conveyed 500 and certified 500 of 500 runs, its command peaking at 13.93; the plant alone conveyed 476 and certified 427<!-- end of monograph: core_evidence -->. The jump-generator set, the last line above: <!-- monograph: core_runs (tools/monograph_words.py) -->base 3779126077, written 2026-11-08T01:22:45Z: Omni-Compass on top conveyed 500 and certified 500 of 500, the plant alone conveyed 469 and certified 437; the C++ twin 2,000 of 2,000 run-ways agreeing to 1e-9, one digest `e799187d41e885a9…` (`results/core_runs/CORE_RUNS_500_3779126077.md`)<!-- end of monograph: core_runs -->. Both are class S, one computation in three implementations (threat T19).
+Here the build took 8 s, each `engine_runs.py` line 16 s and `core_runs.py` 3 s; both digests equalled the records'. **The core's Monte Carlo** runs native (u = 0, the plant left to its double well) beside Omni-Compass on top; a run is conveyed after 5 macro steps in a row in one basin, |U ∓ 1| ≤ 0.10, and certified at 10. The numpy set (`benchmarks/core_evidence.py`, 4 s): <!-- monograph: core_evidence (tools/monograph_words.py) -->seed 223387268: Omni-Compass on top conveyed 500 and certified 500 of 500 runs, its command peaking at 13.93; the plant alone conveyed 476 and certified 427<!-- end of monograph: core_evidence -->. The jump-generator set, the last line above: <!-- monograph: core_runs (tools/monograph_words.py) -->base 3945082204, written 2026-11-09T10:51:09Z: Omni-Compass on top conveyed 500 and certified 500 of 500, the plant alone conveyed 477 and certified 438; the C++ twin 2,000 of 2,000 run-ways agreeing to 1e-9, one digest `49e4ec816353c45e…` (`results/core_runs/CORE_RUNS_500_3945082204.md`)<!-- end of monograph: core_runs -->. Both are class S, one computation in three implementations (threat T19).
 
 ### 8.4 verify.py, the verification receipt and the release manifest
 
@@ -977,7 +977,7 @@ Each limit is numbered once, with the sections that carry its evidence, and hold
 
 ### 9.4 The record and the page
 
-**T29. One source.** Every run, rule, scorer, check, load and native setting is Dubra Software Inc. / The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->99 amendments in 18 preregistrations: 79 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
+**T29. One source.** Every run, rule, scorer, check, load and native setting is Dubra Software Inc. / The Omni-Compass LLC's own; no outside party has run, reviewed or approved the results. "Preregistered" means written in the repository, whose preregistrations carry <!-- monograph: deviations (tools/monograph_words.py) -->100 amendments in 18 preregistrations: 80 written before the runs they apply to, 13 whose heading states no timing and 7 written after runs began<!-- end of monograph: deviations -->.
 
 **T30. Reproduction.** Sums show files unchanged, not a right measurement; the newest byte-for-byte rebuild found one table not identical; the release check passes only at a release commit; a receipt needs about ten gigabytes of raw folders (8.1, 8.4, 8.5).
 

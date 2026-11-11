@@ -166,7 +166,7 @@ def standing(stands: str):
 def arm_words(path: Path) -> dict:
     """Each arm as the record itself describes it (its .md: "Native is ...; Omni on native is ...;"), and where it ran, in the words
     of the orchestrator it ran on (omni_orchestrator/__init__.py's first line): never typed here, so the answer can never call the
-    yardstick Kubernetes itself. "written by us" is said as whose it is, The Omni-Compass LLC."""
+    yardstick Kubernetes itself. "written by us" is said as whose it is, Dubra Software Inc. / The Omni-Compass LLC."""
     md = path.with_suffix(".md").read_text(encoding="utf-8")
     nat = re.search(r"Native is (.+?);", md)
     onn = re.search(r"Omni on native is (.+?);", md)
@@ -175,7 +175,7 @@ def arm_words(path: Path) -> dict:
     doc = (ROOT / "omni_orchestrator" / "__init__.py").read_text(encoding="utf-8")
     head = re.search(r'"""(.+?)(?: \(|\.)', doc).group(1)            # "Omni-Compass's own orchestrator: the organism run without Kubernetes"
     who, what = head.split(": ", 1)
-    return {"native": nat.group(1).replace(", written by us", ", as written by The Omni-Compass LLC"),
+    return {"native": nat.group(1).replace(", written by us", ", as written by Dubra Software Inc. / The Omni-Compass LLC"),
             "on_native": onn.group(1).replace("that rule", "the same rule"),
             "where": f"{who} (`omni_orchestrator`), {what}"}
 
@@ -683,7 +683,7 @@ def markdown(m) -> str:
               "cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. A composition across engines "
               f"(class S over {cls} tables), never read as one engine's result; each total follows its tables as every benchmark runs again "
               f"on {stands}."]
-    L += ["", "Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", "", END]
+    L += ["", "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", "", END]
     return "\n".join(L)
 
 
