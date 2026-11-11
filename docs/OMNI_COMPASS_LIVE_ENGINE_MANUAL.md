@@ -2906,7 +2906,7 @@ This chapter reads the page's appendix A, **Title Page and Build** (`#title-page
 
 The title page (the page's appendix A, `#title-page`) carries the build: the engine that stands and its digest, the commit and the
 time the repository built the page, the evidence classes (P a meter, L live software, S our models, each marked), the arms
-("native · Omni-Compass and native, never Omni-Compass by itself"), and a line that names the engine every table's runs ran on and
+("native · Omni-Compass on native, never Omni-Compass by itself"), and a line that names the engine every table's runs ran on and
 how many benchmarks are being run again on the engine that stands (`#bEngRuns`). Its opening paragraph says the same in full: two
 sides everywhere, and only two, native and Omni-Compass and native; Omni-Compass is never by itself, it always sits on top of a
 native controller; what omni-v18 and omni-v19 added to run it otherwise is still in the engine

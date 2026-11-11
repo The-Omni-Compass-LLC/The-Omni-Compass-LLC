@@ -19,7 +19,7 @@ class CanonicalCompanyAttribution(unittest.TestCase):
         self.assertEqual(normalize(normalize("The Omni-Compass LLC")), CANONICAL)
         self.assertEqual(normalize("Omni Compass LLC"), CANONICAL)
         self.assertEqual(normalize("The Omni Compass LLC"), CANONICAL)
-        repo = "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC"
+        from tools.repo import URL as repo   # the repository's address, written once (tools/repo.py)
         self.assertEqual(normalize(repo), repo)
         self.assertEqual(normalize("Omni-Compass"), "Omni-Compass")
 

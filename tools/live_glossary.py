@@ -1520,7 +1520,8 @@ def main(argv=None) -> int:
     ap.add_argument("--check", action="store_true", help="exit 1 if the files differ from what the repository gives now")
     a = ap.parse_args(argv)
     d = build()
-    js, md = to_json(d) + "\n", to_md(d)
+    from tools.company_attribution import normalize as canonical_name   # the full company name on the published page
+    js, md = to_json(d) + "\n", canonical_name(to_md(d))
     if a.check:
         bad = [str(p.relative_to(ROOT)) for p, s in ((OUT_JSON, js), (OUT_MD, md))
                if not p.exists() or p.read_text(encoding="utf-8") != s]

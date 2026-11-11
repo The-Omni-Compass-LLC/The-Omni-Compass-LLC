@@ -2873,7 +2873,7 @@ This chapter reads the page's appendix A, **Title Page and Build** (`#title-page
 
 The title page (the page's appendix A, `#title-page`) carries the build: the engine that stands and its digest, the commit and the
 time the repository built the page, the evidence classes (P a meter, L live software, S our models, each marked), the arms
-("native · Omni-Compass and native, never Omni-Compass by itself"), and a line that names the engine every table's runs ran on and
+("native · Omni-Compass on native, never Omni-Compass by itself"), and a line that names the engine every table's runs ran on and
 how many benchmarks are being run again on the engine that stands (`#bEngRuns`). Its opening paragraph says the same in full: two
 sides everywhere, and only two, native and Omni-Compass and native; Omni-Compass is never by itself, it always sits on top of a
 native controller; what omni-v18 and omni-v19 added to run it otherwise is still in the engine
@@ -3985,7 +3985,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-11 07:31 UTC on omni-v26 (digest 75d3c22eed4473b9) from commit 4748eba5e0db.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-11 08:22 UTC on omni-v26 (digest 75d3c22eed4473b9) from commit 6bbc87b82970.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.

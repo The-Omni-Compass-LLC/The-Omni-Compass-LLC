@@ -376,7 +376,8 @@ def main(argv=None):
     ap.add_argument("--check", action="store_true", help="fail if the written files differ from what the record gives now")
     a_ = ap.parse_args(argv)
     a, rows = build()
-    c, m = render_csv(rows), render_md(a, rows)
+    from tools.company_attribution import normalize as canonical_name   # the full company name on the published page
+    c, m = render_csv(rows), canonical_name(render_md(a, rows))
     if a_.check:
         ok = CSV_OUT.exists() and CSV_OUT.read_text(encoding="utf-8") == c and MD_OUT.exists() and MD_OUT.read_text(encoding="utf-8") == m
         print("audit export current" if ok else "audit export stale: python3 tools/audit_export.py")

@@ -366,6 +366,8 @@ def code_paths(line: str) -> str:
 
 def main() -> int:
     text_md, _ = normalize_markdown("\n".join(code_paths(ln) for ln in appendix_lines()))
+    from tools.company_attribution import normalize as canonical_name   # the full company name wherever the page has the short one
+    text_md = canonical_name(text_md)
     if "--check" in sys.argv:
         same = OUT_MD.exists() and OUT_MD.read_text(encoding="utf-8") == text_md
         print("the page word for word matches the page" if same else "the page word for word differs from the page: python3 docs/book/build_live_manual.py")
