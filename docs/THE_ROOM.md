@@ -8,7 +8,7 @@ native "just means not doing anything on there, and there can be no reason that 
 mathematics and physics of OmniCompass in it, unless it is because the muscle itself has its own limitations". This page
 writes that law as the theory and the mathematics the engine is held to, names what the catalog already reads by it, and
 sets the order of the work it calls for: the theory first, then the tuning, then the muscles Omni-Compass builds itself.
-Words and mathematics only; no code changes here. Run and scored by The Omni-Compass LLC's own code. No outside party has
+Words and mathematics only; no code changes here. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results.
 
 ## 1. The band, native's point, the room

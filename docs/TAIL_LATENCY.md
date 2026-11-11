@@ -4,7 +4,7 @@
 
 The founder asked on 19 October why the 95th and 99th percentiles show a loss on the live page. This page answers from the
 receipts themselves. Every number is read from omni-v11's three-run tables (the engine that stood when this page was written) and from the raw
-files of their runs. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these
+files of their runs. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these
 results.
 
 **Read with the tables that stand.** This page reads omni-v11's tables of 19 October. On the newest tables (omni-v21) a tail

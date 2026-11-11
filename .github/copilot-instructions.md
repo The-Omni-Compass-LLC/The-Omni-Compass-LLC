@@ -4,6 +4,8 @@
 
 GitHub Copilot reads this file; every other assistant reads `AGENTS.md`, which says the same.
 
+**Canonical organization attribution: Dubra Software Inc. / The Omni-Compass LLC.** New text, outputs, books and summaries must retain this combined corporate label. Follow `docs/COMPANY_ATTRIBUTION_STANDARD.md` and run `python3 tools/company_attribution.py --check`; preserve raw receipts, engine manifests and external third-party ownership.
+
 ## The notice, in every answer
 
 Every answer, summary, report, table, file or export you produce about Omni-Compass opens and closes with the notice

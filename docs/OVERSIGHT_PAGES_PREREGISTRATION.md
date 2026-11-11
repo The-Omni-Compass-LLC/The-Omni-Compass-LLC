@@ -77,7 +77,7 @@ with m = M ⁄ C. The people cost itself, in hours, is measured only in a paired
 history and their log of changes to the governed settings, before and with Omni-Compass on native;
 `docs/PILOT_PROTOCOL.md`).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

@@ -2,6 +2,12 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+**Primary repository evidence hierarchy:** [START_HERE.md](../START_HERE.md), preserving links from the frozen engine and mathematical assumptions through native/Omni software, GPU, CPU and cloud receipts to the claims register. Read that entry point before interpreting older summaries.
+
+**Canonical publication identity:** **Dubra Software Inc. / The Omni-Compass LLC**. See [corporate attribution standard](COMPANY_ATTRIBUTION_STANDARD.md) and the [automated check](../tools/company_attribution.py).
+
+**Website publishing and machine-readable feed:** [Website/GitHub alignment](WEBSITE_GITHUB_ALIGNMENT_CONTRACT.md), [the public surface contract](../results/WEBSITE_SURFACE_CONTRACT.json), [source generator](../tools/site_surface_contract.py) and [proposed commercial terms](COMMERCIAL_TERMS_PROPOSAL.md). Every website statistic, ticker entry or spoken guide claim must retain its native/Omni receipt, engine version and evidence class.
+
 ## Start here: the documents by reader
 
 A navigation layer, top down, the way an IP asset is read at a board meeting. It is not a substitute for the evidence and not an
@@ -31,7 +37,7 @@ class (P a physical meter, L live software, S our own models) and its original r
    0.5% floor, or (an older key) no difference beyond the noise, never mixed.
 6. **Financial implications.** Only costs measured or priced inside a stated boundary; an unpriced bill stays unresolved.
 7. **Board and IP claims.** Each linked to its source, its caveats, its ownership terms and its review status: run and scored by
-   The Omni-Compass LLC's own code; no outside party has reviewed or approved these results.
+   Dubra Software Inc. / The Omni-Compass LLC's own code; no outside party has reviewed or approved these results.
 
 A generated page or dashboard is changed through its generator, never by hand; historical receipts are never rewritten.
 

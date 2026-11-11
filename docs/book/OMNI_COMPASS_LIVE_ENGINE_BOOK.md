@@ -209,7 +209,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 
@@ -1209,7 +1209,7 @@ The first table (`#blArms`) reads a real test, three runs on GitHub's own machin
 full form, 18 steps of 25 s with the clients stepping 1 2 3 2 3 4 …, native against Omni-Compass on top of native. Its columns
 are the way to run it, the light, the change against native and what else moved. It has two rows, one for each side.
 
-- **Native Alone** is the yardstick: Kubernetes' published autoscaling rule as The Omni-Compass LLC wrote it, a description
+- **Native Alone** is the yardstick: Kubernetes' published autoscaling rule as Dubra Software Inc. / The Omni-Compass LLC wrote it, a description
   of the rule and not Kubernetes' code, on Omni-Compass's own orchestrator and test machines, with no Kubernetes. It is shown,
   not judged: every other row is read against it, and it carries no reading of its own.
 - **Omni-Compass on Native**, Omni-Compass on top of that rule, carries as the big number the mean change in work done (requests
@@ -1223,7 +1223,7 @@ are the way to run it, the light, the change against native and what else moved.
 
 The note under the table names the record (on this build `results/orchestrator/V21_THREE_ARMS_ABC.json`, of which the page
 carries only the pair Omni-Compass on native against native, and only those two sides' totals), what it ran, the engine, the
-commit, the three runs and the file, with the line "Run and scored by The Omni-Compass LLC's own code. No outside party has
+commit, the three runs and the file, with the line "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has
 reviewed or approved these results."
 
 ### 4.4 The Software End Carried to Each Place
@@ -1287,7 +1287,7 @@ counted apart, because do no harm is judged by them, each with its cause where o
 
 Under the index stands one real test of the whole loop, three runs on GitHub's own machines (A, B and C from one
 commit), class L, on Omni-Compass's own orchestrator (`omni_orchestrator`), the organism run without Kubernetes: native is
-Kubernetes' published autoscaling rule on the muscles, as written by The Omni-Compass LLC, and the other side is Omni-Compass on
+Kubernetes' published autoscaling rule on the muscles, as written by Dubra Software Inc. / The Omni-Compass LLC, and the other side is Omni-Compass on
 top of the same rule. It is one test, not the figure of record. Its table gives each side's signal, then work, the 95th-percentile
 response time, the machines and the units (the service's own copies), each with its reading, its size with no sign, the raw change
 apart with its true sign, and every run's own change. Native's row is the baseline in every column. Units that rose are power
@@ -3361,7 +3361,7 @@ changed profile would do on a real system until that profile is validated and re
 ## 46. License and Commercial Terms
 
 
-The live benchmark engine page, this manual and every part of the repository are the property of The Omni-Compass LLC; all rights
+The live benchmark engine page, this manual and every part of the repository are the property of Dubra Software Inc. / The Omni-Compass LLC; all rights
 reserved; all patents, copyrights and trademarks filed in the USA. Use is evaluation and simulation only under `LICENSE`
 (`LicenseRef-OmniCompass-Evaluation-1.0`); any commercial use, commercialization, monetization, production use,
 redistribution or hosted service requires a signed, paid Omni-Compass Enterprise License (`ENTERPRISE_LICENSE.md`). The
@@ -3691,7 +3691,7 @@ section 2.2).
 use; operating any system beyond evaluation; offering it, or its function, as a hosted, managed or software-as-a-service
 offering; redistributing it; incorporating it, or any part or derivative of it, into a product, service, appliance or
 firmware; using it or its results to build or train a competing product (`LICENSE`, sections 3 and 5). The Enterprise
-License is a written agreement signed by The Omni-Compass LLC and paid for; its standard terms are summarized in
+License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
@@ -3712,7 +3712,7 @@ Omni-Compass engine, its mathematics and its software have been filed in the Uni
 **May I use the name or the compass rose?** Only to refer to Omni-Compass accurately (`TRADEMARKS.md`).
 
 **May I contribute?** Contributions require the contributor license agreement (`.github/CLA.md`): every contribution
-is assigned to The Omni-Compass LLC, with a patent license from the contributor.
+is assigned to Dubra Software Inc. / The Omni-Compass LLC, with a patent license from the contributor.
 
 **Does Omni-Compass send data anywhere?** No. The software contains no telemetry and makes no network connection of
 its own except to the systems an operator points it at (a Kubernetes API, `nvidia-smi`, a meter command).
@@ -3721,15 +3721,15 @@ its own except to the systems an operator points it at (a Kubernetes API, `nvidi
 (`pyproject.toml`, `REUSE.toml`, `.fossa.yml`, `.snyk`, `sbom/`); third-party components are listed in
 `THIRD_PARTY_NOTICES.md`.
 
-**Can the terms change?** Yes. The Omni-Compass LLC reserves the right to change the software, its documentation, its
+**Can the terms change?** Yes. Dubra Software Inc. / The Omni-Compass LLC reserves the right to change the software, its documentation, its
 results and these terms at any time, without notice; a changed version applies to copies obtained and uses made after it
 is published (`LICENSE`, section 9). A signed Enterprise License governs its own term.
 
 **Which law governs?** The laws of the State of Delaware and the federal laws of the United States, with exclusive
 venue in the Delaware state courts and the United States District Court for the District of Delaware (`LICENSE`,
-section 19). The Omni-Compass LLC is based in Florida.
+section 19). Dubra Software Inc. / The Omni-Compass LLC is based in Florida.
 
-**Who do I contact?** The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who do I contact?** Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## Appendix H. Third-Party Notices
 
@@ -3763,7 +3763,7 @@ where an operator has installed them. Their names are the property of their owne
 This page summarizes the standard terms of the Omni-Compass Enterprise License, the paid license that every production
 use, commercial use, hosted service, distribution, OEM or embedded use, and every other commercialization or monetization
 of Omni-Compass requires (`LICENSE`, section 5). It is a summary for evaluation and planning. It is not an offer, and it
-binds no one: only an Enterprise License signed by The Omni-Compass LLC and the licensee, with its order form, grants any
+binds no one: only an Enterprise License signed by Dubra Software Inc. / The Omni-Compass LLC and the licensee, with its order form, grants any
 right, and that signed agreement controls over this page in every respect.
 
 ### I.1 What can be licensed
@@ -3809,11 +3809,11 @@ is an offer.
 
 ### I.5 Intellectual property
 
-1. The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
+1. Dubra Software Inc. / The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
    receives the rights its order form lists, for its term, and no others.
-2. **Patent license.** The Enterprise License includes a license under The Omni-Compass LLC's patent rights in the filed
+2. **Patent license.** The Enterprise License includes a license under Dubra Software Inc. / The Omni-Compass LLC's patent rights in the filed
    applications, and in any patent issuing from them, for the licensed scope.
-3. **Infringement indemnity.** The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
+3. **Infringement indemnity.** Dubra Software Inc. / The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
    version, used as licensed, infringes that party's intellectual property, and pays the damages finally awarded or the
    settlement it agrees, subject to prompt notice, control of the defense and the usual exclusions (modifications,
    combinations, unlicensed use, versions superseded by an offered fix). Remedies may include a license, a modification
@@ -3850,7 +3850,7 @@ license scope).
 ### I.9 Compliance, audit and insurance
 
 1. Each party complies with export-control, sanctions and anti-corruption law.
-2. The licensee reports usage against the licensed scope as the order form provides, and The Omni-Compass LLC may verify
+2. The licensee reports usage against the licensed scope as the order form provides, and Dubra Software Inc. / The Omni-Compass LLC may verify
    it on reasonable notice, no more than once a year.
 3. Insurance, where the order form requires it, is carried by each party at the limits stated there.
 
@@ -3871,7 +3871,7 @@ the signed agreement for the licensee and its scope.
 
 ### I.12 How to obtain one
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
 (`LICENSE`, section 1.4): watch mode, the wire check, and paired receipts on its own load.
 
 ## Appendix J. Patents and Trademarks
@@ -3916,7 +3916,7 @@ infringement. Everyone who downloads, forks, scans or runs this software is on n
 #### J.2.1 The marks
 
 "Omni-Compass", "OmniCompass", the Omni-Compass compass rose with its ring of Greek letters, and the related names, logos
-and trade dress (the "Marks") are trademarks of The Omni-Compass LLC; trademark applications have been filed in the
+and trade dress (the "Marks") are trademarks of Dubra Software Inc. / The Omni-Compass LLC; trademark applications have been filed in the
 United States. Neither the evaluation license (`LICENSE`) nor publication of this repository grants any license to the
 Marks. A license to use them is granted only in a signed Omni-Compass Enterprise License, and only as it states.
 
@@ -3931,7 +3931,7 @@ Marks. A license to use them is granted only in a signed Omni-Compass Enterprise
 - Using any Mark, or anything confusingly similar, in the name of a product, service, company, domain, account, package,
   repository, fork or derivative.
 - Using the logo or the compass rose, or altering any Mark.
-- Suggesting endorsement, sponsorship, certification, partnership or affiliation by The Omni-Compass LLC.
+- Suggesting endorsement, sponsorship, certification, partnership or affiliation by Dubra Software Inc. / The Omni-Compass LLC.
 - Using a Mark in advertising, comparative claims or sales material without a signed license.
 
 #### J.2.4 Other companies' marks
@@ -3942,7 +3942,7 @@ Omni-Compass was tested with; it states no affiliation, endorsement or certifica
 
 #### J.2.5 Reporting misuse
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## Appendix K. Security Policy
 
@@ -3950,7 +3950,7 @@ The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-955
 
 ### K.1 Reporting a vulnerability
 
-Report a suspected vulnerability privately to The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
+Report a suspected vulnerability privately to Dubra Software Inc. / The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
 pull request or discussion. Include the version and commit, what you saw, how to reproduce it, and its likely impact. We
 acknowledge reports, keep the reporter informed, and coordinate disclosure: a fix or a mitigation is published before the
 details are, and the reporter is credited if they wish. Please give us a reasonable time to fix before any disclosure, do
@@ -4404,7 +4404,7 @@ Each panel is one gauge of the live organism, read every decision on both sides.
 
 **Running Scoreboard · Class S**
 
-Each row is read on the paired change, native against Omni-Compass at the same decision, averaged over blocks of ten decisions so neighbouring decisions do not count twice, with its 95% interval (Student’s t over the blocks). This run (tools/readings.py, run_word): a change under 0.5% of native reads STEADY; 0.5% or more, the word follows the gauge’s aim (work: a rise is GAIN; misses, failed work, waiting: a fall is GAIN; energy or capacity held: a rise is power given, a fall a cut), its 95% interval printed beside it. Runs A, B and C (tools/readings.py, three_run_reading): the change is the mean of the three runs' changes; under 0.5% it reads STEADY, under the floor; 0.5% or more reads GAIN, LOSS or power given by the gauge's aim, “in all three of our runs” when every run went the same way clear of zero, otherwise “by the mean of our three runs” with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions disagree. The spread of positions and the settings are shown, never judged: no rule of the engine aims at them. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Each row is read on the paired change, native against Omni-Compass at the same decision, averaged over blocks of ten decisions so neighbouring decisions do not count twice, with its 95% interval (Student’s t over the blocks). This run (tools/readings.py, run_word): a change under 0.5% of native reads STEADY; 0.5% or more, the word follows the gauge’s aim (work: a rise is GAIN; misses, failed work, waiting: a fall is GAIN; energy or capacity held: a rise is power given, a fall a cut), its 95% interval printed beside it. Runs A, B and C (tools/readings.py, three_run_reading): the change is the mean of the three runs' changes; under 0.5% it reads STEADY, under the floor; 0.5% or more reads GAIN, LOSS or power given by the gauge's aim, “in all three of our runs” when every run went the same way clear of zero, otherwise “by the mean of our three runs” with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions disagree. The spread of positions and the settings are shown, never judged: no rule of the engine aims at them. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **Its monitors.**
 
@@ -5200,7 +5200,7 @@ Each square runs the real cluster inside the model.
 
 **Standing Three-Run Tables**
 
-From each benchmark's newest engine's table (results/live/V<engine>_*.md, the engine named in each row), read row by row by docs/engine/export_scenarios.py; open a row to read every judged row that is not STEADY. Class L: the real software (Kubernetes on kind, the real databases and broker). Class S: the outside simulators run by our own runner (CityLearn, pandapower on SimBench, MuJoCo Menagerie, gym-pybullet-drones). Rows shown and not judged are left out of the counts; the counts take every table of a receipt, its tuning case included where it has one (a receipt's own summary line counts its untouched cases). Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+From each benchmark's newest engine's table (results/live/V<engine>_*.md, the engine named in each row), read row by row by docs/engine/export_scenarios.py; open a row to read every judged row that is not STEADY. Class L: the real software (Kubernetes on kind, the real databases and broker). Class S: the outside simulators run by our own runner (CityLearn, pandapower on SimBench, MuJoCo Menagerie, gym-pybullet-drones). Rows shown and not judged are left out of the counts; the counts take every table of a receipt, its tuning case included where it has one (a receipt's own summary line counts its untouched cases). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **Realms Table · Class S**
 
@@ -5208,7 +5208,7 @@ The eighth organism, the orchestra (the catalog muscles of every governor, each 
 
 **Families by Stack**
 
-From results/realms_v5/REALMS_V5.json, the realms runner at the max, its engine and commit named above (tools/run_realms_v5.py, catalog realms/catalog_v5.csv), ten paired seeds per muscle and per organism, the lease after 80% of every run. Misses: the plant decisions over their line, summed over the ten seeds. A muscle reads GAIN when one of its aims (more work, faster, fewer misses) moved beyond the noise under some load with none moving the other way; STEADY at its limit on native when its knob already sits at the top of its range. Energy is power given where it rose. Evidence class S, our own models: a model's energy is not a meter's, and a plant written by the same people who wrote the law is not an independent test. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+From results/realms_v5/REALMS_V5.json, the realms runner at the max, its engine and commit named above (tools/run_realms_v5.py, catalog realms/catalog_v5.csv), ten paired seeds per muscle and per organism, the lease after 80% of every run. Misses: the plant decisions over their line, summed over the ten seeds. A muscle reads GAIN when one of its aims (more work, faster, fewer misses) moved beyond the noise under some load with none moving the other way; STEADY at its limit on native when its knob already sits at the top of its range. Energy is power given where it rose. Evidence class S, our own models: a model's energy is not a meter's, and a plant written by the same people who wrote the law is not an independent test. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **Its monitors.**
 
@@ -5678,7 +5678,7 @@ Omni-Compass is a supervisory governor. It sits on top of every native controlle
 
 Section Map. Reaction latency: the organism live, every muscle's place in its band and the decisions past the line, native beside Omni-Compass (3a), and the shipped controller's decision trace (4c). Static over-provisioning: the benefit board (2c) and the clouds' bills (4d). Uncoordinated coupling: the whole organism (5d) and the organism's immune system (3a). The gaps closed by hand: the status board's alarms (2e) and the golden signals, the event log and the live metrics (3b).
 
-Limits. It replaces no controller, and it creates no capacity a machine does not have: it uses the capacity already there, each muscle to its own limit. It promises no number on a system it has not run on: the only number that applies to a system is the one that system's own paired runs produce. The outside figures above are their authors' own, quoted for scale; none was measured, checked or endorsed by The Omni-Compass LLC, and none is a result of Omni-Compass.
+Limits. It replaces no controller, and it creates no capacity a machine does not have: it uses the capacity already there, each muscle to its own limit. It promises no number on a system it has not run on: the only number that applies to a system is the one that system's own paired runs produce. The outside figures above are their authors' own, quoted for scale; none was measured, checked or endorsed by Dubra Software Inc. / The Omni-Compass LLC, and none is a result of Omni-Compass.
 
 Accountability. Every comparison judged pairs two arms, native and Omni-Compass on top of native, on the same machines with the same work (the governors' tests run four arms and pair them two at a time, section L.24). Every three-run table is run three separate times (A, B and C); the Azure runs read so far and the card's run inside the whole organism's composition are single runs, named as such where they appear. Every reading is one word, GAIN, STEADY or LOSS, decided by what the gauge is for (the key, appendix D); every result carries its evidence class (P a physical meter, L live software, S our own models, never shown as proof of hardware); and every row is shown, LOSS included. The governing rule is do no harm, in its one meaning (`DISCLOSURES.md`, section 3): the aim is an organism never left turning out less than native, nor less healthy; where a row of a three-run table reads LOSS against native (section L.7 lists each, every one; a model's own LOSS rows, class S, stand in their own sections, the heartbeat dial's in 3d), the row stays, its cause is to be found and fixed (the LOSS ledger writes a cause beside those it has; the others read "not yet written"), and the test runs again on the engine that stands. The executive summary (appendix D) reads where the record stands, from the records on this page.
 
@@ -5698,7 +5698,7 @@ The Omni index, every real test weighed together, is read from its record as the
 
 **Executive Summary**
 
-Every count and reading in this list is read from the records on this page when it opens (the three-run tables, the Omni index, the cloud ledger, the card run, the models' own readings, the realms table and the harness). The settings it quotes are their sources' own: the native defaults in its last line from `docs/engine/NATIVE_REGISTER.md`, the Azure sets' repetition cap from scripts/azure_queue.txt. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Every count and reading in this list is read from the records on this page when it opens (the three-run tables, the Omni index, the cloud ledger, the card run, the models' own readings, the realms table and the harness). The settings it quotes are their sources' own: the native defaults in its last line from `docs/engine/NATIVE_REGISTER.md`, the Azure sets' repetition cap from scripts/azure_queue.txt. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **Reading Key**
 
@@ -5706,7 +5706,7 @@ Every count and reading in this list is read from the records on this page when 
 
 Each term is defined once; where it first appears on the page it carries the same definition, shown when pointed at.
 
-The size is how far the gauge moved from native; the word says whether that move helped the work. Examples, read from the three-run tables on this page, appear here when they load. A miss is a decision where the work went over its line. The key is written once in tools/readings.py and stands at the top of the README, `docs/HOW_TO_READ_THE_RESULTS.md` and the manuals. GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results; the underwriting senses explain the words and are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+The size is how far the gauge moved from native; the word says whether that move helped the work. Examples, read from the three-run tables on this page, appear here when they load. A miss is a decision where the work went over its line. The key is written once in tools/readings.py and stands at the top of the README, `docs/HOW_TO_READ_THE_RESULTS.md` and the manuals. GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results; the underwriting senses explain the words and are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 **Its monitors.** This section draws no canvas: its views are tables and text the page builds from its records.
 
@@ -6413,7 +6413,7 @@ Every glossary term where the book defines or discusses it, every muscle family,
 
 ## Contact
 
-The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
+Dubra Software Inc. / The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
 
 ---
 

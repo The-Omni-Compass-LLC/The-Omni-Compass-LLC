@@ -25,7 +25,7 @@ before the card.
 2. Enter an e-mail address and an account name (`Omni-Compass`), click **Verify email address**, and type the code Amazon
    e-mails you.
 3. Choose a password for the root user.
-4. Contact information: **Business** (The Omni-Compass LLC) or **Personal**, the address and phone.
+4. Contact information: **Business** (Dubra Software Inc. / The Omni-Compass LLC) or **Personal**, the address and phone.
 5. **Choose the Paid plan** if Amazon asks you to pick a plan. Your credits still pay first; the Free plan blocks services
    these tests need (the Kubernetes service among them).
 6. Enter a card, then confirm the phone number with the code Amazon sends.

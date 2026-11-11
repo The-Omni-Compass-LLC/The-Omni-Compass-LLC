@@ -20,7 +20,7 @@ section 2.2).
 use; operating any system beyond evaluation; offering it, or its function, as a hosted, managed or software-as-a-service
 offering; redistributing it; incorporating it, or any part or derivative of it, into a product, service, appliance or
 firmware; using it or its results to build or train a competing product (`LICENSE`, sections 3 and 5). The Enterprise
-License is a written agreement signed by The Omni-Compass LLC and paid for; its standard terms are summarized in
+License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
@@ -41,7 +41,7 @@ Omni-Compass engine, its mathematics and its software have been filed in the Uni
 **May I use the name or the compass rose?** Only to refer to Omni-Compass accurately (`TRADEMARKS.md`).
 
 **May I contribute?** Contributions require the contributor license agreement (`.github/CLA.md`): every contribution
-is assigned to The Omni-Compass LLC, with a patent license from the contributor.
+is assigned to Dubra Software Inc. / The Omni-Compass LLC, with a patent license from the contributor.
 
 **Does Omni-Compass send data anywhere?** No. The software contains no telemetry and makes no network connection of
 its own except to the systems an operator points it at (a Kubernetes API, `nvidia-smi`, a meter command).
@@ -50,15 +50,15 @@ its own except to the systems an operator points it at (a Kubernetes API, `nvidi
 (`pyproject.toml`, `REUSE.toml`, `.fossa.yml`, `.snyk`, `sbom/`); third-party components are listed in
 `THIRD_PARTY_NOTICES.md`.
 
-**Can the terms change?** Yes. The Omni-Compass LLC reserves the right to change the software, its documentation, its
+**Can the terms change?** Yes. Dubra Software Inc. / The Omni-Compass LLC reserves the right to change the software, its documentation, its
 results and these terms at any time, without notice; a changed version applies to copies obtained and uses made after it
 is published (`LICENSE`, section 9). A signed Enterprise License governs its own term.
 
 **Which law governs?** The laws of the State of Delaware and the federal laws of the United States, with exclusive
 venue in the Delaware state courts and the United States District Court for the District of Delaware (`LICENSE`,
-section 19). The Omni-Compass LLC is based in Florida.
+section 19). Dubra Software Inc. / The Omni-Compass LLC is based in Florida.
 
-**Who do I contact?** The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who do I contact?** Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ---
 

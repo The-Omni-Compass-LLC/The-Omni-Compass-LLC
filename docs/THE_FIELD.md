@@ -362,7 +362,7 @@ could not be reached, the source is the search index's copy of it or a third par
 77. Sinergym (MIT): https://github.com/ugr-sail/sinergym ; BOPTEST: https://github.com/ibpsa/project1-boptest
 78. KWOK: https://github.com/kubernetes-sigs/kwok
 
-Read from public material by The Omni-Compass LLC. No outside party has reviewed or approved this map.
+Read from public material by Dubra Software Inc. / The Omni-Compass LLC. No outside party has reviewed or approved this map.
 
 ---
 

@@ -34,7 +34,9 @@ id `b10f1b4128ff…`; the printed configuration `printed_eight_line`, id `623934
 | V | Saturated micro steps: 0 of 100 000 (nearest target), 5 of 100 000 (wrong target). | same |
 | T | The admissible box A (E interval, abs(U − sigma) <= abs(U0 − sigma), S between S0 and S[plus]) is forward invariant in continuous time. | Thm 4 |
 | V | Discrete invariance of A: 0 failures over 100 000 micro steps of the frozen fixtures, both targets. | `results/TRACKING_BOUNDS.json` |
-| O | Discrete invariance and epsilon_h proved over the whole box (interval arithmetic). | — |
+| T (conditional, computer-assisted) | The later executed-RK4 proof claims E1–E2, S1, I1 and U1–U5 over their **declared admissible parameter/start box**, with SMT and outward-rounded interval enclosures; U enters an error ball with radius at most 0.0677. This supersedes the older blanket whole-box-open label **only for these explicitly named obligations** and still requires independent certificate rerun. | `docs/ENGINE_PROOFS.md`; `docs/TRACKING_THEOREM.md` §3–4 |
+| T (conditional, computer-assisted) | Bath mode B1 has spectral radius at most 0.99995 under the stated stable linear forcing hypotheses; boundedness is conditional, and no numerical amplitude ceiling or full-system convergence follows. | `docs/ENGINE_PROOFS.md` B1 |
+| O | CERT-10 for **every** admissible initial state (the certified worst-case entry argument currently guarantees nine macro dwell steps), initial states below S₋, and unrestricted closed-loop external-plant stability. | `docs/ENGINE_PROOFS.md` §5 |
 | O | Global stability of the forced six-state system. | `docs/FORMAL_STATUS.md` |
 | V | 500 / 500 frozen fixtures satisfy CONVEY-5 and CERT-10 (dwell predicates, not external certification). | `results/core_evidence.json` |
 | V | Frozen 500-fixture comparison: symmetric_verified final error 7.48e-5, integrated abs(u) 0.878, peak 13.93; printed_eight_line 5.13e-6, 11.79, 18.87. Both executable; not interchangeable. | `results/MECHANISM_IDENTITY.json` |

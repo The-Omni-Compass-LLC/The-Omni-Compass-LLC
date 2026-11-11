@@ -78,7 +78,7 @@ names, with their SHA-256 sums, and the table's own tool rebuilds the table from
 `tools/redis_abc.py`, and the like). `python3 tools/omni_version.py --commit <sha>` names the engine a run's commit carries.
 `python3 verify.py` runs every test and check the repository holds.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

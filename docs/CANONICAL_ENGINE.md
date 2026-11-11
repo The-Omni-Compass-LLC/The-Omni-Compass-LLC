@@ -88,7 +88,7 @@ preregistration amended on record (`results/LOCK_AMENDMENTS.json`). Until then t
 
 ## 5. For filings
 
-Which form a patent or copyright filing claims as the principal embodiment is a decision for The Omni-Compass LLC and
+Which form a patent or copyright filing claims as the principal embodiment is a decision for Dubra Software Inc. / The Omni-Compass LLC and
 its counsel. Whatever that decision, the software described by this repository runs the canonical engine of section 1,
 and a filing that claims the printed form should name `symmetric_verified` as the embodiment that has been implemented
 and tested, or the printed form should be benchmarked first (section 3).

@@ -94,8 +94,8 @@ placement, the learned GPU power cap and NVIDIA's platform power budget. A model
 
 ## 4. Who owns Omni-Compass, and on what terms it is seen
 
-- **The copyright in Omni-Compass belongs to The Omni-Compass LLC.** Contributions are accepted only on the terms of
-  `.github/CONTRIBUTING.md`, which assign their rights to The Omni-Compass LLC.
+- **The copyright in Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC.** Contributions are accepted only on the terms of
+  `.github/CONTRIBUTING.md`, which assign their rights to Dubra Software Inc. / The Omni-Compass LLC.
 - **The source is visible under the Omni-Compass Evaluation License (`LICENSE`): evaluation and Simulation use only.**
   It is not an open-source license. Any commercial use, commercialization, monetization, production use,
   redistribution or hosted service requires a signed, paid Omni-Compass Enterprise License. Seeing the source grants
@@ -121,7 +121,7 @@ one exact commit, after the CPU side is done (`docs/GPU_RUN_GUIDE.md`, `docs/GPU
 no energy saving on real machines is claimed. The seat is claimed by design and by the receipts on this page; it is held
 when the receipts cover it.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

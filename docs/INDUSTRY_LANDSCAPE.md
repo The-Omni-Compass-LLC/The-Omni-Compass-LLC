@@ -74,7 +74,7 @@ corrected model, `results/model_gate/V23_LADDER_CORRECTED.md`, class S). That is
 - Fewer people: what is measured is fewer alert minutes.
 - Anything in the data plane: Omni-Compass touches no data, cache, network or silicon.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

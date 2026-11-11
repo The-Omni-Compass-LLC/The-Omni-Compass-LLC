@@ -86,7 +86,7 @@ limit down by what the host is over rather than all the way to the operator's, a
 another workload's pods wait for a place, the test omni-v26 already makes for the target. The model gate's shared-host model is
 set from these runs' own files. Then the benchmarks' three runs on that engine.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

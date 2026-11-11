@@ -5,7 +5,7 @@
 Each gate of the solid-A directive, marked only by what was executed on this branch's commit (the merge of main's omni-v21,
 `7678d817d8`, and the commit that carries this page). PASS means the check ran and passed; PARTLY names what ran and what did
 not; NOT RUN means it has not been executed. No gate is marked PASS because it was skipped, blocked or not executed. Run and scored
-by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 | Gate | Status | What was executed | What is open |
 |---|---|---|---|

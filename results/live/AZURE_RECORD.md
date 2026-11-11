@@ -892,7 +892,7 @@ Finished on GitHub, its files not yet on `raw` (the hourly archive takes them; `
 | machines billed, machine-hours | 0.6622 | 0.6312 | down 4.7% | -0.2911 to 0.2291 | GAIN, down 4.7% (inside the noise) |
 | compute bill at list price ($) | 0.06357 | 0.06059 | down 4.7% | -0.02794 to 0.02199 | GAIN, down 4.7% (inside the noise) |
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

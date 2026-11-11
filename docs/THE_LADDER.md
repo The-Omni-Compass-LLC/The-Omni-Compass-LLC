@@ -83,7 +83,7 @@ the table "The stack cut down"). The two can differ, and the difference is physi
 Paid cloud and GPU runs stay at 1, 10 and 100 copies with at most 100 repetitions (the founder's order of 12 October, kept for
 everything that costs money).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

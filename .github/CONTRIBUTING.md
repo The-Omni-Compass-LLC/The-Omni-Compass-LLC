@@ -10,7 +10,7 @@ must be regenerated on fresh held-out seeds, never tuned on existing held-out se
 
 The full terms are in [`.github/CLA.md`](CLA.md).
 
-By submitting a contribution (code, documentation, results or ideas) you assign all rights in it to The Omni-Compass LLC, and you confirm you have the right to do so. Contributions are accepted only on that basis; the repository stays under the Omni-Compass Evaluation License (`LICENSE`).
+By submitting a contribution (code, documentation, results or ideas) you assign all rights in it to Dubra Software Inc. / The Omni-Compass LLC, and you confirm you have the right to do so. Contributions are accepted only on that basis; the repository stays under the Omni-Compass Evaluation License (`LICENSE`).
 
 ---
 

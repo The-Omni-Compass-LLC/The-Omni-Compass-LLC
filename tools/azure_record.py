@@ -275,7 +275,7 @@ def markdown(d: dict) -> str:
             iv = "—" if not ci or None in ci else f"{f(ci[0])} to {f(ci[1])}"
             L.append(f"| {e['gauge']} | {f(n)} | {f(o)} | {cc} | {iv} | {e['word'] or 'shown, not judged'} |")
         L.append("")
-    L += ["Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", ""]
+    L += ["Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.", ""]
     return "\n".join(stamp(L)) + "\n"
 
 

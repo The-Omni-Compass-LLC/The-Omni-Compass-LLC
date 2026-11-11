@@ -65,7 +65,7 @@ standard burst result; the standard burst on the card version runs at `1 3 1 4 1
 Cost: about $2 to $4 a steady run and $4 to $6 a burst run at list price; six runs, about $30 in all. Time: about six
 hours a steady run and nine a burst run.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 
 ## The burst steps from 14 October

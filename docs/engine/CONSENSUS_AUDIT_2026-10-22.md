@@ -185,7 +185,7 @@ registry, the builder, the exporters, the manual and the repository's records; t
 from the records themselves; the underwriter traced every claim it names to its file and back; the editor searched the prose for the
 retired words and the house terms; the structure seat counted anchors, headings, references and characters; the visual seat rendered.
 The grades are of the page as it stood at 22:05 UTC on 22 October; the fixes of section 3 came after it and are not graded here. Every
-model named is our own (class S) and is proof of nothing. Run and read by The Omni-Compass LLC's own code and its own readers; no
+model named is our own (class S) and is proof of nothing. Run and read by Dubra Software Inc. / The Omni-Compass LLC's own code and its own readers; no
 outside party has reviewed or approved these results or this audit.
 
 ---

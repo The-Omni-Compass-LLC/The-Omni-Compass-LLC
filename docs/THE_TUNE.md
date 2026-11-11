@@ -8,13 +8,13 @@ benchmarks prove one engine at one tune, and every page must say that turning an
 direction. The main engine's tune is not a guess: it is the tune found, by measuring every gauge across the knobs, to serve the
 organism best, read against native and against every tune tried. This page states both and formalizes the second. Its
 rule is in code (`tools/tune_study.py`, tested by `tests/test_tune_study.py`); its first search runs in our own models
-(evidence class S) and is read on its own page in `results/model_gate/` when it finishes. Run and scored by The Omni-Compass LLC's own code.
+(evidence class S) and is read on its own page in `results/model_gate/` when it finishes. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code.
 No outside party has reviewed or approved these results.
 
 ## 1. Two things, never one
 
 **The main engine** is the engine that stands (omni-v26, `OMNI_V26.json`, `python3 tools/omni_version.py`) at its factory tune:
-the settings The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
+the settings Dubra Software Inc. / The Omni-Compass LLC ships, frozen and fingerprinted. For the Kubernetes governor the tune is the full decision
 at the factory beat for its place, every 10 s on site and every 60 s through a cloud (omni-v24), with the fast checks every 5 s; the compass law at the max (its balance point 0.3), on a cluster of one's own and in
 a cloud alike since 31 October (the founder's order of that day struck the tune-down on the machines alone, 0.4, that the clouds
 ran until then; in a cloud the bill is judged beside the work, a tune whose bill rises for the same work not admissible); the verdict's 2% allowance on a
@@ -257,7 +257,7 @@ The disclosure of section 1 stands in `DISCLOSURES.md` section 3 (the factory tu
 live benchmark engine page, and in all three manuals: the Operator's Manual (section 3.1, the factory tune and the bench, without the engine's internals), the Owner's Manual
 (the tune and its mathematics, this page's sections 1 and 2) and the Live Benchmark Engine Manual (its opening: the page is a tuning bench).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

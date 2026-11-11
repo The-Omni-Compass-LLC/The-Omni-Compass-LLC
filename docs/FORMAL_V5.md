@@ -272,7 +272,7 @@ is section 3.
   digit); with the max writing, a room twin is native's room under native's heat as the brain reconstructs it, not a
   meter.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

@@ -1965,7 +1965,7 @@ every one a sentence, a count or a drawing. Each is closed here, in the page, it
   Under the add-on's mark on every worker it holds, safely but blind. That changes in the next version, through the model gate.
   `docs/K8S_COMPASS_PREREGISTRATION.md`, the amendment of 19 October.
 
-## 2026-10-19: The repository credits its making to The Omni-Compass LLC alone
+## 2026-10-19: The repository credits its making to Dubra Software Inc. / The Omni-Compass LLC alone
 
 - Four live lines named an AI tool as the maker of part of the work, and now say nothing of who typed them:
   - the governor's role file (`deploy/kind/rbac-omni.yaml`);
@@ -3051,7 +3051,7 @@ every one a sentence, a count or a drawing. Each is closed here, in the page, it
 
 ## 2026-10-14: the company's telephone in the founder's wording, and what its letters mean
 
-- Every contact line now reads, in the founder's words: The Omni-Compass LLC, **main office infrastructure, toll-free
+- Every contact line now reads, in the founder's words: Dubra Software Inc. / The Omni-Compass LLC, **main office infrastructure, toll-free
   direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1**, before the website (README, LICENSE and its copy, NOTICE,
   the Enterprise License, Trademarks, the Licensing FAQ, Security, Support, the manual's "Who to call"). The legal notice
   still ends with www.omni-compass.com and nothing after it.
@@ -3476,9 +3476,9 @@ every one a sentence, a count or a drawing. Each is closed here, in the page, it
   docs/GOOGLE_SETUP.md, docs/AMAZON_SETUP.md (and `docs/AZURE_SETUP.md`). The Google, Amazon, Lambda and one-button
   workflows now register on the branch they are pushed to, so they can be started there.
 - **The three-run words** (the founder's order of 11 October): no table or page says a result is "confirmed", because
-  nobody outside The Omni-Compass LLC has reviewed or approved these results. A reading is lower or higher in all three
+  nobody outside Dubra Software Inc. / The Omni-Compass LLC has reviewed or approved these results. A reading is lower or higher in all three
   of our runs, the same in all three, no difference beyond the noise, or the runs disagree; every three-run table, the
-  Omni index, the dossier, the benefit sheet and the wiring verdicts say "Run and scored by The Omni-Compass LLC's own
+  Omni index, the dossier, the benefit sheet and the wiring verdicts say "Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
   code. No outside party has reviewed or approved these results." and what preregistered means. The words are in
   `tools/readings.py`; the numbers in every table are unchanged. A GPU "confirmation" run is now called the counted run
   (its code name stays `PHASE=confirm`). Nine v3 tables that printed their title twice now print it once.

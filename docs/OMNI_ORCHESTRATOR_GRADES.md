@@ -3,7 +3,7 @@
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 The founder's order of 23 October 2026: grade the orchestrator (`omni_orchestrator/`, `docs/OMNI_ORCHESTRATOR.md`) at referee
-level, sector by sector. The grades below are The Omni-Compass LLC's own reading of its own code and its first showing, written
+level, sector by sector. The grades below are Dubra Software Inc. / The Omni-Compass LLC's own reading of its own code and its first showing, written
 the way a referee of a systems paper or an underwriter of a product would write them: every grade names what was examined,
 what it earned the grade and what it lacks. No outside party has reviewed or approved these grades. The scale: A, the sector
 would pass a referee without a request for changes; B, it passes with named changes; C, the mechanism is present and works in

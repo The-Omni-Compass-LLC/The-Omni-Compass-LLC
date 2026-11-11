@@ -107,7 +107,7 @@ The three runs together, by the one key: **the runs disagree** (the mean of the 
 
 Not yet, said plainly. On bare metal two runs of three gave more work for the bill and the third gave less, so the three runs disagree; the card's energy for each request served fell in all three (GAIN in all three of our runs). Through the cloud the work was not counted in the one set read so far. The sets that will decide it are running or queued on the engine that stands, and each lands here by itself when its table does (`python3 tools/two_bills.py`, then this page).
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
 ---
 

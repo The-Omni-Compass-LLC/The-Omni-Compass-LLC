@@ -4,7 +4,7 @@
 
 The engine is the set of files whose bytes decide what Omni-Compass does: the brain, the compass law, the verdict, the live
 governors, the harness the models run in, and the wires that fasten the brain to an outside simulator. Their SHA-256
-digests together make the engine's fingerprint (the engine that stands, `OMNI_V25.json`: 65 files, digest `cf56fc0a7b707452`).
+digests together make the engine's fingerprint (the engine that stands, `OMNI_V26.json`: 65 files, digest `75d3c22eed4473b9`).
 `python3 tools/omni_version.py` reads the tree and names the engine it holds, or says which file differs from every
 declared engine.
 

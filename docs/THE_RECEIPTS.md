@@ -37,7 +37,7 @@ differs.
 ## 2. Receipt by receipt
 
 "In all three" means the same sign in runs A, B and C with every 95% interval clear of zero; STEADY means a change under
-the 0.5% floor, or no change at all (the key, `tools/readings.py`). Run and scored by The Omni-Compass LLC's own code. No
+the 0.5% floor, or no change at all (the key, `tools/readings.py`). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No
 outside party has reviewed or approved these results.
 
 ### Real software and our own models (L and S)
@@ -94,7 +94,7 @@ the set ran to the paid cap of 100.
 <!-- results: chips (tools/results_chapter.py) -->
 Every three-run table of a card's own meter (class P) in `results/gpu/`, written from the tables by `python3
 tools/results_chapter.py`, newest engine first: the headline gauges in the table's own words, then how all its rows read by the
-one key; every row stands in the table. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or
+one key; every row stands in the table. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or
 approved these results.
 
 - **The organisms on the eight-card machine: six organisms, each on its own A100, three runs on rented machines**
@@ -163,7 +163,7 @@ that is done).
 - A loss in all three runs is reported as it stands, its cause looked for in our own wiring, setup and scoring first,
   and the next set run on the fix.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any
 outside body.
 

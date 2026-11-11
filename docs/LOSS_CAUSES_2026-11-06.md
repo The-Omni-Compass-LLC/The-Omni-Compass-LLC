@@ -168,7 +168,7 @@ The batch stream through the KAI scheduler started the same 3 web pods in both a
 take this cause. On Armada on the organism alone (run 41828277526, repetitions 1 to 3) the pod watch shows each of Omni-Compass's
 starts Ready 2 to 3 s after it was made, none of them waiting for a place.
 
-Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ---
 

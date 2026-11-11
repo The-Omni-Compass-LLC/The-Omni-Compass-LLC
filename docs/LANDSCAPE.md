@@ -9,7 +9,7 @@ public material, and grades each one, and me, on the same seven measures. Read o
 else product you see ... and grade that too").
 
 Every fact about another product below comes from that product's public pages or the press, and is cited; a savings figure a
-vendor publishes is a vendor's claim and is called one. A grade is The Omni-Compass LLC's own reading of public material
+vendor publishes is a vendor's claim and is called one. A grade is Dubra Software Inc. / The Omni-Compass LLC's own reading of public material
 against the measures written here before the grades; it is not a review of anyone's code, and no outside party has reviewed
 it. Where a product's material does not say, the grade says "not published", never a guess.
 
@@ -140,7 +140,7 @@ importance, and it is the bar my live benchmark engine is held to. No surface I 
 controller on the same monitor, gauge by gauge. My live benchmark engine does that today on recorded runs; it reaches the HMI's bar when
 every monitor reads and drives a live system through the control API.
 
-Run and scored by The Omni-Compass LLC's own reading of public material. No outside party has reviewed or approved these grades.
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own reading of public material. No outside party has reviewed or approved these grades.
 
 ---
 

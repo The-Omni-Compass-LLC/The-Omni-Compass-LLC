@@ -69,7 +69,7 @@ run on. It does not make a system immune to failure, delay or drift: it keeps ea
 by row, what it did against native. A result on another system is that system's own, from its own paired runs; where it
 differs, the first presumption is the wiring (`DISCLOSURES.md`, section 4).
 
-**What is protected, and how.** Omni-Compass belongs to The Omni-Compass LLC. Its source, manuals and records are its
+**What is protected, and how.** Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. Its source, manuals and records are its
 copyrighted work; all patents, copyrights and trademarks filed in the USA. The repository is licensed for Evaluation and
 Simulation use only (`LICENSE`); any commercial use, monetization or production use requires a signed, paid Omni-Compass
 Enterprise License (`ENTERPRISE_LICENSE.md`). What a licensee acquires is the working whole: the engine, the wiring and the
@@ -132,7 +132,7 @@ first; this book tells you where.
 anything. Then wire it one level at a time, watch it before you let it write, and judge it by your own receipts.
 
 **AJ Dubra**
-Founder, The Omni-Compass LLC
+Founder, Dubra Software Inc. / The Omni-Compass LLC
 
 ## Preface
 
@@ -181,7 +181,7 @@ should show, the following discipline throughout:
    unchanged to the cases that are counted. A change made after a result has been seen is written down with its time and
    reason, and the receipt that carries the result says so.
 3. **Three separate runs, one rule.** A result is run three times (A, B and C) on the same engine version and profile, and
-   every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree** (chapter 13). Nobody outside The Omni-Compass LLC has reviewed or approved the published results, and every
+   every judged row reads by one rule: the change is the mean of the three runs' changes in percent of native; a mean under 0.5% reads STEADY, under the floor (STEADY, the same where nothing moved); from 0.5% up the word comes from what the gauge is for, GAIN, LOSS or power given, **in all three of our runs** where every run moved the same way with its 95% interval clear of zero, otherwise **by the mean of our three runs** with the count of runs beyond the noise; runs that moved 0.5% or more in opposite directions read **the runs disagree** (chapter 13). Nobody outside Dubra Software Inc. / The Omni-Compass LLC has reviewed or approved the published results, and every
    three-run table says so.
 4. **Every row, losses included.** A row that went against Omni-Compass is in the receipt beside the rows that went for
    it. When Omni-Compass loses, the first suspect is the wiring, then native's setup, then the scoring; when that is fixed,
@@ -383,7 +383,7 @@ Every reading is one of these. **GAIN, LOSS or power given in all three of our r
 
 Why these three words: they are the words of underwriting and actuarial work, where every outcome is graded as surplus, par or deficit, and each letter spells out the same rule. Omni-Compass is there to add (GAIN), never to take (LOSS), and to hand a muscle back to its own native setting where it cannot add (STEADY). Its first rule is do no harm, in the founder's meaning of 19 October 2026: the organism Omni-Compass governs is never left turning out less than its native controllers make it turn out, nor less healthy, and every muscle works only as far as its own limit (`DISCLOSURES.md`, section 3). So **LOSS should never appear**: where it does, the row stays in the table, its cause is found and fixed (our own wiring first, then native's setup, then the scoring) and the test is run again.
 
-Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
+Disclosure and disclaimer: GAIN, STEADY and LOSS, and the letters behind them, are Dubra Software Inc. / The Omni-Compass LLC's own convention for reading its own results. The underwriting senses explain the words; they are not an actuarial, financial or insurance opinion, and no outside body defined, reviewed or approved them. A reading states what our own runs measured against native under the declared aims, not a promise about any other system; every number stands beside its word, so a reader can judge it by any other convention. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 <!-- end of the key -->
 
 
@@ -543,7 +543,7 @@ it, read back, and the record removed.
 | a meter that is blind or late | nothing: blind means hold; it moves nothing it cannot see | section 6.3 |
 | your results point the other way from the published ones | presume the wiring first, not the law | `DISCLOSURES.md`, section 4 |
 
-**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who to call.** Licensing, pilots and the Omni-Compass Enterprise License: Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 Security reports: the process in `SECURITY.md`, never a public issue.
 
 **What the letters of the number mean.** Read as one sentence: Omni-Compass takes the system in through a Data Exchange (DEX), runs every setting up to its Yield Limit Line (YLL) and never past it, and closes it all into one loop (1); science and software people read each part on sight. Read in order, DEX-YLL-1 is the way the engine runs:
@@ -918,7 +918,7 @@ own number. Every table lists the spine first, because the other six stand on it
 
 ### 4.1 The factory tune
 
-Omni-Compass ships tuned. The engine in the repository is presented as The Omni-Compass LLC tuned it and ships it: a
+Omni-Compass ships tuned. The engine in the repository is presented as Dubra Software Inc. / The Omni-Compass LLC tuned it and ships it: a
 self-running engine, set at the factory, the way a vehicle leaves the plant with its engine already mapped. Every muscle
 in the catalog is wired and runs on the setting found for it: its own card where one was found and kept (section 4.3),
 the engine's own setting for every other muscle. The whole tune is fixed and fingerprinted by version
@@ -5197,7 +5197,7 @@ software have been filed in the United States by Dubra Software Inc. / The Omni-
 other use. Contributions are accepted only on the terms in `.github/CONTRIBUTING.md`, which assign their rights to The
 Omni-Compass LLC.
 
-The copyright in Omni-Compass belongs to The Omni-Compass LLC. The source is visible under the Evaluation License,
+The copyright in Omni-Compass belongs to Dubra Software Inc. / The Omni-Compass LLC. The source is visible under the Evaluation License,
 which is not an open-source license; seeing the source grants no right beyond it. The owner of a copyright may
 grant it under more than one license at once (the Evaluation License to everyone, a paid Enterprise License to a
 customer), may set the terms of each new version, and may assign the copyright; copies already received keep the
@@ -5245,7 +5245,7 @@ Every copy, export or printout carries the legal notice at its head and foot, wi
 | Band | a reading's or a knob's safe range |
 | Card | a muscle's own settings, found for it and kept only where it was never behind native; the factory tune for that muscle (section 4.3) |
 | Dial | max (the default) or save (the tune-down), the same switch on every governor (section 4.2) |
-| Factory tune | the engine as The Omni-Compass LLC tuned and ships it: every muscle on its own card or the engine's setting (section 4.1) |
+| Factory tune | the engine as Dubra Software Inc. / The Omni-Compass LLC tuned and ships it: every muscle on its own card or the engine's setting (section 4.1) |
 | Line | the limit the service must meet, from the operator's own objectives (`--slo-ms`) |
 | Engine version | the engine as fingerprinted file by file; a receipt belongs to the version its commit carries (chapter 13) |
 | Compass | the band seen as a position from 0 (calm) to 1 (the line), with a 5% cushion at each edge and the centre where the reading is held (section 4.4) |
@@ -7762,7 +7762,7 @@ before the card.
 2. Enter an e-mail address and an account name (`Omni-Compass`), click **Verify email address**, and type the code Amazon
    e-mails you.
 3. Choose a password for the root user.
-4. Contact information: **Business** (The Omni-Compass LLC) or **Personal**, the address and phone.
+4. Contact information: **Business** (Dubra Software Inc. / The Omni-Compass LLC) or **Personal**, the address and phone.
 5. **Choose the Paid plan** if Amazon asks you to pick a plan. Your credits still pay first; the Free plan blocks services
    these tests need (the Kubernetes service among them).
 6. Enter a card, then confirm the phone number with the code Amazon sends.
@@ -8289,7 +8289,7 @@ section 2.2).
 use; operating any system beyond evaluation; offering it, or its function, as a hosted, managed or software-as-a-service
 offering; redistributing it; incorporating it, or any part or derivative of it, into a product, service, appliance or
 firmware; using it or its results to build or train a competing product (`LICENSE`, sections 3 and 5). The Enterprise
-License is a written agreement signed by The Omni-Compass LLC and paid for; its standard terms are summarized in
+License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
@@ -8310,7 +8310,7 @@ Omni-Compass engine, its mathematics and its software have been filed in the Uni
 **May I use the name or the compass rose?** Only to refer to Omni-Compass accurately (`TRADEMARKS.md`).
 
 **May I contribute?** Contributions require the contributor license agreement (`.github/CLA.md`): every contribution
-is assigned to The Omni-Compass LLC, with a patent license from the contributor.
+is assigned to Dubra Software Inc. / The Omni-Compass LLC, with a patent license from the contributor.
 
 **Does Omni-Compass send data anywhere?** No. The software contains no telemetry and makes no network connection of
 its own except to the systems an operator points it at (a Kubernetes API, `nvidia-smi`, a meter command).
@@ -8319,15 +8319,15 @@ its own except to the systems an operator points it at (a Kubernetes API, `nvidi
 (`pyproject.toml`, `REUSE.toml`, `.fossa.yml`, `.snyk`, `sbom/`); third-party components are listed in
 `THIRD_PARTY_NOTICES.md`.
 
-**Can the terms change?** Yes. The Omni-Compass LLC reserves the right to change the software, its documentation, its
+**Can the terms change?** Yes. Dubra Software Inc. / The Omni-Compass LLC reserves the right to change the software, its documentation, its
 results and these terms at any time, without notice; a changed version applies to copies obtained and uses made after it
 is published (`LICENSE`, section 9). A signed Enterprise License governs its own term.
 
 **Which law governs?** The laws of the State of Delaware and the federal laws of the United States, with exclusive
 venue in the Delaware state courts and the United States District Court for the District of Delaware (`LICENSE`,
-section 19). The Omni-Compass LLC is based in Florida.
+section 19). Dubra Software Inc. / The Omni-Compass LLC is based in Florida.
 
-**Who do I contact?** The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+**Who do I contact?** Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## Appendix Q. Third-Party Notices
 
@@ -8361,7 +8361,7 @@ where an operator has installed them. Their names are the property of their owne
 This page summarizes the standard terms of the Omni-Compass Enterprise License, the paid license that every production
 use, commercial use, hosted service, distribution, OEM or embedded use, and every other commercialization or monetization
 of Omni-Compass requires (`LICENSE`, section 5). It is a summary for evaluation and planning. It is not an offer, and it
-binds no one: only an Enterprise License signed by The Omni-Compass LLC and the licensee, with its order form, grants any
+binds no one: only an Enterprise License signed by Dubra Software Inc. / The Omni-Compass LLC and the licensee, with its order form, grants any
 right, and that signed agreement controls over this page in every respect.
 
 ### R.1 What can be licensed
@@ -8407,11 +8407,11 @@ is an offer.
 
 ### R.5 Intellectual property
 
-1. The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
+1. Dubra Software Inc. / The Omni-Compass LLC keeps all right, title and interest in Omni-Compass, the Mechanism and the marks. The licensee
    receives the rights its order form lists, for its term, and no others.
-2. **Patent license.** The Enterprise License includes a license under The Omni-Compass LLC's patent rights in the filed
+2. **Patent license.** The Enterprise License includes a license under Dubra Software Inc. / The Omni-Compass LLC's patent rights in the filed
    applications, and in any patent issuing from them, for the licensed scope.
-3. **Infringement indemnity.** The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
+3. **Infringement indemnity.** Dubra Software Inc. / The Omni-Compass LLC defends the licensee against a third-party claim that the licensed
    version, used as licensed, infringes that party's intellectual property, and pays the damages finally awarded or the
    settlement it agrees, subject to prompt notice, control of the defense and the usual exclusions (modifications,
    combinations, unlicensed use, versions superseded by an offered fix). Remedies may include a license, a modification
@@ -8448,7 +8448,7 @@ license scope).
 ### R.9 Compliance, audit and insurance
 
 1. Each party complies with export-control, sanctions and anti-corruption law.
-2. The licensee reports usage against the licensed scope as the order form provides, and The Omni-Compass LLC may verify
+2. The licensee reports usage against the licensed scope as the order form provides, and Dubra Software Inc. / The Omni-Compass LLC may verify
    it on reasonable notice, no more than once a year.
 3. Insurance, where the order form requires it, is carried by each party at the limits stated there.
 
@@ -8469,7 +8469,7 @@ the signed agreement for the licensee and its scope.
 
 ### R.12 How to obtain one
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com. A license starts with an evaluation on the licensee's own systems
 (`LICENSE`, section 1.4): watch mode, the wire check, and paired receipts on its own load.
 
 ## Appendix S. Patents and Trademarks
@@ -8514,7 +8514,7 @@ infringement. Everyone who downloads, forks, scans or runs this software is on n
 #### S.2.1 The marks
 
 "Omni-Compass", "OmniCompass", the Omni-Compass compass rose with its ring of Greek letters, and the related names, logos
-and trade dress (the "Marks") are trademarks of The Omni-Compass LLC; trademark applications have been filed in the
+and trade dress (the "Marks") are trademarks of Dubra Software Inc. / The Omni-Compass LLC; trademark applications have been filed in the
 United States. Neither the evaluation license (`LICENSE`) nor publication of this repository grants any license to the
 Marks. A license to use them is granted only in a signed Omni-Compass Enterprise License, and only as it states.
 
@@ -8529,7 +8529,7 @@ Marks. A license to use them is granted only in a signed Omni-Compass Enterprise
 - Using any Mark, or anything confusingly similar, in the name of a product, service, company, domain, account, package,
   repository, fork or derivative.
 - Using the logo or the compass rose, or altering any Mark.
-- Suggesting endorsement, sponsorship, certification, partnership or affiliation by The Omni-Compass LLC.
+- Suggesting endorsement, sponsorship, certification, partnership or affiliation by Dubra Software Inc. / The Omni-Compass LLC.
 - Using a Mark in advertising, comparative claims or sales material without a signed license.
 
 #### S.2.4 Other companies' marks
@@ -8540,7 +8540,7 @@ Omni-Compass was tested with; it states no affiliation, endorsement or certifica
 
 #### S.2.5 Reporting misuse
 
-The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
+Dubra Software Inc. / The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida, www.omni-compass.com.
 
 ## Appendix T. Security Policy
 
@@ -8548,7 +8548,7 @@ The Omni-Compass LLC, main office infrastructure, toll-free direct 1-888-339-955
 
 ### T.1 Reporting a vulnerability
 
-Report a suspected vulnerability privately to The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
+Report a suspected vulnerability privately to Dubra Software Inc. / The Omni-Compass LLC by telephone at its main office infrastructure (toll-free direct 1-888-339-9551; system route asset 1-888-DEX-YLL-1, landline 321-746-4411 registered in Florida) or through www.omni-compass.com, never in a public issue,
 pull request or discussion. Include the version and commit, what you saw, how to reproduce it, and its likely impact. We
 acknowledge reports, keep the reporter informed, and coordinate disclosure: a fix or a mitigation is published before the
 details are, and the reporter is credited if they wish. Please give us a reasonable time to fix before any disclosure, do
@@ -8585,7 +8585,7 @@ Every glossary term where the book defines or discusses it, every muscle family,
 
 ## Contact
 
-The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
+Dubra Software Inc. / The Omni-Compass LLC. Owner and developer: AJ Dubra. Main office infrastructure: toll-free direct 1-888-339-9551, system route asset 1-888-DEX-YLL-1; landline, registered in Florida, 321-746-4411. www.omni-compass.com
 
 ---
 

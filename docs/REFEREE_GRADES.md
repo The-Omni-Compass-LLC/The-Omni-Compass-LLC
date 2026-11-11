@@ -4,7 +4,7 @@
 
 Our own grading of Omni-Compass in twenty categories, the way a referee or an underwriter would grade a study and a
 product: the grade given on the morning of 19 October, the grade the evidence supports now, the highest grade the
-category can reach, and what reaching it takes. These are The Omni-Compass LLC's own grades; no outside party has graded,
+category can reach, and what reaching it takes. These are Dubra Software Inc. / The Omni-Compass LLC's own grades; no outside party has graded,
 reviewed or approved them. A category with no measurement yet is **Undetermined**, never failed, and is graded once its
 measurement exists.
 

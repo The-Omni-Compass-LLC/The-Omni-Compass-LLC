@@ -5,7 +5,7 @@
 The question an underwriter asks of a picture of a mechanism: is every moving part the repository's own, run as the
 repository runs it, and does every word on the page say only what the parts do? This appraisal answers it for
 `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` by reverse engineering: each part of the page is reproduced from the
-repository's own code by an independent path and compared, value by value. Run and scored by The Omni-Compass LLC's own
+repository's own code by an independent path and compared, value by value. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.
 
 **Engine.** The engine that stands is **omni-v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files, since 7 November);
