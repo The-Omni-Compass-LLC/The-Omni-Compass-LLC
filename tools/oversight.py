@@ -41,7 +41,10 @@ NODES, NODE_HOURS = "worker nodes in service, mean", "node-hours"
 # comparisons that are not Omni-Compass on native against that native at the factory tune: an orchestrator against the organism
 # alone (ORCH), Omni-Compass in place of an orchestrator (VS) or with it against the organism alone (BOTH), Omni-Compass by itself
 # (SOLO) and the heartbeat at another beat (PACE)
-NOT_ON_NATIVE = re.compile(r"_4W_(ORCH|VS|BOTH)$|^V\d+_SOLO|^V\d+_PACE_")
+# the oversight line reads Omni-Compass on native against native on site, at the factory tune: the four ways' other
+# comparisons, the arm by itself and the paces are other tunes, and a cloud's set (AKS, GKE, EKS) runs at its own place's
+# tune and is read by its bill (results/TWO_BILLS.md), never in this line
+NOT_ON_NATIVE = re.compile(r"_4W_(ORCH|VS|BOTH)$|^V\d+_SOLO|^V\d+_PACE_|^V\d+_(AKS|GKE|EKS)_")
 
 
 def tables() -> tuple:

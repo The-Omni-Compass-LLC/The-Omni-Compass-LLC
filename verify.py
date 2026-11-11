@@ -495,6 +495,9 @@ def main():
           (r.stdout + r.stderr)[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "carry.py"), "--check"], capture_output=True, text=True)
     check("which results carry to the engine that stands: results/CARRY.md is what the fingerprints and tables give, a result carried only where every engine file its runner imports is byte for byte its own engine's (tools/carry.py --check; the founder's order of 7 November, evening)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "azure_runs.py"), "--check"], capture_output=True, text=True)
+    check("every Azure run GitHub recorded stands on one page with where its receipt lives: results/live/AZURE_RUNS.md is what its "
+          "records give (tools/azure_runs.py --check; the founder's order of 8 November)", r.returncode == 0, (r.stdout + r.stderr).strip()[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "land_engine.py"), "--check"], capture_output=True, text=True)
     check("every place that names the engine that stands names the newest one (tools/land_engine.py --check: the version list, the "
           "conductor's campaign, the grid's manifest and workflows, the package, the front page, CLAUDE.md, the manual, the live "

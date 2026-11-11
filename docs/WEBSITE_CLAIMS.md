@@ -16,7 +16,8 @@ rejects a record's number (a range guard written for an older engine) has the fa
 omni-v25; not bare metal, not a cloud, not a bill)." Its second reading, always named so and never a headline: "On work and speed
 alone, the same runs: GAIN, up 94.0%." By product: "Real Kubernetes: GAIN, up 20.5% by the index's rule (9 tests); one reads LOSS:
 fairness, down 2.3%." Kubernetes on an earlier engine, only with its engine named: "omni-v21 (31 October): real Kubernetes GAIN,
-up 28.0% by the same rule (9 tests); the latest, omni-v25, reads 20.5%; where the difference sits is under investigation." Measured
+up 28.0% by the same rule (9 tests); the latest, omni-v25, reads 20.5%; why the later reading is lower is written in
+docs/audits/K8S_V21_V25_DECLINE_2026-11-11.md, and its test is running." Measured
 with Omni-Compass on top of native against native on the same machines (class L). It is not a
 bare-metal result, not a cloud result, not a comparison of the two, and not a bill.
 Source: `results/OMNI_INDEX.md` (the newest three-run table of each product, omni-v25), `results/SITE_NUMBERS.json`.

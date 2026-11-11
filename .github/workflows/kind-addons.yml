@@ -19,6 +19,7 @@ on:
       duration_s: {description: "Measured seconds per run", default: "900"}
       reps: {description: "Repetitions, as a JSON list", default: "[1,2,3,4,5,6,7,8,9,10]"}
       profiles: {description: "Native setups, as a JSON list (both, http)", default: '["both","http"]'}
+      arms: {description: "Arms in each repetition: native, compass (the factory beat) and compassN (Omni-Compass deciding every N s; docs/PACE_PREREGISTRATION.md, amendments 7 and 8)", default: "native compass"}
 permissions:
   contents: write
 env:
@@ -61,7 +62,7 @@ jobs:
       - run: bash scripts/kind_paired.sh
         env:
           REP: ${{ matrix.rep }}
-          ARMS: native compass
+          ARMS: ${{ github.event.inputs.arms || 'native compass' }}
           ADDONS: keda
           ADDONS_PROFILE: ${{ matrix.profile }}
           DURATION: ${{ github.event.inputs.duration_s || (contains(github.event.head_commit.message, '[smoke]') && '360' || '900') }}

@@ -58,6 +58,19 @@ def _engines(tests: list) -> str:
                              + ", ".join(f"omni-v{v}" for v in rest) + ")" if rest else "")
 
 
+def _engine_words(tests: list) -> str:
+    """The engines a composite is made of, in words: one engine by its name; several as each benchmark's newest engine with
+    its count (the founder's order of 11 November: every number under its actual version, never the newest engine's name
+    alone over tables an older engine made)."""
+    vs = [int(m.group(1)) for t in tests for m in [re.search(r"/V(\d+)_", t.get("source") or "")] if m]
+    if not vs:
+        return "the tables' own engines"
+    counts = sorted({v: vs.count(v) for v in vs}.items(), key=lambda kv: (-kv[1], -kv[0]))
+    if len(counts) == 1:
+        return f"omni-v{counts[0][0]}"
+    return "each benchmark on its newest engine: " + ", ".join(f"{n} on omni-v{v}" for v, n in counts)
+
+
 def build() -> dict:
     idx = R("results/OMNI_INDEX.json")
     ov = R("results/OVERSIGHT.json")
@@ -75,7 +88,7 @@ def build() -> dict:
     h, s = idx["headline_pct"], idx["service_headline_pct"]
     add(id="omni_index", word="GAIN", value_pct=round(h, 1), direction=_dir(h), cls="L", place=soft, engine=eng,
         receipt="results/OMNI_INDEX.md", what="the Omni index: every real product counted once, work, speed and machines scored",
-        sentence=f"The Omni index: GAIN, {_dir(h)} {_pct(h)} (work, speed and machines; real software on GitHub's machines, {eng.split(' ')[0]}).")
+        sentence=f"The Omni index: GAIN, {_dir(h)} {_pct(h)} (work, speed and machines; real software on GitHub's machines; {_engine_words(idx.get('tests') or [])}).")
     add(id="work_and_speed", word="GAIN", value_pct=round(s, 1), direction=_dir(s), cls="L", place=soft, engine=eng,
         receipt="results/OMNI_INDEX.md", what="the same runs read on work and speed alone, the machines and energy shown and not scored",
         sentence=f"On work and speed alone, the same runs: GAIN, {_dir(s)} {_pct(s)} (real software on GitHub's machines; not a bill).")
@@ -87,10 +100,24 @@ def build() -> dict:
         kl = [t for t in kt if t.get("index_pct") is not None and t["index_pct"] <= -0.5]
         kls = "; ".join(f"{t['test'].split(':')[0].strip().lower()}, {_dir(t['index_pct'])} {_pct(t['index_pct'])}" for t in kl)
         tail = (f"; {'one reads' if len(kl) == 1 else str(len(kl)) + ' read'} LOSS: {kls}" if kl else "")
-        add(id="kubernetes", word="GAIN", value_pct=round(k8, 1), direction=_dir(k8), cls="L", place=soft, engine=eng,
-            receipt="results/OMNI_INDEX.md", what="real Kubernetes, by the index's rule (work, speed and machines)",
+        ke = _engine_words(kt)
+        add(id="kubernetes", word="GAIN", value_pct=round(k8, 1), direction=_dir(k8), cls="L", place=soft, engine=ke,
+            receipt="results/OMNI_INDEX.md", what="real Kubernetes, by the index's rule (work, speed and machines), the latest measured",
             losses=[{"test": t["test"], "value_pct": round(t["index_pct"], 1), "source": t.get("source")} for t in kl],
-            sentence=f"Real Kubernetes: GAIN, {_dir(k8)} {_pct(k8)} by the index's rule ({len(kt)} tests on GitHub's machines){tail}.")
+            sentence=f"Real Kubernetes on {ke}, the latest measured: GAIN, {_dir(k8)} {_pct(k8)} by the index's rule ({len(kt)} tests on "
+                     f"GitHub's machines){tail}.")
+    # the historical Kubernetes reading, under its own engine (the founder's determination of 11 November: both authentic
+    # numbers kept, each labeled by its version, the older never written into the newer's file): read from the forensic record
+    # of the fall between them, which holds both index files' Kubernetes values as committed
+    fall = R("results/K8S_DECLINE_V21_V25.json") if (ROOT / "results" / "K8S_DECLINE_V21_V25.json").exists() else None
+    if fall:
+        v21 = fall["decomposition"]["index"]["omni-v21"]
+        add(id="kubernetes_v21_historical", word="GAIN", value_pct=round(v21, 1), direction=_dir(v21), cls="L", place=soft,
+            engine="omni-v21", receipt="docs/audits/K8S_V21_V25_DECLINE_2026-11-11.md",
+            what="real Kubernetes on omni-v21, the historical reading of the same nine tests by the same rule (31 October)",
+            sentence=f"Real Kubernetes on omni-v21, the historical reading of 31 October: GAIN, {_dir(v21)} {_pct(v21)} by the same "
+                     f"rule on the same nine tests; why the later omni-v25 reading is lower is written in "
+                     f"docs/audits/K8S_V21_V25_DECLINE_2026-11-11.md.")
     p, g = ov["pooled"], ov.get("pages") or {}
     add(id="alert_minutes", word=p["reading"].split(" ")[0], reading=p["reading"], value_pct=round(100 * p["change"], 1),
         direction=_dir(p["change"]), cls="L", place=soft, engine=ov["engine"], receipt="results/OVERSIGHT.md",

@@ -254,6 +254,28 @@ dominates, the factory beat stays and the drop from omni-v21 is root-caused else
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
+## Amendment 8 (11 November, written before any run): the beat beside another workload's room
+
+**Why.** The forensic record of 11 November (`docs/audits/K8S_V21_V25_DECLINE_2026-11-11.md`, `tools/k8s_decline.py`) found that
+at the 10 s on-site factory beat (omni-v24 on) the conveyance's shared-host guard raises a serving pod's processor limit and hands
+it back to the operator's limit about every 20 s in the three workloads that run another workload's room beside the service
+(KEDA's HTTP add-on, KEDA on the processor and the requests, the fairness test's second application): 40, 206 and 52 cycles an
+arm, against 0.5, 3.4 and 13 at omni-v21's 60 s. Those three carry 68% of the Kubernetes index's fall from omni-v21 to omni-v25.
+The pace runs of amendment 3 read the steady load alone, and amendment 7's runs the wandering load: the guard fires in
+neither (no hand-back in any of their omni-v25 arms).
+
+**What runs.** On the engine that stands (omni-v26), in every repetition: native, Omni-Compass on top of native at the factory
+beat (`compass`, 10 s on kind) and at 60 s (`compass60`), paired within the repetition, ten paired repetitions a run, three
+runs (A, B and C), on GitHub's own machines: KEDA in both its setups (`kind-addons`, `arms=native compass compass60`) and
+fairness (`benchmark-reps`, `arms=native compass compass60`, `two_app=1`, `loadgen=open`). No cloud, no card, nothing rented.
+
+**How it is read.** Each beat against native by the one key (`tools/confirm_abc.py --pair compass|native`,
+`compass60|native`), and 60 s against 10 s (`--pair compass60|compass`), every row shown. With them, each Omni arm's
+raise-then-hand-back cycles from its own audit (`tools/k8s_decline.py`'s count). Nothing is decided in advance: if 60 s reads
+no LOSS against 10 s and fewer cycles, the on-site factory beat at 60 s goes to the model gate and lands only as the next
+version by the standing rules; if not, the cause is read again from the files. A beat other than the factory's stays a changed
+tune: its readings show the engine's range and are never presented as a benchmark result of the factory tune.
+
 ---
 
 *© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
