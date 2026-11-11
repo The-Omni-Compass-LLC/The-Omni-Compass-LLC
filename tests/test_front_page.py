@@ -25,7 +25,7 @@ def standin_run(raw: Path, rid: int, product: str, workloads, objective="resourc
         w = d / f"{product}-{wl}" / f"{product}-{wl}"
         w.mkdir(parents=True, exist_ok=True)
         (w / f"{wl}.json").write_text(json.dumps({"workload": wl, "objective": objective, "engine": {"version": engine, "digest": "x"},
-                                                  "tuning": wl == "tuning"}))
+                                                  "tuning": wl == "tuning", "reps": [{"rep": 1}]}))
     return d
 
 
@@ -60,11 +60,26 @@ class TestFrontPage(unittest.TestCase):
                 for wl in ("select", "tpcb_hot"):
                     w = d / f"pgbench-{wl}" / f"pgbench-{wl}"
                     (w / "rep-1" / "omni").mkdir(parents=True)
-                    (w / f"{wl}.json").write_text(json.dumps({"engine": {"version": "omni-v3", "digest": "x"}, "reps": []}))
+                    (w / f"{wl}.json").write_text(json.dumps({"engine": {"version": "omni-v3", "digest": "x"}, "reps": [{"rep": 1}]}))
                     (w / "rep-1" / "omni" / "arm.json").write_text(json.dumps({"verdict": {"objective": "service", "state": "acting"}}))
             self.assertEqual(fp.describe(raw / "run-501"), ("pgbench", "service", "omni-v3", ("select", "tpcb_hot"), "operator"))
             items = fp.plan(root)
             self.assertEqual([(it["table"], it["runs"]) for it in items], [("V3_PGBENCH_SERVICE", [501, 502, 503])])
+
+    def test_a_run_that_handed_in_no_repetition_is_never_a_set_member(self):
+        # 11 November: Kafka run 41672078643 (the hang of 30 October to 3 November) left its folders and no record with
+        # repetitions; counted, it named no engine, read as omni-v3, its tool refused it and every refresh stopped there
+        with tempfile.TemporaryDirectory() as t:
+            root = Path(t)
+            raw = root / "results" / "live" / "raw"
+            for rid in (601, 602, 603):
+                standin_run(raw, rid, "kafka", ["light", "heavy"], engine="omni-v26")
+            hung = raw / "run-604"
+            (hung / "kafka-report").mkdir(parents=True)
+            (hung / "kafka-light" / "kafka-light").mkdir(parents=True)
+            (hung / "kafka-light" / "kafka-light" / "light.json").write_text(json.dumps({"workload": "light", "reps": []}))
+            self.assertIsNone(fp.describe(hung))
+            self.assertEqual([(it["table"], it["runs"]) for it in fp.plan(root)], [("V26_KAFKA", [601, 602, 603])])
 
     def test_native_as_shipped_and_the_operators_setting_are_never_one_table(self):
         # 19 October: the omni-v11 Redis runs were the operator's setting and native as shipped, A, B and C of each, both on
@@ -80,7 +95,7 @@ class TestFrontPage(unittest.TestCase):
                     w = d / f"redis-{wl}" / f"redis-{wl}"
                     w.mkdir(parents=True)
                     (w / f"{wl}.json").write_text(json.dumps({"engine": "omni-v11 (digest x, 47 files)", "objective": "resource",
-                                                               "native": native}))
+                                                               "native": native, "reps": [{"rep": 1}]}))
             self.assertEqual(fp.describe(raw / "run-602")[4], "shipped")
             items = sorted((it["table"], it["runs"]) for it in fp.plan(root))
             self.assertEqual(items, [("V11_REDIS", [601, 603, 605]), ("V11_REDIS_SHIPPED", [602, 604, 606])])

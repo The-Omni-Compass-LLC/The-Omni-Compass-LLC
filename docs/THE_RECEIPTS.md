@@ -23,10 +23,10 @@ differs.
 | Claim | Standing | Evidence |
 |---|---|---|
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
-| It does no harm: never a LOSS against native | **Not shown**: 287 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
-| More work, faster, on real Kubernetes | **Shown** (L, omni-v25) | All four at once: work inside the response line up 31% to 65% (`results/live/V25_ALL_FOUR.md`); the 95th percentile cut in 8 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
-| More work, faster, on databases and caches | **Small** (L, omni-v26) | Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table: GAIN, power given, 221.1% GAIN; Redis, the cache's memory ceiling: GAIN, power given, 6.8% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.4% LOSS; MySQL, the buffer pool's size: GAIN, power given, 9.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 4.8% LOSS; Kafka, the consumer group's size: GAIN, power given, 218.6% GAIN (`docs/BENEFIT_SHEET.md`) |
-| Fewer machines | **Shown in 1 test** (L, omni-v25) | a queue of jobs: machines cut 12% to 19%, machine-hours cut 12% to 19%, machines after the queue cut 21% to 32% |
+| It does no harm: never a LOSS against native | **Not shown**: 281 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
+| More work, faster, on real Kubernetes | **Shown** (L, omni-v26) | All four at once: work inside the response line up 31% to 50% (`results/live/V26_ALL_FOUR.md`); the 95th percentile cut in 9 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
+| More work, faster, on databases and caches | **Small** (L, omni-v26) | Redis, the cache's memory ceiling: GAIN, power given, 4.9% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.8% LOSS; MySQL, the buffer pool's size: GAIN, power given, 12.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 7.1% LOSS; Kafka, the consumer group's size: GAIN, power given, 221.1% GAIN (`docs/BENEFIT_SHEET.md`) |
+| Fewer machines | **Shown in 2 tests** (L, omni-v26) | a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs: machines cut 0.3% to 5.3%, machine-hours cut 0.5% to 5.1%; a queue of jobs: machines cut 13% to 28%, machine-hours cut 13% to 28%, machines after the queue cut 22% to 45% |
 | A smaller cloud bill | **Not shown** | Azure, omni-v18, 97 paired repetitions: the bill up 1.2%, inside the noise, and the work not counted (`results/live/AKS_STEADY_100_OMNI_V18.md`); Google and Amazon wired and not yet run |
 | Less energy for the work, on the chip | **GAIN in all three of our runs** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: energy per served request in runs A, B and C GAIN, 1.79%; GAIN, 1.35%; GAIN, 0.78% (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: STEADY, under the floor (the three runs' mean 0.12%) (`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |
 | More work for the bill on a GPU | **the runs disagree** (P, omni-v23) | The A10's work for each dollar, its three runs up 1.46%, up 0.73%, down 0.69% (`results/TWO_BILLS.md`) |
@@ -48,33 +48,32 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
-| Every real test together: the Omni index | L | omni-v25 | **GAIN AND LOSS** | 20.4% GAIN | `results/OMNI_INDEX.md` |
-| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
+| Every real test together: the Omni index | L | omni-v26 | **GAIN AND LOSS** | 20.0% GAIN | `results/OMNI_INDEX.md` |
+| Robustness: the two-hour run | L | omni-v26 | **GAIN AND LOSS** | 6.0% LOSS | `results/live/V26_ROBUST_LONG.md` |
+| Robustness: the governor killed outright mid-run | L | omni-v26 | **GAIN AND LOSS** | 1.7% LOSS | `results/live/V26_ROBUST_KILL.md` |
+| Robot arms (MuJoCo), the three untouched robots | S | omni-v26 | **GAIN** | 3.8% GAIN | `results/live/V26_MUJOCO.md` |
+| Redis, the cache's memory ceiling | L | omni-v26 | **GAIN, power given** | 4.9% LOSS | `results/live/V26_REDIS.md` |
+| Real Kubernetes, steady work | L | omni-v26 | **GAIN, power given** | 31.5% GAIN | `results/live/V26_STEADY.md` |
+| Real Kubernetes, faults | L | omni-v26 | **GAIN AND LOSS** | 34.3% GAIN | `results/live/V26_FAULTS.md` |
+| Real Kubernetes, demand that wanders | L | omni-v26 | **GAIN AND LOSS** | 27.6% GAIN | `results/live/V26_WANDERING.md` |
+| Real Kubernetes, all four at once | L | omni-v26 | **GAIN AND LOSS** | 28.6% GAIN | `results/live/V26_ALL_FOUR.md` |
+| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | L | omni-v26 | **GAIN AND LOSS** | 10.2% GAIN | `results/live/V26_GOLDILOCKS.md` |
+| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | L | omni-v26 | **GAIN AND LOSS** | 1.3% LOSS | `results/live/V26_CRUISEKUBE.md` |
+| Real Kubernetes, a queue of jobs | L | omni-v26 | **GAIN AND LOSS** | 10.2% GAIN | `results/live/V26_BATCH.md` |
+| Real Kubernetes, a public day of demand (Google 2011) | L | omni-v26 | **GAIN AND LOSS** | 37.4% GAIN | `results/live/V26_TRACE_GOOGLE2011.md` |
+| Real Kubernetes, a noisy neighbour | L | omni-v26 | **GAIN AND LOSS** | 2.6% LOSS | `results/live/V26_FAIRNESS.md` |
+| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | L | omni-v26 | **GAIN, power given** | 26.4% GAIN | `results/live/V26_KEDA_REQUESTS.md` |
+| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | L | omni-v26 | **GAIN AND LOSS** | 7.3% GAIN | `results/live/V26_KEDA_CPU_REQUESTS.md` |
+| Power grids (SimBench), both load models | S | omni-v26 | **GAIN, power given** | 5.8% GAIN | `results/live/V26_PANDAPOWER.md` |
+| PostgreSQL, the pooler's pool size | L | omni-v26 | **GAIN AND LOSS** | 1.8% LOSS | `results/live/V26_PGBENCH.md` |
+| MySQL, the buffer pool's size | L | omni-v26 | **GAIN, power given** | 12.5% LOSS | `results/live/V26_SYSBENCH.md` |
+| MongoDB, the storage engine's cache size | L | omni-v26 | **GAIN AND LOSS** | 7.1% LOSS | `results/live/V26_YCSB.md` |
+| Drone swarms, the three untouched cells | S | omni-v26 | **GAIN** | 2.2% GAIN | `results/live/V26_SWARM.md` |
+| Buildings and batteries (CityLearn), the districts with batteries | S | omni-v26 | **GAIN** | 1.4% GAIN | `results/live/V26_CITYLEARN.md` |
+| Kafka, the consumer group's size | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
 | The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
 | The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
-| Robustness: the two-hour run | L | omni-v25 | **GAIN AND LOSS** | 8.9% LOSS | `results/live/V25_ROBUST_LONG.md` |
-| Robustness: the governor killed outright mid-run | L | omni-v25 | **GAIN AND LOSS** | 1.5% LOSS | `results/live/V25_ROBUST_KILL.md` |
-| Robot arms (MuJoCo), the three untouched robots | S | omni-v25 | **GAIN** | 3.8% GAIN | `results/live/V25_MUJOCO.md` |
-| Redis, the cache's memory ceiling | L | omni-v25 | **GAIN, power given** | 6.8% LOSS | `results/live/V25_REDIS.md` |
-| Real Kubernetes, steady work | L | omni-v25 | **GAIN, power given** | 30.8% GAIN | `results/live/V25_STEADY.md` |
-| Real Kubernetes, faults | L | omni-v25 | **GAIN AND LOSS** | 25.2% GAIN | `results/live/V25_FAULTS.md` |
-| Real Kubernetes, demand that wanders | L | omni-v25 | **GAIN AND LOSS** | 23.4% GAIN | `results/live/V25_WANDERING.md` |
-| Real Kubernetes, all four at once | L | omni-v25 | **GAIN AND LOSS** | 29.1% GAIN | `results/live/V25_ALL_FOUR.md` |
-| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | L | omni-v25 | **GAIN AND LOSS** | 22.6% GAIN | `results/live/V25_GOLDILOCKS.md` |
-| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | L | omni-v25 | **GAIN AND LOSS** | 0.9% LOSS | `results/live/V25_CRUISEKUBE.md` |
-| Real Kubernetes, a queue of jobs | L | omni-v25 | **GAIN AND LOSS** | 9.0% GAIN | `results/live/V25_BATCH.md` |
-| Real Kubernetes, a public day of demand (Google 2011) | L | omni-v25 | **GAIN AND LOSS** | 35.3% GAIN | `results/live/V25_TRACE_GOOGLE2011.md` |
-| Real Kubernetes, a noisy neighbour | L | omni-v25 | **GAIN AND LOSS** | 2.3% LOSS | `results/live/V25_FAIRNESS.md` |
-| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | L | omni-v25 | **GAIN AND LOSS** | 28.0% GAIN | `results/live/V25_KEDA_REQUESTS.md` |
-| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | L | omni-v25 | **GAIN AND LOSS** | 9.0% GAIN | `results/live/V25_KEDA_CPU_REQUESTS.md` |
-| Power grids (SimBench), both load models | S | omni-v25 | **GAIN, power given** | 5.8% GAIN | `results/live/V25_PANDAPOWER.md` |
-| PostgreSQL, the pooler's pool size | L | omni-v25 | **GAIN AND LOSS** | 1.4% LOSS | `results/live/V25_PGBENCH.md` |
-| MySQL, the buffer pool's size | L | omni-v25 | **GAIN, power given** | 9.5% LOSS | `results/live/V25_SYSBENCH.md` |
-| MongoDB, the storage engine's cache size | L | omni-v25 | **GAIN AND LOSS** | 4.8% LOSS | `results/live/V25_YCSB.md` |
-| Kafka, the consumer group's size | L | omni-v25 | **GAIN, power given** | 218.6% GAIN | `results/live/V25_KAFKA.md` |
-| Drone swarms, the three untouched cells | S | omni-v25 | **GAIN** | 2.9% GAIN | `results/live/V25_SWARM.md` |
-| Buildings and batteries (CityLearn), the districts with batteries | S | omni-v25 | **GAIN** | 1.4% GAIN | `results/live/V25_CITYLEARN.md` |
 <!-- end of results: sheet -->
 
 ### Through a cloud (L)

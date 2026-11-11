@@ -125,10 +125,25 @@ def describe(run_dir: Path):
                     native = n
             if objective is not None and engine is not None and native is not None:
                 break
-    if not workloads:
+    if not workloads or not _has_reps(run_dir, product):
         return None
     return (product, objective or "resource", engine_version(engine or "omni-v3"), tuple(sorted(workloads)),
             native or "operator")
+
+
+def _has_reps(run_dir: Path, product: str) -> bool:
+    """True when the run handed in at least one workload record with repetitions, the one thing every product's three-run
+    tool reads (`<product>-<workload>/<workload>.json` with `reps`). A run that stopped before it wrote one (the Kafka runs
+    of 30 October to 3 November that hung at the job's limit, run 41672078643 among them) is not a complete run: counted, it
+    read as an omni-v3 run with no records, the tool refused it, and every refresh from 8 November stopped there (11 November)."""
+    for f in sorted(run_dir.rglob(f"{product}-*/*.json")):
+        try:
+            rec = json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(rec, dict) and rec.get("reps"):
+            return True
+    return False
 
 
 def engine_version(text):
@@ -204,19 +219,27 @@ def apply(items, root: Path = ROOT):
             state = json.loads(STATE.read_text(encoding="utf-8"))
         except ValueError:
             state = {}
+    failed = []
     for it in items:
         name = it["table"]
         table = LIVE / f"{name}.md"
-        if table.exists():
-            dest = next_history_name(name)
-            HISTORY.mkdir(parents=True, exist_ok=True)
-            kept, _ = _legal_normalize(table.read_text(encoding="utf-8"))           # kept whole, in the one notice's wording
-            dest.write_text(kept, encoding="utf-8")
+        old = table.read_text(encoding="utf-8") if table.exists() else None
         dirs = [os.path.relpath(RAW / f"run-{r}", ROOT) for r in it["runs"]]
         r = subprocess.run([py, it["tool"], *dirs, "--out", os.path.relpath(table, ROOT)], capture_output=True, text=True,
                            cwd=ROOT)
         if r.returncode != 0:
-            raise SystemExit(f"{it['tool']} failed on {name}: {(r.stdout + r.stderr)[-800:]}")
+            # one table that cannot be built never stops the others, and is never silent (11 November: the first refusal
+            # ended every refresh from 8 November before any state was written, so each hour built the same tables again)
+            failed.append(f"{it['tool']} failed on {name}: {(r.stdout + r.stderr)[-800:]}")
+            continue
+        from tools.reread import reread_pair             # read by the rule that stands before it is compared, as every
+        reread_pair(table.with_suffix(".json"))          # published table is (tools/reread.py, run after this by the job)
+        if old is not None and table.read_text(encoding="utf-8") != old:
+            # the table it replaces, kept whole in the one notice's wording; a rebuild that writes the same table again keeps
+            # no second copy (the loop above had kept 63 copies of four V3_KAFKA tables)
+            HISTORY.mkdir(parents=True, exist_ok=True)
+            kept, _ = _legal_normalize(old)
+            next_history_name(name).write_text(kept, encoding="utf-8")
         summary = _plain_summary((r.stdout.strip().splitlines() or [""])[-1])
         state[name] = {"runs": it["runs"], "built": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
                        "engine": it["engine"], "objective": it["objective"], "summary": summary}
@@ -231,6 +254,8 @@ def apply(items, root: Path = ROOT):
             if r.returncode != 0:
                 raise SystemExit(f"{tool} failed: {(r.stdout + r.stderr)[-800:]}")
         write_readme(lines)
+    if failed:
+        raise SystemExit("\n".join(failed))
     return lines
 
 

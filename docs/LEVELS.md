@@ -14,10 +14,10 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 |---|---|---|---:|---:|---:|---:|---:|---|
 | The muscle, alone (1,107 muscles, each on its own native controller, under its own load) | omni-v8 | S (our model) | 530 | 577 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
 | The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
-| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v25 | L | 41 | 39 | 12 | 23 | 14 | **yes: 37, listed below** |
-| The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v25 | L | 18 | 22 | 11 | 7 | 6 | **yes: 13, listed below** |
-| A muscle inside a running service: database, broker, cache | omni-v25, omni-v26 | L | 167 | 94 | 76 | 3 | 32 | **yes: 35, listed below** |
-| A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v25 | independent simulator | 101 | 165 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
+| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v26 | L | 36 | 41 | 14 | 19 | 19 | **yes: 38, listed below** |
+| The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v26 | L | 18 | 20 | 11 | 8 | 7 | **yes: 15, listed below** |
+| A muscle inside a running service: database, broker, cache | omni-v26 | L | 170 | 81 | 83 | 6 | 32 | **yes: 38, listed below** |
+| A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v26 | independent simulator | 101 | 164 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
 | The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies) | older engines' tables; the grid runs again on the engine that stands | L, the cluster; S, the organism | – | – | – | – | – | no table on the engine that stands yet; the grid's runs on it are dispatched (results/grid_v26/DISPATCHED.json) |
 | The cluster in a cloud: Azure Kubernetes Service, the bill | single runs, omni-v5 to omni-v7; one set on omni-v18 | L, the bill metered | – | – | – | – | – | no three-run table yet: eight single runs at the tune-down, machines billed from down 6.5% to up 7.6%, every one STEADY, inside the noise; the fleet (about 1.9 of 4 machines busy) leaves no whole machine to give back; one set of 97 paired repetitions on omni-v18 read the bill up 1.21%, power given, inside the noise (results/live/AKS_STEADY_100_OMNI_V18.md) |
 | A group of clusters | not run | none yet | – | – | – | – | – | no run at this level yet, real or modelled, on the engine that stands (`k8s_fleet/` holds a model of an earlier engine) |
@@ -38,117 +38,123 @@ Tables: `results/realms_v5/REALMS_V5.md`.
 
 ### The cluster: real Kubernetes, native its own HPA and scheduler
 
-Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v25. Evidence: L.
-Tables: `results/live/V25_ALL_FOUR.md`, `results/live/V25_BATCH.md`, `results/live/V25_CAPACITY.md`, `results/live/V25_FAIRNESS.md`, `results/live/V25_FAULTS.md`, `results/live/V25_TRACE_GOOGLE2011.md`, `results/live/V25_ROBUST_KILL.md`, `results/live/V25_ROBUST_LONG.md`.
+Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v26. Evidence: L.
+Tables: `results/live/V26_ALL_FOUR.md`, `results/live/V26_BATCH.md`, `results/live/V26_CAPACITY.md`, `results/live/V26_FAIRNESS.md`, `results/live/V26_FAULTS.md`, `results/live/V26_TRACE_GOOGLE2011.md`, `results/live/V26_ROBUST_KILL.md`, `results/live/V26_ROBUST_LONG.md`.
 
 Goes the other way:
 
-- V25_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v25): failed requests (%) (LOSS)
-- V25_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v25): pod start wait, mean (s) (the runs disagree)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): response time (ms), 95th percentile (the runs disagree)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): time over the response line (% of samples) (LOSS)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): failed requests (%) (LOSS)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (LOSS)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): HPA replicas, mean (the runs disagree)
-- V25_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v25): batch: queue finished (s) (LOSS)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 1 (the runs disagree)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 1 (the runs disagree)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 1.5 (the runs disagree)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 2 (the runs disagree)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 2 (LOSS)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 3 (LOSS)
-- V25_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v25): 3 (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): response time (ms), mean (the runs disagree)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): response time (ms), 95th percentile (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): response time (ms), 99th percentile (the runs disagree)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): time over the response line (% of samples) (the runs disagree)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): second app: response time (ms), 95th percentile (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): second app: time over the response line (% of samples) (LOSS)
-- V25_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v25): second app: failed requests (%) (the runs disagree)
-- V25_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (the runs disagree)
-- V25_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
-- V25_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v25): response time (ms), 99th percentile (the runs disagree)
-- V25_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
-- V25_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v25): robust: failed requests in the 300 s after the kill (%) (LOSS)
-- V25_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v25): robust: time over the line in the 300 s after the kill (% of samples) (LOSS)
-- V25_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v25): response time (ms), 99th percentile (the runs disagree)
-- V25_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
+- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
+- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
+- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): time over the response line (% of samples) (the runs disagree)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (LOSS)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
+- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): batch: queue finished (s) (LOSS)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1 (the runs disagree)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1.5 (LOSS)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1.5 (LOSS)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 2 (LOSS)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 2 (the runs disagree)
+- V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 3 (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): response time (ms), 95th percentile (LOSS)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): time over the response line (% of samples) (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: response time (ms), 95th percentile (LOSS)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: response time (ms), 99th percentile (the runs disagree)
+- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: failed requests (%) (LOSS)
+- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
+- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
+- V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): robust: failed requests in the 300 s after the kill (%) (LOSS)
+- V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): robust: time over the line in the 300 s after the kill (% of samples) (the runs disagree)
+- V26_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_ROBUST_LONG.md: Robustness: the long run, 7,200 s an arm, the governor's memory and decisions watched: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
 
 ### The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube
 
-Native at this level: Kubernetes with the add-on as shipped and as used, its own recommendations applied. Engine: omni-v25. Evidence: L.
-Tables: `results/live/V25_KEDA_REQUESTS.md`, `results/live/V25_KEDA_CPU_REQUESTS.md`, `results/live/V25_GOLDILOCKS.md`, `results/live/V25_CRUISEKUBE.md`.
+Native at this level: Kubernetes with the add-on as shipped and as used, its own recommendations applied. Engine: omni-v26. Evidence: L.
+Tables: `results/live/V26_KEDA_REQUESTS.md`, `results/live/V26_KEDA_CPU_REQUESTS.md`, `results/live/V26_GOLDILOCKS.md`, `results/live/V26_CRUISEKUBE.md`.
 
 Goes the other way:
 
-- V25_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v25): pod start wait, total (s) (the runs disagree)
-- V25_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
-- V25_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (the runs disagree)
-- V25_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v25): pod start wait, total (s) (LOSS)
-- V25_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (LOSS)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): node-hours (the runs disagree)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): response time (ms), mean (LOSS)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): response time (ms), 95th percentile (LOSS)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): response time (ms), 99th percentile (LOSS)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): pods started (the runs disagree)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): pod start wait, total (s) (the runs disagree)
-- V25_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v25): pod start wait, mean (s) (the runs disagree)
+- V26_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): pods started (the runs disagree)
+- V26_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): pod start wait, total (s) (the runs disagree)
+- V26_KEDA_REQUESTS.md: Kubernetes with KEDA's HTTP add-on on the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (the runs disagree)
+- V26_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_KEDA_CPU_REQUESTS.md: Kubernetes with KEDA on the CPU target and the live requests in flight: Omni-Compass on top: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V26_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_GOLDILOCKS.md: Goldilocks: Omni-Compass on top of a service rightsized with Goldilocks and the VPA's recommender: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): response time (ms), mean (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): response time (ms), 95th percentile (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): failed requests (%) (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): HPA replicas, mean (the runs disagree)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
+- V26_CRUISEKUBE.md: CruiseKube: Omni-Compass on top of a service rightsized by CruiseKube applying its own recommendations: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
 
 ### A muscle inside a running service: database, broker, cache
 
-Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v25, omni-v26. Evidence: L.
-Tables: `results/live/V25_REDIS.md`, `results/live/V25_REDIS_SERVICE.md`, `results/live/V26_KAFKA.md`, `results/live/V25_KAFKA_SERVICE.md`, `results/live/V25_PGBENCH.md`, `results/live/V25_SYSBENCH.md`, `results/live/V25_YCSB.md`.
+Native at this level: the server as shipped but for the one setting an operator sets (each table names it). Engine: omni-v26. Evidence: L.
+Tables: `results/live/V26_REDIS.md`, `results/live/V26_REDIS_SERVICE.md`, `results/live/V26_KAFKA.md`, `results/live/V26_KAFKA_SERVICE.md`, `results/live/V26_PGBENCH.md`, `results/live/V26_SYSBENCH.md`, `results/live/V26_YCSB.md`.
 
 Goes the other way:
 
-- V25_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
-- V25_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V25_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V25_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V25_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V25_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
-- V25_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
-- V25_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, median (ms) (LOSS)
-- V25_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 95th percentile (ms) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 99th percentile (ms) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, mean (ms) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): pages holding data, mean (MB) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
-- V25_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
-- V25_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V25_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
-- V25_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
-- V25_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V25_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
-- V25_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
-- V25_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: bytes in the cache, mean (MB) (the runs disagree)
-- V25_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
-- V25_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
-- V25_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
-- V25_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
-- V25_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
-- V25_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
-- V25_YCSB.md: f: YCSB workloadf, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
+- V26_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V26_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V26_REDIS.md: large: 32768 B values, working set 625 keys × notch; line 2 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 requests inside the line (the runs disagree)
+- V26_REDIS.md: small: 2048 B values, working set 10,000 keys × notch; line 2 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V26_KAFKA_SERVICE.md: light: 1.0 ms of work a message, 128 B; line 500 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 messages inside the line (the runs disagree)
+- V26_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (LOSS)
+- V26_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V26_PGBENCH.md: select (-S, scale 20): line 50 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
+- V26_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 95th percentile (ms, lag included) (the runs disagree)
+- V26_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V26_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: latency, median (ms) (the runs disagree)
+- V26_PGBENCH.md: simple_update (-N, scale 20): line 50 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 95th percentile (ms) (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 99th percentile (ms) (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, mean (ms) (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU busy (share of the run) (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds (the runs disagree)
+- V26_SYSBENCH.md: tuning: sysbench oltp_point_select, 1 statements a transaction, 3000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): host CPU-seconds per 1,000 transactions inside the line (the runs disagree)
+- V26_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (the runs disagree)
+- V26_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: throughput (transactions a second) (the runs disagree)
+- V26_SYSBENCH.md: burst: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: queries a second (the runs disagree)
+- V26_SYSBENCH.md: read_only: sysbench oltp_read_only, 14 statements a transaction, 300 a second offered; the transaction line 8.4 ms, 3 paired repetitions a run: work inside the response line (transactions a second answered within the line) (the runs disagree)
+- V26_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V26_SYSBENCH.md: update_index: sysbench oltp_update_index, 1 statements a transaction, 1000 a second offered; the transaction line 0.6 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V26_YCSB.md: tuning: YCSB workloada, 250,000 records × notch; line 1 ms, 3 paired repetitions a run (the tuning workload, shown and not counted): latency, 99th percentile (ms) (the runs disagree)
+- V26_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
+- V26_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V26_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU busy (share of the run) (the runs disagree)
+- V26_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds (the runs disagree)
+- V26_YCSB.md: b: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: host CPU-seconds per 1,000 operations inside the line (the runs disagree)
+- V26_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (LOSS)
+- V26_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (LOSS)
+- V26_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (the runs disagree)
+- V26_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: bytes in the cache, mean (MB) (the runs disagree)
+- V26_YCSB.md: burst: YCSB workloadb, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: the store's and the harness's own CPU-seconds (mongod plus the compass and its sampler; steal excluded) (the runs disagree)
+- V26_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 95th percentile (ms) (the runs disagree)
+- V26_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, 99th percentile (ms) (the runs disagree)
+- V26_YCSB.md: c: YCSB workloadc, 250,000 records × notch; line 1 ms, 3 paired repetitions a run: latency, mean (ms) (LOSS)
 
 ### A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms
 
-Native at this level: the simulator's own controller, unchanged. Engine: omni-v25. Evidence: independent simulator.
-Tables: `results/live/V25_CITYLEARN.md`, `results/live/V25_PANDAPOWER.md`, `results/live/V25_MUJOCO.md`, `results/live/V25_SWARM.md`.
+Native at this level: the simulator's own controller, unchanged. Engine: omni-v26. Evidence: independent simulator.
+Tables: `results/live/V26_CITYLEARN.md`, `results/live/V26_PANDAPOWER.md`, `results/live/V26_MUJOCO.md`, `results/live/V26_SWARM.md`.
 
 ### The organism with the real cluster inside (the grid, at 1, 10, 100 and on GitHub's machines 1,000 copies)
 

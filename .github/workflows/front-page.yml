@@ -89,6 +89,9 @@ jobs:
         env:
           GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
+          # a step that fails fails the job, even piped through tee (11 November: the rebuild's refusal was hidden by its
+          # pipe, and every refresh from 8 November stopped at the same table while the job read green)
+          set -o pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "## Front page" >> "$GITHUB_STEP_SUMMARY"

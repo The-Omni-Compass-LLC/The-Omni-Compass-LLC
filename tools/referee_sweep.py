@@ -105,6 +105,10 @@ def coverage():
     return {"pct": int(m.group(1)) if m else None, "statements": m.group(2) if m else None, "engine": e.group(1) if e else None}
 
 
+def index_engine():
+    return json.loads((ROOT / "results" / "OMNI_INDEX.json").read_text(encoding="utf-8")).get("index_engine", "omni-v?")
+
+
 def v26_tables():
     return sorted({re.sub(r"\.(md|json)$", "", f) for f in os.listdir(ROOT / "results" / "live") if f.startswith("V26_")})
 
@@ -135,11 +139,11 @@ def render(d):
         "| What is graded | Grade | Why, in one line |",
         "|---|---|---|",
         f"| The mechanism and its mathematics | A | Python and C++ equal to the last bit on every law, sealed, every parity check with a planted-fault control; the release check {rc['verdict']} ({rc['passed']} checks) |",
-        f"| Reproducibility and provenance | A- | every run's raw files kept and hashed; but omni-v26's tables are not yet written ({len(d['v26_tables'])} of its tables on main) |",
+        f"| Reproducibility and provenance | A- | every run's raw files kept and hashed; omni-v26's {len(d['v26_tables'])} tables written from its own archived runs (11 November), each with its recipe; four sets did not finish three runs (Volcano's, Koordinator's, Karmada's and Armada's four ways) |",
         f"| The page's wiring | A | {w['monitors']} monitors, {w['files_named']} named files, {w['files_missing']} missing; {w['cpp_twin']} with a C++ twin, the rest with the reason written |",
         f"| Statistical design | B | paired, three runs, preregistered, Student's t; but no control for many comparisons, and {g0 + l0} rows earn a word by the mean when no run is beyond the noise |",
         f"| The headline's strength | C+ | the Omni index reads GAIN, up {ix['headline']:.2f}%, but without Kafka the other five read {('down' if ix['leave_one_out'][kafka] < 0 else 'up')} {abs(ix['leave_one_out'][kafka]):.2f}% |",
-        f"| Do no harm against native | C+ | {sg} rows GAIN in all three runs, {sl} LOSS in all three runs, most in the batch-queue governor tests omni-v26 was built to fix and has not yet tabled |",
+        f"| Do no harm against native | C+ | {sg} rows GAIN in all three runs, {sl} LOSS in all three runs, most in the batch-queue governor tests: omni-v26 cut the target's flips there by 55% to 69%, and the conveyance's cycle rose as they fell (`docs/LOSS_CAUSES_2026-11-11.md`) |",
         "| The chip and the cloud | D | the one A10 card's three runs disagree, no other card result stands; the cloud's bill moved inside the noise and its work was not counted |",
         "| Independence | not yet graded | nobody outside the company has run, read or checked any of it; an underwriter signs on an outside party's replication, not on ours |",
         f"| Test coverage of the engine | B | {cv['pct']}% of {cv['statements']} statements run under the tests ({cv['engine']}); the database runners run whole only in their own benchmarks |",
@@ -149,7 +153,7 @@ def render(d):
         "",
         "## 1. The headline leans on one product",
         "",
-        f"The Omni index (omni-v25's tables, work, speed and machines) reads GAIN, up {ix['headline']:.2f}%. Recomputed with each "
+        f"The Omni index ({index_engine()}'s tables, work, speed and machines) reads GAIN, up {ix['headline']:.2f}%. Recomputed with each "
         "product left out in turn:",
         "",
         "| Left out | The other five |",
@@ -191,15 +195,15 @@ def render(d):
     L += [
         "",
         "They are the batch queue sharing a cluster with a web service under the governors (pod start waits, the queue finishing "
-        "later, job turnaround), on omni-v25. omni-v26 was landed to fix that fault (`docs/OMNI_V26.md`); its reruns of those "
-        "governors finished on GitHub on 8 November, but no omni-v26 table has been written from them: the omni-v25 tables were "
-        "written in one tabling pass over that campaign's archived runs (6 November), and that pass has not been run for "
-        "omni-v26. Until those tables land, do no harm is not shown on these workloads.",
+        "later, job turnaround). omni-v26 was landed to fix the fault read on omni-v25 (`docs/OMNI_V26.md`, the target's flips); its "
+        "tables, written from its own runs on 11 November, read the flips down by 55% to 69% on every scheduler rig and not to none, "
+        "the conveyance's cycle up by about half, and the governor's own processor unchanged, each counted from the governor's own "
+        "audit (`results/GOVERNOR_WRITES.md`, `docs/LOSS_CAUSES_2026-11-11.md`). Do no harm is not yet shown on these workloads.",
         "",
         "## 3. What sign-off needs, in order",
         "",
-        "1. **Table omni-v26's governor and Kubernetes runs** (free, already run; the tabling pass over their archived files): the "
-        "batch-queue LOSS rows either clear or are root-caused again.",
+        "1. **Fix the conveyance's cycle and read the remaining target writes** (the next version, through the model gate, its model "
+        "set from these runs' own files; free): then the governor tests' three runs again on that engine.",
         "2. **Close the Kubernetes beat question** (free, running: `docs/PACE_PREREGISTRATION.md`, amendment 7), and land the "
         "beat that reads best as the next version through the model gate; then every Kubernetes test again on it.",
         "3. **State the headline with its leave-one-out**, or name a primary endpoint per product before the next campaign, so one "
@@ -211,7 +215,9 @@ def render(d):
         "6. **An outside replication**: a party with no stake runs the published recipe on its own machines and writes what it "
         "finds. Nothing else turns this record into something an underwriter can sign.",
         "7. **Keep main green**: GitHub's release check failed on every push to main from 9 to 11 November, and the job that "
-        "refreshes the front page failed with it on a stale release manifest; both were repaired on 11 November.",
+        "refreshes the front page failed with it on a stale release manifest; both were repaired on 11 November. The front page's "
+        "own rebuild had stopped at one incomplete Kafka run on every refresh from 31 October, its failure hidden by a pipe, so no "
+        "store table landed by itself on omni-v25 or omni-v26; repaired the same day (`tools/front_page.py`).",
         "",
         "## Reproduce",
         "",
