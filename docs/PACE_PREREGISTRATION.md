@@ -223,6 +223,37 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 The record of this amendment's run (written into the repository on 2 November 2026, the founder's order that every number stands on its record): `results/model_gate/V23_LADDER_CORRECTED.md`, rendered by `tools/beat_ladder.py` from `results/model_gate/V23_LADDER_CORRECTED_SOURCE.json`. On site the runs ran on the omni-v23 tree (commit a278eac262); through a cloud on the candidate tree of 31 October (commit ebf83ecaf9), which runs every pace exactly as omni-v23 (it writes the cover's floor as a knob at the factory's 0.6 and strikes the machines-only rule; every run sets its own beat and none passes the machines-only flag).
 
+
+## Amendment 7 (11 November 2026, 07:20 UTC, written before any reading of its runs): the beat on a moving load, on the engine that stands
+
+What the record shows, all read before this was written. On real Kubernetes the Omni index reads omni-v21 (its compass arm deciding
+every 60 s) 28.0% and omni-v25 (every 10 s on site, the factory beat since omni-v24, picked from our own models) 20.5%; all nine
+Kubernetes tests read lower on omni-v25, and native's own values in the two campaigns are alike (the 95th percentile on KEDA's live
+requests: native 423 to 515 ms on omni-v21, 474 to 508 ms on omni-v25), so the arm on top moved: Omni-Compass's own 95th percentile
+went from 115 to 136 ms to 249 to 283 ms there, from 287 to 311 ms to 369 to 457 ms on the wandering demand. On the steady load the two
+engines read alike (30.9% and 30.8%), and amendment 3's real runs on omni-v25 (runs 41751100166, 41767230735, 41780364813,
+`results/pace/PACE.md`, the steady load only) read every slower beat, 15, 30, 75, 90 and 120 s, GAIN against the 10 s factory beat on
+the response time and the time over the line, none LOSS, the machines the same. The beat is the one change to how the Kubernetes
+governor acts on kind between the two engines (omni-v23's own-pod guard acts only on a refused write); it is the suspect, not yet the
+cause.
+
+**The runs.** `benchmark-reps.yml` on main at the engine that stands (omni-v26), the wandering load of the Kubernetes campaign
+(`scripts/reruns.txt`, "kubernetes wandering": `duration_s=2700`, `loadgen=open`, its load steps), four arms in every repetition, in an
+order rotated by repetition, on the same runner: native, the compass arm at the factory beat (10 s on site), and the compass arm
+deciding every 60 s and every 90 s (`compass60`, `compass90`, `scripts/kind_paired.sh`); ten paired repetitions a run, three runs:
+A 42977431782, B 42977442687, C 42977447533, dispatched at 07:09 UTC on 11 November.
+
+**The reading.** Each beat against native and against the factory beat, by the one key (`tools/readings.py`), the tables written by
+`tools/confirm_abc.py` from the three archived runs. The pick is amendment 4's frozen rule read on these real runs: admissible, no gauge
+LOSS against native; among the admissible, the beat no other dominates on the service gauges (the 95th percentile, the time over
+the line, the alert minutes, the pods waiting), pairwise in the same repetitions; a tie goes to the fewest reads of the cluster. If a
+beat other than 10 s dominates the factory beat here and on amendment 3's steady runs, it is the on-site factory beat of the next
+engine version, landed through the model gate with the model's kind setting set from these runs' own files (the rule of 15 October:
+a model's regime is set from a real run's own files, never guessed), and every Kubernetes benchmark runs again on it. If none
+dominates, the factory beat stays and the drop from omni-v21 is root-caused elsewhere, written here.
+
+Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
 ---
 
 *© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
