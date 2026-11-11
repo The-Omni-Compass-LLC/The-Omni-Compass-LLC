@@ -17,7 +17,7 @@ omni-v26; not bare metal, not a cloud, not a bill)." Its second reading, always 
 alone, the same runs: GAIN, up 96.5%." By product: "Real Kubernetes: GAIN, up 22.2% by the index's rule (9 tests); one reads LOSS:
 fairness, down 2.6%." Kubernetes on earlier engines, only with each engine named: "omni-v21 (31 October): real Kubernetes GAIN,
 up 28.0% by the same rule (9 tests); omni-v25 (5 November): 20.5%; omni-v26 (11 November), the latest: 22.2%; where the difference
-from omni-v21 sits is read in `docs/K8S_REGRESSION_2026-11-11.md`." Measured
+from omni-v21 sits is read in `docs/K8S_REGRESSION_2026-11-11.md` and the mechanism of the fall from the governor's own audit in `docs/audits/K8S_V21_V25_DECLINE_2026-11-11.md`." Measured
 with Omni-Compass on top of native against native on the same machines (class L). It is not a
 bare-metal result, not a cloud result, not a comparison of the two, and not a bill.
 Source: `results/OMNI_INDEX.md` (the newest three-run table of each product, omni-v26), `results/SITE_NUMBERS.json`.

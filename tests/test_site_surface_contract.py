@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import unittest
 
-from tools.site_surface_contract import ROOT, OUT, PUBLISHER, SURFACES, build_contract
+from tools.site_surface_contract import ROOT, OUT, PUBLISHER, REQUIRED_IDS, SURFACES, build_contract
 
 
 class WebsiteSurfaceContract(unittest.TestCase):
@@ -20,7 +20,7 @@ class WebsiteSurfaceContract(unittest.TestCase):
     def test_published_contract_is_current(self):
         self.assertEqual(self.published, self.contract)
         self.assertEqual(self.published["publisher"], PUBLISHER)
-        self.assertEqual(len(self.published["claims"]), 10)
+        self.assertEqual(len(self.published["claims"]), len(REQUIRED_IDS))
 
     def test_every_page_and_spoken_reading_uses_receipt_only(self):
         ids = {row["id"] for row in self.published["claims"]}

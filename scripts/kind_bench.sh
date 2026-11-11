@@ -217,10 +217,33 @@ for d in docs:
                                {"key": "node-role.kubernetes.io/master", "operator": "Exists", "effect": "NoSchedule"}]   # 1.24 carries both taints
 print(yaml.safe_dump_all(docs, sort_keys=False))
 EOF
+# metrics-server's image is pulled once onto the runner and loaded into every node (kind load), as busybox is below, so the
+# control plane does not fetch it from the registry inside the arm's set-up: on 11 November a fresh cluster of the grid
+# (run 42952258606, the spine at 10 copies, repetition 199) waited out its one 300 s rollout and the repetition was marked
+# invalid before any governor started. Where the load cannot be made, the node pulls it itself, as before, and the
+# preflight says so
+ms_img=$(sed -n 's/^ *image: *\(.*metrics-server.*\)$/\1/p' "$OUT_DIR/metrics-server-rig.yaml" | head -1)
+ms_kind="${KIND_CLUSTER:-$(kubectl config current-context 2>/dev/null | sed -n 's/^kind-//p')}"
+if [ -n "$ms_img" ] && [ -n "$ms_kind" ] && { docker image inspect "$ms_img" >/dev/null 2>&1 || docker pull -q "$ms_img" >/dev/null 2>&1; } \
+   && kind load docker-image "$ms_img" --name "$ms_kind" >/dev/null 2>&1; then
+  echo "metrics-server: loaded into every node from the runner's own copy (kind load)" | tee -a "$OUT_DIR/preflight.txt"
+else
+  echo "metrics-server: not loaded from the runner; the control plane pulls it itself" | tee -a "$OUT_DIR/preflight.txt"
+fi
 kubectl apply -f "$OUT_DIR/metrics-server-rig.yaml"
 pin='{"spec":{"template":{"spec":{"nodeSelector":{"node-role.kubernetes.io/control-plane":""},"tolerations":[{"key":"node-role.kubernetes.io/control-plane","operator":"Exists","effect":"NoSchedule"},{"key":"node-role.kubernetes.io/master","operator":"Exists","effect":"NoSchedule"}]}}}}'
 kubectl -n kube-system patch deployment coredns -p "$pin"
-kubectl -n kube-system rollout status deployment/metrics-server --timeout=300s
+# three waits of 300 s, as the pre-puller below has; a rollout that never finishes keeps its pods' own words in the arm's
+# files (metrics_server_failed.txt) and fails the arm's checks, as one failed wait did before
+for t in 1 2 3; do
+  kubectl -n kube-system rollout status deployment/metrics-server --timeout=300s && break
+  if [ "$t" = 3 ]; then
+    { kubectl -n kube-system get pods -l k8s-app=metrics-server -o wide; kubectl -n kube-system describe pods -l k8s-app=metrics-server; } \
+      > "$OUT_DIR/metrics_server_failed.txt" 2>&1 || true
+    false
+  fi
+  echo "metrics-server not rolled out (wait $t of 3)"
+done
 kubectl -n kube-system rollout status deployment/coredns --timeout=300s
 # the served image pulled onto every worker before the arm, then the puller deleted, before the governor starts or the
 # window opens (deploy/kind/prepull.yaml; amendment of 18 October, docs/POD_START_WAIT.md): a serving pod started inside
