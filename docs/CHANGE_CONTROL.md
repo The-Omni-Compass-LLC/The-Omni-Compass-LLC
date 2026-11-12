@@ -60,7 +60,7 @@ declared engine.
 Each version through omni-v15 was a fault found in a real run and fixed, omni-v16 made the decision pace a clean setting
 and set the heartbeat at 15 s on the founder's word, and omni-v17 made the heartbeat a dial with the main engine at 60 s on his
 word the same afternoon; each version since, omni-v18 to omni-v25, is the row above it in the table: the record is in
-`docs/OMNI_V6.md` to `docs/OMNI_V25.md`, and each model gate's reading in `results/model_gate/`. Twelve versions in twelve days is the cost of fixing every fault the day it is
+`docs/OMNI_V6.md` through `docs/OMNI_V26.md`, and each model gate's reading in `results/model_gate/`. Twelve versions in twelve days is the cost of fixing every fault the day it is
 found (the founder's order of 18 October: every fault fixed, none set aside); the rules above are what keep that pace from
 mixing results.
 
