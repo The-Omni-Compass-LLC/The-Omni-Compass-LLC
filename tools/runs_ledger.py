@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 E_DIR, C_DIR, R_DIR = ROOT / "results" / "engine_runs", ROOT / "results" / "core_runs", ROOT / "results" / "runs_reproof"
 OUT_JSON, OUT_MD = ROOT / "results" / "RUNS_LEDGER.json", ROOT / "results" / "RUNS_LEDGER.md"
+NO_SET = ROOT / "results" / "RUNS_NO_SET.json"      # the runs on GitHub that finished without recording a set, read from their logs
 OWN_RANGES = "the engine's own ranges"
 NOT_GITHUB = "not made on GitHub"
 
@@ -124,8 +125,15 @@ def build() -> dict:
         if x:
             r["again"] = {k: x.get(k) for k in ("python_same", "cpp_same", "page_same", "draws_same", "ladder_same", "page_ladder_same",
                                                 "own_system", "own_python_same", "own_commit", "error") if x.get(k) is not None}
+    ns = json.loads(NO_SET.read_text(encoding="utf-8")) if NO_SET.exists() else {}
+    by_base = {r["base"]: r for r in eng}
+    for r in ns.get("runs") or []:           # a base run again later has its record: named beside the run that lost it
+        later = by_base.get(r["base"])
+        r["recorded_later"] = ({"run_id": later["run_id"], "url": later["url"], "written": later["written"], "digest": later["digest"],
+                                "engine": later["engine"]} if later else None)
     return {"tool": "tools/runs_ledger.py", "engine_sets": eng, "core_sets": core, "cross": cross,
-            "reproof": {k: rp[k] for k in ("file", "written", "machine") if k in rp}}
+            "reproof": {k: rp[k] for k in ("file", "written", "machine") if k in rp},
+            "no_set": {k: ns[k] for k in ("read", "workflow", "runs") if k in ns}}
 
 
 def tally(d: dict) -> dict:
@@ -208,6 +216,27 @@ def render(d: dict) -> str:
                   "their own commit.", ""]
         if own:
             L += [f"{len(own)} core sets are a reader's own system: their ranges are their records', and they are not run again here.", ""]
+    ns = d.get("no_set") or {}
+    if ns.get("runs"):
+        from tools.repo import RUNS as RUN_URL
+        again = sum(1 for r in ns["runs"] if r.get("recorded_later"))
+        L += ["## Runs on GitHub that recorded no set", "",
+              f"Read from GitHub's own list of the `{ns.get('workflow')}` workflow's runs and from each run's log on {ns.get('read')} "
+              f"(`results/RUNS_NO_SET.json`): {len(ns['runs'])} runs finished without recording their set. None of them failed on a digest: "
+              "each had computed its set, the Python's, the C++ harness's and the page's digests one, and was stopped at the commit by "
+              "the whole repository's notice check on a file another push had brought. Of the runs GitHub listed that day, none had "
+              "failed because two implementations disagreed. The commit step now holds the notice on the records the run itself wrote, "
+              "and a file elsewhere is `verify.yml`'s to stop, so a set is not lost to it again"
+              + (f"; {again} of the {len(ns['runs'])} bases have since been run again on GitHub and recorded." if again else
+                 "; the bases are run again on GitHub once this stands on main, each as its own new run.") , "",
+              "| Run on GitHub | Started (UTC) | Branch | Base | Stopped at | Why it recorded nothing | Run again |", "|---|---|---|---:|---|---|---|"]
+        for r in ns["runs"]:
+            lt = r.get("recorded_later")
+            L.append(f"| [{r['run_id']}]({RUN_URL}{r['run_id']}) `{r['commit'][:8]}` | {r['started'][:16].replace('T', ' ')} | `{r['ref']}` | {r['base']} | "
+                     f"{r['stopped_at']} | {r['cause']} | "
+                     + (f"[{lt['run_id']}]({lt['url']}) on {lt['engine']}, digest {short(lt['digest'])}" if lt and lt.get("run_id")
+                        else "recorded, not on GitHub" if lt else "not yet") + " |")
+        L.append("")
     if fails or d["cross"]:
         L += ["## What fails", ""] + [f"- `{r['file']}`: {'; '.join(r['failed'])}" for r in fails] + [f"- {x}" for x in d["cross"]] + [""]
 

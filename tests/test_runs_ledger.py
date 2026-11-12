@@ -148,6 +148,24 @@ class Record(unittest.TestCase):
             self.assertLess(s.index("git pull -q --rebase"), s.index("python3 tools/runs_ledger.py > /dev/null"), wf)   # on the branch as it stands
         s = (ROOT / ".github" / "workflows" / "engine-runs.yml").read_text(encoding="utf-8")
         self.assertIn("--verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all", s)     # the step that writes the page's digest
+
+    def test_a_set_is_never_lost_to_another_pushs_file(self):
+        """Each of the four runs of engine-runs that ever failed had computed its set and was stopped at the commit by the whole
+        repository's notice check on a file it did not write (results/RUNS_NO_SET.json, read from GitHub's logs): the commit
+        step now holds the notice on the run's own records alone."""
+        for wf, own in (("engine-runs.yml", "engine_runs|core_runs"), ("monte-carlo.yml", "core_runs"), ("injection-grid.yml", "injection_grid")):
+            s = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
+            self.assertIn("python3 tools/legal.py --check > legal.txt || true", s, wf)
+            self.assertIn(f"grep -E '^results/({own})/' legal.txt", s, wf)
+            self.assertNotIn('legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }', s, wf)
+        ns = json.loads((ROOT / "results" / "RUNS_NO_SET.json").read_text(encoding="utf-8"))
+        self.assertTrue(ns["runs"])
+        for r in ns["runs"]:
+            self.assertEqual(r["base"], r["run_id"] % 2 ** 32, r["run_id"])       # a run's base is its own number
+            self.assertNotIn("digest", r["cause"])
+        d = L.build()
+        self.assertEqual([r["run_id"] for r in d["no_set"]["runs"]], [r["run_id"] for r in ns["runs"]])
+        self.assertIn("## Runs on GitHub that recorded no set", L.render(d))
         self.assertIn("runs_ledger.py", (ROOT / "verify.py").read_text(encoding="utf-8"))
 
 
