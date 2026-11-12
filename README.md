@@ -112,6 +112,23 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 The full index, by reader and by the hierarchy of evidence, is [`docs/README.md`](docs/README.md).
 
+### Check it yourself
+
+Each command runs on any machine with Python 3.12 (and CMake for the C++ twin), trusting nothing of ours but the source;
+each was run on 12 November 2026 and gave what its row says. The same checks run on GitHub's own machines with public
+logs: [`verify`](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/workflows/verify.yml) on every push,
+[`engine-runs`](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/workflows/engine-runs.yml) for every
+set of the jump generator, and every benchmark's own workflow for each of its runs (each table links its runs). The engine
+runs are our own models (evidence class S): they prove the code computes what its record says, never a benefit; a benefit
+is read only from the three-run tables of real software (class L).
+
+| What it checks | Command | What it gives |
+|---|---|---|
+| The jump generator's 500 runs, in Python | `python3 tools/engine_runs.py --runs 500 --base 20261020 --out /tmp/er.json` | digest `d4f6586bef00cf1d…`, the one recorded in `results/engine_runs/ENGINE_RUNS_500_20261020.json` (181 such sets of 500 are on record, each with its digest) |
+| The same 500 runs through the C++ twin | `cmake -S cpp -B /tmp/b -DCMAKE_BUILD_TYPE=Release && cmake --build /tmp/b --target oc_engine_runs && python3 tools/engine_runs.py --runs 500 --base 20261020 --verify-cpp /tmp/b/oc_engine_runs --all` | largest difference 0.0e+00; the two digests match |
+| Every run GitHub holds, every archived file, every table | `python3 tools/census.py --check` | `docs/CENSUS.md` is what its records give: 5,984 finished runs, 4,111 folders on the branch `raw`, every run a table names among them |
+| Every reading of every table, by the one key | `python3 tools/reread.py --check` | 0 readings differ from the rule that stands |
+
 
 ## The bottom line: is Omni-Compass a benefit?
 
