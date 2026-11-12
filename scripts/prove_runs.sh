@@ -13,6 +13,9 @@
 #   5. the core's Monte Carlo from the same base, the same three ways;
 #   6. where the base is a recorded set's, each digest compared with the record GitHub's machine wrote.
 # Usage: scripts/prove_runs.sh [BASE] [RUNS]     BASE: a base seed (default: the newest recorded set's); RUNS: default 500
+# In a container, with nothing installed on your machine and the checkout mounted read-only (deploy/Dockerfile.proof):
+#   docker build -f deploy/Dockerfile.proof -t omni-proof . && docker run --rm -v "$PWD":/repo:ro omni-proof [BASE] [RUNS]
+# OMNI_CPP_BUILD names where the C++ harness is built (default cpp/build); nothing else is written outside a temporary folder.
 # Our own models (class S): it proves three implementations compute the same numbers; it is not a benchmark result.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -27,24 +30,25 @@ PYEOF
 OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
 PAGE=docs/engine/OMNI_COMPASS_LIVE_ENGINE.html
+BUILD="${OMNI_CPP_BUILD:-cpp/build}"
 
 echo "== 1. the engine that stands"
 $PY tools/omni_version.py | head -1
 
 echo "== 2. the C++ harness, built from source"
-cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release > "$OUT/cmake.log" 2>&1 || { tail -20 "$OUT/cmake.log"; exit 1; }
-cmake --build cpp/build -j2 --target oc_engine_runs oc_core_runs > "$OUT/build.log" 2>&1 || { tail -20 "$OUT/build.log"; exit 1; }
-echo "built: cpp/build/oc_engine_runs, cpp/build/oc_core_runs ($(c++ --version | head -1))"
+cmake -S cpp -B "$BUILD" -DCMAKE_BUILD_TYPE=Release > "$OUT/cmake.log" 2>&1 || { tail -20 "$OUT/cmake.log"; exit 1; }
+cmake --build "$BUILD" -j2 --target oc_engine_runs oc_core_runs > "$OUT/build.log" 2>&1 || { tail -20 "$OUT/build.log"; exit 1; }
+echo "built: $BUILD/oc_engine_runs, $BUILD/oc_core_runs ($(c++ --version | head -1))"
 
 echo "== 3. every recorded set, from the records themselves"
 $PY tools/runs_ledger.py --check
 
 echo "== 4. the engine's runs: $RUNS runs from base $BASE, three ways on this machine"
-$PY tools/engine_runs.py --runs "$RUNS" --base "$BASE" --cpp cpp/build/oc_engine_runs --out "$OUT/engine.json"
+$PY tools/engine_runs.py --runs "$RUNS" --base "$BASE" --cpp "$BUILD/oc_engine_runs" --out "$OUT/engine.json"
 $PY tools/engine_runs.py --verify "$PAGE" --all --runs "$RUNS" --base "$BASE" --out "$OUT/engine.json"
 
 echo "== 5. the core's Monte Carlo: $RUNS runs from base $BASE, three ways on this machine"
-$PY tools/core_runs.py --runs "$RUNS" --base "$BASE" --cpp cpp/build/oc_core_runs --out "$OUT/core.json"
+$PY tools/core_runs.py --runs "$RUNS" --base "$BASE" --cpp "$BUILD/oc_core_runs" --out "$OUT/core.json"
 $PY tools/core_runs.py --verify "$PAGE" --runs "$RUNS" --base "$BASE" --out "$OUT/core.json"
 
 echo "== 6. the digests, side by side"
@@ -69,6 +73,18 @@ for name, here, rec in (("the engine's runs", out / "engine.json", Path(f"result
         match = r["digest"] == d["digest"]
         print(f"  the record ({rec}, GitHub run {g.get('run_id', 'none')}): {r['digest']}: {'the same as this machine gives' if match else 'DIFFERENT from this machine'}")
         ok = ok and match
+    elif rec.with_name(rec.name.replace(f"_{runs}_", "_500_")).exists() and runs < 500:   # a recorded base, fewer runs than its record
+        full = json.loads(rec.with_name(rec.name.replace(f"_{runs}_", "_500_")).read_text())
+        g = (full.get("github") or {})
+        if full.get("receipts"):
+            sys.path.insert(0, ".")
+            from tools.engine_runs import digest
+            first = digest(full["receipts"][:runs])
+            match = first == d["digest"]
+            print(f"  the record's first {runs} receipts (GitHub run {g.get('run_id', 'none')}): {first}: {'the same as this machine gives' if match else 'DIFFERENT from this machine'}")
+            ok = ok and match
+        else:
+            print(f"  the record of base {base} (GitHub run {g.get('run_id', 'none')}) keeps the digest of its 500 runs alone: run 500 to compare")
     else:
         print(f"  no record of base {base} in the repository: a set of your own")
 print("PROVED: every digest agrees" if ok else "NOT PROVED: a digest differs")

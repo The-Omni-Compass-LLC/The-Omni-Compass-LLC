@@ -16,7 +16,7 @@ results/core_runs/ and, with no network and nothing run again, proves of each wh
   the seeds               every receipt's seed recomputed from the base by the jump generator: it must be the receipt's
   the ladder              the digest of the first 1, 10, 100 and 500 runs recomputed from the receipts: each must be its rung's
   the C++ harness         its digest must be the Python's, at the whole set and at every rung, every run agreeing
-  the page                where the record carries the page's digest (from 12 November), it must be the Python's, rung by rung
+  the page                where the record carries the page's digest, it must be the Python's, rung by rung
   the run on GitHub       the run's number, its commit and its address, and no run or base written twice
 
 and joins the newest re-proof (tools/runs_reproof.py: every set run again on another machine, the Python, the C++ and the page).
@@ -181,7 +181,8 @@ def render(d: dict) -> str:
          f"{t['core']} core sets; in every one it is the Python's (a set made before the harness existed carries none).",
          f"- **The page's own digest** stands in the record of {t['engine_page']} engine sets and {t['core_page']} core sets. On "
          "GitHub the page's own code has run every run of every set since 21 October (`engine-runs.yml`) and the run fails if it differs, but the record kept only "
-         "the Python's and the C++ harness's digests; from 12 November the page's digest is written beside them, rung by rung.",
+         "the Python's and the C++ harness's digests until `tools/engine_runs.py --verify --all` began writing the page's beside them, rung by rung; "
+         "for the sets made before that, the page's digest is the one the re-proof below computed.",
          f"- **The run on GitHub**: {t['engine_github']} of the {t['engine']} engine sets name the run that made them, its commit and "
          f"its address ({', '.join(f'{n} on `{k}`' for k, n in t['refs'].items() if k != NOT_GITHUB)}"
          + (f"; {t['refs'][NOT_GITHUB]} made before the runs were linked to GitHub" if t["refs"].get(NOT_GITHUB) else "")
@@ -240,9 +241,10 @@ def render(d: dict) -> str:
         L.append(f"| {r['base']} | {(r['written'] or '')[:16].replace('T', ' ')} | {r['system'] or OWN_RANGES} | {short(r['digest'])} | "
                  f"{'the same' if r['cpp'] == r['digest'] else 'not recorded' if not r['cpp'] else '**DIFFERENT**'} | "
                  f"{'the same' if r['page'] and r['page'] == r['digest'] else 'not recorded' if not r['page'] else '**DIFFERENT**'} | {run} | {again(r)} |")
-    L += ["", "To run a set again yourself: `python3 tools/engine_runs.py --runs 500 --base <base> --cpp cpp/build/oc_engine_runs --out /tmp/set.json`, "
+    L += ["", "To run a set again yourself: `python3 tools/engine_runs.py --runs 500 --base <base> --cpp cpp/build/oc_engine_runs --out my_set.json`, "
           "then compare its digest with this page's; `python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all "
-          "--runs 500 --base <base>` runs the page's own code on the same set."]
+          "--runs 500 --base <base> --out my_set.json` runs the page's own code on the same set and writes its digest into `my_set.json`. One command "
+          "does all of it and prints the three digests side by side: `scripts/prove_runs.sh [BASE]`."]
     return normalize("\n".join(stamp(L)) + "\n")
 
 

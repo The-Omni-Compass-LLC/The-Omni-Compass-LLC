@@ -108,6 +108,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 | Security, legal, IP | [Security policy](SECURITY.md) | [Threat model](docs/THREAT_MODEL.md) · [safety case](docs/SAFETY_CASE.md) · [license](LICENSE) · [disclosures](DISCLOSURES.md) |
 | Benchmark referee | [How to read the results](docs/HOW_TO_READ_THE_RESULTS.md) | [The referee's audit pack](docs/audit/README.md) · [every reading recomputed](docs/audit/STATISTICAL_VALIDATION.md) · [the verdict audit](results/verdict_audit/VERDICT_AUDIT.md) |
 | Live benchmark engine | [The page](docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) | [The Live Benchmark Engine Manual](docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md) · [its appraisal](docs/engine/APPRAISAL.md) |
+| Anyone who would rather check than read | [Check it yourself](#check-it-yourself): one command, the digests side by side | [The jump generator's ledger](results/RUNS_LEDGER.md) · [every table's recipe](results/live/RECIPES.json) (`tools/reproduce.py`) · [the runs on GitHub](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions) |
 
 The full index, by reader and by the hierarchy of evidence, is [`docs/README.md`](docs/README.md).
 
@@ -568,12 +569,33 @@ wrote on its own).
 
 ```
 pip install -r requirements.txt && python verify.py      # must end: VERIFICATION: PASS
+bash scripts/prove_runs.sh                                # one set of the jump generator, three ways, the digests side by side
 bash scripts/run_live_local.sh 3                          # native against omni on your own kind cluster
 sudo bash scripts/gpu_rented_run.sh                       # the card run, on any rented NVIDIA machine
 ```
 
 `verify.py` reruns every held-out result byte for byte, the Python and C++ twins, the property tests, and checks that
 the repository is lined up (`tools/layout_check.py`). Every live result carries its raw files and SHA-256 digests.
+
+**The jump generator's sets, proved on your own machine.** A set is 500 runs from one base seed (seed_k = base + k·0x9E3779B9
+mod 2³²). Three implementations of the mechanism run it, the Python (`tools/engine_runs.py`, `tools/core_runs.py`), the C++
+harness on the engine's C++ twins (`cpp/tools/`) and the live benchmark engine page's own code, and each writes one SHA-256
+digest of its receipts; the three must be one. `scripts/prove_runs.sh [BASE]` names the engine by its fingerprint, builds
+the C++ harness from source, checks every recorded set from the records themselves, runs a set the three ways and prints the
+three digests beside the one GitHub's machine recorded for that base; it ends `PROVED: every digest agrees` or says which
+differs. With nothing installed but Docker, and the checkout mounted read-only:
+
+```
+docker build -f deploy/Dockerfile.proof -t omni-proof .
+docker run --rm -v "$PWD":/repo:ro omni-proof              # the newest recorded set; add a base to prove another, or one of your own
+```
+
+Every recorded set, with its digests, its engine and the run on GitHub that made it, is in
+[`results/RUNS_LEDGER.md`](results/RUNS_LEDGER.md) (`tools/runs_ledger.py`; checked by `verify.py`); GitHub runs the same
+container in public, where the log is not ours to edit (`.github/workflows/prove-runs.yml`). These are our own models (class
+S): a set proves that three implementations compute the same numbers, never that Omni-Compass benefits a system. The benefit
+is read on real software only, in the three-run tables (`results/live/`), each rebuilt from its raw files by its own recipe
+(`python3 tools/reproduce.py`, [`results/live/RECIPES.json`](results/live/RECIPES.json)).
 
 The raw files of the live runs (about 36 GB, 182,161 files) live on their own branch, `raw`, from 18 October: main holds the
 code and the tables, so a clone of main is small and every table, page, manual and the verifier work without the raw

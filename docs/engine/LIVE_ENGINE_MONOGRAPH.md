@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3945082204, where the newest on file is 375788794; the injection grid of batch 3945082204, where the newest on file is 48766475<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 3945082204, where the newest on file is 375788794; the injection grid of batch 3945082204, where the newest on file is 249031878<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
@@ -848,7 +848,7 @@ The folders held about ten gigabytes; not run here, for want of disk. `.github/w
 
 ### 8.2 Re-running each benchmark
 
-<!-- monograph: workflows (tools/monograph_words.py) -->73 workflows<!-- end of monograph: workflows --> hold the automation; the campaign releases run A of every entry in `scripts/reruns.txt`, then B, then C. None was run here. The limit is the workflow's `timeout-minutes`; the time is its newest successful run's, start to last update, queue included, from GitHub's run record of 7 November.
+<!-- monograph: workflows (tools/monograph_words.py) -->74 workflows<!-- end of monograph: workflows --> hold the automation; the campaign releases run A of every entry in `scripts/reruns.txt`, then B, then C. None was run here. The limit is the workflow's `timeout-minutes`; the time is its newest successful run's, start to last update, queue included, from GitHub's run record of 7 November.
 
 | Benchmark | Workflow (`.github/workflows/`) | Native | Limit | Newest run's time | Cost |
 |---|---|---|---|---|---|

@@ -94,9 +94,24 @@ jobs:
           git add results/core_runs/
           git diff --cached --quiet && { echo "nothing new to record"; exit 0; }
           git commit -q -m "The core's Monte Carlo from the jump generator, the Python and the C++ linked, checked in the live benchmark engine's own code (monte-carlo run $GITHUB_RUN_ID)"
+          # the jump generator's ledger (tools/runs_ledger.py, results/RUNS_LEDGER.md) is written again on the branch as it stands
+          # after the rebase and committed beside the set; a push that fails drops it and retries; a set that fails one of the
+          # ledger's proofs stops the push (12 November)
           for attempt in 1 2 3 4 5 6; do
-            git pull -q --rebase && git push && exit 0
-            git rebase --abort 2>/dev/null || true
+            if git pull -q --rebase; then
+              made=0
+              python3 tools/runs_ledger.py > /dev/null
+              git add results/RUNS_LEDGER.json results/RUNS_LEDGER.md
+              if ! git diff --cached --quiet; then
+                git commit -q -m "The jump generator's ledger carries the new set (tools/runs_ledger.py, monte-carlo run $GITHUB_RUN_ID)"
+                made=1
+              fi
+              python3 tools/runs_ledger.py --check | tee -a "$GITHUB_STEP_SUMMARY" || { echo "::error::a set fails one of the ledger's proofs (results/RUNS_LEDGER.md)"; exit 1; }
+              git push && exit 0
+              if [ "$made" = 1 ]; then git reset -q --hard HEAD~1; fi
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
           done
           echo "::error::the record could not be pushed after six attempts"; exit 1

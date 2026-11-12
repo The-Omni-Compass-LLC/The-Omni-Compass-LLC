@@ -96,6 +96,11 @@ GROUPS = {
                         "cpp/tools/engine_runs.cpp", "cpp/include/omnicompass/governor.hpp", "cpp/src/governor.cpp",
                         "tests/test_cpp_verdict_parity.py", "tests/test_cpp_engine_runs_parity.py", "tools/engine_runs.py",
                         ".github/workflows/engine-runs.yml"],
+    # the jump generator's ledger (12 November): every set's digests proved from its record, the re-proof, the one command and
+    # its container; the ledger's own pages are written with every set (engine-runs.yml, monte-carlo.yml) and held by verify.py
+    "run_sets_ledger": ["tools/runs_ledger.py", "tools/runs_reproof.py", "tools/core_runs.py", "scripts/prove_runs.sh",
+                        "deploy/Dockerfile.proof", "tests/test_runs_ledger.py", ".github/workflows/monte-carlo.yml",
+                        ".github/workflows/prove-runs.yml"],
     "engine_v13": ["OMNI_V13.json", "tools/omni_version.py", "docs/OMNI_V13.md", "omni_controller/muscles.py", "tests/test_convey_handback.py",
                    "results/model_gate/V13_VS_V12.md", "results/model_gate/V13_VS_V12.json"],
     "engine_v12_refused_raise": ["OMNI_V12.json", "omni_controller/muscles.py", "tools/omni_version.py", "docs/OMNI_V12.md",
