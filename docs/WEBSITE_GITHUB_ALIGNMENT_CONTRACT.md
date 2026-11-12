@@ -16,9 +16,9 @@ The machine-readable payload is [`results/WEBSITE_SURFACE_CONTRACT.json`](../res
 
 | Claim family | Required source | Release interpretation |
 |---|---|---|
-| Software work, speed, machine-use score | `results/SITE_NUMBERS.json` → `show[omni_index]`; `results/OMNI_INDEX.json`; `tools/omni_index.py` | V25 composite index of work, speed and resources; 20.4%, **not** a raw 20.4% uplift in completed work |
-| Service-only index | `show[work_and_speed]` | V25 +94.0% composite from work and response metrics, not bill savings or an end-to-end total |
-| Kubernetes category | `show[kubernetes]` | V25 +20.5% category index; fairness `LOSS` of −2.3% included |
+| Software work, speed, machine-use score | `results/SITE_NUMBERS.json` → `show[omni_index]`; `results/OMNI_INDEX.json`; `tools/omni_index.py` | The composite index of work, speed and resources, at the value and on the engine the feed row itself carries (never typed here: the row moved from omni-v25 to omni-v26 on 11 November with the index); **not** a raw uplift of that size in completed work |
+| Service-only index | `show[work_and_speed]` | The composite from work and response metrics, at the feed row's own value and engine; not bill savings or an end-to-end total |
+| Kubernetes category | `show[kubernetes]` | The Kubernetes category index at the feed row's own value and engine; the fairness `LOSS` the row lists is shown with it |
 | Same-time actual work | `results/WORK_TODAY.md` plus its underlying named paired-run workload and denominator | Publish **only** a supported throughput/completed-work or goodput ratio with units, time window, environment, baseline and uncertainty; never substitute an index or response-time decrease |
 | Physical GPU | `show[chip_energy_per_request]`, `show[chip_work_for_the_bill]`; `results/TWO_BILLS.json` | V23 A10 meter: energy per served request lower; work per dollar mixed over three runs |
 | Cloud economics | `show[cloud_bill]`, `four_arms.C` / `four_arms.D`; `results/TWO_BILLS.json` | V18 Azure 97 paired comparisons; work per dollar not recorded |
