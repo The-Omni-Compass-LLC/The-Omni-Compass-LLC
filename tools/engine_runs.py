@@ -275,7 +275,7 @@ function engineRunsCanonical(runs) {   // the receipts as tools/engine_runs.py w
 """
 
 
-def verify(page: Path, n: int = 20, base: int = DEFAULT_BASE) -> int:
+def verify(page: Path, n: int = 20, base: int = DEFAULT_BASE, record: Path = None) -> int:
     """The page's own loop (its ported engine and this file's loop, as the page carries it) in node against the Python."""
     sys.path.insert(0, str(ROOT / "docs" / "engine"))
     import check_live_engine as C
@@ -309,9 +309,57 @@ def verify(page: Path, n: int = 20, base: int = DEFAULT_BASE) -> int:
                 worst = max(worst, max(abs(x - y) for x, y in zip(va, vb)))
             else:
                 worst = max(worst, abs(float(va) - float(vb)))
-    same_digest = hashlib.sha256(r["canon"].encode("utf-8")).hexdigest() == digest(py)
+    page_digest = hashlib.sha256(r["canon"].encode("utf-8")).hexdigest()
+    same_digest = page_digest == digest(py)
     print(f"generator bit for bit: {'yes' if gen_ok else 'NO'}; {n} runs: largest difference {worst:.1e}; the digests {'match' if same_digest else 'DIFFER'}")
+    if record is not None:   # the third digest beside the Python's and the C++ harness's, in the set's own record (11 November)
+        lines = r["canon"].split("\n")
+        agree = sum(1 for a, b in zip(py, r["runs"]) if largest(a, b) < 1e-9)
+        note_page(record, n, base, {
+            "tool": "the page's own loop and ported engine, run in node (tools/engine_runs.py --verify --all)",
+            "page": str(page.resolve().relative_to(ROOT)) if page.resolve().is_relative_to(ROOT) else page.name,
+            "page_sha256": hashlib.sha256(page.read_bytes()).hexdigest(), "digest": page_digest, "same": same_digest,
+            "largest_difference": float(f"{worst:.1e}"), "agree": agree, "of": n, "generator_bit_for_bit": gen_ok,
+            "ladder": [{"runs": m, "digest": hashlib.sha256("\n".join(lines[:m]).encode("utf-8")).hexdigest()} for m in LADDER if m <= n]})
     return 0 if gen_ok and worst < 1e-9 and same_digest else 1
+
+
+PAGE_MARK = "**The live engine page's own code**"
+
+
+def note_page(record: Path, n: int, base: int, block: dict) -> bool:
+    """The page's digest written into the set's record beside the Python's and the C++ harness's, and its line into the record's
+    page. Only the record of the same set takes it (its runs and its base), and each rung reads the same or says it differs."""
+    if not record.exists():
+        return False
+    data = json.loads(record.read_text(encoding="utf-8"))
+    if data.get("runs") != n or data.get("base") != base:
+        return False
+    block["same"] = block["digest"] == data.get("digest")
+    by = {g["runs"]: g for g in block["ladder"]}
+    for rung in data.get("ladder") or []:
+        if rung["runs"] in by:
+            rung["page_digest"] = by[rung["runs"]]["digest"]
+            rung["page_same"] = rung["page_digest"] == rung["digest"]
+            by[rung["runs"]]["same"] = rung["page_same"]
+    data["page"] = block
+    record.write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+    md = record.with_suffix(".md")
+    if md.exists():
+        line = (f"{PAGE_MARK} (its ported engine and its loop, run in node) on the same {n} runs: digest {block['digest']}, "
+                f"{'the same' if block['same'] else 'DIFFERENT'}; {block['agree']} of {block['of']} runs agree to 1e-9, largest difference "
+                f"{block['largest_difference']:.1e}; the generator bit for bit {'the same' if block['generator_bit_for_bit'] else 'DIFFERENT'}. "
+                f"The page checked: SHA-256 {block['page_sha256']}.")
+        out, placed = [], False
+        for ln in md.read_text(encoding="utf-8").split("\n"):
+            if ln.startswith(PAGE_MARK):
+                out.append(line); placed = True
+            elif ln.startswith("**The ladder**") and not placed:
+                out += [line, "", ln]; placed = True
+            else:
+                out.append(ln)
+        md.write_text("\n".join(out), encoding="utf-8")
+    return True
 
 
 def main() -> int:
@@ -324,8 +372,9 @@ def main() -> int:
     ap.add_argument("--cpp", default="", help="the C++ harness (cpp/build/oc_engine_runs): run the same set through it and record its digest")
     ap.add_argument("--verify-cpp", default="", help="the C++ harness: run the Python's runs through it and compare")
     a = ap.parse_args()
-    if a.verify:
-        return verify(Path(a.verify), a.runs if a.all else min(a.runs, 20), a.base)
+    if a.verify:   # with --all the page's digest goes into the set's own record, beside the Python's and the C++ harness's
+        rec = (Path(a.out) if a.out else OUT_DIR / f"ENGINE_RUNS_{a.runs}_{a.base}.json") if a.all else None
+        return verify(Path(a.verify), a.runs if a.all else min(a.runs, 20), a.base, rec)
     if a.verify_cpp:
         return cpp_check(a.runs if a.all else min(a.runs, 20), a.base, Path(a.verify_cpp))
     sets = [draws(k, a.base) for k in range(a.runs)]
