@@ -3,7 +3,7 @@
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Read from GitHub's own run records on 27 October 2026 (the `lambda-gpu`, `aks-metered`, `cloud-check` and benchmark
-workflows), not from memory; sections 1 and 3 read again from them on 11 November 2026. Dollar figures are the hours a machine was rented times the hourly price each launch printed
+workflows), not from memory; sections 1 and 3 read again from them on 11 November 2026. Every run of every benchmark workflow, whether its files are on the branch `raw` and which table counts it, is counted from both ends in `docs/CENSUS.md` (`tools/census.py`), and every Azure run is listed with its receipt in `results/live/AZURE_RUNS.md`. Dollar figures are the hours a machine was rented times the hourly price each launch printed
 (`gpu_1x_a10`: $1.29 an hour). Lambda's own billing page is the exact figure; this page is the record of what each rental
 was for, whether it finished, and where its receipt is.
 
