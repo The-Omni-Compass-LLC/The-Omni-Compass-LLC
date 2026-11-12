@@ -188,12 +188,20 @@ def main(argv=None) -> int:
     # every set's row is kept as it lands (a line a set beside the record), so a machine that stops loses one set, not the hour
     part = out.with_suffix(".part.jsonl")
     out.parent.mkdir(parents=True, exist_ok=True)
+    # a set already run again is not run twice: the rows of the file being written to (a run that added sets since) and of
+    # the part file (a run that stopped); a row that ended in an error (a machine's fault, not the set's) is run again
     done = {}
+    if out.exists():
+        try:
+            done.update({r["file"]: r for r in json.loads(out.read_text(encoding="utf-8")).get("sets") or [] if not r.get("error")})
+        except (ValueError, KeyError):
+            pass
     if part.exists():
         for line in part.read_text(encoding="utf-8").splitlines():
             try:
                 r = json.loads(line)
-                done[r["file"]] = r
+                if not r.get("error"):
+                    done[r["file"]] = r
             except (ValueError, KeyError):
                 continue
     todo = [j for j in jobs if str(Path(j[1]).relative_to(ROOT)) not in done]

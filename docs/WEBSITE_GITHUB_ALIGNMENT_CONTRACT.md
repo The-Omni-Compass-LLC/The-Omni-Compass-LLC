@@ -57,6 +57,20 @@ The machine-readable payload is [`results/WEBSITE_SURFACE_CONTRACT.json`](../res
 
 This is canonical reference dialogue, not proof that the website's virtual guide has been changed. Each route may expand it using a more detailed local script only if the same meaning and provenance survive.
 
+## The site-wide tour and the live benchmark engine's own tour
+
+A site-wide tour (an orchestrator over the site's pages, a registry each page's sections register with, a persistent tour button and card, a page sequence, a narration engine) meets the live benchmark engine at one seam. The live benchmark engine page already carries its own tour, built and checked in this repository (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, `tools/tour_script.py`, `tools/tour_voice.py`, `tests/test_tour.py`); the site does not rebuild it, restyle it or narrate over it. What the page gives the site, and what the site's tour owes the record:
+
+| Piece of the site's tour | What the live benchmark engine already does on its own page | What the site's build does |
+|---|---|---|
+| Orchestrator across pages | One page, so none is needed: its tour walks its own sections | Keeps its own ordered list of the site's pages and its own state (which page, which stop, on or off) in the site's own storage; the live benchmark engine page is one entry in that list |
+| Registry and per-page section registration | Every section of the page is a stop, in the page's order, read from the page itself (`tourSteps`); the words of each stop are the Live Benchmark Engine Manual's, written by `tools/tour_script.py` | Each site page registers its own sections (an anchor that exists, a title, its words, its media id) when it loads; a stop with no real anchor is not registered |
+| Persistent button and card | The blue **Guided tour** tab and the card (`#tourCard`): "Stop N of M", the list of every stop, the red stop sign **◀ Back**, the yellow yield diamond **↺ Replay**, the green circle **Skip ▶**, the blue **?**, **Close** and the **Escape** key | Uses the same marks for the same acts (red only as a stop sign, yellow a diamond, green a circle), the same keys, an audio-off control and reduced motion; hides its own button and card while the live benchmark engine page is open, so two tours never run at once |
+| Page sequence and navigation | A link ending in `#tour` opens the page with its tour started, at the stop the reader left it on in that browser, else at its first; `#tour=` and a section's anchor (as `#tour=s-board`) starts it at that section's stop. The tour's last stop tells the reader the tab starts it again | Reaches the live benchmark engine by that link and nothing else, and resumes its own sequence when the reader returns to a site page; it does not script, scroll or press anything inside the live benchmark engine page |
+| Narration | A recorded voice, one clip a stop (`docs/engine/tour/`, listed with each clip's SHA-256 in `TOUR_VOICE.json`), never the browser's synthetic voice; the build fails on a spoken line the page no longer carries | Speaks only words that stand on the page it is on; a number is spoken as its feed row's own sentence (`results/SITE_NUMBERS.json`, the row's `sentence`), never retyped, so a new engine's reading replaces it everywhere at once |
+
+The legal notice opens and closes the site's tour as it opens and closes the live benchmark engine's. This section states what the repository's page does and what a site tour must respect; it is not a claim that the website's tour has been built or changed.
+
 ## Referee arithmetic: throughput and savings are independent
 
 With native useful completed work `W_N` and Omni work `W_O` over **the same duration** `T`, define:
