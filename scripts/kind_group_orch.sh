@@ -265,9 +265,25 @@ EOF
   fetch "$rel/karmadactl-linux-amd64.tgz" "$W/karmadactl.tgz" "$KARMADACTL_SHA256"
   fetch "$rel/crds.tar.gz" "$W/crds.tar.gz" "$KARMADA_CRDS_SHA256"
   tar -xzf "$W/karmadactl.tgz" -C "$W/bin" karmadactl
-  "$W/bin/karmadactl" init --kubeconfig "$D/kubeconfig-host" --karmada-data "$W/data" --karmada-pki "$W/pki" \
-    --crds "$W/crds.tar.gz" --karmada-apiserver-advertise-address "$host_ip" --wait-component-ready-timeout 600 \
-    > "$D/karmada_init.log" 2>&1 || { tail -40 "$D/karmada_init.log"; exit 1; }
+  # Karmada's installer picks a node it judges healthy for its etcd: Ready, and carrying no taint that refuses pods. kind says
+  # the control plane is ready a moment before the node controller lifts the not-ready taint, and an install started inside
+  # that moment stops with "failed to find a healthy node for karmada-etcd" before it has installed anything (8 November,
+  # runs 42451535312 and 42452546939, repetition 1: the install began 1.5 s after kind's word and the arm was marked invalid).
+  # The node is waited for, and an install that still stops on that one sentence is started again; any other failure stands.
+  kubectl --kubeconfig "$D/kubeconfig-host" wait --for=condition=Ready node --all --timeout=180s > /dev/null
+  for t in $(seq 1 60); do
+    [ -z "$(kubectl --kubeconfig "$D/kubeconfig-host" get nodes -o json | jq -r '.items[].spec.taints[]? | select(.key | startswith("node.kubernetes.io/")) | .key')" ] && break
+    sleep 2
+  done
+  for t in 1 2 3; do
+    "$W/bin/karmadactl" init --kubeconfig "$D/kubeconfig-host" --karmada-data "$W/data" --karmada-pki "$W/pki" \
+      --crds "$W/crds.tar.gz" --karmada-apiserver-advertise-address "$host_ip" --wait-component-ready-timeout 600 \
+      > "$D/karmada_init.log" 2>&1 && break
+    if [ "$t" != 3 ] && grep -q "failed to find a healthy node" "$D/karmada_init.log"; then
+      echo "karmadactl init found no healthy node yet (try $t): waiting 20 s" >> "$D/karmada_init_retries.log"; sleep 20; continue
+    fi
+    tail -40 "$D/karmada_init.log"; exit 1
+  done
   # every member joined in push mode by the address the orchestrator's pods reach it at (its control plane on the runner's
   # container network)
   for i in $(seq 1 "$N"); do

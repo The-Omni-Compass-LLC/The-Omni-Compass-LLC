@@ -106,11 +106,14 @@ install)
   done
   placed "$OUT_DIR/kai_placement.txt"
   elif [ "$Q" = koordinator ]; then
+  # the archive is asked for with the patience the group rig gives the metrics-server manifest (scripts/kind_group.sh): on
+  # 8 November GitHub's release download answered 504 for this archive from about 07:00 to 10:30 UTC, and a fetch that gave up
+  # inside a minute marked every arm with Koordinator invalid in runs 42457078253 and 42461424873; nothing is measured yet here
   # Koordinator's chart at its pinned version, the release archive checked against its pinned SHA-256, installed by Helm as
   # its own guide installs it, with the operator's two settings for one control plane (deploy/kind/koordinator-values.yaml)
   url="https://github.com/koordinator-sh/charts/releases/download/koordinator-${KOORD_VERSION}/koordinator-${KOORD_VERSION}.tgz"
   for t in 1 2 3; do
-    curl -fsSL --retry 3 -o "$W/chart.tgz" "$url" && break
+    curl -fsSL --retry 8 --retry-all-errors --retry-delay 15 -o "$W/chart.tgz" "$url" && break
     [ "$t" = 3 ] && { echo "INVALID RUN: Koordinator's chart could not be fetched ($url)"; exit 1; }; sleep 10
   done
   got=$(sha256sum "$W/chart.tgz" | cut -d' ' -f1)
@@ -150,7 +153,7 @@ install)
   # with the chart's own placement settings (deploy/kind/kuberay-values.yaml)
   url="https://github.com/ray-project/kuberay-helm/releases/download/kuberay-operator-${KUBERAY_VERSION}/kuberay-operator-${KUBERAY_VERSION}.tgz"
   for t in 1 2 3; do
-    curl -fsSL --retry 3 -o "$W/chart.tgz" "$url" && break
+    curl -fsSL --retry 8 --retry-all-errors --retry-delay 15 -o "$W/chart.tgz" "$url" && break
     [ "$t" = 3 ] && { echo "INVALID RUN: KubeRay's chart could not be fetched ($url)"; exit 1; }; sleep 10
   done
   got=$(sha256sum "$W/chart.tgz" | cut -d' ' -f1)

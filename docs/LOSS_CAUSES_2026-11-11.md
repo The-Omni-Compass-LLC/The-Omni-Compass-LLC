@@ -82,6 +82,19 @@ as on omni-v25 (`docs/LOSS_CAUSES_2026-11-05.md`): 0.083 of a core (0.059 to 0.1
   Omni-Compass on top of it, did not finish their queue or exited with an error, while the arms without it finished), Karmada's
   four ways (runs B and C failed) and Armada's (run B failed). Each goes back in the queue once its failure is read from its
   job's own log (Koordinator's first: its failure repeats, so a rerun alone would only repeat it).
+- **Read from those logs on 12 November** (`scripts/reruns.txt`, the block added that day): none of the four is a result, and
+  Koordinator's failure was not one failure repeating. Its first run A (42442972445) lost repetition 5 to the rig's own pod
+  watch, which refused the Omni-Compass arm because its history had expired across a change to a watched pod; the two sets
+  queued on 5 and 6 November then ran while GitHub's release download answered 504 for Koordinator's pinned chart (about
+  07:00 to 10:30 UTC on 8 November), so every arm that installs Koordinator was marked invalid before it measured anything.
+  Volcano's run B (42445169073) had one repetition's job ended by the runner (exit 143) inside its first arm. Karmada's runs
+  B and C (42451535312, 42452546939) each lost repetition 1 to an install race: Karmada's installer began 1.5 s after kind
+  said the host cluster was ready and stopped with "failed to find a healthy node for karmada-etcd". Armada's run B
+  (42454965601) lost one repetition whose log GitHub no longer serves. Repaired in the rig: the chart's fetch waits as the
+  metrics-server manifest's does (`scripts/kind_batch_queue.sh`), and the Karmada install waits for the node and starts
+  again when it stops on that sentence (`scripts/kind_group_orch.sh`). Still open: the pod watch's refusal on Koordinator's
+  rig, first repaired on 6 November (`docs/REPAIR_20261106.md`) and seen once more here. All four sets are queued again
+  whole, A, B and C.
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
