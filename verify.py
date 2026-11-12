@@ -507,6 +507,9 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "azure_runs.py"), "--check"], capture_output=True, text=True)
     check("every Azure run GitHub recorded stands on one page with where its receipt lives: results/live/AZURE_RUNS.md is what its "
           "records give (tools/azure_runs.py --check; the founder's order of 8 November)", r.returncode == 0, (r.stdout + r.stderr).strip()[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "census.py"), "--check"], capture_output=True, text=True)
+    check("the census reads every run, file, table and catalog row from both ends: docs/CENSUS.md is what its records give "
+          "(tools/census.py --check; the founder's order of 11 November)", r.returncode == 0, (r.stdout + r.stderr).strip()[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "land_engine.py"), "--check"], capture_output=True, text=True)
     check("every place that names the engine that stands names the newest one (tools/land_engine.py --check: the version list, the "
           "conductor's campaign, the grid's manifest and workflows, the package, the front page, CLAUDE.md, the manual, the live "

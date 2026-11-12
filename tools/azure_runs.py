@@ -126,7 +126,7 @@ def render(rec: dict) -> str:
     by = {}
     for r in runs:
         by[r["conclusion"]] = by.get(r["conclusion"], 0) + 1
-    url = "https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/"
+    from tools.repo import RUNS as url
     lines = ["# Every Azure run, and where its receipt lives", "",
              f"Every run of the two Azure workflows that GitHub recorded, {len(runs)} in all ("
              + ", ".join(f"{v} {k}" for k, v in sorted(by.items())) + "), newest first, read from "
@@ -154,10 +154,10 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--refresh", default="")
-    ap.add_argument("--raw", default="")
+    ap.add_argument("--raw", dest="clone", default="")
     a = ap.parse_args(argv)
     if a.refresh:
-        RECORDS.write_text(json.dumps(refresh(a.refresh, a.raw or str(ROOT)), indent=1) + "\n", encoding="utf-8")
+        RECORDS.write_text(json.dumps(refresh(a.refresh, a.clone or str(ROOT)), indent=1) + "\n", encoding="utf-8")
     md = render(json.loads(RECORDS.read_text(encoding="utf-8")))
     if a.check:
         ok = OUT.exists() and OUT.read_text(encoding="utf-8") == md

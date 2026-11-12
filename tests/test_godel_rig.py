@@ -79,7 +79,11 @@ class GodelRig(unittest.TestCase):
     def test_metrics_server_is_applied_once_with_the_rigs_settings_and_by_the_registry_that_serves_it(self):
         # amendment 9: one rollout (two left the first pod terminating past the wait on 1.24); k8s.gcr.io only redirects
         self.assertNotIn("patch deployment metrics-server", BENCH)
-        code = BENCH[BENCH.index("<<'EOF'\nimport sys, yaml") + len("<<'EOF'\n"):BENCH.index("\nEOF\nkubectl apply -f \"$OUT_DIR/metrics-server-rig.yaml\"")]
+        # the heredoc that writes the rig's manifest, to its own end (11 November: the image's load from the runner stands
+        # between it and the one apply)
+        start = BENCH.index("<<'EOF'\nimport sys, yaml") + len("<<'EOF'\n")
+        code = BENCH[start:BENCH.index("\nEOF\n", start)]
+        self.assertEqual(BENCH.count('kubectl apply -f "$OUT_DIR/metrics-server-rig.yaml"'), 1)
         manifest = ("apiVersion: v1\nkind: ServiceAccount\nmetadata: {name: metrics-server, namespace: kube-system}\n---\n"
                     "apiVersion: apps/v1\nkind: Deployment\nmetadata: {name: metrics-server, namespace: kube-system}\n"
                     "spec:\n  template:\n    spec:\n      containers:\n      - name: metrics-server\n"
