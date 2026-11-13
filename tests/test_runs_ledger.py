@@ -149,6 +149,14 @@ class Record(unittest.TestCase):
         s = (ROOT / ".github" / "workflows" / "engine-runs.yml").read_text(encoding="utf-8")
         self.assertIn("--verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all", s)     # the step that writes the page's digest
 
+    def test_the_grid_rewrites_the_monograph_it_moves(self):
+        """13 November: each grid committed on main left the monograph's page_lag block one grid behind, and main's verify
+        failed until the next set of engine-runs wrote it again; the grid's own push now writes it on the branch as it stands."""
+        s = (ROOT / ".github" / "workflows" / "injection-grid.yml").read_text(encoding="utf-8")
+        self.assertIn("python3 tools/monograph_words.py --fix", s)
+        self.assertLess(s.index("git pull -q --rebase"), s.index("python3 tools/monograph_words.py --fix"))
+        self.assertIn("git add docs/engine/LIVE_ENGINE_MONOGRAPH.md", s)
+
     def test_a_set_is_never_lost_to_another_pushs_file(self):
         """Each of the four runs of engine-runs that ever failed had computed its set and was stopped at the commit by the whole
         repository's notice check on a file it did not write (results/RUNS_NO_SET.json, read from GitHub's logs): the commit
