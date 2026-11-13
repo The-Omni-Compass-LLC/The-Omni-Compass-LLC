@@ -22,6 +22,7 @@ The machine-readable payload is [`results/WEBSITE_SURFACE_CONTRACT.json`](../res
 | Same-time actual work | `results/WORK_TODAY.md` plus its underlying named paired-run workload and denominator | Publish **only** a supported throughput/completed-work or goodput ratio with units, time window, environment, baseline and uncertainty; never substitute an index or response-time decrease |
 | Physical GPU | `show[chip_energy_per_request]`, `show[chip_work_for_the_bill]`; `results/TWO_BILLS.json` | V23 A10 meter: energy per served request lower; work per dollar mixed over three runs |
 | Cloud economics | `show[cloud_bill]`, `four_arms.C` / `four_arms.D`; `results/TWO_BILLS.json` | V18 Azure 97 paired comparisons; work per dollar not recorded |
+| The four arms A, B, C and D | `four_arms.A` to `four_arms.D` and the rows `show[arm_b_vs_a]`, `show[arm_d_vs_c]`, each printed as its own `sentence` with its `word`, `engine` and `receipt` | Each arm read on its own engine and class; `results/ABC_TABLE.json` was retired on 4 November (our own model, class S: A Kubernetes alone, B Omni-Compass on top, C Omni-Compass alone, and no D) and the tests refuse it on `results/`, so no arm is ever read from it |
 | Composed full system | `results/WHOLE_SYSTEM.md` | Model composition, class S; not a simultaneous physical chip–cloud measurement |
 | Company and rights | `LICENSE`, `NOTICE`, `DISCLOSURES.md`, `docs/COMPANY_ATTRIBUTION_STANDARD.md` | Proprietary terms; no unproved legal title-transfer or granted-patent claim |
 | Proposed licensing economics | `docs/COMMERCIAL_TERMS_PROPOSAL.md` | Proposals/examples only until signed agreements establish contractual rates |
@@ -33,7 +34,7 @@ The machine-readable payload is [`results/WEBSITE_SURFACE_CONTRACT.json`](../res
 | Website surface | Product communication | Mandatory alignment and acceptance |
 |---|---|---|
 | Homepage hero and supervisory description | One-line identity, architecture, existing hardware and native-controller retention | Product promise matches `docs/MECHANISM_OF_ACTION.md`; no invented throughput or bill claim |
-| Ticker / animated statistics | Compact benchmark claims | Feed **only** `results/SITE_NUMBERS.json` data with receipt links; freeze or hide if unavailable, never silently substitute fallbacks |
+| Ticker / animated statistics | Compact benchmark claims | Feed **only** `results/SITE_NUMBERS.json` data with receipt links; freeze or hide if unavailable, never silently substitute fallbacks: a figure kept from an older engine (the omni-v21 index's +5.0% and +12.9% among them) is never shown in its place; the surface says the receipt could not be read |
 | Homepage benchmark panel and carousels | Per-workload comparisons | Match engine and class on each card; show adverse rows, confidence and baseline; no cross-version percentage addition |
 | Homepage 10-slide tour and PageTourGuide | Stepwise narrative from problem through mechanism, experiment, receipts and licensing | Each stop maps to a real section anchor, media ID and exact evidence; accessible next/back, reduced-motion and audio off |
 | Virtual guide / TTS / Q&A | “What is it?”, “How does it work?”, “Where did numbers come from?”, “What is the bill?”, “What is not proved?” | Reuse the same canonical statements; TTS must say the version, what percentages mean and model-vs-meter distinction |
