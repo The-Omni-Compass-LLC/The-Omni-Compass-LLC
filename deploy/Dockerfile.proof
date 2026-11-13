@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The proof image: the toolchain alone (Python 3.12 with the repository's requirements, a C++ compiler and cmake, node, git)
+# and no copy of the repository. The checkout is mounted read-only when the image runs, so what is proved is the reader's own
+# clone, and nothing in it is changed: scripts/prove_runs.sh names the engine by its fingerprint, builds the C++ harness from
+# source inside the container, checks every recorded set of the jump generator from the records themselves, runs one set
+# three ways (the Python, the C++ harness, the live engine page's own code in node) and prints the three SHA-256 digests
+# side by side with the digest GitHub's machine recorded. Our own models (class S): it proves that three implementations
+# compute the same numbers; it is not a benchmark result.
+#
+#   git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC && cd The-Omni-Compass-LLC
+#   docker build -f deploy/Dockerfile.proof -t omni-proof .
+#   docker run --rm -v "$PWD":/repo:ro omni-proof                 # the newest recorded set
+#   docker run --rm -v "$PWD":/repo:ro omni-proof 48766475        # any recorded base (results/RUNS_LEDGER.md), or a base of your own
+#
+# GitHub builds and runs this image on its own machine (.github/workflows/prove-runs.yml); its log is public and not ours to edit.
+FROM node:22-slim AS node
+FROM python:3.12-slim
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+RUN apt-get update && apt-get install -y --no-install-recommends git cmake make g++ && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt /opt/omni/requirements.txt
+RUN pip install --no-cache-dir -r /opt/omni/requirements.txt
+# the mounted checkout belongs to another user: git reads it all the same; nothing is written into it
+RUN git config --system --add safe.directory /repo
+ENV PYTHONDONTWRITEBYTECODE=1 OMNI_CPP_BUILD=/opt/omni/build
+WORKDIR /repo
+ENTRYPOINT ["bash", "scripts/prove_runs.sh"]

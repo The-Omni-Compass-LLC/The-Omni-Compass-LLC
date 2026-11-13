@@ -10,7 +10,7 @@ name: engine-runs
 # writes every receipt and one SHA-256 digest; the C++ harness (cpp/tools/engine_runs.cpp on the engine's C++ twins) reads the
 # Python's draws as its input, puts the mechanism on and must give the same receipts and the same digest; the live benchmark engine page's
 # own code (its ported engine and its loop, run in node) computes the same set and must give the same again; the record, with the
-# digest of the draws, the Python's, the C++'s and their run-by-run differences, is committed to
+# digest of the draws, the Python's, the C++'s, the page's own and their run-by-run differences, is committed to
 # results/engine_runs/ with this run's id, address and commit, and the page shows the newest record with the GitHub run that
 # made it (docs/engine/build_live_engine.py). The same base runs the core's Monte Carlo too (the founder's words of 24 October:
 # tools/core_runs.py, omnicompass/core.simulate on 500 runs, RK4, 20 macro steps of 10 micro steps, native beside Omni-Compass), and
@@ -33,6 +33,7 @@ on:
       - "docs/engine/OMNI_COMPASS_LIVE_ENGINE.html"
       - "tools/engine_runs.py"
       - "tools/core_runs.py"
+      - "tools/runs_ledger.py"
       - "omnicompass/core.py"
       - "cpp/**"
       - ".github/workflows/engine-runs.yml"
@@ -83,21 +84,32 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
+          # the notice is held here on what this run wrote; a file elsewhere that lacks it is verify.yml's to stop, on the push
+          # that brought it, and never costs a set its record (12 November: each of the four runs of engine-runs that ever
+          # failed had computed its set, the digests one, and was stopped here by another push's file)
+          python3 tools/legal.py --check > legal.txt || true
+          if grep -E '^results/(engine_runs|core_runs)/' legal.txt; then echo "::error::a record this run wrote lacks the legal notice"; exit 1; fi
+          others=$(grep -vc '^legal notice:' legal.txt || true)
+          [ "$others" = 0 ] || echo "::warning::$others notice problems in files this run did not write (verify.yml holds them); the record is committed all the same"
           git add results/engine_runs/ results/core_runs/
           git commit -q -m "The Python's runs and the core's Monte Carlo from the jump generator: base $BASE, checked in the live benchmark engine's own code (engine-runs run $GITHUB_RUN_ID)"
           # the monograph quotes the newest set (tools/monograph_words.py): written again on the branch as it stands after the
           # rebase and committed beside the set, so no release check finds it one set behind (11 November: every set pushed to
           # a branch had left the monograph stale and the next release check failed on it); a push that fails drops it and retries
+          # the jump generator's ledger (tools/runs_ledger.py, results/RUNS_LEDGER.md) is written the same way and in the same
+          # commit: every set's digests, the Python's, the C++ harness's and the page's, and the run that made it, proved again
+          # from the records as the branch stands; a set that fails a proof stops the push (12 November)
           for attempt in 1 2 3 4 5 6; do
             if git pull -q --rebase; then
               made=0
               python3 tools/monograph_words.py --fix > /dev/null
-              if ! git diff --quiet -- docs/engine/LIVE_ENGINE_MONOGRAPH.md; then
-                git add docs/engine/LIVE_ENGINE_MONOGRAPH.md
-                git commit -q -m "The live engine monograph quotes the new set (tools/monograph_words.py --fix, engine-runs run $GITHUB_RUN_ID)"
+              python3 tools/runs_ledger.py > /dev/null
+              git add docs/engine/LIVE_ENGINE_MONOGRAPH.md results/RUNS_LEDGER.json results/RUNS_LEDGER.md
+              if ! git diff --cached --quiet; then
+                git commit -q -m "The live engine monograph and the jump generator's ledger carry the new set (tools/monograph_words.py --fix, tools/runs_ledger.py, engine-runs run $GITHUB_RUN_ID)"
                 made=1
               fi
+              python3 tools/runs_ledger.py --check | tee -a "$GITHUB_STEP_SUMMARY" || { echo "::error::a set fails one of the ledger's proofs (results/RUNS_LEDGER.md)"; exit 1; }
               git push && exit 0
               if [ "$made" = 1 ]; then git reset -q --hard HEAD~1; fi
             else

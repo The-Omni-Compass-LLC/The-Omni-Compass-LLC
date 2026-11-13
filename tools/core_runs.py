@@ -217,7 +217,7 @@ def page_system(system: dict) -> str:
     return json.dumps({"state": system["state"], "ranges": system["params"]})
 
 
-def verify(page: Path, n: int, base: int, system: dict = None) -> int:
+def verify(page: Path, n: int, base: int, system: dict = None, record: Path = None) -> int:
     """The page's own port of the core (between its CORE-MC markers) run in node on the same set: the digest must be the Python's."""
     s = page.read_text(encoding="utf-8")
     try:
@@ -245,6 +245,30 @@ def verify(page: Path, n: int, base: int, system: dict = None) -> int:
             worst = max([worst] + [abs(float(x) - float(y)) if "nan" not in (x, y) else (0.0 if x == y else math.inf) for x, y in zip(ua, ub)])
     print(f"the page's core and the Python's, {n} runs from base {base} in four ways ({(system or SYSTEM)['name']}): the digests {'match' if same else 'DIFFER'}; "
           f"{lines} of {4 * n} lines differ, largest difference {worst:.1e}")
+    if record is not None and record.exists():   # the third digest beside the Python's and the C++ harness's, in the set's own record (11 November)
+        data = json.loads(record.read_text(encoding="utf-8"))
+        if data.get("runs") == n and data.get("base") == base:
+            pd = hashlib.sha256(b.encode("utf-8")).hexdigest()
+            data["page"] = {"tool": "the page's own port of the core (between its CORE-MC markers), run in node (tools/core_runs.py --verify)",
+                            "page": str(page.resolve().relative_to(ROOT)) if page.resolve().is_relative_to(ROOT) else page.name,
+                            "page_sha256": hashlib.sha256(page.read_bytes()).hexdigest(), "digest": pd, "same": pd == data.get("digest"),
+                            "largest_difference": float(f"{worst:.1e}"), "agree": 4 * n - lines, "of": 4 * n}
+            record.write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+            md = record.with_suffix(".md")
+            if md.exists():
+                mark = "**The live engine page's own port of the core**"
+                line = (f"{mark} (run in node) on the same {n} runs in four ways: digest {pd}, {'the same' if data['page']['same'] else 'DIFFERENT'}; "
+                        f"{4 * n - lines} of {4 * n} lines agree, largest difference {worst:.1e}. The page checked: SHA-256 {data['page']['page_sha256']}.")
+                out, placed = [], False
+                body = md.read_text(encoding="utf-8").split("\n")
+                for i, ln in enumerate(body):
+                    if ln.startswith(mark):
+                        out.append(line); placed = True
+                    elif ln.strip() == "---" and not placed and i >= len(body) - 4:
+                        out += [line, "", ln]; placed = True
+                    else:
+                        out.append(ln)
+                md.write_text("\n".join(out), encoding="utf-8")
     return 0 if same else 1
 
 
@@ -266,8 +290,9 @@ def main() -> int:
     except (ValueError, OSError) as e:
         print(f"the system is not read: {e}")
         return 2
-    if a.verify:
-        return verify(Path(a.verify), a.runs, a.base, system)
+    if a.verify:   # the page's digest goes into the set's own record, beside the Python's and the C++ harness's
+        rec = Path(a.out) if a.out else OUT_DIR / (f"CORE_RUNS_{system['slug']}_{a.runs}_{a.base}.json" if system and system.get("slug") else f"CORE_RUNS_{a.runs}_{a.base}.json")
+        return verify(Path(a.verify), a.runs, a.base, system, rec)
     if a.verify_cpp:
         return cpp_check(a.runs, a.base, system, Path(a.verify_cpp))
     runs = [one(k, a.base, system) for k in range(a.runs)]

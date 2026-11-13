@@ -90,13 +90,34 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          python3 tools/legal.py --check > legal.txt || { tail -20 legal.txt; echo "::error::a page lacks the legal notice"; exit 1; }
+          # the notice is held here on what this run wrote; a file elsewhere that lacks it is verify.yml's to stop, on the push
+          # that brought it, and never costs a set its record (12 November: each of the four runs of engine-runs that ever
+          # failed had computed its set, the digests one, and was stopped here by another push's file)
+          python3 tools/legal.py --check > legal.txt || true
+          if grep -E '^results/(core_runs)/' legal.txt; then echo "::error::a record this run wrote lacks the legal notice"; exit 1; fi
+          others=$(grep -vc '^legal notice:' legal.txt || true)
+          [ "$others" = 0 ] || echo "::warning::$others notice problems in files this run did not write (verify.yml holds them); the record is committed all the same"
           git add results/core_runs/
           git diff --cached --quiet && { echo "nothing new to record"; exit 0; }
           git commit -q -m "The core's Monte Carlo from the jump generator, the Python and the C++ linked, checked in the live benchmark engine's own code (monte-carlo run $GITHUB_RUN_ID)"
+          # the jump generator's ledger (tools/runs_ledger.py, results/RUNS_LEDGER.md) is written again on the branch as it stands
+          # after the rebase and committed beside the set; a push that fails drops it and retries; a set that fails one of the
+          # ledger's proofs stops the push (12 November)
           for attempt in 1 2 3 4 5 6; do
-            git pull -q --rebase && git push && exit 0
-            git rebase --abort 2>/dev/null || true
+            if git pull -q --rebase; then
+              made=0
+              python3 tools/runs_ledger.py > /dev/null
+              git add results/RUNS_LEDGER.json results/RUNS_LEDGER.md
+              if ! git diff --cached --quiet; then
+                git commit -q -m "The jump generator's ledger carries the new set (tools/runs_ledger.py, monte-carlo run $GITHUB_RUN_ID)"
+                made=1
+              fi
+              python3 tools/runs_ledger.py --check | tee -a "$GITHUB_STEP_SUMMARY" || { echo "::error::a set fails one of the ledger's proofs (results/RUNS_LEDGER.md)"; exit 1; }
+              git push && exit 0
+              if [ "$made" = 1 ]; then git reset -q --hard HEAD~1; fi
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
           done
           echo "::error::the record could not be pushed after six attempts"; exit 1

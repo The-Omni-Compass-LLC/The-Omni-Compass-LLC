@@ -37,6 +37,7 @@ from tools.company_attribution import normalize as canonical_name            # n
 LIVE = ROOT / "results" / "live"
 OUT = ROOT / "docs" / "K8S_REGRESSION_2026-11-11.md"
 OLD, NEW = 21, 25
+AFTER = 26                    # the engine that stands: its own category reading beside the two, never read across
 P95, MEAN = "response time (ms), 95th percentile", "response time (ms), mean"
 WRITES = "settings commands the governor wrote on its own (no person touched either arm)"
 PODS = "pods started"
@@ -70,6 +71,9 @@ def beat_at(commit):
 def build():
     tests = {v: {t["source"].split("/")[-1].split("_", 1)[1]: t for t in k8s_tests(v)} for v in (OLD, NEW)}
     cat = {v: 100 * (OI.gmean([1 + t["index_pct"] / 100 for t in tests[v].values()]) - 1) for v in (OLD, NEW)}
+    after = {t["source"].split("/")[-1].split("_", 1)[1]: t for t in k8s_tests(AFTER)}
+    if len(after) == len(tests[NEW]):          # the engine that stands, once its nine tables are whole (11 November: they are)
+        cat[AFTER] = 100 * (OI.gmean([1 + t["index_pct"] / 100 for t in after.values()]) - 1)
     rows = []
     for base in tests[OLD]:
         t_old, t_new = tests[OLD][base], tests[NEW][base]
@@ -157,10 +161,14 @@ def render(d):
         f"- **omni-v21**: the real-Kubernetes category of the Omni index reads GAIN, up {c[OLD]:.4f}%, from its nine three-run "
         "tables (the index of 31 October, commit `3ad522226b`). It is omni-v21's historical reading and is labelled so.",
         f"- **omni-v25**: the same category reads GAIN, up {c[NEW]:.4f}%, from its nine three-run tables (`results/OMNI_INDEX.json` on "
-        "main). It is the latest measured reading of the category.",
-        "- **omni-v26** stands as the engine on main; its Kubernetes tables are not yet whole, so it has no category reading yet.",
+        "main until 11 November). It is omni-v25's reading and is labelled so.",
+        (f"- **omni-v26**, the engine that stands: the same category reads GAIN, up {c[AFTER]:.4f}%, from its own nine three-run "
+         "tables (`results/live/V26_*.json`, tabled on 11 November; `results/OMNI_INDEX.json` on main). It is the latest measured "
+         "reading of the category; omni-v26 changed one rule from omni-v25 (`docs/OMNI_V26.md`) and kept the 10 s beat on site."
+         if AFTER in c else "- **omni-v26** stands as the engine on main; its Kubernetes tables are not yet whole, so it has no "
+         "category reading yet."),
         f"- The two differ by {c[OLD] - c[NEW]:.4f} points. Neither number is moved into the other's record: the index file on main "
-        "keeps omni-v25's numbers, and no omni-v21 table is read as omni-v25's. Every number on this page is each engine's own; "
+        "keeps each engine's own numbers, and no omni-v21 table is read as omni-v25's. Every number on this page is each engine's own; "
         "setting them side by side is a diagnosis of what to test, never a result.",
         "",
         "## 2. Test by test: native held, the Omni-Compass arm moved",
@@ -220,7 +228,7 @@ def render(d):
         "- That is the signature of a faster beat on a moving load: a decision every 10 s follows each step of the load and moves the "
         "autoscaler's target and the pod count more often, where a decision every 60 s rides through them. It is the leading cause, "
         "not yet a proven one.",
-        "- The steady-load pace runs on omni-v25 (`results/pace/PACE.md`) read every slower beat against 10 s by small amounts on the "
+        "- The steady-load pace runs on omni-v25 (`results/pace/V25_PACE_*.md`) read every slower beat against 10 s by small amounts on the "
         "response time; they do not cover a moving load, where the two campaigns part most.",
         "- The direct test is preregistered and dispatched on GitHub's free machines: `docs/PACE_PREREGISTRATION.md`, amendment 7, "
         "the demand that wanders, native and the Omni-Compass arm at 10, 60 and 90 s, one engine, one rig, paired, three runs "

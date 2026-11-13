@@ -4,7 +4,7 @@
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
-Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `b813bb98a5`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so. The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; the engine that stands is omni-v26, and its figure of record is the Omni index, **GAIN 20.4%** (its second reading, work and speed alone, GAIN 94.0%), in `results/OMNI_INDEX.md`.
+Every mechanism, harness, receipt and result, read from the files named beside it. Built by `tools/dossier.py` at commit `ccead14a412`. Evidence classes: **T** theorem, **V** verified in code, **S** a model, **L** live software (real Kubernetes), **P** a physical meter. A model is not a meter, and a model written by the people who wrote the law is not an independent test; where a result is a model it says so. The sections below are the record of omni-v3 and the engines before it, each named, every cell's word its own table's; the engine that stands is omni-v26, and its figure of record is the Omni index, **GAIN 20.0%** (its second reading, work and speed alone, GAIN 96.5%), in `results/OMNI_INDEX.md`.
 
 ## 1. The mechanism, and proof that it is the one that ran
 

@@ -24,45 +24,44 @@ the live evidence and the verification receipt), which `verify.py` checks agains
   - the organisms under the line load: the spine: GAIN (fewer misses), misses down 0.371 pp, energy STEADY, up 0.038% (under the 0.5% floor); Compute / AI / Cloud: GAIN (fewer misses), misses down 0.205 pp, energy STEADY, up 0.045% (under the 0.5% floor); Physics / Robotics / Autonomous: GAIN (fewer misses), misses down 0.250 pp, energy STEADY, up 0.030% (under the 0.5% floor); Energy / Facility / Industrial: GAIN (fewer misses), misses down 0.117 pp, energy the same; Distribution / Specialized: GAIN (fewer misses), misses down 0.142 pp, energy STEADY, up 0.006% (under the 0.5% floor); the four stacked: GAIN (fewer misses), misses down 0.176 pp, energy the same; the whole tower: GAIN (fewer misses), misses down 0.051 pp, energy the same
 - The grid (source: results/grid_v5/GRID.md, its signs put in words): Across the grid: modelled, 36 of 36 squares of 10 and 100 runs GAIN (fewer misses); the 18 single runs: 18 with fewer misses; work STEADY, the same (raw +0.000%); energy STEADY, up 0.000% to 0.065% (under the 0.5% floor); with the cluster inside, 54 squares: 18 single repetitions (no reading); of the 36 of 10 and 100 repetitions, by gauge: "organism time over the line (% of steps)" GAIN in 36, LOSS in 0, "time over the response line (% of samples)" GAIN in 36, LOSS in 0, "response time (ms), 95th percentile" GAIN in 26, LOSS in 2, "energy (Wh)" GAIN in 26, power given in 0, "energy, parked workers still on at idle power (Wh)" GAIN in 26, power given in 0, "organism energy (J)" GAIN in 0, power given in 22, "organism work per energy" GAIN in 0, power given in 22, "failed requests (%)" GAIN in 18, LOSS in 0, "response time (ms), 99th percentile" GAIN in 12, LOSS in 2, "HPA replicas, mean" GAIN in 4, power given in 5, "pods started" GAIN in 3, power given in 0; off the clock in 3; invalid in 0.
 - **The four arms** (`results/TWO_BILLS.md`): **A**, the chip native, and **B**, the chip with Omni-Compass on native (omni-v23, three runs): B against A, the bill STEADY, under the floor (the three runs' mean 0.01%), the work done the runs disagree, work per dollar the runs disagree; **C**, the cloud native, and **D**, the cloud with Omni-Compass on native (omni-v18, 97 paired repetitions on Azure): D against C, the bill up 1.21%, inside the noise; Google and Amazon wired, not yet run.
-- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v25, each named in its table): GAIN 20.4% on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), GAIN 94.0% on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: GAIN 20.9%. Source: results/OMNI_INDEX.md.
-  - Real messaging (Apache Kafka, GitHub): GAIN 218.6%
-  - Real Kubernetes (GitHub): GAIN 20.5%
-  - Real database (PostgreSQL behind PgBouncer, GitHub): power given 1.4%
-  - Real database cache (MongoDB under YCSB, GitHub): power given 4.8%
-  - Real cache (Redis, GitHub): power given 6.8%
-  - Real database buffer pool (MySQL under sysbench, GitHub): power given 9.5%
+- The Omni index (evidence class L, real software on real computers: the software end, not bare metal and not the chip; every measure judged across our three runs; the three-run tables of omni-v26, each named in its table): GAIN 20.0% on the software end's reading (work, speed and machines; energy shown, never scored where no meter read it), GAIN 96.5% on the service reading (work and speed alone); the reading declared on 4 October, the modelled energy scored too: GAIN 20.5%. Source: results/OMNI_INDEX.md.
+  - Real messaging (Apache Kafka, GitHub): GAIN 221.1%
+  - Real Kubernetes (GitHub): GAIN 22.2%
+  - Real database (PostgreSQL behind PgBouncer, GitHub): power given 1.8%
+  - Real cache (Redis, GitHub): power given 4.9%
+  - Real database cache (MongoDB under YCSB, GitHub): power given 7.1%
+  - Real database buffer pool (MySQL under sysbench, GitHub): power given 12.5%
 
-**On the engine that stands (omni-v26): 1 of 27 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
+**On the engine that stands (omni-v26): 23 of 26 benchmarks so far.** Every other row is that engine's own result, named in its Engine column, and runs again on the engine that stands (`scripts/reruns.txt`); results are never read across engines.
 
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
-| Kafka, the consumer group's size, on omni-v26, outside the index until every test has its omni-v26 table | omni-v26 | 221.1% | GAIN, power given | L |
-| Every real test together: the Omni index | omni-v25 | 20.4% | GAIN AND LOSS | L |
+| Every real test together: the Omni index | omni-v26 | 20.0% | GAIN AND LOSS | L |
+| Robustness: the two-hour run | omni-v26 | 6.0% | GAIN AND LOSS | L |
+| Robustness: the governor killed outright mid-run | omni-v26 | 1.7% | GAIN AND LOSS | L |
+| Robot arms (MuJoCo), the three untouched robots | omni-v26 | 3.8% | GAIN | S |
+| Redis, the cache's memory ceiling | omni-v26 | 4.9% | GAIN, power given | L |
+| Real Kubernetes, steady work | omni-v26 | 31.5% | GAIN, power given | L |
+| Real Kubernetes, faults | omni-v26 | 34.3% | GAIN AND LOSS | L |
+| Real Kubernetes, demand that wanders | omni-v26 | 27.6% | GAIN AND LOSS | L |
+| Real Kubernetes, all four at once | omni-v26 | 28.6% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v26 | 10.2% | GAIN AND LOSS | L |
+| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v26 | 1.3% | GAIN AND LOSS | L |
+| Real Kubernetes, a queue of jobs | omni-v26 | 10.2% | GAIN AND LOSS | L |
+| Real Kubernetes, a public day of demand (Google 2011) | omni-v26 | 37.4% | GAIN AND LOSS | L |
+| Real Kubernetes, a noisy neighbour | omni-v26 | 2.6% | GAIN AND LOSS | L |
+| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v26 | 26.4% | GAIN, power given | L |
+| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v26 | 7.3% | GAIN AND LOSS | L |
+| Power grids (SimBench), both load models | omni-v26 | 5.8% | GAIN, power given | S |
+| PostgreSQL, the pooler's pool size | omni-v26 | 1.8% | GAIN AND LOSS | L |
+| MySQL, the buffer pool's size | omni-v26 | 12.5% | GAIN, power given | L |
+| MongoDB, the storage engine's cache size | omni-v26 | 7.1% | GAIN AND LOSS | L |
+| Drone swarms, the three untouched cells | omni-v26 | 2.2% | GAIN | S |
+| Buildings and batteries (CityLearn), the districts with batteries | omni-v26 | 1.4% | GAIN | S |
+| Kafka, the consumer group's size | omni-v26 | 221.1% | GAIN, power given | L |
 | The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
 | The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
 | The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
-| Robustness: the two-hour run | omni-v25 | 8.9% | GAIN AND LOSS | L |
-| Robustness: the governor killed outright mid-run | omni-v25 | 1.5% | GAIN AND LOSS | L |
-| Robot arms (MuJoCo), the three untouched robots | omni-v25 | 3.8% | GAIN | S |
-| Redis, the cache's memory ceiling | omni-v25 | 6.8% | GAIN, power given | L |
-| Real Kubernetes, steady work | omni-v25 | 30.8% | GAIN, power given | L |
-| Real Kubernetes, faults | omni-v25 | 25.2% | GAIN AND LOSS | L |
-| Real Kubernetes, demand that wanders | omni-v25 | 23.4% | GAIN AND LOSS | L |
-| Real Kubernetes, all four at once | omni-v25 | 29.1% | GAIN AND LOSS | L |
-| Real Kubernetes, a service rightsized by Goldilocks and the VPA's recommender, Omni-Compass on top, ten pairs, three runs | omni-v25 | 22.6% | GAIN AND LOSS | L |
-| Real Kubernetes, a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs | omni-v25 | 0.9% | GAIN AND LOSS | L |
-| Real Kubernetes, a queue of jobs | omni-v25 | 9.0% | GAIN AND LOSS | L |
-| Real Kubernetes, a public day of demand (Google 2011) | omni-v25 | 35.3% | GAIN AND LOSS | L |
-| Real Kubernetes, a noisy neighbour | omni-v25 | 2.3% | GAIN AND LOSS | L |
-| Real Kubernetes, With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | 28.0% | GAIN AND LOSS | L |
-| Real Kubernetes, With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | omni-v25 | 9.0% | GAIN AND LOSS | L |
-| Power grids (SimBench), both load models | omni-v25 | 5.8% | GAIN, power given | S |
-| PostgreSQL, the pooler's pool size | omni-v25 | 1.4% | GAIN AND LOSS | L |
-| MySQL, the buffer pool's size | omni-v25 | 9.5% | GAIN, power given | L |
-| MongoDB, the storage engine's cache size | omni-v25 | 4.8% | GAIN AND LOSS | L |
-| Kafka, the consumer group's size | omni-v25 | 218.6% | GAIN, power given | L |
-| Drone swarms, the three untouched cells | omni-v25 | 2.9% | GAIN | S |
-| Buildings and batteries (CityLearn), the districts with batteries | omni-v25 | 1.4% | GAIN | S |
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 
@@ -116,7 +115,7 @@ machine (the GPU's stacks mode, `lambda-gpu.yml`), is the measurement that repla
 copied here.
 
 <!-- the oversight line (tools/oversight.py) -->
-**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 43 real Kubernetes tests of omni-v25, the minutes an on-call page would be open (the 3 a.m. call) went down 7.4%, fewer in 16 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (216; 216; 203 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 6.7% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.5% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
+**The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 37 real Kubernetes tests of omni-v26, the minutes an on-call page would be open (the 3 a.m. call) went down 11.0%, fewer in 13 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (227; 207; 226 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 12.2% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.8% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
 <!-- end of the oversight line -->
 
 ## Open

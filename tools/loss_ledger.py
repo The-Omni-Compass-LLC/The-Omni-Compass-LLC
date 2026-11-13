@@ -239,6 +239,48 @@ for _name in ("KOORDINATOR", "KOORDINATOR_CGROUP"):
     CAUSES[(25, _name, "pod start wait")] = KOORD_START
 
 
+# omni-v26's own causes, read from its own runs on 11 November (docs/LOSS_CAUSES_2026-11-11.md, the counts by
+# tools/governor_writes.py in results/GOVERNOR_WRITES.md): no omni-v25 cause is carried onto an omni-v26 row unread
+V26_PAGE = "docs/LOSS_CAUSES_2026-11-11.md"
+V26_NEXT = ("the next version through the model gate: the conveyance's raise sized so the shared host stays under its hand-back "
+            "line, a hand-back that steps a limit down by what the host is over, no raise into processor another workload's "
+            "waiting pods are owed, the remaining target writes read from the audit's own reasons first; then the benchmarks' "
+            "three runs on that engine")
+V26_BEAT = ("the governor's own processor at the factory beat on site (10 s) on the shared test machine, read again from omni-v26's "
+            "own runs: 0.083 of a core (0.059 to 0.105) against 0.086 on omni-v25, with no target written and about two limit "
+            "raises a repetition on either engine; Omni-Compass moved no machine, pod or limit through the queue otherwise",
+            V26_PAGE, "", "the next version, through the model gate: the governor's own processor counted in the body's load on a "
+            "shared host; then the benchmark's three runs on that engine")
+V26_RIG = ("measured beside the row, not yet separated from one another: the conveyance's cycle (limit raises and hand-backs up "
+           "by about half against omni-v25, nearly every raise followed by a hand-back, the shape of docs/LOSS_CAUSES_2026-11-07.md "
+           "section 2), the web target's remaining writes (down 55% to 69% against omni-v25 with omni-v26's hold, not to none) and "
+           "the governor's own processor at the 10 s beat (0.069 to 0.083 of a core, unchanged)", V26_PAGE, "", V26_NEXT)
+V26_NOCONVEY = ("measured beside the row: the web target's remaining writes (Crane 1.6 a repetition on both engines; the Gödel "
+                "scheduler 8.9 to 2.8) and the governor's own processor at the 10 s beat (0.040 and 0.063 of a core); the "
+                "conveyance wrote nothing on these rigs", V26_PAGE, "",
+                "the remaining target writes read from the audit's own reasons; the next version through the model gate")
+V26_KOORD = ("the conveyance's cycle on the shared host, measured again on omni-v26's own runs: 50.8 and 50.7 raises and 45.5 and "
+             "44.7 hand-backs a repetition (53.2 and 49.2, 47.0 and 43.8 on omni-v25), the fault of docs/LOSS_CAUSES_2026-11-07.md "
+             "unchanged by omni-v26", V26_PAGE, "", KOORD_NEXT)
+CAUSES[(26, "BATCH", "batch: queue finished")] = V26_BEAT
+_V26_GAUGES = ("response time", "time over the response line", "alert minutes", "failed requests", "batch: queue finished",
+               "queue: job", "pod start wait")
+for _name in ("VANILLA", "BINPACK", "KAI", "KUEUE", "VOLCANO"):
+    for _g in _V26_GAUGES:
+        CAUSES[(26, _name, _g)] = V26_RIG
+for _sys in ("KAI", "KUEUE", "BINPACK", "KUBERAY", "OCM"):
+    for _way in ("TOP", "BARE", "BOTH", "VS"):
+        for _g in _V26_GAUGES:
+            CAUSES[(26, f"{_sys}_4W_{_way}", _g)] = V26_RIG
+for _sys in ("CRANE", "GODEL"):
+    for _way in ("TOP", "BARE", "BOTH", "VS"):
+        for _g in _V26_GAUGES:
+            CAUSES[(26, f"{_sys}_4W_{_way}", _g)] = V26_NOCONVEY
+for _name in ("KOORDINATOR", "KOORDINATOR_CGROUP"):
+    for _g in _V26_GAUGES:
+        CAUSES[(26, _name, _g)] = V26_KOORD
+
+
 def newest_tables():
     """Each benchmark's newest whole table: (engine number, benchmark name, path)."""
     out = []

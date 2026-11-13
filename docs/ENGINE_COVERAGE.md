@@ -2,11 +2,11 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Line coverage of every Python file in the engine it was measured on (omni-v23; omni-v26, the engine that stands since, is measured at the next `--measure`), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `2b1390a7dc02`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
+Line coverage of every Python file in the engine that stands (omni-v26), under the whole test suite: the unittest suite and every file `tools/function_tests.py` runs. Measured with coverage.py by `python3 tools/engine_coverage.py --measure` on commit `e45ac4a0ccc2`; `tools/engine_coverage.py --check`, run by `verify.py`, fails a push where this page is not what `results/ENGINE_COVERAGE.json` records.
 
-**71% of the engine's 11,424 statements run under the tests** (8,148 run, 3,276 not). Coverage counts lines a test executes, not what it asserts: the properties the tests check are in `tests/test_engine_properties.py`, and the proofs of the core in `docs/ENGINE_PROOFS.md`.
+**71% of the engine's 11,501 statements run under the tests** (8,205 run, 3,296 not). Coverage counts lines a test executes, not what it asserts: the properties the tests check are in `tests/test_engine_properties.py`, and the proofs of the core in `docs/ENGINE_PROOFS.md`.
 
-The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's, MuJoCo's and the CPU power runner, `tools/run_*.py`) hold 3,623 of these statements, 51% of them run under the tests: each is run whole by its own benchmark on GitHub, A, B and C, rather than by a unit test. The other 45 Python files, the engine as it stood before them, hold 7,801, 81% run. The whole figure fell when those runners came in; no test was lost.
+The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's, MuJoCo's and the CPU power runner, `tools/run_*.py`) hold 3,631 of these statements, 51% of them run under the tests: each is run whole by its own benchmark on GitHub, A, B and C, rather than by a unit test. The other 45 Python files, the engine as it stood before them, hold 7,870, 81% run. The whole figure fell when those runners came in; no test was lost.
 
 | Engine file | Statements | Run by the tests | Coverage |
 |---|---:|---:|---:|
@@ -17,8 +17,8 @@ The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's,
 | `omnicompass/closure.py` | 151 | 61 | 40% |
 | `omnicompass/speed.py` | 60 | 25 | 42% |
 | `omnicompass/mathdrive.py` | 50 | 22 | 44% |
+| `tools/run_kafka.py` | 587 | 287 | 49% |
 | `tools/run_redis.py` | 427 | 210 | 49% |
-| `tools/run_kafka.py` | 579 | 285 | 49% |
 | `omnicompass/shield.py` | 79 | 41 | 52% |
 | `tools/run_swarm.py` | 257 | 134 | 52% |
 | `tools/run_sysbench.py` | 433 | 226 | 52% |
@@ -32,8 +32,8 @@ The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's,
 | `tools/run_mujoco.py` | 205 | 165 | 80% |
 | `realms/harness.py` | 425 | 359 | 84% |
 | `omni_controller/quota.py` | 86 | 75 | 87% |
+| `omni_controller/controller.py` | 1,269 | 1,153 | 91% |
 | `omnicompass/compass.py` | 82 | 75 | 91% |
-| `omni_controller/controller.py` | 1,200 | 1,098 | 92% |
 | `realms/compass_arm_v5.py` | 838 | 771 | 92% |
 | `omnicompass/conveyance.py` | 52 | 48 | 92% |
 | `omnicompass/muscle_sdk.py` | 215 | 199 | 93% |
@@ -62,7 +62,7 @@ The 8 runners omni-v15 took into the fingerprint (the data stores', the swarm's,
 
 ## Where the tests reach least
 
-Files under 60%: `tools/run_pgbench.py`, `tools/run_citylearn.py`, `omnicompass/stack_sim.py`, `omni_orchestrator/control.py`, `omnicompass/closure.py`, `omnicompass/speed.py`, `omnicompass/mathdrive.py`, `tools/run_redis.py`, `tools/run_kafka.py`, `omnicompass/shield.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`. The CityLearn runner and the runners of the data stores and the swarm are exercised by their own benchmarks on GitHub (`citylearn.yml`, `redis.yml` and the rest, three runs on every engine) rather than by a unit test; the stack simulator, the shield and the speed and mathdrive modules hold paths the live governors do not call. Raising each to the level of the rest is the next tests' work: no engine file changes for a test.
+Files under 60%: `tools/run_pgbench.py`, `tools/run_citylearn.py`, `omnicompass/stack_sim.py`, `omni_orchestrator/control.py`, `omnicompass/closure.py`, `omnicompass/speed.py`, `omnicompass/mathdrive.py`, `tools/run_kafka.py`, `tools/run_redis.py`, `omnicompass/shield.py`, `tools/run_swarm.py`, `tools/run_sysbench.py`, `tools/run_ycsb.py`. The CityLearn runner and the runners of the data stores and the swarm are exercised by their own benchmarks on GitHub (`citylearn.yml`, `redis.yml` and the rest, three runs on every engine) rather than by a unit test; the stack simulator, the shield and the speed and mathdrive modules hold paths the live governors do not call. Raising each to the level of the rest is the next tests' work: no engine file changes for a test.
 
 ---
 

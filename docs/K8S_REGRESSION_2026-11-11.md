@@ -7,9 +7,9 @@ Written by `tools/k8s_regression.py` from the two campaigns' own three-run table
 ## 1. Both readings stand, each on its own engine
 
 - **omni-v21**: the real-Kubernetes category of the Omni index reads GAIN, up 28.0351%, from its nine three-run tables (the index of 31 October, commit `3ad522226b`). It is omni-v21's historical reading and is labelled so.
-- **omni-v25**: the same category reads GAIN, up 20.4633%, from its nine three-run tables (`results/OMNI_INDEX.json` on main). It is the latest measured reading of the category.
-- **omni-v26** stands as the engine on main; its Kubernetes tables are not yet whole, so it has no category reading yet.
-- The two differ by 7.5718 points. Neither number is moved into the other's record: the index file on main keeps omni-v25's numbers, and no omni-v21 table is read as omni-v25's. Every number on this page is each engine's own; setting them side by side is a diagnosis of what to test, never a result.
+- **omni-v25**: the same category reads GAIN, up 20.4633%, from its nine three-run tables (`results/OMNI_INDEX.json` on main until 11 November). It is omni-v25's reading and is labelled so.
+- **omni-v26**, the engine that stands: the same category reads GAIN, up 22.2286%, from its own nine three-run tables (`results/live/V26_*.json`, tabled on 11 November; `results/OMNI_INDEX.json` on main). It is the latest measured reading of the category; omni-v26 changed one rule from omni-v25 (`docs/OMNI_V26.md`) and kept the 10 s beat on site.
+- The two differ by 7.5718 points. Neither number is moved into the other's record: the index file on main keeps each engine's own numbers, and no omni-v21 table is read as omni-v25's. Every number on this page is each engine's own; setting them side by side is a diagnosis of what to test, never a result.
 
 ## 2. Test by test: native held, the Omni-Compass arm moved
 
@@ -52,7 +52,7 @@ Every value is the mean of the three runs' means, read from the table named in t
 
 - The fall sits in the Omni-Compass arm: native held, the arm's own response time rose in all nine tests, most over and above native's in KEDA's HTTP add-on, KEDA on the CPU target, the demand that wanders, all four in one run, the noisy neighbour and the faults (up 12.9% to 101.4%), least in the steady load, the queue of jobs and the public day (up 0.6% to 4.9%); in eight of the nine it also wrote more settings and started more pods.
 - That is the signature of a faster beat on a moving load: a decision every 10 s follows each step of the load and moves the autoscaler's target and the pod count more often, where a decision every 60 s rides through them. It is the leading cause, not yet a proven one.
-- The steady-load pace runs on omni-v25 (`results/pace/PACE.md`) read every slower beat against 10 s by small amounts on the response time; they do not cover a moving load, where the two campaigns part most.
+- The steady-load pace runs on omni-v25 (`results/pace/V25_PACE_*.md`) read every slower beat against 10 s by small amounts on the response time; they do not cover a moving load, where the two campaigns part most.
 - The direct test is preregistered and dispatched on GitHub's free machines: `docs/PACE_PREREGISTRATION.md`, amendment 7, the demand that wanders, native and the Omni-Compass arm at 10, 60 and 90 s, one engine, one rig, paired, three runs (runs 42977431782, 42977442687 and 42977447533). No paid card or cloud run is needed.
 - What follows from it: if a slower beat reads better than 10 s there, the on-site factory beat is picked by amendment 4's frozen rule on those runs and lands as the next version through the model gate, keeping every repair made since omni-v21 (the hand-back retries, the pod muscle's guard, the Kafka wire's fix, the neighbour hold); every Kubernetes benchmark then runs again on it, read by its own engine. If not, the cause is looked for again in the files, and this page says so.
 
