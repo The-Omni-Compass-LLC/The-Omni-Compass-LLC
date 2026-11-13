@@ -66,7 +66,10 @@ jobs:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     concurrency: {group: live-engine, cancel-in-progress: false}
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    # the raw folders take about 18 minutes to check out and the build about 80 (every newest table of 113 benchmarks, each
+    # raw file checked against its run's SHA-256 list); at 60 minutes every run since 12 November was cut off mid-build
+    # (run 43417425455: started 11:35:40, cancelled 12:35:53), so the page could not rebuild itself on GitHub
+    timeout-minutes: 180
     defaults:
       run:
         # bash with -e and -o pipefail: a check whose output is piped into tee still fails its step, and a failed check stops
