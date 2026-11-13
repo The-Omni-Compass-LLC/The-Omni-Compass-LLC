@@ -1746,7 +1746,7 @@ sign, Back, for the stop before; or the blue question mark to see what every but
 on, the tour goes on to the next stop. The card's foot holds **Step on by itself** (on from the start, whichever button opened the
 tour; on or off: the next stop follows when this one ends), the speed, **0.75×**, **1×** or **1.25×**, **Voice off** or **Voice on** and, inside Claude, **Explain simply** (Claude
 restates the stop from its own text alone); then the last line, naming the voice. Keys: **J**, **K** or space, **L**, **R**,
-**S**, the arrows and **Escape**. The tab starts the tour at its opening; the dock's button starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started.
+**S**, the arrows and **Escape**. The tab starts the tour at the stop the reader left it on in this browser, else at its opening (the card says so once and offers **Start from stop 1**; a tour that reached its last stop starts again at its first); the dock's button starts it at the section in view; a second press of either ends it; a link ending in `#tour` opens the page with the tour started, and `#tour=` with a section's anchor (`#tour=s-board`) starts it at that section's stop.
 A hand moves over the page with the voice, through each section and from control to control, pressing only what opens (a fold, a
 tab), never a switch; the whole recorded voice loads at once when the tour starts.
 

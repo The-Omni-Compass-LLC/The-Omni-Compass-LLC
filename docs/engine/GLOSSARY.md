@@ -1638,7 +1638,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the dashboards | term | 3i (#s-dash); B (#s-guide) |
 | the dial | term | 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 4a (#s-ops); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | Distribution / Specialized | organism | C (#s-problem) |
-| do no harm | term | 2b (#s-answer); 3c (#s-desk); C (#s-problem); G (#s-disclose) |
+| do no harm | term | 3c (#s-desk); C (#s-problem); G (#s-disclose) |
 | the edge | term | 2c (#s-board); 3a (#s-engines); 5h (#s-math) |
 | Energy / Facility / Industrial | organism | 3c (#s-desk); C (#s-problem) |
 | the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
