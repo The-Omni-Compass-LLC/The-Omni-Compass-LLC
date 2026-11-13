@@ -14,7 +14,7 @@ Read from both ends, from GitHub's own run records of every workflow that hands 
 
 ## 3. Every finished run and its files
 
-Of the 5,984 finished runs, 3,944 have their folder on `raw` (66%). Of the rest, 1,016 still have their files on GitHub (26.1 GB; the first of them expire on 2026-12-26): every one is on the archive's request list, oldest first, and is copied to `raw` by `archive-run.yml` before GitHub lets it go. 1,024 handed in no files at all: a launch refused before anything ran, a set stopped at its login, or a workflow that records its result another way (named below).
+Of the 5,984 finished runs, 3,944 have their folder on `raw` (66%). Of the rest, 1,016 still have their files on GitHub (26.1 GB; the first of them expire on 2026-12-26): every one is on the archive's backlog (`.github/archive_backlog.txt`), oldest first, which `archive-run.yml` copies to `raw` after every new run and before GitHub lets it go. 1,024 handed in no files at all: a launch refused before anything ran, a set stopped at its login, or a workflow that records its result another way (named below).
 
 | Workflow | Runs | Finished | On `raw` | Files still on GitHub, requested | No files handed in | How it records |
 |---|---:|---:|---:|---:|---:|---|
