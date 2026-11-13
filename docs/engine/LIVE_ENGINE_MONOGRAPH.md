@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 375788794, where the newest on file is 484981172; the injection grid of batch 249031878, where the newest on file is 455676285<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 375788794, where the newest on file is 484981172; the injection grid of batch 249031878, where the newest on file is 484981172<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
