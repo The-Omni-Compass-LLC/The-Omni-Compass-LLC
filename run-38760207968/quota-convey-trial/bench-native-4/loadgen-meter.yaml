@@ -1,0 +1,105 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+#
+# The work meter (the capacity test, docs/CAPACITY_PREREGISTRATION.md): one load generator that sends requests at a
+# scheduled rate whatever the service answers (open loop: the same offered work in every arm) and counts every answer,
+# so completed work is a count, not an estimate. Each request is one of: answered within the response-time line (SLO_MS)
+# - the work that counts -, answered late, failed (an error or no answer in TIMEOUT_S), or never sent because MAX_INFLIGHT
+# requests were already waiting (counted as not served). It warms at the first step's rate without counting until the
+# harness opens the window (kubectl exec ... touch /tmp/go), then steps through RATE_STEPS (requests per second), each
+# step DURATION / steps seconds, prints its running totals every 15 s and its final totals as one JSON line, and stays up
+# so the harness can read its log. The same manifest, rates and line in every arm.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: work-meter}
+data:
+  meter.py: |
+    import http.client, json, os, threading, time
+    HOST, PORT = os.environ.get("TARGET_HOST", "php-apache"), int(os.environ.get("TARGET_PORT", "80"))
+    SLO = float(os.environ.get("SLO_MS", "500")) / 1000.0
+    TIMEOUT = float(os.environ.get("TIMEOUT_S", "10"))
+    STEPS = [float(x) for x in os.environ.get("RATE_STEPS", "10 20 40 60").split()]
+    DURATION = float(os.environ.get("DURATION", "1200"))
+    MAX_INFLIGHT = int(os.environ.get("MAX_INFLIGHT", "1500"))
+    KEYS = ("sent", "in_time", "late", "failed", "not_sent")
+    lock = threading.Lock()
+    tot = dict.fromkeys(KEYS, 0)
+    per = [dict.fromkeys(KEYS, 0) for _ in STEPS]
+    state = {"inflight": 0}
+
+    def one(step):
+        t = time.monotonic(); ok = False
+        try:
+            c = http.client.HTTPConnection(HOST, PORT, timeout=TIMEOUT)
+            c.request("GET", "/"); r = c.getresponse(); r.read(); ok = r.status == 200; c.close()
+        except Exception:
+            ok = False
+        dt = time.monotonic() - t
+        k = "in_time" if ok and dt <= SLO else ("late" if ok else "failed")
+        with lock:
+            state["inflight"] -= 1
+            if step is not None:
+                tot[k] += 1; per[step][k] += 1
+
+    def fire(step):
+        with lock:
+            if step is not None:
+                tot["sent"] += 1; per[step]["sent"] += 1
+            if state["inflight"] >= MAX_INFLIGHT:
+                if step is not None:
+                    tot["not_sent"] += 1; per[step]["not_sent"] += 1
+                return
+            state["inflight"] += 1
+        threading.Thread(target=one, args=(step,), daemon=True).start()
+
+    def report(final=False):
+        with lock:
+            snap = {"t": round(time.time(), 1), "final": final, "total": dict(tot), "steps": [dict(p) for p in per],
+                    "rate_steps": STEPS, "slo_ms": SLO * 1000.0, "inflight": state["inflight"]}
+        print(json.dumps(snap), flush=True)
+
+    nxt = time.monotonic()
+    while not os.path.exists("/tmp/go"):                    # warm-up: the first step's rate, nothing counted
+        fire(None); nxt += 1.0 / STEPS[0]; time.sleep(max(0.0, nxt - time.monotonic()))
+    start = nxt = time.monotonic(); last = start
+    step_s = DURATION / len(STEPS)
+    for i, rate in enumerate(STEPS):
+        end = start + (i + 1) * step_s
+        while nxt < end:
+            fire(i); nxt += 1.0 / rate
+            time.sleep(max(0.0, nxt - time.monotonic()))
+            if time.monotonic() - last >= 15:
+                report(); last = time.monotonic()
+    t_end = time.monotonic() + TIMEOUT + 1                   # the last requests sent get their full time to answer
+    while state["inflight"] > 0 and time.monotonic() < t_end:
+        time.sleep(0.2)
+    report(final=True)
+    while True:
+        time.sleep(3600)
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: load-generator}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector: {matchLabels: {app: load-generator}}
+  template:
+    metadata: {labels: {app: load-generator}}
+    spec:
+      nodeSelector: {node-role.kubernetes.io/control-plane: ""}
+      tolerations:
+        - {key: node-role.kubernetes.io/control-plane, operator: Exists, effect: NoSchedule}
+      containers:
+        - name: load
+          image: python:3.12-alpine
+          command: ["python", "-u", "/meter/meter.py"]
+          env:
+            - {name: RATE_STEPS, value: "4 6 8 10 12 14 16 20"}
+            - {name: DURATION, value: "1200"}
+            - {name: SLO_MS, value: "500"}
+          volumeMounts: [{name: meter, mountPath: /meter}]
+      volumes: [{name: meter, configMap: {name: work-meter}}]
