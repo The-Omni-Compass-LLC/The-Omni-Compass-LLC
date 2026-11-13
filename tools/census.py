@@ -12,8 +12,9 @@ reads forward (every run of every benchmark workflow GitHub recorded: did it fin
 table counts it) and backward (every run a three-run table names: is its folder on raw), and it counts the archive itself
 (folders, files, checksum lists, signatures, receipts), the engine that stands (what stands, carries or runs again on it),
 the catalog (muscles, families, wiring, cards) and the website feed (numbers with receipts). Every gap is listed with what
-fills it: a run whose files GitHub still holds is put on the archive's request list (.github/archive_request.txt), oldest
-first, so it is saved before GitHub's retention ends.
+fills it: a run whose files GitHub still holds is put on the archive's backlog (.github/archive_backlog.txt), oldest first,
+which archive-run.yml takes after every new run, so it is saved before GitHub's retention ends and never holds back a run of
+the engine that stands.
 
   python3 tools/census.py                       write docs/CENSUS.md from results/CENSUS_RECORDS.json
   python3 tools/census.py --check               exit 1 when the page differs from the records
@@ -21,7 +22,7 @@ first, so it is saved before GitHub's retention ends.
                                                 build the records again from a saved GitHub run list (one list a workflow),
                                                 the branch raw's folder counts (name, files, checksum list, signed, receipt)
                                                 and each unarchived run's files on GitHub; --request adds every unarchived run
-                                                whose files GitHub still holds to .github/archive_request.txt
+                                                whose files GitHub still holds to .github/archive_backlog.txt
 """
 from __future__ import annotations
 
@@ -38,6 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 RECORDS, OUT = ROOT / "results" / "CENSUS_RECORDS.json", ROOT / "docs" / "CENSUS.md"
 REQUEST = ROOT / ".github" / "archive_request.txt"
+BACKLOG = ROOT / ".github" / "archive_backlog.txt"
 TABLE_DIRS = ("results/live", "results/orchestrator", "results/gpu")
 # workflows whose runs hand their results in some other way than files to archive (they commit their records to main, or
 # they hand in nothing by design); a run of these with no files on GitHub is not a gap
@@ -184,8 +186,8 @@ def render(rec: dict) -> str:
         f"Of the {fin:,} finished runs, {arch:,} have their folder on `raw` ({100 * arch / fin:.0f}%). Of the rest, "
         f"{wf_files:,} still have their files on GitHub ({_mb(wf_bytes)}"
         + (f"; the first of them expire on {min(expiries)[:10]}" if expiries else "")
-        + "): every one is on the archive's request list, oldest first, and is copied to `raw` by "
-        "`archive-run.yml` before GitHub lets it go. "
+        + "): every one is on the archive's backlog (`.github/archive_backlog.txt`), oldest first, which "
+        "`archive-run.yml` copies to `raw` after every new run and before GitHub lets it go. "
         f"{nofiles:,} handed in no files at all: a launch refused before anything ran, a set stopped at its login, or a "
         "workflow that records its result another way (named below)."
         + (f" {unread:,} could not be read when the records were taken; the next refresh reads them." if unread else ""), "",
@@ -221,16 +223,18 @@ def render(rec: dict) -> str:
 
 
 def request(rec: dict) -> int:
-    """Put every unarchived run whose files GitHub still holds on the archive's request list, oldest first, after the runs
-    already asked for; a run already on the list is never written twice."""
-    text = REQUEST.read_text(encoding="utf-8") if REQUEST.exists() else ""
-    have = set(re.findall(r"\b\d{9,12}\b", text))
+    """Put every unarchived run whose files GitHub still holds on the archive's backlog, oldest first, after the runs already
+    on it; a run already on the backlog or the request list is never written twice."""
+    have = set()
+    for f in (REQUEST, BACKLOG):
+        if f.exists():
+            have |= set(re.findall(r"\b\d{9,12}\b", f.read_text(encoding="utf-8")))
     new = [str(x[1]) for x in rec["unarchived_with_files"] if str(x[1]) not in have]
     new += [i for _, i in rec["tables"]["not_on_raw"] if i not in have and i not in new]
     if new:
+        text = BACKLOG.read_text(encoding="utf-8") if BACKLOG.exists() else ""
         lines = [" ".join(new[k:k + 12]) for k in range(0, len(new), 12)]
-        REQUEST.write_text(text.rstrip("\n") + "\n# the census of 11 November (tools/census.py): every finished run whose files "
-                           "GitHub still holds and raw does not, oldest first\n" + "\n".join(lines) + "\n", encoding="utf-8")
+        BACKLOG.write_text(text.rstrip("\n") + ("\n" if text else "") + "\n".join(lines) + "\n", encoding="utf-8")
     return len(new)
 
 

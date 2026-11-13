@@ -4,13 +4,13 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The census (tools/census.py) is what its records give, its counts add up, and every gap it finds is on the archive's
-request list: a run whose files GitHub still holds and a run a table names that raw does not hold."""
+request list or its backlog: a run whose files GitHub still holds and a run a table names that raw does not hold."""
 import json
 import re
 import unittest
 from pathlib import Path
 
-from tools.census import OUT, RECORDS, REQUEST, render
+from tools.census import BACKLOG, OUT, RECORDS, REQUEST, render
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +33,10 @@ class Census(unittest.TestCase):
         self.assertLessEqual(raw["checksums"], raw["folders"])
 
     def test_every_gap_is_requested(self):
-        asked = set(re.findall(r"\b\d{9,12}\b", REQUEST.read_text(encoding="utf-8")))
+        asked = set()
+        for f in (REQUEST, BACKLOG):
+            if f.exists():
+                asked |= set(re.findall(r"\b\d{9,12}\b", f.read_text(encoding="utf-8")))
         gaps = {str(x[1]) for x in self.rec["unarchived_with_files"]} | {i for _, i in self.rec["tables"]["not_on_raw"]}
         self.assertEqual(sorted(gaps - asked), [])
 

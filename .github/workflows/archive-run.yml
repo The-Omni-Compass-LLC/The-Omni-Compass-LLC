@@ -10,7 +10,8 @@ name: archive-run
 # the code and the tables. Every hour it takes, by itself, every finished run (failed ones too: their files say why) of every
 # workflow that hands in raw files, from the moment the engine that stands landed (the founder's order of 19 October: a
 # run's files are his and belong in his repository, never left behind in GitHub's artifact store). Run ids listed in
-# .github/archive_request.txt (one per line) go first; pushing a change to that file starts a pass at once. Each run's
+# .github/archive_request.txt (one per line) go first, and the census's backlog (.github/archive_backlog.txt) last; pushing a
+# change to the request list starts a pass at once. Each run's
 # SHA256SUMS_ALL.txt is signed as it is archived (31 October): Sigstore, keyless, under GitHub's own identity for this
 # workflow, the signature entered in Sigstore's public transparency log and saved beside the sums as
 # SHA256SUMS_ALL.txt.sigstore.json; anyone checks a run with tools/verify_receipt.py. A signing that fails never stops the
@@ -84,7 +85,10 @@ jobs:
               gh api --paginate "repos/$repo/actions/workflows/$wf/runs?status=completed&created=>=$ARCHIVE_SINCE&per_page=100" \
                 --jq '.workflow_runs[] | select(.conclusion != "skipped") | .id' \
                 || echo "::warning::$wf: its runs could not be listed; the next pass lists them again" >&2
-            done | sort -n; } | awk '!seen[$0]++' > runs.txt
+            done | sort -n
+            # the backlog last (.github/archive_backlog.txt, tools/census.py): runs of earlier engines whose files GitHub still
+            # holds, taken only once every new run is in, so it never holds back a run of the engine that stands
+            tr ' ' '\n' < .github/archive_backlog.txt 2>/dev/null | grep -E '^[0-9]+$' || true; } | awk '!seen[$0]++' > runs.txt
           # the branch raw's tree is read once (nothing downloaded); a run counts as archived when the branch holds its
           # folder under any name: run-<id>, or <test>-run-<id> where a test archives itself (Goldilocks, the add-ons, the
           # capacity test, CruiseKube)
