@@ -108,7 +108,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 | Security, legal, IP | [Security policy](SECURITY.md) | [Threat model](docs/THREAT_MODEL.md) · [safety case](docs/SAFETY_CASE.md) · [license](LICENSE) · [disclosures](DISCLOSURES.md) |
 | Benchmark referee | [How to read the results](docs/HOW_TO_READ_THE_RESULTS.md) | [The referee's audit pack](docs/audit/README.md) · [every reading recomputed](docs/audit/STATISTICAL_VALIDATION.md) · [the verdict audit](results/verdict_audit/VERDICT_AUDIT.md) |
 | Live benchmark engine | [The page](docs/engine/OMNI_COMPASS_LIVE_ENGINE.html) | [The Live Benchmark Engine Manual](docs/OMNI_COMPASS_LIVE_ENGINE_MANUAL.md) · [its appraisal](docs/engine/APPRAISAL.md) |
-| Anyone who would rather check than read | [Check it yourself](#check-it-yourself): one command, the digests side by side | [The jump generator's ledger](results/RUNS_LEDGER.md) · [every table's recipe](results/live/RECIPES.json) (`tools/reproduce.py`) · [the runs on GitHub](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions) |
+| Anyone who would rather check than read | [Check it yourself](#check-it-yourself): one command a check, each with what it gives | [The jump generator's ledger](results/RUNS_LEDGER.md) · [every table's recipe](results/live/RECIPES.json) (`tools/reproduce.py`) · [the runs on GitHub](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions) |
 
 The full index, by reader and by the hierarchy of evidence, is [`docs/README.md`](docs/README.md).
 
@@ -128,6 +128,9 @@ is read only from the three-run tables of real software (class L).
 | The same 500 runs through the C++ twin | `cmake -S cpp -B /tmp/b -DCMAKE_BUILD_TYPE=Release && cmake --build /tmp/b --target oc_engine_runs && python3 tools/engine_runs.py --runs 500 --base 20261020 --verify-cpp /tmp/b/oc_engine_runs --all` | largest difference 0.0e+00; the two digests match |
 | Every run GitHub holds, every archived file, every table | `python3 tools/census.py --check` | `docs/CENSUS.md` is what its records give: 5,984 finished runs, 4,111 folders on the branch `raw`, every run a table names among them |
 | Every reading of every table, by the one key | `python3 tools/reread.py --check` | 0 readings differ from the rule that stands |
+| The Python, the C++ harness and the live engine page's own code on one set, side by side | `bash scripts/prove_runs.sh` (any recorded base, or one of your own: `bash scripts/prove_runs.sh 48766475`) | the three SHA-256 digests printed one under another beside the digest GitHub's machine recorded for that base; it ends `PROVED: every digest agrees` or names the one that differs |
+| The same with nothing installed but Docker, your checkout mounted read-only | `docker build -f deploy/Dockerfile.proof -t omni-proof . && docker run --rm -v "$PWD":/repo:ro omni-proof` | the same three digests; GitHub runs this container in public (`.github/workflows/prove-runs.yml`), where the log is not ours to edit |
+| Every recorded set of the jump generator: its digests, its engine, the run that made it | `python3 tools/runs_ledger.py --check` | every set's digest recomputed from its own receipts and seeds, the C++ harness's and the page's digests the Python's, no base or run written twice; the page is [`results/RUNS_LEDGER.md`](results/RUNS_LEDGER.md) |
 
 
 ## The bottom line: is Omni-Compass a benefit?
@@ -582,7 +585,7 @@ wrote on its own).
 **The people, counted: the oversight line** (`results/OVERSIGHT.md`, written by `tools/oversight.py` from the tables). The Omni index counts work, speed and machines, never a person; the receipts count the people too, in both arms. Across the 37 real Kubernetes tests of omni-v26, the minutes an on-call page would be open (the 3 a.m. call) went down 11.0%, fewer in 13 tests and to none in 3, and down in each of our three runs beyond the noise (GAIN in all three of our runs), while the governor turned the knobs itself (227; 207; 226 settings an hour in runs A; B; C, no person touching either arm). Counted as pages from the same runs' raw files by the rule written before the count, the pages a person would have been sent went down 12.2% (GAIN by the mean of our three runs, beyond the noise in 2 of 3; `results/OVERSIGHT_PAGES.md`): fewer pages, each open about as long. In the bill it is the people line, b = s(people) · b(people) at the owner's own share: at the founder's example of 7%, down 0.8% of the whole bill. It is not added to the index (a share of a bill and a reading of work and speed do not add), and it removes no person: a person keeps the switch.
 <!-- end of the oversight line -->
 
-## Check it yourself
+## Check it yourself, in full
 
 ```
 pip install -r requirements.txt && python verify.py      # must end: VERIFICATION: PASS

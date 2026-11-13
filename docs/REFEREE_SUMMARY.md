@@ -24,7 +24,7 @@ differs.
 | Claim | Standing | Evidence |
 |---|---|---|
 | It sits on top of native and never replaces it | **Shown** | Every live test runs native, and Omni-Compass on top of the same native; the setting is read back at native's value at the end of every arm |
-| It does no harm: never a LOSS against native | **Not shown**: 281 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
+| It does no harm: never a LOSS against native | **Not shown**: 288 rows read LOSS against its own native on the tables that stand | Each named with its cause and on the next version's list (`docs/LOSS_LEDGER.md`) |
 | More work, faster, on real Kubernetes | **Shown** (L, omni-v26) | All four at once: work inside the response line up 31% to 50% (`results/live/V26_ALL_FOUR.md`); the 95th percentile cut in 9 of 11 Kubernetes tests (`docs/BENEFIT_SHEET.md`) |
 | More work, faster, on databases and caches | **Small** (L, omni-v26) | Redis, the cache's memory ceiling: GAIN, power given, 4.9% LOSS; PostgreSQL, the pooler's pool size: GAIN AND LOSS, 1.8% LOSS; MySQL, the buffer pool's size: GAIN, power given, 12.5% LOSS; MongoDB, the storage engine's cache size: GAIN AND LOSS, 7.1% LOSS; Kafka, the consumer group's size: GAIN, power given, 221.1% GAIN (`docs/BENEFIT_SHEET.md`) |
 | Fewer machines | **Shown in 2 tests** (L, omni-v26) | a service rightsized by CruiseKube applying its own recommendations, Omni-Compass on top, ten pairs, three runs: machines cut 0.3% to 5.3%, machine-hours cut 0.5% to 5.1%; a queue of jobs: machines cut 13% to 28%, machine-hours cut 13% to 28%, machines after the queue cut 22% to 45% |

@@ -12,6 +12,34 @@ A row reads **STEADY** when a run's 95% interval includes zero: the change is sm
 
 Each figure is in percent of native's mean in the least favourable of the three runs. Every number is computed from the table's own intervals with the Student t quantiles the tables use (`omnicompass/student_t.py`).
 
+## Aks Full Burst (omni-v26, `V26_AKS_FULL_BURST.md`, 3 paired repetitions a run)
+
+| Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
+|---|---|---:|---:|---:|
+| worker nodes in service, mean | power given by the mean of our three runs, beyond the noise in 2 of 3 | 47.0% | 58.3% | 409 |
+| node-hours | power given by the mean of our three runs, beyond the noise in 2 of 3 | 53.6% | 66.4% | 530 |
+| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 20.5% | 25.5% | 78 |
+| energy (Wh) | power given by the mean of our three runs, beyond the noise in 2 of 3 | 45.3% | 56.1% | 379 |
+| response time (ms), mean | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 192.9% | 239.2% | 6864 |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 651.4% | 807.7% | 78294 |
+| response time (ms), 99th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 | 211.0% | 261.7% | 8218 |
+| time over the response line (% of samples) | GAIN by the mean of our three runs, beyond the noise in 0 of 3 | 47.4% | 58.8% | 416 |
+| failed requests (%) | GAIN by the mean of our three runs, beyond the noise in 1 of 3 | 135.5% | 168.1% | 3390 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | the runs disagree | 18.5% | 22.9% | 64 |
+| pods with no machine to take them (unschedulable) | LOSS in all three of our runs | 536.4% | 665.1% | 53086 |
+| time pods had no machine to take them, pod-minutes | LOSS in all three of our runs | 1694.4% | 2101.2% | 529782 |
+| pending pods, pod-minutes | shown, not judged | 668.6% | 829.1% | 82500 |
+| utilisation (used / allocatable) | shown, not judged | 27.4% | 33.9% | 139 |
+| CPU used (cores), mean | shown, not judged | 30.1% | 37.3% | 167 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 30.3% | 37.6% | 170 |
+| energy per core-hour (Wh) | shown, not judged | 20.8% | 25.8% | 80 |
+| HPA replicas, mean | power given in all three of our runs | 106.0% | 131.5% | 2076 |
+| pods started | power given in all three of our runs | 837.8% | 1038.9% | 129529 |
+| pod start wait, total (s) | LOSS in all three of our runs | 6321.1% | 7838.5% | 7372997 |
+| pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 | 346.8% | 430.0% | 22188 |
+| machines billed, machine-hours | power given in all three of our runs | 36.7% | 45.5% | 249 |
+| compute bill at list price ($) | power given in all three of our runs | 36.7% | 45.5% | 249 |
+
 ## All Four (omni-v26, `V26_ALL_FOUR.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |

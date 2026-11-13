@@ -4,7 +4,7 @@
 
 Every benchmark's newest three-run table, the engine files its runner imports (followed import by import through the fingerprint), and whether any of them has moved since the table's own engine. A result **carries** when every one of those files has the same bytes on its engine and on omni-v26: the engine that stands runs exactly the code the table measured, and the benchmark need not run again for the version number alone. A result **runs again** when one moved; the files that moved are named. A carried record stays its own engine's, under its own engine's name. Written by `python3 tools/carry.py` from the fingerprints (`OMNI_V<n>.json`) and the tables; `verify.py` fails a push where it differs (the founder's order of 7 November, evening).
 
-On omni-v26: 80 on the engine that stands, 6 carry, 30 run again.
+On omni-v26: 81 on the engine that stands, 6 carry, 30 run again.
 
 | Benchmark | Its newest table | Its engine | The runner | Engine files it runs | Moved since its engine | On omni-v26 |
 |---|---|---|---|---:|---|---|
@@ -18,6 +18,7 @@ On omni-v26: 80 on the engine that stands, 6 carry, 30 run again.
 | A10_STACKS_FULL_ABC | `results/gpu/V23_A10_STACKS_FULL_ABC.json` | omni-v23 | `omni_controller/gpu_compass.py` | 14 | none | **carries** |
 | STACKS_A10_ABC | `results/gpu/V21_STACKS_A10_ABC.json` | omni-v21 | `omni_controller/gpu_compass.py` | 14 | `omni_controller/muscles.py` | **runs again** |
 | AKS_BURST | `results/live/V1_AKS_BURST.json` | omni-v1 | `omni_controller/controller.py` | 16 | `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/compass_law.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/nervous_system.py`, `omnicompass/verdict.py` | **runs again** |
+| AKS_FULL_BURST | `results/live/V26_AKS_FULL_BURST.json` | omni-v26 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | AKS_STEADY | `results/live/V1_AKS_STEADY.json` | omni-v1 | `omni_controller/controller.py` | 16 | `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/compass_law.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/nervous_system.py`, `omnicompass/verdict.py` | **runs again** |
 | ALL_FOUR | `results/live/V26_ALL_FOUR.json` | omni-v26 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | ARMADA_4W_BARE | `results/live/V25_ARMADA_4W_BARE.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py` | **runs again** |
