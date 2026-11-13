@@ -228,9 +228,24 @@ jobs:
           [ "$others" = 0 ] || echo "::warning::$others notice problems in files this run did not write (verify.yml holds them); the record is committed all the same"
           git add results/injection_grid/
           git commit -q -m "The injection grid on the Python's batch ${{ needs.plan.outputs.base }}: every organism and every governor, 1 to 500 runs x 1 to 500 organisms (injection-grid run $GITHUB_RUN_ID)" || { echo "nothing new"; exit 0; }
+          # the monograph quotes the newest grid (tools/monograph_words.py, its page_lag block): written again on the branch as it
+          # stands after the rebase and committed beside the grid, so no release check finds it one grid behind (13 November:
+          # every grid committed on main had left the monograph stale until the next set of engine-runs wrote it); a push that
+          # fails drops it and retries
           for attempt in 1 2 3 4 5 6; do
-            git pull -q --rebase && git push && exit 0
-            git rebase --abort 2>/dev/null || true
+            if git pull -q --rebase; then
+              made=0
+              python3 tools/monograph_words.py --fix > /dev/null
+              if ! git diff --quiet -- docs/engine/LIVE_ENGINE_MONOGRAPH.md; then
+                git add docs/engine/LIVE_ENGINE_MONOGRAPH.md
+                git commit -q -m "The live engine monograph quotes the new grid (tools/monograph_words.py --fix, injection-grid run $GITHUB_RUN_ID)"
+                made=1
+              fi
+              git push && exit 0
+              if [ "$made" = 1 ]; then git reset -q --hard HEAD~1; fi
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "::warning::push attempt $attempt failed (the branch moved); trying again"; sleep 15
           done
           echo "::error::the record could not be pushed after six attempts"; exit 1
