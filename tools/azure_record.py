@@ -15,7 +15,8 @@ of native's value is a change, read by what the gauge is for; a resource spent t
 is never read across engines and no two runs are pooled: each run's word stands by itself (the founder's order of 31 October).
 
 What a run is, from its title and the record: a counted set (steady, a burst, the real day; at the tune-down on the machines
-alone until 31 October, the founder's order of 14 October), a set under the stopping rule (up to 100 paired repetitions), or a
+alone until 31 October, the founder's order of 14 October), a set under the stopping rule (up to 100 paired repetitions; the work
+meter's counted set among them, its title "to the cap, stopping rule"), or a
 tuning case (the work meter at the max, one repetition, run once before the counted A, B and C to freeze their rates; never
 counted, `docs/K8S_COMPASS_PREREGISTRATION.md`, the amendment of 31 October, night).
 
@@ -136,8 +137,14 @@ def kind(title: str) -> tuple[str, str]:
     """What the set is, from its title: (the set, how it counts)."""
     t = title.replace("aks-metered", "").strip()
     if "work meter" in t:
-        rates = re.search(r"work meter ([\d ]+?) dial", t)
-        return f"the work meter at rates {rates.group(1).strip() if rates else '?'} a second", "tuning case: sets the counted rates, never counted"
+        # 13 November: the counted set's title carries "to the cap, stopping rule" between its rates and its dial, and its run A
+        # (43005182097, ten paired repetitions) was read as a tuning case with rates "?"; a work meter set to the cap under the
+        # stopping rule is the counted set, a work meter of one repetition with no stopping rule a tuning case
+        rates = re.search(r"work meter ([\d ]+?)(?: to the cap|,| dial|$)", t)
+        r = rates.group(1).strip() if rates else "?"
+        if "stopping rule" in t or "to the cap" in t:
+            return f"the work meter at rates {r} a second under the stopping rule", "counted set"
+        return f"the work meter at rates {r} a second", "tuning case: sets the counted rates, never counted"
     m = re.search(r"burst ([\d ]+?) replica", t) or re.search(r"burst ([\d ]+?) dial", t)
     if m:
         steps = m.group(1).strip()
