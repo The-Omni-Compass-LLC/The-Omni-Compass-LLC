@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 The Omni-Compass LLC. All rights reserved.
+# Evaluation and simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The add-on native, profile "http" (ADDONS_PROFILE=http): KEDA owns php-apache's autoscaler and scales on the HTTP
+# add-on's live requests in flight alone, the way the add-on is set up for a web service (deploy/kind/addons/keda-route.yaml);
+# no CPU target. KEDA builds the HPA under the same name, php-apache. Replica range 1 to 10, as demo.yaml (10 is
+# replaced by scripts/kind_addons.sh with HPA_MAX or 10).
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata: {name: php-apache, namespace: default}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: php-apache}
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  advanced:
+    horizontalPodAutoscalerConfig: {name: php-apache}
+  triggers:
+    - type: external-push
+      metadata:
+        interceptorRoute: php-apache
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
