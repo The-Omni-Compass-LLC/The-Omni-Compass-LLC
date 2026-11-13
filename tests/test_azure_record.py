@@ -25,6 +25,13 @@ class AzureRecord(unittest.TestCase):
         self.assertTrue(AR.kind("aks-metered burst 2 3 3 4 3 4 4 3 2 2 2 2 2 3 2 3 4 5 4 5 6 7 6 5 replica room 0 dial save")[0].startswith("the real day"))
         self.assertEqual(AR.kind("aks-metered steady replica room 0 to the cap, stopping rule dial save")[0], "the steady set under the stopping rule")
 
+    def test_the_counted_work_meter_set_is_counted(self):
+        """13 November: run A of the counted work meter set (43005182097) was read as a tuning case with rates "?"."""
+        s, c = AR.kind("aks-metered work meter 2 4 6 8 10 12 16 20 to the cap, stopping rule dial max eastus Standard_D2s_v4")
+        self.assertEqual((s, c), ("the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule", "counted set"))
+        s, c = AR.kind("aks-metered work meter 10 20 40 60 80 100 120 140 dial max eastus Standard_D2s_v4")
+        self.assertEqual((s, c), ("the work meter at rates 10 20 40 60 80 100 120 140 a second", "tuning case: sets the counted rates, never counted"))
+
     def test_each_word_by_what_the_gauge_is_for(self):
         bill = AR.reading({"native": 1.0, "omni": 1.012, "diff": 0.012, "ci95": [-0.001, 0.02], "significant": False}, K.SPENT, 97)
         self.assertEqual(bill["word"], K.GIVEN)
