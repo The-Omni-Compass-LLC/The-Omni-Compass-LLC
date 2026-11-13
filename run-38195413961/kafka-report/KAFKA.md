@@ -1,0 +1,105 @@
+# Kafka: Omni-Compass on top of a consumer group's operator-set size
+
+> © 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Apache Kafka as shipped (one broker, a topic of 8 partitions); native: the consumer group at the operator's count (2); omni: the compass law on the consumer count inside [1, 8], holding the group's own end-to-end latency at 40% of the 500 ms line. The same offered load in both arms. Energy is the host's CPU seconds, the compass's own cost included. Every row is reported, losses included.
+
+## burst: 2.0 ms of work a message, 256 B, steps 1 6 1 8 1 6 × 20.0 s
+
+Native capacity 974 messages a second; base rate 109.6/s; 3 paired repetitions; engine omni-v5 (digest 1bde1fc6e695d292, 43 files) at `c0bc70570862`.
+
+| Gauge | native | omni | change | 95% interval of the difference | reading |
+|---|---:|---:|---:|---:|---|
+| work inside the response line (messages a second handled within the line) | 348 | 346 | -0.4% | -2.6 to -0.00113 | **WORSE** |
+| throughput (messages a second consumed) | 418 | 418 | +0.0% | -0.0417 to 0.07 | no difference beyond the noise |
+| end-to-end latency, 95th percentile (ms) | 1,682 | 1,711 | +1.8% | -29.5 to 88.6 | no difference beyond the noise |
+| end-to-end latency, 99th percentile (ms) | 2,471 | 2,488 | +0.7% | -96.5 to 130 | no difference beyond the noise |
+| end-to-end latency, median (ms) | 9.45 | 9.77 | +3.4% | -0.0235 to 0.669 | no difference beyond the noise |
+| end-to-end latency, mean (ms) | 262 | 268 | +2.2% | 0.959 to 10.6 | **WORSE** |
+| consumer lag, most messages waiting at once | 1,100 | 1,130 | +2.7% | 17.2 to 42.2 | **WORSE** |
+| consumer lag, mean messages waiting | 115 | 117 | +1.7% | -0.731 to 4.75 | no difference beyond the noise |
+| messages produced and never consumed | 0 | 0 |  | 0 to 0 | same |
+| consumers running, mean (the resources held) | 2 | 1.98 | -1.2% | -0.0249 to -0.0244 | better |
+| consumers running, most at once | 2 | 2 | +0.0% | 0 to 0 | same |
+| host CPU busy (share of the run) | 0.295 | 0.29 | -1.7% | -0.0297 to 0.0196 | no difference beyond the noise |
+| host CPU-seconds | 138 | 136 | -1.7% | -13.8 to 9.24 | no difference beyond the noise |
+| host CPU-seconds per 1,000 messages inside the line | 3.29 | 3.25 | -1.3% | -0.306 to 0.222 | no difference beyond the noise |
+| consumer changes written (the knob's moves) | 2 | 4 | +100.0% | 2 to 2 | shown, not judged |
+
+Every omni arm handed back to the operator's count: yes; fail-ups: 3.
+
+## heavy: 5.0 ms of work a message, 1024 B, steps 1 2 3 2 3 4 5 6 5 4 3 2 1 2 1 × 20.0 s
+
+Native capacity 392 messages a second; base rate 58.9/s; 3 paired repetitions; engine omni-v5 (digest 1bde1fc6e695d292, 43 files) at `c0bc70570862`.
+
+| Gauge | native | omni | change | 95% interval of the difference | reading |
+|---|---:|---:|---:|---:|---|
+| work inside the response line (messages a second handled within the line) | 149 | 148 | -0.4% | -1.24 to 0.121 | no difference beyond the noise |
+| throughput (messages a second consumed) | 172 | 172 | -0.0% | -0.00176 to 0.000579 | no difference beyond the noise |
+| end-to-end latency, 95th percentile (ms) | 1,531 | 1,556 | +1.7% | -86.9 to 138 | no difference beyond the noise |
+| end-to-end latency, 99th percentile (ms) | 2,423 | 2,430 | +0.3% | -42.2 to 56.4 | no difference beyond the noise |
+| end-to-end latency, median (ms) | 11 | 11 | -0.4% | -0.416 to 0.329 | no difference beyond the noise |
+| end-to-end latency, mean (ms) | 209 | 215 | +2.7% | -5.9 to 17.3 | no difference beyond the noise |
+| consumer lag, most messages waiting at once | 472 | 457 | -3.2% | -66.6 to 36.6 | no difference beyond the noise |
+| consumer lag, mean messages waiting | 39 | 40.1 | +2.8% | -0.808 to 2.98 | no difference beyond the noise |
+| messages produced and never consumed | 0 | 0 |  | 0 to 0 | same |
+| consumers running, mean (the resources held) | 2 | 2.02 | +0.9% | -0.0431 to 0.0808 | no difference beyond the noise |
+| consumers running, most at once | 2 | 2.67 | +33.3% | -0.768 to 2.1 | no difference beyond the noise |
+| host CPU busy (share of the run) | 0.265 | 0.263 | -0.6% | -0.012 to 0.00875 | no difference beyond the noise |
+| host CPU-seconds | 317 | 315 | -0.6% | -14.4 to 10.5 | no difference beyond the noise |
+| host CPU-seconds per 1,000 messages inside the line | 7.08 | 7.06 | -0.2% | -0.318 to 0.285 | no difference beyond the noise |
+| consumer changes written (the knob's moves) | 2 | 5.33 | +166.7% | 0.465 to 6.2 | shown, not judged |
+
+Every omni arm handed back to the operator's count: yes; fail-ups: 3.
+
+## light: 1.0 ms of work a message, 128 B, steps 1 2 3 2 3 4 5 6 5 4 3 2 1 2 1 × 20.0 s
+
+Native capacity 1947 messages a second; base rate 292.1/s; 3 paired repetitions; engine omni-v5 (digest 1bde1fc6e695d292, 43 files) at `c0bc70570862`.
+
+| Gauge | native | omni | change | 95% interval of the difference | reading |
+|---|---:|---:|---:|---:|---|
+| work inside the response line (messages a second handled within the line) | 740 | 739 | -0.2% | -5.06 to 2.08 | no difference beyond the noise |
+| throughput (messages a second consumed) | 856 | 856 | -0.0% | -0.0399 to 0.00715 | no difference beyond the noise |
+| end-to-end latency, 95th percentile (ms) | 1,553 | 1,565 | +0.8% | -149 to 174 | no difference beyond the noise |
+| end-to-end latency, 99th percentile (ms) | 2,460 | 2,464 | +0.1% | -51.2 to 57.8 | no difference beyond the noise |
+| end-to-end latency, median (ms) | 9.24 | 7.92 | -14.3% | -1.89 to -0.763 | better |
+| end-to-end latency, mean (ms) | 222 | 222 | +0.1% | -14.7 to 15.1 | no difference beyond the noise |
+| consumer lag, most messages waiting at once | 2,246 | 2,215 | -1.4% | -130 to 68.4 | no difference beyond the noise |
+| consumer lag, mean messages waiting | 198 | 195 | -1.2% | -17.3 to 12.6 | no difference beyond the noise |
+| messages produced and never consumed | 0 | 0 |  | 0 to 0 | same |
+| consumers running, mean (the resources held) | 2 | 2.37 | +18.3% | 0.362 to 0.371 | **WORSE** |
+| consumers running, most at once | 2 | 3 | +50.0% | 1 to 1 | **WORSE** |
+| host CPU busy (share of the run) | 0.292 | 0.293 | +0.2% | -0.0161 to 0.0171 | no difference beyond the noise |
+| host CPU-seconds | 348 | 349 | +0.2% | -19.7 to 21.2 | no difference beyond the noise |
+| host CPU-seconds per 1,000 messages inside the line | 1.57 | 1.57 | +0.4% | -0.0905 to 0.104 | no difference beyond the noise |
+| consumer changes written (the knob's moves) | 2 | 6 | +200.0% | 4 to 4 | shown, not judged |
+
+Every omni arm handed back to the operator's count: yes; fail-ups: 3.
+
+## tuning: 2.0 ms of work a message, 256 B, steps 1 2 3 2 3 4 5 6 5 4 3 2 1 2 1 × 20.0 s (the tuning workload)
+
+Native capacity 975 messages a second; base rate 146.3/s; 3 paired repetitions; engine omni-v5 (digest 1bde1fc6e695d292, 43 files) at `c0bc70570862`.
+
+| Gauge | native | omni | change | 95% interval of the difference | reading |
+|---|---:|---:|---:|---:|---|
+| work inside the response line (messages a second handled within the line) | 370 | 368 | -0.4% | -4.15 to 1.09 | no difference beyond the noise |
+| throughput (messages a second consumed) | 429 | 429 | +0.0% | -0.0045 to 0.00779 | no difference beyond the noise |
+| end-to-end latency, 95th percentile (ms) | 1,569 | 1,638 | +4.4% | -36.8 to 174 | no difference beyond the noise |
+| end-to-end latency, 99th percentile (ms) | 2,534 | 2,555 | +0.8% | -304 to 345 | no difference beyond the noise |
+| end-to-end latency, median (ms) | 8.56 | 8.53 | -0.3% | -0.0956 to 0.0503 | no difference beyond the noise |
+| end-to-end latency, mean (ms) | 217 | 224 | +2.9% | -9.27 to 22.1 | no difference beyond the noise |
+| consumer lag, most messages waiting at once | 1,145 | 1,152 | +0.6% | -9.58 to 24.2 | no difference beyond the noise |
+| consumer lag, mean messages waiting | 97.3 | 99.8 | +2.5% | -3.18 to 8.12 | no difference beyond the noise |
+| messages produced and never consumed | 0 | 0 |  | 0 to 0 | same |
+| consumers running, mean (the resources held) | 2 | 1.99 | -0.5% | -0.00997 to -0.00997 | better |
+| consumers running, most at once | 2 | 2 | +0.0% | 0 to 0 | same |
+| host CPU busy (share of the run) | 0.311 | 0.311 | +0.1% | -0.0122 to 0.0129 | no difference beyond the noise |
+| host CPU-seconds | 360 | 361 | +0.4% | -13.7 to 16.6 | no difference beyond the noise |
+| host CPU-seconds per 1,000 messages inside the line | 3.24 | 3.26 | +0.8% | -0.131 to 0.185 | no difference beyond the noise |
+| consumer changes written (the knob's moves) | 2 | 4 | +100.0% | 2 to 2 | shown, not judged |
+
+Every omni arm handed back to the operator's count: yes; fail-ups: 3.
+
+---
+
+*© 2026 The Omni-Compass LLC. All rights reserved. **Evaluation and simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
