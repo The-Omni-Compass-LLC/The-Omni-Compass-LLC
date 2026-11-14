@@ -5,7 +5,7 @@
 Every claim the company's website may make about Omni-Compass's benefit, worded as the repository's own records support it, each
 with the file it is read from; and every number that has appeared on the site, or in an outside AI's reading of it, that no record
 supports and that must come off. A page that needs a number takes it from here, and from nowhere else. When a record changes, this
-page changes with it. The numbers below are omni-v25's (6 November 2026); a page reads them live from `results/SITE_NUMBERS.json`
+page changes with it. The current published software-index numbers below are omni-v26's; historical GPU, cloud, and earlier-engine results retain their original version and date attribution; a page reads them live from `results/SITE_NUMBERS.json`
 (`show[].sentence`, `four_arms`, written by `tools/site_numbers.py`), never typed in, and when that file cannot be read it says "the
 record could not be read just now", never a cached or typed number. The record is never changed to suit a page: a site whose code
 rejects a record's number (a range guard written for an older engine) has the fault, not the record.
