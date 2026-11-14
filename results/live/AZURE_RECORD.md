@@ -4,7 +4,7 @@
 
 Written by `tools/azure_record.py` from each run's own receipt on the branch `raw` (`run-<id>/live-reps-aks/LIVE_REPS.json`, written by `tools/live_reps.py` in the run's own aggregate job); `results/live/AZURE_RECORD.json` is the same in a form a page reads. The runs' own records (title, commit, start, end, conclusion) are GitHub's, read 2026-11-14T13:13:22Z; each run's engine is the one its commit stands on (`tools/omni_version.py --commit`). Evidence class **L** (live software on Azure Kubernetes Service, the bill metered: Azure's own count of the machines it billed every 15 s, priced at list).
 
-**33 Azure runs handed in a receipt**: 29 counted sets and 4 tuning cases, on 12 engines (no declared engine, omni-v1, omni-v5, omni-v6, omni-v7, omni-v9, omni-v10, omni-v11, omni-v18, omni-v21, omni-v25, omni-v26). Each run's word stands by itself, on its own number, by the one key; no two runs are pooled and no run is read across engines. A set of five repetitions has wide intervals: its words say what it measured, and how many of them stand beyond the noise. The sets before 31 October ran at the tune-down on the machines alone (the founder's order of 14 October, struck on 31 October): there Omni-Compass only parked a machine the cloud already made, so the work could not grow and the service rows read the noise of the same pods. The sets at the max on the work meter start after their tuning cases.
+**34 Azure runs handed in a receipt**: 30 counted sets and 4 tuning cases, on 12 engines (no declared engine, omni-v1, omni-v5, omni-v6, omni-v7, omni-v9, omni-v10, omni-v11, omni-v18, omni-v21, omni-v25, omni-v26). Each run's word stands by itself, on its own number, by the one key; no two runs are pooled and no run is read across engines. A set of five repetitions has wide intervals: its words say what it measured, and how many of them stand beyond the noise. The sets before 31 October ran at the tune-down on the machines alone (the founder's order of 14 October, struck on 31 October): there Omni-Compass only parked a machine the cloud already made, so the work could not grow and the service rows read the noise of the same pods. The sets at the max on the work meter start after their tuning cases.
 
 How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the direction and size of the change against native in words, then whether the run's paired 95% interval stands clear of zero. Why a word reads so: work done: more work is more output from the same organism; work bought with each dollar of the bill: more is more work for the bill; a resource the bill pays for: a fall is a cut, a rise is power given beside what it bought, never a loss; time waited, missed or failed: less helps the system, more hurts it; a count that must never rise: any rise hurts the system and reads LOSS, with no floor.
 
@@ -12,6 +12,7 @@ How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the d
 
 | Run | Engine | Set | Counts | Paired repetitions | Work inside the line | The bill | 95th percentile | 99th percentile | Failed requests | Time over the line |
 |---|---|---|---|---:|---|---|---|---|---|---|
+| [43364393684](#run-43364393684) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 68.3%<br>(beyond the noise) | power given, up 28.5%<br>(beyond the noise) | GAIN, down 30.2%<br>(beyond the noise) | GAIN, down 66.5%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 47.6%<br>(beyond the noise) |
 | [43177138720](#run-43177138720) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 59.0%<br>(beyond the noise) | power given, up 17.9%<br>(beyond the noise) | GAIN, down 25.6%<br>(beyond the noise) | GAIN, down 58.3%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 35.5%<br>(beyond the noise) |
 | [43005182097](#run-43005182097) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 65.0%<br>(beyond the noise) | power given, up 27.6%<br>(beyond the noise) | GAIN, down 25.2%<br>(beyond the noise) | GAIN, down 57.0%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 42.6%<br>(beyond the noise) |
 | [42408759289](#run-42408759289) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second | tuning case: sets the counted rates, never counted | 1 | GAIN, up 52.5%<br>(one repetition, no interval) | GAIN, down 1.5%<br>(one repetition, no interval) | GAIN, down 0.9%<br>(one repetition, no interval) | GAIN, down 53.0%<br>(one repetition, no interval) | GAIN or STEADY, down 100.0%<br>(one repetition, no interval) | GAIN, down 6.3%<br>(one repetition, no interval) |
@@ -47,6 +48,42 @@ How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the d
 | [37187059424](#run-37187059424) | no declared engine | the steady set | counted set | 4 | — | GAIN, down 0.6%<br>(inside the noise) | GAIN, down 17.1%<br>(inside the noise) | LOSS, up 37.6%<br>(inside the noise) | LOSS, up 60.5%<br>(inside the noise) | LOSS, up 19.3%<br>(inside the noise) |
 
 ## Each run, every gauge of its receipt
+
+### Run 43364393684
+
+<a id="run-43364393684"></a>
+
+`aks-metered`, work meter 2 4 6 8 10 12 16 20 to the cap, stopping rule dial max eastus Standard_D2s_v4; engine **omni-v26** (commit `db8ccfcc9d`, branch `main`); started 2026-11-13 04:16 UTC, ended 2026-11-14 02:39 UTC; GitHub's conclusion **failure**; 10 paired repetitions; the dial max; counted set. Receipt `raw:run-43364393684/live-reps-aks/LIVE_REPS.json`.
+
+| Gauge | native | Omni-Compass on native | Change against native | 95% interval of the difference | Reading |
+|---|---:|---:|---:|---:|---|
+| worker nodes in service, mean | 2.532 | 3.079 | up 21.6% | 0.4197 to 0.6737 | power given, up 21.6% (beyond the noise) |
+| node-hours | 0.8519 | 1.033 | up 21.3% | 0.1395 to 0.2228 | power given, up 21.3% (beyond the noise) |
+| energy, parked workers still on at idle power (Wh) | 105.8 | 157.4 | up 48.7% | 44.41 to 58.7 | power given, up 48.7% (beyond the noise) |
+| energy (Wh) | 94.04 | 111.6 | up 18.6% | 11.65 to 23.41 | power given, up 18.6% (beyond the noise) |
+| response time (ms), mean | 467.3 | 331.5 | down 29.1% | -172.8 to -98.93 | GAIN, down 29.1% (beyond the noise) |
+| response time (ms), 95th percentile | 1033 | 721.5 | down 30.2% | -414.8 to -208.2 | GAIN, down 30.2% (beyond the noise) |
+| response time (ms), 99th percentile | 3067 | 1027 | down 66.5% | -2945 to -1137 | GAIN, down 66.5% (beyond the noise) |
+| time over the response line (% of samples) | 28.64 | 15 | down 47.6% | -17.1 to -10.18 | GAIN, down 47.6% (beyond the noise) |
+| failed requests (%) | 3.124 | 0 | down 100.0% | -3.618 to -2.629 | GAIN or STEADY, down 100.0% (beyond the noise) |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 19.7 | 18.2 | down 7.6% | -2.343 to -0.657 | GAIN, down 7.6% (beyond the noise) |
+| settings commands the governor wrote on its own (no person touched either arm) | 0 | 33.2 | — | 29.27 to 37.13 | shown, not judged |
+| pods with no machine to take them (unschedulable) | 2.9 | 13.6 | up 369.0% | 6.569 to 14.83 | LOSS, up 369.0% (beyond the noise) |
+| time pods had no machine to take them, pod-minutes | 3.627 | 16.18 | up 346.0% | 7.618 to 17.48 | LOSS, up 346.0% (beyond the noise) |
+| pending pods, pod-minutes | 6.668 | 26.37 | up 295.4% | 13.5 to 25.9 | shown, not judged |
+| utilisation (used / allocatable) | 0.3276 | 0.2594 | down 20.8% | -0.07891 to -0.05739 | shown, not judged |
+| CPU used (cores), mean | 1.574 | 1.513 | down 3.9% | -0.08808 to -0.03522 | shown, not judged |
+| Omni's own CPU (cores), mean | 0 | 0.01227 | — | 0.01073 to 0.01381 | shown, not judged |
+| CPU used with Omni's own (cores), mean | 1.574 | 1.525 | down 3.1% | -0.07465 to -0.02411 | shown, not judged |
+| energy per core-hour (Wh) | 177.6 | 219.8 | up 23.8% | 32.11 to 52.28 | shown, not judged |
+| HPA replicas, mean | 7.41 | 12.99 | up 75.3% | 4.143 to 7.022 | shown, not judged |
+| pods started | 8.2 | 28.7 | up 250.0% | 16.93 to 24.07 | shown, not judged |
+| pod start wait, total (s) | 269.7 | 1150 | up 326.6% | 536.5 to 1225 | LOSS, up 326.6% (beyond the noise) |
+| pod start wait, mean (s) | 32.97 | 39.05 | up 18.5% | -6.464 to 18.64 | LOSS, up 18.5% (inside the noise) |
+| machines billed, machine-hours | 0.753 | 0.9675 | up 28.5% | 0.08689 to 0.3421 | power given, up 28.5% (beyond the noise) |
+| compute bill at list price ($) | 0.07229 | 0.09288 | up 28.5% | 0.008341 to 0.03284 | power given, up 28.5% (beyond the noise) |
+| work inside the response line (requests a second; the capacity test's own gauge) | 5.314 | 8.94 | up 68.3% | 3.329 to 3.925 | GAIN, up 68.3% (beyond the noise) |
+| work per dollar of the bill (answers inside the line for each $; the cloud's judged number) | 9.184e+04 | 1.182e+05 | up 28.8% | 9809 to 4.301e+04 | GAIN, up 28.8% (beyond the noise) |
 
 ### Run 43177138720
 
