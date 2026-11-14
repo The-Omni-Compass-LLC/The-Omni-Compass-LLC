@@ -6,7 +6,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 Dubra Software Inc. / The Omni-Compass LLC, 7 November 2026.
 
-**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 fingerprinted files), the verdict audit's record `287061c8bc13fc03` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-14 03:34 UTC at commit `48b0ee913060` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
+**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 fingerprinted files), the verdict audit's record `287061c8bc13fc03` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-14 10:20 UTC at commit `80b101da5126` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
 
 ## Abstract
 
@@ -107,7 +107,7 @@ Q4 comes first in logic; on the page Q1 leads. Do no harm is judged on the rows 
 
 ### 1.3 What the engine is: one page and its copies
 
-The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-14 03:34 UTC carries 25 records; it plays back 97 three-run tables with 291 runs, and 235,791 of 235,791 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
+The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-14 10:20 UTC carries 25 records; it plays back 97 three-run tables with 291 runs, and 235,791 of 235,791 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
 
 ### 1.4 How the page is fed and rebuilt
 
@@ -115,7 +115,7 @@ One workflow, `.github/workflows/live-engine.yml`, rebuilds the page on a push t
 
 ### 1.5 The self-update and its stamp
 
-Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-14 03:34 UTC, 61,819,110 bytes, SHA-256 `5eb21b30bc506599…`, page identity `50ca1deffd5dc044…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
+Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-14 10:20 UTC, 61,819,761 bytes, SHA-256 `ea819b985ab0ac3e…`, page identity `85600921c1a20434…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
 
 ### 1.6 What runs live, what plays back, and the three evidence classes
 
@@ -719,7 +719,7 @@ A metrics dashboard closes no loop; the Kubernetes Dashboard's writes are manual
 
 ## 7. The Page, Section by Section
 
-The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-14 03:34 UTC, 61,819,110 bytes, SHA-256 `5eb21b30bc506599…`, page identity `50ca1deffd5dc044…`<!-- end of monograph: page_stamp --> in that order.
+The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-14 10:20 UTC, 61,819,761 bytes, SHA-256 `ea819b985ab0ac3e…`, page identity `85600921c1a20434…`<!-- end of monograph: page_stamp --> in that order.
 
 ### 7.1 The sections, their monitors and their code
 
@@ -801,7 +801,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 | `gpurun` | `docs/engine/export_gpu_run.py`; `results/gpu/run-20261024T091235Z/GPU_REPS.md` | omni-v18 |
 | `cpuhost` | `docs/engine/export_cpu_model.py`; `results/sim/cpu_power_model/CPU_POWER.md` | omni-v12 |
 | `monitors` | `docs/engine/build_live_engine.py` `records()`; `docs/engine/monitors.json` | names none |
-| `engineruns` | `results/engine_runs/ENGINE_RUNS_500_583076300.json`; `tools/engine_runs.py` | omni-v26; base 583076300 |
+| `engineruns` | `results/engine_runs/ENGINE_RUNS_500_630642797.json`; `tools/engine_runs.py` | omni-v26; base 630642797 |
 | `heldout` | `docs/engine/export_heldout.py`; `benchmarks/stack_benchmark.py` | names none |
 | `cpptwin` | `docs/engine/export_cpp_twins.py` | seed 3000 |
 | `beatsweep` | `docs/engine/build_live_engine.py` `beat_sweep()`; `tools/heartbeat_sweep.py`; `tools/model_gate.py`; `results/model_gate/HEARTBEAT_SWEEP.json` | names none |
@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 583076300, where the newest on file is 630642797; the injection grid of batch 583076300, the newest on file<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 630642797, the newest on file; the injection grid of batch 583076300, the newest on file<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
