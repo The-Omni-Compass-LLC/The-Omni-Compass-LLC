@@ -39,7 +39,7 @@ Today: bare metal, omni-v23: G, the work for each dollar, run 1 GAIN, up 1.46% (
 | Bare metal, one card | the seven organisms (the spine, the four realms, the four stacked, the whole catalog) at 1, 10 and 100 copies | on omni-v23 (`results/gpu/V23_A10_STACKS_FULL_ABC.json`): 196 rows STEADY, 90 rows shown, not judged (one repetition in a run), 7 rows LOSS, 6 rows power given, 1 row GAIN; not yet run on omni-v26 |
 | Bare metal, one card, fully loaded | the seven organisms at 1, 10 and 100 copies, the card offered more than it serves (docs/GPU_PREREGISTRATION.md, amendment 16) | read in `results/gpu/V23_A10_STACKS_FULL_ABC.json`, every organism at every size in `results/TWO_BILLS.md` |
 | Bare metal, the eight-card machine | six organisms at 1, 10 and 100 copies, each on its own card, the spine not among them | read in `results/gpu/V23_A100_8CARD_STACKS_ABC.json`, every organism at every size in `results/TWO_BILLS.md` |
-| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | read in `results/live/V26_AKS_FULL_BURST.json` |
+| Through the cloud: Azure | the cloud's own cluster and autoscaler, the whole engine at the max, the work meter | read in `results/live/V26_AKS_WORK_METER.json` |
 | Through the cloud: Azure, the seven organisms | one rented Azure machine, each organism with the real cluster inside, 100 copies | started on omni-v23 (big-organism-detached, run 41269562586 (100 copies, three repetitions)); not yet read; it runs again on omni-v26 |
 | Through the cloud: Google and Amazon | the same harness as Azure | wired, Google's switch on, Amazon's on; not yet run |
 
