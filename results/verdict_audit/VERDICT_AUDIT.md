@@ -4,33 +4,33 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `287061c8bc13fc03`). The engine that stands is omni-v26. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
+Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `1361d4bb017b03e1`). The engine that stands is omni-v26. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
 
 ## The counts
 
 | What | Count |
 |---|---|
-| Three-run tables | 422: 101 standing, 259 superseded, 60 the road, 2 taken out |
-| Standing tables, Omni-Compass against its native | 64 |
-| Standing tables on the engine that stands (omni-v26) | 81 |
+| Three-run tables | 423: 102 standing, 259 superseded, 60 the road, 2 taken out |
+| Standing tables, Omni-Compass against its native | 65 |
+| Standing tables on the engine that stands (omni-v26) | 82 |
 | Standing tables not yet run again on omni-v26 | 20 |
-| Rows recomputed from their stored values | 12842 of 17779 |
+| Rows recomputed from their stored values | 12862 of 17806 |
 | Stored readings the key reads otherwise | 0 |
 | Markdown readings unlike their JSON twin | 0 |
 
 ### Standing tables: Omni-Compass against its native (the readings do no harm is judged by)
 
-Every word: 484 GAIN, 197 power given, 567 STEADY, 288 LOSS, 206 the runs disagree, 32 the runs differ, 661 shown, 201 tuning. The four categories are exclusive: each row has one word.
+Every word: 492 GAIN, 205 power given, 567 STEADY, 292 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning. The four categories are exclusive: each row has one word.
 
 | Engine | Words |
 |---|---|
-| omni-v26 | 444 GAIN, 185 power given, 527 STEADY, 227 LOSS, 184 the runs disagree, 32 the runs differ, 589 shown, 201 tuning |
+| omni-v26 | 452 GAIN, 193 power given, 527 STEADY, 231 LOSS, 184 the runs disagree, 32 the runs differ, 596 shown, 201 tuning |
 | omni-v25 | 27 GAIN, 12 power given, 30 STEADY, 55 LOSS, 7 the runs disagree, 54 shown |
 | omni-v12 | 13 GAIN, 10 STEADY, 6 LOSS, 15 the runs disagree, 18 shown |
 
 | Evidence class | Words |
 |---|---|
-| L (the real software) | 387 GAIN, 187 power given, 407 STEADY, 288 LOSS, 206 the runs disagree, 605 shown, 189 tuning |
+| L (the real software) | 395 GAIN, 195 power given, 407 STEADY, 292 LOSS, 206 the runs disagree, 612 shown, 189 tuning |
 | S (an outside simulator driven by our own runner) | 97 GAIN, 10 power given, 160 STEADY, 32 the runs differ, 56 shown, 12 tuning |
 
 Useful work, time waited and resources apart (item 8 of the work order): a resource spent or held that rose is power given, shown beside what it bought, never a gain in work.
@@ -38,18 +38,19 @@ Useful work, time waited and resources apart (item 8 of the work order): a resou
 | The gauge's direction | Words |
 |---|---|
 | a count that must never rise | 6 GAIN, 82 STEADY, 14 tuning |
-| resource spent or held | 271 GAIN, 197 power given, 217 STEADY, 62 the runs disagree, 6 the runs differ, 63 tuning |
-| shown | 6 STEADY, 20 the runs differ, 661 shown, 56 tuning |
-| time waited, missed or failed | 178 GAIN, 182 STEADY, 285 LOSS, 133 the runs disagree, 3 the runs differ, 39 tuning |
-| work done | 29 GAIN, 80 STEADY, 3 LOSS, 11 the runs disagree, 3 the runs differ, 29 tuning |
+| resource spent or held | 271 GAIN, 205 power given, 217 STEADY, 62 the runs disagree, 6 the runs differ, 63 tuning |
+| shown | 6 STEADY, 20 the runs differ, 668 shown, 56 tuning |
+| time waited, missed or failed | 184 GAIN, 182 STEADY, 289 LOSS, 133 the runs disagree, 3 the runs differ, 39 tuning |
+| work done | 30 GAIN, 80 STEADY, 3 LOSS, 11 the runs disagree, 3 the runs differ, 29 tuning |
+| work per resource | 1 GAIN |
 
 Evidence strength beside the word (it never changes the word):
 
 | Word | Strength |
 |---|---|
-| GAIN | 210 strong, 94 deterministic, reproduced in all three runs, 92 inconclusive, 43 moderate, 42 weak, 3 not recomputable from runs |
-| LOSS | 115 inconclusive, 65 strong, 55 moderate, 53 weak |
-| power given | 94 strong, 39 inconclusive, 30 moderate, 24 weak, 10 deterministic, reproduced in all three runs |
+| GAIN | 217 strong, 94 deterministic, reproduced in all three runs, 92 inconclusive, 44 moderate, 42 weak, 3 not recomputable from runs |
+| LOSS | 116 inconclusive, 68 strong, 55 moderate, 53 weak |
+| power given | 102 strong, 39 inconclusive, 30 moderate, 24 weak, 10 deterministic, reproduced in all three runs |
 
 | STEADY of each kind | 215 under the floor, 352 exactly the same |
 |---|---|
@@ -59,7 +60,7 @@ Evidence strength beside the word (it never changes the word):
 
 | Status, comparison | Words |
 |---|---|
-| standing | against its native | 484 GAIN, 197 power given, 567 STEADY, 288 LOSS, 206 the runs disagree, 32 the runs differ, 661 shown, 201 tuning |
+| standing | against its native | 492 GAIN, 205 power given, 567 STEADY, 292 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning |
 | standing | in place of a controller | 110 GAIN, 29 power given, 72 STEADY, 70 LOSS, 18 the runs disagree, 137 shown |
 | standing | the orchestrator's own | 28 GAIN, 10 power given, 86 STEADY, 76 LOSS, 35 the runs disagree, 99 shown |
 | standing | two changes at once | 57 GAIN, 25 power given, 43 STEADY, 96 LOSS, 14 the runs disagree, 99 shown |
@@ -72,7 +73,7 @@ Evidence strength beside the word (it never changes the word):
 
 The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two changes at once (BOTH) and in place of a controller (VS) are shown, never a reading of Omni-Compass against its native.
 
-## Every LOSS row of Omni-Compass against its native (288)
+## Every LOSS row of Omni-Compass against its native (292)
 
 | Table | Engine | Class | Gauge | Native → Omni-Compass, raw change, each run | Evidence |
 |---|---|---|---|---|---|
@@ -144,6 +145,10 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_AKS_FULL_BURST.md` | omni-v26 | L | time pods had no machine to take them, pod-minutes | 2.133 → 40.31 (+1789.3%); 2.933 → 39.82 (+1257.4%); 2.794 → 44.82 (+1504.0%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_AKS_FULL_BURST.md` | omni-v26 | L | pod start wait, total (s) | 58.33 → 2501 (+4186.9%); 38 → 2555 (+6623.7%); 87 → 2667 (+2965.1%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_AKS_FULL_BURST.md` | omni-v26 | L | pod start wait, mean (s) | 19.27 → 103.5 (+437.0%); 7.6 → 95.33 (+1154.4%); 29.67 → 109.3 (+268.5%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | pods with no machine to take them (unschedulable) | 2.8 → 12.2 (+335.7%); 2.8 → 11.5 (+310.7%); 2.9 → 13.6 (+369.0%) | strong; 3 of 3 beyond the noise |
+| `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | time pods had no machine to take them, pod-minutes | 3.082 → 15.16 (+391.9%); 3.155 → 13.13 (+316.1%); 3.627 → 16.18 (+346.0%) | strong; 3 of 3 beyond the noise |
+| `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | pod start wait, total (s) | 233 → 1058 (+354.3%); 236.9 → 921.8 (+289.1%); 269.7 → 1150 (+326.6%) | strong; 3 of 3 beyond the noise |
+| `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | pod start wait, mean (s) | 29.12 → 36.29 (+24.6%); 29.61 → 33.8 (+14.2%); 32.97 → 39.05 (+18.5%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_ALL_FOUR.md` | omni-v26 | L | pod start wait, total (s) | 7.6 → 17.8 (+134.2%); 7.8 → 20.8 (+166.7%); 7.3 → 15.1 (+106.8%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_ALL_FOUR.md` | omni-v26 | L | pod start wait, mean (s) | 1.406 → 1.76 (+25.2%); 1.399 → 1.888 (+35.0%); 1.325 → 1.528 (+15.3%) | weak; 1 of 3 beyond the noise |
 | `results/live/V26_BATCH.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 10.7 → 11 (+2.8%); 9.7 → 9.8 (+1.0%); 11.2 → 11.6 (+3.6%) | weak; 1 of 3 beyond the noise |
@@ -663,6 +668,7 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V25_YCSB_SERVICE.md` | omni-v25 | superseded | against its native | L | A 41790648692 (? reps, `0a92e09fe669`), B 41792507887 (? reps, `05092772357b`), C 41794367186 (? reps, `05092772357b`) |
 | `results/live/V25_YCSB_SHIPPED.md` | omni-v25 | superseded | against its native | L | A 41758494688 (? reps, `e29ad045b2ac`), B 41772133244 (? reps, `db6e040b4584`), C 41785367418 (? reps, `0a92e09fe669`) |
 | `results/live/V26_AKS_FULL_BURST.md` | omni-v26 | standing | against its native | L | A 42416651121 (3 reps, `84462b32eacc`), B 42483841896 (3 reps, `c53a301d3751`), C 42651049003 (3 reps, `9a219c92c8c4`) |
+| `results/live/V26_AKS_WORK_METER.md` | omni-v26 | standing | against its native | L | A 43005182097 (10 reps, `0e489fe0ca22`), B 43177138720 (10 reps, `2438623f09a9`), C 43364393684 (10 reps, `db8ccfcc9d1d`) |
 | `results/live/V26_ALL_FOUR.md` | omni-v26 | standing | against its native | L | A 42406258911 (10 reps, `b806aadd5bbb`), B 42415420145 (10 reps, `84462b32eacc`), C 42427795427 (10 reps, `84462b32eacc`) |
 | `results/live/V26_BATCH.md` | omni-v26 | standing | against its native | L | A 42407546216 (10 reps, `b806aadd5bbb`), B 42417953886 (10 reps, `84462b32eacc`), C 42427808988 (10 reps, `84462b32eacc`) |
 | `results/live/V26_BINPACK.md` | omni-v26 | standing | against its native | L | A 42439660401 (10 reps, `f11b1b18673c`), B 42440706098 (10 reps, `f11b1b18673c`), C 42440713360 (10 reps, `f11b1b18673c`) |

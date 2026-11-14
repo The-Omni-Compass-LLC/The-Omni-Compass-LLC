@@ -40,6 +40,36 @@ Each figure is in percent of native's mean in the least favourable of the three 
 | machines billed, machine-hours | power given in all three of our runs | 36.7% | 45.5% | 249 |
 | compute bill at list price ($) | power given in all three of our runs | 36.7% | 45.5% | 249 |
 
+## Aks Work Meter (omni-v26, `V26_AKS_WORK_METER.md`, 10 paired repetitions a run)
+
+| Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
+|---|---|---:|---:|---:|
+| work inside the response line (requests a second; the capacity test's own gauge) | GAIN in all three of our runs | 9.3% | 11.4% | 53 |
+| worker nodes in service, mean | power given in all three of our runs | 10.7% | 13.1% | 69 |
+| node-hours | power given in all three of our runs | 11.0% | 13.5% | 73 |
+| energy, parked workers still on at idle power (Wh) | power given in all three of our runs | 14.0% | 17.2% | 119 |
+| energy (Wh) | power given in all three of our runs | 10.3% | 12.6% | 64 |
+| response time (ms), mean | GAIN in all three of our runs | 12.1% | 14.9% | 89 |
+| response time (ms), 95th percentile | GAIN in all three of our runs | 15.4% | 19.0% | 144 |
+| response time (ms), 99th percentile | GAIN in all three of our runs | 47.4% | 58.3% | 1359 |
+| time over the response line (% of samples) | GAIN in all three of our runs | 20.2% | 24.8% | 246 |
+| failed requests (%) | GAIN in all three of our runs | 27.5% | 33.8% | 457 |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | GAIN by the mean of our three runs, beyond the noise in 2 of 3 | 11.8% | 14.5% | 84 |
+| pods with no machine to take them (unschedulable) | LOSS in all three of our runs | 198.1% | 243.4% | 23694 |
+| time pods had no machine to take them, pod-minutes | LOSS in all three of our runs | 233.8% | 287.4% | 33032 |
+| pending pods, pod-minutes | shown, not judged | 129.3% | 158.8% | 10092 |
+| utilisation (used / allocatable) | shown, not judged | 8.2% | 10.0% | 41 |
+| CPU used (cores), mean | shown, not judged | 2.9% | 3.5% | 6 |
+| CPU used with Omni's own (cores), mean | shown, not judged | 2.9% | 3.6% | 6 |
+| energy per core-hour (Wh) | shown, not judged | 11.5% | 14.2% | 81 |
+| HPA replicas, mean | power given in all three of our runs | 28.6% | 35.2% | 496 |
+| pods started | power given in all three of our runs | 77.9% | 95.8% | 3669 |
+| pod start wait, total (s) | LOSS in all three of our runs | 198.8% | 244.3% | 23872 |
+| pod start wait, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 | 53.0% | 65.1% | 1694 |
+| machines billed, machine-hours | power given in all three of our runs | 23.6% | 28.9% | 336 |
+| compute bill at list price ($) | power given in all three of our runs | 23.6% | 28.9% | 336 |
+| work per dollar of the bill (answers inside the line for each $; the cloud's judged number) | GAIN in all three of our runs | 25.1% | 30.9% | 382 |
+
 ## All Four (omni-v26, `V26_ALL_FOUR.md`, 10 paired repetitions a run)
 
 | Measure | Reading | MDE, one run | MDE, all three runs | Repetitions for 5% |
