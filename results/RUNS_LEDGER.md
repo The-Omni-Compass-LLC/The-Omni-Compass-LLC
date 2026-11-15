@@ -10,12 +10,12 @@ One base seed, 500 runs. Run k draws its seed from the jump generator, seed_k = 
 
 ## Where it stands
 
-- **202 sets of the engine's runs** (101,000 runs, 2026-10-20 to 2026-11-15) and **203 sets of the core's Monte Carlo** (13 of them a reader's own system).
-- **The receipts' own digest**: recomputed here from each record's 500 receipts, with every seed recomputed from its base by the jump generator and every rung of its ladder: 202 of 202 engine sets pass.
-- **The C++ harness** wrote its digest into 199 of the 202 engine sets and 202 of the 203 core sets; in every one it is the Python's (a set made before the harness existed carries none).
-- **The page's own digest** stands in the record of 17 engine sets and 25 core sets. On GitHub the page's own code has run every run of every set since 21 October (`engine-runs.yml`) and the run fails if it differs, but the record kept only the Python's and the C++ harness's digests until `tools/engine_runs.py --verify --all` began writing the page's beside them, rung by rung; for the sets made before that, the page's digest is the one the re-proof below computed.
-- **The run on GitHub**: 201 of the 202 engine sets name the run that made them, its commit and its address (78 on `main`, 123 on `claude/interactive-animated-charts-icvnsw`; 1 made before the runs were linked to GitHub); no base, digest or run stands twice.
-- **By engine** (each set keeps the engine it ran on): omni-v26 34, omni-v25 41, omni-v24 13, omni-v23 35, omni-v22 20, omni-v21 17, omni-v20 6, omni-v19 7, omni-v18 8, omni-v17 4, omni-v16 2, omni-v15 1, omni-v14 2, omni-v13 11, omni-v12 1.
+- **203 sets of the engine's runs** (101,500 runs, 2026-10-20 to 2026-11-15) and **204 sets of the core's Monte Carlo** (13 of them a reader's own system).
+- **The receipts' own digest**: recomputed here from each record's 500 receipts, with every seed recomputed from its base by the jump generator and every rung of its ladder: 203 of 203 engine sets pass.
+- **The C++ harness** wrote its digest into 200 of the 203 engine sets and 203 of the 204 core sets; in every one it is the Python's (a set made before the harness existed carries none).
+- **The page's own digest** stands in the record of 18 engine sets and 26 core sets. On GitHub the page's own code has run every run of every set since 21 October (`engine-runs.yml`) and the run fails if it differs, but the record kept only the Python's and the C++ harness's digests until `tools/engine_runs.py --verify --all` began writing the page's beside them, rung by rung; for the sets made before that, the page's digest is the one the re-proof below computed.
+- **The run on GitHub**: 202 of the 203 engine sets name the run that made them, its commit and its address (124 on `claude/interactive-animated-charts-icvnsw`, 78 on `main`; 1 made before the runs were linked to GitHub); no base, digest or run stands twice.
+- **By engine** (each set keeps the engine it ran on): omni-v26 35, omni-v25 41, omni-v24 13, omni-v23 35, omni-v22 20, omni-v21 17, omni-v20 6, omni-v19 7, omni-v18 8, omni-v17 4, omni-v16 2, omni-v15 1, omni-v14 2, omni-v13 11, omni-v12 1.
 
 ## Run again on another machine
 
@@ -44,6 +44,7 @@ Read from GitHub's own list of the `engine-runs` workflow's runs and from each r
 
 | Base | Written (UTC) | Engine | The Python's digest | The C++ harness's | The page's, in the record | The ladder | Run on GitHub | Run again: the same digest |
 |---:|---|---|---|---|---|---|---|---|
+| 734738986 | 2026-11-15 06:16 | omni-v26 | `29e8a522720f…` | the same | the same | 1/10/100/500, C++, page | [43684411946](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43684411946) `2e55bdf1` claude/interactive-animated-charts-icvnsw | not yet run again |
 | 710946795 | 2026-11-15 01:58 | omni-v26 | `7b5ced47dc14…` | the same | the same | 1/10/100/500, C++, page | [43660619755](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43660619755) `adfc923b` main | not yet run again |
 | 709890395 | 2026-11-15 01:56 | omni-v26 | `8853d7ac5619…` | the same | the same | 1/10/100/500, C++, page | [43659563355](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43659563355) `657982bd` main | not yet run again |
 | 711279456 | 2026-11-15 01:55 | omni-v26 | `6737e25afb0d…` | the same | the same | 1/10/100/500, C++, page | [43660952416](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43660952416) `1e093413` claude/interactive-animated-charts-icvnsw | not yet run again |
@@ -251,6 +252,7 @@ Read from GitHub's own list of the `engine-runs` workflow's runs and from each r
 
 | Base | Written (UTC) | System | The Python's digest | The C++ harness's | The page's, in the record | Run on GitHub | Run again: the same digest |
 |---:|---|---|---|---|---|---|---|
+| 734738986 | 2026-11-15 06:16 | the engine's own ranges | `6cc36f649986…` | the same | the same | [43684411946](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43684411946) `2e55bdf1` claude/interactive-animated-charts-icvnsw | not yet run again |
 | 710946795 | 2026-11-15 01:59 | the engine's own ranges | `2390d3425c33…` | the same | the same | [43660619755](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43660619755) `adfc923b` main | not yet run again |
 | 709890395 | 2026-11-15 01:57 | the engine's own ranges | `bec9595cab73…` | the same | the same | [43659563355](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43659563355) `657982bd` main | not yet run again |
 | 711279456 | 2026-11-15 01:56 | the engine's own ranges | `e588767eb111…` | the same | the same | [43660952416](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/43660952416) `1e093413` claude/interactive-animated-charts-icvnsw | not yet run again |
