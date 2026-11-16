@@ -1,0 +1,1 @@
+const {minify}=require('terser');const fs=require('fs');(async()=>{let bad=0;for(const f of process.argv.slice(2)){const src=fs.readFileSync(f,'utf8');try{const r=await minify(src,{compress:false,mangle:false,format:{comments:false,beautify:false,ascii_only:false},ecma:2020});fs.writeFileSync(f,r.code);}catch(e){bad++;console.log('skip',f,e.message)}}console.log('done',bad)})()
