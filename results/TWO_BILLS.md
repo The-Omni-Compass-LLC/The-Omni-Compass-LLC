@@ -54,10 +54,12 @@ A line item the same in both arms adds the same dollars to both bills: it leaves
 | the chip, A against B (omni-v23) | 1 | 2,616 → 2,656 | +1.51% | 0.1194 → 0.1195 | +0.04% | 21,909 → 22,229 | +1.46% |
 | the chip, A against B (omni-v23) | 2 | 2,270 → 2,286 | +0.73% | 0.1189 → 0.1189 | ±0.00% | 19,089 → 19,229 | +0.73% |
 | the chip, A against B (omni-v23) | 3 | 2,255 → 2,239 | −0.70% | 0.1189 → 0.1189 | −0.01% | 18,964 → 18,833 | −0.69% |
-| the cloud, C against D (omni-v18, Azure) | one set of 97 | not counted in that set | | 0.05626 → 0.05694 | +1.21%, inside the noise | not read | not read |
+| the cloud, C against D (omni-v26, Azure) | 1 | 5.35 → 8.82 a second | +64.98% | 0.07288 → 0.09303 | +27.64% | 89,779 → 115,210 | +29.26% |
+| the cloud, C against D (omni-v26, Azure) | 2 | 5.44 → 8.65 a second | +59.01% | 0.07411 → 0.08740 | +17.93% | 90,010 → 120,820 | +34.83% |
+| the cloud, C against D (omni-v26, Azure) | 3 | 5.31 → 8.94 a second | +68.25% | 0.07229 → 0.09288 | +28.48% | 91,835 → 118,246 | +30.95% |
 | the cloud, C against D (Google, Amazon) | | not yet run | | | | | |
 
-**What it reads today.** On the chip the three runs' G read **the runs disagree**: the work for the bill has not yet been shown to rise. In the cloud the work was not counted in the set that stands, so G is not read. The runs that read it next are started or queued: the card fully loaded with the seven organisms, the eight-card machine, and the cloud at the max with its work meter, each read by this equation as it lands.
+**What it reads today.** On the chip the three runs' G read **the runs disagree**: the work for the bill has not yet been shown to rise. In the cloud (omni-v26, Azure, the work counted inside the response line) the three runs' G read **GAIN in all three of our runs**: more work for each dollar, the bill itself rising as power given for the work it bought. Each later table is read by this equation as it lands, on its own engine.
 
 ## The chip: A against B (an NVIDIA A10 on Lambda, omni-v23, three runs)
 
@@ -81,16 +83,26 @@ From `results/gpu/V23_A10_CAP_FULL_ABC.md` (runs 41243352339, 41243355485, 41243
 | 3 | A, native | 331.9 | 0.1189 | 2,255 | 18,963.8 |
 | 3 | B, Omni-Compass on native | 331.8 | 0.1189 | 2,239 | 18,832.8 |
 
-## The cloud: C against D (Kubernetes on Azure's AKS, omni-v18, one set of 97 paired repetitions)
+## The cloud: C against D (Kubernetes on Azure's AKS, omni-v26, three runs)
 
-From `results/live/AKS_STEADY_100_OMNI_V18.md`, the newest cloud set with a metered bill. The engine that stands has not yet run in the cloud: its set starts when Azure's current long set ends, and this row is then read again on it.
+From `results/live/V26_AKS_WORK_METER.md` (runs A 43005182097, 10 paired repetitions, B 43177138720, 10 paired repetitions, C 43364393684, 10 paired repetitions): **C, native** (Kubernetes on Azure's machines with Azure's own autoscaler) against **D, Omni-Compass on native** (the same with Omni-Compass on top): the cloud at the max with its work meter, the work counted as the answers inside the response line, the bill every machine billed at Azure's list price. Each run's change is in percent of native's, its word by what the gauge is for; the three runs read by the one key.
 
-| Gauge | C, native | D, Omni-Compass on native | The change | 95% interval | Beyond the noise |
-|---|---:|---:|---|---|---|
-| bill at list price ($ a window) | 0.05626 | 0.05694 | 1.21% (power given, inside the noise) | -0.00071 to +0.00208 | no |
-| machines billed (machine-hours a window) | 0.5860 | 0.5931 | 1.21% (power given, inside the noise) | -0.0074 to +0.0216 | no |
-
-This set counted no work done: the cloud's work meter came with the cloud sets after 31 October, so its work per dollar is not read here; the set on the engine that stands reads it.
+| Gauge | Three runs | Run 1 | Run 2 | Run 3 |
+|---|---|---|---|---|
+| work per dollar of the bill (answers inside the line for each $; the cloud's judged number) | **GAIN in all three of our runs** | GAIN, 28.3% | GAIN, 34.2% | GAIN, 28.8% |
+| work inside the response line (requests a second; the capacity test's own gauge) | **GAIN in all three of our runs** | GAIN, 65.0% | GAIN, 59.0% | GAIN, 68.3% |
+| compute bill at list price ($) | **power given in all three of our runs** | power given, 27.6% | power given, 17.9% | power given, 28.5% |
+| machines billed, machine-hours | **power given in all three of our runs** | power given, 27.6% | power given, 17.9% | power given, 28.5% |
+| response time (ms), mean | **GAIN in all three of our runs** | GAIN, 25.5% | GAIN, 23.3% | GAIN, 29.1% |
+| response time (ms), 95th percentile | **GAIN in all three of our runs** | GAIN, 25.2% | GAIN, 25.6% | GAIN, 30.2% |
+| response time (ms), 99th percentile | **GAIN in all three of our runs** | GAIN, 57.0% | GAIN, 58.3% | GAIN, 66.5% |
+| failed requests (%) | **GAIN in all three of our runs** | GAIN, 100.0% | GAIN, 100.0% | GAIN, 100.0% |
+| time over the response line (% of samples) | **GAIN in all three of our runs** | GAIN, 42.6% | GAIN, 35.5% | GAIN, 47.6% |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | **GAIN by the mean of our three runs, beyond the noise in 2 of 3** | GAIN, 8.2% | GAIN, 4.7% | GAIN, 7.6% |
+| pods with no machine to take them (unschedulable) | **LOSS in all three of our runs** | LOSS, 335.7% | LOSS, 310.7% | LOSS, 369.0% |
+| time pods had no machine to take them, pod-minutes | **LOSS in all three of our runs** | LOSS, 391.9% | LOSS, 316.1% | LOSS, 346.0% |
+| pod start wait, total (s) | **LOSS in all three of our runs** | LOSS, 354.3% | LOSS, 289.1% | LOSS, 326.6% |
+| energy (Wh) | **power given in all three of our runs** | power given, 19.5% | power given, 15.0% | power given, 18.6% |
 
 ## The seven organisms in the four arms
 
@@ -160,7 +172,7 @@ Not yet run: its key is not in the repository's secrets and the account is on th
 ## What the two bills say today
 
 - **The chip:** the bill STEADY, under the floor (the three runs' mean 0.01%) (the same rented window in both arms); the work done inside it the runs disagree; the work per dollar the runs disagree; the energy for each request served GAIN in all three of our runs.
-- **The cloud:** the bill 1.21% higher with Omni-Compass on native, inside the noise; the work done was not counted in that set, so the work per dollar waits for the set on the engine that stands.
+- **The cloud** (omni-v26, Azure, three runs): the work done inside the response line GAIN in all three of our runs; the bill power given in all three of our runs; the work per dollar GAIN in all three of our runs.
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 

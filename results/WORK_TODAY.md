@@ -46,7 +46,7 @@ A test that sends the same fixed load to both arms, or reads only time, misses a
 | the software end (GitHub's machines, class L), Real Kubernetes (GitHub) | A public day of demand: the Google cluster trace of 2011 replayed one step at a time, ten pairs, three runs | the test does not count its work (it reads time, misses and machines) | `results/live/V26_TRACE_GOOGLE2011.json` |
 | the software end (GitHub's machines, class L), Real Kubernetes (GitHub) | With its add-ons: KEDA on the CPU target and the live requests in flight, Omni-Compass on top, ten pairs, three runs | the test does not count its work (it reads time, misses and machines) | `results/live/V26_KEDA_CPU_REQUESTS.json` |
 | the software end (GitHub's machines, class L), Real Kubernetes (GitHub) | With its add-ons: KEDA's HTTP add-on on the live requests in flight, Omni-Compass on top, ten pairs, three runs | the test does not count its work (it reads time, misses and machines) | `results/live/V26_KEDA_REQUESTS.json` |
-| through the cloud (Azure, billed), the cloud | omni-v18, 97 paired repetitions | the work was not counted (a fixed rate of requests); the work meter runs in every cloud set from 31 October | `results/TWO_BILLS.json cloud (results/live/AKS_STEADY_100_OMNI_V18.md)` |
+| through the cloud (Azure, billed), the cloud | omni-v26, 30 paired repetitions | the work was not counted (a fixed rate of requests); the work meter runs in every cloud set from 31 October | `results/TWO_BILLS.json cloud (results/live/V26_AKS_WORK_METER.md)` |
 
 ## The test taken out of the count
 

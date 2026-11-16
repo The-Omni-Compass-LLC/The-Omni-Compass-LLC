@@ -925,7 +925,7 @@ the engine's own setting for every other muscle. The whole tune is fixed and fin
 (`python3 tools/omni_version.py`), so an installation can always tell whether it is running the factory tune or a tune of
 its own. Every published result is the factory tune of the engine its table names (`python3 tools/omni_version.py`), and is run again on each engine that stands.
 In the words of `docs/FACTORY_PROFILE.md`, the factory tune is the **factory profile**: the complete, versioned set of
-Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v26's. The best validated
+Omni-Compass default settings shipped together. The released one is the engine that stands, omni-v27's. The best validated
 factory profile for the declared operating conditions has not yet been established: it is chosen only after every mechanism
 is verified and the settings are tuned and validated together (`docs/FACTORY_PROFILE.md`, section 5), and until then the
 released profile stands and no other is locked as the baseline.
@@ -1410,8 +1410,8 @@ respect a limit the wires do not carry.
 
 ### 6.5 The rules of the engine that stands, as an operator meets them
 
-The engine that stands in this edition is **omni-v26** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
-quoted here ran on omni-v7, whose rules omni-v26 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
+The engine that stands in this edition is **omni-v27** (`python3 tools/omni_version.py` prints it; chapter 13); the receipts
+quoted here ran on omni-v7, whose rules omni-v27 carries (omni-v8, omni-v9 and omni-v10 changed one wire, the CityLearn battery,
 and the interval table; omni-v11 added one guard to the Kubernetes governor; omni-v12 holds a raise the cluster's admission
 refused until something changes, and the swarm's wire acts on a neighbour at once; omni-v13 hands the CPU limits it gave back to
 the operator's on a shared host at its top while another workload there has room of its own, and counts every other pod by its
@@ -1441,7 +1441,7 @@ autoscaler when the cluster refuses three of Omni-Compass's own writes of its sc
 in the audit); and omni-v24 takes its factory beat from the place it runs in, read from the cluster's own nodes at its start:
 a decision every 10 s on site (kind, your own machines, a node with no providerID) and every 60 s through a cloud (a node
 whose providerID names a public cloud's machine), 60 s when the nodes cannot be read, a beat you set always kept (the audit's
-first record, `"factory_beat"`, names the place, the beat and why). The hand-back shows in the audit as `"convey": "handed back"`, with the host's busy share on each write; a muscle left native shows as `"native_muscles"` at the start and `"held"` on each write
+first record, `"factory_beat"`, names the place, the beat and why). omni-v27 asks for no pod a machine in service cannot take and withdraws the pods it asked for that wait (`"replica_room": "back while pods wait"` in the audit, with the pods placed and waiting); through a cloud it sets the stand-ins' count (`"headroom"`, with the room ahead, the room free and the shortfall) and times each machine order to its delivery (`"delivery"`). The hand-back shows in the audit as `"convey": "handed back"`, with the host's busy share on each write; a muscle left native shows as `"native_muscles"` at the start and `"held"` on each write
 it withholds. The guard shows in the audit: when the cluster's
 reading shows no machine in service (every worker cordoned, tainted NoSchedule or unreachable at once), the decision is recorded
 as `held: the cluster's reading shows no machine in service; nothing decided, nothing written`, and the governor takes up again
@@ -1597,7 +1597,7 @@ python3 tools/run_gpu_card.py results/sim/gpu_two_wire/eval                  # t
 ```
 
 Pass: `VERIFICATION: PASS`. Nothing in your systems is touched.
-What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v26 (digest 75d3c22eed4473b9, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
+What you should see: `verify.py` ends `VERIFICATION: PASS`, and `python3 tools/omni_version.py` prints `omni-v27 (digest 34548e45437a05bd, 65 files)`; the modelled run writes a receipt whose organism rows read GAIN on misses with power given beside them, as `results/realms_v5/REALMS_V5.md` does on the same seeds. Anything else means the copy is not the copy: chapter 33.
 
 **Level 1 - Watch (read-only).**
 
@@ -3315,11 +3315,14 @@ USER 10001
 
 Build the shipped image first and pass it as the base (`--build-arg BASE=<registry>/omni-compass:<version>`). The
 governing Deployment is `deploy/install/omni-compass-cloud.yaml` (printed in Appendix I). Apply the cloud's grant of
-section 15.3 (`deploy/install/rbac-cloud.yaml`) first, set the image, the service, the service's URL and the line, and
-replace the watch Deployment:
+section 15.3 (`deploy/install/rbac-cloud.yaml`) first, and the stand-ins (`deploy/kind/omni-headroom.yaml`: a priority class
+and one deployment of pause pods, made with none; the governor sets their count so the cloud's own autoscaler makes a machine
+before the demand arrives, and any real pod displaces them), then set the image, the service, the service's URL and the line,
+and replace the watch Deployment:
 
 ```bash
 kubectl apply -f deploy/install/rbac-cloud.yaml
+kubectl apply -f deploy/kind/omni-headroom.yaml
 kubectl apply -f deploy/install/omni-compass-cloud.yaml
 kubectl -n omni-compass set image deployment/omni-compass controller=<registry>/omni-compass-cloud:<version> \
   probe=<registry>/omni-compass-cloud:<version>
@@ -7826,7 +7829,24 @@ answers within a day. To ask by hand: in the console search **Service Quotas**, 
 EC2)**, **Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances**, **Request increase at account level**, ask for
 64, **Request**. The set is never shrunk to fit.
 
-### H.6 Afterwards
+### H.6 The one-card chip on Amazon (`aws-gpu`)
+
+The founder's word of 14 November: the GPU's small runs on Amazon, one card at 1, 10 and 100 copies; the eight-card machine not
+now, for its cost an hour. **Actions**, **aws-gpu**, **Run workflow**: `probe` first (the machine, both of the card's wires and a
+one-minute smoke, about 30 minutes, under a dollar), then `fast`, `cap` and `stacks-full` (A, B and C, each its own machine). The
+harness is the one-card harness that runs on Lambda (`scripts/gpu_rented_run.sh`) on `g5.xlarge` (one NVIDIA A10G, about $1.01
+an hour on demand in us-east-1); the workflow reads the price and refuses to rent above its dollar ceiling, refuses any machine
+with more than one card, and the machine terminates itself at its hour budget plus one hour from its own boot script, whatever
+happens to GitHub (`scripts/aws_gpu.sh`). Each run makes its own SSH key and firewall (port 22 from GitHub's runner only) and
+removes both at its end.
+
+A G machine needs Amazon's **Running On-Demand G and VT instances** quota (in vCPUs; a g5.xlarge takes 4, A, B and C side by side
+12; the stacks run on `g5.2xlarge`, one A10G with 8 vCPUs and 32 GB, so A, B and C take 24). New accounts often start at 0. The workflow asks Amazon for 32 by itself when the quota is short (once; it waits for
+Amazon's answer before asking again) and rents nothing until it is granted. To ask by hand: **Service Quotas**, **Amazon Elastic
+Compute Cloud (Amazon EC2)**, **Running On-Demand G and VT instances**, **Request increase at account level**, ask for 32,
+**Request**.
+
+### H.7 Afterwards
 
 To remove GitHub's access: in IAM, **Users**, tick **omni-compass-github**, **Delete**; and delete the two secrets in
 GitHub.

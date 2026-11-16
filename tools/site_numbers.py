@@ -146,7 +146,33 @@ def build() -> dict:
         sentence="On the chip, the work for the bill: the runs disagree (" + ", ".join(f"{_dir(x)} {_pct(100 * x)}" for x in gs)
                  + "); not yet shown to rise.")
     cb = (tb.get("cloud") or {}).get("bill") or {}
-    if cb.get("native"):
+    clr = tb.get("cloud") or {}
+    if clr.get("form") == "three runs":
+        # the newest cloud table counted the work: its judged number is the work per dollar, the bill read beside it as power given
+        def runs_pct(key):
+            rs = ((clr.get("rows") or {}).get(key) or {}).get("runs") or []
+            return [100 * x["diff"] / x["native"] for x in rs if x.get("native")]
+        kpd = "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"
+        kb = "compute bill at list price ($)"
+        kw = "work inside the response line (requests a second; the capacity test's own gauge)"
+        rpd, rb, rw = (((clr.get("rows") or {}).get(k_) or {}).get("reading", "").replace("**", "") for k_ in (kpd, kb, kw))
+        pd, pb, pw = runs_pct(kpd), runs_pct(kb), runs_pct(kw)
+        if pd:
+            m_ = sum(pd) / len(pd)
+            add(id="cloud_work_per_dollar", word=rpd.split(" ")[0], reading=rpd, value_pct=round(m_, 1), direction=_dir(m_),
+                runs_pct=[round(x, 1) for x in pd], cls="L", place="through the cloud: Azure, its own bill", engine=clr.get("engine"),
+                receipt=clr.get("page"), what="the answers inside the response line for each dollar of the cloud's bill, arm D against arm C",
+                sentence=f"Through the cloud (Azure, {clr.get('engine')}, three runs): the work per dollar {rpd} ("
+                         + ", ".join(f"{_dir(x)} {_pct(x)}" for x in pd) + "); the work inside the response line " + rw + " ("
+                         + ", ".join(f"{_dir(x)} {_pct(x)}" for x in pw) + ").")
+        if pb:
+            mb = sum(pb) / len(pb)
+            add(id="cloud_bill", word=rb.split(" in all")[0].split(" by the")[0], reading=rb, value_pct=round(mb, 1), direction=_dir(mb),
+                runs_pct=[round(x, 1) for x in pb], cls="L", place="through the cloud: Azure, its own bill", engine=clr.get("engine"),
+                receipt=clr.get("page"), what="the cloud's bill, Omni-Compass on top of native against native, three runs",
+                sentence=f"Through the cloud (Azure, {clr.get('engine')}): the bill {rb} (" + ", ".join(f"{_dir(x)} {_pct(x)}" for x in pb)
+                         + "): more machines bought for more work, read beside the work per dollar, never as a smaller bill.")
+    elif cb.get("native"):
         bc = 100 * (cb["omni"] / cb["native"] - 1)
         add(id="cloud_bill", word="power given", reading="power given, inside the noise", value_pct=round(bc, 1),
             direction=_dir(bc), cls="L", place="through the cloud: Azure, its own bill", engine=(tb.get("cloud") or {}).get("engine"),
@@ -183,10 +209,14 @@ def build() -> dict:
          "why": "$16 million is 20% of $100 million; the 20% has no receipt, so neither does the $16 million."},
         {"id": "free_work_33", "value_pct": 33.0, "receipt": "none",
          "why": "no table, chip receipt or cloud receipt carries a 33% rise in work for the bill."},
-        {"id": "arm_d_work_per_dollar", "value_pct": None, "receipt": AKS.replace(".json", ".md"),
-         "why": "arm D stands, from the Azure set on file (the four arms above, every gauge paired with arm C); what it cannot "
-                "show yet is the work per dollar, because that set sent a fixed rate of requests and counted no work. Nor is "
-                "there a column D in docs/history/model_tables/ABC_TABLE_MODEL.json, so no D may be read from our own model."},
+        ({"id": "arm_d_from_the_model", "value_pct": None, "receipt": "docs/history/model_tables/ABC_TABLE_MODEL.json",
+          "why": "arm D's work per dollar is shown from its own three runs on Azure (show: cloud_work_per_dollar); there is no column "
+                 "D in docs/history/model_tables/ABC_TABLE_MODEL.json, so no D may be read from our own model."}
+         if (tb.get("cloud") or {}).get("form") == "three runs" else
+         {"id": "arm_d_work_per_dollar", "value_pct": None, "receipt": AKS.replace(".json", ".md"),
+          "why": "arm D stands, from the Azure set on file (the four arms above, every gauge paired with arm C); what it cannot "
+                 "show yet is the work per dollar, because that set sent a fixed rate of requests and counted no work. Nor is "
+                 "there a column D in docs/history/model_tables/ABC_TABLE_MODEL.json, so no D may be read from our own model."}),
         {"id": "thirteen_point_one", "value_pct": 13.1, "receipt": "results/WHOLE_SYSTEM.md (section 4)",
          "why": "no record carries 13.1% as a headline: it appears only inside single rows of the whole-system page's "
                 "separability check (Kueue's machines on the organism alone; KubeRay's modelled energy), one-row readings "
@@ -246,6 +276,14 @@ D_GAUGES = (("compute bill at list price ($)", "the bill", "usd"), ("machines bi
             ("energy (Wh)", "the energy", "Wh"))
 
 
+# the cloud's own judged number and the rows beside it, where the newest cloud table counted the work (the work meter)
+METER_EXTRA = (("work per dollar of the bill (answers inside the line for each $; the cloud's judged number)", "work per dollar", "answers per $"),
+               ("work inside the response line (requests a second; the capacity test's own gauge)", "work inside the response line", "answers a second"),
+               ("time over the response line (% of samples)", "time over the response line", "% of samples"),
+               ("pods with no machine to take them (unschedulable)", "pods with no machine", "pods"),
+               ("time pods had no machine to take them, pod-minutes", "pod-minutes with no machine", "pod-minutes"))
+
+
 def four_arms(tb: dict, a10: dict) -> dict:
     """The two bills' four arms, each from its receipt: A the chip native and B the chip with Omni-Compass on native (one A10,
     the card's rental and the requests it served, three runs); C the cloud native and D the cloud with Omni-Compass on native
@@ -260,11 +298,29 @@ def four_arms(tb: dict, a10: dict) -> dict:
     B = [{"run": runs[i] if i < len(runs) else None, "work": r["omni"]["work"], "bill_usd": round(r["omni"]["bill"], 6),
           "work_per_dollar": round(r["omni"]["per_dollar"], 1)} for i, r in enumerate(per)]
     g = [b["work_per_dollar"] / a["work_per_dollar"] - 1 for a, b in zip(A, B)]
-    aks = R(AKS)
-    pc = (aks.get("paired") or {}).get("compass") or {}
     cl = tb.get("cloud") or {}
+    three = cl.get("form") == "three runs"
+    aks = {} if three else R(AKS)
+    pc = (aks.get("paired") or {}).get("compass") or {}
     C, D, dvc = {}, {}, []
-    for key, name, unit in D_GAUGES:
+    if three:
+        # the newest cloud table (results/TWO_BILLS.json cloud, the work meter's three runs): each gauge's mean over the runs in
+        # each arm, its word the three-run reading by the one key, its per-run changes beside it
+        gauges = list(D_GAUGES) + [(k_, n_, u_) for k_, n_, u_ in METER_EXTRA]
+        for key, name, unit in gauges:
+            r = (cl.get("rows") or {}).get(key)
+            if not r:
+                continue
+            rs = r["runs"]
+            n = sum(x["native"] for x in rs) / len(rs); o = sum(x["native"] + x["diff"] for x in rs) / len(rs)
+            C[name] = {"value": round(n, 4), "unit": unit}
+            D[name] = {"value": round(o, 4), "unit": unit}
+            per = [100 * x["diff"] / x["native"] for x in rs if x.get("native")]
+            word = r["reading"].replace("**", "")
+            dvc.append({"gauge": name, "word": word.split(" in all")[0].split(" by the")[0].split(",")[0], "reading": word,
+                        "change_pct": round(sum(per) / len(per), 1) if per else None, "runs_pct": [round(x, 1) for x in per],
+                        "direction": _dir(sum(per) / len(per)) if per else "", "beyond_the_noise": "in all three" in word})
+    for key, name, unit in (() if three else D_GAUGES):
         v = pc.get(key)
         if not isinstance(v, dict) or not v.get("native"):
             continue
@@ -275,6 +331,12 @@ def four_arms(tb: dict, a10: dict) -> dict:
         word = "STEADY" if abs(chg) < 0.5 else ("power given" if spent else "LOSS") if chg > 0 else "GAIN"
         dvc.append({"gauge": name, "word": word, "change_pct": round(chg, 1), "direction": _dir(chg), "beyond_the_noise": bool(v.get("significant"))})
     reps = cl.get("repetitions") or aks.get("repetitions")
+    cloud_note = ("three runs of the cloud at the max with its work meter (" + ", ".join(f"{r['tag']} {r['run']}" for r in cl.get("runs") or [])
+                  + "), the work counted as the answers inside the response line, so the work per dollar is read by the one key"
+                  if three else
+                  "one run of paired repetitions on omni-v18 at the tune-down on the machines alone; the work was not counted "
+                  "(a fixed rate of requests), so the work per dollar is not read; the counted runs on the engine that stands "
+                  "are queued (scripts/azure_queue.txt)")
     arms = {
         "A": {"name": "the chip native", "place": "one A10 card rented directly; its bill the rental", "class": "P", "engine": eng,
               "receipt": rec_chip, "runs": A},
@@ -286,25 +348,32 @@ def four_arms(tb: dict, a10: dict) -> dict:
               "receipt": cl.get("page") or AKS.replace(".json", ".md"), "repetitions": reps, "values": C},
         "D": {"name": "the cloud with Omni-Compass on native", "place": "Azure (AKS), the same machines, paired with C",
               "class": "L", "engine": cl.get("engine"), "receipt": cl.get("page") or AKS.replace(".json", ".md"),
-              "repetitions": reps, "values": D, "against_C": dvc,
-              "note": "one run of paired repetitions on omni-v18 at the tune-down on the machines alone; the work was not counted "
-                      "(a fixed rate of requests), so the work per dollar is not read; the counted runs on the engine that stands "
-                      "are queued (scripts/azure_queue.txt)"},
+              "repetitions": reps, "values": D, "against_C": dvc, "note": cloud_note},
     }
     sig = [x for x in dvc if x["beyond_the_noise"]]
     inside = [x for x in dvc if not x["beyond_the_noise"]]
-    s_d = (f"Arm D, the cloud with Omni-Compass on native, against arm C, the cloud native (Azure, {reps} paired repetitions, one run, "
+    if three:
+        first = [x for x in dvc if x["gauge"] in ("work per dollar", "work inside the response line")]
+        rest = [x for x in dvc if x not in first]
+        s_d = (f"Arm D, the cloud with Omni-Compass on native, against arm C, the cloud native (Azure, three runs of "
+               f"{', '.join(str(r.get('paired_repetitions')) for r in cl.get('runs') or [])} paired repetitions, {cl.get('engine')}): "
+               + "; ".join(f"{x['gauge']} {x['reading']} ({', '.join(f'{_dir(v)} {_pct(v)}' for v in x['runs_pct'])})" for x in first + rest) + ".")
+    else:
+      s_d = (f"Arm D, the cloud with Omni-Compass on native, against arm C, the cloud native (Azure, {reps} paired repetitions, one run, "
            f"{cl.get('engine')}): " + "; ".join(f"{x['gauge']} {x['word']}, {x['direction']} {_pct(x['change_pct'])}, beyond the noise" for x in sig)
            + ("; " if sig and inside else "") + "; ".join(f"{x['gauge']} {x['word']}, {x['direction']} {_pct(x['change_pct'])}, inside the noise" for x in inside)
-           + "; the work not counted, so the work per dollar is not read yet.")
+             + "; the work not counted, so the work per dollar is not read yet.")
     s_b = ("Arm B, the chip with Omni-Compass on native, against arm A, the chip native (one A10, three runs, " + eng + "): the work for "
            "the bill " + ", ".join(f"{_dir(100 * x)} {_pct(100 * x)}" for x in g) + ": the runs disagree, not yet shown to rise.")
     sentences = [
         {"id": "arm_b_vs_a", "word": "the runs disagree", "reading": "the runs disagree", "value_pct": None,
          "runs_pct": [round(100 * x, 2) for x in g], "cls": "P", "place": arms["B"]["place"], "engine": eng, "receipt": rec_chip,
          "what": "the four arms: B against A", "sentence": s_b},
-        {"id": "arm_d_vs_c", "word": "one run", "reading": "one run, read gauge by gauge: " + "; ".join(f"{w} on {', '.join(x['gauge'] for x in dvc if x['word'] == w)}" for w in ("LOSS", "GAIN", "power given", "STEADY") if any(x["word"] == w for x in dvc))
-                   + ("; beyond the noise in " + ", ".join(x["gauge"] for x in sig) if sig else "; every gauge inside the noise"),
+        {"id": "arm_d_vs_c", "word": (next((x["word"] for x in dvc if x["gauge"] == "work per dollar"), "one run") if three else "one run"),
+         "reading": ((next((x["reading"] for x in dvc if x["gauge"] == "work per dollar"), "") + " on the work per dollar; read gauge by gauge: ")
+                     if three else "one run, read gauge by gauge: ")
+                    + "; ".join(f"{w} on {', '.join(x['gauge'] for x in dvc if x['word'] == w)}" for w in ("LOSS", "GAIN", "power given", "STEADY") if any(x["word"] == w for x in dvc))
+                   + ("" if three else ("; beyond the noise in " + ", ".join(x["gauge"] for x in sig) if sig else "; every gauge inside the noise")),
          "value_pct": None, "cls": "L", "place": arms["D"]["place"], "engine": cl.get("engine"), "receipt": arms["D"]["receipt"],
          "what": "the four arms: D against C", "sentence": s_d}]
     return {"arms": arms, "sentences": sentences}

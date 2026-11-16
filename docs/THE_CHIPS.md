@@ -94,7 +94,7 @@ on an uncapped card there is no door: the firmware is already at the top.
 
 ## 5. What the chip proof still needs, step by step, with what each step costs
 
-Each step starts from the GPU branch of the engine that stands (`gpu-omni-v26`, one exact commit), prints its price first,
+Each step starts from the GPU branch of the engine that stands (`gpu-omni-v27`, one exact commit), prints its price first,
 and rents nothing before the founder's word.
 
 1. **Run A's cause, then the cap at the stopping rule's repetitions.** Read run A's files (`raw`, `run-40485609401/`): the
@@ -127,10 +127,14 @@ before the result exists.
   `aks-10`, on `raw` when the run ends), about 68 minutes a repetition, one at a time: about four more days to the cap
   unless a look of the stopping rule (at 10, 20, 40 and 70) reads the bill first. Behind it in the queue: the two bursts and
   the real day (Google 2011), each behind Azure's own $0 check.
-- **Google Cloud and Amazon**: wired as Azure's sets are and switched off (`scripts/google_queue.txt`,
-  `scripts/amazon_queue.txt`, `switch=off`); no key of either is stored in the repository's secrets (`cloud-check` reads
-  all four absent); nothing has ever been rented on either. Each goes on with the founder's word once its key is stored
-  (`docs/GOOGLE_SETUP.md` section 4; `docs/AMAZON_SETUP.md` section 1a, the account on the Paid plan).
+- **Amazon**: the founder stored its two keys and put the account on the Paid plan on 14 November; the one-card chip is wired on
+  Amazon's `g5.xlarge` (one NVIDIA A10G) through `aws-gpu.yml` (`docs/AMAZON_SETUP.md` section 4a): one card at 1, 10 and 100
+  copies, the eight-card machine not now. Nothing has been rented on Amazon. On 15 November the founder held every chip and
+  cloud run until the scaling mechanism is the one he wants: the Azure, Amazon and Google queues read `switch=off`, and the chip
+  workflow starts only by hand.
+- **Google Cloud**: wired as Azure's sets are and switched off (`scripts/google_queue.txt`, `switch=off`); its key is not yet
+  stored in the repository's secrets; nothing has ever been rented on it. It goes on with the founder's word once its key is
+  stored (`docs/GOOGLE_SETUP.md` section 4).
 
 ---
 

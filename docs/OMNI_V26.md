@@ -2,7 +2,8 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Omni v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files) is omni-v25 with one fault fixed in the Kubernetes governor
+Omni v26 (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files) stood on main from 7 November to 15 November, when omni-v27
+(`docs/OMNI_V27.md`, no pod asked for that no machine can take; the scale-up looks forward) took its place. It is omni-v25 with one fault fixed in the Kubernetes governor
 (`omni_controller/controller.py`). Do no harm keeps its strictest form. On the founder's standing order that every fault found is
 fixed and lands as the next version, told, not asked, and his order of 6 November ("Just get everything else push, and push").
 

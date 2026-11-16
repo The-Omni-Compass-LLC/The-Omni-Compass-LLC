@@ -44,7 +44,7 @@ class SiteNumbers(unittest.TestCase):
             for figure in ("47.2", "49.9"):
                 self.assertNotIn(figure, text, f"{figure} in results/{f}")
         for k in ("abc_web_speed", "abc_multi_speed", "abc_gpu_energy", "drain_20_percent", "sixteen_million", "free_work_33",
-                  "thirteen_point_one", "arm_d_work_per_dollar"):
+                  "thirteen_point_one", "arm_d_from_the_model"):
             self.assertIn(k, no)
         # arm D is shown from its receipt; only its work per dollar waits (the founder's words of 4 November: four arms, A, B, C, D)
         self.assertFalse(any("nothing for D" in n["why"] for n in no.values()))

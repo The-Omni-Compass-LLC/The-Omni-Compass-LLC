@@ -91,7 +91,29 @@ def places() -> dict:
                              "runs": runs, "mean_G": sum(r["G"] for r in runs) / len(runs), "reading": (rd if isinstance(rd, str) else rd[0] if isinstance(rd, (list, tuple)) else str(rd)).replace("**", ""),
                              "status": "read"}
     cl = tb.get("cloud") or {}
-    if cl:
+    if cl and cl.get("form") == "three runs":
+        # the cloud with its work meter (results/TWO_BILLS.json cloud): each run's work inside the line and its bill, G by the
+        # one equation, and the three runs read by the one key on the table's own work-per-dollar row
+        runs = []
+        for i, r in enumerate(cl.get("per_run") or [], 1):
+            (wn, wo), (bn, bo) = r["work"], r["bill"]
+            w, b = wo / wn - 1, bo / bn - 1
+            G = (1 + w) / (1 + b) - 1
+            runs.append({"run": i, "id": ((cl.get("runs") or [{}] * 9)[i - 1] or {}).get("run"), "w": w, "b": b, "G": G,
+                         "approx_w_minus_b": w - b, "log_check": math.log1p(G) - (math.log1p(w) - math.log1p(b)),
+                         "Y_native": wn / bn, "Y_omni": wo / bo, "W": [wn, wo], "B": [bn, bo],
+                         "table_G": (r["per_dollar"][1] / r["per_dollar"][0] - 1) if r.get("per_dollar") and r["per_dollar"][0] else None})
+        pd = [v for k_, v in (cl.get("rows") or {}).items() if k_.startswith("work per dollar")]
+        out["cloud"] = {"label": "Through the cloud: the cloud's own bill and the work answered inside the line", "engine": cl.get("engine"),
+                        "conditions": "Omni-Compass at the max on top of Azure's own autoscaler, the work meter's stepped rate (the founder's "
+                                      "order of 31 October: no hard rule)",
+                        "title": cl.get("title"), "source": f"results/TWO_BILLS.json cloud ({cl.get('page')})", "runs": runs,
+                        "repetitions": cl.get("repetitions"), "mean_G": sum(r["G"] for r in runs) / len(runs) if runs else None,
+                        "b": sum(r["b"] for r in runs) / len(runs) if runs else None,
+                        "w": sum(r["w"] for r in runs) / len(runs) if runs else None,
+                        "G": sum(r["G"] for r in runs) / len(runs) if runs else None,
+                        "reading": (pd[0]["reading"] if pd else "").replace("**", ""), "status": "read"}
+    elif cl:
         bn, bo = (cl.get("bill") or {}).get("native"), (cl.get("bill") or {}).get("omni")
         has_work = bool(cl.get("work_key")) and bool(cl.get("work"))
         out["cloud"] = {"label": "Through the cloud: the cloud's own bill and the work answered inside the line", "engine": cl.get("engine"),
@@ -320,9 +342,14 @@ def markdown(d: dict) -> str:
          "the A10 receipt's own ratios applied to the spend (arithmetic, not a measurement of a fleet): " + chip_100m + " of work at "
          "native's price per unit of work, out of the same $100 M; the three runs disagree, so no figure is claimed |",
          "| Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, "
-         "the work answered inside the line (the work meter) | the one set read so far moved the compute bill " + cloud_b + " (inside "
-         "the noise) and did not count its work; " + ladder_words() + ": the cloud's bill may rise where the work rises more, so a "
-         "smaller cloud bill is not what the record points to |", "",
+         "the work answered inside the line (the work meter) | " + (
+             f"the work meter's three runs ({cl0.get('engine')}): the bill " + cloud_b + ", the work "
+             f"{way(cl0['w'])} {abs(cl0['w']) * 100:.2f}% (raw {_pct(cl0['w'])}), the work for each dollar "
+             f"{way(cl0['G'])} {abs(cl0['G']) * 100:.2f}% (raw {_pct(cl0['G'])}), read {cl0.get('reading') or 'by the mean'}; the cloud's "
+             "bill rose where the work rose more |" if cl0.get("runs") else
+             "the one set read so far moved the compute bill " + cloud_b + " (inside the noise) and did not count its work; "
+             + ladder_words() + ": the cloud's bill may rise where the work rises more, so a smaller cloud bill is not what the record "
+             "points to |"), "",
          "**The arithmetic at the founder's aim, an example and not a result.** The founder's words of 31 October state the aim the "
          "cloud is judged by: \"We're pushing 1% more bill, but we're getting ~12% more work.\" Put through the equation on the example's "
          f"$100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +{100 * a['G']:.1f}%, the work for each dollar up "
@@ -365,7 +392,28 @@ def markdown(d: dict) -> str:
               "is carried for a run's work per dollar, so no run is counted beyond the noise; each run's word is its own size against the "
               "0.5% floor.", ""]
     cl = pl.get("cloud")
-    if cl:
+    if cl and cl.get("runs"):
+        L += [f"**Through the cloud** ({cl['title'] or cl['label']}; {cl['engine']}, {cl['repetitions']} paired repetitions in all; "
+              f"{cl['conditions']}; `{cl['source']}`):", "",
+              "| Run | Work inside the line, native → Omni-Compass | w (raw) | Bill a window, native → Omni-Compass | b (raw) | Work per dollar, native → Omni-Compass | G (its own word, then its size) |",
+              "|---|---|---:|---|---:|---|---|"]
+        for r in cl["runs"]:
+            word = "GAIN" if r["G"] >= 0.005 else "LOSS" if r["G"] <= -0.005 else "STEADY, under the floor"
+            gw = (f"{word} (raw {_pct(r['G'])})" if word.startswith("STEADY")
+                  else f"{word}, {'up' if r['G'] > 0 else 'down'} {abs(r['G']) * 100:.2f}% (raw {_pct(r['G'])}): "
+                       f"{'more' if r['G'] > 0 else 'less'} work for each dollar")
+            L.append(f"| run {r['run']}" + (f" (#{r['id']})" if r.get("id") else "") + f" | {r['W'][0]:,.2f} → {r['W'][1]:,.2f} requests a second | "
+                     f"{_pct(r['w'])} | ${r['B'][0]:.4f} → ${r['B'][1]:.4f} | "
+                     + (f"power given, up {abs(r['b']) * 100:.2f}% (raw {_pct(r['b'])})" if r['b'] > 0 else _pct(r['b'])) + " | "
+                     + f"{r['Y_native']:,.0f} → {r['Y_omni']:,.0f} | {gw} |")
+        mg = cl["mean_G"]
+        L += ["", f"The three runs together, by the one key on the table's own work-per-dollar row: **{cl['reading'] or 'by the mean'}** "
+              f"(the mean of the three G {'up' if mg > 0 else 'down'} {abs(mg) * 100:.2f}%, raw {_pct(mg)}). A bill that rose is power "
+              "given, shown beside the work it bought. G here is the equation's own form, the ratio of each run's means; the table's "
+              "work-per-dollar row reads each repetition's own ratio and averages them ("
+              + ", ".join(f"run {r['run']} {way(r['table_G'])} {abs(r['table_G']) * 100:.1f}%" for r in cl["runs"] if r.get("table_G") is not None)
+              + "), so the two differ by the spread of the repetitions, never in their word.", ""]
+    elif cl:
         L += [f"**Through the cloud** ({cl['engine']}, {cl['repetitions']} paired repetitions, {cl['conditions']}; `{cl['source']}`): the bill "
               f"${cl['bill'][0]:.4f} → ${cl['bill'][1]:.4f} a window, the bill {'up' if cl['b'] > 0 else 'down'} {abs(cl['b']) * 100:.2f}%"
               f"{', power given' if cl['b'] > 0 else ''}, inside the noise (raw b {_pct(cl['b'])}); the work done "

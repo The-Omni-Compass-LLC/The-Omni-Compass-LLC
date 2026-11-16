@@ -32,6 +32,7 @@ GROUPS = {
                             "tools/omni_switch.py", "scripts/kind_faults.sh", "tests/test_faults_extended.py",
                             "tests/test_switch_trust.py", "verify.py"],
     "engine_v8_citylearn": ["OMNI_V8.json", "tools/run_citylearn.py", "docs/OMNI_V8.md", "docs/CITYLEARN_PREREGISTRATION.md"],
+    "engine_v27": ["OMNI_V27.json", "tools/omni_version.py", "docs/OMNI_V27.md"],   # extend with the files omni-v27 changed
     "engine_v26": ["OMNI_V26.json", "tools/omni_version.py", "docs/OMNI_V26.md", "omni_controller/controller.py",
                    "tests/test_neighbour_hold.py", "tools/batch_flip_model.py", "results/model_gate/BATCH_FLIP_INPUTS.json",
                    "results/model_gate/V26_BATCH_FLIP.md", "results/model_gate/V26_VS_V25.md",

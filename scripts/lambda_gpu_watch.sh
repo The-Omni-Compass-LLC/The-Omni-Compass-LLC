@@ -4,7 +4,7 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-# Watch one rented Lambda machine running an Omni-Compass GPU run (.github/workflows/lambda-gpu.yml), for at most
+# Watch one rented Lambda (or, with CLOUD=aws, Amazon EC2) machine running an Omni-Compass GPU run (.github/workflows/lambda-gpu.yml), for at most
 # MINUTES, and give it back the moment the run is over:
 #   the run printed its last line ("send this one file back"): fetch every result file, give the machine back;
 #   the hour budget plus one hour has passed (the deadline): fetch whatever results exist, give the machine back;
@@ -22,7 +22,11 @@ mkdir -p "$OUT"
 LOGIN="${LOGIN:-ubuntu}"
 SSH=(ssh -i "${SSH_KEY:?set SSH_KEY}" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 -o ServerAliveInterval=30 "$LOGIN@$IP")
 SCP=(scp -i "$SSH_KEY" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20)
+# CLOUD=aws: the same watch on an Amazon EC2 machine (.github/workflows/aws-gpu.yml, scripts/aws_gpu.sh; RUN names its tags)
+CLOUD="${CLOUD:-lambda}"
+state_of() { if [ "$CLOUD" = aws ]; then bash scripts/aws_gpu.sh status "$ID"; else python3 scripts/lambda_gpu.py status "$ID"; fi; }
 give_back() { if [ "${GIVE_BACK:-yes}" = no ]; then echo "the machine is kept (GIVE_BACK=no): it bills until its owner gives it back"; return 0; fi
+  if [ "$CLOUD" = aws ]; then bash scripts/aws_gpu.sh terminate "$ID" --run "${RUN:-}" || bash scripts/aws_gpu.sh terminate "$ID" --run "${RUN:-}"; return; fi
   python3 scripts/lambda_gpu.py terminate "$ID" || python3 scripts/lambda_gpu.py terminate "$ID"; }
 fetch() {   # every result file the run packed, its log, the machine's own card list, and always the live result folders as they
             # stand: the whole stacks (results/hil) write each arm as it ends but are packed only when they finish, so a run cut
@@ -37,7 +41,7 @@ fetch() {   # every result file the run packed, its log, the machine's own card 
 }
 T_END=$(( $(date +%s) + MINUTES * 60 ))
 while :; do
-  st=$(python3 scripts/lambda_gpu.py status "$ID" 2>/dev/null | awk '{print $3}')
+  st=$(state_of 2>/dev/null | awk '{print $3}')
   if [ "$st" = terminated ]; then echo gone > "$OUT/state"; echo "machine $ID is already given back"; exit 0; fi
   if "${SSH[@]}" "grep -q 'send this one file back' omni/run.log" 2>/dev/null; then
     echo "the run is over: fetching the results"; fetch; give_back; echo done > "$OUT/state"; exit 0

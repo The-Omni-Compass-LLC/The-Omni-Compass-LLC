@@ -2,6 +2,24 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-15: omni-v27 stands: no pod asked for that no machine can take; the scale-up looks forward; the stand-ins
+- **The faults** (the Azure work meter's own audits on omni-v26, runs 43005182097, 43177138720, 43364393684; the founder's orders of
+  14 and 15 November): work per dollar read GAIN in all three runs, and the pods waiting for a machine stood three to four times
+  native's: the replica room raised the autoscaler's cap onto machines not yet made, and raised it again while the pods it had asked
+  for still waited. The immune memory (omni-v19) held the largest rise ever seen as a reserve from then on ("history is what makes
+  the future, which is bullshit"). And through a cloud a machine is made only for a pod that waits, so stopping every wait also
+  stopped every machine asked for ahead.
+- **The change** (`omni_controller/controller.py`, `omni_controller/muscles.py`; `docs/OMNI_V27.md`): place before asking (R1, R2, R3,
+  in the decision and the fast check); the forward look (the rate held at every one of the last three beats, three beats ahead, never
+  nearer than a machine's measured delivery); the stand-ins through a cloud (`deploy/kind/omni-headroom.yaml`, the grant in
+  `deploy/kind/rbac-omni.yaml` and `deploy/install/rbac-cloud.yaml`; never on site, at the tune-down or on give-back-only); the
+  conveyance owed. The C++ twin of the look-ahead and the stand-ins (`cpp/src/lookahead.cpp`, sealed; a negative control in verify).
+  Tests: `tests/test_place_before_asking.py`, `tests/test_standins.py`, `tests/test_cpp_lookahead_parity.py`, `tests/test_convey_owed.py`.
+- **The model gate** (`results/model_gate/V27_VS_V26.md`, class S): The model gate against omni-v26 (`results/model_gate/V27_VS_V26.md`, eight seeds, twelve models, class S, never proof): against native the cloud and on-site models read GAIN or STEADY on every service gauge but one, the minutes the autoscaler wanted more pods than its cap allowed in the cloud at 60 s (up 0.8%, about two seconds an hour, inside the seeds' noise), with the machines power given; against omni-v26 the pods waiting read GAIN (down 28.4% in the cloud at its factory 60 s, beyond the seeds' noise; down 76.2% at 15 s), and the 95th percentile and the alert minutes read LOSS (in the cloud at 60 s up 5.0% and 9.7%, inside the seeds' noise; at 15 s up 8.5% and 67.5%; on site at 10 s up 1.4% and 2.5 minutes a day): omni-v26's speed came from the two things the founder ordered out, the pods it asked for waiting for a machine and the largest rise ever seen held as a reserve; the conveyance, card and verdict models read omni-v26's numbers to the digit, its rows against native among them (LOSS: the conveyance models' pod start wait up 9.0%, the batch model's requests served down 2.1% and alert minutes up 9.8%, the card's 95th percentile up 2.4%), on the next version's list
+- **One benchmark** (`results/THE_BENCHMARK.md`, `tools/the_benchmark.py`): every scenario on the engine that stands, its receipt,
+  and every paid scenario waiting with its switch. Every benchmark runs again on omni-v27 on GitHub's own machines from 18:30 UTC on 15 November;
+  every paid queue stays off until the founder's word.
+
 ## 2026-11-07: Koordinator's rows read from their own files (no engine change; omni-v26 stands)
 - `docs/LOSS_CAUSES_2026-11-07.md`, from the 60 repetitions of Koordinator's two batch-stream tables on omni-v25: the web
   service's 95th and 99th percentile, time over the line and alert minutes are the conveyance's cycle on the shared host (one

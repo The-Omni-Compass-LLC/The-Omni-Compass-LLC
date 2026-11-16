@@ -4,7 +4,7 @@
 
 What the three-run tables can and cannot support (this page's counts were read on omni-v11's tables, the newest when it was
 written; omni-v25, which stood from 3 to 7 November, has its own three-run table of every test that had one on omni-v21,
-`results/live/V25_*.md`, and omni-v26, the engine that stands since 7 November, runs every one of them again), written the way a referee reads a
+`results/live/V25_*.md`, and omni-v27, the engine that stands since 15 November, runs every one of them again), written the way a referee reads a
 study: who ran it, what could bias a comparison, what a gauge really measures, how often the reading rule could be fooled,
 and how far a result travels. Each limitation names what would remove it. Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own
 code. No outside party has reviewed or approved these results.

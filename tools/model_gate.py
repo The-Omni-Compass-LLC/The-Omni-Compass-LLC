@@ -167,6 +167,13 @@ def gate_kube(sim, blink=False, provider=""):
                 c = self.sim.c; frac = min(1.0, c.alloc / c.reqs) if c.reqs > 0 else 1.0; run = int(w.replicas * frac)
                 per = w.metric * w.request * 1000.0 * (w.replicas / max(1, run)) if run else 0.0
                 return "\n".join(f"{w.name}-{i} {int(per)}m 10Mi" for i in range(run))
+            if args[:3] == ("get", "deployment", "omni-headroom"):
+                # omni-v27's stand-ins (deploy/kind/omni-headroom.yaml): made at the install with none, 250m each
+                n = int(getattr(self.sim, "headroom_n", 0))
+                return {"metadata": {"name": "omni-headroom", "namespace": "default", "labels": {"app": "omni-headroom"}},
+                        "spec": {"replicas": n, "selector": {"matchLabels": {"app": "omni-headroom"}},
+                                 "template": {"metadata": {"labels": {"app": "omni-headroom"}}, "spec": {"containers": [
+                                     {"name": "pause", "resources": {"requests": {"cpu": "250m"}}}]}}}}
             if args[:2] == ("get", "deployment"):
                 w = next(x for x in self.sim.c.workloads if x.name == args[2])
                 cpu = f"{int(w.request * 1000)}m"
@@ -180,6 +187,15 @@ def gate_kube(sim, blink=False, provider=""):
             except ValueError:
                 raise subprocess.CalledProcessError(1, ["kubectl", *args], stderr="not in the model cluster")
 
+        def write(self, args, why):
+            if list(args[:3]) == ["scale", "deployment", "omni-headroom"]:
+                n = int(next(a.split("=", 1)[1] for a in args if str(a).startswith("--replicas=")))
+                self.audit({"write": list(args), "why": why, "dry_run": False})
+                self.sim.headroom_n = n
+                self.sim.c.headroom_m = n * 0.25                # cores the stand-ins ask for (250m each)
+                return
+            return super().write(args, why)
+
     return Kube(sim, None)
 
 def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud", ctl=""):
@@ -191,6 +207,26 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
     from fleet.sim import ALLOC
     import fleet.sim as fleet_sim
     from fleet.harness import BOOT_TICKS, hpa_step
+    import pilot.selfpilot as _sp
+    _ca = fleet_sim._cluster_autoscaler
+
+    def _ca_with_standins(c):
+        """The cloud's own autoscaler with omni-v27's stand-ins in the cluster: a real pod displaces a stand-in at once, so the real
+        pods' room is the machines' (the plant's own arithmetic, unchanged); the autoscaler counts a stand-in no machine takes as
+        a pod that waits (it makes a machine for it) and a placed one as asked for (it keeps that machine). Nothing else moves."""
+        h = float(getattr(c, "headroom_m", 0.0) or 0.0)
+        if h <= 0:
+            return _ca(c)
+        free = max(0.0, c.alloc - c.reqs)
+        wait = max(0.0, h - free)
+        p0, r0 = c.pending, c.reqs
+        c.pending, c.reqs = p0 + wait, r0 + (h - wait)
+        try:
+            return _ca(c)
+        finally:
+            c.pending, c.reqs = p0, r0
+    fleet_sim._cluster_autoscaler = _ca_with_standins
+    _sp._cluster_autoscaler = _ca_with_standins
     tick_s = FINE_S if fine else 15.0                          # the plant's step (omni-v16: 5 s for the pace models)
     out = Path(out); out.mkdir(parents=True, exist_ok=True)
     # a fresh audit every run: the governor appends to its audit, so a folder left by an earlier, interrupted gate would

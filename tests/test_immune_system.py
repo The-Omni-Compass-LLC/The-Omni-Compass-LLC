@@ -80,11 +80,12 @@ class ImmuneSystem(unittest.TestCase):
             self.assertFalse(self.c._held_native(key))
             self.assertEqual(self.c.hold_n[key], 1)               # the next hold is halved
 
-    def test_extra_pods_leave_room_for_the_largest_rise_seen(self):
+    def test_extra_pods_leave_room_for_the_rise_ahead(self):
+        # rise: the demand looked ahead over the demand now (omni-v27; omni-v19's largest rise ever seen)
         s = {"alloc_m": 8000, "req_m": 2000, "open": 2, "nodes": 2}
         h = hpa(50, replicas=4, util=100)                         # demand: 4 pods' worth at 100% of their request
         alone = self.c._placeable_target(h, s, 20.0, 50.0, 1.0)  # room for 12 more pods of 500m: placeable 16
-        held = self.c._placeable_target(h, s, 20.0, 50.0, 2.0)   # a rise of 2x seen: half the placeable pods
+        held = self.c._placeable_target(h, s, 20.0, 50.0, 2.0)   # a rise of 2x ahead: half the placeable pods
         self.assertEqual(alone, 25.0)                             # 100 x 4 / 16
         self.assertEqual(held, 50.0)                              # 100 x 4 / 8: no more pods than the rise leaves room for
         self.assertLess(alone, held)

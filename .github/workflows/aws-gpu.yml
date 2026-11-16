@@ -1,0 +1,918 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+name: aws-gpu
+run-name: aws-gpu 1card ${{ github.event.inputs.mode || '' }}${{ github.event.inputs.dial == 'save' && ' save' || '' }} ${{ github.event.inputs.tag || '' }}
+# The one-card GPU benchmark on a rented Amazon EC2 machine (the founder's word of 14 November: the small runs on Amazon, one
+# card at 1, 10 and 100 copies; the eight-card machine not now, for its cost an hour), the same harness as on Lambda
+# (scripts/gpu_rented_run.sh, the one-card modes of lambda-gpu.yml) at the exact commit the button is pressed on. One button
+# (Actions -> aws-gpu -> Run workflow). It reads the price and the account's G and VT quota first and rents nothing on a dry run
+# (the default) or above the dollar ceiling; a short quota is asked of Amazon and nothing is rented. Otherwise it rents one
+# machine with one card (scripts/aws_gpu.sh: a key and a firewall of its own, port 22 from GitHub's runner only), ships the
+# committed tree, starts the run, watches it from GitHub, brings every result file back as this run's artifact, and always
+# gives the machine back: when the run prints its last line, at the hour budget plus one hour whatever happens (the machine's
+# own boot script terminates it then, even with GitHub down), or at the very end of this workflow if anything before failed.
+# Needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY (docs/AMAZON_SETUP.md). Nothing here publishes a result: the founder
+# hears what it says first.
+on:
+  workflow_dispatch:
+    inputs:
+      mode: {description: "probe (the machine and both wires on the card, one short smoke: about 30 minutes, cents), fast (the compute-bound counted run, about 7 hours), cap (an operator's power cap underneath, about 4 hours), stacks (the whole stacks with the card inside at the sizes below), stacks-full (the same, the card fully loaded inside them), or giveback (give back a run's machine by its run number: nothing rented)", default: "probe"}
+      scales: {description: "stacks and stacks-full: the copies, from 1, 10 and 100 (never 1,000 on a paid machine)", default: "1,10,100"}
+      tag: {description: "A, B or C: which of the three runs this is (each its own machine, side by side; empty for one run)", default: ""}
+      instance_type: {description: "EC2 machine type with exactly one NVIDIA card (g5.xlarge: one A10G)", default: "g5.xlarge"}
+      region: {description: "AWS region", default: "us-east-1"}
+      max_cost: {description: "Ceiling in US dollars for the hour budget plus one hour; above it nothing is rented", default: "60"}
+      dry_run: {description: "Show the price, the quota and the plan, rent nothing (yes/no)", default: "yes"}
+      quota_ask: {description: "If the G and VT quota is short: the vCPUs to ask Amazon for (32 holds A, B and C side by side on g5.2xlarge, the stacks' machine, and a fourth on g5.xlarge)", default: "32"}
+      give_back: {description: "giveback only: the GitHub run number whose machines go back", default: ""}
+      dial: {description: "max (the factory tune) or save (the tune-down)", default: "max"}
+permissions:
+  contents: read
+concurrency: {group: "aws-gpu-${{ github.event_name }}-${{ github.event.inputs.mode || 'none' }}-${{ github.event.inputs.dial || 'max' }}${{ github.event.inputs.tag || '' }}", cancel-in-progress: false}
+env:
+  OMNI_NOTICE: '© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com'
+  AWS_REGION: ${{ github.event.inputs.region || 'us-east-1' }}
+jobs:
+  giveback:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'giveback'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Give the machines back
+        env: {WHICH: "${{ github.event.inputs.give_back }}"}
+        run: |
+          case "$WHICH" in ''|*[!0-9]*) echo "::error::give_back must be a GitHub run number."; exit 2;; esac
+          bash scripts/aws_gpu.sh terminate --run "$WHICH" --region "$AWS_REGION" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  launch:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode != 'giveback'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      launched: ${{ steps.go.outputs.launched }}
+      ekey: ${{ steps.go.outputs.ekey }}
+      id: ${{ steps.go.outputs.id }}
+      ip: ${{ steps.go.outputs.ip }}
+      sg: ${{ steps.go.outputs.sg }}
+      deadline: ${{ steps.go.outputs.deadline }}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4: the code, not the archive of raw runs
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/results/live/raw/*
+      - name: Engine and source receipt
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee -a "$GITHUB_STEP_SUMMARY"
+          python3 tools/omni_version.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: The secrets this cloud needs
+        env:
+          HAS_CREDENTIALS: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' }}
+        run: |
+          [ "$HAS_CREDENTIALS" = true ] || { echo "::error::AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are not both in this repository's secrets: docs/AMAZON_SETUP.md, sections 2 and 3. Nothing rented."; exit 2; }
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Price, quota and plan; rent, ship, start (or stop at the plan on a dry run)
+        id: go
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          SCALES: ${{ github.event.inputs.scales || '1,10,100' }}
+          TYPE: ${{ github.event.inputs.instance_type || 'g5.xlarge' }}
+          MAX_COST: ${{ github.event.inputs.max_cost }}
+          DRY: ${{ github.event.inputs.dry_run }}
+          ASK: ${{ github.event.inputs.quota_ask || '32' }}
+          DIAL: ${{ github.event.inputs.dial || 'max' }}
+        run: |
+          set -euo pipefail
+          echo "launched=false" >> "$GITHUB_OUTPUT"
+          case "$DIAL" in max|save) ;; *) echo "::error::dial must be max or save, not $DIAL"; exit 2;; esac
+          case "$MODE" in
+            probe)       ENVS="STOP_AFTER_SMOKE=1 SMOKE_REPS=1 SMOKE_DURATION=60 SMOKE_COOLDOWN=10"; BUDGET=0.5;;
+            fast)        ENVS="SKIP_DECODE=1 SKIP_CAP=1 SKIP_HIL=1 SKIP_LLM=1"; BUDGET=8;;
+            cap)         ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_DRILL=1 SKIP_HIL=1 SKIP_LLM=1"; BUDGET=5;;
+            stacks)      ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_CAP=1 SKIP_DRILL=1 SKIP_LLM=1"; BUDGET=32;;
+            stacks-full) ENVS="SKIP_CONFIRM=1 SKIP_DECODE=1 SKIP_CAP=1 SKIP_DRILL=1 SKIP_LLM=1 HIL_WORKLOAD_ARGS=--phases=1.3,1.3,1.3"; BUDGET=32;;
+            *) echo "::error::unknown mode $MODE (probe, fast, cap, stacks, stacks-full, giveback)"; exit 2;;
+          esac
+          case "$MODE" in stacks|stacks-full)
+            # the sizes the founder named: 1, 10 and 100 copies, never 1,000 on a paid machine (12 October); the repetitions
+            # of lambda-gpu.yml's 1-10-100 profile, so both clouds run one protocol
+            REPS=""; for s in ${SCALES//,/ }; do
+              case "$s" in 1|10|100) REPS="${REPS:+$REPS,}100";; *) echo "::error::copies $s: only 1, 10 and 100 on a paid machine"; exit 2;; esac
+            done
+            ENVS="$ENVS HIL_SCALES=$SCALES HIL_REPS_BY_SCALE=$REPS";;
+          esac
+          ENVS="$ENVS OMNI_DIAL=$DIAL"
+          # one card only (the founder's word of 14 November: the eight-card machine not now)
+          GPUS=$(aws ec2 describe-instance-types --instance-types "$TYPE" --query 'InstanceTypes[0].GpuInfo.Gpus[0].Count' --output text)
+          [ "$GPUS" = 1 ] || { echo "::error::$TYPE has ${GPUS:-no} NVIDIA cards: this workflow rents a machine with exactly one."; exit 2; }
+          HOURS=$(python3 -c "print(float('$BUDGET') + 1)")
+          PRICE=$(bash scripts/aws_gpu.sh price "$TYPE" "$AWS_REGION")
+          COST=$(python3 -c "print(round($PRICE * $HOURS, 2))")
+          { echo "## The GPU benchmark on Amazon: 1card $MODE, dial $DIAL, $TYPE in $AWS_REGION, commit \`${GITHUB_SHA::12}\`"; echo
+            echo "\`scripts/gpu_rented_run.sh\` with \`$ENVS\`; hour budget $BUDGET, the machine terminates itself at $HOURS hours at the latest."
+            echo "Price \$$PRICE an hour on demand: at most \$$COST for this run (ceiling \$$MAX_COST)."; echo; } >> "$GITHUB_STEP_SUMMARY"
+          python3 -c "import sys; sys.exit(0 if $COST <= float('$MAX_COST') else 1)" || { echo "::error::at most \$$COST is above the ceiling \$$MAX_COST: nothing rented."; exit 2; }
+          set +e; bash scripts/aws_gpu.sh quota "$TYPE" "$AWS_REGION" "$([ "$DRY" = yes ] && echo '' || echo "$ASK")" 2>&1 | tee quota.txt; qrc=${PIPESTATUS[0]}; set -e
+          { echo '```'; cat quota.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          AMI=$(bash scripts/aws_gpu.sh ami "$AWS_REGION"); echo "image: $AMI" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$DRY" = yes ]; then echo "Dry run: the keys log in, the price and the quota are read; nothing rented." >> "$GITHUB_STEP_SUMMARY"; exit 0; fi
+          [ "$qrc" = 0 ] || { echo "::error::$(tail -n 1 quota.txt)"; exit 2; }
+          rm -f key key.pub; ssh-keygen -q -t ed25519 -N "" -C "omni-gh-$GITHUB_RUN_ID" -f key
+          echo "ekey=$(openssl enc -aes-256-cbc -pbkdf2 -salt -pass env:AWS_SECRET_ACCESS_KEY -in key | base64 -w0)" >> "$GITHUB_OUTPUT"
+          NAME="omni-1card-$MODE-$(date +%s)-r$GITHUB_RUN_ID"
+          read -r ID SG < <(bash scripts/aws_gpu.sh launch "$TYPE" "$AWS_REGION" "$NAME" "$GITHUB_RUN_ID" key.pub "$HOURS")
+          [ -n "${ID:-}" ] || { echo "::error::Amazon rented no machine (the launch step's words above say why)."; exit 2; }
+          echo "id=$ID" >> "$GITHUB_OUTPUT"; echo "sg=$SG" >> "$GITHUB_OUTPUT"; echo "launched=true" >> "$GITHUB_OUTPUT"
+          DEADLINE=$(python3 -c "import time; print(int(time.time() + $HOURS * 3600))")
+          echo "deadline=$DEADLINE" >> "$GITHUB_OUTPUT"
+          echo "Rented machine \`$ID\` ($NAME); it terminates itself by $(date -u -d @"$DEADLINE" '+%Y-%m-%d %H:%M') UTC at the latest." >> "$GITHUB_STEP_SUMMARY"
+          IP=$(bash scripts/aws_gpu.sh wait "$ID" "$AWS_REGION")
+          echo "ip=$IP" >> "$GITHUB_OUTPUT"
+          SSH="ssh -i key -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 ubuntu@$IP"
+          for i in $(seq 1 40); do $SSH true && break; sleep 15; done
+          # the card's driver up before anything runs (the image loads it at first boot)
+          for i in $(seq 1 40); do $SSH "nvidia-smi -L" && break; sleep 15; done
+          git config --local --unset-all 'http.https://github.com/.extraheader' || true
+          tar czf "$RUNNER_TEMP/omni.tgz" --exclude=./key --exclude=./key.pub --exclude=./quota.txt --exclude=./quota.err \
+            --exclude=./userdata.sh --exclude=./launch.err .
+          timeout 900 scp -i key -o StrictHostKeyChecking=accept-new "$RUNNER_TEMP/omni.tgz" "ubuntu@$IP:omni.tgz"
+          timeout 300 $SSH "mkdir -p omni && tar xzf omni.tgz -C omni && echo $GITHUB_SHA > omni/COMMIT"
+          # PyTorch with CUDA lives in the image's own environment; the run uses it, as root
+          timeout 60 $SSH "PYB=\$(for p in /opt/pytorch/bin /opt/conda/envs/pytorch/bin /usr/bin; do [ -x \$p/python3 ] && \$p/python3 -c 'import torch' 2>/dev/null && { echo \$p; break; }; done); echo \"python: \${PYB:-none}\"; cd omni && setsid nohup sudo -n env PATH=\${PYB:-/usr/bin}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $ENVS bash scripts/gpu_rented_run.sh > run.log 2>&1 < /dev/null & disown; exit 0" || true
+          sleep 30; timeout 60 $SSH "tail -n 5 omni/run.log; pgrep -f '[g]pu_rented_run.sh' > /dev/null && echo 'the run is under way' || echo 'the run is not running'" | sed 's/^/  run: /'
+          echo "Started; the watch below carries on until it is over." >> "$GITHUB_STEP_SUMMARY"
+          rm -f key
+      - name: Give the machine back if starting failed
+        if: failure() || cancelled()
+        run: bash scripts/aws_gpu.sh terminate ${{ steps.go.outputs.id }} --run "$GITHUB_RUN_ID" --region "$AWS_REGION"
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch1:
+    # watch 1 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: launch
+    if: always() && needs.launch.outputs.launched == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_1
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_1.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch2:
+    # watch 2 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: [launch, watch1]
+    if: always() && needs.launch.outputs.launched == 'true' && needs.watch1.result != 'skipped' && !contains('done deadline gone', needs.watch1.outputs.state || 'x')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_2
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_2.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch3:
+    # watch 3 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: [launch, watch2]
+    if: always() && needs.launch.outputs.launched == 'true' && needs.watch2.result != 'skipped' && !contains('done deadline gone', needs.watch2.outputs.state || 'x')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_3
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_3.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch4:
+    # watch 4 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: [launch, watch3]
+    if: always() && needs.launch.outputs.launched == 'true' && needs.watch3.result != 'skipped' && !contains('done deadline gone', needs.watch3.outputs.state || 'x')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_4
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_4.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch5:
+    # watch 5 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: [launch, watch4]
+    if: always() && needs.launch.outputs.launched == 'true' && needs.watch4.result != 'skipped' && !contains('done deadline gone', needs.watch4.outputs.state || 'x')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_5
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_5.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  watch6:
+    # watch 6 of 6: about 5.7 hours each, 34 hours in all; each carries on where the one before stopped
+    needs: [launch, watch5]
+    if: always() && needs.launch.outputs.launched == 'true' && needs.watch5.result != 'skipped' && !contains('done deadline gone', needs.watch5.outputs.state || 'x')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    outputs: {state: "${{ steps.w.outputs.state }}"}
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Watch, fetch, give back
+        id: w
+        env: {EKEY: "${{ needs.launch.outputs.ekey }}"}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/key"
+          printf '%s' "$EKEY" | base64 -d | openssl enc -d -aes-256-cbc -pbkdf2 -pass env:AWS_SECRET_ACCESS_KEY > "$RUNNER_TEMP/key"
+          bash scripts/aws_gpu.sh allow "${{ needs.launch.outputs.sg }}" "$AWS_REGION"
+          CLOUD=aws RUN="$GITHUB_RUN_ID" SSH_KEY="$RUNNER_TEMP/key" bash scripts/lambda_gpu_watch.sh "${{ needs.launch.outputs.id }}" \
+            "${{ needs.launch.outputs.ip }}" "${{ needs.launch.outputs.deadline }}" 340 out
+          echo "state=$(cat out/state 2>/dev/null || echo watching)" >> "$GITHUB_OUTPUT"
+          rm -f "$RUNNER_TEMP/key"
+      - name: Attach README, licenses and disclosures to this artifact
+        id: omni_legal_export_6
+        if: "always()"
+        env:
+          OMNI_EXPORT_PATHS: |
+            out
+        shell: python
+        run: |
+          #!/usr/bin/env python3
+          # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+          # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+          # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+          # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+          # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+          """Attach the exact legal bundle inside an artifact without changing its result-file layout."""
+          import glob
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import urllib.parse
+          import urllib.request
+          import uuid
+          
+          BUNDLE = ('README.md', 'LICENSE', 'NOTICE', 'DISCLOSURES.md', 'PATENTS.md', 'TRADEMARKS.md')
+          
+          
+          def search_root(pattern, workspace):
+              path = Path(os.path.expanduser(pattern))
+              if not path.is_absolute():
+                  path = workspace / path
+              prefix = Path(path.anchor)
+              for part in path.parts[1:]:
+                  if glob.has_magic(part):
+                      return prefix
+                  prefix /= part
+              return path if path.is_dir() or (not path.exists() and not path.suffix) else path.parent
+          
+          
+          def attach(paths, workspace, loader=None):
+              workspace = Path(workspace).absolute()
+              lines = [p.strip() for p in paths.splitlines() if p.strip()]
+              roots = [search_root(p, workspace) for p in lines if not p.startswith('!')]
+              if not roots:
+                  raise ValueError('artifact has no positive output path')
+              root = Path(os.path.commonpath([str(p) for p in roots]))
+              if root == Path(root.anchor):
+                  raise ValueError('refusing to write an export bundle at a filesystem root')
+              legal = root / '_omni_legal'
+              legal.mkdir(parents=True, exist_ok=True)
+              hashes = {}
+              for name in BUNDLE:
+                  source = workspace / name
+                  data = source.read_bytes() if source.is_file() else loader(name) if loader else None
+                  if data is None:
+                      raise FileNotFoundError('required export legal file is unavailable: ' + name)
+                  target = legal / name
+                  target.write_bytes(data)
+                  hashes[name] = hashlib.sha256(data).hexdigest()
+              (legal / 'SHA256SUMS.json').write_text(json.dumps(hashes, indent=2) + '\n')
+              return '\n'.join([*lines, *(str(legal / n) for n in (*BUNDLE, 'SHA256SUMS.json'))])
+          
+          
+          def main():
+              workspace = Path(os.environ.get('GITHUB_WORKSPACE', '.')).absolute()
+              def public_source(name):
+                  # Collect-only jobs may not check out source. Fetch only these public legal files, pinned to the run commit.
+                  repo, sha = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_SHA']
+                  url = f'https://raw.githubusercontent.com/{repo}/{sha}/{urllib.parse.quote(name)}'
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.read()
+              paths = attach(os.environ['OMNI_EXPORT_PATHS'], workspace, public_source)
+              delimiter = 'OMNI_LEGAL_' + uuid.uuid4().hex
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write('paths<<' + delimiter + '\n' + paths + '\n' + delimiter + '\n')
+          
+          
+          if __name__ == '__main__':
+              main()
+      - name: The results, as this run's artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: {name: "aws-gpu-${{ github.job }}-${{ github.run_id }}", path: "${{ steps.omni_legal_export_6.outputs.paths }}", if-no-files-found: ignore, retention-days: 90}
+      - name: Legal files beside the files this run hands out
+        if: always()
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: _legal
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            README.md
+            LICENSE
+            NOTICE
+            DISCLOSURES.md
+            PATENTS.md
+            TRADEMARKS.md
+      - name: Legal notice handed out with this run's files
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: legal-notice
+          overwrite: true
+          path: |
+            _legal/README.md
+            _legal/LICENSE
+            _legal/NOTICE
+            _legal/DISCLOSURES.md
+            _legal/PATENTS.md
+            _legal/TRADEMARKS.md
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+
+  give-back:
+    # whatever happened above, the machine goes back (asking twice; an already given-back machine is fine)
+    needs: [launch, watch1, watch2, watch3, watch4, watch5, watch6]
+    if: always() && needs.launch.result != 'skipped'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Legal notice at the top of this job's report
+        run: printf '> %s\n\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {sparse-checkout: "scripts"}
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region || 'us-east-1' }}
+      - name: Give the machine back
+        run: |
+          id="${{ needs.launch.outputs.id }}"
+          bash scripts/aws_gpu.sh terminate $id --run "$GITHUB_RUN_ID" --region "$AWS_REGION" || { sleep 30; bash scripts/aws_gpu.sh terminate $id --run "$GITHUB_RUN_ID" --region "$AWS_REGION"; } || {
+            echo "::error::Amazon did not confirm this run's machine given back: it may still be billing (it terminates itself at its deadline). By hand: console.aws.amazon.com/ec2, Instances, tick it, Instance state, Terminate."; exit 1; }
+      - name: Where the results are
+        if: always()
+        run: |
+          { echo "The results are this run's artifacts (aws-gpu-watch*-${{ github.run_id }}); the archive bot lands them on the"
+            echo "branch raw."; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Legal notice at the end of this job's report
+        if: always()
+        run: printf '\n---\n\n*%s*\n' "$OMNI_NOTICE" >> "$GITHUB_STEP_SUMMARY"

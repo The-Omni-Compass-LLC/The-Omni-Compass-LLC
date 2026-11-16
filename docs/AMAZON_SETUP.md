@@ -89,6 +89,23 @@ answers within a day. To ask by hand: in the console search **Service Quotas**, 
 EC2)**, **Running On-Demand Standard (A, C, D, H, I, M, R, T, Z) instances**, **Request increase at account level**, ask for
 64, **Request**. The set is never shrunk to fit.
 
+## 4a. The one-card chip on Amazon (`aws-gpu`)
+
+The founder's word of 14 November: the GPU's small runs on Amazon, one card at 1, 10 and 100 copies; the eight-card machine not
+now, for its cost an hour. **Actions**, **aws-gpu**, **Run workflow**: `probe` first (the machine, both of the card's wires and a
+one-minute smoke, about 30 minutes, under a dollar), then `fast`, `cap` and `stacks-full` (A, B and C, each its own machine). The
+harness is the one-card harness that runs on Lambda (`scripts/gpu_rented_run.sh`) on `g5.xlarge` (one NVIDIA A10G, about $1.01
+an hour on demand in us-east-1); the workflow reads the price and refuses to rent above its dollar ceiling, refuses any machine
+with more than one card, and the machine terminates itself at its hour budget plus one hour from its own boot script, whatever
+happens to GitHub (`scripts/aws_gpu.sh`). Each run makes its own SSH key and firewall (port 22 from GitHub's runner only) and
+removes both at its end.
+
+A G machine needs Amazon's **Running On-Demand G and VT instances** quota (in vCPUs; a g5.xlarge takes 4, A, B and C side by side
+12; the stacks run on `g5.2xlarge`, one A10G with 8 vCPUs and 32 GB, so A, B and C take 24). New accounts often start at 0. The workflow asks Amazon for 32 by itself when the quota is short (once; it waits for
+Amazon's answer before asking again) and rents nothing until it is granted. To ask by hand: **Service Quotas**, **Amazon Elastic
+Compute Cloud (Amazon EC2)**, **Running On-Demand G and VT instances**, **Request increase at account level**, ask for 32,
+**Request**.
+
 ## 5. Afterwards
 
 To remove GitHub's access: in IAM, **Users**, tick **omni-compass-github**, **Delete**; and delete the two secrets in

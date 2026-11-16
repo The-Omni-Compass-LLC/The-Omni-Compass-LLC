@@ -237,7 +237,7 @@ the response time and the time over the line, none LOSS, the machines the same. 
 governor acts on kind between the two engines (omni-v23's own-pod guard acts only on a refused write); it is the suspect, not yet the
 cause.
 
-**The runs.** `benchmark-reps.yml` on main at the engine that stands (omni-v26), the wandering load of the Kubernetes campaign
+**The runs.** `benchmark-reps.yml` on main at the engine that stands (omni-v27 from 15 November; omni-v26 when this amendment was written), the wandering load of the Kubernetes campaign
 (`scripts/reruns.txt`, "kubernetes wandering": `duration_s=2700`, `loadgen=open`, its load steps), four arms in every repetition, in an
 order rotated by repetition, on the same runner: native, the compass arm at the factory beat (10 s on site), and the compass arm
 deciding every 60 s and every 90 s (`compass60`, `compass90`, `scripts/kind_paired.sh`); ten paired repetitions a run, three runs:
@@ -264,7 +264,7 @@ arm, against 0.5, 3.4 and 13 at omni-v21's 60 s. Those three carry 68% of the Ku
 The pace runs of amendment 3 read the steady load alone, and amendment 7's runs the wandering load: the guard fires in
 neither (no hand-back in any of their omni-v25 arms).
 
-**What runs.** On the engine that stands (omni-v26), in every repetition: native, Omni-Compass on top of native at the factory
+**What runs.** On the engine that stands (omni-v27 from 15 November; omni-v26 when this amendment was written), in every repetition: native, Omni-Compass on top of native at the factory
 beat (`compass`, 10 s on kind) and at 60 s (`compass60`), paired within the repetition, ten paired repetitions a run, three
 runs (A, B and C), on GitHub's own machines: KEDA in both its setups (`kind-addons`, `arms=native compass compass60`) and
 fairness (`benchmark-reps`, `arms=native compass compass60`, `two_app=1`, `loadgen=open`). No cloud, no card, nothing rented.

@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
+# Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
+# Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
+# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+# The stand-in (omni-v27, the founder's words of 15 November: never ask for a pod we cannot give a machine; look forward): pods of
+# the lowest priority that hold nothing but room. Where a cloud's own autoscaler makes a machine only for a pod that waits, the
+# governor sets how many stand-ins there are, sized for the demand looked ahead; the cloud makes a machine for them, and any real
+# pod displaces a stand-in at once (preemption), so the machine is ready before the demand and no real pod waits for it. Made
+# once at the install with no copy; the governor only scales it (deploy/kind/rbac-omni.yaml: this one deployment's scale), and
+# its reset sets it back to none. On site (no cloud autoscaler) it is never scaled.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata: {name: omni-headroom}
+value: -5                       # above the cluster autoscaler's default cutoff (-10), so it makes a machine for them; below every real pod
+preemptionPolicy: Never         # a stand-in never displaces anything
+globalDefault: false
+description: "Omni-Compass stand-ins: room held for the demand looked ahead; any real pod displaces them."
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: omni-headroom, namespace: default, labels: {app: omni-headroom}}
+spec:
+  replicas: 0
+  selector: {matchLabels: {app: omni-headroom}}
+  template:
+    metadata: {labels: {app: omni-headroom}}
+    spec:
+      priorityClassName: omni-headroom
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.9
+          resources: {requests: {cpu: "250m", memory: "16Mi"}, limits: {cpu: "250m", memory: "16Mi"}}

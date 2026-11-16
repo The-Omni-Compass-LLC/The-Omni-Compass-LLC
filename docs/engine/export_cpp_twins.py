@@ -208,6 +208,9 @@ def twins(b: Path, tmp: Path) -> list:
             lines = test_cpp_immune_parity.script(seed)
             assert test_cpp_immune_parity.py_answers(lines) == test_cpp_immune_parity.cpp_answers(exe, lines), f"seed {seed}"
     run([k for k in seal.TWINS if k.startswith("the immune system")][0], immune, "40 seeded scripts, every answer")
+    from tests import test_cpp_lookahead_parity
+    run([k for k in seal.TWINS if k.startswith("the scale-up's look-ahead")][0],
+        lambda: test_cpp_lookahead_parity.main(str(b / "oc_lookahead"), 60) and None, "60 seeded scripts, every answer")
     run([k for k in seal.TWINS if k.startswith("Omni direct's brain")][0],
         lambda: test_cpp_orchestrator_brain_parity.main(str(b / "oc_orchestrator_brain"), 60) and None, "60 seeded brains, identical")
     return rows
