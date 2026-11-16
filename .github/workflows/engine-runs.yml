@@ -88,7 +88,7 @@ jobs:
           # that brought it, and never costs a set its record (12 November: each of the four runs of engine-runs that ever
           # failed had computed its set, the digests one, and was stopped here by another push's file)
           python3 tools/legal.py --check > legal.txt || true
-          if grep -E '^results/(engine_runs|core_runs)/' legal.txt; then echo "::error::a record this run wrote lacks the legal notice"; exit 1; fi
+          if grep -E '^results/(engine_runs|core_runs|run_reports)/' legal.txt; then echo "::error::a record this run wrote lacks the legal notice"; exit 1; fi
           others=$(grep -vc '^legal notice:' legal.txt || true)
           [ "$others" = 0 ] || echo "::warning::$others notice problems in files this run did not write (verify.yml holds them); the record is committed all the same"
           git add results/engine_runs/ results/core_runs/
@@ -104,9 +104,15 @@ jobs:
               made=0
               python3 tools/monograph_words.py --fix > /dev/null
               python3 tools/runs_ledger.py > /dev/null
+              # the newest set's reports for the engineer, the CTO and the boardroom, in Word, PDF, text and Markdown with the set's
+              # data (tools/run_reports.py, results/run_reports/latest/; the founder's words of 16 November: "every one run is a
+              # theoretical 500 run ... the outputs better be documentation and PDFs and text forms and doc forms and Word doc");
+              # a report that cannot be written never costs the set its record: verify.py's run_reports --check names it instead
+              python3 tools/run_reports.py > /dev/null || echo "::warning::the newest set's reports could not be written; the set is pushed without them"
               git add docs/engine/LIVE_ENGINE_MONOGRAPH.md results/RUNS_LEDGER.json results/RUNS_LEDGER.md
+              git add -A results/run_reports/latest/ 2>/dev/null || true
               if ! git diff --cached --quiet; then
-                git commit -q -m "The live engine monograph and the jump generator's ledger carry the new set (tools/monograph_words.py --fix, tools/runs_ledger.py, engine-runs run $GITHUB_RUN_ID)"
+                git commit -q -m "The live engine monograph, the jump generator's ledger and the newest set's reports carry the new set (tools/monograph_words.py --fix, tools/runs_ledger.py, tools/run_reports.py, engine-runs run $GITHUB_RUN_ID)"
                 made=1
               fi
               python3 tools/runs_ledger.py --check | tee -a "$GITHUB_STEP_SUMMARY" || { echo "::error::a set fails one of the ledger's proofs (results/RUNS_LEDGER.md)"; exit 1; }
