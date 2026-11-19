@@ -4,7 +4,7 @@
  const $=id=>document.getElementById(id); const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const sleep=ms=>new Promise(r=>setTimeout(r,ms)); const say=m=>{ try{ toast(m); }catch(_){ } };
  const shown=e=>!!(e&&!e.hidden&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0);
- const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial';
+ const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial,#kAI,#kEasel';
  const css=document.createElement('style'); css.id='kRailCss';
  css.textContent=`
 :root{--kRailW:58px;--kDockH:0px;--rdockH:0px}
@@ -52,7 +52,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
  /* ---------- which screen is open ---------- */
  const NAMES={home:'Home'}; try{ (window.KBAR&&KBAR.screens||[]).forEach(s=>NAMES[s.id]=s.name); }catch(_){ }
  function cur(){ const ds=[...document.querySelectorAll(SCREENS+',#sbp')].filter(d=>shown(d)&&getComputedStyle(d).position==='fixed'); if(!ds.length) return 'home'; ds.sort((a,b)=>(+getComputedStyle(b).zIndex||0)-(+getComputedStyle(a).zIndex||0)); return ds[0].id; }
- const nameOf=id=>{ try{ if(!NAMES[id]&&window.KBAR) KBAR.screens.forEach(s=>NAMES[s.id]=s.name); }catch(_){ } return NAMES[id]||({gamesDock:'Games',opsHub:'Game hub',libDock:'Story library',fileDock:'Library',sbp:'Storybook',tac:'TAC-OPS',kHumor:'Humor',kJump:'Cannon Jump Generator',kKara:'Karaoke Live',kOwner:'The owner’s word',kVG:'Video games',kSocial:'DD Universe Social'}[id])||id; };
+ const nameOf=id=>{ try{ if(!NAMES[id]&&window.KBAR) KBAR.screens.forEach(s=>NAMES[s.id]=s.name); }catch(_){ } return NAMES[id]||({gamesDock:'Games',opsHub:'Game hub',libDock:'Story library',fileDock:'Library',sbp:'Storybook',tac:'TAC-OPS',kHumor:'Humor',kJump:'Cannon Jump Generator',kKara:'Karaoke Live',kOwner:'The owner’s word',kVG:'Video games',kSocial:'DD Universe Social',kAI:'AI',kEasel:'The Easel'}[id])||id; };
  /* ---------- landing exactly on what a link names ---------- */
  const byHead=t=>{ const hs=[...document.querySelectorAll('h2,h3,h4')].filter(h=>!h.closest('.kBar,.ocSec,.ocBrand,[id^=lib-]')&&h.textContent.trim().startsWith(t)); return hs[0]||null; };
  const T=sel=>sel.startsWith('@')?byHead(sel.slice(1)):document.querySelector(sel);
@@ -61,7 +61,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
   const top=box.getBoundingClientRect().top-(sc===document.scrollingElement||sc===document.documentElement?0:sc.getBoundingClientRect().top); sc.scrollTop=Math.max(0,sc.scrollTop+top-stick-8); try{ box.animate([{outline:'3px solid #ffe94a'},{outline:'3px solid transparent'}],{duration:1400}); }catch(_){ } return true; }
  const LAND={pad:'#padGrid',djSec:'#djSec',kBand:'#bandSec',kSounds:'#vcSec',keys:'#kbKeys'};
  let want=null, wantAt=0; const aim=(sel)=>{ want=sel; wantAt=Date.now(); [700,1500].forEach(ms=>setTimeout(()=>{ if(want===sel&&Date.now()-wantAt<2500) land(sel); },ms)); setTimeout(()=>{ if(want===sel) want=null; },1700); };
- function goTo(id,sel){ if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
+ function goTo(id,sel){ if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } if(id==='kAI'){ closePanel(); try{ KAI.open(); }catch(_){ } return; } if(id==='kEasel'){ closePanel(); try{ KEASEL.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
  /* every way into the Beat Maker lands on the pads unless it asked for another part */
  try{ const pad=$('pad'); let was=pad&&pad.classList.contains('on'); if(pad) new MutationObserver(()=>{ const on=pad.classList.contains('on'); if(on&&!was){ setTimeout(beatBase,50); if(!(want&&Date.now()-wantAt<2500)) aim('#padGrid'); } was=on; }).observe(pad,{attributes:true,attributeFilter:['class']}); }catch(_){ }
  const MAPID={ttPad:'#padGrid',ttDJ:'#djSec',ttBand:'#bandSec',ttVc:'#vcSec',ttWatch:null};
@@ -73,7 +73,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
   railBtn('kdPanel','⚙','Panel','This screen’s control panel',()=>{ const p=$('kPanel'); if(p&&!p.hidden) closePanel(); else openPanel(); });
   railBtn('kdKara','🎤','Karaoke','Karaoke: your lyrics on the beat, full screen',karaoke);
   railBtn('kdTour','🗺','Tour','The virtual tour of the whole app',()=>{ closePanel(); clickAct('home','tour'); });
-  const st=$('kStopBtn'); if(st){ st.dataset.kdI='■'; st.dataset.kdL='Stop'; } const ask=$('askBtn'); if(ask){ ask.dataset.kdI='🎙'; ask.dataset.kdL='Ask'; }
+  const st=$('kStopBtn'); if(st&&!st.dataset.kdL){ st.dataset.kdI='▶'; st.dataset.kdL='Play'; } const ask=$('askBtn'); if(ask){ ask.dataset.kdI='🎙'; ask.dataset.kdL='Ask'; }
   const pb=$('kdPanel'); if(pb) pb.classList.toggle('on',!!($('kPanel')&&!$('kPanel').hidden)); }
  function clickAct(sc,ka){ const b=document.querySelector('.kBar[data-sc="'+sc+'"] [data-ka="'+ka+'"]')||document.querySelector('#kHomeBar [data-ka="'+ka+'"]'); if(b){ b.click(); return true; } return false; }
  async function karaoke(){ closePanel(); if(window.KKARA&&KKARA.open){ KKARA.open(); return; } try{ KAUDIO&&KAUDIO.gesture&&KAUDIO.gesture(); }catch(_){ } goTo('pad','#tpWrap'); await sleep(900); const s=$('tpSrc'); if(s){ s.value='lyr'; s.dispatchEvent(new Event('change',{bubbles:true})); }

@@ -1,0 +1,62 @@
+(()=>{ /* 🤖 AI · talk with Claude inside KAN-IN. Inside claude.ai it runs on the viewer's own Claude account (they are asked once);
+   it writes songs, stories, jokes, scripts, beat and art ideas, and sends what it writes straight into the Studio, Karaoke, the prompter
+   or a Social post. Answers stream in; ⏹ Stop ends one; 🧹 New chat starts over. The chat stays on this device. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const GUIDE='You are the creative assistant inside KAN-IN, the multimedia studio app by DD Universe Multi-Media Studios (built and powered by The Omni-Compass LLC). You help people write songs, lyrics, raps, poems, stories, scripts, jokes and social posts, and you give ideas for beats, drawings, videos and games. Write clearly at about a 10th-grade reading level, be warm and direct, and keep answers short unless asked for more. Keep it family-friendly unless the person clearly asks for adult themes, and never produce hateful content. When you write lyrics or a script, put them as plain lines without commentary so they can be sung or read. Horoscopes are for fun.';
+ const QUICK=[['🎤','Write a hook and two verses about chasing a dream, over a 90 BPM beat'],['📖','Give me a short story idea with a twist, in 5 sentences'],['😂','Tell me 3 clean jokes about music producers'],['🥁','Suggest a beat: genre, tempo, drum pattern and a chord progression'],['🎨','Give me 5 drawing ideas for the Easel, with colors'],['📣','Write 3 catchy social posts announcing my new song'],['🎬','Write a 30-second video script for a dance clip'],['🌞','Explain what a Leo sun and Pisces moon mean, for fun']];
+ let chat=getLS('kanin-ai-chat',[]), busy=null, sample=null, ready='checking';
+ (async()=>{ try{ if(window.claude&&claude.use){ sample=await claude.use('sample').catch(()=>null); } }catch(_){ } ready=sample?'yes':'no'; paint(); })();
+ const css=document.createElement('style'); css.textContent=`
+#kAI{position:fixed;top:0;left:0;right:var(--kRailW,58px);bottom:0;z-index:8560;display:flex;flex-direction:column;box-sizing:border-box;padding:calc(8px + env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-left,0px)) 10px 10px;background:radial-gradient(circle at 50% -10%,#123a5c,#06101c 65%);color:#eef6ff;font:15px/1.5 system-ui,sans-serif}
+#kAI[hidden]{display:none!important}
+#kAI .aiTop{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+#kAI h2{margin:0 auto 0 0;font:900 22px system-ui,sans-serif;color:#6fe8ff}
+#kAI .aiTop button,#kAI .aiBar button,#kAI .aiUse button{min-height:40px;border-radius:10px;padding:0 10px;font:700 13px system-ui,sans-serif}
+#kAI .aiLog{flex:1 1 auto;overflow-y:auto;padding:8px 2px;max-width:860px;width:100%;margin:0 auto}
+#kAI .aiMsg{margin:8px 0;padding:10px 12px;border-radius:14px;white-space:pre-wrap;word-break:break-word;max-width:92%}
+#kAI .aiMsg.u{margin-left:auto;background:#1f4f7a;border-bottom-right-radius:4px}
+#kAI .aiMsg.a{background:rgba(255,255,255,.08);border:1px solid rgba(111,232,255,.25);border-bottom-left-radius:4px}
+#kAI .aiUse{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+#kAI .aiQuick{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
+#kAI .aiQuick button{min-height:38px;border-radius:19px;padding:0 12px;font:600 13px system-ui,sans-serif;max-width:100%;text-align:left}
+#kAI .aiBar{display:flex;gap:6px;max-width:860px;width:100%;margin:0 auto;padding-bottom:env(safe-area-inset-bottom,0px)}
+#kAI textarea{flex:1 1 auto;min-height:48px;max-height:30vh;border-radius:12px;padding:10px;font:15px system-ui,sans-serif;resize:vertical}
+#kAI .aiN{font-size:12.5px;opacity:.8;text-align:center}`; document.head.appendChild(css);
+ function box(){ let d=$('kAI'); if(d) return d; d=document.createElement('div'); d.id='kAI'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','AI'); document.body.appendChild(d);
+  d.addEventListener('click',onClick); d.addEventListener('keydown',e=>{ if(e.target.id==='aiIn'&&e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); } }); return d; }
+ function paint(){ const d=$('kAI'); if(!d||d.hidden) return; const keep=($('aiIn')||{}).value||'';
+  d.innerHTML='<div class="kBar" data-sc="kAI"><button type="button" data-ka="close" data-ai="close">✕</button></div><div class="aiTop"><h2>🤖 AI</h2><button type="button" data-ai="new" data-noul>🧹 New chat</button><button type="button" data-ai="stop" data-noul'+(busy?'':' disabled')+'>⏹ Stop</button><button type="button" data-ai="close" data-noul>✕ Close</button></div>'+
+   '<div class="aiN">'+(ready==='yes'?'Talking with Claude on your own Claude account. Your chat stays on this device.':ready==='no'?'The AI works here for people signed in to claude.ai. When KAN-IN runs on its own website it will work for everyone.':'Connecting…')+'</div>'+
+   '<div class="aiLog" id="aiLog" aria-live="polite">'+(chat.length?chat.map((m,i)=>'<div class="aiMsg '+(m.role==='user'?'u':'a')+'">'+esc(m.content)+(m.role==='assistant'&&m.content?'<div class="aiUse"><button type="button" data-ai="copy" data-i="'+i+'" data-noul>📋 Copy</button><button type="button" data-ai="kara" data-i="'+i+'" data-noul>🎤 To karaoke</button><button type="button" data-ai="prompt" data-i="'+i+'" data-noul>📜 To the prompter</button><button type="button" data-ai="post" data-i="'+i+'" data-noul>🌐 Post it</button><button type="button" data-ai="read" data-i="'+i+'" data-noul>🔊 Read</button></div>':'')+'</div>').join(''):'<div class="aiQuick">'+QUICK.map(([i,q],n)=>'<button type="button" data-ai="quick" data-n="'+n+'" data-noul>'+i+' '+esc(q)+'</button>').join('')+'</div>')+'</div>'+
+   '<div class="aiBar"><textarea id="aiIn" maxlength="4000" placeholder="Ask anything: write me a song, a story, a joke, a script…" aria-label="Your message">'+esc(keep)+'</textarea><button type="button" data-ai="send" data-noul style="background:#6fe8ff;color:#06101c;min-width:70px">'+(busy?'…':'Send ➤')+'</button></div>';
+  const lg=$('aiLog'); if(lg) lg.scrollTop=lg.scrollHeight; }
+ async function send(text){ const inp=$('aiIn'); const q=(text||(inp&&inp.value)||'').trim(); if(!q) return; if(busy) return say('Wait for this answer, or press ⏹ Stop.');
+  if(!sample) return say(ready==='no'?'The AI needs you signed in to claude.ai.':'Connecting to the AI… try again in a moment.');
+  chat.push({role:'user',content:q}); chat.push({role:'assistant',content:''}); if(inp) inp.value=''; const ctl=new AbortController(); busy=ctl; paint();
+  let hist=chat.slice(0,-1).slice(-16).map(m=>({role:m.role,content:m.content||'…'})); while(hist.length&&hist[0].role!=='user') hist.shift(); hist[0]={role:'user',content:GUIDE+'\n\n'+hist[0].content};
+  try{ const r=await sample(hist,{signal:ctl.signal,cache:false,onText:({text})=>{ chat[chat.length-1].content=text; const ms=document.querySelectorAll('#aiLog .aiMsg.a'); const last=ms[ms.length-1]; if(last&&last.firstChild) last.firstChild.textContent=text; else paint(); const lg=$('aiLog'); if(lg) lg.scrollTop=lg.scrollHeight; }});
+   chat[chat.length-1].content=(r&&r.text)||chat[chat.length-1].content||'…'; }
+  catch(e){ const c=e&&e.code; chat[chat.length-1].content=c==='not_granted'?'The AI was not allowed on this page. You can allow it from the page’s permissions.':c==='rate_limited'?'The AI is busy. Wait a minute and try again.':(chat[chat.length-1].content||'')+(ctl.signal.aborted?'\n⏹ Stopped.':'\nThe answer did not come through. Try again.'); if(c==='not_granted'){ sample=null; ready='no'; } }
+  busy=null; putLS('kanin-ai-chat',chat.slice(-40)); paint(); }
+ function onClick(e){ const b=e.target.closest('[data-ai]'); if(!b) return; e.stopPropagation(); const k=b.dataset.ai, m=chat[+b.dataset.i];
+  if(k==='close') return close(); if(k==='send') return send(); if(k==='quick') return send(QUICK[+b.dataset.n][1]);
+  if(k==='stop'){ if(busy) busy.abort(); return; } if(k==='new'){ if(busy) busy.abort(); chat=[]; putLS('kanin-ai-chat',chat); return paint(); }
+  if(!m) return; const t=m.content;
+  if(k==='copy'){ try{ navigator.clipboard.writeText(t).then(()=>say('📋 Copied.'),()=>say('Select the words to copy.')); }catch(_){ } return; }
+  if(k==='read'){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t.slice(0,3000)); speechSynthesis.speak(u); say('🔊 Reading. ■ Stop on the rail or the remote stops it.'); }catch(_){ } return; }
+  if(k==='kara'){ putLS('kanin-kara-lyrics',t); close(); try{ KKARA.open(); }catch(_){ } return say('🎤 The words are in Karaoke. Press 🎙 Record.'); }
+  if(k==='prompt'){ close(); try{ KRAIL.goTo('pad'); }catch(_){ } setTimeout(()=>{ const s=$('tpSrc'), x=$('tpText'); if(s){ s.value='own'; s.dispatchEvent(new Event('change',{bubbles:true})); } if(x){ x.value=t; x.dispatchEvent(new Event('input',{bubbles:true})); } say('📜 The words are on the prompter.'); },1200); return; }
+  if(k==='post'){ close(); try{ KSOCIAL.compose({text:t.slice(0,2000)}); }catch(_){ } } }
+ function open(ask){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay','kHumor','kJump','kKara','kOwner','kVG','kSocial','kEasel'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ } d.hidden=false; paint(); if(ask) setTimeout(()=>{ const i=$('aiIn'); if(i){ i.value=ask; i.focus(); } },50); }
+ function close(){ const d=$('kAI'); if(d) d.hidden=true; if(busy) try{ busy.abort(); }catch(_){ } }
+ try{ const gh=window.GOHOME; if(gh&&!gh.__kai){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__kai=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu')) close(); },true);
+ /* the rail and the Menu */
+ function wire(){ const d=$('rDock'); if(d&&!$('kdAI')){ const b=document.createElement('button'); b.type='button'; b.id='kdAI'; b.setAttribute('data-noul',''); b.dataset.kdI='🤖'; b.dataset.kdL='AI'; b.title='Talk with AI: songs, stories, jokes, scripts, ideas'; b.setAttribute('aria-label','AI'); b.addEventListener('click',e=>{ e.stopPropagation(); open(); }); const s=$('kdStudio'); if(s&&s.nextSibling) d.insertBefore(b,s.nextSibling); else d.appendChild(b); }
+  const t=$('tourTab'); if(t&&!$('ttAI')){ [['ttAI','🤖 AI · talk, write, create',()=>open()],['ttEasel','🎨 The Easel · draw and paint',()=>KEASEL.open()],['ttRemote','🎛 Show the remote control',()=>KREMOTE.show()]].forEach(([id,l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.id=id; b.className='ttMusic'; b.textContent=l; b.style.order=String(101+5+i); b.dataset.kg='0'; b.dataset.kmSoc='1'; b.dataset.kmDone='1'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); } }
+ const css2=document.createElement('style'); css2.textContent='html body #rDock#rDock #kdAI{order:1!important;display:flex!important}'; document.head.appendChild(css2);
+ setInterval(wire,900);
+ window.KAI={open,close,send,clear:()=>{ chat=[]; putLS('kanin-ai-chat',chat); paint(); }};
+})();

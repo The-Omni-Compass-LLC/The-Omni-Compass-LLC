@@ -34,7 +34,7 @@ html body :is(#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDoc
 @media (min-width:761px){ html body #rDock#rDock button{max-width:150px!important} html body #rDock#rDock button[data-kd-i]::after{font-size:12px!important} }
 `;
  document.head.appendChild(css);
- const LB={lpMenu:['☰','Menu'],kStopBtn:['■','Stop'],imPad:['🥁','Pad'],askBtn:['🎙','Ask'],imTog:['⌨','Play by'],kdRemote:['📡','Remote']};
+ const LB={lpMenu:['☰','Menu'],imPad:['🥁','Pad'],askBtn:['🎙','Ask'],imTog:['⌨','Play by'],kdRemote:['📡','Remote']};
  let label=function(){ const d=$('rDock'); if(!d) return;
   Object.keys(LB).forEach(id=>{ if(id==='lpMenu') return; const b=$(id); if(b&&d.contains(b)&&b.dataset.kdI!==LB[id][0]){ b.dataset.kdI=LB[id][0]; b.dataset.kdL=LB[id][1]; if(!b.getAttribute('aria-label')) b.setAttribute('aria-label',LB[id][1]); } });
   const f=$('kFreeze'); if(f){ const fr=/▶|release|move again/i.test((f.textContent||'')+' '+(f.getAttribute('aria-label')||'')); const i=fr?'▶':'❚❚', l=fr?'Move':'Freeze'; if(f.dataset.kdI!==i){ f.dataset.kdI=i; f.dataset.kdL=l; } }
