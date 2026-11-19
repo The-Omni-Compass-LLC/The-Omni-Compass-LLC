@@ -161,7 +161,7 @@ class Record(unittest.TestCase):
         """Each of the four runs of engine-runs that ever failed had computed its set and was stopped at the commit by the whole
         repository's notice check on a file it did not write (results/RUNS_NO_SET.json, read from GitHub's logs): the commit
         step now holds the notice on the run's own records alone."""
-        for wf, own in (("engine-runs.yml", "engine_runs|core_runs"), ("monte-carlo.yml", "core_runs"), ("injection-grid.yml", "injection_grid")):
+        for wf, own in (("engine-runs.yml", "engine_runs|core_runs|run_reports"), ("monte-carlo.yml", "core_runs"), ("injection-grid.yml", "injection_grid")):
             s = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
             self.assertIn("python3 tools/legal.py --check > legal.txt || true", s, wf)
             self.assertIn(f"grep -E '^results/({own})/' legal.txt", s, wf)
