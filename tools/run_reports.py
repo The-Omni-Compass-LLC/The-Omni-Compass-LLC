@@ -432,83 +432,136 @@ def to_pdf(blocks: list, path: Path, title: str) -> None:
                       bottomMargin=0.8 * inch, title=title, author=OWNERS).build(story, onFirstPage=foot, onLaterPages=foot)
 
 
-def to_docx(blocks: list, path: Path, title: str, written: str) -> None:
-    import datetime
-    import docx
-    from docx.enum.text import WD_LINE_SPACING
-    from docx.shared import Pt
-    d = docx.Document()
-    st = d.styles["Normal"]
-    st.font.name, st.font.size = "Arial", Pt(11)
-    st.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+def _x(t: str) -> str:
+    return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
-    def runs(par, text):
-        for i, part in enumerate(re.split(r"(\*\*[^*]+\*\*|`[^`]+`)", text)):
-            if not part:
-                continue
-            if part.startswith("**"):
-                par.add_run(part[2:-2]).bold = True
-            elif part.startswith("`"):
-                r = par.add_run(part[1:-1])
-                r.font.name = "Courier New"
-            else:
-                par.add_run(part)
-    note = d.add_paragraph()
-    runs(note, NOTICE)
-    for r in note.runs:
-        r.font.size = Pt(9)
+
+def _runs_xml(text: str, size: int | None = None) -> str:
+    """WordprocessingML runs for a line of text: **bold** and `code` kept as they read in the other forms."""
+    out = []
+    for part in re.split(r"(\*\*[^*]+\*\*|`[^`]+`)", text):
+        if not part:
+            continue
+        props = []
+        if part.startswith("**"):
+            part, props = part[2:-2], ["<w:b/>"]
+        elif part.startswith("`"):
+            part, props = part[1:-1], ['<w:rFonts w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New"/>']
+        if size:
+            props.append(f'<w:sz w:val="{size}"/>')
+        rpr = f"<w:rPr>{''.join(props)}</w:rPr>" if props else ""
+        out.append(f'<w:r>{rpr}<w:t xml:space="preserve">{_x(part)}</w:t></w:r>')
+    return "".join(out)
+
+
+def _p(text: str, style: str | None = None, size: int | None = None, indent: int = 0, hanging: int = 0) -> str:
+    ppr = []
+    if style:
+        ppr.append(f'<w:pStyle w:val="{style}"/>')
+    if indent or hanging:
+        ppr.append(f'<w:ind w:left="{indent}" w:hanging="{hanging}"/>')
+    return f"<w:p>{'<w:pPr>' + ''.join(ppr) + '</w:pPr>' if ppr else ''}{_runs_xml(text, size)}</w:p>"
+
+
+def to_docx(blocks: list, path: Path, title: str, written: str) -> None:
+    """A Word document (Office Open XML, ECMA-376) written with the standard library alone: no package beyond Python's own,
+    so the supply chain the lock file pins (requirements-lock.txt) is unchanged; the same blocks give the same bytes."""
+    import zipfile
+    body = [_p(NOTICE, size=18)]
     for b in blocks:
         k = b[0]
-        if k in ("h1", "h2"):
-            d.add_heading(plain(b[1]), level=1 if k == "h1" else 2)
+        if k == "h1":
+            body.append(_p(plain(b[1]), "Heading1"))
+        elif k == "h2":
+            body.append(_p(plain(b[1]), "Heading2"))
         elif k == "p":
-            runs(d.add_paragraph(), b[1])
+            body.append(_p(b[1]))
         elif k == "eq":
-            p = d.add_paragraph()
-            p.paragraph_format.left_indent = Pt(24)
-            p.add_run(b[1])
+            body.append(_p(b[1], indent=480))
         elif k == "code":
-            p = d.add_paragraph()
-            r = p.add_run(b[1])
-            r.font.name, r.font.size = "Courier New", Pt(9.5)
+            body += [_p(line, "Code") for line in b[1].split("\n")]
         elif k == "bullets":
-            for x in b[1]:
-                runs(d.add_paragraph(style="List Bullet"), x)
+            body += [_p("• " + x, indent=360, hanging=240) for x in b[1]]
         elif k == "table":
-            t = d.add_table(rows=1 + len(b[2]), cols=len(b[1]))
-            t.style = "Table Grid"
-            for j, h in enumerate(b[1]):
-                c = t.rows[0].cells[j]
-                c.text = ""
-                c.paragraphs[0].add_run(plain(h)).bold = True
-            for i, r in enumerate(b[2], start=1):
-                for j, x in enumerate(r):
-                    t.rows[i].cells[j].text = plain(x)
-            d.add_paragraph()
-    end = d.add_paragraph()
-    runs(end, NOTICE)
-    for r in end.runs:
-        r.font.size = Pt(9)
-    cp = d.core_properties
-    cp.title, cp.author = title, OWNERS              # the notice itself stands at the top and the end of the body
-    try:
-        when = datetime.datetime.strptime(written, "%Y-%m-%dT%H:%M:%SZ")
-        cp.created = cp.modified = when
-    except ValueError:
-        pass
-    raw = io.BytesIO()
-    d.save(raw)
-    # the same words give the same bytes: every part of the package rewritten with one fixed time, in the order written
-    import zipfile
-    src = zipfile.ZipFile(io.BytesIO(raw.getvalue()))
+            rows = []
+            for i, r in enumerate([b[1]] + b[2]):
+                cells = "".join(f'<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/></w:tcPr>'
+                                f'{_p(("**" + plain(c) + "**") if i == 0 else plain(c), size=18)}</w:tc>' for c in r)
+                rows.append(f"<w:tr>{cells}</w:tr>")
+            body.append('<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="5000" w:type="pct"/></w:tblPr>'
+                        + "".join(rows) + "</w:tbl>")
+            body.append("<w:p/>")
+    body.append(_p(NOTICE, size=18))
+    W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+    document = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:document {W}><w:body>' + "".join(body) +
+                '<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1080" w:right="1080" w:bottom="1080" '
+                'w:left="1080" w:header="720" w:footer="720" w:gutter="0"/></w:sectPr></w:body></w:document>')
+    font = '<w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/>'
+    styles = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:styles {W}>'
+              f'<w:docDefaults><w:rPrDefault><w:rPr>{font}<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr></w:rPrDefault>'
+              '<w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="360" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'
+              '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>'
+              '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/>'
+              '<w:pPr><w:keepNext/><w:spacing w:before="240" w:after="120"/><w:outlineLvl w:val="0"/></w:pPr>'
+              '<w:rPr><w:b/><w:sz w:val="34"/></w:rPr></w:style>'
+              '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/>'
+              '<w:pPr><w:keepNext/><w:spacing w:before="200" w:after="80"/><w:outlineLvl w:val="1"/></w:pPr>'
+              '<w:rPr><w:b/><w:sz w:val="27"/></w:rPr></w:style>'
+              '<w:style w:type="paragraph" w:styleId="Code"><w:name w:val="Code"/><w:basedOn w:val="Normal"/>'
+              '<w:pPr><w:spacing w:after="0" w:line="276" w:lineRule="auto"/><w:ind w:left="240"/></w:pPr>'
+              '<w:rPr><w:rFonts w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New"/><w:sz w:val="19"/></w:rPr></w:style>'
+              '<w:style w:type="table" w:styleId="TableGrid"><w:name w:val="Table Grid"/><w:tblPr><w:tblBorders>'
+              + "".join(f'<w:{e} w:val="single" w:sz="4" w:space="0" w:color="9AA4B2"/>' for e in ("top", "left", "bottom", "right", "insideH", "insideV"))
+              + '</w:tblBorders><w:tblCellMar><w:left w:w="80" w:type="dxa"/><w:right w:w="80" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style>'
+              '</w:styles>')
+    when = written if re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", written or "") else "2026-01-01T00:00:00Z"
+    core = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<cp:coreProperties '
+            'xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
+            'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+            f"<dc:title>{_x(title)}</dc:title><dc:creator>{_x(OWNERS)}</dc:creator>"
+            f'<dcterms:created xsi:type="dcterms:W3CDTF">{when}</dcterms:created>'
+            f'<dcterms:modified xsi:type="dcterms:W3CDTF">{when}</dcterms:modified></cp:coreProperties>')
+    app = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Properties '
+           'xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">'
+           f"<Application>tools/run_reports.py</Application><Company>{_x(OWNERS)}</Company></Properties>")
+    types = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+             '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+             '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+             '<Default Extension="xml" ContentType="application/xml"/>'
+             '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+             '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+             '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>'
+             '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>'
+             '</Types>')
+    R = 'xmlns="http://schemas.openxmlformats.org/package/2006/relationships"'
+    rels = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships {R}>'
+            '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+            '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>'
+            '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>'
+            '</Relationships>')
+    doc_rels = (f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships {R}>'
+                '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+                '</Relationships>')
     out = io.BytesIO()
-    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
-        for info in src.infolist():
-            fixed = zipfile.ZipInfo(info.filename, date_time=(1980, 1, 1, 0, 0, 0))
-            fixed.compress_type = zipfile.ZIP_DEFLATED
-            fixed.external_attr = 0o644 << 16
-            z.writestr(fixed, src.read(info.filename))
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:           # the same words give the same bytes
+        for name, data in (("[Content_Types].xml", types), ("_rels/.rels", rels), ("word/document.xml", document),
+                           ("word/_rels/document.xml.rels", doc_rels), ("word/styles.xml", styles),
+                           ("docProps/core.xml", core), ("docProps/app.xml", app)):
+            info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o644 << 16
+            z.writestr(info, data.encode("utf-8"))
     path.write_bytes(out.getvalue())
+
+
+def docx_text(path: Path) -> list[str]:
+    """The text of a Word document's paragraphs, in order (for the tests and the check; the standard library alone)."""
+    import zipfile
+    xml = zipfile.ZipFile(path).read("word/document.xml").decode("utf-8")
+    paras = re.findall(r"<w:p>(.*?)</w:p>|<w:p/>", xml, re.S)
+    unx = lambda t: t.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"').replace("&amp;", "&")
+    return [unx("".join(re.findall(r"<w:t[^>]*>(.*?)</w:t>", p, re.S))) for p in paras]
 
 
 def data_files(e: dict, c: dict, S: dict) -> dict[str, str]:

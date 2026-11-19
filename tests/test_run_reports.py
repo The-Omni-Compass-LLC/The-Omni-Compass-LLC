@@ -49,9 +49,8 @@ class Reports(unittest.TestCase):
             self.assertTrue(md.rstrip().endswith(f"*{NOTICE}*"))
             txt = (self.out / f"{a}.txt").read_text(encoding="utf-8").strip().split("\n")
             self.assertEqual((txt[0], txt[-1]), (plain, plain))
-            import docx
-            d = docx.Document(str(self.out / f"{a}.docx"))
-            self.assertEqual((d.paragraphs[0].text, d.paragraphs[-1].text), (plain, plain))
+            paras = [x for x in R.docx_text(self.out / f"{a}.docx") if x]
+            self.assertEqual((R.plain(paras[0]), R.plain(paras[-1])), (plain, plain))
 
     def test_every_number_is_the_records(self):
         s = json.loads((self.out / "SET_SUMMARY.json").read_text(encoding="utf-8"))
@@ -87,7 +86,9 @@ class Reports(unittest.TestCase):
         self.assertIn('python3 tools/run_reports.py > /dev/null || echo "::warning::', s)
         self.assertIn("git add -A results/run_reports/latest/ 2>/dev/null || true", s)
         self.assertLess(s.index("git pull -q --rebase"), s.index("python3 tools/run_reports.py > /dev/null"))
-        self.assertIn("python-docx", (ROOT / "requirements.txt").read_text(encoding="utf-8"))
+        # the Word form needs no package beyond Python's own: the lock file's pinned supply chain is unchanged
+        self.assertNotIn("docx", (ROOT / "requirements-lock.txt").read_text(encoding="utf-8"))
+        self.assertNotIn("import docx", (ROOT / "tools" / "run_reports.py").read_text(encoding="utf-8"))
         self.assertIn("run_reports.py", (ROOT / "verify.py").read_text(encoding="utf-8"))
 
 
