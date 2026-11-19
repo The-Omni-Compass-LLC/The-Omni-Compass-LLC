@@ -35,7 +35,7 @@
    'The work speaks. The critics are welcome to listen.',
    'I care about the truth, the people who use what I make, and the work. Everything else is weather.',
    LINE]]];
- const text=()=>LINE+'\n\n'+SEC.map(([h,ps])=>h.replace(/^\S+\s/,'')+'\n'+ps.join('\n')).join('\n\n')+'\n\n— The owner, DD World Studio’s KAN-IN™ · The Omni-Compass LLC';
+ const text=()=>LINE+'\n\n'+SEC.map(([h,ps])=>h.replace(/^\S+\s/,'')+'\n'+ps.join('\n')).join('\n\n')+'\n\n— The owner, DD Universe Multi-Media Studios’ KAN-IN™ · The Omni-Compass LLC';
  const css=document.createElement('style'); css.textContent=`
 #kOwner{position:fixed;top:0;left:0;right:var(--kRailW,58px);bottom:0;z-index:8560;overflow-y:auto;box-sizing:border-box;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-left,0px)) 48px 16px;background:radial-gradient(circle at 50% -10%,#3a2a08,#0b0712 62%);color:#f3ecdc;font:16px/1.6 Georgia,'Times New Roman',serif}
 #kOwner[hidden]{display:none!important}
@@ -52,7 +52,7 @@
 #kOwner .koFoot{margin-top:30px;font:12px/1.5 system-ui,sans-serif;color:#a99c80}
 #tourTab #ttOwner{grid-column:1/-1;order:3;min-height:52px;font:italic 800 16px/1.25 Georgia,serif!important;color:#ffd76a!important;background:linear-gradient(90deg,#3a2a08,#160f22)!important;border:1px solid #d9b45a!important;border-radius:12px}`; document.head.appendChild(css);
  function box(){ let d=$('kOwner'); if(!d){ d=document.createElement('div'); d.id='kOwner'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','The owner’s word');
-   d.innerHTML='<div class="kBar" data-sc="kOwner"><button type="button" data-ka="close" data-ko="close">✕</button></div><div class="koIn"><div class="koBrand">The Omni-Compass LLC · DD World Studio’s KAN-IN™ · The owner’s word</div><h2>“'+esc(LINE)+'”</h2><div class="koSub">Proven truth needs nobody’s permission. The owner’s position, in plain words: where the line comes from, what it means here, its philosophy and its theology.</div>'+
+   d.innerHTML='<div class="kBar" data-sc="kOwner"><button type="button" data-ka="close" data-ko="close">✕</button></div><div class="koIn"><div class="koBrand">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · The owner’s word</div><h2>“'+esc(LINE)+'”</h2><div class="koSub">Proven truth needs nobody’s permission. The owner’s position, in plain words: where the line comes from, what it means here, its philosophy and its theology.</div>'+
     '<div class="koRow"><button type="button" data-ko="say" data-noul>🔊 Read it out</button><button type="button" data-ko="stop" data-noul>⏹ Stop</button><button type="button" data-ko="copy" data-noul>📋 Copy it</button><button type="button" data-ko="prompt" data-noul>🎤 Put it on the prompter</button><button type="button" data-ko="close" data-noul>✕ Close</button></div>'+
     SEC.map(([h,ps],i)=>'<h3>'+esc(h)+'</h3><div class="'+(i===SEC.length-1?'koCreed':'')+'">'+ps.map(p=>'<p>'+esc(p)+'</p>').join('')+'</div>').join('')+
     '<div class="koFoot">Quotations: Arthur Conan Doyle, A Scandal in Bohemia (1891) and The Sign of Four (1890); Margaret Mitchell, Gone with the Wind (1936); Epictetus, Enchiridion 1; Marcus Aurelius, Meditations 12.4; the Bible, King James Version. © 2026 The Omni-Compass LLC. All rights reserved. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</div></div>';
