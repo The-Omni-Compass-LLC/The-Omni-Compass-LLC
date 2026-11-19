@@ -65,7 +65,7 @@
     if(k==='prompt'){ close(); try{ KRAIL.goTo('pad'); }catch(_){ } setTimeout(()=>{ const s=$('tpSrc'), t=$('tpText'); if(s){ s.value='own'; s.dispatchEvent(new Event('change',{bubbles:true})); } if(t){ t.value=SEC[SEC.length-1][1].join('\n'); t.dispatchEvent(new Event('input',{bubbles:true})); } say('🎤 The creed is on the prompter.'); },1200); return; } });
   } return d; }
  function sel(){ const r=document.createRange(); const n=document.querySelector('#kOwner .koCreed'); if(!n) return; r.selectNodeContents(n); const s=getSelection(); s.removeAllRanges(); s.addRange(r); say('Selected: press copy on your keyboard or phone.'); }
- function open(){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay','kHumor','kJump','kKara','kVG'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } d.hidden=false; d.scrollTop=0; }
+ function open(){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay','kHumor','kJump','kKara','kVG'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ } d.hidden=false; d.scrollTop=0; }
  function close(){ const d=$('kOwner'); if(d) d.hidden=true; try{ speechSynthesis.cancel(); }catch(_){ } }
  try{ const gh=window.GOHOME; if(gh&&!gh.__kown){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__kown=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu')) close(); },true);
