@@ -35,7 +35,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | GitHub workflows (`.github/workflows/`) | 71 |
 | Three-run tables in `results/live/`, all engines | 345 |
 | Of them, by engine, newest first | omni-v25: 95; omni-v21: 31; omni-v18: 8; omni-v17: 13; omni-v16: 13 |
-| Three-run tables on the engine that stands (omni-v26) | 0 (the newest are omni-v25's) |
+| Three-run tables on the engine that stands (omni-v27) | 0 (the newest are omni-v26's) |
 | Model gate pages (`results/model_gate/`) | 35 |
 | Pages in `docs/` (top level), preregistrations, engine pages, history pages | 162, 31, 26, 125 |
 | Drawn figures (`docs/book/figures/`) | 77 |
@@ -87,7 +87,7 @@ read from the newest table of its test (omni-v21's for most), and an A on a resu
 | 35 | Continuous checks on GitHub | `.github/workflows/` | **B−** | verify failed once today on our own push (run 42397521880, the headline section after a rebase): our error, fixed in the next push | Every push green; the page writers rerun after any rebase before a push |
 | 36 | The conductor and the campaign | `scripts/dispatch_grid.py`, `scripts/reruns.txt` | **B** | The omni-v26 campaign releases every benchmark again, though 23 of them run exactly the code their tables measured (`results/CARRY.md`) | The campaign releases only the benchmarks that do not carry |
 | 37 | The raw branch and the archive | `raw`, `archive-run.yml` | **A** | Every finished run swept with its hashes and signed | Hold it |
-| 38 | Branches | `main`, `v7` to `v26`, `gpu-omni-v26` | **A−** | Every version branch level with main at the last push; `v26` and `gpu-omni-v26` made at omni-v26's push | Hold it |
+| 38 | Branches | `main`, `v7` to `v27`, `gpu-omni-v27` | **A−** | Every version branch level with main at the last push; `v27` and `gpu-omni-v27` made at omni-v27's push | Hold it |
 | 39 | The side packages | `reference/`, `omnilab/`, `k8s_fleet/`, `fleet/`, `pilot/`, `hardware/` | **B** | In use, each with its tests; none in the fingerprint | Each named in the register or the levels page |
 | 40 | Omni-Compass 1.0 | — | **Not yet declared** | The engine that stands is published as 1.0 on the founder's word | The founder's word |
 | 41 | The oversight line (the babysitting tax) | `results/OVERSIGHT.md` | **A−** | Counted in both arms of every Kubernetes receipt and read as one line | Hold it |

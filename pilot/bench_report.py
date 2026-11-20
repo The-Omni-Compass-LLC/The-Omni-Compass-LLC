@@ -94,6 +94,8 @@ def pod_starts(d):
         o = ev.get("object", ev); m = o.get("metadata", {}); uid = m.get("uid")
         if not uid or not m.get("creationTimestamp"):
             continue
+        if (m.get("labels") or {}).get("app") == "omni-headroom":   # a stand-in (omni-v27) is no pod's start and no pod's wait
+            continue
         rec = pods.setdefault(uid, {"created": ts(m["creationTimestamp"]), "ready": None, "unsched": None, "sched": None})
         for c in (o.get("status", {}) or {}).get("conditions", []) or []:
             if c.get("type") == "Ready" and c.get("status") == "True" and c.get("lastTransitionTime") and rec["ready"] is None:

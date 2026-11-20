@@ -48,9 +48,24 @@ the founder overrides one in the conversation.
 - Scaling: floor of 2 machines, no ceiling, every machine usable. Traffic tests step by one (1 2 3 2 3 4 …).
 - Nothing is hardwired. Anything that doesn't work is removed, not just switched off.
 
-## The engine: Omni v26 stands (v25, v24, v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
+## The engine: Omni v27 stands (v26, v25, v24, v23, v22, v21, v20, v19, v18, v17, v16, v15, v14, v13, v12, v11, v10, v9, v8, v7, v6, v5, v3, v2 and v1 kept for their results)
 
-- **Omni v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files; `docs/OMNI_V26.md`) stands on main from 7 November, under the founder's
+- **Omni v27** (`OMNI_V27.json`, digest `34548e45437a05bd`, 65 files; `docs/OMNI_V27.md`) stands on main from 15 November, on the founder's
+  orders of 14 and 15 November ("one whole new version of engine with all these new metrics as one shot"; "we don't want to make
+  pods scale up when we can't give it to them"; "if it's scaling up, it should be looking forward 3 steps"; "you don't run no chip and
+  no cloud until you make sure you got the mechanism right"): omni-v26 with four faults fixed in the Kubernetes governor
+  (`omni_controller/controller.py`, `omni_controller/muscles.py`). Place before asking: the replica room raises the cap only while none of
+  the service's pods waits and only to the pods the machines in service can take (R1); while its pods wait, a raised cap goes back to the
+  pods placed (R2) and a target below native's has its cap set to native's own count or the pods placed (R3), in the decision and the fast
+  check. The forward look (`LOOK_AHEAD_BEATS = 3`, `lookahead_slope`): the rate the demand has risen at every one of the last three beats,
+  projected three beats ahead and never nearer than a machine's delivery measured from the governor's own orders; omni-v19's
+  largest-rise-ever memory removed. The stand-ins (`_headroom`, `standin_count`, `deploy/kind/omni-headroom.yaml`): through a cloud only, at
+  the max, pause pods of priority −5 sized for the rise ahead and the pods held back beyond the free and parked room, so the cloud's own
+  autoscaler makes the machine and any real pod displaces them; never counted as a pod waiting or a request. The conveyance owed (held on
+  `v27-convey-study` since 7 November). The C++ twin `cpp/src/lookahead.cpp` (sealed, `tests/test_cpp_lookahead_parity.py`, a negative
+  control in verify). The model gate against omni-v26 (`results/model_gate/V27_VS_V26.md`, eight seeds, twelve models, class S, never proof): against native the cloud and on-site models read GAIN or STEADY on every service gauge but one, the minutes the autoscaler wanted more pods than its cap allowed in the cloud at 60 s (up 0.8%, about two seconds an hour, inside the seeds' noise), with the machines power given; against omni-v26 the pods waiting read GAIN (down 28.4% in the cloud at its factory 60 s, beyond the seeds' noise; down 76.2% at 15 s), and the 95th percentile and the alert minutes read LOSS (in the cloud at 60 s up 5.0% and 9.7%, inside the seeds' noise; at 15 s up 8.5% and 67.5%; on site at 10 s up 1.4% and 2.5 minutes a day): omni-v26's speed came from the two things the founder ordered out, the pods it asked for waiting for a machine and the largest rise ever seen held as a reserve; the conveyance, card and verdict models read omni-v26's numbers to the digit, its rows against native among them (LOSS: the conveyance models' pod start wait up 9.0%, the batch model's requests served down 2.1% and alert minutes up 9.8%, the card's 95th percentile up 2.4%), on the next version's list One page holds the whole benchmark on the engine that stands (`results/THE_BENCHMARK.md`,
+  `tools/the_benchmark.py`). Every benchmark runs again on it on GitHub's own machines; every paid queue stays off until the founder's word.
+- **Omni v26** (`OMNI_V26.json`, digest `75d3c22eed4473b9`, 65 files; `docs/OMNI_V26.md`) stood on main from 7 to 15 November, under the founder's
   standing order that every fault found is fixed and lands as the next version, told, not asked, and his order of 6 November ("Just get
   everything else push, and push"): omni-v25 with one fault fixed in the Kubernetes governor (`omni_controller/controller.py`), read from
   the omni-v25 runs' own files (`docs/LOSS_CAUSES_2026-11-06.md`). When a service's target stood below native's and pods waited, the
@@ -653,6 +668,18 @@ the founder overrides one in the conversation.
   search reads it (`docs/THE_TUNE.md`, section 4b); the on-site beat is read on the kind rig's own fixed machines, a plant of its
   own, before it is picked.
 
+## Orders of 16 November
+
+- **The voice: "My dear Watson, I don't give a damn"** (the founder's words of 16 November: "you will write my shit with such a
+  tonality that it lets people know ... It's in their face and nobody can say shit to me. 1 plus 1 make 2 ... The math is what it
+  is"). Every page, report and answer is written as the record speaks: the number first, its receipt second, the command that
+  rebuilds it third; declarative, present tense; no hedging ("we believe", "may", "could"), no apology, no selling adjective, no
+  pleading for agreement. The losses are printed flat in the same tables as the gains, and every model reading keeps its class S:
+  that is what makes the position unanswerable, because anyone can add 1 and 1 again and get 2. The certainty is the record's,
+  never more than the record holds.
+- **One version, one benchmark** (the same day: "it better be version 27. How many versions you think I'm gonna pay for"). omni-v27
+  is the engine every receipt is gathered on, every scenario on one page (`results/THE_BENCHMARK.md`).
+
 ## Orders of 24 October
 
 - **One factory profile, found and then frozen; the live engine its tuning bench** (the founder's words of 24 October, late night:
@@ -1227,8 +1254,8 @@ the founder overrides one in the conversation.
 ## Repository
 
 - Referee and underwriter level. Only finals up front; old material goes to `docs/history` / `archive/` or is removed.
-  One version is always the main one; `main` and the working branch, `v26` (the engine that stands, 7 November), stay in
-  sync, and `v25`, `v24`, `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda start from `gpu-omni-v26` (made at omni-v26's push; the runs started from `gpu-omni-v25` stay omni-v25's record),
+  One version is always the main one; `main` and the working branch, `v27` (the engine that stands, 15 November), stay in
+  sync, and `v26`, `v25`, `v24`, `v23`, `v22`, `v21`, `v19`, `v18`, `v17`, `v16`, `v15`, `v14`, `v13`, `v12`, `v11`, `v10`, `v9`, `v8`, `v7` and `v7-candidate` are kept level with them; the GPU runs on Lambda and Amazon start from `gpu-omni-v27` (made at omni-v27's push; the runs started from `gpu-omni-v26` stay omni-v26's record),
   levelled with main at every landing, its head the one exact commit the founder's next GPU rental starts from (the last rental ran
   7770532ed5, omni-v21 with the GPU rig's readiness barrier, 30 October). `main` stays linear: a branch is rebased onto it and fast-forwarded, never merged with a merge commit. **The `v5` branch
   is history** (the founder's order of 17 October: "We won long past 5"): it is never merged into `main` and `main` is

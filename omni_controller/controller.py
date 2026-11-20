@@ -59,6 +59,55 @@ ANNOTATION = "omnicompass.io/original-target-utilization"
 RELEASE_PERIOD_S = 60.0   # the pool gives back at most one machine a minute (v7: a rate in time, not in decisions)
 ADD_PERIOD_S = 60.0       # omni-v16: and adds at most --max-node-step machines a minute past the scheduling floor
 LAND_S = 60.0             # omni-v16: a command is given a minute to land before proprioception lets it go
+LOOK_AHEAD_BEATS = 3      # omni-v27: the scale-up looks forward, three beats ahead (the founder's words of 15 November: "if it's
+                          # scaling up, it should be looking forward 3 steps"), never nearer than a machine's delivery
+DELIVERY_S = 120.0        # omni-v27: the time from a machine's order to its node ready, until the cloud's own is measured live
+HEADROOM, HEADROOM_NS = "omni-headroom", "default"   # omni-v27: the stand-ins (deploy/kind/omni-headroom.yaml)
+
+
+def lookahead_slope(pts, beat) -> float:
+    """The rate a series has risen at every beat of its last readings, a second (omni-v27; the C++ twin, cpp/src/lookahead.cpp,
+    tests/test_cpp_lookahead_parity.py): the least of its beat-to-beat rates, the time the decisions' own count times the beat;
+    0 with fewer than two readings. A rise held at every beat is a trend, and the scale-up looks it forward; a single jump (one
+    rate up, the others flat) and the noise of a flat series (rates up and down) give none, so no machine is asked for a step
+    already taken or a reading's wobble (the model gate of 15 November: the least-squares line through a step projected most of
+    the step again, and the cloud made machines for demand that never came)."""
+    rates = [(float(v1) - float(v0)) / ((d1 - d0) * beat) for (d0, v0), (d1, v1) in zip(pts, pts[1:]) if (d1 - d0) * beat > 0]
+    return min(rates) if rates else 0.0
+
+
+def lookahead_horizon(beat, delivery_s, beats=None) -> float:
+    """How far ahead the scale-up looks: `beats` beats (LOOK_AHEAD_BEATS), never nearer than a machine's delivery."""
+    return max((LOOK_AHEAD_BEATS if beats is None else beats) * beat, delivery_s)
+
+
+def lookahead_delivered(delivery_s, took_s) -> float:
+    """The machine's delivery, measured: half the last measure, half the new."""
+    return 0.5 * delivery_s + 0.5 * took_s
+
+
+def standin_count(alloc_m, req_m, nodes, pool, open_, ahead_m, room, unit_m, off=False):
+    """The stand-ins a decision asks for (omni-v27, Controller._headroom): the shortfall is the room looked ahead beyond what
+    the machines in service have free and the pool's parked machines hold, never past what the cloud may still add (`room`
+    machines; None for no top); the stand-ins number the free room, the parked room and the shortfall, since the scheduler
+    places them where they fit first and only the shortfall waits for the cloud's new machine. None asked when off, when
+    nothing is short, or with no machine in service. Returns (count, free, parked, short)."""
+    if alloc_m <= 0 or unit_m <= 0:
+        return 0, 0.0, 0.0, 0.0
+    nodes = max(1, int(nodes)); per_node = alloc_m / nodes
+    free = max(0.0, alloc_m - req_m)
+    parked = max(0, int(pool) - int(open_)) * per_node
+    short = max(0.0, ahead_m - free - parked)
+    if room is not None:
+        short = min(short, room * per_node)
+    count = 0 if off or short <= 0 else int(math.ceil((free + parked + short) / unit_m - 1e-9))
+    return count, free, parked, short
+
+
+def standin(p) -> bool:
+    """A stand-in pod (omni-v27): the lowest priority, holding room and no work; any real pod displaces it. Never a pod that
+    waits, never a request, never another workload's waiting pod in any reading of the governor."""
+    return ((p.get("metadata") or {}).get("labels") or {}).get("app") == HEADROOM
 COMPASS_UP, COMPASS_DOWN, COMPASS_RELEASE = 0.10, 0.02, -0.2   # the compass's gains, the same on every muscle (realms/compass_arm.py)
 DEMAND_RISE = 0.05     # the demand moves: more than 5% between its least and its most over one HPA window
 RANGE_ANN = "omnicompass.io/original-replica-range"
@@ -333,7 +382,7 @@ def snapshot(k: Kube, active_only: bool = False):
     nodes = k.get("get", "nodes", "-o", "json")["items"]
     ready = [n for n in nodes if is_ready(n)]
     pool = sum(1 for n in ready if worker(n))                         # every ready worker, open or closed: the lever's pool
-    pods = k.get("get", "pods", "-A", "-o", "json")["items"]
+    pods = [p for p in k.get("get", "pods", "-A", "-o", "json")["items"] if not standin(p)]   # omni-v27: no stand-in
     if active_only:
         # in service: open to new work, or still carrying work (an idling worker keeps serving until its work is gone)
         carrying = {p["spec"].get("nodeName") for p in pods if p["status"].get("phase") in ("Running", "Pending")
@@ -430,6 +479,9 @@ class Controller:
         self.target_at = {}            # (ns, hpa) -> when I last set its target
         self.nodes_restored = False
         self.m = Muscles(self.k, a, self.audit)
+        # omni-v27: the conveyance reads which workloads an HPA scales from the last decision's snapshot, only when a pod waits
+        # unplaced (a workload no autoscaler governs waiting for a place is owed the host's unused CPU)
+        self.m.served = lambda: [x for x in (self._selector_of(h) for h in (getattr(self, "_snap", None) or {}).get("hpas") or []) if x]
         if a.native_muscles:
             self.audit({"native_muscles": sorted(a.native_muscles), "why": "left native by the operator (--native): never written"})
         self.cl = None
@@ -449,11 +501,15 @@ class Controller:
         self.cmd_hpa = {}              # efferent record: HPA targets last written
         self.pod_hold = {}             # (ns, hpa) -> (until, seconds): the pod target held at native's after a pod waited (omni-v19)
         self.waited = False            # a fast check saw a pod waiting for a place since the last decision (omni-v19)
-        self.req_seen = []             # the requests on the machines at the last decisions, newest last (omni-v19)
-        self.burst_m = 0.0             # the largest rise in requests seen inside two decisions: the immune memory (omni-v19)
-        self.dem_seen = {}             # (ns, hpa) -> the service's demand at the last decisions, newest last (omni-v19)
+        self.req_seen = []             # (decision, the requests on the machines) at the last decisions, newest last
+        self.burst_m = 0.0             # omni-v27: the rise in requests projected ahead (the current rate times the look-ahead)
+        self.delivery_s = DELIVERY_S   # omni-v27: a machine's delivery, order to node ready, measured live from the cloud's own
+        self.held_back_m = 0.0         # omni-v27: the requests of the pods held back this decision until a machine can take them
+        self._place = None             # omni-v27: on site or through the cloud, read once from the nodes' own names
+        self.order = None              # omni-v27: the machine order still to land: (decision, machines ordered)
+        self.dem_seen = {}             # (ns, hpa) -> (decision, the service's demand) at the last decisions, newest last
         self.immune = {}               # (ns, hpa) -> its knob's self-knowledge (omnicompass/immune.py, omni-v21)
-        self.dem_rise = {}             # (ns, hpa) -> the largest rise in its demand inside two decisions, as a ratio (omni-v19)
+        self.dem_rise = {}             # (ns, hpa) -> its demand projected ahead over its demand now, a ratio, 1 when not rising
         self.hold_n = {}               # (ns, hpa) -> hand-backs in a row: each doubles the hold, up to two hours
         from omnicompass.compass import Compass
         gp = self.g.p                  # the compass reads the engine in the engine's own parameters
@@ -598,6 +654,8 @@ class Controller:
             return True
         try:
             subprocess.run(shlex.split(cmd), check=True)
+            if n > n_now and not self.order:
+                self.order = (self.decisions, n)       # omni-v27: its delivery is timed until it lands
             return True
         except subprocess.CalledProcessError as e:
             if n > n_now:
@@ -684,13 +742,47 @@ class Controller:
                                        "taken again while the hold runs (omni-v26)"}})
         return True
 
+    def _beat(self):
+        """The decision's own beat in seconds."""
+        return max(1.0, float(getattr(self.a, "interval", 60.0) or 60.0))
+
+    def _horizon_s(self):
+        """How far ahead the scale-up looks (omni-v27): three beats, never nearer than a machine's delivery measured live from
+        the cloud (order to node ready), since a machine ordered now serves nothing sooner."""
+        return lookahead_horizon(self._beat(), self.delivery_s)
+
+    def _slope(self, hist):
+        """The rate a series read once a decision has risen at every one of the last three beats, a second (omni-v27,
+        lookahead_slope): (decision, value) pairs, the time the decisions' own count times the beat; 0 with fewer than two
+        readings. Replaces omni-v19's immune memory, which kept the largest rise ever seen as a reserve from then on: history
+        deciding the future, holding room while the demand was flat or falling (the founder's words of 15 November)."""
+        return lookahead_slope(hist[-(LOOK_AHEAD_BEATS + 1):], self._beat())
+
+    def _delivered(self, s):
+        """A machine order that has landed (the machines open to work reach the count ordered) gives the cloud's delivery time,
+        order to node ready, in the decisions' own time; the look-ahead follows it (half the last measure, half the new). An
+        order that never lands within ten look-aheads is let go (omni-v27)."""
+        if not self.order:
+            return
+        d0, n_ord = self.order
+        took = (self.decisions - d0) * self._beat()
+        if s.get("open", 0) >= n_ord and took > 0:
+            was = self.delivery_s
+            self.delivery_s = lookahead_delivered(self.delivery_s, took)
+            self.audit({"delivery": {"machines": n_ord, "took_s": round(took, 1), "delivery_s_was": round(was, 1),
+                                     "delivery_s": round(self.delivery_s, 1), "look_ahead_s": round(self._horizon_s(), 1)}})
+            self.order = None
+        elif took > 10 * self._horizon_s():
+            self.order = None
+
     def _placeable_target(self, h, s, lo_t, hi_t, rise=1.0):
         """The fail-up's target (omni-v19): the cover's floor lo_t where the machines in service can place the pods it asks
         for; else the lowest target whose pods they can place, ceil(100 dem / x) <= running + room, and the machines the rest
         need asked for now, so a pod is never asked for before there is a machine to run it. Unread (no demand, no request,
-        not the node-pool mode): the cover's floor, as before. rise is the immune memory, the largest rise in the service's
-        demand seen inside two decisions: the pods asked for leave room for that rise times themselves, so the next rise of
-        that size finds a place, as native's fewer pods do."""
+        not the node-pool mode): the cover's floor, as before. rise is the demand looked ahead (omni-v27): the service's demand
+        rising now, projected three beats ahead and never nearer than a machine's delivery, over its demand now (1 while it is
+        flat or falling): the pods asked for leave room for that rise times themselves, so the rise under way finds a place,
+        as native's fewer pods do. omni-v19 kept the largest rise ever seen instead, a reserve held whatever the demand did."""
         dem, req = self._app_demand(h), self._pod_request_m(h)
         if dem is None or not req or dem <= 0:
             return lo_t
@@ -710,14 +802,15 @@ class Controller:
                 self.rec_n = need
         self.audit({"placeable": {"hpa": f"{h['metadata']['namespace']}/{h['metadata']['name']}", "target": round(min(hi_t, fit), 1),
                                   "asked": round(lo_t, 1), "pods_placeable": place, "pods_short": max(0, short),
-                                  "largest_rise": round(rise, 3)}})
+                                  "rise_ahead": round(rise, 3)}})
         return min(hi_t, fit)
 
-    def _live_ceiling(self, h):
+    def _live_ceiling(self, h, in_service=False):
         """The most replicas the machines can hold, one pod under it, read live: the allocatable CPU of every ready worker
         (closed ones included: the machine lever opens them) and of the machines the system can still add, less the CPU
         every other pod asks for, in units of one of this service's pods; where every node is a container on one machine
-        (kind), that machine's CPU once. None where it cannot be read."""
+        (kind), that machine's CPU once. None where it cannot be read. With in_service, the machines in service only: the
+        pods that can be placed now, without a machine the cloud has not yet made (omni-v27, the place-before-asking rule)."""
         ref = (h.get("spec") or {}).get("scaleTargetRef") or {}
         ns = h["metadata"]["namespace"]
         if ref.get("kind") != "Deployment" or not ref.get("name"):
@@ -725,7 +818,7 @@ class Controller:
         try:
             dep = self.k.get("get", "deployment", ref["name"], "-n", ns, "-o", "json")
             nodes = [n for n in self.k.get("get", "nodes", "-o", "json")["items"] if is_ready(n) and worker(n)]
-            pods = self.k.get("get", "pods", "-A", "-o", "json")["items"]
+            pods = [p for p in self.k.get("get", "pods", "-A", "-o", "json")["items"] if not standin(p)]
         except Exception:
             return None
         tpl = dep["spec"]["template"]["spec"]
@@ -739,7 +832,8 @@ class Controller:
             alloc = max(to_milli(n["status"]["allocatable"]["cpu"]) for n in nodes)
         else:
             alloc = sum(to_milli(n["status"]["allocatable"]["cpu"]) for n in nodes)
-            alloc += self._machine_room(len(nodes)) * alloc / len(nodes)
+            if not in_service:
+                alloc += self._machine_room(len(nodes)) * alloc / len(nodes)
         sel = (dep["spec"].get("selector") or {}).get("matchLabels") or {}
         names = {n["metadata"]["name"] for n in nodes}
         mine = lambda p: p["metadata"].get("namespace") == ns and sel and all((p["metadata"].get("labels") or {}).get(k_) == v for k_, v in sel.items())
@@ -751,6 +845,134 @@ class Controller:
             current = int((h.get("status") or {}).get("currentReplicas", 0) or 0)
             return kind_replica_ceiling(alloc, int(other), int(req), current, self.host_cpu.busy_share)
         return max(1, int((alloc - other) // req) - 1)
+
+    def _place_of(self):
+        """On site or through the cloud, read once from the nodes' own names (factory_beat's reading)."""
+        if self._place is None:
+            self._place = factory_beat(self.k)[1]
+        return self._place
+
+    def _headroom(self, s):
+        """The stand-ins (omni-v27; the founder's words of 15 November: "we don't want to make pods scale up when we can't give it
+        to them"; "if it's scaling up, it should be looking forward 3 steps"). Through a cloud, a new machine is made by the cloud's
+        own autoscaler and only for a pod that waits, so a machine asked for ahead of the demand was a real pod made to wait. The
+        stand-ins ask instead: pods of the lowest priority that hold room and no work (deploy/kind/omni-headroom.yaml), as many as
+        the requests looked ahead (the rate the requests rise now, over the look-ahead) and the pods held back until a machine can
+        take them need beyond the room the machines in service have free and the pool's parked machines (the floor opens those
+        first), never past what the cloud may still add. The cloud makes their machine; a real pod displaces a stand-in at once,
+        so the machine is up before the demand and no real pod waits for it. With nothing rising and nothing held back there is
+        none. On site, where no machine is made, never; at the tune-down, on the cloud's give-back-only and where the machines are
+        left native, never (the bill may not rise there). Where the stand-ins are not installed, nothing (said once in the
+        audit)."""
+        if self._place_of() != "through the cloud" or s.get("alloc_m", 0) <= 0:
+            return
+        off = getattr(self.a, "give_back_only", False) or self.dial != "max" or "machines" in getattr(self.a, "native_muscles", ())
+        try:
+            dep = self.k.get("get", "deployment", HEADROOM, "-n", HEADROOM_NS, "-o", "json")
+        except Exception:
+            if not getattr(self, "_headroom_said", False):
+                self._headroom_said = True
+                self.audit({"headroom": {"installed": False, "why": "deploy/kind/omni-headroom.yaml not applied: no stand-in asked"}})
+            return
+        tpl = ((dep.get("spec") or {}).get("template") or {}).get("spec") or {}
+        unit = sum(to_milli(((c.get("resources") or {}).get("requests") or {}).get("cpu", "0")) for c in tpl.get("containers", []))
+        if unit <= 0:
+            return
+        cur = int((dep.get("spec") or {}).get("replicas", 0) or 0)
+        nodes = max(1, int(s.get("nodes", 1) or 1))
+        pool = int(s.get("pool", nodes))
+        ahead = max(0.0, self.burst_m) + max(0.0, self.held_back_m)
+        room = self._machine_room(pool)
+        # the parked machines are the pool's own, opened first by the floor; the stand-ins fill the free room first (the
+        # scheduler places them where they fit), so they number the room ahead and only the shortfall waits for the cloud
+        want, free, parked, short = standin_count(s["alloc_m"], s["req_m"], nodes, pool, int(s.get("open", nodes)), ahead,
+                                                  room if room < UNBOUNDED else None, unit, off)
+        if want == cur:
+            return
+        self.k.write(["scale", "deployment", HEADROOM, "-n", HEADROOM_NS, f"--replicas={want}"],
+                     f"stand-ins: {cur} -> {want} of {unit}m, room for the demand {round(self._horizon_s())} s ahead "
+                     f"({int(ahead)}m ahead, {int(free)}m free in service)")
+        self.audit({"headroom": {"stand_ins_was": cur, "stand_ins": want, "unit_m": unit, "ahead_m": int(ahead),
+                                 "rise_ahead_m": int(self.burst_m), "held_back_m": int(self.held_back_m), "free_m": int(free),
+                                 "parked_m": int(parked), "short_m": int(short), "off": bool(off),
+                                 "look_ahead_s": round(self._horizon_s(), 1), "machine_room": room if room < UNBOUNDED else None}})
+
+    def _machines_first(self, s, why, waiting=None, extra_m=0.0):
+        """Order the machines the cluster's requests need, the waiting pods' included, and extra_m more (the pods held back
+        until a machine can take them), by the scheduling floor's own arithmetic: the requests and the headroom over one
+        machine's allocatable; where the governor holds the pool lever (omni-v27)."""
+        if not s or s.get("alloc_m", 0) <= 0 or self.a.mode != "nodepool" or not self.a.node_scale_cmd:
+            return
+        n = max(1, s["open"]); per_node = s["alloc_m"] / max(1, s["nodes"])
+        want_m = s["req_m"] + max(0.0, extra_m)
+        need = min(self._max_nodes(s), int(math.ceil(want_m * (1.0 + self.a.headroom) / per_node)) if want_m > 0 else n)
+        if need > n and need > (self.rec_n or 0) and self._pool_command(need, n, why, pods_waiting=waiting):
+            self.rec_n = need
+
+    def _withdraw_waiting(self, h, s, counts=None):
+        """omni-v27, R2 and R3 (the founder's order of 14 November: never worse than native; "what Omni-Compass can't achieve to
+        make better stays native"). While one of the service's own pods has no machine: a cap Omni-Compass raised above the
+        operator's goes back to the pods already placed, never below the operator's own (R2); and while its target stands below
+        native's, so that the autoscaler asks more pods than native's would, the cap goes to the larger of native's own count
+        (the replicas native's autoscaler asks at the operator's target, inside the operator's range) and the pods already
+        placed (R3). Every pod Omni-Compass asked for that has no machine is withdrawn (Kubernetes removes an unplaced pod first)
+        and native's own pods wait exactly as on native. The machines the waiting pods' requests need are ordered first, so the
+        machines still come and the pods follow as they land. Called by the decision and by the fast check, so a pod Omni-Compass
+        asked for waits at most one fast check, never a whole beat. True when the cap was written."""
+        if int(getattr(self.a, "replica_ceiling", -1)) == 0 or "replicas" in getattr(self.a, "native_muscles", ()):
+            return False
+        spec = h.get("spec", {}) or {}
+        ann = h["metadata"].get("annotations", {}) or {}
+        lo0, hi0 = (int(x) for x in ann.get(RANGE_ANN, f"{spec.get('minReplicas', 1)},{spec.get('maxReplicas', 1)}").split(","))
+        cap = int(spec.get("maxReplicas", hi0))
+        _, tgt = cpu_target(h); dem = self._app_demand(h)
+        if not tgt or dem is None:
+            return False
+        orig_t = int(ann.get(ANNOTATION, tgt) or tgt)
+        below = tgt < orig_t
+        if not (cap > hi0 or below):
+            return False
+        counts = counts if counts is not None else self._own_pod_counts(h)
+        if counts is not None and counts[1] <= 0:
+            return False
+        if counts is None and int((s or {}).get("pending", 0) or 0) <= 0:
+            return False
+        native_n = max(lo0, min(hi0, int(math.ceil(100.0 * dem / float(orig_t) - 1e-9)) if orig_t > 0 else hi0))
+        placed = counts[0] if counts else 0
+        back = max(hi0, placed) if not below else max(lo0, native_n, placed)
+        if back >= cap:
+            return False
+        ns, name = h["metadata"]["namespace"], h["metadata"]["name"]
+        self._machines_first(s, "machines first: room for the pods withdrawn while they wait (omni-v27)", counts[1] if counts else None)
+        if RANGE_ANN not in ann:
+            self.k.write(["annotate", "hpa", name, "-n", ns, "--overwrite", f"{RANGE_ANN}={lo0},{hi0}"], "replica room: record the operator's range")
+        self.k.write(["patch", "hpa", name, "-n", ns, "--type=merge", "-p", json.dumps({"spec": {"maxReplicas": back}})],
+                     f"replica room: cap {cap} -> {back}, back toward native's {native_n} (the operator's {hi0}) while "
+                     f"{counts[1] if counts else 'some'} pods wait for a machine ({counts[0] if counts else '?'} placed)")
+        self.audit({"immune": {"hpa": f"{ns}/{name}", "replica_room": "back while pods wait", "cap_was": cap, "cap": back,
+                               "native_count": native_n, "target_below_native": below,
+                               "waiting": counts[1] if counts else None, "placed": counts[0] if counts else None}})
+        return True
+
+    def _own_pod_counts(self, h):
+        """(placed, waiting): the pods of the HPA's own deployment on a machine, and those with no machine yet (pending and
+        not bound to a node), read live; None where they cannot be read (omni-v27)."""
+        ref = (h.get("spec") or {}).get("scaleTargetRef") or {}
+        ns = h["metadata"]["namespace"]
+        if ref.get("kind") != "Deployment" or not ref.get("name"):
+            return None
+        try:
+            dep = self.k.get("get", "deployment", ref["name"], "-n", ns, "-o", "json")
+            sel = (dep["spec"].get("selector") or {}).get("matchLabels") or {}
+            if not sel:
+                return None
+            pods = self.k.get("get", "pods", "-n", ns, "-o", "json")["items"]
+        except Exception:
+            return None
+        own = [p for p in pods if all((p["metadata"].get("labels") or {}).get(k_) == v for k_, v in sel.items())
+               and not p["metadata"].get("deletionTimestamp") and p["status"].get("phase") in ("Running", "Pending")]
+        placed = sum(1 for p in own if (p.get("spec") or {}).get("nodeName"))
+        return placed, len(own) - placed
 
     def _replica_room(self, h, ns, name, win, obs, s):
         """The HPA's replica cap as a lever, up to what the machines can hold, one pod under it, read live (the
@@ -779,13 +1001,56 @@ class Controller:
         # runnable if the refreshed ceiling is below it.
         if ceil_ is None and ((cur >= cap and pressed and need > cap) or cap > hi0):
             ceil_ = self._live_ceiling(h)
+        # omni-v27: native's own count, the replicas native's autoscaler asks for at the operator's own target, inside the
+        # operator's range; Omni-Compass's target stands below native's when it asks for more pods than that
+        orig_t = int(ann.get(ANNOTATION, tgt) or tgt)
+        below = tgt < orig_t
+        native_n = max(lo0, min(hi0, int(math.ceil(100.0 * dem / float(orig_t) - 1e-9)) if orig_t > 0 else need))
+        # omni-v27, R2 and R3 (back to native while pods wait): the pods Omni-Compass asked for that have no machine are withdrawn
+        # (_withdraw_waiting, also called from the fast check every few seconds)
+        counts = self._own_pod_counts(h) if (cap > hi0 or cap < hi0 or below or (cur >= cap and pressed and need > cap)) else None
+        waiting = bool(counts and counts[1] > 0) or (counts is None and int((s or {}).get("pending", 0) or 0) > 0)
+        if waiting and (cap > hi0 or below):
+            self._withdraw_waiting(h, s, counts)
+            return
+        if cap < hi0 and not waiting:
+            # omni-v27, R3's release: the cap set below the operator's while pods waited goes back up as the machines in
+            # service can place the pods, to the operator's own once they can (never a pod asked for before its machine); the
+            # machines for the pods the target asks beyond the cap are ordered first, so the cap rises as they land (a pod held
+            # back no longer asks the pool for a machine itself, as a waiting one does)
+            want = min(hi0, need)
+            now_ = self._live_ceiling(h, in_service=True)
+            new = hi0 if now_ is None else min(hi0, max(native_n, now_, cap))
+            if want > max(cur, new):
+                req_ = self._pod_request_m(h)
+                if req_:      # the pods still held back once the cap stands at what the machines in service place: their
+                    held = (want - max(cur, new)) * req_      # machines asked for first (the pool's parked ones, then the stand-ins)
+                    self.held_back_m += held
+                    self._machines_first(s, "machines first: room for the pods held back until a machine can take them (omni-v27)",
+                                         extra_m=held)
+            if new > cap:
+                self.k.write(["patch", "hpa", name, "-n", ns, "--type=merge", "-p", json.dumps({"spec": {"maxReplicas": new}})],
+                             f"replica room: cap {cap} -> {new}, toward the operator's {hi0} as the machines in service place the pods")
+                if new == hi0 and int(spec.get("minReplicas", lo0)) == lo0:
+                    self.k.write(["annotate", "hpa", name, "-n", ns, f"{RANGE_ANN}-"], "replica room: operator's range back, record removed")
+            return
         if cap > hi0:
             safe_cap = bounded_replica_cap(hi0, cap, cur, ceil_)
             if safe_cap < cap:
                 self.k.write(["patch", "hpa", name, "-n", ns, "--type=merge", "-p", json.dumps({"spec": {"maxReplicas": safe_cap}})],
                              f"replica room: cap {cap} -> {safe_cap} (live ceiling {ceil_}; current replicas {cur})")
                 return
-        if cur >= cap and pressed and need > cap and ceil_ is not None and cap < ceil_:
+        # omni-v27, R1 (place before asking): no raise while a pod waits, and a raise only up to the pods the machines in
+        # service can take now; the machines the cloud may still add are its own to add, never asked for by a waiting pod
+        if not waiting and ceil_ is not None and given <= 0:
+            now_ = self._live_ceiling(h, in_service=True)
+            if now_ is not None:
+                if cur >= cap and pressed and min(ceil_, need) > max(cur, cap, now_):
+                    req_ = self._pod_request_m(h)     # the pods the machines still to come would hold: asked of the cloud by the
+                    if req_:                          # stand-ins, never by a real pod left waiting (omni-v27)
+                        self.held_back_m += (min(ceil_, need) - max(cur, cap, now_)) * req_
+                ceil_ = min(ceil_, now_)
+        if cur >= cap and pressed and need > cap and ceil_ is not None and cap < ceil_ and not waiting:
             new = min(ceil_, need)
             if RANGE_ANN not in ann:
                 self.k.write(["annotate", "hpa", name, "-n", ns, "--overwrite", f"{RANGE_ANN}={lo0},{hi0}"], "replica room: record the operator's range")
@@ -900,6 +1165,10 @@ class Controller:
                 self.nodes_restored = True
             else:
                 missed.append("the node pool")
+        try:   # omni-v27: the stand-ins back to none, last and with no read (one write, refused where they are not installed)
+            self.k.write(["scale", "deployment", HEADROOM, "-n", HEADROOM_NS, "--replicas=0"], "reset: the stand-ins back to none")
+        except Exception:  # noqa: BLE001  (not installed, on site: nothing to hand back)
+            pass
         if missed:
             raise RuntimeError("hand-back incomplete after %d tries each: %s" % (RESTORE_TRIES, "; ".join(missed)))
 
@@ -1178,7 +1447,9 @@ class Controller:
             self._convey()
         # one light read every check; the full snapshot (nodes, all pods, node metrics, HPAs) only when a pod waits. The
         # controller shares CPUs with the service it protects (on kind, one 4-core runner), so its reads cost latency
-        if not str(self.k.get("get", "pods", "-A", "--field-selector=status.phase=Pending", "-o", "name")).strip():
+        waiting = [x for x in str(self.k.get("get", "pods", "-A", "--field-selector=status.phase=Pending", "-o", "name")).split()
+                   if not x.startswith(f"pod/{HEADROOM}-")]   # omni-v27: a waiting stand-in is room asked for, no pod waiting
+        if not waiting:
             return None
         self.waited = True                       # time waited between decisions is harm the next decision's verdict reads
         s = snapshot(self.k, getattr(self.a, "active_nodes_only", False))
@@ -1186,6 +1457,13 @@ class Controller:
             return None                          # no machine in service in the reading: blind, nothing to add from it
         if s["pending"] > 0:
             self._pods_wait_handback(s)
+            if self.compass_law is not None:
+                # omni-v27: Omni-Compass's own pods with no machine are withdrawn at once, not at the next decision
+                for h in s["hpas"]:
+                    try:
+                        self._withdraw_waiting(h, s)
+                    except Exception as e:  # a failed withdrawal writes nothing more; the decision reads it again
+                        self.audit({"error": f"withdraw: {e!r}"[:300]})
         n = max(1, s["open"]); per_node = s["alloc_m"] / max(1, s["nodes"])
         floor = max(int(math.ceil(s["req_m"] * (1.0 + self.a.headroom) / per_node)) if s["req_m"] > 0 else self.a.min_nodes, int(math.ceil(s["used_m"] / per_node)))
         floor = min(self._max_nodes(s), floor)
@@ -1284,12 +1562,14 @@ class Controller:
 
     def step(self):
         self.decisions += 1
+        self.held_back_m = 0.0
         convey_due = self._convey_due() if self.a.mode == "nodepool" and self.a.node_scale_cmd else False
         self.host_cpu.sample()              # two adjacent controller ticks provide a host CPU busy share
         if self.killed():
             self.restore()
             return self.audit({"decision": "killed", "mode": "observe"})
         s = snapshot(self.k, getattr(self.a, "active_nodes_only", False))
+        self._delivered(s)
         if s["alloc_m"] <= 0:
             # a reading with no machine in service is blind, never an overload (omni-v11; 18 Oct, the CruiseKube test, run
             # 39120444653: every worker of the kind cluster left service for two minutes while the service answered every
@@ -1437,17 +1717,19 @@ class Controller:
                          for h in s["hpas"])
         gate = node_release_gate(n, per_node, s["used_m"], s["pending"], scaling_up, breach_now, rho, auth_n,
                                  senses_live=not any(blind.values()), last_command_landed=nodes_landed)
-        # the immune memory (omni-v19): the largest rise in requests seen inside two decisions, about the time a new machine
-        # takes to boot; a machine is given back only when the machines left hold the requests and a reserve of the larger of
-        # one machine and that rise, so the next rise of the same size lands on a machine already up, as it does on native's
+        # looking ahead (omni-v27; omni-v19's immune memory kept the largest rise ever seen): the requests' rate of rise now,
+        # projected over the look-ahead, three beats and never nearer than a machine's delivery; a machine is given back only
+        # when the machines left hold the requests and a reserve of the larger of one machine and that projected rise, so the
+        # rise under way lands on a machine already up; while the requests are flat or falling no rise is projected
         if s["req_m"] > 0:
-            self.req_seen = (self.req_seen + [float(s["req_m"])])[-3:]
-            self.burst_m = max(self.burst_m, float(s["req_m"]) - min(self.req_seen))
+            self.req_seen = (self.req_seen + [(self.decisions, float(s["req_m"]))])[-(LOOK_AHEAD_BEATS + 1):]
+            self.burst_m = max(0.0, self._slope(self.req_seen)) * self._horizon_s()
         reserve = max(per_node, self.burst_m)
         native_line = float(getattr(self.a, "native_release_util", 0.5) or 0.5)
         if rec_n < n and (s["req_m"] + reserve > (n - 1) * per_node or s["req_m"] > native_line * (n - 1) * per_node):
             self.audit({"immune_memory": {"kept": n, "requests_m": int(s["req_m"]), "reserve_m": int(reserve),
-                                          "largest_rise_m": int(self.burst_m), "room_after_m": int((n - 1) * per_node),
+                                          "rise_ahead_m": int(self.burst_m), "look_ahead_s": round(self._horizon_s(), 1),
+                                          "room_after_m": int((n - 1) * per_node),
                                           "native_line": native_line}})
             rec_n = n            # the machines left would not hold the requests and the reserve, or would stand thinner than
                                  # native's own autoscaler lets them: the machine stays
@@ -1593,12 +1875,13 @@ class Controller:
                     else:
                         F_ = compass_rec["force"]
                         x = x - (COMPASS_UP if F_ > 0 else COMPASS_DOWN) * F_ * (hi_t - lo_t) * self.step_scale
-                    # the immune memory for pods (omni-v19): the largest rise in this service's demand seen inside two decisions
+                    # looking ahead for pods (omni-v27; omni-v19 kept the largest rise ever seen): this service's demand rising
+                    # now, projected over the look-ahead, as a ratio to the demand now; 1 while it is flat or falling
                     dem_now = self._app_demand(h)
                     if dem_now and dem_now > 0:
-                        hist = (self.dem_seen.get((ns, name), []) + [dem_now])[-3:]
+                        hist = (self.dem_seen.get((ns, name), []) + [(self.decisions, dem_now)])[-(LOOK_AHEAD_BEATS + 1):]
                         self.dem_seen[(ns, name)] = hist
-                        self.dem_rise[(ns, name)] = max(self.dem_rise.get((ns, name), 1.0), dem_now / min(hist))
+                        self.dem_rise[(ns, name)] = 1.0 + max(0.0, self._slope(hist)) * self._horizon_s() / dem_now
                     if self._held_native((ns, name)):
                         # a pod waited while the target stood below the operator's: native's target is held (omni-v19)
                         x = hi_t
@@ -1668,6 +1951,10 @@ class Controller:
         if convey_due and getattr(self.a, "latency_file", "") and not self.cruise and not self.killed():
             self._convey()
         self.rec_n = rec_n
+        try:
+            self._headroom(s)
+        except Exception as e:  # a failed sizing writes nothing more; the next decision reads it again
+            self.audit({"error": f"headroom: {e!r}"[:300]})
         return out
 
 

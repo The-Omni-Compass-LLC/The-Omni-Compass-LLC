@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -39,9 +40,21 @@ DATA = ROOT / "results" / "TWO_BILLS.json"
 CHIP = ROOT / "results" / "gpu" / "V23_A10_CAP_FULL_ABC.json"   # the full load: more offered than served, so the work can rise
 CHIP_FIXED = ROOT / "results" / "gpu" / "V23_A10_CAP_ABC.json"  # the fixed job, beside it
 CHIP_PRICE = 1.29        # dollars an hour, the price each Lambda launch printed for gpu_1x_a10 (docs/RUN_LEDGER.md)
-CLOUD = ROOT / "results" / "live" / "AKS_STEADY_100_OMNI_V18.json"
+CLOUD = ROOT / "results" / "live" / "AKS_STEADY_100_OMNI_V18.json"   # the older form: one set of paired repetitions, no work counted
 CLOUD_ENGINE = "omni-v18"
 CLOUD_PAGE = "results/live/AKS_STEADY_100_OMNI_V18.md"
+# the newest form (14 November): the cloud at the max with its work meter, three runs, read from the newest table on file, so a
+# later engine's table takes its place the day it is written and no number is typed in here
+METER_GLOB = "V*_AKS_WORK_METER.json"
+METER_KEYS = {"work": "work inside the response line (requests a second; the capacity test's own gauge)",
+              "bill": "compute bill at list price ($)", "machine_hours": "machines billed, machine-hours",
+              "per_dollar": "work per dollar of the bill (answers inside the line for each $; the cloud's judged number)"}
+METER_SHOW = (METER_KEYS["per_dollar"], METER_KEYS["work"], METER_KEYS["bill"], METER_KEYS["machine_hours"],
+              "response time (ms), mean", "response time (ms), 95th percentile", "response time (ms), 99th percentile",
+              "failed requests (%)", "time over the response line (% of samples)",
+              "alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line)",
+              "pods with no machine to take them (unschedulable)", "time pods had no machine to take them, pod-minutes",
+              "pod start wait, total (s)", "energy (Wh)")
 
 # The founder's order of 1 November: the seven organisms, each run native and with Omni-Compass on native, in each place,
 # so fourteen runs on the chip (A against B) and fourteen through the cloud (C against D). Each place reads its own three-run
@@ -126,8 +139,37 @@ def chip() -> dict:
             "fixed_job": {g: fixed[g]["reading"] for g in ("requests served", "energy, GPU (J)") if g in fixed}}
 
 
+def meter_table():
+    """The newest Azure work-meter three-run table on file (by its engine's number), or None."""
+    fs = [(int(re.match(r"V(\d+)_", f.name).group(1)), f) for f in (ROOT / "results" / "live").glob(METER_GLOB) if re.match(r"V\d+_", f.name)]
+    return max(fs)[1] if fs else None
+
+
 def cloud() -> dict:
-    """The cloud's newest set with a bill: its means and its paired bill, one set of paired repetitions (no three-run reading)."""
+    """The cloud's newest table with a bill. The work meter's three runs where one is on file (the work counted, so the work
+    per dollar is read by the one key); else the older set of paired repetitions (the bill only)."""
+    f = meter_table()
+    if f is not None:
+        t = json.loads(f.read_text(encoding="utf-8"))
+        rows = t["rows"]
+        eng = "omni-v" + re.match(r"V(\d+)_", f.name).group(1)
+        per_run = []
+        for i in range(len(t["runs"])):
+            per_run.append({k: (rows[g]["runs"][i]["native"], rows[g]["runs"][i]["native"] + rows[g]["runs"][i]["diff"])
+                            for k, g in METER_KEYS.items()})
+
+        def pooled(g):
+            rs = rows[g]["runs"]
+            n = sum(r["native"] for r in rs) / len(rs); o = sum(r["native"] + r["diff"] for r in rs) / len(rs)
+            return {"native": n, "omni": o, "diff": o - n, "ci95": None, "significant": "in all three" in rows[g]["reading"],
+                    "reading": rows[g]["reading"]}
+        return {"engine": eng, "page": str(f.relative_to(ROOT))[:-5] + ".md", "form": "three runs", "title": t.get("title"),
+                "runs": [{"tag": r.get("tag"), "run": r.get("run"), "paired_repetitions": r.get("paired_repetitions")} for r in t["runs"]],
+                "repetitions": sum(int(r.get("paired_repetitions") or 0) for r in t["runs"]),
+                "bill": pooled(METER_KEYS["bill"]), "machine_hours": pooled(METER_KEYS["machine_hours"]),
+                "work_key": METER_KEYS["work"], "work": {METER_KEYS["work"]: (pooled(METER_KEYS["work"])["native"], pooled(METER_KEYS["work"])["omni"])},
+                "per_run": per_run, "rows": {g: {"reading": rows[g]["reading"], "runs": rows[g]["runs"], "aim": rows[g].get("aim")}
+                                             for g in METER_SHOW if g in rows}}
     t = json.loads(CLOUD.read_text(encoding="utf-8"))
     p = t["paired"]["compass"]
     bill = p["compute bill at list price ($)"]
@@ -223,7 +265,14 @@ def equation(c: dict, k: dict) -> list:
         L.append(f"| the chip, A against B ({c['engine'].split(' (')[0]}) | {i} | {n['work']:,.0f} → {o['work']:,.0f} | {sign(dw)} | "
                  f"{n['bill']:.4f} → {o['bill']:.4f} | {sign(db)} | {n['per_dollar']:,.0f} → {o['per_dollar']:,.0f} | {sign(g)} |")
     b = k.get("bill") or {}
-    if b:
+    if k.get("form") == "three runs":
+        for i, r in enumerate(k["per_run"], 1):
+            (wn, wo), (bn, bo), (en, eo) = r["work"], r["bill"], r["per_dollar"]
+            dw, db = wo / wn - 1, bo / bn - 1
+            g = (1 + dw) / (1 + db) - 1
+            L.append(f"| the cloud, C against D ({k['engine']}, Azure) | {i} | {wn:,.2f} → {wo:,.2f} a second | {sign(dw)} | {bn:.5f} → "
+                     f"{bo:.5f} | {sign(db)} | {en:,.0f} → {eo:,.0f} | {sign(g)} |")
+    elif b:
         db = b["diff"] / b["native"]
         if k.get("work_key"):
             wn, wo = k["work"][k["work_key"]]
@@ -236,10 +285,15 @@ def equation(c: dict, k: dict) -> list:
                      f"{b['native']:.5f} → {b['omni']:.5f} | {sign(db)}, inside the noise | not read | not read |")
     L += ["| the cloud, C against D (Google, Amazon) | | not yet run | | | | | |", ""]
     w = (c.get("rows") or {}).get("work per dollar (requests served per $)", {}).get("reading", "")
+    if k.get("form") == "three runs":
+        kw = k["rows"].get(METER_KEYS["per_dollar"], {}).get("reading", "")
+        cloud_says = (f"In the cloud ({k['engine']}, Azure, the work counted inside the response line) the three runs' G read "
+                      f"**{kw.replace('**', '')}**: more work for each dollar, the bill itself rising as power given for the work it "
+                      "bought.")
+    else:
+        cloud_says = "In the cloud the work was not counted in the set that stands, so G is not read."
     L += [f"**What it reads today.** On the chip the three runs' G read **{w.replace('**', '')}**: the work for the bill has not "
-          "yet been shown to rise. In the cloud the work was not counted in the set that stands, so G is not read. The runs that "
-          "read it next are started or queued: the card fully loaded with the seven organisms, the eight-card machine, and the "
-          "cloud at the max with its work meter, each read by this equation as it lands.", ""]
+          f"yet been shown to rise. {cloud_says} Each later table is read by this equation as it lands, on its own engine.", ""]
     return L
 
 
@@ -275,22 +329,48 @@ def page(c: dict, k: dict, organisms_: list) -> str:
             L.append(f"| {i} | {name} | {a['seconds']:.1f} | {a['bill']:.4f} | {a['work']:,.0f} | {a['per_dollar']:,.1f} |")
     b = k["bill"]; m = k["machine_hours"]
     bill_rel = b["diff"] / b["native"]
-    L += ["", f"## The cloud: C against D (Kubernetes on Azure's AKS, {k['engine']}, one set of {k['repetitions']} paired repetitions)", "",
-          f"From `{k['page']}`, the newest cloud set with a metered bill. The engine that stands has not yet run in the cloud: its "
-          "set starts when Azure's current long set ends, and this row is then read again on it.", "",
-          "| Gauge | C, native | D, Omni-Compass on native | The change | 95% interval | Beyond the noise |", "|---|---:|---:|---|---|---|",
-          f"| bill at list price ($ a window) | {b['native']:.5f} | {b['omni']:.5f} | {pct(abs(bill_rel))} ({run_word(b, SPENT)}"
-          f"{'' if b['significant'] else ', inside the noise'}) | "
-          f"{b['ci95'][0]:+.5f} to {b['ci95'][1]:+.5f} | {'yes' if b['significant'] else 'no'} |",
-          f"| machines billed (machine-hours a window) | {m['native']:.4f} | {m['omni']:.4f} | {pct(abs(m['diff'] / m['native']))} "
-          f"({run_word(m, SPENT)}{'' if m['significant'] else ', inside the noise'}) | {m['ci95'][0]:+.4f} to {m['ci95'][1]:+.4f} | "
-          f"{'yes' if m['significant'] else 'no'} |"]
-    if k["work_key"]:
-        n, o = k["work"][k["work_key"]]
-        L.append(f"| {k['work_key']} | {n:,.1f} | {o:,.1f} | {pct((o - n) / n)} | | |")
+    if k.get("form") == "three runs":
+        L += ["", f"## The cloud: C against D (Kubernetes on Azure's AKS, {k['engine']}, three runs)", "",
+              f"From `{k['page']}` (runs " + ", ".join(f"{r['tag']} {r['run']}, {r['paired_repetitions']} paired repetitions" for r in k["runs"])
+              + "): **C, native** (Kubernetes on Azure's machines with Azure's own autoscaler) against **D, Omni-Compass on native** "
+              "(the same with Omni-Compass on top): the cloud at the max with its work meter, the work counted as the answers inside the response line, the bill "
+              "every machine billed at Azure's list price. Each run's change is in percent of native's, its word by what the gauge "
+              "is for; the three runs read by the one key.", "",
+              "| Gauge | Three runs | Run 1 | Run 2 | Run 3 |", "|---|---|---|---|---|"]
+        for g, r in k["rows"].items():
+            cells = []
+            for x in r["runs"]:
+                w_ = run_word(x, r["aim"]) if r.get("aim") else None
+                rel = (x["diff"] / x["native"]) if x.get("native") else 0.0
+                cells.append(f"{w_ or 'shown'}, {by_word(100 * rel, w_, digits=1) if w_ and w_ != 'STEADY' else pct(abs(rel))}")
+            reading = r["reading"] if r["reading"].startswith("**") else f"**{r['reading']}**"
+            L.append(f"| {g} | {reading} | " + " | ".join(cells) + " |")
+        pd = k["rows"].get(METER_KEYS["per_dollar"], {}).get("reading", "").replace("**", "")
+        bw = k["rows"].get(METER_KEYS["bill"], {}).get("reading", "").replace("**", "")
+        ww = k["rows"].get(METER_KEYS["work"], {}).get("reading", "").replace("**", "")
+        cloud_line = (f"- **The cloud** ({k['engine']}, Azure, three runs): the work done inside the response line {ww}; the bill {bw}; "
+                      f"the work per dollar {pd}.")
     else:
-        L += ["", "This set counted no work done: the cloud's work meter came with the cloud sets after 31 October, so its work "
-              "per dollar is not read here; the set on the engine that stands reads it."]
+        cloud_line = (f"- **The cloud:** the bill {pct(abs(bill_rel))} {'higher' if bill_rel > 0 else 'lower'} with Omni-Compass on native, "
+                      "inside the noise; the work done was not counted in that set, so the work per dollar waits for the set on the engine "
+                      "that stands.")
+    if k.get("form") != "three runs":
+        L += ["", f"## The cloud: C against D (Kubernetes on Azure's AKS, {k['engine']}, one set of {k['repetitions']} paired repetitions)", "",
+              f"From `{k['page']}`, the newest cloud set with a metered bill. The engine that stands has not yet run in the cloud: its "
+              "set starts when Azure's current long set ends, and this row is then read again on it.", "",
+              "| Gauge | C, native | D, Omni-Compass on native | The change | 95% interval | Beyond the noise |", "|---|---:|---:|---|---|---|",
+              f"| bill at list price ($ a window) | {b['native']:.5f} | {b['omni']:.5f} | {pct(abs(bill_rel))} ({run_word(b, SPENT)}"
+              f"{'' if b['significant'] else ', inside the noise'}) | "
+              f"{b['ci95'][0]:+.5f} to {b['ci95'][1]:+.5f} | {'yes' if b['significant'] else 'no'} |",
+              f"| machines billed (machine-hours a window) | {m['native']:.4f} | {m['omni']:.4f} | {pct(abs(m['diff'] / m['native']))} "
+              f"({run_word(m, SPENT)}{'' if m['significant'] else ', inside the noise'}) | {m['ci95'][0]:+.4f} to {m['ci95'][1]:+.4f} | "
+              f"{'yes' if m['significant'] else 'no'} |"]
+        if k["work_key"]:
+            n, o = k["work"][k["work_key"]]
+            L.append(f"| {k['work_key']} | {n:,.1f} | {o:,.1f} | {pct((o - n) / n)} | | |")
+        else:
+            L += ["", "This set counted no work done: the cloud's work meter came with the cloud sets after 31 October, so its work "
+                  "per dollar is not read here; the set on the engine that stands reads it."]
     names = {"bill": "bill ($, the rental for the arm's window)", "work": "work done (requests served)",
              "per_dollar": "work per dollar (requests served per $)", "energy_per": "energy per served request (J)"}
 
@@ -321,9 +401,7 @@ def page(c: dict, k: dict, organisms_: list) -> str:
           f"- **The chip:** the bill {chip_word('bill')} (the same rented window in both arms); the work done inside it "
           f"{chip_word('work')}; the work per dollar {chip_word('per_dollar')}; the energy for each request served "
           f"{chip_word('energy_per')}.",
-          f"- **The cloud:** the bill {pct(abs(bill_rel))} {'higher' if bill_rel > 0 else 'lower'} with Omni-Compass on native, "
-          "inside the noise; the work done was not counted in that set, so the work per dollar waits for the set on the engine "
-          "that stands.", "", OWN_RUNS, ""]
+          cloud_line, "", OWN_RUNS, ""]
     return "\n".join(L)
 
 

@@ -203,8 +203,11 @@ def main():
     c.step()
     assert c._live_ceiling(json.loads(st.read_text())["hpas"][0]) == (4000 - 1000) // 200 - 1 and cap(st) == 14, cap(st)
     t, st, c = capped(None, web(alloc="2", workers=2, other_m=1000, room=2))   # the autoscaler may add 2 more: 35, one under: 34
-    assert cap(st) == 18, f"read live with the autoscaler's room: cap {cap(st)}, expected the 18 asked for"
-    assert c._live_ceiling(json.loads(st.read_text())["hpas"][0]) == (8000 - 1000) // 200 - 1
+    # omni-v27, the place-before-asking rule: the ceiling still reads the autoscaler's room (34), but the cap is raised only to
+    # the pods the machines in service can take now, (4000 - 1000) // 200 - 1 = 14, never the 18 asked for on machines to come
+    assert cap(st) == 14, f"placed before asked: cap {cap(st)}, expected the 14 the machines in service hold"
+    h0 = json.loads(st.read_text())["hpas"][0]
+    assert c._live_ceiling(h0) == (8000 - 1000) // 200 - 1 and c._live_ceiling(h0, in_service=True) == (4000 - 1000) // 200 - 1
     assert c._max_nodes({"pool": 2, "nodes": 3}) == 4, "the machine lever's top: 2 ready workers and 2 the autoscaler may add"
     print("replica room read live: no top until the pool refuses one (then 119), 14 of 15 (one pod under), kind's one host "
           "counted once, the autoscaler's room counted, the control plane never")

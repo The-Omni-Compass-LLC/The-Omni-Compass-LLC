@@ -61,6 +61,10 @@ TWINS = {
         "python": ["omni_orchestrator/brain.py", "omni_orchestrator/scheduler.py"],
         "cpp": ["cpp/src/orchestrator_brain.cpp", "cpp/include/omnicompass/orchestrator_brain.hpp"],
         "proof": "tests/test_cpp_orchestrator_brain_parity.py"},
+    "the scale-up's look-ahead and the stand-ins (omni-v27: the rise read three beats ahead, never nearer than a machine's "
+    "delivery; the stand-ins sized past the free room and the parked machines, never past the cloud's room)": {
+        "python": ["omni_controller/controller.py"], "cpp": ["cpp/src/lookahead.cpp", "cpp/include/omnicompass/lookahead.hpp"],
+        "proof": "tests/test_cpp_lookahead_parity.py"},
     "the engine's seeded runs (the Python's 500 from the jump generator, its draws the input, every twin above the mechanism)": {
         "python": ["tools/engine_runs.py"], "cpp": ["cpp/tools/engine_runs.cpp"],
         "proof": "tests/test_cpp_engine_runs_parity.py"},
@@ -71,7 +75,8 @@ TWINS = {
 PYTHON_ONLY = {
     "omni_controller/gpu_governor.py (device I/O)": "reading nvidia-smi and writing power limits; its decision rules are twinned above",
     "omni_controller/muscles.py": "Kubernetes and hardware muscles (convey, rightsize, coldstart, batch, contain, cooling, CPU/GPU connectors)",
-    "omni_controller/controller.py": "Kubernetes controller (HPA target, pod reflex, machines, strict replicas)",
+    "omni_controller/controller.py": "Kubernetes controller (HPA target, pod reflex, machines, strict replicas, the replica room); "
+                                     "its look-ahead and stand-in arithmetic are twinned above",
     "hardware/node_exchange.py": "CPU + GPU on one power budget (modelled harness; the law itself is twinned above)",
     "realms/compass_arm_v5.py": "the max, the default brain of every organism (max_apply, max_body_step, the Bone, the twins, the "
                                 "heat debt); its tune-down runs the compass law, twinned above",
@@ -116,6 +121,8 @@ def prove():
     for seed in range(200):
         lines = test_cpp_immune_parity.script(seed)
         assert test_cpp_immune_parity.py_answers(lines) == test_cpp_immune_parity.cpp_answers(b / "oc_immune", lines), seed
+    from tests import test_cpp_lookahead_parity
+    test_cpp_lookahead_parity.main(str(b / "oc_lookahead"), 300)
     test_cpp_engine_runs_parity.main(str(b / "oc_engine_runs"), 100)
     from tests import test_cpp_core_runs_parity
     test_cpp_core_runs_parity.main(str(b / "oc_core_runs"), 100)

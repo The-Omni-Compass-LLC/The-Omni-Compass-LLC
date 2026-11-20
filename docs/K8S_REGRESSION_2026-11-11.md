@@ -8,7 +8,7 @@ Written by `tools/k8s_regression.py` from the two campaigns' own three-run table
 
 - **omni-v21**: the real-Kubernetes category of the Omni index reads GAIN, up 28.0351%, from its nine three-run tables (the index of 31 October, commit `3ad522226b`). It is omni-v21's historical reading and is labelled so.
 - **omni-v25**: the same category reads GAIN, up 20.4633%, from its nine three-run tables (`results/OMNI_INDEX.json` on main until 11 November). It is omni-v25's reading and is labelled so.
-- **omni-v26**, the engine that stands: the same category reads GAIN, up 22.2286%, from its own nine three-run tables (`results/live/V26_*.json`, tabled on 11 November; `results/OMNI_INDEX.json` on main). It is the latest measured reading of the category; omni-v26 changed one rule from omni-v25 (`docs/OMNI_V26.md`) and kept the 10 s beat on site.
+- **omni-v26**, the engine that stood on 11 November: the same category reads GAIN, up 22.2286%, from its own nine three-run tables (`results/live/V26_*.json`, tabled on 11 November; `results/OMNI_INDEX.json` on main). It is the latest measured reading of the category; omni-v26 changed one rule from omni-v25 (`docs/OMNI_V26.md`) and kept the 10 s beat on site.
 - The two differ by 7.5718 points. Neither number is moved into the other's record: the index file on main keeps each engine's own numbers, and no omni-v21 table is read as omni-v25's. Every number on this page is each engine's own; setting them side by side is a diagnosis of what to test, never a result.
 
 ## 2. Test by test: native held, the Omni-Compass arm moved

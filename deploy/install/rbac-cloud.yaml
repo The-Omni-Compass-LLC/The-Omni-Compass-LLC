@@ -10,8 +10,10 @@
 # the service's own namespace, by name: move its autoscaler's target, its floor and its cap inside the replica room and record
 # the operator's own on the object, get, patch and update its HorizontalPodAutoscaler; record its pods' original processor
 # limit on its Deployment, get, patch and update the Deployment; give its running pods the processor their machine can spare,
-# in place, and hand it back, get and patch pods/resize. Nothing else: no delete, no eviction, no create, no cloud credential
-# (the cloud's own autoscaler, with the provider's identity, alone adds machines). Set <namespace> and <deployment> (the
+# in place, and hand it back, get and patch pods/resize. In the default namespace, the stand-ins alone (omni-v27,
+# deploy/kind/omni-headroom.yaml, applied with this file): read their one deployment and set its count, so the cloud's own
+# autoscaler makes a machine ahead of the demand and no real pod waits for it. Nothing else: no delete, no eviction, no create,
+# no cloud credential (the cloud's own autoscaler, with the provider's identity, alone adds machines). Set <namespace> and <deployment> (the
 # service, as --sensed and --cap-deployments name it in omni-compass-cloud.yaml) before applying; one Role and RoleBinding
 # per governed service.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -51,4 +53,19 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata: {name: omni-compass-cloud-service, namespace: "<namespace>"}
 roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: omni-compass-cloud-service}
+subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: omni-compass-cloud-standins, namespace: default}
+rules:
+  - apiGroups: [apps]
+    resources: [deployments, deployments/scale]
+    resourceNames: ["omni-headroom"]
+    verbs: [get, patch, update]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: omni-compass-cloud-standins, namespace: default}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: omni-compass-cloud-standins}
 subjects: [{kind: ServiceAccount, name: omni-compass, namespace: omni-compass}]

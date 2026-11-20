@@ -24,7 +24,7 @@ class TwoBills(unittest.TestCase):
         self.assertEqual(tb.main(["--check"]), 0)
 
     def test_four_arms_named_and_the_runs_never_lettered(self):
-        for arm in ("A, native", "B, Omni-Compass on native", "C, native", "D, Omni-Compass on native"):
+        for arm in ("A, native", "B, Omni-Compass on native", "C, native", "D, Omni-Compass on native"):   # in the three-run form too
             self.assertIn(arm, self.text)
         self.assertIn("| Run 1 | Run 2 | Run 3 |", self.text)
 
@@ -37,7 +37,7 @@ class TwoBills(unittest.TestCase):
 
     def test_each_place_names_its_engine(self):
         self.assertIn("omni-v23", self.text)
-        self.assertIn(f"Kubernetes on Azure's AKS, {tb.CLOUD_ENGINE}", self.text)
+        self.assertIn(f"Kubernetes on Azure's AKS, {self.cloud['engine']}", self.text)   # the newest Azure table's own engine
 
     def test_a_place_that_counted_no_work_reads_no_work_per_dollar(self):
         if self.cloud["work_key"] is None:

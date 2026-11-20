@@ -32,10 +32,12 @@ class KindRigRbac(unittest.TestCase):
     def test_the_named_workloads_scale_is_granted_and_nothing_is_deleted(self):
         app = rules("deploy/kind/rbac-omni.yaml", "Role", "omni-compass-app")
         scale = [r for r in app if "deployments/scale" in r.get("resources", [])]
-        self.assertEqual(len(scale), 1, "the pod muscle of its own needs the scale subresource, once, by name")
-        self.assertEqual(scale[0]["apiGroups"], ["apps"])
-        self.assertEqual(scale[0]["resourceNames"], ["php-apache"])
-        self.assertEqual(sorted(scale[0]["verbs"]), ["get", "patch", "update"])
+        # the pod muscle of its own needs the scale subresource of the workload, once, by name; omni-v27's stand-ins the scale of
+        # their own deployment, once, by name; nothing else
+        self.assertEqual(sorted(tuple(r["resourceNames"]) for r in scale), [("omni-headroom",), ("php-apache",)])
+        for r in scale:
+            self.assertEqual(r["apiGroups"], ["apps"])
+            self.assertEqual(sorted(r["verbs"]), ["get", "patch", "update"])
         own = rules("deploy/rbac-own-pods.yaml", "Role", "omni-compass-own-pods")
         self.assertEqual([r["resources"] for r in own], [["deployments/scale"]])
         self.assertEqual(own[0]["resourceNames"], ["php-apache"])

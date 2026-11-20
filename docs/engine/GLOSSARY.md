@@ -2,7 +2,7 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-This is the back of the live benchmark engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`): every term a reader of the page meets, the 10 organisms it shows, its 2 arms and their 20 combinations, every one of the catalog's 1,107 muscles bulked by its realms, and an index of where each term stands on the page. Every definition is drawn from the file it names, and the file still carries the words quoted from it; nothing here is typed twice. It is written by `tools/live_glossary.py`, which writes the same content as `docs/engine/glossary.json` for the page. Engine: omni-v26 (digest 75d3c22eed4473b9).
+This is the back of the live benchmark engine page (`docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`): every term a reader of the page meets, the 10 organisms it shows, its 2 arms and their 20 combinations, every one of the catalog's 1,107 muscles bulked by its realms, and an index of where each term stands on the page. Every definition is drawn from the file it names, and the file still carries the words quoted from it; nothing here is typed twice. It is written by `tools/live_glossary.py`, which writes the same content as `docs/engine/glossary.json` for the page. Engine: omni-v27 (digest 34548e45437a05bd).
 
 The organisms and the muscles' plants are our own models (evidence class S) unless a line says otherwise; a model is a statement about the model, and nothing here is a result. See `DISCLOSURES.md`.
 
@@ -1611,7 +1611,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | automatic optimizer | term | 3i (#s-dash) |
 | Auxiliary Input | term | 0 (#s-wall); B (#s-guide) |
 | AWAITING | term | B (#s-guide) |
-| the band | term | 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 5d (#s-whole); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem) |
+| the band | term | 3a (#s-engines); 3b (#s-feed); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 5d (#s-whole); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | bare metal | term | 2b (#s-answer); 3a (#s-engines); 3d (#s-dial); 4a (#s-ops); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | the benefit board | term | 2c (#s-board); B (#s-guide); C (#s-problem) |
 | the bill of a route | term | 2b (#s-answer); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
@@ -1622,7 +1622,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the centre | term | 3a (#s-engines); 5f (#s-lab); 5h (#s-math); B (#s-guide) |
 | the chip | term | 2b (#s-answer); 4d (#s-cloud); 4f (#s-stacks); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the climb | term | 5e (#s-fleet); 5h (#s-math); B (#s-guide) |
-| the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read) |
+| the cloud as the wire | term | 2b (#s-answer); 4a (#s-ops); 4d (#s-cloud); 5d (#s-whole); 5h (#s-math); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | collector | term | 3i (#s-dash) |
 | Commands | term | 1 (#s-health); 5h (#s-math); B (#s-guide); C (#s-problem) |
 | the compass | term | 1 (#s-health); 3a (#s-engines); 3e (#s-decision); 3f (#s-plane); 4a (#s-ops); 4b (#s-runs); 4c (#s-live); 5a (#s-proof); 5b (#s-cpp); 5f (#s-lab); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
@@ -1638,7 +1638,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the dashboards | term | 3i (#s-dash); B (#s-guide) |
 | the dial | term | 3a (#s-engines); 3b (#s-feed); 3c (#s-desk); 3d (#s-dial); 3e (#s-decision); 4a (#s-ops); B (#s-guide); C (#s-problem); G (#s-disclose) |
 | Distribution / Specialized | organism | C (#s-problem) |
-| do no harm | term | 3c (#s-desk); C (#s-problem); G (#s-disclose) |
+| do no harm | term | 2b (#s-answer); 3c (#s-desk); C (#s-problem); G (#s-disclose) |
 | the edge | term | 2c (#s-board); 3a (#s-engines); 5h (#s-math) |
 | Energy / Facility / Industrial | organism | 3c (#s-desk); C (#s-problem) |
 | the engine that stands | term | 2b (#s-answer); 3a (#s-engines); 3b (#s-feed); 4a (#s-ops); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5a (#s-proof); 5c (#s-scn); 5d (#s-whole); 5e (#s-fleet); 5h (#s-math); B (#s-guide); C (#s-problem); G (#s-disclose) |
@@ -1647,7 +1647,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | the factory tune | term | 1 (#s-health); 3c (#s-desk); 4f (#s-stacks); B (#s-guide); G (#s-disclose) |
 | fail up | term | 5h (#s-math); B (#s-guide) |
 | family | term | 2c (#s-board); 3b (#s-feed); 5e (#s-fleet); B (#s-guide) |
-| the fast checks | term | 3d (#s-dial); 4a (#s-ops); C (#s-problem) |
+| the fast checks | term | 3d (#s-dial); 4a (#s-ops); C (#s-problem); G (#s-disclose) |
 | the fingerprint and its digest | term | 1 (#s-health); 3b (#s-feed); 5a (#s-proof); 5b (#s-cpp); 5h (#s-math); B (#s-guide); G (#s-disclose) |
 | the four arms | term | 2b (#s-answer); C (#s-problem) |
 | the four pieces | term | B (#s-guide) |
@@ -1730,7 +1730,7 @@ Every term, organism and arm with the sections of the page that print it, by the
 | supervisory governor | term | 3a (#s-engines); 4a (#s-ops); 4b (#s-runs); 4e (#s-orch); 4f (#s-stacks); 5c (#s-scn); 5e (#s-fleet); 5g (#s-master); 5h (#s-math); 5j (#s-self); B (#s-guide); G (#s-disclose) |
 | tanh | term | 5h (#s-math) |
 | template | term | 5e (#s-fleet) |
-| three runs A, B and C | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5c (#s-scn); 5d (#s-whole); 5h (#s-math); 5i (#s-fail); B (#s-guide); C (#s-problem); D (#s-read) |
+| three runs A, B and C | term | 2a (#s-bottom); 2b (#s-answer); 2c (#s-board); 3d (#s-dial); 3e (#s-decision); 3f (#s-plane); 3i (#s-dash); 4b (#s-runs); 4c (#s-live); 4d (#s-cloud); 4e (#s-orch); 4f (#s-stacks); 4g (#s-github); 5c (#s-scn); 5d (#s-whole); 5h (#s-math); 5i (#s-fail); B (#s-guide); C (#s-problem); D (#s-read); G (#s-disclose) |
 | through the cloud | term | 2b (#s-answer); 5d (#s-whole); 5h (#s-math); B (#s-guide) |
 | the tower | term | 1 (#s-health); 2b (#s-answer); B (#s-guide) |
 | the traffic signal | term | 0 (#s-wall); B (#s-guide); G (#s-disclose) |

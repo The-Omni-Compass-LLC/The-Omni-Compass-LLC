@@ -53,8 +53,9 @@ while :; do
     } >> "$OUT.errors"
   fi
   alloc=$(echo "$nodes" | jq -r '.items[].status.allocatable.cpu' | to_m | awk '{s+=$1} END {printf "%.0f", s}')
-  req=$(echo "$pods" | jq -r '.items[] | select(.status.phase=="Running") | .spec.containers[].resources.requests.cpu // "0"' | to_m | awk '{s+=$1} END {printf "%.0f", s}')
-  pending=$(echo "$pods" | jq '[.items[] | select(.status.phase=="Pending")] | length')
+  # a stand-in (omni-v27, app=omni-headroom: the lowest priority, any real pod displaces it) is neither work nor a waiting pod
+  req=$(echo "$pods" | jq -r '.items[] | select(.status.phase=="Running") | select(.metadata.labels.app != "omni-headroom") | .spec.containers[].resources.requests.cpu // "0"' | to_m | awk '{s+=$1} END {printf "%.0f", s}')
+  pending=$(echo "$pods" | jq '[.items[] | select(.status.phase=="Pending") | select(.metadata.labels.app != "omni-headroom")] | length')
   used=$( { kubectl top nodes --no-headers --request-timeout=20s 2>>"$OUT.errors" || true; } | awk -v names="$names" 'BEGIN{n=split(names,a," "); for(i=1;i<=n;i++) on[a[i]]=1} ($1 in on){print $2}' | to_m | awk '{s+=$1} END {printf "%.0f", s}')
   hpa=$(kubectl get hpa -A -o json --request-timeout=20s 2>>"$OUT.errors") || hpa='{"items":[]}' 
   hc=$(echo "$hpa" | jq '.items | length'); hcur=$(echo "$hpa" | jq '[.items[].status.currentReplicas // 0] | add // 0'); hdes=$(echo "$hpa" | jq '[.items[].status.desiredReplicas // 0] | add // 0')

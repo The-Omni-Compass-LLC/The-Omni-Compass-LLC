@@ -38,7 +38,7 @@ class Kube:
 
     def write(self, args, why):
         self.writes.append(list(args))
-        if args[0] == "scale":
+        if args[0] == "scale" and args[2] != "omni-headroom":   # the workload's own scale; the stand-ins' (omni-v27) are their own
             self.replicas = int(args[-1].split("=")[1])
         elif args[0] == "annotate":
             kv = args[-1]

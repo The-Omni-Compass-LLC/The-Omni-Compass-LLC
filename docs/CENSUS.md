@@ -79,7 +79,7 @@ The three-run tables' records name 718 runs; 718 have their folder on `raw`. Non
 
 ## 5. The engine that stands
 
-On omni-v26: 6 carries, 82 on the engine that stands, 30 runs again (`results/CARRY.md`: a benchmark stands when its three runs on this engine are tabled, carries when no file it runs changed since its last engine, and runs again otherwise; the conductor releases the reruns, A of every benchmark, then B, then C).
+On omni-v27: 18 carries, 0 on the engine that stands, 100 runs again (`results/CARRY.md`: a benchmark stands when its three runs on this engine are tabled, carries when no file it runs changed since its last engine, and runs again otherwise; the conductor releases the reruns, A of every benchmark, then B, then C).
 
 ## 6. The catalog
 
@@ -87,7 +87,7 @@ On omni-v26: 6 carries, 82 on the engine that stands, 30 runs again (`results/CA
 
 ## 7. The website feed
 
-`results/SITE_NUMBERS.json` holds 11 numbers for the site and 9 kept off it (each with the reason), every one with the record it is read from; `results/WEBSITE_SURFACE_CONTRACT.json` names which page may show which, and `verify.py` fails a push where either differs from its records.
+`results/SITE_NUMBERS.json` holds 12 numbers for the site and 9 kept off it (each with the reason), every one with the record it is read from; `results/WEBSITE_SURFACE_CONTRACT.json` names which page may show which, and `verify.py` fails a push where either differs from its records.
 
 ---
 

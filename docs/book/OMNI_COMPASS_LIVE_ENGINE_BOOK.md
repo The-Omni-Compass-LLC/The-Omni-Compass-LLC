@@ -174,7 +174,7 @@ played back.
 **What this manual covers.** Every section of the page in the page's own order; every gauge, with its side, its aim and its
 word; every control, with its backend, its effects and its limits; the factory profile against the active one; the two tickers
 that show the mechanism of action; the trace from any tile to the record it came from; and what to do when a tile reads LOSS.
-It covers the page as built on omni-v26; a later engine renames itself on the page's title block and this book is realigned in
+It covers the page as built on omni-v27; a later engine renames itself on the page's title block and this book is realigned in
 the same push.
 
 **What this manual does not cover.** How the engine is built, its equations beyond the ones the page itself prints, the
@@ -1126,7 +1126,7 @@ introduction stands there under the section's number and title, so the sections 
 Native is orange everywhere and Omni-Compass blue, and every monitor, section and part carries its signal and its word: red
 REDLINING, yellow STEADY, green GAINING.
 
-### 3.2 The sections, as built on omni-v26
+### 3.2 The sections, as built on omni-v27
 
 Appendix A lists every section with its anchor and the chapter of this book that reads it. In the page's order:
 
@@ -2919,7 +2919,7 @@ under the same rule, the engine's setting for the rest (`realms/muscle_cards_v5.
 
 In the words of `docs/FACTORY_PROFILE.md`, the page is the **live tuning bench**: the interface that operates the engine's
 controls and displays their effects through the connected backend. The **factory profile** is the complete, versioned set of
-Omni-Compass default settings shipped together; on the engine that stands it is omni-v26's (`OMNI_V26.json`): the governor's
+Omni-Compass default settings shipped together; on the engine that stands it is omni-v27's (`OMNI_V27.json`): the governor's
 full decision every 10 s on site and every 60 s through a cloud, read from the cluster's own nodes at its start, the fast checks
 every 5 s, every muscle on the card found for it and on the engine's own setting
 otherwise. The **active profile** is the settings actually governing the current run. An adjustment on the bench produces an
@@ -3043,7 +3043,7 @@ the hold doubling for each hand-back in a row up to 160; it takes the muscle bac
 than native's by 5%. Where native is not stronger it stays, because redlining less than native is still a benefit against native.
 The red is still wired on its side, so that if a muscle does redline there (a fault, a bug), it is seen at once. That is the kill
 switch's purpose: when something redlines that Omni-Compass itself cannot stop, one press hands every muscle back to native in the
-same instant. The engine that stands, omni-v26, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
+same instant. The engine that stands, omni-v27, carries this rule in its immune system, knob by knob (`omnicompass/immune.py`, its
 C++ twin `cpp/src/immune.cpp`, proven alike on 200 seeded scripts, and the nervous system's `native_hold`; on Kubernetes each
 service's autoscaler target, native's twin the operator's own target), beside the SLO reflex and the pod reflex of the Kubernetes
 governor (`omni_controller/controller.py`); the page's live model (class S) applies the same rule, with the engine's own numbers, to
@@ -3251,7 +3251,7 @@ Every number on the wall can be walked back to the file it came from.
 ### 43.2 The engine's name and the profile
 
 Every table and every monitor names the engine it ran on; the page's title block names the engine
-the page stands on (omni-v26). A table on an older engine stands only until its runs on the engine that stands land, and the
+the page stands on (omni-v27). A table on an older engine stands only until its runs on the engine that stands land, and the
 board says which it is. Nothing is read across engines. Every result the page plays ran the factory profile of the engine its
 table names; the control panel names the profile governing the live model now, with its fingerprint (section 2.7), and a
 candidate or custom profile there is never a result of record.
@@ -3985,7 +3985,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-15 00:54 UTC on omni-v26 (digest 75d3c22eed4473b9) from commit 657982bd4c99.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-20 01:43 UTC on omni-v26 (digest 75d3c22eed4473b9) from commit 7aacf7da9f39.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.
@@ -4049,8 +4049,6 @@ Each row carries one word, its reading by the key: GAIN, Omni-Compass on native 
 **The page, in its own words.**
 
 **Four Arms, A, B, C and D: the Bill and the Work Done Inside It**
-
-**Newest Real Runs on omni-v26**
 
 **Bill by Route**
 
@@ -4630,7 +4628,7 @@ Every stage from the GitHub Actions run to this page: the run, the raw files arc
 - **Moves.** The stage being read lights in turn and the data moves between the stages.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Speed: 1×, 4×, 16× or 60× of the engine's clock; Gauge: which gauge of the run is shown.
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.2 Monitor 14: Governor Heartbeat and Lease
 
@@ -4642,7 +4640,7 @@ Native's own 15 s clock above, every beat of the governor's decision loop in the
 - **Moves.** The chosen repetition replayed decision by decision; native's own 15 s clock beats above.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Speed: 1×, 4×, 16× or 60× of the engine's clock; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.3 Monitor 36: Heartbeat Sweep · Class S
 
@@ -4654,7 +4652,7 @@ The governor's beat as a knob: what a decision every 5 to 120 s does against nat
 - **Moves.** A cursor reads the beats in turn and names the row it holds; every button redraws the chart from the record.
 - **Knobs.** Beat: the governor's full read of the state and its decision: every 5, 10, 15, 20, 30, 60, 75, 90 or 120 s in the heartbeat sweep's record; on a real governor its --interval (the factory's beat is the governor's own default: 15 s on omni-v16, 60 s from omni-v17 to omni-v23, and from omni-v24 the factory beat for its place, 10 s on site and 60 s through a cloud); Scenario: the software end carried to bare metal, or to the cloud; Engine: which engine's record the monitor reads: the engine that stands or the one before it; Baseline: what each reading is set against: native, or the same engine at another setting; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.4 Monitor 15: Response Time Candlesticks
 
@@ -4666,7 +4664,7 @@ The response time of the chosen run as candles, one a half minute, native above 
 - **Moves.** The chosen run replayed half minute by half minute.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.5 Monitor 16: Latency Heatmap
 
@@ -4678,7 +4676,7 @@ The responses of each half minute counted in eight response-time buckets, native
 - **Moves.** The chosen run replayed half minute by half minute.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.6 Monitor 17: Throughput per 30 s Bin
 
@@ -4690,7 +4688,7 @@ The requests answered each half minute, native and Omni-Compass side by side, th
 - **Moves.** The chosen run replayed half minute by half minute.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.20.7 Monitor 18: Paired Repetitions
 
@@ -4702,7 +4700,7 @@ Each repetition's reading in the chosen gauge with its interval.
 - **Moves.** Each repetition's reading filled in as the run replays.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Gauge: which gauge of the run is shown; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 ### L.21 Repetition Telemetry
 
@@ -4732,7 +4730,7 @@ One repetition half minute by half minute from its archived capture: the 95th pe
 - **Moves.** The archived capture replayed half minute by half minute; a ring opens at each head with its newest value.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Repetition: which repetition of the run is replayed; Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 ### L.22 Controller Decision Trace
 
@@ -4768,7 +4766,7 @@ The controller every Kubernetes and cloud set runs, replayed decision by decisio
 - **Moves.** The shipped controller's record played decision by decision on the live benchmark engine's clock; a ring opens at each head with its newest value.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.22.2 Monitor 22: Omni-Compass Cluster Trace · Class S
 
@@ -4780,7 +4778,7 @@ The same, Omni-Compass's cluster: every write, every trial, every hold.
 - **Moves.** The shipped controller's record played decision by decision on the live benchmark engine's clock; a ring opens at each head with its newest value.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 #### L.22.3 Monitor 23: Machines and Response Time · Class S
 
@@ -4792,7 +4790,7 @@ The shipped controller's machines (in service, booting and parked) and the respo
 - **Moves.** The shipped controller's record played decision by decision on the live benchmark engine's clock; a ring opens at each head with its newest value.
 - **Knobs.** Run: A, B or C (or the archived run) the monitor plays; Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** A Kubernetes run played back from its own archived files, or the shipped controller replayed decision by decision from its own audit: the machines, the replicas, the response line, native beside Omni-Compass.
-- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v26; an older engine's run is its own record.
+- **What to do with it.** Pick the run (A, B or C) and the gauge; read the paired difference in each repetition before the table's word. A run of the engine that stands carries omni-v27; an older engine's run is its own record.
 
 ### L.23 Cloud Providers
 
@@ -4976,7 +4974,7 @@ The NVIDIA A100 (SXM4, 40 GB) run of 24 October on Lambda (omni-v18's card gover
 - **Moves.** The card's own meter replayed at ten times the run's seconds.
 - **Knobs.** Repetition: which repetition of the run is replayed; Arm: which arm stands on the right: Omni-Compass governing, or watching only; Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** The card's own meter, second by second: its draw, the power limit Omni-Compass wrote (dashed), its clock, the 95th percentile against the response line, its temperature; every write of the governor a red tick.
-- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v26 run lands.
+- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v27 run lands.
 
 #### L.25.2 Monitor 44: CPU Host Model · Class S
 
@@ -5000,7 +4998,7 @@ Eight card slots for scripts/gpu_8card.sh: each native lane the repository's one
 - **Moves.** The one-card model's native lanes replayed second by second; the Omni-Compass lanes wait for the 8-card run.
 - **Knobs.** Speed: 1×, 4×, 16× or 60× of the engine's clock; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** The card's own meter, second by second: its draw, the power limit Omni-Compass wrote (dashed), its clock, the 95th percentile against the response line, its temperature; every write of the governor a red tick.
-- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v26 run lands.
+- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v27 run lands.
 
 #### L.25.4 Monitor 46: Stack Models · Class S
 
@@ -5012,7 +5010,7 @@ The repository's own models of one GPU card and one Linux host, native beside Om
 - **Moves.** The chip's and the host's models replayed second by second; a ring opens at each head with its newest value.
 - **Knobs.** Stack: the GPU card, the Linux host, Kubernetes or the cloud; Run: A, B or C (or the archived run) the monitor plays; Kill Switch: Omni-Compass ON (green) or engaged (red): every setting handed back to native at once; every Omni-Compass side follows native (white).
 - **How to read it.** The card's own meter, second by second: its draw, the power limit Omni-Compass wrote (dashed), its clock, the 95th percentile against the response line, its temperature; every write of the governor a red tick.
-- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v26 run lands.
+- **What to do with it.** Power on a card is a resource: a fall is a cut, a rise power given; the response time is the judge. The one real run on the page is the replaced controller's record and is shown as such until its omni-v27 run lands.
 
 ### L.26 CI Pipeline
 
@@ -5053,6 +5051,8 @@ Every workflow run in progress or queued when the page was built, the Azure set'
 **Seeded Engine Runs and Replayed Scenarios**
 
 Three-Way Run Check. tools/engine_runs.py runs N runs from a base seed: run k's seed is base + k·0x9E3779B9 mod 2³² (the jump generator), its stream mulberry32 (this page's own generator, written in the Python bit for bit), through the engine that stands: 288 decisions of the brain's state equations integrated by the fourth-order Runge–Kutta step, 80 steps of the compass law and one give-back trial judged by the verdict. Each run's receipt is its final state, its pushes and grants, the law's mean and last force and the trial's answer; the digest is the SHA-256 of every receipt at six decimals. The Python writes every draw of every run, the injection, and the C++ harness (cpp/tools/engine_runs.cpp) reads it as its input, puts the mechanism on through the engine's C++ twins and writes every receipt: its digest must be the Python's. This page runs the same N with its own port of the engine (proven equal to the Python and the C++ to 1e-12 on every build by docs/engine/check_live_engine.py) as it opens and compares every receipt and the digest. GitHub does all three on every set it runs (.github/workflows/engine-runs.yml) and on every push (verify.py); run the Python again with another base and it writes another set, and the three digests must be one. Every set recorded, with its digests, its engine and the run on GitHub that made it, is in the jump generator's ledger (`results/RUNS_LEDGER.md`, written from the records by tools/runs_ledger.py and held by verify.py); one command proves a set on your own machine and prints the three digests side by side (scripts/prove_runs.sh; in a container, deploy/Dockerfile.proof).
+
+Reports of the Newest 500-Run Set. On GitHub every set writes its own reports from its two records, for the engineer, the CTO and the boardroom, each as Word, PDF, text and Markdown, with the set's data as CSV and JSON (tools/run_reports.py, held by verify.py; the newest in results/run_reports/latest/): the engineer's Word · PDF · text; the CTO's Word · PDF · text; the boardroom's Word · PDF · text; the set's data every run (CSV) · its summary (JSON); all of them on GitHub. Evidence class S: the engine's own models, never a benchmark of real software or hardware.
 
 **Engine Core Monte Carlo**
 
@@ -5931,10 +5931,10 @@ DISCLOSURE: REAL RUNS, A REAL ENGINE, NOTHING HARDWIRED. Every run played back o
 - **Omni-Compass against native.** Azure Kubernetes Service, full control, the six-stage burst 1 4 1 6 1 9 at the tune-down (omni-v26, `results/live/V26_AKS_FULL_BURST.md`): time pods had no machine to take them, pod-minutes, A B C 2.133 → 40.31; raw +1789.3% (95%: +430.0% to +3148.7%); LOSS · 2.933 → 39.82; raw +1257.4% (95%: +215.0% to +2299.8%); LOSS · 2.794 → 44.82; raw +1504.0% (95%: +778.7% to +2229.3%); LOSS. Cause: 3. Clouds (`docs/RUN_LEDGER.md`). The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
 - **Omni-Compass against native.** Azure Kubernetes Service, full control, the six-stage burst 1 4 1 6 1 9 at the tune-down (omni-v26, `results/live/V26_AKS_FULL_BURST.md`): pod start wait, total (s), A B C 58.33 → 2501; raw +4186.9% (95%: +1609.4% to +6764.3%); LOSS · 38 → 2555; raw +6623.7% (95%: +1552.5% to +11694.8%); LOSS · 87 → 2667; raw +2965.1% (95%: +1875.4% to +4054.9%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
 - **Omni-Compass against native.** Azure Kubernetes Service, full control, the six-stage burst 1 4 1 6 1 9 at the tune-down (omni-v26, `results/live/V26_AKS_FULL_BURST.md`): pod start wait, mean (s), A B C 19.27 → 103.5; raw +437.0% (95%: +206.9% to +667.1%); LOSS · 7.6 → 95.33; raw +1154.4% (95%: +879.5% to +1429.2%); LOSS · 29.67 → 109.3; raw +268.5% (95%: −9.7% to +546.7%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
-- **Omni-Compass against native.** V26_AKS_WORK_METER (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pods with no machine to take them (unschedulable), A B C LOSS in all three of our runs. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
-- **Omni-Compass against native.** V26_AKS_WORK_METER (omni-v26, `results/live/V26_AKS_WORK_METER.md`): time pods had no machine to take them, pod-minutes, A B C LOSS in all three of our runs. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
-- **Omni-Compass against native.** V26_AKS_WORK_METER (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pod start wait, total (s), A B C LOSS in all three of our runs. The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
-- **Omni-Compass against native.** V26_AKS_WORK_METER (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pod start wait, mean (s), A B C LOSS by the mean of our three runs, beyond the noise in 0 of 3. The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
+- **Omni-Compass against native.** Azure (AKS, Standard_D2s_v4, eastus) (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pods with no machine to take them (unschedulable), A B C 2.8 → 12.2; raw +335.7% (95%: +209.3% to +462.1%); LOSS · 2.8 → 11.5; raw +310.7% (95%: +181.5% to +439.9%); LOSS · 2.9 → 13.6; raw +369.0% (95%: +226.5% to +511.4%); LOSS. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
+- **Omni-Compass against native.** Azure (AKS, Standard_D2s_v4, eastus) (omni-v26, `results/live/V26_AKS_WORK_METER.md`): time pods had no machine to take them, pod-minutes, A B C 3.082 → 15.16; raw +391.9% (95%: +223.7% to +560.1%); LOSS · 3.155 → 13.13; raw +316.1% (95%: +179.8% to +452.4%); LOSS · 3.627 → 16.18; raw +346.0% (95%: +210.1% to +481.9%); LOSS. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.
+- **Omni-Compass against native.** Azure (AKS, Standard_D2s_v4, eastus) (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pod start wait, total (s), A B C 233 → 1058; raw +354.3% (95%: +211.3% to +497.3%); LOSS · 236.9 → 921.8; raw +289.1% (95%: +168.8% to +409.4%); LOSS · 269.7 → 1150; raw +326.6% (95%: +198.9% to +454.3%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
+- **Omni-Compass against native.** Azure (AKS, Standard_D2s_v4, eastus) (omni-v26, `results/live/V26_AKS_WORK_METER.md`): pod start wait, mean (s), A B C 29.12 → 36.29; raw +24.6% (95%: −10.3% to +59.4%); LOSS · 29.61 → 33.8; raw +14.2% (95%: −16.3% to +44.6%); LOSS · 32.97 → 39.05; raw +18.5% (95%: −19.6% to +56.5%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
 - **Omni-Compass against native.** All four in one run (omni-v26, `results/live/V26_ALL_FOUR.md`): pod start wait, total (s), A B C 7.6 → 17.8; raw +134.2% (95%: +80.3% to +188.2%); LOSS · 7.8 → 20.8; raw +166.7% (95%: +33.1% to +300.3%); LOSS · 7.3 → 15.1; raw +106.8% (95%: +47.2% to +166.5%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
 - **Omni-Compass against native.** All four in one run (omni-v26, `results/live/V26_ALL_FOUR.md`): pod start wait, mean (s), A B C 1.406 → 1.76; raw +25.2% (95%: +7.3% to +43.0%); LOSS · 1.399 → 1.888; raw +35.0% (95%: −23.2% to +93.2%); LOSS · 1.325 → 1.528; raw +15.3% (95%: −0.9% to +31.5%); LOSS. Cause: The pod start wait on one shared host: where it goes, why it rose, and the rig amendment of 18 October (`docs/POD_START_WAIT.md`). The knob: the test machine, not the governor: the image unpacked inside the window on the one runner every kind node shares (`docs/POD_START_WAIT.md`); the rig pre-pulls the image in both arms.
 - **Omni-Compass against native.** Batch queue (omni-v26, `results/live/V26_BATCH.md`): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line), A B C 10.7 → 11; raw +2.8% (95%: −0.4% to +6.0%); LOSS · 9.7 → 9.8; raw +1.0% (95%: −1.3% to +3.4%); LOSS · 11.2 → 11.6; raw +3.6% (95%: +0.3% to +6.9%); LOSS. The knob: the muscle's floor and the trial's tolerance; a muscle that fails a request native served stays native until the gate reads no LOSS.

@@ -4,7 +4,7 @@
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `1361d4bb017b03e1`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v26. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
+Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `26060ee48ab03ea7`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v27. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
 
 ## The rule
 

@@ -162,7 +162,7 @@ def render(d):
         "tables (the index of 31 October, commit `3ad522226b`). It is omni-v21's historical reading and is labelled so.",
         f"- **omni-v25**: the same category reads GAIN, up {c[NEW]:.4f}%, from its nine three-run tables (`results/OMNI_INDEX.json` on "
         "main until 11 November). It is omni-v25's reading and is labelled so.",
-        (f"- **omni-v26**, the engine that stands: the same category reads GAIN, up {c[AFTER]:.4f}%, from its own nine three-run "
+        (f"- **omni-v26**, the engine that stood on 11 November: the same category reads GAIN, up {c[AFTER]:.4f}%, from its own nine three-run "
          "tables (`results/live/V26_*.json`, tabled on 11 November; `results/OMNI_INDEX.json` on main). It is the latest measured "
          "reading of the category; omni-v26 changed one rule from omni-v25 (`docs/OMNI_V26.md`) and kept the 10 s beat on site."
          if AFTER in c else "- **omni-v26** stands as the engine on main; its Kubernetes tables are not yet whole, so it has no "

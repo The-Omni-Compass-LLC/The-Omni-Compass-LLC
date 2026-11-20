@@ -204,11 +204,14 @@ class PublicBenchmarkContract(unittest.TestCase):
         self.assertEqual(self.rows["chip_energy_per_request"]["engine"], arms["A"]["engine"])
         self.assertEqual(self.rows["cloud_bill"]["engine"], arms["C"]["engine"])
         self.assertIn("the runs disagree", self.rows["chip_work_for_the_bill"]["sentence"])
-        self.assertIn("work was not counted", self.rows["cloud_bill"]["sentence"])
+        # the cloud's work is counted from the Azure work meter's three runs: the bill is read beside the work per dollar, never
+        # as a smaller bill
+        self.assertIn("read beside the work per dollar", self.rows["cloud_bill"]["sentence"])
+        self.assertIn("cloud_work_per_dollar", self.rows)
         for k in ("arm_b_vs_a", "arm_d_vs_c"):
             self.assertIn(k, self.rows)
-        # The cloud receipt does not count completed work for a work-per-dollar claim.
-        self.assertIn("arm_d_work_per_dollar",
+        # Arm D's work per dollar is read from its own three runs on Azure, never from our own model (which has no column D).
+        self.assertIn("arm_d_from_the_model",
                       {r["id"] for r in self.feed["not_for_the_site"]})
 
     def test_standing_engine_is_distinguished_from_benchmark_engine(self):

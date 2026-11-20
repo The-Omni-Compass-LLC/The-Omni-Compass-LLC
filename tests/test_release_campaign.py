@@ -28,7 +28,9 @@ class ReleaseCampaign(unittest.TestCase):
 
     def test_queue_is_complete_and_excluded_providers_cannot_dispatch(self):
         queue = grid.rerun_queue()
-        self.assertEqual(len(queue), 219)        # 73 entries, A, B and C (12 November: the four ways through Koordinator, Volcano,
+        self.assertEqual(len(queue), 228)        # 76 entries, A, B and C (14 November: the orchestra, Omni-Compass's own
+                                                 # orchestrator's three arms and the core's Monte Carlo, before the omni-v27
+                                                 # campaign opened, no run of them started; 12 November: the four ways through Koordinator, Volcano,
                                                  # Karmada and Armada again whole, each cause read from its runs' logs and
                                                  # written beside the entry; 6 November: Koordinator's four ways once more, on the
                                                  # repaired pod watch; 5 November: Koordinator's four ways, the batch through
@@ -87,7 +89,13 @@ class ReleaseCampaign(unittest.TestCase):
              'postgresql resource', 'mysql resource', 'mongodb resource', 'redis service', 'kafka service',
              'mysql resource, native as shipped', 'redis resource, native as shipped', 'mongodb resource, native as shipped',
              'robot arms', 'power grids', 'buildings and batteries', 'drone swarms', 'robustness kill', 'robustness long',
-             'kubernetes batch through kueue', 'kubernetes batch through volcano'],   # written before the omni-v12 campaign opened;
+             'kubernetes batch through kueue', 'kubernetes batch through volcano',
+             "the orchestra: every governor's and orchestrator's muscles, native and with Omni-Compass on top",
+             "Omni-Compass's own orchestrator, the three arms (native, Omni-Compass on native, Omni-Compass by itself)",
+             "the core's Monte Carlo from the jump generator, a new base each run"],   # written before the omni-v12 campaign opened;
+                                                                                      # the last three before the omni-v27
+                                                                                      # campaign opened (14 November), no run of
+                                                                                      # them started;
                                                                                       # Omni-Compass by itself before the omni-v19
                                                                                       # campaign opened (24 October), no run of it started;
                                                                                       # the decision pace before the omni-v16 campaign
@@ -116,7 +124,7 @@ class ReleaseCampaign(unittest.TestCase):
             inputs = yaml.safe_load((ROOT / ".github" / "workflows" / wf).read_text())
             declared = set(((inputs.get("on") or inputs.get(True) or {}).get("workflow_dispatch") or {}).get("inputs") or {})
             with self.subTest(workflow=wf):
-                self.assertEqual(wf in grid.LABELLED, "label" in declared)
+                self.assertEqual(wf in grid.LABELLED, grid.LETTER_INPUT.get(wf, "label") in declared)
 
     def test_started_work_is_not_queued_again(self):
         queue = grid.rerun_queue()

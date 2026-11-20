@@ -43,9 +43,10 @@ ceiling=$(( total - ${NODE_CUSHION:-0} ))   # every machine usable; the protecti
 (( want > total )) && want=$total
 n=${#active[@]}
 
-workload_on() {   # workload pods (not DaemonSet-owned, running or starting) on node $1
+workload_on() {   # workload pods (not DaemonSet-owned, running or starting) on node $1; omni-v27's stand-ins hold no work
   $KUBECTL get pods -A --field-selector "spec.nodeName=$1" -o json \
-    | jq '[.items[] | select(.status.phase=="Running" or .status.phase=="Pending") | select(all(.metadata.ownerReferences[]?; .kind != "DaemonSet"))] | length'
+    | jq '[.items[] | select(.status.phase=="Running" or .status.phase=="Pending") | select(all(.metadata.ownerReferences[]?; .kind != "DaemonSet"))
+           | select((.metadata.labels.app // "") != "omni-headroom")] | length'
 }
 if (( want > n )); then
   mapfile -t wake < <(for node in "${parked[@]}"; do echo "$(workload_on "$node") $node"; done | sort -rn | awk '{print $2}')

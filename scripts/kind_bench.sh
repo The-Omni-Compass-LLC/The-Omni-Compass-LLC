@@ -485,6 +485,7 @@ fi
 [ "$foreign" = "0" ] || { echo "cluster contains non-harness pods"; exit 1; }
 if [ -z "$NATIVE" ]; then
   kubectl apply -f deploy/kind/rbac-omni.yaml
+  kubectl apply -f deploy/kind/omni-headroom.yaml   # omni-v27: the stand-ins, none until the governor scales them (a cloud only)
   [ -z "${TWO_APP:-}" ] || kubectl apply -f deploy/kind/rbac-omni-noisy.yaml
   [ -z "$KEDA" ] || kubectl apply -f deploy/kind/rbac-omni-keda.yaml
   [ -z "$CRANE" ] || kubectl apply -f deploy/kind/rbac-omni-crane.yaml

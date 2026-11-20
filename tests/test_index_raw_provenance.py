@@ -146,19 +146,22 @@ class PhysicalAndCloudBillProvenance(unittest.TestCase):
                       chip["rows"]["work per dollar (requests served per $)"]["reading"])
 
     def test_azure_bill_has_no_completed_work_claim(self):
+        """The cloud's work per dollar only from a set that counted its work: the Azure work meter's three runs (work inside the
+        response line, each run's own receipt); never inferred from a set that counted none (the omni-v18 steady set)."""
         cloud = self.data["cloud"]
-        self.assertEqual(cloud["engine"], "omni-v18")
-        self.assertEqual(cloud["repetitions"], 97)
-        self.assertIsNone(cloud["work_key"],
-                          "unmeasured work cannot be used to infer cloud work/$")
-        self.assertFalse(cloud["work"],
-                         "unmeasured work cannot become a measured cloud benefit")
+        if cloud.get("form") != "three runs":
+            self.assertIsNone(cloud["work_key"], "unmeasured work cannot be used to infer cloud work/$")
+            self.assertFalse(cloud["work"], "unmeasured work cannot become a measured cloud benefit")
+            return
+        self.assertTrue(cloud["page"].endswith("_AKS_WORK_METER.md"), cloud["page"])
+        self.assertEqual(len(cloud["runs"]), 3)
+        self.assertIn("work inside the response line", cloud["work_key"])
+        for r in cloud["per_run"]:
+            self.assertGreater(r["work"][0], 0); self.assertGreater(r["work"][1], 0)
+            self.assertAlmostEqual(r["per_dollar"][0] > 0, True)
         bill = cloud["bill"]
-        self.assertAlmostEqual(
-            bill["omni"] - bill["native"], bill["diff"], places=10)
-        self.assertLess(bill["ci95"][0], 0)
-        self.assertGreater(bill["ci95"][1], 0,
-                           "historical interval crosses zero; bill effect unresolved")
+        self.assertAlmostEqual(bill["omni"] - bill["native"], bill["diff"], places=10)
+        self.assertIn("power given", bill["reading"], "a bill that rose is power given, read beside the work per dollar")
 
 
 if __name__ == "__main__":

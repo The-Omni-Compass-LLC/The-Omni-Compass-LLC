@@ -55,7 +55,7 @@ The prices below are an owner's example (a three-node cluster, the founder's ill
 | Example | Its bill, line by line (native) | What Omni-Compass can move | Read through the equation |
 |---|---|---|---|
 | Bare metal, always on | the lease $500 a month (egress and storage inside the box) | none of the bill: the same boxes in both arms, b = 0 | G = w, the work the same boxes serve: on the A10's receipts w was up 1.51% (raw +1.51%), up 0.73% (raw +0.73%), down 0.70% (raw −0.70%); at native's price per unit of work that is $7.53 more, $3.66 more, $3.50 less of work a month out of the same $500, and the three runs disagree |
-| Through the cloud, always on | compute 720 h × $4.50 = $3,240, egress 500 GB × $0.08 = $40, storage $30: $3,310 | the hours (the machines it parks and wakes), 97.9% of this bill; egress only as the work grows; storage not at all | b ≈ 0.979 × the change in machine-hours; the one cloud set read so far moved its machine-hours up 1.21% (raw +1.21%), power given (inside the noise, at the tune-down on the machines alone) and did not count its work, so G is not read |
+| Through the cloud, always on | compute 720 h × $4.50 = $3,240, egress 500 GB × $0.08 = $40, storage $30: $3,310 | the hours (the machines it parks and wakes), 97.9% of this bill; egress only as the work grows; storage not at all | b ≈ 0.979 × the change in machine-hours; the one cloud set read so far moved its machine-hours up 24.68% (raw +24.68%), power given (inside the noise, at the tune-down on the machines alone) and did not count its work, so G is not read |
 | Through the cloud, weekends only (40 h) | compute 40 h × $4.50 = $180, egress 50 GB × $0.08 = $4, storage $30: $214 | the hours, 84.1% of this bill | the same reading: b ≈ 0.841 × the change in machine-hours |
 
 Which place is cheaper for the same work (the weekend cluster in a cloud, the always-on one on bare metal) is the owner's choice of place, and a cloud's hypervisor share is the same in both arms: neither is a benefit of Omni-Compass. What Omni-Compass changes is the work the same machines serve and, in a cloud, the hours billed (`owner_bill` in `tools/work_per_bill.py` reads any owner's line items the same way).
@@ -69,7 +69,7 @@ An owner's budget is read the same way, place by place, from the receipts and no
 | Place | Its bill with Omni-Compass | The work with Omni-Compass | What the receipts let an owner write today |
 |---|---|---|---|
 | Bare metal (a lease of $100 M) | the same $100 M: the same boxes in both arms, b = 0 | w, the work the same boxes serve | the A10 receipt's own ratios applied to the spend (arithmetic, not a measurement of a fleet): $1.51 M more, $0.73 M more, $0.70 M less of work at native's price per unit of work, out of the same $100 M; the three runs disagree, so no figure is claimed |
-| Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, the work answered inside the line (the work meter) | the one set read so far moved the compute bill up 1.21% (raw +1.21%), power given (inside the noise) and did not count its work; our own model at the max reads the machine-hours up 8% to 34% across the beats, 15% at the main engine's 60 s, with the work fixed by the model's own load (`results/model_gate/V23_LADDER_CORRECTED.md`, class S): the cloud's bill may rise where the work rises more, so a smaller cloud bill is not what the record points to |
+| Through the cloud ($100 M a year) | b, read from the cloud's own bill: only the hours Omni-Compass parks or adds move it | w, the work answered inside the line (the work meter) | the work meter's three runs (omni-v26): the bill up 24.68% (raw +24.68%), power given, the work up 64.08% (raw +64.08%), the work for each dollar up 31.68% (raw +31.68%), read GAIN in all three of our runs; the cloud's bill rose where the work rose more |
 
 **The arithmetic at the founder's aim, an example and not a result.** The founder's words of 31 October state the aim the cloud is judged by: "We're pushing 1% more bill, but we're getting ~12% more work." Put through the equation on the example's $100 M a year in a cloud: ΔB = +1%, ΔW = +12%, G = 1.12 / 1.01 − 1 = +10.9%, the work for each dollar up 10.9%. In dollars, each at native's price per unit of work (native's $100 M bill for native's year of work): the bill is $101 M and the work 1.12 times native's, worth $112 M, so $12 M more work for $1 M more bill; at that work for each dollar, $100 M of bill buys $10.9 M more work than native's $100 M did; read the other way, native's year of work costs $100 M / 1.109 = $90.2 M. On bare metal the bill holds (ΔB = 0), so G = ΔW: each 1% more work from the same boxes is $1 M of work a year on the example's $100 M. These are the equation's arithmetic on an aim; the receipts above are what has been measured, and a page that shows the example says so beside it.
 
@@ -91,7 +91,15 @@ An owner's budget is read the same way, place by place, from the receipts and no
 
 The three runs together, by the one key: **the runs disagree** (the mean of the three G up 0.50%, raw +0.50%; the runs point different ways, so the mean is no word). No interval is carried for a run's work per dollar, so no run is counted beyond the noise; each run's word is its own size against the 0.5% floor.
 
-**Through the cloud** (omni-v18, 97 paired repetitions, Omni-Compass on top of native at the tune-down (dial save) on the machines alone (OMNI_MACHINES_ONLY=1), the rule of 14 October struck on 31 October; `results/TWO_BILLS.json cloud (results/live/AKS_STEADY_100_OMNI_V18.md)`): the bill $0.0563 → $0.0569 a window, the bill up 1.21%, power given, inside the noise (raw b +1.21%); the work done was not counted, so G(cloud) is not read: the set counted the bill and the machine-hours but not the work done (its load sent a fixed rate of requests, so its work could not grow); the work per dollar waits for the sets at the max with the work meter (scripts/azure_queue.txt), on the engine that stands.
+**Through the cloud** (Azure (AKS, Standard_D2s_v4, eastus): the work meter, the rate stepping 2 4 6 8 10 12 16 20 a second to the cap, under the stopping rule, Omni-Compass at the max on top of Azure's own autoscaler; omni-v26, 30 paired repetitions in all; Omni-Compass at the max on top of Azure's own autoscaler, the work meter's stepped rate (the founder's order of 31 October: no hard rule); `results/TWO_BILLS.json cloud (results/live/V26_AKS_WORK_METER.md)`):
+
+| Run | Work inside the line, native → Omni-Compass | w (raw) | Bill a window, native → Omni-Compass | b (raw) | Work per dollar, native → Omni-Compass | G (its own word, then its size) |
+|---|---|---:|---|---:|---|---|
+| run 1 (#43005182097) | 5.35 → 8.82 requests a second | +64.98% | $0.0729 → $0.0930 | power given, up 27.64% (raw +27.64%) | 73 → 95 | GAIN, up 29.26% (raw +29.26%): more work for each dollar |
+| run 2 (#43177138720) | 5.44 → 8.65 requests a second | +59.01% | $0.0741 → $0.0874 | power given, up 17.93% (raw +17.93%) | 73 → 99 | GAIN, up 34.83% (raw +34.83%): more work for each dollar |
+| run 3 (#43364393684) | 5.31 → 8.94 requests a second | +68.25% | $0.0723 → $0.0929 | power given, up 28.48% (raw +28.48%) | 74 → 96 | GAIN, up 30.95% (raw +30.95%): more work for each dollar |
+
+The three runs together, by the one key on the table's own work-per-dollar row: **GAIN in all three of our runs** (the mean of the three G up 31.68%, raw +31.68%). A bill that rose is power given, shown beside the work it bought. G here is the equation's own form, the ratio of each run's means; the table's work-per-dollar row reads each repetition's own ratio and averages them (run 1 up 28.3%, run 2 up 34.2%, run 3 up 28.8%), so the two differ by the spread of the repetitions, never in their word.
 
 **Not yet read:**
 
@@ -101,7 +109,7 @@ The three runs together, by the one key: **the runs disagree** (the mean of the 
 - through the cloud: Google Cloud: not yet run (its key is not in the repository's secrets (docs/GOOGLE_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 - through the cloud: Amazon Web Services: not yet run (its key is not in the repository's secrets and the account is on the Free plan (docs/AMAZON_SETUP.md)); no reader yet writes its W and B: tools/two_bills.py reads card rows only
 
-**Both places, for an owner who runs work in both**, G(total): read only for an owner's stated native spend in each place, never from the benchmark windows; and only once every place's G is read on the engine that stands (the cloud's work is not yet counted).
+**Both places, for an owner who runs work in both**, G(total): read only for an owner's stated native spend in each place.
 
 ## Is it proven
 

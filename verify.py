@@ -44,7 +44,8 @@ def build_cpp(tmp):
                            ("run_compass_law.cpp", "oc_compass_law"), ("run_verdict.cpp", "oc_verdict"),
                            ("engine_runs.cpp", "oc_engine_runs"), ("run_edge.cpp", "oc_edge"),
                            ("run_student_t.cpp", "oc_student_t"), ("run_orchestrator_brain.cpp", "oc_orchestrator_brain"),
-                           ("core_runs.cpp", "oc_core_runs"), ("run_immune.cpp", "oc_immune")):
+                           ("core_runs.cpp", "oc_core_runs"), ("run_immune.cpp", "oc_immune"),
+                           ("run_lookahead.cpp", "oc_lookahead")):
             subprocess.run([cxx, "-std=c++20", "-O2", "-I", str(src / "include"), *srcs, str(src / "tools" / tool), "-o", str(b / name)], check=True)
     return b
 
@@ -187,6 +188,22 @@ def main():
         except AssertionError:
             det = True
         check(f"negative control: parity test detects a C++ Omni direct that {what}", omut != osrc and det)
+    from tests import test_cpp_lookahead_parity
+    test_cpp_lookahead_parity.main(str(b / "oc_lookahead"), 60 if a.quick else 300)
+    check("C++ look-ahead and stand-ins vs Python (omni-v27), every slope, horizon, delivery and stand-in count identical", True)
+    # negative control: stand-ins that ask the cloud for the parked machines too (the pool's own, opened first) must be caught
+    lsrc = (ROOT / "cpp" / "src" / "lookahead.cpp").read_text()
+    lmut2 = lsrc.replace("r.shortfall = std::max(0.0, ahead_m - r.free - r.parked);", "r.shortfall = std::max(0.0, ahead_m - r.free);")
+    (tmp / "lookahead_mut.cpp").write_text(lmut2)
+    lothers = [str(p) for p in (ROOT / "cpp" / "src").glob("*.cpp") if p.name != "lookahead.cpp"]
+    subprocess.run([shutil.which("g++") or shutil.which("clang++"), "-std=c++20", "-O2", "-I", str(ROOT / "cpp" / "include"), *lothers,
+                    str(tmp / "lookahead_mut.cpp"), str(ROOT / "cpp" / "tools" / "run_lookahead.cpp"), "-o", str(tmp / "oc_lookahead_mut")], check=True)
+    try:
+        test_cpp_lookahead_parity.main(str(tmp / "oc_lookahead_mut"), 60); det_look = False
+    except AssertionError:
+        det_look = True
+    check("negative control: parity test detects C++ stand-ins that ask the cloud for machines the pool already has parked",
+          lmut2 != lsrc and det_look)
     from tools import seal
     broken = seal.check()
     check(f"seal: all {len(seal.TWINS)} Python/C++ twins unchanged since proven equal (results/SEAL.json)", not broken, "; ".join(broken))
@@ -508,6 +525,8 @@ def main():
           "tools/run_reports.py --check; the founder's order of 16 November)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "carry.py"), "--check"], capture_output=True, text=True)
     check("which results carry to the engine that stands: results/CARRY.md is what the fingerprints and tables give, a result carried only where every engine file its runner imports is byte for byte its own engine's (tools/carry.py --check; the founder's order of 7 November, evening)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "the_benchmark.py"), "--check"], capture_output=True, text=True)
+    check("the one benchmark: results/THE_BENCHMARK.md is every scenario on the engine that stands, its receipts and the paid ones waiting, as the records give (tools/the_benchmark.py --check; the founder's words of 15 November)", r.returncode == 0, (r.stdout + r.stderr)[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "azure_runs.py"), "--check"], capture_output=True, text=True)
     check("every Azure run GitHub recorded stands on one page with where its receipt lives: results/live/AZURE_RUNS.md is what its "
           "records give (tools/azure_runs.py --check; the founder's order of 8 November)", r.returncode == 0, (r.stdout + r.stderr).strip()[-300:])

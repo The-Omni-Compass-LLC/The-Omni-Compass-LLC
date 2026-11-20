@@ -25,7 +25,7 @@ OUT = ROOT / "results/WEBSITE_SURFACE_CONTRACT.json"
 PUBLISHER = "Dubra Software Inc. / The Omni-Compass LLC"
 REQUIRED_IDS = (
     "omni_index", "work_and_speed", "kubernetes", "kubernetes_v21_historical", "alert_minutes", "pages",
-    "chip_energy_per_request", "chip_work_for_the_bill", "cloud_bill",
+    "chip_energy_per_request", "chip_work_for_the_bill", "cloud_work_per_dollar", "cloud_bill",
     "arm_b_vs_a", "arm_d_vs_c",
 )
 # the historical Kubernetes reading (omni-v21, 31 October) stands beside the latest measured one (omni-v25) wherever the
@@ -37,9 +37,9 @@ SURFACES = {
     "homepage.carousel": ["omni_index", "work_and_speed", "kubernetes", "chip_work_for_the_bill"],
     "virtual_tour": ["omni_index", "kubernetes", "chip_energy_per_request", "cloud_bill"],
     "virtual_guide": ["omni_index", "work_and_speed", "chip_work_for_the_bill", "cloud_bill"],
-    "investors": ["omni_index", "kubernetes", "kubernetes_v21_historical", "chip_work_for_the_bill", "cloud_bill"],
+    "investors": ["omni_index", "kubernetes", "kubernetes_v21_historical", "chip_work_for_the_bill", "cloud_work_per_dollar", "cloud_bill"],
     "press": ["omni_index", "kubernetes"],
-    "case_studies": ["kubernetes", "chip_energy_per_request", "cloud_bill"],
+    "case_studies": ["kubernetes", "chip_energy_per_request", "cloud_work_per_dollar", "cloud_bill"],
     "whitepaper": ["omni_index", "work_and_speed", "kubernetes", "kubernetes_v21_historical"],
     "awards": ["omni_index"],
     "market.licensing": [],
