@@ -4,7 +4,7 @@
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
  const press=sel=>{ const b=document.querySelector(sel); if(b&&b.getClientRects().length){ b.click(); return true; } if(b){ b.click(); return true; } return false; };
- const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'Horoscope',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
+ const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'LuvMyZodiac',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',kProfile:'Profile',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
  const stopAll=()=>{ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ press('#kStopBtn'); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ } try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ if(!m.paused&&!m.muted) m.pause(); }catch(_){ } }); };
  const ACT={
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
@@ -20,6 +20,7 @@
   kAI:[['🧹','New chat',()=>window.KAI&&KAI.clear()]],
   kLock:[['🔀','Partial',()=>press('#kLock [data-lk="part"]')],['🎲','Complete',()=>press('#kLock [data-lk="full"]')]],
   kKnow:[['🔎','Search',()=>{ const q=$('knQ'); if(q) q.focus(); }]],
+  kProfile:[['✏️','Edit',()=>press('#kProfile [data-pf="edit"]')],['➕','Post',()=>press('#kProfile [data-pf="post"]')],['🎶','Song',()=>press('#kProfile [data-pf="songplay"]')]],
   kHumor:[['🔊','Read',()=>press('#kHumor [data-kh="daysay"]')],['🎲','Joke',()=>press('#kHumor [data-kh="rnd"]')]],
   gamesDock:[['🕹','All games',()=>{ try{ KVG.open(); }catch(_){ } }]],
   home:[['🎛','Studio',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } }],['🎤','Karaoke',()=>{ try{ KKARA.open(); }catch(_){ } }],['🎨','Easel',()=>{ try{ KEASEL.open(); }catch(_){ } }],['🤖','AI',()=>{ try{ KAI.open(); }catch(_){ } }]]};
