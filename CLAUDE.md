@@ -689,6 +689,18 @@ the founder overrides one in the conversation.
   (1, 2, 4, 8, 16, then 30 s; fails only past 15 minutes unanswered; every stall written in its receipt) and resumes at the last
   version delivered, so no event is lost; a rig fix, no engine change. The shared runner held at its top in the Omni-Compass arm
   is recorded here and waits for the founder's word; no engine is changed for it.
+- **v26 is good; v27 stands only as v26 strengthened; no receipt made again where the number holds** (the founder's words of 20
+  November, evening: "version 26 is good. We don't need to keep pushing another version. You need to just strengthen 26 unless
+  you tell me 27th is better. And you don't try to keep running and making more receipts on the cloud if it's the same number
+  that's holding"). Read from the tables: omni-v27 is omni-v26's code with one change (`omni_controller/controller.py` and
+  `muscles.py`), the fix for omni-v26's one real LOSS on record, pods asked for in a cloud that no machine could take
+  (`results/live/V26_AKS_WORK_METER.md`, `V26_AKS_FULL_BURST.md`). On GitHub's machines it holds omni-v26's numbers test for test
+  (by the index's rule, v27 against v26: steady 30.8% against 31.5% GAIN, wandering 26.5% against 27.6%, all four 30.1% against
+  28.6%, the noisy neighbour 2.7% against 2.6% LOSS, the job queue 9.2% against 10.2%, Google's 2011 day 36.1% against 37.4%;
+  faults 27.2% against 34.3%, a trade: omni-v26's 95th percentile faster, omni-v27's failed requests fewer, its pods fewer and
+  its pod start wait no LOSS). Not shown better, not worse: it stays as omni-v26 strengthened, with no new version; on the
+  founder's word "go back" main returns to omni-v26's bytes. Every rerun is held (`switch=off` in `scripts/reruns.txt`, the
+  conductor releases none); no cloud and no chip runs without his word.
 
 ## Orders of 16 November
 
