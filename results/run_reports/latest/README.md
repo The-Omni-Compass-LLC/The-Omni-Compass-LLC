@@ -1,8 +1,8 @@
-# The reports of the newest 500-run set from the jump generator (base 1725417798)
+# The reports of the newest 500-run set from the jump generator (base 1730637465)
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Written by `tools/run_reports.py` from the set's own records, omni-v27 (digest 34548e45437a05bd, 65 files), the set written 2026-11-20T04:34:01Z. Evidence class S. Every report in every form carries the owners' notice at its top and its end.
+Written by `tools/run_reports.py` from the set's own records, omni-v27 (digest 34548e45437a05bd, 65 files), the set written 2026-11-20T05:21:04Z. Evidence class S. Every report in every form carries the owners' notice at its top and its end.
 
 | Reader | Word | PDF | Text | Markdown |
 |---|---|---|---|---|
