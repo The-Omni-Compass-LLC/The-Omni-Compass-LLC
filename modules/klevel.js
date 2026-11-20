@@ -3,7 +3,8 @@
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const LV=[['easy','🟢','Easy','Easy: the essentials in plain words. Best for anyone and first-timers.'],['avg','🟡','Everyday','Everyday: the tools creators and influencers use.'],['pro','🔴','Pro','Pro: every engine, knob and library, for producers, writers and engineers.']];
- let lv=getLS('kanin-level','easy'); if(!LV.some(x=>x[0]===lv)) lv='easy';
+ /* the factory setting: every open of KAN-IN starts on 🟡 Everyday; a person can switch for the visit, and the next open is Everyday again */
+ let lv='avg';
  /* which parts belong to which level (anything not listed is for everyone) */
  const MAP={
   avg:['mpcSec','chopSec','seSec','slSec','vcSec','bandSec','sqWrap','sesWrap','kbWrap','rollWrap','autoSec','shSec','tpWrap','zodExtra','z4Today','z4Chart','z4Moons','z4China','z4Syn','z4Spin','z4Beat','z4Book','omniOrg','swAna','kkIn','kkOut'],
@@ -19,7 +20,8 @@ html body #rDock#rDock #kdLvl{order:4!important;display:flex!important}
 #tourTab .kLvlRow button.on,#kPanel .kLvlRow button.on{background:#ffe94a!important;color:#14163a!important}
 #kPanel .kLvlRow{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 8px}`; document.head.appendChild(css);
  function apply(quiet){ const h=document.documentElement; h.classList.remove('lvl-easy','lvl-avg','lvl-pro'); h.classList.add('lvl-'+lv); tag(); rail(); document.querySelectorAll('.kLvlRow button').forEach(b=>b.classList.toggle('on',b.dataset.lv===lv)); if(!quiet){ const L=LV.find(x=>x[0]===lv); say(L[1]+' '+L[3]); } }
- function setLv(v){ lv=v; putLS('kanin-level',lv); apply(); panelLv(); }
+ function setLv(v,quiet){ lv=v; putLS('kanin-level',lv); apply(quiet); panelLv(); }
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#mFactory')) setTimeout(()=>{ setLv('avg',true); const t=document.querySelector('#tourTab .kLvlRow'); if(t) t.innerHTML=row(); },60); },true);
  function rail(){ const d=$('rDock'); if(!d) return; let b=$('kdLvl'); const L=LV.find(x=>x[0]===lv); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kdLvl'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); const i=LV.findIndex(x=>x[0]===lv); setLv(LV[(i+1)%LV.length][0]); }); d.appendChild(b); } b.dataset.kdI=L[1]; b.dataset.kdL=L[2]; b.title='Level: '+L[3]+' Tap to change.'; b.setAttribute('aria-label','Level: '+L[2]+'. Tap to change.'); }
  const row=()=>'<span class="kN" style="flex:1 1 100%;font:700 12px ui-monospace,monospace;letter-spacing:.1em;color:#7ff">HOW DO YOU WANT TO USE KAN-IN?</span>'+LV.map(x=>'<button type="button" data-lv="'+x[0]+'" class="'+(x[0]===lv?'on':'')+'" title="'+x[3]+'" data-noul>'+x[1]+' '+x[2]+'</button>').join('');
  /* the menu: a level switch and, for everyone, ⭐ Start here with plain big buttons */
@@ -34,5 +36,5 @@ html body #rDock#rDock #kdLvl{order:4!important;display:flex!important}
  setInterval(()=>{ tag(); rail(); menu(); const p=$('kPanel'); if(p&&!p.hidden&&!p.querySelector('.kLvlRow')) panelLv(); },1000);
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdPanel')) setTimeout(panelLv,30); },true);
  apply(true); menu();
- window.KLEVEL={get:()=>lv,set:setLv,levels:LV.map(x=>x[0])};
+ window.KLEVEL={get:()=>lv,set:setLv,levels:LV.map(x=>x[0]),factory:'avg'};
 })();
