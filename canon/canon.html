@@ -20069,11 +20069,11 @@ html body :is(#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDoc
  async function send(text){ const inp=$('aiIn'); const q=(text||(inp&&inp.value)||'').trim(); if(!q) return; if(busy) return say('Wait for this answer, or press ⏹ Stop.');
   if(!sample) return say(ready==='no'?'The AI needs you signed in to claude.ai.':'Connecting to the AI… try again in a moment.');
   chat.push({role:'user',content:q}); chat.push({role:'assistant',content:''}); if(inp) inp.value=''; const ctl=new AbortController(); busy=ctl; paint();
-  let hist=chat.slice(0,-1).slice(-16).map(m=>({role:m.role,content:m.content||'…'})); while(hist.length&&hist[0].role!=='user') hist.shift(); hist[0]={role:'user',content:GUIDE+'\n\n'+hist[0].content};
+  let hist=chat.slice(0,-1).slice(-16).map(m=>({role:m.role,content:m.content||'…'})); while(hist.length&&hist[0].role!=='user') hist.shift(); hist[0]={role:'user',content:GUIDE+'\n\n'+hist[0].content}; try{ if(window.KOMNIAI){ const f=KOMNIAI.frame(q); if(f){ const n=hist.length-1; hist[n]={role:'user',content:hist[n].content+'\n\n'+f}; } } }catch(_){ }
   try{ const r=await sample(hist,{signal:ctl.signal,cache:false,onText:({text})=>{ chat[chat.length-1].content=text; const ms=document.querySelectorAll('#aiLog .aiMsg.a'); const last=ms[ms.length-1]; if(last&&last.firstChild) last.firstChild.textContent=clean(text); else paint(); const lg=$('aiLog'); if(lg) lg.scrollTop=lg.scrollHeight; }});
    chat[chat.length-1].content=(r&&r.text)||chat[chat.length-1].content||'…'; }
   catch(e){ const c=e&&e.code; chat[chat.length-1].content=c==='not_granted'?'The AI was not allowed on this page. You can allow it from the page’s permissions.':c==='rate_limited'?'The AI is busy. Wait a minute and try again.':(chat[chat.length-1].content||'')+(ctl.signal.aborted?'\n⏹ Stopped.':'\nThe answer did not come through. Try again.'); if(c==='not_granted'){ sample=null; ready='no'; } }
-  busy=null; putLS('kanin-ai-chat',chat.slice(-40)); paint(); if(auto&&acts(chat[chat.length-1].content).length) runAll(chat.length-1); }
+  try{ if(window.KOMNIAI) KOMNIAI.observe(chat[chat.length-1].content); }catch(_){ } busy=null; putLS('kanin-ai-chat',chat.slice(-40)); paint(); if(auto&&acts(chat[chat.length-1].content).length) runAll(chat.length-1); }
  function onClick(e){ const b=e.target.closest('[data-ai]'); if(!b) return; e.stopPropagation(); const k=b.dataset.ai, m=chat[+b.dataset.i];
   if(k==='close') return close(); if(k==='send') return send(); if(k==='quick') return send(QUICK[+b.dataset.n][1]);
   if(k==='stop'){ if(busy) busy.abort(); return; }
@@ -20561,7 +20561,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   const up=()=>{ if(!drag) return; drag=null; const rc=r.getBoundingClientRect(); putLS('kanin-remote-pos',{x:Math.round(rc.left),y:Math.round(rc.top)}); }; r.addEventListener('pointerup',up); r.addEventListener('pointercancel',up);
   return r; }
  function paint(force){ const r=box(); const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&!t.hidden&&t.getBoundingClientRect().width>40; })();
-  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); const key=id+'|'+min+'|'+LVL; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
+  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'||(innerWidth<700&&(id==='kAI'||(document.activeElement&&/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)&&!/^(range|checkbox|radio|button|file|color)$/.test(document.activeElement.type||''))))||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); const key=id+'|'+min+'|'+LVL; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
   const base=LVL==='easy'?[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['save','💾','Save'],['close','✕','Close']]:[['rew','⏮','Rewind'],['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['save','💾','Save'],['new','🆕','New'],['open','📂','Open'],['close','✕','Close']];
   const ex=LVL==='easy'?[]:(EXTRA[id]||[]); r.classList.toggle('easy',LVL==='easy');
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(min?'Open the remote':'Shrink the remote')+'" data-noul>'+(min?'🎛':'▁')+'</button>'+(min?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
@@ -22001,6 +22001,106 @@ html body #padMixer#padMixer .mxs .kStrip{display:flex;flex-direction:column;ali
   b.innerHTML='<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="mt">'+title()+(pausedFor?' · paused while another sound plays':' · in the background')+'</span><b class="go">↗ Music</b>'; }
  setInterval(()=>{ wrap(); if(pausedFor){ if(otherPlaying()){ quietSince=0; } else { if(!quietSince) quietSince=performance.now(); else if(performance.now()-quietSince>1200){ quietSince=0; resume(); } } } paint(false); },400);
  window.KMINI={get bgOn(){ return bgOn; },keeping:guarded,stop:realStop,get under(){ return under; },get pausedFor(){ return pausedFor; },paint:()=>paint(true)};
+})();
+
+</script>
+<script>
+(()=>{ /* 🎤 TALK INSTEAD OF TYPING (v212): every place you can type has a microphone. Tap into any text box and a 🎤 appears at its
+   right edge; tap it and talk, and your words go into the box as you speak. The AI chat keeps its 🎤 beside Send all the time; while
+   you talk a big ⬆ Send arrow shows: one push stops listening, waits for your last words and sends, like the Claude app (Send does
+   the same). ⚡ Send when I stop sends by itself the moment you stop. The platform holds the microphone and turns
+   speech into text with the same service claude.ai's own dictation uses (Chrome, Edge and the Claude desktop app); the page only
+   receives the words. Where that is not offered (Safari, the phone apps) the 🎤 opens the box and points to your keyboard's own
+   microphone key. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ let D=null, ready=false, target=null, live=false, partial='', autoSend=getLS('kanin-ai-voicesend',false), sending=false, denied=false;
+ (async()=>{ try{ if(window.claude&&claude.use) D=await claude.use('dictation'); }catch(_){ D=null; } ready=true;
+  if(D){ D.onPartial(({text})=>{ partial=text||''; bubble(); }); D.onFinal(({text})=>insert(text)); D.onState(({state,reason})=>{ live=state!=='idle'; paint(); if(state==='idle'){ partial=''; bubble(); ended(reason); } }); } })();
+ const OK=e=>e&&e.isConnected&&!e.disabled&&!e.readOnly&&(e.tagName==='TEXTAREA'||(e.tagName==='INPUT'&&/^(text|search|email|url|tel|)$/.test((e.getAttribute('type')||'').toLowerCase()))||e.isContentEditable)&&!e.closest('#gateWrap,[data-nomic]')&&e.getBoundingClientRect().width>=80;
+ const css=document.createElement('style'); css.textContent=`
+#kMic{position:fixed;z-index:9790;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:#6b2fd0;color:#fff;font:900 18px system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.5);padding:0!important;min-height:0!important}
+#kMic[hidden]{display:none!important} #kMic.live{background:#e01e37;animation:kMicP 1.1s ease-in-out infinite}
+@keyframes kMicP{50%{box-shadow:0 0 0 8px rgba(224,30,55,.35)}}
+@media (prefers-reduced-motion:reduce){ #kMic.live{animation:none} }
+#kMicTxt{position:fixed;z-index:9790;max-width:min(520px,calc(100vw - var(--kRailW,58px) - 24px));padding:6px 10px;border-radius:10px;background:rgba(12,10,36,.95);border:1px solid #b48cff;color:#e8e2ff;font:600 italic 14px/1.4 system-ui,sans-serif;pointer-events:none}
+#kMicTxt[hidden]{display:none!important}
+.kAiMic{min-width:48px;min-height:44px;border-radius:12px!important;font:900 18px system-ui,sans-serif!important}
+.kAiMic.live{background:#e01e37!important;color:#fff!important;animation:kMicP 1.1s ease-in-out infinite}
+.kAiSendV{min-width:56px;min-height:44px;border-radius:999px!important;background:#ffe94a!important;color:#14163a!important;font:900 20px system-ui,sans-serif!important;box-shadow:0 0 0 3px rgba(255,233,74,.35)}
+.kAiSendV[hidden]{display:none!important}
+.kAiAuto{min-height:44px;border-radius:12px!important;font:700 12.5px system-ui,sans-serif!important}
+.kAiAuto.on{background:#ffe94a!important;color:#14163a!important}
+@media (min-width:1700px){ #kMic{width:52px;height:52px;font-size:24px} #kMicTxt{font-size:18px} }`; document.head.appendChild(css);
+ function btn(){ let b=$('kMic'); if(b) return b; b=document.createElement('button'); b.type='button'; b.id='kMic'; b.hidden=true; b.setAttribute('data-noul',''); b.textContent='🎤'; document.body.appendChild(b);
+  b.addEventListener('pointerdown',e=>e.preventDefault()); /* keep the box focused */
+  b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); toggle(target||document.activeElement); }); return b; }
+ function place(){ const b=btn(); const f=(live&&target)?target:document.activeElement; if(!OK(f)||document.body.classList.contains('gated')){ if(!live) b.hidden=true; return; } if(f.closest('#kAI')&&!live){ b.hidden=true; return; }
+  const r=f.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight){ b.hidden=!live; return; } const s=b.offsetWidth||40; b.style.left=Math.max(4,Math.min(innerWidth-s-4,r.right-s-4))+'px'; b.style.top=Math.max(4,Math.min(innerHeight-s-4,r.top+Math.min(r.height,48)/2-s/2))+'px'; b.hidden=false; if(!live) target=f; }
+ function bubble(){ let t=$('kMicTxt'); if(!t){ t=document.createElement('div'); t.id='kMicTxt'; t.setAttribute('aria-live','polite'); document.body.appendChild(t); } if(!live||!partial||!target){ t.hidden=true; return; } const r=target.getBoundingClientRect(); t.textContent='🎤 '+partial; t.style.left=Math.max(8,r.left)+'px'; t.style.top=Math.min(innerHeight-40,r.bottom+6)+'px'; t.hidden=false; }
+ function insert(text){ const f=target; if(!f||!f.isConnected||!text) return; if(f.isContentEditable){ f.focus(); try{ document.execCommand('insertText',false,text); }catch(_){ f.textContent+=text; } return; }
+  let v=text; const empty=!f.value; if(empty) v=v.replace(/^\s+/,''); const a=f.selectionStart!=null?f.selectionStart:f.value.length, z=f.selectionEnd!=null?f.selectionEnd:f.value.length;
+  if(!empty&&a>0&&!/\s$/.test(f.value.slice(0,a))&&!/^\s/.test(v)) v=' '+v; try{ f.setRangeText(v,a,z,'end'); }catch(_){ f.value+=v; } f.dispatchEvent(new Event('input',{bubbles:true})); }
+ function ended(reason){ if(reason==='not_granted'){ denied=true; say('🎤 The microphone is off for this page. Turn it on in the page\'s Permissions menu, or type.'); }
+  else if(reason==='unavailable'){ say('🎤 Talking is not available here. Type instead, or use your keyboard\'s own 🎤 key.'); }
+  else if(reason==='rate_limited') say('🎤 Too many at once. Try again in a moment.'); else if(reason==='upstream_error') say('🎤 The microphone did not answer. Try again.');
+  const f=target; if(f&&f.id==='aiIn'&&(sending||(autoSend&&(reason==='stopped'||reason==='viewer_stopped')))&&f.value.trim()){ sending=false; sendAI(); } sending=false; }
+ function sendAI(){ const s=document.querySelector('#kAI [data-ai="send"]'); if(s){ s.__kmicPass=true; setTimeout(()=>{ s.click(); s.__kmicPass=false; },80); } }
+ /* ⬆ while talking: stop, wait for the last words, then send */
+ function stopAndSend(){ if(D&&(live||D.active())&&target&&target.id==='aiIn'){ sending=true; D.stop().catch(()=>{ sending=false; sendAI(); }); } else sendAI(); }
+ document.addEventListener('click',e=>{ const s=e.target.closest&&e.target.closest('#kAI [data-ai="send"]'); if(!s||s.__kmicPass) return; if(live&&target&&target.id==='aiIn'){ e.preventDefault(); e.stopImmediatePropagation(); stopAndSend(); } },true);
+ /* tap 🎤: start listening right away (nothing waits before it) or stop */
+ function toggle(f){ if(!OK(f)) f=target; if(!OK(f)) return; target=f;
+  if(!D){ f.focus(); say(ready?'🎤 Tap the microphone key on your keyboard and talk. (Talking straight into KAN-IN works in Chrome, Edge and the Claude desktop app.)':'🎤 The microphone is getting ready. Tap again in a second.'); return; }
+  if(live||D.active()){ D.stop().catch(()=>{}); return; }
+  if(denied){ say('🎤 The microphone is off for this page. Turn it on in the page\'s Permissions menu, or type.'); return; }
+  try{ f.focus({preventScroll:true}); }catch(_){ } D.start().catch(err=>{ const c=err&&err.code; if(c==='not_granted'){ denied=true; ended('not_granted'); } else if(c==='dismissed') say('🎤 Tap the microphone again when you are ready to talk.'); else if(c==='unavailable') ended('unavailable'); else if(c&&c!=='stopped') ended(c); }); }
+ function paint(){ const b=btn(); b.classList.toggle('live',live); b.title=live?'Listening… tap to stop':'Tap and talk instead of typing'; b.setAttribute('aria-label',b.title); b.setAttribute('aria-pressed',String(live));
+  const onAi=live&&target&&target.id==='aiIn'; document.querySelectorAll('.kAiSendV').forEach(x=>{ x.hidden=!onAi; }); document.querySelectorAll('.kAiMic').forEach(x=>{ x.classList.toggle('live',live&&target&&target.id==='aiIn'); x.textContent=(live&&target&&target.id==='aiIn')?'■':'🎤'; x.title=(live&&target&&target.id==='aiIn')?'Listening… tap to stop without sending':'Talk to the AI instead of typing'; }); place(); bubble(); }
+ /* the AI chat: a 🎤 beside Send, always there, and ⚡ Send when I stop */
+ function aiMic(){ const s=document.querySelector('#kAI [data-ai="send"]'); if(!s||s.parentNode.querySelector('.kAiMic')) return; const m=document.createElement('button'); m.type='button'; m.className='kAiMic'; m.setAttribute('data-noul',''); m.textContent='🎤'; m.title='Talk to the AI instead of typing'; m.setAttribute('aria-label','Talk to the AI');
+  m.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); toggle($('aiIn')); }); s.insertAdjacentElement('beforebegin',m);
+  const v=document.createElement('button'); v.type='button'; v.className='kAiSendV'; v.hidden=true; v.setAttribute('data-noul',''); v.textContent='⬆'; v.title='Stop talking and send'; v.setAttribute('aria-label','Stop talking and send');
+  v.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); stopAndSend(); }); m.insertAdjacentElement('afterend',v);
+  const a=document.createElement('button'); a.type='button'; a.className='kAiAuto'+(autoSend?' on':''); a.setAttribute('data-noul',''); a.textContent='⚡ Send when I stop'; a.title='When on, your spoken message goes to the AI as soon as you stop talking'; a.setAttribute('aria-pressed',String(autoSend));
+  a.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); autoSend=!autoSend; putLS('kanin-ai-voicesend',autoSend); a.classList.toggle('on',autoSend); a.setAttribute('aria-pressed',String(autoSend)); say(autoSend?'⚡ Your spoken message goes to the AI when you stop talking.':'You press Send yourself after talking.'); }); s.insertAdjacentElement('afterend',a); }
+ document.addEventListener('focusin',()=>setTimeout(place,0),true);
+ document.addEventListener('focusout',()=>setTimeout(()=>{ if(!live&&document.activeElement!==$('kMic')) place(); },120),true);
+ addEventListener('scroll',()=>{ place(); bubble(); },true); addEventListener('resize',()=>{ place(); bubble(); });
+ setInterval(()=>{ aiMic(); place(); },700);
+ window.KMIC={toggle:f=>toggle(f||document.activeElement),get available(){ return !!D; },get listening(){ return live; }};
+})();
+
+</script>
+<script>
+(()=>{ /* 🧭 THE AI ON THE OMNI-COMPASS (v212): every request to the AI runs through the Omni-Compass before it leaves the page.
+   1. The reading: the request is sorted onto one of the compass's eight limbs (Story, Beat, Compass, Zodiac, Games, Voice, Film,
+      Clock); the live law engine gives that limb's ring letter, and the letter's lens steers the angle of the answer.
+   2. The governor: the compass law sits on top of the AI's own sense of length. The length the request asks for is the native
+      setting; a band around it with 5% cushions holds the answer, two antagonist forces push back from the edges, smoothed with
+      tanh so it never hammers; every answer read back moves the state, so length stays steady and inside the band.
+   Shown on screen: the letter and the limb, never the equations. Switch: 🧭 in the AI's header. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const LIMBS=['Story','Beat','Compass','Zodiac','Games','Voice','Film','Clock'];
+ const LENS={'Α':'origin: where it all begins','Ε':'energy: drive and momentum','Ζ':'zeal: passion and heat','Δ':'direction: a clear path to the goal','Η':'harmony: balance and resolution','Θ':'theme: the deeper meaning','Β':'the bridge: connections and turns','Ι':'identity: whose story it is','Κ':'craft: technique and detail','Λ':'logic: cause and reason','Μ':'memory: the past that shapes it','Ν':'novelty: the surprising and new','Ω':'the outcome: the ending it earns','Ξ':'exchange: dialogue and give-and-take','Ο':'order: structure and form','Π':'pulse: rhythm and pace','Ρ':'resonance: feeling that lingers','Σ':'synthesis: parts brought together','Γ':'ground: the concrete and real','Τ':'tension: conflict and stakes','Υ':'unity: one voice, one whole','Ψ':'psyche: the inner mind','Φ':'flow: ease and movement','Χ':'change: transformation'};
+ let on=getLS('kanin-ai-compass',true), last=null; const X=getLS('kanin-ai-compass-x',{});
+ const KW=[[1,/\b(beat|song|rap|lyric|verse|hook|chorus|music|melody|chord|bpm|drum|producer?)\b/i],[3,/\b(zodiac|horoscope|sign|astrolog|birth ?chart|moon|aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\b/i],[4,/\b(game|level|puzzle|quest|player|score)\b/i],[5,/\b(voice|read (it )?aloud|speak|narrat|pronounc|accent)\b/i],[6,/\b(film|movie|video|script|scene|shot|screenplay|trailer)\b/i],[7,/\b(time|clock|schedule|plan|today|tomorrow|week|calendar|deadline)\b/i],[2,/\b(compass|omni|direction|decide|choice|which way)\b/i]];
+ const limbOf=q=>{ for(const [i,re] of KW) if(re.test(q)) return i; return 0; };
+ function nativeLen(q){ const m=/(\d{2,4})\s*(words?|lines?)/i.exec(q); if(m) return Math.max(20,Math.min(1500,+m[1]*(/line/i.test(m[2])?9:1)));
+  if(/\b(short|brief|quick|one line|tl;?dr|in a sentence)\b/i.test(q)) return 60; if(/\b(song|poem|story|script|scene|chapter|lyrics|rap)\b/i.test(q)) return 350; if(/\b(list|steps|plan|outline)\b/i.test(q)) return 200; return 140; }
+ /* the compass law: band, cushions, two forces, tanh smoothing */
+ function govern(kind,n0){ const lo=n0*0.8, hi=n0*1.2, span=hi-lo, cl=lo+0.05*span, ch=hi-0.05*span, s=Math.max(10,0.1*n0); const x=X[kind]!=null?X[kind]:n0;
+  const up=x<cl?Math.tanh((cl-x)/s):0, dn=x>ch?Math.tanh((x-ch)/s):0; let t=x+0.5*span*(up-dn); if(!up&&!dn) t=x+0.25*span*Math.tanh((n0-x)/s); t=Math.max(lo,Math.min(hi,t)); return {target:Math.round(t),lo:Math.round(lo),hi:Math.round(hi)}; }
+ function reading(q){ const limb=limbOf(q); let L=null; try{ L=UNILAW.state().letters[limb]; }catch(_){ } if(!L){ const R='ΑΕΖΔΗΘΒΙΚΛΜΝΩΞΟΠΡΣΓΤΥΨΦΧ'; L=R[(new Date().getHours()*7+limb*3)%24]; } const n0=nativeLen(q); const kind=LIMBS[limb]; const g=govern(kind,n0); return {limb,kind,L,lens:LENS[L]||'',n0,...g}; }
+ function frame(q){ if(!on) return ''; const r=reading(q); last=r; paint();
+  return '[Omni-Compass reading for this answer · limb: '+r.kind+' · ring letter '+r.L+(r.lens?' ('+r.lens+')':'')+'. Let this lens shape the angle of the answer without naming the compass unless asked. Length governor: aim for about '+r.target+' words, staying between '+r.lo+' and '+r.hi+', unless the person asked for a different length.]'; }
+ function observe(text){ if(!last||!text) return; const w=(String(text).trim().match(/\S+/g)||[]).length; const k=last.kind; X[k]=X[k]==null?w:Math.round(0.6*X[k]+0.4*w); putLS('kanin-ai-compass-x',X); }
+ function paint(){ const a=document.querySelector('#kAI [data-ai="auto"]'); if(!a) return; let c=$('kAiCompass'); if(!c){ c=document.createElement('button'); c.type='button'; c.id='kAiCompass'; c.setAttribute('data-noul',''); a.insertAdjacentElement('afterend',c);
+   c.addEventListener('click',e=>{ e.stopPropagation(); on=!on; putLS('kanin-ai-compass',on); paint(); say(on?'🧭 Omni-Compass ON: every answer is steered by the compass and held in its band.':'🧭 Omni-Compass OFF: the AI answers on its own.'); }); }
+  const t=on?('🧭 Compass ON'+(last?' · '+last.L+' '+last.kind:'')):'🧭 Compass OFF'; if(c.textContent!==t) c.textContent=t; c.classList.toggle('on',on); c.setAttribute('aria-pressed',String(on)); c.title=on?(last?'Last answer steered by '+last.kind+' letter '+last.L+(last.lens?' ('+last.lens+')':'')+', held near '+last.target+' words. Tap to turn off.':'Every answer is steered by the Omni-Compass. Tap to turn off.'):'Tap to steer every answer with the Omni-Compass.'; }
+ setInterval(paint,800);
+ window.KOMNIAI={frame,observe,reading,get on(){ return on; }};
 })();
 
 </script>

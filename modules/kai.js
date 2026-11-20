@@ -54,11 +54,11 @@
  async function send(text){ const inp=$('aiIn'); const q=(text||(inp&&inp.value)||'').trim(); if(!q) return; if(busy) return say('Wait for this answer, or press ⏹ Stop.');
   if(!sample) return say(ready==='no'?'The AI needs you signed in to claude.ai.':'Connecting to the AI… try again in a moment.');
   chat.push({role:'user',content:q}); chat.push({role:'assistant',content:''}); if(inp) inp.value=''; const ctl=new AbortController(); busy=ctl; paint();
-  let hist=chat.slice(0,-1).slice(-16).map(m=>({role:m.role,content:m.content||'…'})); while(hist.length&&hist[0].role!=='user') hist.shift(); hist[0]={role:'user',content:GUIDE+'\n\n'+hist[0].content};
+  let hist=chat.slice(0,-1).slice(-16).map(m=>({role:m.role,content:m.content||'…'})); while(hist.length&&hist[0].role!=='user') hist.shift(); hist[0]={role:'user',content:GUIDE+'\n\n'+hist[0].content}; try{ if(window.KOMNIAI){ const f=KOMNIAI.frame(q); if(f){ const n=hist.length-1; hist[n]={role:'user',content:hist[n].content+'\n\n'+f}; } } }catch(_){ }
   try{ const r=await sample(hist,{signal:ctl.signal,cache:false,onText:({text})=>{ chat[chat.length-1].content=text; const ms=document.querySelectorAll('#aiLog .aiMsg.a'); const last=ms[ms.length-1]; if(last&&last.firstChild) last.firstChild.textContent=clean(text); else paint(); const lg=$('aiLog'); if(lg) lg.scrollTop=lg.scrollHeight; }});
    chat[chat.length-1].content=(r&&r.text)||chat[chat.length-1].content||'…'; }
   catch(e){ const c=e&&e.code; chat[chat.length-1].content=c==='not_granted'?'The AI was not allowed on this page. You can allow it from the page’s permissions.':c==='rate_limited'?'The AI is busy. Wait a minute and try again.':(chat[chat.length-1].content||'')+(ctl.signal.aborted?'\n⏹ Stopped.':'\nThe answer did not come through. Try again.'); if(c==='not_granted'){ sample=null; ready='no'; } }
-  busy=null; putLS('kanin-ai-chat',chat.slice(-40)); paint(); if(auto&&acts(chat[chat.length-1].content).length) runAll(chat.length-1); }
+  try{ if(window.KOMNIAI) KOMNIAI.observe(chat[chat.length-1].content); }catch(_){ } busy=null; putLS('kanin-ai-chat',chat.slice(-40)); paint(); if(auto&&acts(chat[chat.length-1].content).length) runAll(chat.length-1); }
  function onClick(e){ const b=e.target.closest('[data-ai]'); if(!b) return; e.stopPropagation(); const k=b.dataset.ai, m=chat[+b.dataset.i];
   if(k==='close') return close(); if(k==='send') return send(); if(k==='quick') return send(QUICK[+b.dataset.n][1]);
   if(k==='stop'){ if(busy) busy.abort(); return; }
