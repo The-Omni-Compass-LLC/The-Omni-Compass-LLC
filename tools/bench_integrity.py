@@ -29,6 +29,20 @@ PAUSE = 'omnicompass.io/paused-by-omni'
 # for it, none gone, none new. Any other gap fails the receipt, as every gap did before.
 EXPIRED = ('Expired', 'too old resource version', '(410)', 'Gone')
 RETRIES = 5
+# An API server that stops answering for a while (kind's one API server is a container on the same runner as the nodes
+# and the organism) is waited out, never taken for a gap: each failed request waits twice the last (1 s up to 30 s) and
+# the watch resumes at the last resourceVersion delivered, so the server replays every event after it (or the history
+# has expired and the bridge above proves the gap empty, or the receipt fails). Only an API server unanswered for STALL_S
+# fails the receipt; every stall is written in it (when, how long, how many requests). Found on the 500-copy grid of
+# 15 and 16 November 2026 (runs 43759372686, 43807915219, 43809655929, 43904675592): the API server refused TLS
+# handshakes for about a minute in the Omni-Compass arm, the five 1-second retries were spent in under a minute, and
+# a complete, handed-back arm was refused for it; its native arm, the same repetition, had none.
+STALL_S = 900.0
+
+
+def backoff(failures):
+    """The wait after the n-th failed request in a row: 1, 2, 4, 8, 16, then 30 s."""
+    return min(30.0, 2.0 ** (failures - 1))
 LIST = ['get', 'pods', '-n', 'default', '-l', 'run=php-apache', '-o', 'json', '--request-timeout=20s']
 # A write refused by its resourceVersion precondition is read again and retried while the object is still ours: on a
 # live cluster the HPA and the Deployment controller write the same object (run 40938221203, repetition 349: the reset's
@@ -84,14 +98,16 @@ def bridge(listing, last, live):
             'empty': None not in (after, before) and after >= before and not written and not gone}
 
 
-def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.Popen, sleep=time.sleep):
+def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.Popen, sleep=time.sleep,
+            clock=time.monotonic):
     """A LIST followed by watches at its resourceVersion; a new LIST only across a gap it proves empty.
 
     Every clean server timeout resumes the last event/bookmark's resourceVersion, and so does a request the client
     cut, its unfinished last line dropped (the resumed watch delivers that event again). History the watch cache no
     longer holds (410) is bridged by a fresh LIST only when that LIST proves the gap empty (bridge); each gap is written
-    in the receipt. A gap that is not empty, malformed JSON, any other API error, and RETRIES failed requests (or more
-    than RETRIES expired histories) in a row fail the receipt.
+    in the receipt. An API server that does not answer is waited out (backoff) and each stall written in the receipt.
+    A gap that is not empty, malformed JSON, any other API error, an API server unanswered for STALL_S, and more than
+    RETRIES expired histories in a row fail the receipt.
     A stop file drains the current bounded request before the collector exits.
     """
     directory = Path(directory)
@@ -119,16 +135,31 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                     live[meta['uid']] = meta.get('resourceVersion')
                 return meta['resourceVersion']
 
+            def waited(failures, since):
+                """After the n-th failed request in a row: fail once the API server has been unanswered for STALL_S,
+                else wait (backoff) and say so in the receipt."""
+                receipt['client_retries'] += 1
+                if clock() - since >= STALL_S:
+                    return False
+                sleep(backoff(failures))
+                return True
+
+            def stalled(failures, since):
+                if failures:
+                    receipt.setdefault('stalls', []).append({'at': time.time(), 'seconds': round(clock() - since, 1),
+                                                             'failed_requests': failures})
+
             def bridged(last):
-                for attempt in range(1, RETRIES + 1):
+                attempt, since = 0, clock()
+                while True:
                     try:
                         fresh = listing()
                         break
                     except (subprocess.CalledProcessError, ValueError):
-                        if attempt == RETRIES:
+                        attempt += 1
+                        if not waited(attempt, since):
                             raise
-                        receipt['client_retries'] += 1
-                        sleep(1)
+                stalled(attempt, since)
                 gap = bridge(fresh, last, live)
                 gap['at'] = time.time()
                 receipt.setdefault('gaps', []).append(gap)
@@ -141,6 +172,7 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                 keep({'type': 'ADDED', 'object': pod})
             (directory / 'pod_watch.ready').touch()
             failures = refusals = 0
+            since = clock()
             with err_path.open('w') as errors:
                 while not stop.exists():
                     query = urlencode({'watch': 'true', 'labelSelector': 'run=php-apache',
@@ -185,17 +217,20 @@ def collect(directory, kubectl='kubectl', run=subprocess.run, popen=subprocess.P
                         version = bridged(version)
                         continue
                     if code != 0:
+                        if not failures:
+                            since = clock()
                         failures += 1
-                        receipt['client_retries'] += 1
-                        if failures >= RETRIES:
-                            raise RuntimeError('pod watch client failed %d times in a row; see pod_watch.err' % failures)
-                        sleep(1)
+                        if not waited(failures, since):
+                            raise RuntimeError('pod watch client failed %d times in a row over %.0f s; '
+                                               'see pod_watch.err' % (failures, clock() - since))
                         continue
                     for event in read_events(cut):
                         version = keep(event)
+                    stalled(failures, since)
                     failures = refusals = 0
                     receipt['segments'] += 1
                     receipt['last_resource_version'] = version
+                stalled(failures, since)        # still unanswered when the stop came: said, and validate judges it
         receipt['complete'] = True
     except Exception as error:
         receipt['error'] = str(error)

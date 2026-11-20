@@ -316,6 +316,25 @@ class ReleaseCampaign(unittest.TestCase):
         self.assertEqual(len(calls), 10)
         self.assertEqual(running, 1000)
 
+    def test_a_result_that_carries_is_not_run_again(self):
+        """The founder's orders of 7 and 20 November: a benchmark whose every table carries to the engine that stands is
+        left out of the reruns; one whose engine code moved (the Kubernetes governor on omni-v27) runs as before, and a
+        carry record written for another engine leaves nothing out."""
+        carried = grid.carried_workflows()
+        for wf in ("pgbench.yml", "sysbench.yml", "redis.yml", "ycsb.yml", "kafka.yml", "swarm.yml", "citylearn.yml",
+                   "pandapower.yml", "orchestrator.yml"):
+            self.assertIn(wf, carried)
+        for wf in ("benchmark.yml", "live-kind.yml", "kind-orchestrators.yml", "mujoco.yml", "cpu-power.yml"):
+            self.assertNotIn(wf, carried)
+        record = json.loads(grid.CARRY_JSON.read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as tmp:
+            other = Path(tmp) / "carry.json"
+            other.write_text(json.dumps({**record, "engine_standing": "omni-v1"}))
+            self.assertEqual(grid.carried_workflows(other), set())
+            self.assertEqual(grid.carried_workflows(Path(tmp) / "none.json"), set())
+        queue = [q for q in grid.rerun_queue() if q[2] not in carried]
+        self.assertTrue(queue and not any(q[2] == "pgbench.yml" for q in queue))
+
 
 if __name__ == '__main__':
     unittest.main()

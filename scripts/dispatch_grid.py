@@ -116,6 +116,33 @@ RIG_WORKFLOWS = ("benchmark.yml", "benchmark-reps.yml", "big-organism.yml", "cap
                  "kind-crane.yml", "kind-cruisekube.yml", "kind-godel.yml", "kind-goldilocks.yml", "kind-group.yml",
                  "kind-orchestrators.yml", "robustness.yml")
 RERUN_JOBS = 10                    # jobs one rerun is counted as toward the queue's target
+# a result that carries is not run again (the founder's orders of 7 November: "if you're not updating something that's ...
+# doing anything, then we use the one that's got all that if it hasn't moved"; and of 20 November: "if the old ones are
+# perfect and run, we ain't got to keep running them ... We just got to strengthen the ones we got"): a workflow whose
+# runner's every table carries to the engine that stands (results/CARRY.json, tools/carry.py: every fingerprinted file the
+# runner imports has the same bytes on the table's engine and on this one) is left out of the reruns; its tables stand under
+# their own engine's name. A runner with any table that runs again, or with no table, runs as before.
+CARRY_JSON = ROOT / "results" / "CARRY.json"
+WORKFLOW_RUNNER = {"pgbench.yml": "tools/run_pgbench.py", "sysbench.yml": "tools/run_sysbench.py",
+                   "redis.yml": "tools/run_redis.py", "ycsb.yml": "tools/run_ycsb.py", "kafka.yml": "tools/run_kafka.py",
+                   "mujoco.yml": "tools/run_mujoco.py", "swarm.yml": "tools/run_swarm.py",
+                   "citylearn.yml": "tools/run_citylearn.py", "pandapower.yml": "tools/run_pandapower.py",
+                   "cpu-power.yml": "tools/run_cpu_power.py", "orchestrator.yml": "omni_orchestrator/brain.py"}
+
+
+def carried_workflows(path=None):
+    """The rerun workflows whose every table carries to the engine that stands; none when the carry record was written for
+    another engine (it would say nothing about this one) or cannot be read."""
+    try:
+        record = json.loads(Path(path or CARRY_JSON).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    if record.get("engine_standing") != ENGINE:
+        return set()
+    states = {}
+    for row in record.get("rows", []):
+        states.setdefault(row.get("runner"), set()).add(row.get("state"))
+    return {wf for wf, runner in WORKFLOW_RUNNER.items() if states.get(runner) == {"carries"}}
 # the workflows whose run records the label it was started with (A, B or C): the conductor passes the rerun's own letter
 # (19 October; before, a run it started read the workflow's default, A, in its own record)
 LABELLED = ("capacity.yml", "kind-crane.yml", "kind-godel.yml", "kind-group.yml", "kind-orchestrators.yml", "orchestra.yml",
@@ -1038,7 +1065,10 @@ def main(argv=None):
         print(f"waits for a runner and goes first: {t}")
     reruns = []
     if a.grid == "all" and not first:
-        queue = [q for q in rq if cloud_of(q[2]) is None]       # a cloud's reruns stand in its own line (above)
+        carried = carried_workflows()
+        queue = [q for q in rq if cloud_of(q[2]) is None and q[2] not in carried]   # a cloud's reruns stand in its own line
+        for wf in sorted(carried):
+            print(f"carries to {ENGINE}, not run again: {wf}")
         if queue:
             for run, name, wf, kv in reruns_to_start(queue, reruns_started(queue))[:a.reruns_per_tick]:
                 if inflight >= target:
