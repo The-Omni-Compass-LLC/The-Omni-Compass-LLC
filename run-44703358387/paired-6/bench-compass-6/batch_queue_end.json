@@ -1,0 +1,1006 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "scheduling.run.ai/v2",
+            "kind": "Queue",
+            "metadata": {
+                "annotations": {
+                    "argocd.argoproj.io/sync-options": "Prune=false",
+                    "helm.sh/resource-policy": "keep",
+                    "meta.helm.sh/release-name": "kai-scheduler",
+                    "meta.helm.sh/release-namespace": "kai-scheduler"
+                },
+                "creationTimestamp": "2026-11-20T08:54:33Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "Helm"
+                },
+                "name": "default-parent-queue",
+                "resourceVersion": "11065",
+                "uid": "6067a220-2198-4630-8fa5-0119dac746ef"
+            },
+            "spec": {
+                "resources": {
+                    "cpu": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    },
+                    "gpu": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    },
+                    "memory": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    }
+                }
+            },
+            "status": {
+                "childQueues": [
+                    "default-queue"
+                ]
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2",
+            "kind": "Queue",
+            "metadata": {
+                "annotations": {
+                    "argocd.argoproj.io/sync-options": "Prune=false",
+                    "helm.sh/resource-policy": "keep",
+                    "meta.helm.sh/release-name": "kai-scheduler",
+                    "meta.helm.sh/release-namespace": "kai-scheduler"
+                },
+                "creationTimestamp": "2026-11-20T08:54:33Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "Helm"
+                },
+                "name": "default-queue",
+                "resourceVersion": "11064",
+                "uid": "128ddd57-edbb-4292-9b9d-f06edfb1e2e8"
+            },
+            "spec": {
+                "parentQueue": "default-parent-queue",
+                "resources": {
+                    "cpu": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    },
+                    "gpu": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    },
+                    "memory": {
+                        "limit": -1,
+                        "overQuotaWeight": 1,
+                        "quota": 0
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T08:57:44Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-001\nuid: 63177374-2f1a-4582-804c-9f1d5953f221\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-001\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T08:57:44Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-001-63177374-2f1a-4582-804c-9f1d5953f221",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-001",
+                        "uid": "63177374-2f1a-4582-804c-9f1d5953f221"
+                    }
+                ],
+                "resourceVersion": "2742",
+                "uid": "460e46b7-f8dc-481d-8389-331766c99d21"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T08:58:14Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-002\nuid: 208e5ab8-032f-408c-8320-7e2021838579\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-002\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T08:58:14Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-002-208e5ab8-032f-408c-8320-7e2021838579",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-002",
+                        "uid": "208e5ab8-032f-408c-8320-7e2021838579"
+                    }
+                ],
+                "resourceVersion": "3078",
+                "uid": "acb1fd47-ad53-4762-9c3b-2a36f5becaf3"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T08:59:04Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-003\nuid: 95a73a85-d6c2-4bd1-8b61-31e63ef2ef5a\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-003\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T08:58:44Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-003-95a73a85-d6c2-4bd1-8b61-31e63ef2ef5a",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-003",
+                        "uid": "95a73a85-d6c2-4bd1-8b61-31e63ef2ef5a"
+                    }
+                ],
+                "resourceVersion": "3427",
+                "uid": "8bcd8d04-4c55-48bf-8370-e40cf17b842b"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T08:59:15Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-004\nuid: 2749da5e-a0b6-4dd7-bd77-d877b94b73df\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-004\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T08:59:14Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-004-2749da5e-a0b6-4dd7-bd77-d877b94b73df",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-004",
+                        "uid": "2749da5e-a0b6-4dd7-bd77-d877b94b73df"
+                    }
+                ],
+                "resourceVersion": "3776",
+                "uid": "50e71f75-45ed-4d0d-8ba3-e999118e3e8d"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:00:05Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-005\nuid: 1b57048f-cc30-420c-af68-84c8dd1f503e\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-005\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T08:59:44Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-005-1b57048f-cc30-420c-af68-84c8dd1f503e",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-005",
+                        "uid": "1b57048f-cc30-420c-af68-84c8dd1f503e"
+                    }
+                ],
+                "resourceVersion": "4222",
+                "uid": "2c6a7938-ad17-4bfd-b1e3-08a60b931958"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:00:37Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-006\nuid: 611dc744-c7bc-423e-9396-98c956bd6f75\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-006\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:00:14Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-006-611dc744-c7bc-423e-9396-98c956bd6f75",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-006",
+                        "uid": "611dc744-c7bc-423e-9396-98c956bd6f75"
+                    }
+                ],
+                "resourceVersion": "4649",
+                "uid": "c807ab81-477b-464a-a1de-b5d74dd685d0"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:00:45Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-007\nuid: bc533342-2e7e-4648-8e31-93e044d76105\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-007\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:00:44Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-007-bc533342-2e7e-4648-8e31-93e044d76105",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-007",
+                        "uid": "bc533342-2e7e-4648-8e31-93e044d76105"
+                    }
+                ],
+                "resourceVersion": "5084",
+                "uid": "f020ce19-99dc-4bfe-a0c4-23539059c722"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:01:15Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-008\nuid: 66951d9c-9c36-4486-bbb9-9bfabc24238a\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-008\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:01:14Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-008-66951d9c-9c36-4486-bbb9-9bfabc24238a",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-008",
+                        "uid": "66951d9c-9c36-4486-bbb9-9bfabc24238a"
+                    }
+                ],
+                "resourceVersion": "5402",
+                "uid": "7b37962c-5589-4dc2-9afb-0d7991a53dae"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:01:45Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-009\nuid: 703ca895-dc32-4fa1-aa68-be73deb8ccee\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-009\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:01:44Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-009-703ca895-dc32-4fa1-aa68-be73deb8ccee",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-009",
+                        "uid": "703ca895-dc32-4fa1-aa68-be73deb8ccee"
+                    }
+                ],
+                "resourceVersion": "5739",
+                "uid": "097bd287-b000-4402-b0ff-5124ea1bdb94"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:02:16Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-010\nuid: cd112797-fc62-48dd-9c40-923296701598\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-010\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:02:15Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-010-cd112797-fc62-48dd-9c40-923296701598",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-010",
+                        "uid": "cd112797-fc62-48dd-9c40-923296701598"
+                    }
+                ],
+                "resourceVersion": "6109",
+                "uid": "f00c48a4-f17e-4b82-89e1-966b1108c5bc"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:02:45Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-011\nuid: d13b2129-d4de-4f58-98f0-789d65a9673c\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-011\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:02:45Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-011-d13b2129-d4de-4f58-98f0-789d65a9673c",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-011",
+                        "uid": "d13b2129-d4de-4f58-98f0-789d65a9673c"
+                    }
+                ],
+                "resourceVersion": "6514",
+                "uid": "ca51b099-e4e1-4e6e-a129-647505dde36e"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:03:15Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-012\nuid: 78406266-4d51-46dd-a269-bfd6cf1d9d30\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-012\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:03:15Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-012-78406266-4d51-46dd-a269-bfd6cf1d9d30",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-012",
+                        "uid": "78406266-4d51-46dd-a269-bfd6cf1d9d30"
+                    }
+                ],
+                "resourceVersion": "6884",
+                "uid": "ec1545b4-3dd1-4cf7-82ef-9dee4772b805"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:03:46Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-013\nuid: 4ba3c5da-e3ac-4ee9-a964-f9f3518e753a\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-013\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:03:45Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-013-4ba3c5da-e3ac-4ee9-a964-f9f3518e753a",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-013",
+                        "uid": "4ba3c5da-e3ac-4ee9-a964-f9f3518e753a"
+                    }
+                ],
+                "resourceVersion": "7369",
+                "uid": "42de16b0-50df-464d-8705-accc05a51783"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:04:16Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-014\nuid: f484bfeb-d472-48f6-bed1-ee1e32d8cdf9\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-014\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:04:15Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-014-f484bfeb-d472-48f6-bed1-ee1e32d8cdf9",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-014",
+                        "uid": "f484bfeb-d472-48f6-bed1-ee1e32d8cdf9"
+                    }
+                ],
+                "resourceVersion": "7683",
+                "uid": "f82b26c5-d982-44cb-9a6d-acbf62bb7592"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:04:47Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-015\nuid: c40184ba-d161-43bc-a85f-fcad1ca72423\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-015\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:04:46Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-015-c40184ba-d161-43bc-a85f-fcad1ca72423",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-015",
+                        "uid": "c40184ba-d161-43bc-a85f-fcad1ca72423"
+                    }
+                ],
+                "resourceVersion": "8064",
+                "uid": "95fd4d19-cd2e-4c59-8bf5-d7382daf0912"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:05:16Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-016\nuid: 92f90426-e4b6-4e49-a7e5-7700252fab13\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-016\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:05:16Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-016-92f90426-e4b6-4e49-a7e5-7700252fab13",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-016",
+                        "uid": "92f90426-e4b6-4e49-a7e5-7700252fab13"
+                    }
+                ],
+                "resourceVersion": "8416",
+                "uid": "1ec2dd77-b5d5-46f2-9b08-316c2969304a"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:05:47Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-017\nuid: 41b37751-5bbd-46cf-8fd9-0f74667390eb\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-017\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:05:46Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-017-41b37751-5bbd-46cf-8fd9-0f74667390eb",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-017",
+                        "uid": "41b37751-5bbd-46cf-8fd9-0f74667390eb"
+                    }
+                ],
+                "resourceVersion": "8765",
+                "uid": "3c9ab04d-966d-425e-b53d-3caa19bf3a95"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:06:17Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-018\nuid: 4c509de4-c72f-4e61-9640-c0f52239a604\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-018\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:06:16Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-018-4c509de4-c72f-4e61-9640-c0f52239a604",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-018",
+                        "uid": "4c509de4-c72f-4e61-9640-c0f52239a604"
+                    }
+                ],
+                "resourceVersion": "9132",
+                "uid": "2c22cd66-f3c6-4e0b-9f84-4658c29c3dc4"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:06:47Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-019\nuid: cbe5026c-bc18-4442-b084-bda9c35c0f41\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-019\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:06:46Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-019-cbe5026c-bc18-4442-b084-bda9c35c0f41",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-019",
+                        "uid": "cbe5026c-bc18-4442-b084-bda9c35c0f41"
+                    }
+                ],
+                "resourceVersion": "9490",
+                "uid": "c2e6517a-b82a-44c4-924f-60466c6b6329"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:07:17Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-020\nuid: fc313aba-e2bd-4106-a09f-2db1bcb1cc6d\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-020\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:07:17Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-020-fc313aba-e2bd-4106-a09f-2db1bcb1cc6d",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-020",
+                        "uid": "fc313aba-e2bd-4106-a09f-2db1bcb1cc6d"
+                    }
+                ],
+                "resourceVersion": "9849",
+                "uid": "aabbac03-e02e-4e0f-bf24-fda8e5c7c3bf"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:07:47Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-021\nuid: ba892b7d-c594-436b-9554-03ef8c20b320\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-021\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:07:47Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-021-ba892b7d-c594-436b-9554-03ef8c20b320",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-021",
+                        "uid": "ba892b7d-c594-436b-9554-03ef8c20b320"
+                    }
+                ],
+                "resourceVersion": "10229",
+                "uid": "cb9c2f02-19b6-4bad-8c97-f976befea497"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:08:18Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-022\nuid: 972d1321-982d-451f-b463-81253adc2743\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-022\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:08:17Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-022-972d1321-982d-451f-b463-81253adc2743",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-022",
+                        "uid": "972d1321-982d-451f-b463-81253adc2743"
+                    }
+                ],
+                "resourceVersion": "10578",
+                "uid": "7c3226f9-39e6-436a-b4ea-ab1973af10e9"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:08:48Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-023\nuid: 156b7fd0-b73f-4a1c-859a-256c2107d777\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-023\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:08:47Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-023-156b7fd0-b73f-4a1c-859a-256c2107d777",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-023",
+                        "uid": "156b7fd0-b73f-4a1c-859a-256c2107d777"
+                    }
+                ],
+                "resourceVersion": "10970",
+                "uid": "65429da3-bdf5-4dae-9e21-b414506694b9"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        },
+        {
+            "apiVersion": "scheduling.run.ai/v2alpha2",
+            "kind": "PodGroup",
+            "metadata": {
+                "annotations": {
+                    "kai.scheduler/last-start-timestamp": "2026-11-20T09:09:18Z",
+                    "kai.scheduler/top-owner-metadata": "name: omni-batch-024\nuid: a685eaac-8ddb-4f75-9470-3d84b5e2204c\ngroup: batch\nversion: v1\nkind: Job\n",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"},\"name\":\"omni-batch-024\",\"namespace\":\"default\"},\"spec\":{\"backoffLimit\":20,\"completions\":10,\"parallelism\":5,\"template\":{\"metadata\":{\"labels\":{\"app\":\"omni-batch-stream\",\"kai.scheduler/queue\":\"default-queue\"}},\"spec\":{\"containers\":[{\"command\":[\"/bin/sh\",\"-c\",\"dd if=/dev/zero bs=1M count=3000 2\\u003e/dev/null | sha256sum\"],\"image\":\"busybox:1.36\",\"name\":\"work\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"64Mi\"}}}],\"restartPolicy\":\"Never\",\"schedulerName\":\"kai-scheduler\"}}}}\n"
+                },
+                "creationTimestamp": "2026-11-20T09:09:17Z",
+                "generation": 1,
+                "labels": {
+                    "app": "omni-batch-stream",
+                    "kai.scheduler/queue": "default-queue"
+                },
+                "name": "pg-omni-batch-024-a685eaac-8ddb-4f75-9470-3d84b5e2204c",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "name": "omni-batch-024",
+                        "uid": "a685eaac-8ddb-4f75-9470-3d84b5e2204c"
+                    }
+                ],
+                "resourceVersion": "11063",
+                "uid": "7e44e1af-ddb2-4872-96e1-a05112e3037d"
+            },
+            "spec": {
+                "minMember": 1,
+                "priorityClassName": "train",
+                "queue": "default-queue",
+                "topologyConstraint": {}
+            },
+            "status": {
+                "resourcesStatus": {}
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}
