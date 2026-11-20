@@ -1,3 +1,4 @@
+# Applied for v199; v200 then removed the die face shown over each hit (a hit is a plain starburst again).
 import re
 p='canon/canon.html'; s=open(p,encoding='utf-8').read()
 def rep(a,b,n=1):

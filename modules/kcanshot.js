@@ -1,6 +1,6 @@
-(()=>{ /* THE LOGO CANNON FIRES (v199). Its bullet is one die, like every cannon's: the face it lands on picks the limb it reads. The little cannon between KAN and IN never kicks without firing: one clock drives the kick and
-   the shot together. Each kick is a real shot: a muzzle flash and smoke, a glowing shell on a live arc out of the barrel, and a
-   starburst where it lands that shows the letter the live engine holds for one of its eight limbs (read, never moved). Tap the
+(()=>{ /* THE LOGO CANNON FIRES (v199). Its bullet is one die, like every cannon's; it lands in a starburst. The little cannon between KAN and IN never kicks without firing: one clock drives the kick and
+   the shot together. Each kick is a real shot: a muzzle flash and smoke, a die on a live arc out of the barrel, and a starburst
+   where it lands, like every cannon's hit. Tap the
    cannon to fire it by hand. Nothing fires while the opening game is up, while a screen covers the cannon, with effects off, or
    for people who ask their device for reduced motion. Silent: one sound at a time stays the rule. */
  const GL='ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ', LIMBS=['Story','Beat','Compass','Zodiac','Games','Voice','Film','Clock'];
@@ -28,7 +28,7 @@
  function burst(x,y,limb,k,now,f){ const cols=['#ffe94a','#ff6ad5','#6fe8ff','#b48cff','#7dff8a','#ffa94d','#ff5a5a','#ffffff'];
   for(let i=0;i<26;i++){ const a=Math.PI*2*i/26+Math.random()*0.2, sp=(90+Math.random()*170)*k; parts.push({kind:'spark',x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,t0:now,life:520+Math.random()*380,c:cols[(i+limb)%cols.length]}); }
   parts.push({kind:'ring',x,y,t0:now,life:520,r:6*k,c:cols[limb%cols.length]});
-  const lo=70, hi=innerWidth-railW()-70; tags.push({x:Math.max(lo,Math.min(hi,x)),y,t0:now,life:1300,txt:'🎲 '+f+' · '+letter(limb)+' · '+LIMBS[limb],k}); }
+  /* the hit is a plain starburst: no number over it */ }
  function loop(now){ raf=0; if(!g) return; g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,innerWidth,innerHeight);
   shells=shells.filter(s=>{ const t=Math.min(1,(now-s.t0)/1000/s.T); const x=s.x0+s.dist*t, y=s.y0-4*s.h*t*(1-t); s.trail.push([x,y]); if(s.trail.length>10) s.trail.shift();
    s.trail.forEach(([tx,ty],i)=>{ g.globalAlpha=(i+1)/s.trail.length*0.5; g.fillStyle='#ffd34a'; g.beginPath(); g.arc(tx,ty,s.r*(0.35+0.6*i/s.trail.length),0,7); g.fill(); });
