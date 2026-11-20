@@ -58,16 +58,15 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
  /* what each level hides: on Easy the deep parts of home and the Studio step aside (nothing deleted) */
  const HOME_DEEP=['master','contents','manual','monitors','control','s-rail','s-words','s-drive','shape','outputs','s-referee'];
  const HOME_DEEP_CLS=['nav.stagenav','section.monitors','section.bay','section.deck','section.outbay'];
- const PAD_DEEP=['bbBar','crSec','kTrans','mxBanks','kStudioHead','kIO','padMixer','kDjStrips','trBar','kLockBeat','cmpWrap','vocSec','kSeqTools'];
+ const PAD_DEEP=[]; /* the Studio keeps every part at every level: the sequencer and mixer first, every module below */
  const EASY_MENU=/^(🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
  const tagLv=e=>{ if(e&&e.dataset.lvl!=='avg'&&e.dataset.lvl!=='pro') e.dataset.lvl='avg'; };
  let easyPadFor='';
  function tag(){ HOME_DEEP.forEach(id=>tagLv($(id))); HOME_DEEP_CLS.forEach(s=>document.querySelectorAll('.wrap>'+s).forEach(tagLv)); PAD_DEEP.forEach(id=>tagLv($(id)));
-  const pad=$('pad'); if(pad){ pad.querySelectorAll('h4').forEach(h=>{ if(/^🎚 Mixer/.test(h.textContent.trim())){ tagLv(h); const n=h.nextElementSibling; if(n&&n.tagName==='P') tagLv(n); } }); pad.querySelectorAll(':scope div').forEach(d=>{ if(d.children.length&&d.children.length<12&&/^▶ Play loop/.test(d.textContent.trim())&&!d.querySelector('#bbBar')) tagLv(d); }); }
+  /* the Studio hides nothing on any level */
   const t=$('tourTab'); if(t) t.querySelectorAll('.kStartB').forEach(b=>{ const on=EASY_MENU.test(b.textContent.trim()); if(on&&!b.hasAttribute('data-easy')) b.setAttribute('data-easy',''); });
   panel('kEasyHome',()=>document.querySelector('.wrap>header.mast')||document.querySelector('.wrap>header'),'afterend','🟢 What do you want to do?','Tap one big button. That is all it takes.',HOME);
-  /* on Easy the 16 pads sit in the page under the giant buttons, not in a floating window over them */
-  const L=lv(), id=cur(); if(L==='easy'&&id==='pad'&&easyPadFor!==id+L){ easyPadFor=id+L; try{ if(KRAIL.FLOAT.isOpen('pads')) KRAIL.FLOAT.close('pads'); }catch(_){ } } if(id!=='pad'||L!=='easy') easyPadFor='';
+    /* the pads keep floating over the sequencer on every level */
   panel('kEasyStudio',()=>$('bbBar'),'beforebegin','🟢 Easy Studio','Tap 🎲 Make me a beat, then ▶ Play. Or tap the colored pads below to play sounds yourself.',STU); }
  setInterval(tag,1000); tag();
  /* ── ONE UNDO ── every knob, slider, picker and switch remembers its last value; the screen's own undo covers its own edits */
@@ -78,7 +77,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
  const snap=e=>{ if(isCtl(e)&&e.__kuOld===undefined) e.__kuOld=valOf(e); };
  document.addEventListener('focusin',e=>snap(e.target),true); document.addEventListener('pointerdown',e=>{ const c=e.target.closest&&e.target.closest('input,select,textarea'); if(c) snap(c); const l=e.target.closest&&e.target.closest('label'); if(l){ const i=l.querySelector('input,select'); if(i) snap(i); } },true);
  document.addEventListener('change',e=>{ const t=e.target; if(restoring||!isCtl(t)) return; const old=t.__kuOld; const now=valOf(t); t.__kuOld=now; if(old===undefined||old===now) return; stack.push({el:t,old,now,at:performance.now(),scr:cur(),name:nameOf(t)}); if(stack.length>200) stack.shift(); paintU(); },true);
- const PINS='#kSeqTools,#kRemote,#rDock,#kXAll,#kUndoAll,#tourTab,.kEasy [data-ez="undo"],.kEasy [data-ez="save"],.kEasy [data-ez="play"],.kEasy [data-ez="stop"],.kEasy [data-ez="how"]';
+ const PINS='#kSeqTools,#k40Seq,#kFXRet,#kkMix,.kStrip,#kKbd,#kRemote,#rDock,#kXAll,#kUndoAll,#tourTab,.kEasy [data-ez="undo"],.kEasy [data-ez="save"],.kEasy [data-ez="play"],.kEasy [data-ez="stop"],.kEasy [data-ez="how"]';
  const SAVES='[id$="Save"],[data-kk="save"],[data-pj="save"],[data-r="save"],[data-ez="save"]';
  document.addEventListener('click',e=>{ const t=e.target; if(!t.closest) return; if(t.closest(SAVES)||/^💾/.test((t.closest('button')||{}).textContent||'')){ stack.length=0; Object.keys(lastAct).forEach(k=>delete lastAct[k]); setTimeout(paintU,50); return; } if(t.closest(PINS)) return; if(t.closest('button,canvas,.pd,[data-step]')) lastAct[cur()]=performance.now(); },true);
  function undoOne(){ const g=stack.pop(); if(!g) return false; if(g.fn){ try{ g.fn(); }catch(_){ } say('↶ Undid: '+g.name+(stack.length?' · '+stack.length+' more to undo':'')); paintU(); return true; } if(g.el&&g.el.isConnected){ restoring=true; try{ if(g.el.type==='checkbox'||g.el.type==='radio') g.el.checked=g.old; else g.el.value=g.old; g.el.__kuOld=g.old; g.el.dispatchEvent(new Event('input',{bubbles:true})); g.el.dispatchEvent(new Event('change',{bubbles:true})); }catch(_){ } restoring=false; say('↶ Undid: '+g.name+(stack.length?' · '+stack.length+' more to undo':'')); } else return undoOne(); paintU(); return true; }
