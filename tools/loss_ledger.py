@@ -279,6 +279,30 @@ for _sys in ("CRANE", "GODEL"):
 for _name in ("KOORDINATOR", "KOORDINATOR_CGROUP"):
     for _g in _V26_GAUGES:
         CAUSES[(26, _name, _g)] = V26_KOORD
+# the Azure sets on omni-v26 (written 20 November from the tables' own rows and the mechanism audit of 15 November, section 2):
+# in a cloud a machine is made only for a pod that waits, and omni-v26's lower autoscaler target asked for pods the machines in
+# service could not place
+AKS_AUDIT = "docs/audits/MECHANISM_AUDIT_2026-11-15.md"
+AKS_FIX = "omni-v27 (no pod asked for where no machine in service can place it; its own waiting pods withdrawn to native's count; the stand-ins)"
+AKS_DECIDES = "omni-v27's Azure sets, three runs, on the founder's word (the Azure queue is off since 15 November)"
+CAUSES[(26, "AKS_WORK_METER", "pods with no machine")] = (
+    "omni-v26's lower autoscaler target asked for pods no machine in service could place, and the cloud's autoscaler makes a "
+    "machine only for a pod that waits: the replicas rose 59% to 75% against native's while the workers rose 18% to 22% "
+    "(the table's own rows), so the pods asked for beyond the room waited for the machines made for them", AKS_AUDIT, AKS_FIX,
+    AKS_DECIDES)
+CAUSES[(26, "AKS_FULL_BURST", "pods with no machine")] = (
+    "omni-v26's lower autoscaler target asked for pods no machine in service could place, and the cloud's autoscaler makes a "
+    "machine only for a pod that waits: the replicas rose 114% to 136% against native's while the workers rose 27% to 39% "
+    "(the table's own rows), so the pods asked for beyond the room waited for the machines made for them", AKS_AUDIT, AKS_FIX,
+    AKS_DECIDES)
+for _name in ("AKS_WORK_METER", "AKS_FULL_BURST"):
+    for _g in ("time pods had no machine", "pod start wait"):
+        CAUSES[(26, _name, _g)] = CAUSES[(26, _name, "pods with no machine")]
+CAUSES[(26, "AKS_FULL_BURST", "response time")] = (
+    "suspected: the same pods waiting (20.7 to 22.6 replicas asked for against native's 9.6; 20.7 to 22.3 pods with no machine "
+    "against native's 2.3 to 2.7); not yet shown from the runs' own files, and three paired repetitions a run leave every "
+    "run's interval wide",
+    AKS_AUDIT, "omni-v27, if the suspicion holds", AKS_DECIDES)
 
 
 def newest_tables():
