@@ -6,7 +6,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 Dubra Software Inc. / The Omni-Compass LLC, 7 November 2026.
 
-**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v27 (`OMNI_V27.json`, digest `34548e45437a05bd`, 65 fingerprinted files), the verdict audit's record `26060ee48ab03ea7` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-20 02:20 UTC at commit `03fa1df8487a` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
+**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v27 (`OMNI_V27.json`, digest `34548e45437a05bd`, 65 fingerprinted files), the verdict audit's record `26060ee48ab03ea7` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-20 04:29 UTC at commit `5a2205565422` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
 
 ## Abstract
 
@@ -107,7 +107,7 @@ Q4 comes first in logic; on the page Q1 leads. Do no harm is judged on the rows 
 
 ### 1.3 What the engine is: one page and its copies
 
-The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-20 02:20 UTC carries 25 records; it plays back 98 three-run tables with 294 runs, and 237,684 of 237,684 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
+The engine is one page, `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html`, built by `docs/engine/build_live_engine.py` from the engine that stands and the repository's results, "a monitor of the engine, never a drawing of it". It carries its records as JSON blocks: <!-- monograph: page_records (tools/monograph_words.py) -->the page built 2026-11-20 04:29 UTC carries 25 records; it plays back 98 three-run tables with 294 runs, and 237,684 of 237,684 raw files matched their runs' own sums<!-- end of monograph: page_records -->. It reaches readers as the source page; as the one-file copy `docs/live/index.html`; and as a split copy published by hand at the address in `README.md` (threat T31).
 
 ### 1.4 How the page is fed and rebuilt
 
@@ -115,7 +115,7 @@ One workflow, `.github/workflows/live-engine.yml`, rebuilds the page on a push t
 
 ### 1.5 The self-update and its stamp
 
-Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-20 02:20 UTC, 62,210,167 bytes, SHA-256 `948362ae26a6ffe2…`, page identity `b9ccbec6ba7a6af4…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
+Every copy carries `omniSelfUpdate`, which reads the stamp, `docs/engine/LIVE_ENGINE_VERSION.json`, on main: <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-20 04:29 UTC, 62,254,109 bytes, SHA-256 `c70710e2289a24db…`, page identity `615679146c449133…`<!-- end of monograph: page_stamp -->, the identity being the SHA-256 of the page with its own tag read as zeros. A copy reads the stamp when it opens and every 24 hours after, and opens a newer page only when its bytes, SHA-256 and identity match and its scripts compile; the script only reads (`tests/test_live_self_update.py`). The stamp shows that a copy is the published page; that its content is right is Q4.
 
 ### 1.6 What runs live, what plays back, and the three evidence classes
 
@@ -719,7 +719,7 @@ A metrics dashboard closes no loop; the Kubernetes Dashboard's writes are manual
 
 ## 7. The Page, Section by Section
 
-The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-20 02:20 UTC, 62,210,167 bytes, SHA-256 `948362ae26a6ffe2…`, page identity `b9ccbec6ba7a6af4…`<!-- end of monograph: page_stamp --> in that order.
+The page opens on its monitor wall and control panel, then its contents, four parts (2 Results, 3 Live Operation, 4 Real Runs and Platforms, 5 Proof and Models) and appendixes A to G. This chapter reads the build <!-- monograph: page_stamp (tools/monograph_words.py) -->omni-v26 (digest `75d3c22eed4473b9`), built 2026-11-20 04:29 UTC, 62,254,109 bytes, SHA-256 `c70710e2289a24db…`, page identity `615679146c449133…`<!-- end of monograph: page_stamp --> in that order.
 
 ### 7.1 The sections, their monitors and their code
 
@@ -751,7 +751,7 @@ Native shows in orange and Omni-Compass in blue; each monitor's light is a red o
 | 4e Orchestrators and Governors | `#s-orch` | 42 Road to a Result (L); 24 Orchestration Stack (L) | `buildFour`, `buildOrch`, `buildOrchDetail`, `buildOrchestra`, `drawOrch`, `drawOrchRoad`, `orchSelect` | `build`, `fleet` | chapter 22 |
 | 4f GPU and CPU Hardware | `#s-stacks` | 43 Metered A100 Run (P); 44 CPU Host Model (S); 45 8-Card GPU Node (S); 46 Stack Models (S) | `buildMech`, `cpuInit`, `cpuStands`, `drawCpuHost`, `drawGpu8`, `drawGpuRun`, `drawSStrip`, `gpuInit`, `gpuStands`, `mechSame`, `setStack`, `updateStack` | `bills`, `build`, `cpuhost`, `gpurun`, `scen` | chapter 23 |
 | 4g CI Pipeline | `#s-github` | 59 GitHub Actions in Flight (L) | `drawCi` | `build` | chapter 24 |
-| 5a Python Runs and Monte Carlo | `#s-proof` | 50 Three-Way Run Check (S); 51 Held-Out Scenario Replay (S); 52 Engine Core Monte Carlo (S) | `drawHeld`, `drawMC`, `drawProof`, `hoInit`, `hoNote`, `mcLinkPaint`, `mcLinkedRun`, `mcRender`, `mcSetup`, `mcSysSetup`, `ownOpen`, `proofInit`, `proofPrint`, `proofSets`, `proofTable` | `build`, `coremc`, `engineruns`, `heldout`, `monitors`, `scen`, `whole` | chapter 25 |
+| 5a Python Runs and Monte Carlo | `#s-proof` | 50 Three-Way Run Check (S); 51 Held-Out Scenario Replay (S); 52 Engine Core Monte Carlo (S) | `drawHeld`, `drawMC`, `drawProof`, `hoInit`, `hoNote`, `mcLinkPaint`, `mcLinkedRun`, `mcRender`, `mcSetup`, `mcSysSetup`, `ownOpen`, `proofInit`, `proofPrint`, `proofSets`, `proofTable`, `setfNote`, `setfSetup` | `build`, `coremc`, `engineruns`, `heldout`, `monitors`, `scen`, `whole` | chapter 25 |
 | 5b C++ Twin | `#s-cpp` | none | `cppRender`, `find` | `cpptwin` | chapter 26 |
 | 5c Scenarios and Injection Grid | `#s-scn` | none | `scnRender` | `injgrid`, `scenarios` | chapter 27 |
 | 5d Whole Organism | `#s-whole` | 2 Stack Composition (S) | `buildWhole`, `drawWhole` | `audit`, `build`, `coremc`, `fleet`, `scen`, `whole` | chapter 28 |
@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 1666194554, where the newest on file is 1710323498; the injection grid of batch 1558696416, where the newest on file is 1710323498<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 1666194554, where the newest on file is 1725417798; the injection grid of batch 1558696416, where the newest on file is 1710323498<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
@@ -862,7 +862,7 @@ The folders held about ten gigabytes; not run here, for want of disk. `.github/w
 
 ### 8.3 The Python 500 and its C++ twin
 
-Two seeded sets of 500 runs check that the Python, the C++ and the page compute the same mathematics. `tools/engine_runs.py` draws run k's seed as seedₖ = base + k·0x9E3779B9 mod 2³² into a mulberry32 stream; a run is a day of the core's decisions, steps of the compass law and one give-back trial, and one SHA-256 digest covers the receipts, which the C++ harness and the page's port must equal. The record: <!-- monograph: engine_runs (tools/monograph_words.py) -->the newest record, base 1710323498, written 2026-11-20T02:21:47Z on omni-v27: 500 runs, 288 decisions of the brain, 80 steps of the compass law and one give-back trial each, digest `8f9831c57856a2c4…`; the C++ harness gave the same digest on the same draws, 500 of 500 runs agreeing to 1e-9, largest difference 0.0e+00 (`results/engine_runs/ENGINE_RUNS_500_1710323498.md`, the newest of 214 sets on file)<!-- end of monograph: engine_runs -->. With B that base and `T=$(mktemp -d)`:
+Two seeded sets of 500 runs check that the Python, the C++ and the page compute the same mathematics. `tools/engine_runs.py` draws run k's seed as seedₖ = base + k·0x9E3779B9 mod 2³² into a mulberry32 stream; a run is a day of the core's decisions, steps of the compass law and one give-back trial, and one SHA-256 digest covers the receipts, which the C++ harness and the page's port must equal. The record: <!-- monograph: engine_runs (tools/monograph_words.py) -->the newest record, base 1725417798, written 2026-11-20T04:34:01Z on omni-v27: 500 runs, 288 decisions of the brain, 80 steps of the compass law and one give-back trial each, digest `78ee041c4442fa12…`; the C++ harness gave the same digest on the same draws, 500 of 500 runs agreeing to 1e-9, largest difference 0.0e+00 (`results/engine_runs/ENGINE_RUNS_500_1725417798.md`, the newest of 217 sets on file)<!-- end of monograph: engine_runs -->. With B that base and `T=$(mktemp -d)`:
 
 ```
 cmake -S cpp -B "$T" -DCMAKE_BUILD_TYPE=Release && cmake --build "$T" --target oc_engine_runs oc_core_runs
@@ -871,7 +871,7 @@ python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html 
 python3 tools/core_runs.py --runs 500 --base B --cpp "$T"/oc_core_runs --out "$T"/cr.json
 ```
 
-Here the build took 8 s, each `engine_runs.py` line 16 s and `core_runs.py` 3 s; both digests equalled the records'. **The core's Monte Carlo** runs native (u = 0, the plant left to its double well) beside Omni-Compass on top; a run is conveyed after 5 macro steps in a row in one basin, |U ∓ 1| ≤ 0.10, and certified at 10. The numpy set (`benchmarks/core_evidence.py`, 4 s): <!-- monograph: core_evidence (tools/monograph_words.py) -->seed 223387268: Omni-Compass on top conveyed 500 and certified 500 of 500 runs, its command peaking at 13.93; the plant alone conveyed 476 and certified 427<!-- end of monograph: core_evidence -->. The jump-generator set, the last line above: <!-- monograph: core_runs (tools/monograph_words.py) -->base 1710323498, written 2026-11-20T02:22:15Z: Omni-Compass on top conveyed 500 and certified 500 of 500, the plant alone conveyed 481 and certified 447; the C++ twin 2,000 of 2,000 run-ways agreeing to 1e-9, one digest `d14c0336beefa362…` (`results/core_runs/CORE_RUNS_500_1710323498.md`)<!-- end of monograph: core_runs -->. Both are class S, one computation in three implementations (threat T19).
+Here the build took 8 s, each `engine_runs.py` line 16 s and `core_runs.py` 3 s; both digests equalled the records'. **The core's Monte Carlo** runs native (u = 0, the plant left to its double well) beside Omni-Compass on top; a run is conveyed after 5 macro steps in a row in one basin, |U ∓ 1| ≤ 0.10, and certified at 10. The numpy set (`benchmarks/core_evidence.py`, 4 s): <!-- monograph: core_evidence (tools/monograph_words.py) -->seed 223387268: Omni-Compass on top conveyed 500 and certified 500 of 500 runs, its command peaking at 13.93; the plant alone conveyed 476 and certified 427<!-- end of monograph: core_evidence -->. The jump-generator set, the last line above: <!-- monograph: core_runs (tools/monograph_words.py) -->base 1725417798, written 2026-11-20T04:34:33Z: Omni-Compass on top conveyed 500 and certified 500 of 500, the plant alone conveyed 473 and certified 432; the C++ twin 2,000 of 2,000 run-ways agreeing to 1e-9, one digest `0109dc1f18b5d8cc…` (`results/core_runs/CORE_RUNS_500_1725417798.md`)<!-- end of monograph: core_runs -->. Both are class S, one computation in three implementations (threat T19).
 
 ### 8.4 verify.py, the verification receipt and the release manifest
 

@@ -73,7 +73,9 @@ def cloud_kube(sim):
     """The model cluster as the governor reads it: tools/model_gate.py's own stand-in, never a copy (1 November 2026: the copy
     kept here missed the gate's fixes of 24 October, and once the pods carried their metadata the two read differently)."""
     from tools.model_gate import gate_kube
-    return gate_kube(sim)
+    return gate_kube(sim, provider="azure:///omni-gate/")   # the gate's cloud names its machines a cloud's, as the worker does: from
+    # omni-v24 the governor reads its place from them, and from omni-v27 it sets its stand-ins only through a cloud (20 November:
+    # without it the page's record read seed 3001's machines on site, 4.5% short of the gate's own run)
 
 
 def observe(sim, lat_rows, lat_path, rng):
@@ -127,6 +129,13 @@ def digest(recs):
 
 
 def run(setting, seed, arm):
+    """One record: the model gate's own run of the shipped controller, with the gate's own stand-ins in the cloud's autoscaler."""
+    from tools.model_gate import standins_in_the_cloud
+    with standins_in_the_cloud():
+        return _run(setting, seed, arm)
+
+
+def _run(setting, seed, arm):
     tmp = Path(tempfile.mkdtemp())
     rng = np.random.default_rng(seed + 7)
     if setting == "cloud":

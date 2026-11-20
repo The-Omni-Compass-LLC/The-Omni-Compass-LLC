@@ -51,6 +51,7 @@ from 0.5% up every change reads by its aim, with whether it stands beyond the se
 """
 from __future__ import annotations
 
+import contextlib
 import argparse
 import json
 import math
@@ -198,22 +199,13 @@ def gate_kube(sim, blink=False, provider=""):
 
     return Kube(sim, None)
 
-def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud", ctl=""):
-    import csv
-    from unittest import mock
-    import numpy as np
-    from pilot.selfpilot import SimCluster, SimKube
-    from pilot.score import blocks, load
-    from fleet.sim import ALLOC
-    import fleet.sim as fleet_sim
-    from fleet.harness import BOOT_TICKS, hpa_step
-    import pilot.selfpilot as _sp
-    _ca = fleet_sim._cluster_autoscaler
-
+def standins_autoscaler(_ca):
+    """The cloud's own autoscaler with omni-v27's stand-ins in the cluster: a real pod displaces a stand-in at once, so the real
+    pods' room is the machines' (the plant's own arithmetic, unchanged); the autoscaler counts a stand-in no machine takes as
+    a pod that waits (it makes a machine for it) and a placed one as asked for (it keeps that machine). Nothing else moves.
+    Written once, here: the gate's worker and the live page's controller record (docs/engine/export_controller_trace.py) both
+    run the cloud through it (20 November: the page's record had no stand-ins and read seed 3001's machines 4.5% short)."""
     def _ca_with_standins(c):
-        """The cloud's own autoscaler with omni-v27's stand-ins in the cluster: a real pod displaces a stand-in at once, so the real
-        pods' room is the machines' (the plant's own arithmetic, unchanged); the autoscaler counts a stand-in no machine takes as
-        a pod that waits (it makes a machine for it) and a placed one as asked for (it keeps that machine). Nothing else moves."""
         h = float(getattr(c, "headroom_m", 0.0) or 0.0)
         if h <= 0:
             return _ca(c)
@@ -225,6 +217,34 @@ def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud
             return _ca(c)
         finally:
             c.pending, c.reqs = p0, r0
+    return _ca_with_standins
+
+
+@contextlib.contextmanager
+def standins_in_the_cloud():
+    """The stand-ins' autoscaler in the plant for the length of a run, the plant's own put back after it."""
+    import fleet.sim as fleet_sim
+    import pilot.selfpilot as _sp
+    old = fleet_sim._cluster_autoscaler, _sp._cluster_autoscaler
+    wrapped = standins_autoscaler(old[0])
+    fleet_sim._cluster_autoscaler, _sp._cluster_autoscaler = wrapped, wrapped
+    try:
+        yield
+    finally:
+        fleet_sim._cluster_autoscaler, _sp._cluster_autoscaler = old
+
+
+def worker(arm, seed, days, period, out, blink=False, fine=False, setting="cloud", ctl=""):
+    import csv
+    from unittest import mock
+    import numpy as np
+    from pilot.selfpilot import SimCluster, SimKube
+    from pilot.score import blocks, load
+    from fleet.sim import ALLOC
+    import fleet.sim as fleet_sim
+    from fleet.harness import BOOT_TICKS, hpa_step
+    import pilot.selfpilot as _sp
+    _ca_with_standins = standins_autoscaler(fleet_sim._cluster_autoscaler)
     fleet_sim._cluster_autoscaler = _ca_with_standins
     _sp._cluster_autoscaler = _ca_with_standins
     tick_s = FINE_S if fine else 15.0                          # the plant's step (omni-v16: 5 s for the pace models)
