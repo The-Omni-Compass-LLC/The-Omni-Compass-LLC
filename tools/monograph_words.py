@@ -1603,13 +1603,15 @@ def b_oversight_count():
     c = d["count"]
     same = [named(Path(r["record"]).stem) for r in d["rows"] if str(r.get("reading", "")).startswith(f"{STEADY}, the same")]
     return (f"fewer in {n(c['fewer'])} tests, falling to none in {n(c['to_zero'])}; the same in {n(c['same'])}"
-            + (f" ({series(same)})" if len(same) == c["same"] else "") + f"; more in {n(c['more'])}")
+            + (f" ({series(same)})" if same and len(same) == c["same"] else "") + f"; more in {n(c['more'])}")
 
 
 @block("oversight_loss_all_three", OVERSIGHT)
 def b_oversight_loss_all_three():
     rows = [r for r in load(OVERSIGHT)["rows"] if bare(r["reading"]).startswith(f"{LOSS} in all three")]
     each = [f"{named(Path(r['record']).stem)}, {updown(r['change'])} {pct(100 * r['change'])}" for r in rows]
+    if not rows:                     # none: the sentence closes on the count, with no empty list after a colon
+        return "none reads LOSS in all three of our runs"
     return f"{plural(len(rows), 'test reads', 'tests read')} LOSS in all three of our runs, more minutes over the line: " + "; ".join(each)
 
 

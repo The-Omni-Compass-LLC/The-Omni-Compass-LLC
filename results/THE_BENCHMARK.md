@@ -12,12 +12,12 @@ One engine. Every scenario. Every receipt. Nothing on this page asks to be belie
 
 ## 2. Every scenario on real machines
 
-Of 118 scenarios with a three-run receipt: **0 on omni-v27**, 18 carry to it, **100 run again on it**. The rows on the engine's own receipts, by what each receipt sets side by side (as the LOSS ledger reads them, `docs/LOSS_LEDGER.md`):
+Of 118 scenarios with a three-run receipt: **11 on omni-v27**, 18 carry to it, **89 run again on it**. The rows on the engine's own receipts, by what each receipt sets side by side (as the LOSS ledger reads them, `docs/LOSS_LEDGER.md`):
 
 | Set side by side | Rows by word |
 |---|---|
-| Omni-Compass on native against native alone | none judged |
-| Omni-Compass by itself, in place of a controller | none judged |
+| Omni-Compass on native against native alone | GAIN 50, LOSS 31, power given 14, the runs disagree 18, STEADY 50 |
+| Omni-Compass by itself, in place of a controller | GAIN 5, LOSS 8, power given 4, the runs disagree 3, STEADY 12 |
 | Omni-Compass on top of an orchestrator, against the orchestrator alone or compounded | none judged |
 
 ### the chip (class P: the card's own meter)
@@ -49,34 +49,34 @@ Of 118 scenarios with a three-run receipt: **0 on omni-v27**, 18 carry to it, **
 
 ### Kubernetes (class L)
 
-20 scenarios: 0 on omni-v27, 0 carry, 20 run again.
+20 scenarios: 9 on omni-v27, 0 carry, 11 run again.
 
 | Scenario | Its newest receipt | Its engine | On omni-v27 | Its rows by word (on the engine's own receipt) |
 |---|---|---|---|---|
-| ALL_FOUR | [V26_ALL_FOUR.json](live/V26_ALL_FOUR.json) | omni-v26 | **runs again** | — |
-| BATCH | [V26_BATCH.json](live/V26_BATCH.json) | omni-v26 | **runs again** | — |
+| ALL_FOUR | [V27_ALL_FOUR.json](live/V27_ALL_FOUR.json) | omni-v27 | **on the engine that stands** | GAIN 6, LOSS 2, power given 2, the runs disagree 1, STEADY 6 |
+| BATCH | [V27_BATCH.json](live/V27_BATCH.json) | omni-v27 | **on the engine that stands** | GAIN 8, LOSS 5, power given 1, the runs disagree 1, STEADY 3 |
 | BIG_ORGANISM | [V3_BIG_ORGANISM.json](live/V3_BIG_ORGANISM.json) | omni-v3 | **runs again** | — |
 | CAPACITY | [V26_CAPACITY.json](live/V26_CAPACITY.json) | omni-v26 | **runs again** | — |
 | COST_TO_MATCH | [V26_COST_TO_MATCH.json](live/V26_COST_TO_MATCH.json) | omni-v26 | **runs again** | — |
-| FAIRNESS | [V26_FAIRNESS.json](live/V26_FAIRNESS.json) | omni-v26 | **runs again** | — |
-| FAULTS | [V26_FAULTS.json](live/V26_FAULTS.json) | omni-v26 | **runs again** | — |
+| FAIRNESS | [V27_FAIRNESS.json](live/V27_FAIRNESS.json) | omni-v27 | **on the engine that stands** | GAIN 1, LOSS 7, power given 2, the runs disagree 4, STEADY 6 |
+| FAULTS | [V27_FAULTS.json](live/V27_FAULTS.json) | omni-v27 | **on the engine that stands** | GAIN 6, power given 2, the runs disagree 2, STEADY 6 |
 | FAULTS_EXTENDED | [V26_FAULTS_EXTENDED.json](live/V26_FAULTS_EXTENDED.json) | omni-v26 | **runs again** | — |
 | OWN_COST | [V3_OWN_COST.json](live/V3_OWN_COST.json) | omni-v3 | **runs again** | — |
 | ROBUST_KILL | [V26_ROBUST_KILL.json](live/V26_ROBUST_KILL.json) | omni-v26 | **runs again** | — |
 | ROBUST_LONG | [V26_ROBUST_LONG.json](live/V26_ROBUST_LONG.json) | omni-v26 | **runs again** | — |
 | SIX_KUBE | [V3_SIX_KUBE.json](live/V3_SIX_KUBE.json) | omni-v3 | **runs again** | — |
-| SOLO | [V26_SOLO.json](live/V26_SOLO.json) | omni-v26 | **runs again** | — |
+| SOLO | [V27_SOLO.json](live/V27_SOLO.json) | omni-v27 | **on the engine that stands** | GAIN 5, LOSS 3, power given 2, STEADY 6 |
 | SOLO_2 | [V26_SOLO_2.json](live/V26_SOLO_2.json) | omni-v26 | **runs again** | — |
 | SOLO_2_VS_ON_NATIVE | [V26_SOLO_2_VS_ON_NATIVE.json](live/V26_SOLO_2_VS_ON_NATIVE.json) | omni-v26 | **runs again** | — |
-| SOLO_VS_ON_NATIVE | [V26_SOLO_VS_ON_NATIVE.json](live/V26_SOLO_VS_ON_NATIVE.json) | omni-v26 | **runs again** | — |
-| STEADY | [V26_STEADY.json](live/V26_STEADY.json) | omni-v26 | **runs again** | — |
-| TRACE_GOOGLE2011 | [V26_TRACE_GOOGLE2011.json](live/V26_TRACE_GOOGLE2011.json) | omni-v26 | **runs again** | — |
+| SOLO_VS_ON_NATIVE | [V27_SOLO_VS_ON_NATIVE.json](live/V27_SOLO_VS_ON_NATIVE.json) | omni-v27 | **on the engine that stands** | LOSS 5, power given 2, the runs disagree 3, STEADY 6 |
+| STEADY | [V27_STEADY.json](live/V27_STEADY.json) | omni-v27 | **on the engine that stands** | GAIN 7, power given 1, the runs disagree 1, STEADY 7 |
+| TRACE_GOOGLE2011 | [V27_TRACE_GOOGLE2011.json](live/V27_TRACE_GOOGLE2011.json) | omni-v27 | **on the engine that stands** | GAIN 6, LOSS 1, power given 2, the runs disagree 1, STEADY 6 |
 | VANILLA | [V26_VANILLA.json](live/V26_VANILLA.json) | omni-v26 | **runs again** | — |
-| WANDERING | [V26_WANDERING.json](live/V26_WANDERING.json) | omni-v26 | **runs again** | — |
+| WANDERING | [V27_WANDERING.json](live/V27_WANDERING.json) | omni-v27 | **on the engine that stands** | GAIN 5, LOSS 2, power given 2, the runs disagree 1, STEADY 6 |
 
 ### the governors and orchestrators on Kubernetes (class L)
 
-66 scenarios: 0 on omni-v27, 0 carry, 66 run again.
+66 scenarios: 2 on omni-v27, 0 carry, 64 run again.
 
 | Scenario | Its newest receipt | Its engine | On omni-v27 | Its rows by word (on the engine's own receipt) |
 |---|---|---|---|---|
@@ -129,7 +129,7 @@ Of 118 scenarios with a three-run receipt: **0 on omni-v27**, 18 carry to it, **
 | KUBERAY_4W_ORCH | [V26_KUBERAY_4W_ORCH.json](live/V26_KUBERAY_4W_ORCH.json) | omni-v26 | **runs again** | — |
 | KUBERAY_4W_TOP | [V26_KUBERAY_4W_TOP.json](live/V26_KUBERAY_4W_TOP.json) | omni-v26 | **runs again** | — |
 | KUBERAY_4W_VS | [V26_KUBERAY_4W_VS.json](live/V26_KUBERAY_4W_VS.json) | omni-v26 | **runs again** | — |
-| KUEUE | [V26_KUEUE.json](live/V26_KUEUE.json) | omni-v26 | **runs again** | — |
+| KUEUE | [V27_KUEUE.json](live/V27_KUEUE.json) | omni-v27 | **on the engine that stands** | GAIN 6, LOSS 9, power given 2, STEADY 5 |
 | KUEUE_4W_BARE | [V26_KUEUE_4W_BARE.json](live/V26_KUEUE_4W_BARE.json) | omni-v26 | **runs again** | — |
 | KUEUE_4W_BOTH | [V26_KUEUE_4W_BOTH.json](live/V26_KUEUE_4W_BOTH.json) | omni-v26 | **runs again** | — |
 | KUEUE_4W_ORCH | [V26_KUEUE_4W_ORCH.json](live/V26_KUEUE_4W_ORCH.json) | omni-v26 | **runs again** | — |
@@ -140,7 +140,7 @@ Of 118 scenarios with a three-run receipt: **0 on omni-v27**, 18 carry to it, **
 | OCM_4W_ORCH | [V26_OCM_4W_ORCH.json](live/V26_OCM_4W_ORCH.json) | omni-v26 | **runs again** | — |
 | OCM_4W_TOP | [V26_OCM_4W_TOP.json](live/V26_OCM_4W_TOP.json) | omni-v26 | **runs again** | — |
 | OCM_4W_VS | [V26_OCM_4W_VS.json](live/V26_OCM_4W_VS.json) | omni-v26 | **runs again** | — |
-| VOLCANO | [V26_VOLCANO.json](live/V26_VOLCANO.json) | omni-v26 | **runs again** | — |
+| VOLCANO | [V27_VOLCANO.json](live/V27_VOLCANO.json) | omni-v27 | **on the engine that stands** | GAIN 5, LOSS 5, the runs disagree 7, STEADY 5 |
 | VOLCANO_4W_BARE | [V25_VOLCANO_4W_BARE.json](live/V25_VOLCANO_4W_BARE.json) | omni-v25 | **runs again** | — |
 | VOLCANO_4W_BOTH | [V25_VOLCANO_4W_BOTH.json](live/V25_VOLCANO_4W_BOTH.json) | omni-v25 | **runs again** | — |
 | VOLCANO_4W_ORCH | [V25_VOLCANO_4W_ORCH.json](live/V25_VOLCANO_4W_ORCH.json) | omni-v25 | **runs again** | — |

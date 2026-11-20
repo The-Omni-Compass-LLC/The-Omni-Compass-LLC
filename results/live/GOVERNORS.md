@@ -11,8 +11,8 @@ The founder's list of 19 October, night: every governor and orchestrator he name
 | Governor | What it governs | Register row | Where it stands | Readings (A, B and C) |
 |---|---|---:|---|---|
 | The Kubernetes scheduler (vanilla, and its bin-packing profile) | pod placement | 88 | as shipped: three runs in on omni-v26; bin-packing profile: three runs in on omni-v26 | as shipped: 5 GAIN, 9 LOSS, 2 power given, 5 STEADY, 1 where the runs disagree ([table](V26_VANILLA.md), omni-v26); bin-packing profile: 6 GAIN, 9 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V26_BINPACK.md), omni-v26) |
-| Kueue | batch admission (a job at a time, by queue quota) | 63 | three runs in on omni-v26 | 5 GAIN, 10 LOSS, 2 power given, 4 STEADY, 1 where the runs disagree ([table](V26_KUEUE.md), omni-v26) |
-| Volcano | batch scheduling (queues, gangs) | 63 | three runs in on omni-v26 | 4 GAIN, 9 LOSS, 2 power given, 5 STEADY, 2 where the runs disagree ([table](V26_VOLCANO.md), omni-v26) |
+| Kueue | batch admission (a job at a time, by queue quota) | 63 | three runs in on omni-v27 | 6 GAIN, 9 LOSS, 2 power given, 5 STEADY, 0 where the runs disagree ([table](V27_KUEUE.md), omni-v27) |
+| Volcano | batch scheduling (queues, gangs) | 63 | three runs in on omni-v27 | 5 GAIN, 5 LOSS, 0 power given, 5 STEADY, 7 where the runs disagree ([table](V27_VOLCANO.md), omni-v27) |
 | KAI scheduler | AI workload scheduling (queues, fair share, gangs) | 91 | three runs in on omni-v26 | 4 GAIN, 7 LOSS, 2 power given, 4 STEADY, 5 where the runs disagree ([table](V26_KAI.md), omni-v26) |
 | Koordinator | QoS colocation (batch work on what latency-sensitive pods leave unused) | 89 | three runs in on omni-v26 | 4 GAIN, 5 LOSS, 0 power given, 4 STEADY, 8 where the runs disagree ([table](V26_KOORDINATOR.md), omni-v26) |
 | CruiseKube | rightsizing (requests and limits, in place) | 81 | three runs in on omni-v26 | 3 GAIN, 5 LOSS, 1 power given, 5 STEADY, 2 where the runs disagree ([table](V26_CRUISEKUBE.md), omni-v26) |
@@ -139,26 +139,26 @@ Every row of the run: [`results/live/V26_BINPACK.md`](V26_BINPACK.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`; register row 63.
 - **In the catalog (modelled, class S)**: family 1, Work Admission & Demand Shaping (19 muscles, in its realm and the whole tower): `job_admission`, `batch_admission`, `queue_concurrency`, `queue_backpressure`, `tenant_admission`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Runs**: A [42412690276](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42412690276) (10 pairs), B [42422950496](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42422950496) (10 pairs), C [42432716761](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42432716761) (10 pairs); engine omni-v26 (digest 75d3c22eed4473b9, 65 files).
+- **Runs**: A [44673401745](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44673401745) (10 pairs), B [44685881054](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44685881054) (10 pairs), C [44697253488](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44697253488) (10 pairs); engine omni-v27 (digest 34548e45437a05bd, 65 files).
 
 | Gauge | Reading |
 |---|---|
-| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
+| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
-| queue: job turnaround, submitted to done, mean (s) | LOSS in all three of our runs |
+| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
 | queue: jobs unfinished at the window's end | STEADY, the same |
-| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
 | worker nodes in service, mean | GAIN in all three of our runs |
 | node-hours | GAIN in all three of our runs |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.08%) |
 | energy (Wh) | GAIN in all three of our runs |
 | energy per core-hour (Wh) | shown, not judged |
-| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 0 of 3 |
-| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
-| failed requests (%) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
+| response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| failed requests (%) | STEADY, the same |
 
-Every row of the run: [`results/live/V26_KUEUE.md`](V26_KUEUE.md).
+Every row of the run: [`results/live/V27_KUEUE.md`](V27_KUEUE.md).
 
 
 ## Volcano
@@ -167,26 +167,26 @@ Every row of the run: [`results/live/V26_KUEUE.md`](V26_KUEUE.md).
 - **Its test on real Kubernetes (class L)**: `docs/BATCH_QUEUE_PREREGISTRATION.md`; register row 63.
 - **In the catalog (modelled, class S)**: family 14, Distributed Cluster Managers (15 muscles, in its realm and the whole tower): `gang_schedule`, `queue_fairness`, `task_priority`, `task_preemption`, `binpack_pressure`.
 - **Its muscles as a body in the orchestra (modelled, class S)**: own load: STEADY (the same as native); the climb: STEADY (the same as native); work in line: STEADY (the same as native).
-- **Runs**: A [42412695021](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42412695021) (10 pairs), B [42422954360](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42422954360) (10 pairs), C [42432720979](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/42432720979) (10 pairs); engine omni-v26 (digest 75d3c22eed4473b9, 65 files).
+- **Runs**: A [44673408351](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44673408351) (10 pairs), B [44687723958](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44687723958) (10 pairs), C [44697261681](https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44697261681) (10 pairs); engine omni-v27 (digest 34548e45437a05bd, 65 files).
 
 | Gauge | Reading |
 |---|---|
-| queue: job wait, submitted to its first pod running, mean (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
-| queue: job wait, submitted to its first pod running, 95th percentile (s) | the runs disagree |
-| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| queue: job wait, submitted to its first pod running, mean (s) | the runs disagree |
+| queue: job wait, submitted to its first pod running, 95th percentile (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
+| queue: job turnaround, submitted to done, mean (s) | LOSS by the mean of our three runs, beyond the noise in 1 of 3 |
 | queue: jobs unfinished at the window's end | STEADY, the same |
-| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 2 of 3 |
+| batch: queue finished (s) | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | batch: worker machines in service after the queue finished, mean | GAIN in all three of our runs |
 | worker nodes in service, mean | GAIN in all three of our runs |
 | node-hours | GAIN in all three of our runs |
-| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.02%) |
+| energy, parked workers still on at idle power (Wh) | STEADY, under the floor (the three runs' mean 0.06%) |
 | energy (Wh) | GAIN in all three of our runs |
 | energy per core-hour (Wh) | shown, not judged |
-| response time (ms), mean | the runs disagree |
+| response time (ms), mean | GAIN by the mean of our three runs, beyond the noise in 2 of 3 |
 | response time (ms), 95th percentile | LOSS by the mean of our three runs, beyond the noise in 0 of 3 |
 | failed requests (%) | STEADY, the same |
 
-Every row of the run: [`results/live/V26_VOLCANO.md`](V26_VOLCANO.md).
+Every row of the run: [`results/live/V27_VOLCANO.md`](V27_VOLCANO.md).
 
 
 ## KAI scheduler

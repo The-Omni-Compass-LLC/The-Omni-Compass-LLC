@@ -79,7 +79,7 @@ The three-run tables' records name 718 runs; 718 have their folder on `raw`. Non
 
 ## 5. The engine that stands
 
-On omni-v27: 18 carries, 0 on the engine that stands, 100 runs again (`results/CARRY.md`: a benchmark stands when its three runs on this engine are tabled, carries when no file it runs changed since its last engine, and runs again otherwise; the conductor releases the reruns, A of every benchmark, then B, then C).
+On omni-v27: 18 carries, 11 on the engine that stands, 89 runs again (`results/CARRY.md`: a benchmark stands when its three runs on this engine are tabled, carries when no file it runs changed since its last engine, and runs again otherwise; the conductor releases the reruns, A of every benchmark, then B, then C).
 
 ## 6. The catalog
 

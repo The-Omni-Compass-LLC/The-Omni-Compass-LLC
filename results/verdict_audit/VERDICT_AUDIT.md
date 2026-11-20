@@ -4,33 +4,34 @@
 
 Run and scored by The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `26060ee48ab03ea7`). The engine that stands is omni-v27. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
+Written by `tools/verdict_audit.py` from the three-run tables as they stand (digest `5d99e48e9e31d411`). The engine that stands is omni-v27. The rule: tools/readings.py three_run_reading: a change of 0.5% or more, the mean of the three runs' changes in percent of native, reads by the gauge's aim; under it STEADY, under the floor; every run's two values equal to 1e-09 of the value, STEADY, the same; runs that moved 0.5% or more in opposite directions, the runs disagree. Evidence strength is shown beside the word and never changes it: strong, every run the mean's way and beyond its noise (its 95% interval clear of zero); moderate, all but one; weak, one run beyond its noise; inconclusive, no run beyond its noise (a mean of 0.5% or more, not a change any one run could tell from its noise). STEADY is of three kinds: exactly the same (every run's values equal to nine decimal places), under the floor (a measured change, the three runs' mean under 0.5%) and no difference beyond the noise (a table read by an older key). The runs disagree is unresolved, never a final word: opposite directions each beyond its noise, or opposite directions inside overlapping noise.
 
 ## The counts
 
 | What | Count |
 |---|---|
-| Three-run tables | 423: 102 standing, 259 superseded, 60 the road, 2 taken out |
+| Three-run tables | 434: 102 standing, 270 superseded, 60 the road, 2 taken out |
 | Standing tables, Omni-Compass against its native | 65 |
-| Standing tables on the engine that stands (omni-v27) | 0 |
-| Standing tables not yet run again on omni-v27 | 102 |
-| Rows recomputed from their stored values | 12862 of 17806 |
+| Standing tables on the engine that stands (omni-v27) | 11 |
+| Standing tables not yet run again on omni-v27 | 91 |
+| Rows recomputed from their stored values | 13057 of 18101 |
 | Stored readings the key reads otherwise | 0 |
 | Markdown readings unlike their JSON twin | 0 |
 
 ### Standing tables: Omni-Compass against its native (the readings do no harm is judged by)
 
-Every word: 492 GAIN, 205 power given, 567 STEADY, 292 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning. The four categories are exclusive: each row has one word.
+Every word: 498 GAIN, 202 power given, 566 STEADY, 290 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning. The four categories are exclusive: each row has one word.
 
 | Engine | Words |
 |---|---|
-| omni-v26 | 452 GAIN, 193 power given, 527 STEADY, 231 LOSS, 184 the runs disagree, 32 the runs differ, 596 shown, 201 tuning |
+| omni-v27 | 50 GAIN, 14 power given, 50 STEADY, 31 LOSS, 18 the runs disagree, 81 shown |
+| omni-v26 | 408 GAIN, 176 power given, 476 STEADY, 198 LOSS, 166 the runs disagree, 32 the runs differ, 515 shown, 201 tuning |
 | omni-v25 | 27 GAIN, 12 power given, 30 STEADY, 55 LOSS, 7 the runs disagree, 54 shown |
 | omni-v12 | 13 GAIN, 10 STEADY, 6 LOSS, 15 the runs disagree, 18 shown |
 
 | Evidence class | Words |
 |---|---|
-| L (the real software) | 395 GAIN, 195 power given, 407 STEADY, 292 LOSS, 206 the runs disagree, 612 shown, 189 tuning |
+| L (the real software) | 401 GAIN, 192 power given, 406 STEADY, 290 LOSS, 206 the runs disagree, 612 shown, 189 tuning |
 | S (an outside simulator driven by our own runner) | 97 GAIN, 10 power given, 160 STEADY, 32 the runs differ, 56 shown, 12 tuning |
 
 Useful work, time waited and resources apart (item 8 of the work order): a resource spent or held that rose is power given, shown beside what it bought, never a gain in work.
@@ -38,9 +39,9 @@ Useful work, time waited and resources apart (item 8 of the work order): a resou
 | The gauge's direction | Words |
 |---|---|
 | a count that must never rise | 6 GAIN, 82 STEADY, 14 tuning |
-| resource spent or held | 271 GAIN, 205 power given, 217 STEADY, 62 the runs disagree, 6 the runs differ, 63 tuning |
+| resource spent or held | 272 GAIN, 202 power given, 217 STEADY, 64 the runs disagree, 6 the runs differ, 63 tuning |
 | shown | 6 STEADY, 20 the runs differ, 668 shown, 56 tuning |
-| time waited, missed or failed | 184 GAIN, 182 STEADY, 289 LOSS, 133 the runs disagree, 3 the runs differ, 39 tuning |
+| time waited, missed or failed | 189 GAIN, 181 STEADY, 287 LOSS, 131 the runs disagree, 3 the runs differ, 39 tuning |
 | work done | 30 GAIN, 80 STEADY, 3 LOSS, 11 the runs disagree, 3 the runs differ, 29 tuning |
 | work per resource | 1 GAIN |
 
@@ -48,11 +49,11 @@ Evidence strength beside the word (it never changes the word):
 
 | Word | Strength |
 |---|---|
-| GAIN | 217 strong, 94 deterministic, reproduced in all three runs, 92 inconclusive, 44 moderate, 42 weak, 3 not recomputable from runs |
-| LOSS | 116 inconclusive, 68 strong, 55 moderate, 53 weak |
-| power given | 102 strong, 39 inconclusive, 30 moderate, 24 weak, 10 deterministic, reproduced in all three runs |
+| GAIN | 214 strong, 96 inconclusive, 94 deterministic, reproduced in all three runs, 46 moderate, 45 weak, 3 not recomputable from runs |
+| LOSS | 117 inconclusive, 66 strong, 55 weak, 52 moderate |
+| power given | 101 strong, 38 inconclusive, 29 moderate, 24 weak, 10 deterministic, reproduced in all three runs |
 
-| STEADY of each kind | 215 under the floor, 352 exactly the same |
+| STEADY of each kind | 215 under the floor, 351 exactly the same |
 |---|---|
 | The runs disagree, by cause | 204 opposite directions inside overlapping noise, 2 opposite directions, each beyond its noise |
 
@@ -60,12 +61,12 @@ Evidence strength beside the word (it never changes the word):
 
 | Status, comparison | Words |
 |---|---|
-| standing | against its native | 492 GAIN, 205 power given, 567 STEADY, 292 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning |
-| standing | in place of a controller | 110 GAIN, 29 power given, 72 STEADY, 70 LOSS, 18 the runs disagree, 137 shown |
+| standing | against its native | 498 GAIN, 202 power given, 566 STEADY, 290 LOSS, 206 the runs disagree, 32 the runs differ, 668 shown, 201 tuning |
+| standing | in place of a controller | 108 GAIN, 29 power given, 72 STEADY, 69 LOSS, 21 the runs disagree, 137 shown |
 | standing | the orchestrator's own | 28 GAIN, 10 power given, 86 STEADY, 76 LOSS, 35 the runs disagree, 99 shown |
 | standing | two changes at once | 57 GAIN, 25 power given, 43 STEADY, 96 LOSS, 14 the runs disagree, 99 shown |
-| superseded | against its native | 1713 GAIN, 622 power given, 2568 STEADY, 572 LOSS, 1258 the runs disagree, 80 the runs differ, 1861 shown, 1221 tuning |
-| superseded | in place of a controller | 172 GAIN, 31 power given, 94 STEADY, 75 LOSS, 31 the runs disagree, 182 shown |
+| superseded | against its native | 1757 GAIN, 639 power given, 2619 STEADY, 605 LOSS, 1276 the runs disagree, 80 the runs differ, 1942 shown, 1221 tuning |
+| superseded | in place of a controller | 179 GAIN, 35 power given, 106 STEADY, 84 LOSS, 31 the runs disagree, 201 shown |
 | superseded | the orchestrator's own | 37 GAIN, 20 power given, 126 STEADY, 111 LOSS, 45 the runs disagree, 144 shown |
 | superseded | two changes at once | 78 GAIN, 39 power given, 68 STEADY, 133 LOSS, 21 the runs disagree, 144 shown |
 | taken out | against its native | 15 GAIN, 5 power given, 1 LOSS, 3 the runs disagree |
@@ -73,7 +74,7 @@ Evidence strength beside the word (it never changes the word):
 
 The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two changes at once (BOTH) and in place of a controller (VS) are shown, never a reading of Omni-Compass against its native.
 
-## Every LOSS row of Omni-Compass against its native (292)
+## Every LOSS row of Omni-Compass against its native (290)
 
 | Table | Engine | Class | Gauge | Native → Omni-Compass, raw change, each run | Evidence |
 |---|---|---|---|---|---|
@@ -149,12 +150,6 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | time pods had no machine to take them, pod-minutes | 3.082 → 15.16 (+391.9%); 3.155 → 13.13 (+316.1%); 3.627 → 16.18 (+346.0%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | pod start wait, total (s) | 233 → 1058 (+354.3%); 236.9 → 921.8 (+289.1%); 269.7 → 1150 (+326.6%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_AKS_WORK_METER.md` | omni-v26 | L | pod start wait, mean (s) | 29.12 → 36.29 (+24.6%); 29.61 → 33.8 (+14.2%); 32.97 → 39.05 (+18.5%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_ALL_FOUR.md` | omni-v26 | L | pod start wait, total (s) | 7.6 → 17.8 (+134.2%); 7.8 → 20.8 (+166.7%); 7.3 → 15.1 (+106.8%) | strong; 3 of 3 beyond the noise |
-| `results/live/V26_ALL_FOUR.md` | omni-v26 | L | pod start wait, mean (s) | 1.406 → 1.76 (+25.2%); 1.399 → 1.888 (+35.0%); 1.325 → 1.528 (+15.3%) | weak; 1 of 3 beyond the noise |
-| `results/live/V26_BATCH.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 10.7 → 11 (+2.8%); 9.7 → 9.8 (+1.0%); 11.2 → 11.6 (+3.6%) | weak; 1 of 3 beyond the noise |
-| `results/live/V26_BATCH.md` | omni-v26 | L | pod start wait, total (s) | 0.0; 0.7 → 1.6 (+128.6%); 0.1 → 1.8 (+1700.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_BATCH.md` | omni-v26 | L | pod start wait, mean (s) | 0.0; 0.7 → 0.8 (+14.3%); 0.1 → 0.9 (+800.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_BATCH.md` | omni-v26 | L | batch: queue finished (s) | 633.6 → 649.1 (+2.4%); 561.1 → 578.5 (+3.1%); 662.2 → 682.9 (+3.1%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_BINPACK.md` | omni-v26 | L | response time (ms), 95th percentile | 1579 → 1717 (+8.8%); 2154 → 2350 (+9.1%); 1149 → 1276 (+11.0%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_BINPACK.md` | omni-v26 | L | response time (ms), 99th percentile | 2235 → 2419 (+8.2%); 3139 → 3222 (+2.7%); 1678 → 1844 (+9.9%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_BINPACK.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 7.6 → 8 (+5.3%); 11.9 → 12.3 (+3.4%); 7.3 → 7.7 (+5.5%) | inconclusive; 0 of 3 beyond the noise |
@@ -196,11 +191,6 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_CRUISEKUBE_RECORDER.md` | omni-v26 | L | response time (ms), 95th percentile | 103.7 → 107 (+3.2%); 119.9 → 119.6 (−0.3%); 114 → 115.9 (+1.6%) | weak; 1 of 3 beyond the noise |
 | `results/live/V26_CRUISEKUBE_RECORDER.md` | omni-v26 | L | response time (ms), 99th percentile | 115.1 → 124.9 (+8.6%); 136.8 → 137.4 (+0.5%); 127 → 137.6 (+8.3%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_CRUISEKUBE_RECORDER.md` | omni-v26 | L | pod start wait, total (s) | 2.1 → 2.5 (+19.0%); 1.5 → 2.1 (+40.0%); 1.5 → 2.2 (+46.7%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_FAIRNESS.md` | omni-v26 | L | response time (ms), 95th percentile | 2072 → 2246 (+8.4%); 1918 → 2132 (+11.2%); 1822 → 1908 (+4.7%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_FAIRNESS.md` | omni-v26 | L | pod start wait, total (s) | 8.4 → 10.3 (+22.6%); 8.8 → 10.5 (+19.3%); 9.3 → 10.2 (+9.7%) | weak; 1 of 3 beyond the noise |
-| `results/live/V26_FAIRNESS.md` | omni-v26 | L | second app: response time (ms), 95th percentile | 239.9 → 240.7 (+0.4%); 272.6 → 296.7 (+8.8%); 372.8 → 417 (+11.9%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_FAIRNESS.md` | omni-v26 | L | second app: failed requests (%) | 12.08 → 12.48 (+3.3%); 10.23 → 10.43 (+2.0%); 10.22 → 10.46 (+2.3%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_FAULTS.md` | omni-v26 | L | pod start wait, total (s) | 8.6 → 16.3 (+89.5%); 9 → 17.3 (+92.2%); 17.5 → 29.2 (+66.9%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_FAULTS_EXTENDED.md` | omni-v26 | L | pod start wait, total (s) | 15.8 → 19.2 (+21.5%); 13.1 → 18.3 (+39.7%); 13.4 → 20 (+49.3%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_FAULTS_EXTENDED.md` | omni-v26 | L | pod start wait, mean (s) | 1.626 → 1.626 (−0.0%); 1.536 → 1.716 (+11.7%); 1.538 → 1.641 (+6.7%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_GODEL_4W_BARE.md` | omni-v26 | L | response time (ms), mean | 505.6 → 526.9 (+4.2%); 399 → 417.1 (+4.5%); 270.8 → 293.8 (+8.5%) | weak; 1 of 3 beyond the noise |
@@ -278,16 +268,6 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_KUBERAY_4W_TOP.md` | omni-v26 | L | pod start wait, mean (s) | 2.04; 0.2 → 2.35 (+1075.0%); 0.75 → 1.7 (+126.7%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_KUBERAY_4W_TOP.md` | omni-v26 | L | batch: queue finished (s) | 1455 → 1462 (+0.5%); 1364 → 1388 (+1.8%); 1363 → 1360 (−0.2%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_KUBERAY_4W_TOP.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 998.2 → 1057 (+5.9%); 870.3 → 888 (+2.0%); 878.9 → 877.2 (−0.2%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | response time (ms), 95th percentile | 1153 → 1308 (+13.5%); 1080 → 1187 (+9.9%); 1575 → 1669 (+6.0%) | weak; 1 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | response time (ms), 99th percentile | 1611 → 1856 (+15.2%); 1495 → 1641 (+9.8%); 2270 → 2386 (+5.1%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | failed requests (%) | 0.011299435028248588; 0.0; 0.0 | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 7.9 → 9.6 (+21.5%); 8.3 → 9.8 (+18.1%); 8.9 → 9.3 (+4.5%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | pod start wait, total (s) | 4.8; 3.5; 0.3 → 2 (+566.7%) | strong; 3 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | pod start wait, mean (s) | 1.8499999999999996; 2.15; 0.3 → 1.15 (+283.3%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | batch: queue finished (s) | 781.1 → 791.4 (+1.3%); 774.7 → 783.4 (+1.1%); 812.4 → 819.6 (+0.9%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, mean (s) | 0.1417 → 0.7292 (+414.7%); 0.1542 → 0.2958 (+91.9%); 0.35 → 0.5583 (+59.5%) | weak; 1 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 0.8 → 4.5 (+462.5%); 0.9 → 1.6 (+77.8%); 1.5 → 1.8 (+20.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_KUEUE.md` | omni-v26 | L | queue: job turnaround, submitted to done, mean (s) | 84.98 → 95.59 (+12.5%); 79.76 → 86.92 (+9.0%); 117 → 124.4 (+6.3%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_KUEUE_4W_BARE.md` | omni-v26 | L | response time (ms), 95th percentile | 1428 → 1578 (+10.5%); 1121 → 1251 (+11.6%); 1193 → 1339 (+12.2%) | weak; 1 of 3 beyond the noise |
 | `results/live/V26_KUEUE_4W_BARE.md` | omni-v26 | L | response time (ms), 99th percentile | 1949 → 2257 (+15.8%); 1633 → 1782 (+9.1%); 1686 → 1883 (+11.7%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_KUEUE_4W_BARE.md` | omni-v26 | L | time over the response line (% of samples) | 17.32 → 17.71 (+2.2%); 13.26 → 15.14 (+14.2%); 13.46 → 13.55 (+0.7%) | inconclusive; 0 of 3 beyond the noise |
@@ -339,7 +319,6 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_SYSBENCH_SHIPPED.md` | omni-v26 | L | burst: p99_ms | 4.129 → 4.725 (+14.4%); 4.36 → 4.543 (+4.2%); 5.672 → 5.92 (+4.4%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_SYSBENCH_SHIPPED.md` | omni-v26 | L | read_only: p95_ms | 3.038 → 3.208 (+5.6%); 3.405 → 3.428 (+0.7%); 4.004 → 4.101 (+2.4%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_SYSBENCH_SHIPPED.md` | omni-v26 | L | read_only: p99_ms | 4.101 → 4.411 (+7.6%); 4.461 → 4.683 (+5.0%); 5.309 → 5.57 (+4.9%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_TRACE_GOOGLE2011.md` | omni-v26 | L | pod start wait, total (s) | 10.4 → 28.4 (+173.1%); 10.4 → 27.8 (+167.3%); 9.1 → 23.9 (+162.6%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_VANILLA.md` | omni-v26 | L | response time (ms), 95th percentile | 1223 → 1406 (+15.0%); 1625 → 1801 (+10.8%); 1160 → 1285 (+10.8%) | strong; 3 of 3 beyond the noise |
 | `results/live/V26_VANILLA.md` | omni-v26 | L | response time (ms), 99th percentile | 1753 → 1900 (+8.4%); 2273 → 2553 (+12.3%); 1629 → 1756 (+7.8%) | moderate; 2 of 3 beyond the noise |
 | `results/live/V26_VANILLA.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 6.2 → 6.3 (+1.6%); 10.7 → 10.9 (+1.9%); 7.7 → 8.7 (+13.0%) | weak; 1 of 3 beyond the noise |
@@ -349,17 +328,6 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_VANILLA.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, mean (s) | 0.1667 → 0.2083 (+25.0%); 0.04583 → 0.1125 (+145.5%); 0.07083 → 0.225 (+217.6%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_VANILLA.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 0.9 → 1.3 (+44.4%); 0.4 → 0.9 (+125.0%); 0.2 → 1.7 (+750.0%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_VANILLA.md` | omni-v26 | L | queue: job turnaround, submitted to done, mean (s) | 97.71 → 105.6 (+8.1%); 116.7 → 126.4 (+8.3%); 81.89 → 90.47 (+10.5%) | strong; 3 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | response time (ms), 95th percentile | 703.2 → 880.6 (+25.2%); 473.4 → 536.4 (+13.3%); 1099 → 1331 (+21.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | response time (ms), 99th percentile | 1167 → 1404 (+20.3%); 729.5 → 808.8 (+10.9%); 1740 → 1975 (+13.5%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | time over the response line (% of samples) | 6.358 → 7.332 (+15.3%); 2.679 → 2.948 (+10.1%); 11.27 → 11.89 (+5.5%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 4.9 → 5.5 (+12.2%); 2 → 2.5 (+25.0%); 7 → 7.8 (+11.4%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | pod start wait, total (s) | 0.9; 1.0; 0.4 → 0.9 (+125.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | pod start wait, mean (s) | 0.45; 0.7333333333333333; 0.4 → 0.7 (+75.0%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | batch: queue finished (s) | 772.8 → 782.1 (+1.2%); 745.7 → 750.3 (+0.6%); 805 → 814.1 (+1.1%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | queue: job wait, submitted to its first pod running, mean (s) | 0.7292 → 0.75 (+2.9%); 0.6833 → 0.7167 (+4.9%); 0.7833 → 0.875 (+11.7%) | inconclusive; 0 of 3 beyond the noise |
-| `results/live/V26_VOLCANO.md` | omni-v26 | L | queue: job turnaround, submitted to done, mean (s) | 83.83 → 92.07 (+9.8%); 51.27 → 57.43 (+12.0%); 114.1 → 125.1 (+9.7%) | moderate; 2 of 3 beyond the noise |
-| `results/live/V26_WANDERING.md` | omni-v26 | L | pod start wait, total (s) | 7.5 → 15.7 (+109.3%); 7.2 → 16.8 (+133.3%); 7.3 → 15.2 (+108.2%) | strong; 3 of 3 beyond the noise |
-| `results/live/V26_WANDERING.md` | omni-v26 | L | pod start wait, mean (s) | 1.325 → 1.544 (+16.6%); 1.577 → 1.714 (+8.7%); 1.396 → 1.684 (+20.6%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_YCSB.md` | omni-v26 | L | b: p99_ms | 0.4953 → 0.4983 (+0.6%); 0.394 → 0.3987 (+1.2%); 0.3697 → 0.3743 (+1.3%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_YCSB.md` | omni-v26 | L | burst: p95_ms | 0.3517 → 0.3547 (+0.9%); 0.468 → 0.4737 (+1.2%); 0.336 → 0.3413 (+1.6%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_YCSB.md` | omni-v26 | L | burst: p99_ms | 0.5087 → 0.514 (+1.0%); 0.6503 → 0.6793 (+4.5%); 0.5463 → 0.5473 (+0.2%) | inconclusive; 0 of 3 beyond the noise |
@@ -369,6 +337,37 @@ The orchestrator's own rows (ORCH) carry no Omni-Compass in either arm; two chan
 | `results/live/V26_YCSB_SHIPPED.md` | omni-v26 | L | b: p99_ms | 0.2353 → 0.2503 (+6.4%); 0.468 → 0.4767 (+1.9%); 0.3023 → 0.321 (+6.2%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_YCSB_SHIPPED.md` | omni-v26 | L | b: mean_ms | 0.05044 → 0.05121 (+1.5%); 0.1514 → 0.1527 (+0.9%); 0.05914 → 0.05914 (+0.0%) | inconclusive; 0 of 3 beyond the noise |
 | `results/live/V26_YCSB_SHIPPED.md` | omni-v26 | L | burst: p95_ms | 0.316 → 0.3277 (+3.7%); 0.5253 → 0.526 (+0.1%); 0.328 → 0.332 (+1.2%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_ALL_FOUR.md` | omni-v27 | L | pod start wait, total (s) | 9 → 16 (+77.8%); 7.5 → 14.9 (+98.7%); 8.3 → 18.4 (+121.7%) | strong; 3 of 3 beyond the noise |
+| `results/live/V27_ALL_FOUR.md` | omni-v27 | L | pod start wait, mean (s) | 1.541 → 1.594 (+3.5%); 1.335 → 1.531 (+14.7%); 1.706 → 1.878 (+10.0%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_BATCH.md` | omni-v27 | L | response time (ms), 95th percentile | 3000 → 3016 (+0.6%); 3205 → 3233 (+0.9%); 3132 → 3179 (+1.5%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_BATCH.md` | omni-v27 | L | response time (ms), 99th percentile | 3942 → 3955 (+0.3%); 4235 → 4282 (+1.1%); 4155 → 4169 (+0.3%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_BATCH.md` | omni-v27 | L | failed requests (%) | 0.0; 0.011049723756906077; 0.0 | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_BATCH.md` | omni-v27 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 10.5 → 10.9 (+3.8%); 10.9 → 11.2 (+2.8%); 10.9 → 11.3 (+3.7%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V27_BATCH.md` | omni-v27 | L | batch: queue finished (s) | 613.3 → 630.3 (+2.8%); 644.2 → 665.4 (+3.3%); 645.6 → 662.9 (+2.7%) | strong; 3 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | response time (ms), 95th percentile | 2184 → 2230 (+2.1%); 1737 → 1868 (+7.6%); 1639 → 1904 (+16.2%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | time over the response line (% of samples) | 22.81 → 23.6 (+3.4%); 21.42 → 21.36 (−0.3%); 18.24 → 19.21 (+5.3%) | weak; 1 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | pod start wait, total (s) | 8.8 → 9.9 (+12.5%); 9.4 → 10.8 (+14.9%); 9.5 → 10.3 (+8.4%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | pod start wait, mean (s) | 1.624 → 1.823 (+12.3%); 1.63 → 1.783 (+9.4%); 1.652 → 1.696 (+2.7%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | second app: response time (ms), 95th percentile | 283.8 → 347.3 (+22.4%); 243.9 → 297.5 (+22.0%); 330.9 → 360.8 (+9.1%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | second app: time over the response line (% of samples) | 13.35 → 14.04 (+5.1%); 12.78 → 13.47 (+5.4%); 11.64 → 12.22 (+5.0%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | L | second app: failed requests (%) | 11.4 → 12.04 (+5.5%); 10.45 → 10.81 (+3.5%); 9.118 → 9.198 (+0.9%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | response time (ms), 95th percentile | 1272 → 1326 (+4.3%); 1072 → 1199 (+11.9%); 1847 → 2002 (+8.4%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | response time (ms), 99th percentile | 1795 → 1844 (+2.7%); 1560 → 1689 (+8.2%); 2571 → 2779 (+8.1%) | moderate; 2 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 6.8 → 7.3 (+7.4%); 6.2 → 8 (+29.0%); 9.8 → 10.7 (+9.2%) | weak; 1 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | pod start wait, total (s) | 2.9; 1.7; 2.4 | weak; 1 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | pod start wait, mean (s) | 1.0866666666666667; 0.8666666666666666; 1.2166666666666666 | moderate; 2 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | batch: queue finished (s) | 791.3 → 793.5 (+0.3%); 777.6 → 782.3 (+0.6%); 834.6 → 849 (+1.7%) | weak; 1 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | queue: job wait, submitted to its first pod running, mean (s) | 0.2167 → 0.6708 (+209.6%); 0.1042 → 0.2708 (+160.0%); 0.5125 → 1.363 (+165.9%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 0.7 → 2.5 (+257.1%); 0.6 → 0.7 (+16.7%); 2.3 → 8.5 (+269.6%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_KUEUE.md` | omni-v27 | L | queue: job turnaround, submitted to done, mean (s) | 97.29 → 99.8 (+2.6%); 81.28 → 86.94 (+7.0%); 139.1 → 150.1 (+7.9%) | weak; 1 of 3 beyond the noise |
+| `results/live/V27_TRACE_GOOGLE2011.md` | omni-v27 | L | pod start wait, total (s) | 9.6 → 31.2 (+225.0%); 10.2 → 26.6 (+160.8%); 9.3 → 33.3 (+258.1%) | strong; 3 of 3 beyond the noise |
+| `results/live/V27_VOLCANO.md` | omni-v27 | L | response time (ms), 95th percentile | 720.2 → 748.6 (+3.9%); 920.5 → 1030 (+11.9%); 907.3 → 976.9 (+7.7%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_VOLCANO.md` | omni-v27 | L | response time (ms), 99th percentile | 1075 → 1143 (+6.3%); 1496 → 1613 (+7.9%); 1455 → 1511 (+3.9%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_VOLCANO.md` | omni-v27 | L | batch: queue finished (s) | 763.9 → 769 (+0.7%); 783.4 → 790.7 (+0.9%); 782.7 → 787.8 (+0.7%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_VOLCANO.md` | omni-v27 | L | queue: job wait, submitted to its first pod running, 95th percentile (s) | 1.4 → 1.8 (+28.6%); 1.5 → 1.5 (±0.0%); 1.3 → 2.3 (+76.9%) | inconclusive; 0 of 3 beyond the noise |
+| `results/live/V27_VOLCANO.md` | omni-v27 | L | queue: job turnaround, submitted to done, mean (s) | 71.53 → 74.85 (+4.6%); 91.63 → 98.31 (+7.3%); 92.45 → 96.05 (+3.9%) | weak; 1 of 3 beyond the noise |
+| `results/live/V27_WANDERING.md` | omni-v27 | L | pod start wait, total (s) | 8.4 → 16.6 (+97.6%); 9.1 → 15.4 (+69.2%); 8.3 → 18.8 (+126.5%) | strong; 3 of 3 beyond the noise |
+| `results/live/V27_WANDERING.md` | omni-v27 | L | pod start wait, mean (s) | 1.526 → 1.628 (+6.6%); 1.615 → 1.751 (+8.4%); 1.544 → 1.871 (+21.1%) | weak; 1 of 3 beyond the noise |
 
 ## Stored readings the key reads otherwise (0)
 
@@ -669,8 +668,8 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V25_YCSB_SHIPPED.md` | omni-v25 | superseded | against its native | L | A 41758494688 (? reps, `e29ad045b2ac`), B 41772133244 (? reps, `db6e040b4584`), C 41785367418 (? reps, `0a92e09fe669`) |
 | `results/live/V26_AKS_FULL_BURST.md` | omni-v26 | standing | against its native | L | A 42416651121 (3 reps, `84462b32eacc`), B 42483841896 (3 reps, `c53a301d3751`), C 42651049003 (3 reps, `9a219c92c8c4`) |
 | `results/live/V26_AKS_WORK_METER.md` | omni-v26 | standing | against its native | L | A 43005182097 (10 reps, `0e489fe0ca22`), B 43177138720 (10 reps, `2438623f09a9`), C 43364393684 (10 reps, `db8ccfcc9d1d`) |
-| `results/live/V26_ALL_FOUR.md` | omni-v26 | standing | against its native | L | A 42406258911 (10 reps, `b806aadd5bbb`), B 42415420145 (10 reps, `84462b32eacc`), C 42427795427 (10 reps, `84462b32eacc`) |
-| `results/live/V26_BATCH.md` | omni-v26 | standing | against its native | L | A 42407546216 (10 reps, `b806aadd5bbb`), B 42417953886 (10 reps, `84462b32eacc`), C 42427808988 (10 reps, `84462b32eacc`) |
+| `results/live/V26_ALL_FOUR.md` | omni-v26 | superseded | against its native | L | A 42406258911 (10 reps, `b806aadd5bbb`), B 42415420145 (10 reps, `84462b32eacc`), C 42427795427 (10 reps, `84462b32eacc`) |
+| `results/live/V26_BATCH.md` | omni-v26 | superseded | against its native | L | A 42407546216 (10 reps, `b806aadd5bbb`), B 42417953886 (10 reps, `84462b32eacc`), C 42427808988 (10 reps, `84462b32eacc`) |
 | `results/live/V26_BINPACK.md` | omni-v26 | standing | against its native | L | A 42439660401 (10 reps, `f11b1b18673c`), B 42440706098 (10 reps, `f11b1b18673c`), C 42440713360 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_BINPACK_4W_BARE.md` | omni-v26 | standing | against its native | L | A 42444100547 (10 reps, `f11b1b18673c`), B 42445172518 (10 reps, `f11b1b18673c`), C 42446289715 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_BINPACK_4W_BOTH.md` | omni-v26 | standing | two changes at once | L | A 42444100547 (10 reps, `f11b1b18673c`), B 42445172518 (10 reps, `f11b1b18673c`), C 42446289715 (10 reps, `f11b1b18673c`) |
@@ -687,8 +686,8 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V26_CRANE_4W_VS.md` | omni-v26 | standing | in place of a controller | L | A 42447367322 (10 reps, `f11b1b18673c`), B 42450499095 (10 reps, `f11b1b18673c`), C 42452540225 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_CRUISEKUBE.md` | omni-v26 | standing | against its native | L | A 42403615734 (10 reps, `5d13597b94dc`), B 42413970707 (10 reps, `0d5b2754d310`), C 42425416413 (10 reps, `84462b32eacc`) |
 | `results/live/V26_CRUISEKUBE_RECORDER.md` | omni-v26 | standing | against its native | L | A 42436262163 (10 reps, `bf9868379271`), B 42436265627 (10 reps, `bf9868379271`), C 42437381465 (10 reps, `bf9868379271`) |
-| `results/live/V26_FAIRNESS.md` | omni-v26 | standing | against its native | L | A 42406263563 (10 reps, `b806aadd5bbb`), B 42417945882 (10 reps, `84462b32eacc`), C 42427800113 (10 reps, `84462b32eacc`) |
-| `results/live/V26_FAULTS.md` | omni-v26 | standing | against its native | L | A 42407542058 (10 reps, `b806aadd5bbb`), B 42417949915 (10 reps, `84462b32eacc`), C 42427804535 (10 reps, `84462b32eacc`) |
+| `results/live/V26_FAIRNESS.md` | omni-v26 | superseded | against its native | L | A 42406263563 (10 reps, `b806aadd5bbb`), B 42417945882 (10 reps, `84462b32eacc`), C 42427800113 (10 reps, `84462b32eacc`) |
+| `results/live/V26_FAULTS.md` | omni-v26 | superseded | against its native | L | A 42407542058 (10 reps, `b806aadd5bbb`), B 42417949915 (10 reps, `84462b32eacc`), C 42427804535 (10 reps, `84462b32eacc`) |
 | `results/live/V26_FAULTS_EXTENDED.md` | omni-v26 | standing | against its native | L | A 42433917965 (10 reps, `bf9868379271`), B 42435068170 (10 reps, `bf9868379271`), C 42436258993 (10 reps, `bf9868379271`) |
 | `results/live/V26_GODEL_4W_BARE.md` | omni-v26 | standing | against its native | L | A 42447370557 (10 reps, `f11b1b18673c`), B 42451531911 (10 reps, `f11b1b18673c`), C 42452543740 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_GODEL_4W_BOTH.md` | omni-v26 | standing | two changes at once | L | A 42447370557 (10 reps, `f11b1b18673c`), B 42451531911 (10 reps, `f11b1b18673c`), C 42452543740 (10 reps, `f11b1b18673c`) |
@@ -713,7 +712,7 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V26_KUBERAY_4W_ORCH.md` | omni-v26 | standing | the orchestrator's own | L | A 42447364135 (10 reps, `f11b1b18673c`), B 42450495106 (10 reps, `f11b1b18673c`), C 42452536842 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_KUBERAY_4W_TOP.md` | omni-v26 | standing | against its native | L | A 42447364135 (10 reps, `f11b1b18673c`), B 42450495106 (10 reps, `f11b1b18673c`), C 42452536842 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_KUBERAY_4W_VS.md` | omni-v26 | standing | in place of a controller | L | A 42447364135 (10 reps, `f11b1b18673c`), B 42450495106 (10 reps, `f11b1b18673c`), C 42452536842 (10 reps, `f11b1b18673c`) |
-| `results/live/V26_KUEUE.md` | omni-v26 | standing | against its native | L | A 42412690276 (10 reps, `e81cb06c22b0`), B 42422950496 (10 reps, `84462b32eacc`), C 42432716761 (10 reps, `bf9868379271`) |
+| `results/live/V26_KUEUE.md` | omni-v26 | superseded | against its native | L | A 42412690276 (10 reps, `e81cb06c22b0`), B 42422950496 (10 reps, `84462b32eacc`), C 42432716761 (10 reps, `bf9868379271`) |
 | `results/live/V26_KUEUE_4W_BARE.md` | omni-v26 | standing | against its native | L | A 42442976725 (10 reps, `f11b1b18673c`), B 42445165273 (10 reps, `f11b1b18673c`), C 42445184360 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_KUEUE_4W_BOTH.md` | omni-v26 | standing | two changes at once | L | A 42442976725 (10 reps, `f11b1b18673c`), B 42445165273 (10 reps, `f11b1b18673c`), C 42445184360 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_KUEUE_4W_ORCH.md` | omni-v26 | standing | the orchestrator's own | L | A 42442976725 (10 reps, `f11b1b18673c`), B 42445165273 (10 reps, `f11b1b18673c`), C 42445184360 (10 reps, `f11b1b18673c`) |
@@ -733,22 +732,33 @@ None: every stored reading is the key's reading of its stored values, and every 
 | `results/live/V26_REDIS_SHIPPED.md` | omni-v26 | standing | against its native | L | A 42410139533 (? reps, `e81cb06c22b0`), B 42420505631 (? reps, `84462b32eacc`), C 42430260591 (? reps, `25130545f054`) |
 | `results/live/V26_ROBUST_KILL.md` | omni-v26 | standing | against its native | L | A 42411433795 (10 reps, `e81cb06c22b0`), B 42421747995 (10 reps, `84462b32eacc`), C 42431521983 (10 reps, `25130545f054`) |
 | `results/live/V26_ROBUST_LONG.md` | omni-v26 | standing | against its native | L | A 42411438422 (3 reps, `e81cb06c22b0`), B 42422946374 (3 reps, `84462b32eacc`), C 42432712342 (3 reps, `bf9868379271`) |
-| `results/live/V26_SOLO.md` | omni-v26 | standing | in place of a controller | L | A 42406245967 (10 reps, `b806aadd5bbb`), B 42415405827 (10 reps, `84462b32eacc`), C 42426635223 (10 reps, `84462b32eacc`) |
+| `results/live/V26_SOLO.md` | omni-v26 | superseded | in place of a controller | L | A 42406245967 (10 reps, `b806aadd5bbb`), B 42415405827 (10 reps, `84462b32eacc`), C 42426635223 (10 reps, `84462b32eacc`) |
 | `results/live/V26_SOLO_2.md` | omni-v26 | standing | in place of a controller | L | A 42457064085 (10 reps, `f11b1b18673c`), B 42457069917 (10 reps, `f11b1b18673c`), C 42457074398 (10 reps, `f11b1b18673c`) |
 | `results/live/V26_SOLO_2_VS_ON_NATIVE.md` | omni-v26 | standing | in place of a controller | L | A 42457064085 (10 reps, `f11b1b18673c`), B 42457069917 (10 reps, `f11b1b18673c`), C 42457074398 (10 reps, `f11b1b18673c`) |
-| `results/live/V26_SOLO_VS_ON_NATIVE.md` | omni-v26 | standing | in place of a controller | L | A 42406245967 (10 reps, `b806aadd5bbb`), B 42415405827 (10 reps, `84462b32eacc`), C 42426635223 (10 reps, `84462b32eacc`) |
-| `results/live/V26_STEADY.md` | omni-v26 | standing | against its native | L | A 42406241542 (10 reps, `b806aadd5bbb`), B 42415400880 (10 reps, `84462b32eacc`), C 42426631088 (10 reps, `84462b32eacc`) |
+| `results/live/V26_SOLO_VS_ON_NATIVE.md` | omni-v26 | superseded | in place of a controller | L | A 42406245967 (10 reps, `b806aadd5bbb`), B 42415405827 (10 reps, `84462b32eacc`), C 42426635223 (10 reps, `84462b32eacc`) |
+| `results/live/V26_STEADY.md` | omni-v26 | superseded | against its native | L | A 42406241542 (10 reps, `b806aadd5bbb`), B 42415400880 (10 reps, `84462b32eacc`), C 42426631088 (10 reps, `84462b32eacc`) |
 | `results/live/V26_SWARM.md` | omni-v26 | standing | against its native | S | in its own Markdown |
 | `results/live/V26_SYSBENCH.md` | omni-v26 | standing | against its native | L | A 42408808035 (? reps, `e81cb06c22b0`), B 42419228266 (? reps, `84462b32eacc`), C 42429048986 (? reps, `25130545f054`) |
 | `results/live/V26_SYSBENCH_SERVICE.md` | omni-v26 | standing | against its native | L | A 42433905637 (? reps, `bf9868379271`), B 42435054949 (? reps, `bf9868379271`), C 42435143553 (? reps, `bf9868379271`) |
 | `results/live/V26_SYSBENCH_SHIPPED.md` | omni-v26 | standing | against its native | L | A 42408824241 (? reps, `e81cb06c22b0`), B 42420501775 (? reps, `84462b32eacc`), C 42430256512 (? reps, `25130545f054`) |
-| `results/live/V26_TRACE_GOOGLE2011.md` | omni-v26 | standing | against its native | L | A 42407550879 (10 reps, `b806aadd5bbb`), B 42417958110 (10 reps, `84462b32eacc`), C 42427813944 (10 reps, `84462b32eacc`) |
+| `results/live/V26_TRACE_GOOGLE2011.md` | omni-v26 | superseded | against its native | L | A 42407550879 (10 reps, `b806aadd5bbb`), B 42417958110 (10 reps, `84462b32eacc`), C 42427813944 (10 reps, `84462b32eacc`) |
 | `results/live/V26_VANILLA.md` | omni-v26 | standing | against its native | L | A 42439656396 (10 reps, `f11b1b18673c`), B 42439664303 (10 reps, `f11b1b18673c`), C 42440709856 (10 reps, `f11b1b18673c`) |
-| `results/live/V26_VOLCANO.md` | omni-v26 | standing | against its native | L | A 42412695021 (10 reps, `e81cb06c22b0`), B 42422954360 (10 reps, `84462b32eacc`), C 42432720979 (10 reps, `bf9868379271`) |
-| `results/live/V26_WANDERING.md` | omni-v26 | standing | against its native | L | A 42406254590 (10 reps, `b806aadd5bbb`), B 42415415600 (10 reps, `84462b32eacc`), C 42426642847 (10 reps, `84462b32eacc`) |
+| `results/live/V26_VOLCANO.md` | omni-v26 | superseded | against its native | L | A 42412695021 (10 reps, `e81cb06c22b0`), B 42422954360 (10 reps, `84462b32eacc`), C 42432720979 (10 reps, `bf9868379271`) |
+| `results/live/V26_WANDERING.md` | omni-v26 | superseded | against its native | L | A 42406254590 (10 reps, `b806aadd5bbb`), B 42415415600 (10 reps, `84462b32eacc`), C 42426642847 (10 reps, `84462b32eacc`) |
 | `results/live/V26_YCSB.md` | omni-v26 | standing | against its native | L | A 42408812057 (? reps, `e81cb06c22b0`), B 42419232825 (? reps, `84462b32eacc`), C 42429053789 (? reps, `25130545f054`) |
 | `results/live/V26_YCSB_SERVICE.md` | omni-v26 | standing | against its native | L | A 42433909760 (? reps, `bf9868379271`), B 42435059254 (? reps, `bf9868379271`), C 42435147369 (? reps, `bf9868379271`) |
 | `results/live/V26_YCSB_SHIPPED.md` | omni-v26 | standing | against its native | L | A 42410144402 (? reps, `e81cb06c22b0`), B 42420509695 (? reps, `84462b32eacc`), C 42430264345 (? reps, `25130545f054`) |
+| `results/live/V27_ALL_FOUR.md` | omni-v27 | standing | against its native | L | A 44664572156 (10 reps, `e8f715bbfa30`), B 44680366764 (10 reps, `275dad3cbbbf`), C 44695279547 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_BATCH.md` | omni-v27 | standing | against its native | L | A 44666372071 (10 reps, `8c3f6f107001`), B 44680386621 (10 reps, `275dad3cbbbf`), C 44695299456 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_FAIRNESS.md` | omni-v27 | standing | against its native | L | A 44664578678 (10 reps, `e8f715bbfa30`), B 44680373422 (10 reps, `275dad3cbbbf`), C 44695285715 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_FAULTS.md` | omni-v27 | standing | against its native | L | A 44666366302 (10 reps, `8c3f6f107001`), B 44680380054 (10 reps, `275dad3cbbbf`), C 44695292827 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_KUEUE.md` | omni-v27 | standing | against its native | L | A 44673401745 (10 reps, `7cae6a4202df`), B 44685881054 (10 reps, `fe3cbb497940`), C 44697253488 (10 reps, `919f9bc7f807`) |
+| `results/live/V27_SOLO.md` | omni-v27 | standing | in place of a controller | L | A 44664553782 (10 reps, `e8f715bbfa30`), B 44678602353 (10 reps, `fb41b2450f54`), C 44693360659 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_SOLO_VS_ON_NATIVE.md` | omni-v27 | standing | in place of a controller | L | A 44664553782 (10 reps, `e8f715bbfa30`), B 44678602353 (10 reps, `fb41b2450f54`), C 44693360659 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_STEADY.md` | omni-v27 | standing | against its native | L | A 44664547563 (10 reps, `e8f715bbfa30`), B 44678596546 (10 reps, `fb41b2450f54`), C 44693353493 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_TRACE_GOOGLE2011.md` | omni-v27 | standing | against its native | L | A 44666378039 (10 reps, `8c3f6f107001`), B 44680393256 (10 reps, `275dad3cbbbf`), C 44695306073 (10 reps, `d05faa76e1a5`) |
+| `results/live/V27_VOLCANO.md` | omni-v27 | standing | against its native | L | A 44673408351 (10 reps, `7cae6a4202df`), B 44687723958 (10 reps, `fe3cbb497940`), C 44697261681 (10 reps, `919f9bc7f807`) |
+| `results/live/V27_WANDERING.md` | omni-v27 | standing | against its native | L | A 44664565856 (10 reps, `e8f715bbfa30`), B 44680359486 (10 reps, `275dad3cbbbf`), C 44695273057 (10 reps, `d05faa76e1a5`) |
 | `results/live/V3_ALL_FOUR.md` | omni-v3 | the road | against its native | L | A 38013221512 (10 reps, `3aac0ab7d384`), B 38013226173 (10 reps, `3aac0ab7d384`), C 38013230522 (10 reps, `3aac0ab7d384`) |
 | `results/live/V3_BATCH.md` | omni-v3 | the road | against its native | L | A 38013261196 (10 reps, `3aac0ab7d384`), B 38013265986 (10 reps, `3aac0ab7d384`), C 38013269850 (10 reps, `3aac0ab7d384`) |
 | `results/live/V3_CITYLEARN.md` | omni-v3 | the road | against its native | S | in its own Markdown |
