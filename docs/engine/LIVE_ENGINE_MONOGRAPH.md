@@ -6,7 +6,7 @@ Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outs
 
 Dubra Software Inc. / The Omni-Compass LLC, 7 November 2026.
 
-**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v27 (`OMNI_V27.json`, digest `34548e45437a05bd`, 65 fingerprinted files), the verdict audit's record `26060ee48ab03ea7` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-20 14:37 UTC at commit `945f8c85a461` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
+**Validity.** <!-- monograph: validity (tools/monograph_words.py) -->Valid for omni-v27 (`OMNI_V27.json`, digest `34548e45437a05bd`, 65 fingerprinted files), the verdict audit's record `5d99e48e9e31d411` (`results/verdict_audit/VERDICT_AUDIT.json`) and the page built 2026-11-20 14:37 UTC at commit `945f8c85a461` (`docs/engine/LIVE_ENGINE_VERSION.json`); every count marked in this monograph is written from its record by `tools/monograph_words.py`, whose `--check` fails when one falls out of step.<!-- end of monograph: validity --> (threat T31)
 
 ## Abstract
 
@@ -822,7 +822,7 @@ Table 7.3. Every record the page carries, with the Python that writes it (the bu
 
 ### 7.4 What the tables establish
 
-Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 1769574203, the newest on file; the injection grid of batch 1769574203, the newest on file<!-- end of monograph: page_lag --> (threat T31).
+Each monitor is read on its own record's engine: beside the omni-v25 tables and the records rebuilt at every build, the page plays the older engines Table 7.3 names (threat T23); and it is true only for its build, playing <!-- monograph: page_lag (tools/monograph_words.py) -->the Python's runs of base 1769574203, where the newest on file is 1809585610; the injection grid of batch 1769574203, where the newest on file is 1809585610<!-- end of monograph: page_lag --> (threat T31).
 
 ## 8. Reproducing the Engine
 
