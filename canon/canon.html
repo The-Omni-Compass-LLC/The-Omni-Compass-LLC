@@ -12749,7 +12749,7 @@ function TabSol(ctx,G){var B=SolB(ctx,G.cols,G.maxw),st=G.deal(),sel=null,hist=[
  function save(){hist.push(clone(st));if(hist.length>300)hist.shift();}
  function render(){var maxX=0,maxY=0,vh=Math.max(B.ch*4,(window.innerHeight||700)*0.62);B.clear(1,1);
   P.forEach(function(L){var cs=pile(L.id),x=L.x,y=L.y;B.slot(x,y,L.id+':-1',L.label||'');var n=cs.length;
-   if(L.fan==='down'){var nd=0,nu=0;cs.forEach(function(c){if(c.up)nu++;else nd++;});var du=Math.round(B.ch*0.27),dd=Math.max(5,Math.round(B.ch*0.11)),room=vh-L.y-B.ch;
+   if(L.fan==='down'){var nd=0,nu=0;cs.forEach(function(c){if(c.up)nu++;else nd++;});var du=Math.round(B.ch*0.27),dd=Math.max(5,Math.round(B.ch*0.11)),room=(L.room!=null?L.room:vh-L.y-B.ch);
     if(nu>1&&nd*dd+(nu-1)*du>room)du=Math.max(Math.round(B.ch*0.14),Math.floor((room-nd*dd)/(nu-1)));
     cs.forEach(function(c,i){var s=sel&&sel.id===L.id&&i>=sel.i;B.card(c,x,y,L.id+':'+i,!c.up,s?'sel':'');if(i<n-1)y+=c.up?du:dd;});maxY=Math.max(maxY,y+B.ch);}
    else if(L.fan==='w3'){var show=Math.min(G.w3||1,n),off=Math.floor(B.cw*0.3);for(var k=0;k<show;k++){var i2=n-show+k;B.card(cs[i2],x+k*off,y,L.id+':'+i2,false,(sel&&sel.id===L.id&&k===show-1)?'sel':'');}maxX=Math.max(maxX,x+(show-1)*off+B.cw);maxY=Math.max(maxY,y+B.ch);}
@@ -13511,7 +13511,7 @@ GAMES.reg('c_bridge','Bridge','Cards','Contract bridge for four: you (South) and
   else if(phase==='done'){TT.buttons([[['Deal next hand',function(){newHand();},'gmPri']]]);ctx.status(msg);}
   else{TT.buttons([]);ctx.status(phase==='play'&&G.human(turn)?(turn===2?'Play from North’s (dummy’s) hand.':'Your turn — tap a highlighted card.'):'');}}
  newHand();return {state:function(){return {phase:phase,tr:tr,hands:hands,run:run,cur:cur,auc:auc,decl:decl,contract:contract,tot:tot};},api:{bid:function(b){return doBid(0,b);},play:function(p,i){return run&&run.play(p,i);},legal:function(p){return run?run.legalIdx(p):[];},next:newHand,human:function(p){return G.human(p);}}};});
-GAMES._packC=T;
+GAMES._packC=T; GAMES._sol={TabSol:TabSol,SolB:SolB,emptySt:emptySt,topRowFound:topRowFound,tabCols:tabCols,foundOK:foundOK,flipTops:flipTops,fcount:fcount,safeF:safeF,upAll:upAll,altSeq:altSeq,red:red,cn:cn};
 })();
 </script>
 <style>
@@ -20511,6 +20511,33 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  const press=sel=>{ const b=document.querySelector(sel); if(b&&b.getClientRects().length){ b.click(); return true; } if(b){ b.click(); return true; } return false; };
  const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'LuvMyZodiac',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',kProfile:'Profile',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
  const stopAll=()=>{ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ press('#kStopBtn'); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ } try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ if(!m.paused&&!m.muted) m.pause(); }catch(_){ } }); };
+ /* 🎮 THE CONTROL PAD: ◀ ▲ ▼ ▶ move a big yellow light to the nearest button in that direction on whatever screen is open
+    (scrolling the page when the next one is out of sight); OK presses the lit button. Nothing to aim, nothing small to hit. */
+ const PADNAV=(()=>{ let curEl=null; const st=document.createElement('style'); st.textContent=`.kPadFocus{outline:4px solid #ffe94a!important;outline-offset:2px!important;box-shadow:0 0 0 8px rgba(255,233,74,.35)!important}
+#kRemote .rmPad{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px 6px 0}
+#kRemote .rmPad button{min-height:48px!important;min-width:0!important;padding:0!important;font:900 20px/1 system-ui,sans-serif!important;border-radius:12px!important}
+#kRemote .rmPad .ok{background:#ffe94a!important;color:#14163a!important;font-size:16px!important}
+#kRemote .rmHead button.on{background:#ffe94a!important;color:#14163a!important}
+#kRemote .rmBtns button.more{background:#3b2f7a!important;border-color:#ffe94a!important}`; document.head.appendChild(st);
+  const ok=e=>{ if(!e||!document.contains(e)||e.closest('#kRemote,#rDock,#kXAll')||e.disabled) return false; const r=e.getBoundingClientRect(); if(r.width<4||r.height<4||r.bottom<0||r.top>innerHeight||r.right<0||r.left>innerWidth) return false; const cs=getComputedStyle(e); if(cs.visibility==='hidden'||cs.pointerEvents==='none') return false;
+   const t=document.elementFromPoint(Math.min(innerWidth-1,Math.max(0,r.left+r.width/2)),Math.min(innerHeight-1,Math.max(0,r.top+r.height/2))); return !!t&&(e===t||e.contains(t)||t.contains(e)); };
+  const all=()=>[...document.querySelectorAll('button,a[href],input:not([type=hidden]),select,textarea,summary,[role=button],[tabindex]:not([tabindex="-1"])')].filter(ok);
+  const mid=e=>{ const r=e.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; };
+  function clear(){ if(curEl) curEl.classList.remove('kPadFocus'); curEl=null; }
+  function set(e){ clear(); curEl=e; e.classList.add('kPadFocus'); try{ e.focus({preventScroll:true}); }catch(_){ } try{ e.scrollIntoView({block:'nearest',inline:'nearest'}); }catch(_){ } }
+  function scroller(e){ let p=e&&e.parentElement; while(p&&p!==document.body){ const cs=getComputedStyle(p); if(/(auto|scroll)/.test(cs.overflowY)&&p.scrollHeight>p.clientHeight+4) return p; p=p.parentElement; } return document.scrollingElement; }
+  function pickFrom(L,dir){ const a=mid(curEl); let best=null,bv=1e9; L.forEach(e=>{ if(e===curEl||e.contains(curEl)||curEl.contains(e)) return; const b=mid(e); const dx=b.x-a.x, dy=b.y-a.y; let along,across; if(dir==='right'){ along=dx; across=dy; } else if(dir==='left'){ along=-dx; across=dy; } else if(dir==='down'){ along=dy; across=dx; } else { along=-dy; across=dx; } if(along<=3) return; const v=along+Math.abs(across)*2.2; if(v<bv){ bv=v; best=e; } }); return best; }
+  function go(dir,retry){ if(dir==='ok'){ if(curEl&&document.contains(curEl)){ const e=curEl; e.click(); setTimeout(()=>{ if(!ok(e)) clear(); },350); } else say('🎮 Press an arrow to light a button, then OK.'); return; }
+   const L=all(); if(!L.length) return say('🎮 No buttons on this screen.');
+   if(!curEl||!ok(curEl)){ L.sort((a,b)=>{ const A=a.getBoundingClientRect(),B=b.getBoundingClientRect(); return (Math.round(A.top/20)-Math.round(B.top/20))||(A.left-B.left); }); return set(L[0]); }
+   const best=pickFrom(L,dir); if(best) return set(best);
+   if(!retry&&(dir==='down'||dir==='up')){ const sc=scroller(curEl); const before=sc.scrollTop; sc.scrollBy({top:(dir==='down'?1:-1)*innerHeight*0.55}); setTimeout(()=>{ if(sc.scrollTop!==before) go(dir,true); else say('🎮 That is the '+(dir==='down'?'bottom':'top')+'.'); },160); return; }
+   say('🎮 Nothing further that way.'); }
+  return {go,clear,lit:()=>curEl}; })();
+ /* the screens that open over the page: the remote knows them too */
+ const OVL={kRec:['Recipes',()=>{ try{ KREC.close(); }catch(_){ } }],kFind:['Find',()=>{ try{ KFINDALL.close(); }catch(_){ } }]};
+ const ovl=()=>{ for(const id of Object.keys(OVL)){ const e=$(id); if(e&&!e.hidden&&getComputedStyle(e).display!=='none') return id; } return null; };
+ const here=()=>ovl()||cur(); NAME.kRec='Recipes'; NAME.kFind='Find'; let lastHere='';
  const ACT={
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
   stop:()=>{ stopAll(); say('■ Stopped.'); },
@@ -20522,7 +20549,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   open:()=>{ try{ KPROJ.open(); }catch(_){ } say('📂 Your projects: tap one to open it.'); },
   undoScreen:()=>{ const id=cur(); const m={pad:'#padUndo',kKara:'#kKara [data-kk="undo"]',gamesDock:'#gmUndo',musicDock:'#mUndo'}; if(id==='kEasel'&&window.KEASEL) return KEASEL.undo(); if(m[id]&&press(m[id])) return; if(id==='pad'&&press('#kbUndo')) return; say('Nothing to undo here yet.'); },
   loop:()=>{ const id=cur(); if(id==='pad'||id==='kKara'){ if(press('#ktLoop')) return say('🔁 Loop switched.'); } if(id==='musicDock'&&press('#mShuf')) return; say('🔁 Loop works in the Studio and Karaoke.'); },
-  close:()=>{ const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
+  close:()=>{ const o=ovl(); if(o){ OVL[o][1](); setTimeout(()=>paint(true),120); return; } const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
  /* the buttons each screen adds */
  const EXTRA={pad:[['🥁','Pads',()=>{ try{ KRAIL.FLOAT.toggle('pads'); }catch(_){ press('#kdIPads'); } }],['🎹','Keys',()=>{ try{ KRAIL.FLOAT.toggle('keys'); }catch(_){ press('#kdIKeys'); } }],['🎧','DJ',()=>{ try{ KRAIL.FLOAT.toggle('dj'); }catch(_){ press('#kdIDJ'); } }],['🎤','Sing',()=>{ try{ KKARA.open(); }catch(_){ } }],['×2','Double loop',()=>{ try{ KLOCK.double(); }catch(_){ } }],['🔒','Lock & shuffle',()=>{ try{ KLOCK.open('beat'); }catch(_){ } }]],
   kKara:[['📱','Phone rec',()=>press('#kkCap')],['🎚','Layers',()=>{ const l=$('kkLayers'); if(l) l.scrollIntoView({block:'start'}); else say('Record a take first.'); }],['🏗','Build song',()=>press('#kKara [data-kk="build"]')]],
@@ -20532,6 +20559,8 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   kKnow:[['🔎','Search',()=>{ const q=$('knQ'); if(q) q.focus(); }]],
   kProfile:[['✏️','Edit',()=>press('#kProfile [data-pf="edit"]')],['➕','Post',()=>press('#kProfile [data-pf="post"]')],['🎶','Song',()=>press('#kProfile [data-pf="songplay"]')]],
   kHumor:[['🔊','Read',()=>press('#kHumor [data-kh="daysay"]')],['🎲','Joke',()=>press('#kHumor [data-kh="rnd"]')]],
+  kRec:[['🔎','Search',()=>{ const q=$('rcQ'); if(q){ q.focus(); q.select&&q.select(); } }],['🌍','Cultures',()=>press('#kRec [data-tab="cul"]')],['🎓','School',()=>{ try{ KREC.school(); }catch(_){ } }],['⭐','Favorites',()=>press('#kRec [data-tab="fav"]')],['🛒','List',()=>press('#kRec [data-tab="list"]')]],
+  kFind:[['🔎','Type',()=>{ const q=$('fdQ'); if(q) q.focus(); }],['🤖','Ask AI',()=>press('#kFind [data-fd="ai"]')]],
   gamesDock:[['🕹','All games',()=>{ try{ KVG.open(); }catch(_){ } }]],
   home:[['🎛','Studio',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } }],['🎤','Karaoke',()=>{ try{ KKARA.open(); }catch(_){ } }],['🎨','Easel',()=>{ try{ KEASEL.open(); }catch(_){ } }],['🤖','AI',()=>{ try{ KAI.open(); }catch(_){ } }]]};
  const css=document.createElement('style'); css.textContent=`
@@ -20553,19 +20582,19 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
 @media (max-width:600px){ #kRemote:not(.easy) .rmBtns button{min-width:44px;min-height:44px!important;font-size:9.5px} #kRemote:not(.easy) .rmBtns button span{font-size:17px} }
 @media (min-width:1700px){ #kRemote:not(.easy) .rmBtns button{min-width:66px;min-height:66px!important;font-size:13.5px} #kRemote:not(.easy) .rmBtns button span{font-size:25px} #kRemote .rmHead b{font-size:15px} }
 @media (min-width:2500px){ #kRemote:not(.easy) .rmBtns button{min-width:88px;min-height:88px!important;font-size:17px} #kRemote:not(.easy) .rmBtns button span{font-size:34px} #kRemote .rmHead b{font-size:19px} }`; document.head.appendChild(css);
- let min=getLS('kanin-remote-min',false), shownFor='', gameOpen=false; const GAMESCR=new Set(['gamesDock','kVG']); const isMin=id=>GAMESCR.has(id)?!gameOpen:min; /* on a game screen the remote starts as its bubble so it never covers the play area */
+ let min=getLS('kanin-remote-min',false), shownFor='', gameOpen=false; const GAMESCR=new Set(['gamesDock','kVG']); const isMin=id=>GAMESCR.has(id)?!gameOpen:id==='home'?!homeOpen:min; let homeOpen=false, moreOpen=false, padOn=getLS('kanin-remote-pad',false); /* on a game screen the remote starts as its bubble so it never covers the play area */
  function box(){ let r=$('kRemote'); if(r) return r; r=document.createElement('div'); r.id='kRemote'; r.setAttribute('role','toolbar'); r.setAttribute('aria-label','Remote control'); document.body.appendChild(r);
   const g=getLS('kanin-remote-pos',null); if(g){ r.style.setProperty('--rx',g.x+'px'); r.style.setProperty('--ry',g.y+'px'); r.style.setProperty('--rb','auto'); }
-  r.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; e.stopPropagation(); if(b.dataset.rm==='min'){ if(GAMESCR.has(cur())){ gameOpen=!gameOpen; return paint(true); } min=!min; putLS('kanin-remote-min',min); return paint(true); } if(b.dataset.rm==='hide'){ putLS('kanin-remote-off',true); r.hidden=true; return say('🎛 Remote hidden. Turn it back on in the ⚙ Panel or the Menu.'); } const k=b.dataset.r; if(k&&ACT[k]) return ACT[k](); const x=b.dataset.x; if(x!=null){ const L=EXTRA[cur()]||[]; const f=L[+x]; if(f) f[2](); } });
+  r.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; e.stopPropagation(); if(b.dataset.rm==='min'){ if(GAMESCR.has(here())){ gameOpen=!gameOpen; return paint(true); } if(here()==='home'){ homeOpen=!homeOpen; return paint(true); } min=!min; putLS('kanin-remote-min',min); return paint(true); } if(b.dataset.rm==='hide'){ putLS('kanin-remote-off',true); r.hidden=true; return say('🎛 Remote hidden. Turn it back on in the ⚙ Panel or the Menu.'); } if(b.dataset.rm==='pad'){ padOn=!padOn; putLS('kanin-remote-pad',padOn); if(!padOn) PADNAV.clear(); return paint(true); } if(b.dataset.rm==='more'){ moreOpen=!moreOpen; return paint(true); } if(b.dataset.nav){ return PADNAV.go(b.dataset.nav); } const k=b.dataset.r; if(k&&ACT[k]) return ACT[k](); const x=b.dataset.x; if(x!=null){ const L=EXTRA[here()]||[]; const f=L[+x]; if(f) f[2](); } });
   let drag=null; r.addEventListener('pointerdown',e=>{ if(!e.target.closest('.rmHead')||e.target.closest('button')) return; const rc=r.getBoundingClientRect(); drag={dx:e.clientX-rc.left,dy:e.clientY-rc.top}; try{ r.setPointerCapture(e.pointerId); }catch(_){ } });
   r.addEventListener('pointermove',e=>{ if(!drag) return; const W=innerWidth-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kRailW'))||58), x=Math.max(0,Math.min(W-80,e.clientX-drag.dx)), y=Math.max(0,Math.min(innerHeight-40,e.clientY-drag.dy)); r.style.setProperty('--rx',x+'px'); r.style.setProperty('--ry',y+'px'); r.style.setProperty('--rb','auto'); });
   const up=()=>{ if(!drag) return; drag=null; const rc=r.getBoundingClientRect(); putLS('kanin-remote-pos',{x:Math.round(rc.left),y:Math.round(rc.top)}); }; r.addEventListener('pointerup',up); r.addEventListener('pointercancel',up);
   return r; }
- function paint(force){ const r=box(); const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&!t.hidden&&t.getBoundingClientRect().width>40; })();
-  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'||(innerWidth<700&&(id==='kAI'||(document.activeElement&&/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)&&!/^(range|checkbox|radio|button|file|color)$/.test(document.activeElement.type||''))))||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); if(!GAMESCR.has(id)) gameOpen=false; const mn=isMin(id); const key=id+'|'+mn+'|'+LVL; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',mn);
+ function paint(force){ const r=box(); const id=here(); if(id!==lastHere){ lastHere=id; moreOpen=false; } const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&!t.hidden&&t.getBoundingClientRect().width>40; })();
+  r.hidden=getLS('kanin-remote-off',false)||menuOpen||(innerWidth<700&&(id==='kAI'||(document.activeElement&&/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)&&!/^(range|checkbox|radio|button|file|color)$/.test(document.activeElement.type||''))))||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); if(!GAMESCR.has(id)) gameOpen=false; const mn=isMin(id); const key=id+'|'+mn+'|'+LVL+'|'+moreOpen+'|'+padOn+'|'+(innerWidth<700); if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',mn);
   const base=LVL==='easy'?[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['save','💾','Save'],['close','✕','Close']]:[['rew','⏮','Rewind'],['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['save','💾','Save'],['new','🆕','New'],['open','📂','Open'],['close','✕','Close']];
-  const ex=(LVL==='easy'||innerWidth<700)?[]:(EXTRA[id]||[]); /* on a phone the remote keeps to its ten main buttons; the rail carries the rest */ r.classList.toggle('easy',LVL==='easy');
-  r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(mn?'Open the remote':'Shrink the remote')+'" data-noul>'+(mn?'🎛':'▁')+'</button>'+(mn?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
+  const all=EXTRA[id]||[]; const small=LVL==='easy'||innerWidth<700; const ex=small&&!moreOpen?[]:all; /* on a phone (and in Easy) the screen's own buttons wait behind ➕ More */ r.classList.toggle('easy',LVL==='easy');
+  r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b>'+(mn?'':'<button type="button" data-rm="pad" class="'+(padOn?'on':'')+'" title="Control pad: arrows move between the buttons on the screen, OK presses one" data-noul>🎮</button>')+'<button type="button" data-rm="min" title="'+(mn?'Open the remote':'Shrink the remote')+'" data-noul>'+(mn?'🎛':'▁')+'</button>'+(mn?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div>'+(padOn&&!mn?'<div class="rmPad"><button type="button" data-nav="left" aria-label="Left" data-noul>◀</button><button type="button" data-nav="up" aria-label="Up" data-noul>▲</button><button type="button" data-nav="ok" class="ok" aria-label="Press the lit button" data-noul>OK</button><button type="button" data-nav="down" aria-label="Down" data-noul>▼</button><button type="button" data-nav="right" aria-label="Right" data-noul>▶</button></div>':'')+'<div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+(small&&all.length?'<button type="button" data-rm="more" class="more" title="'+(moreOpen?'Fewer buttons':'This screen’s own buttons')+'" data-noul><span>'+(moreOpen?'➖':'➕')+'</span>'+(moreOpen?'Less':'More')+'</button>':'')+'</div>'; }
  setInterval(()=>paint(false),400);
  /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
  const homeNow=()=>{ const r=$('kRemote'); if(r) r.hidden=true; shownFor=''; [60,300].forEach(t=>setTimeout(()=>paint(true),t)); };
@@ -26319,6 +26348,100 @@ html body .kFloat.kFlash{box-shadow:0 0 0 4px #ffe94a,0 18px 44px rgba(0,0,0,.65
  addEventListener('resize',()=>setTimeout(refit,120)); setInterval(()=>{ const p=$('pad'); if(p&&p.classList.contains('on')) refit(); },1000);
  document.addEventListener('scroll',()=>{ clearTimeout(refit.t); refit.t=setTimeout(refit,150); },true);
  window.KPADFLOAT={fit:k=>fit(getEl(k||'pads')),band:()=>band(getEl('pads')),inFront:k=>inFront(getEl(k||'pads')),inView:k=>inView(getEl(k||'pads'))};
+})();
+
+</script>
+<script>
+(()=>{ /* 📐 v224: THE RIGHT-HAND RAIL, READABLE. No empty gap: every button grows into the whole column; ▶ Play sits at the bottom,
+   right on top of ☰ Menu; the names are big enough to read (about 12px on a phone, up to 15px on a desktop) and the rail is a
+   little wider on phones so no name is cut. */
+ const css=document.createElement('style'); css.textContent=`
+@media (max-width:760px){ :root{--kRailW:64px!important} }
+html body #rDock#rDock#rDock{gap:2px!important;justify-content:stretch!important}
+html body #rDock#rDock#rDock .kdSpace{flex:0 0 0px!important;min-height:0!important;height:0!important;margin:0!important;padding:0!important}
+html body #rDock#rDock#rDock>button,html body #rDock#rDock#rDock #kStopBtn{flex:1 1 0px!important;min-height:0!important;max-height:96px!important;padding:1px 1px!important;gap:0!important;justify-content:center!important;overflow:hidden!important}
+html body #rDock#rDock#rDock #kStopBtn{order:8!important;flex:1.25 1 0px!important}
+html body #rDock#rDock#rDock #lpMenu{order:9!important;flex:1.25 1 0px!important;min-height:0!important}
+html body #rDock#rDock#rDock>button::before,html body #rDock#rDock#rDock #kStopBtn::before{font-size:var(--rIco,clamp(14px,2.7vh,22px))!important;line-height:1.05!important}
+html body #rDock#rDock#rDock>button::after,html body #rDock#rDock#rDock #kStopBtn::after{font-size:var(--rLab,clamp(10px,1.8vh,12.5px))!important;line-height:1.08!important;font-weight:800!important;letter-spacing:-.015em!important;white-space:nowrap!important;max-width:100%!important;overflow:hidden!important;text-overflow:clip!important}
+`; document.head.appendChild(css);
+ /* the fitter: from the rail's own height and the number of buttons it carries now, the biggest icon and name that fit whole */
+ const cv=document.createElement('canvas').getContext('2d'); let last='';
+ function fit(){ const d=document.getElementById('rDock'); if(!d) return; const bs=[...d.querySelectorAll(':scope > button, :scope #kStopBtn')].filter(b=>!b.hidden&&getComputedStyle(b).display!=='none');
+  const n=bs.length; if(!n) return; const cs=getComputedStyle(d); const H=d.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom)-2*(n-1); const W=d.clientWidth-6;
+  const per=H/(n+0.5); const big=innerWidth>=1700?1.35:innerWidth>=761?1.15:1;
+  let lab=Math.min(15*big,Math.max(9,per*0.34)), ico=Math.min(28*big,Math.max(11,per*0.5));
+  const b0=bs.find(b=>b.dataset.kdL)||bs[0], ac=getComputedStyle(b0,'::after'), bc=getComputedStyle(b0); const inner=b0.clientWidth-parseFloat(bc.paddingLeft)-parseFloat(bc.paddingRight)-4; cv.font=(ac.fontWeight||'800')+' 100px '+(ac.fontFamily||'system-ui,sans-serif'); const ls=parseFloat(ac.letterSpacing)||0; const longest=Math.max(...bs.map(b=>{ const t=b.dataset.kdL||''; return cv.measureText(t).width/100+(t.length*(ls/ (parseFloat(ac.fontSize)||12))); })); if(longest>0) lab=Math.min(lab,Math.max(8,inner)/longest);
+  if(ico*1.05+lab*1.1+3>per){ lab=Math.max(8.5,Math.min(lab,(per-3)*0.4)); ico=Math.max(10,(per-3-lab*1.1)/1.05); }
+  const key=n+'|'+Math.round(per*10)+'|'+W; if(key===last) return; last=key; d.style.setProperty('--rLab',lab.toFixed(2)+'px'); d.style.setProperty('--rIco',ico.toFixed(2)+'px'); }
+ addEventListener('resize',()=>{ last=''; setTimeout(fit,60); }); setInterval(fit,700); setTimeout(fit,300);
+ window.KRAILFIT=fit;
+})();
+
+</script>
+<script>
+(()=>{ /* 🂡 FOUR MORE PATIENCE GAMES (v224): Scorpion, Canfield, Baker's Dozen and Calculation, on the shared table engine
+   (tap a card, tap where it goes; tap twice to send it home; Auto, Undo, Keys: Space draws, A auto, U undo). Traditional public-domain rules. */
+ const G0=window.GAMES; if(!G0||!G0.reg||!G0._sol) return; const S=G0._sol, L=G0.lib, shuffle=L.shuffle, mkDeck=L.mkDeck; const CAT='Cards';
+ const {TabSol,emptySt,topRowFound,tabCols,foundOK,flipTops,fcount,red}=S;
+ const up=c=>{ c.up=true; return c; }, down=c=>{ c.up=false; return c; };
+ /* ───── SCORPION ───── */
+ G0.reg('c_scorpion','Scorpion Solitaire',CAT,'Seven columns of seven cards; in the first four columns the top three cards are face down. Three cards wait in the reserve. Build down in the same suit (a 7♥ goes on an 8♥). Any face-up card may be moved, together with every card on top of it, even if they are not in order. Only a King (with whatever is on it) may fill an empty column. Tap the reserve once to deal its three cards onto the first three columns. A complete run from King down to Ace in one suit leaves the table by itself; clear all four to win.',ctx=>{
+  const G={cols:7,maxw:84,nf:4,hasStock:true,
+   deal(){ const d=shuffle(mkDeck(true)), st=emptySt(4,7); for(let t=0;t<7;t++) for(let k=0;k<7;k++){ const c=d.pop(); c.up=!(t<4&&k<3); st.p['t'+t].push(c); } st.p.s=d.map(down); return st; },
+   layout(B){ return [{id:'s',x:0,y:0,count:1}].concat(topRowFound(B,4,3),tabCols(B,7,B.ch+16)); },
+   pick(st,id,i){ return id.charAt(0)==='t'&&st.p[id][i].up; },
+   drop(st,cs,from,id){ if(id.charAt(0)!=='t'||from.charAt(0)==='f') return false; const T=st.p[id]; if(!T.length) return cs[0].r===13; const t=T[T.length-1]; return t.up&&t.s===cs[0].s&&t.r===cs[0].r+1; },
+   targets(st){ const a=[],e=[]; for(let t=0;t<7;t++){ (st.p['t'+t].length?a:e).push('t'+t); } return a.concat(e); },
+   pointless(st,id,i,to){ return i===0&&!st.p[to].length; },
+   stock(st){ if(!st.p.s.length) return 'The reserve is already dealt.'; for(let t=0;t<3&&st.p.s.length;t++) st.p['t'+t].push(up(st.p.s.pop())); return true; },
+   after(st){ flipTops(st,'t'); for(let t=0;t<7;t++){ const C=st.p['t'+t]; if(C.length<13) continue; const run=C.slice(-13); if(run.every((c,k)=>c.up&&c.s===run[0].s&&c.r===13-k)){ for(let f=0;f<4;f++){ if(!st.p['f'+f].length){ st.p['f'+f]=C.splice(-13).reverse(); break; } } flipTops(st,'t'); } } },
+   won(st){ return fcount(st)===52; },
+   status(st){ return 'Runs cleared '+(fcount(st)/13)+'/4 · Reserve '+st.p.s.length; }};
+  return TabSol(ctx,G); });
+ /* ───── CANFIELD ───── */
+ G0.reg('c_canfield','Canfield',CAT,'Thirteen cards form the reserve (only its top card shows), four cards start the tableau and one card starts the first foundation: its rank is the base every foundation starts from (the other three start when a card of that rank turns up). Build the foundations up in suit from the base, going round the corner from King to Ace. Build the tableau down in alternating colors, also round the corner (an Ace may go on a 2, a King on an Ace); move whole columns together. An empty column fills itself from the reserve (and from the waste once the reserve is gone). Tap the stock to turn three cards; turn through it as often as you like. Win by building all 52 cards onto the foundations.',ctx=>{
+  let base=1; const nx=r=>r===13?1:r+1;
+  const G={cols:7,maxw:84,nf:4,hasStock:true,w3:3,
+   deal(){ const d=shuffle(mkDeck(true)), st=emptySt(4,4); st.p.r=[]; for(let k=0;k<13;k++) st.p.r.push(down(d.pop())); up(st.p.r[12]); const b=up(d.pop()); base=b.r; st.base=base; st.p.f0.push(b); for(let t=0;t<4;t++) st.p['t'+t].push(up(d.pop())); st.p.s=d.map(down); st.p.w=[]; return st; },
+   layout(B){ return [{id:'s',x:0,y:0,count:1},{id:'w',x:B.colW,y:0,fan:'w3'}].concat(topRowFound(B,4,3)).concat([{id:'r',x:0,y:B.ch+16,count:1}]).concat(tabCols(B,4,B.ch+16,3)); },
+   pick(st,id,i){ const P=st.p[id]; if(id==='r'||id==='w') return i===P.length-1&&P[i].up; return id.charAt(0)==='t'&&P[i].up; },
+   drop(st,cs,from,id){ const c=cs[0]; if(from.charAt(0)==='f') return false;
+    if(id.charAt(0)==='f'){ if(cs.length!==1) return false; const F=st.p[id]; if(!F.length) return c.r===(st.base||base)&&!['f0','f1','f2','f3'].some(f=>st.p[f].length&&st.p[f][0].s===c.s); return F[0].s===c.s&&c.r===nx(F[F.length-1].r); }
+    if(id.charAt(0)!=='t') return false; const T=st.p[id]; if(!T.length) return true; const t=T[T.length-1]; return red(t)!==red(c)&&nx(c.r)===t.r; },
+   targets(){ return ['f0','f1','f2','f3','t0','t1','t2','t3']; },
+   pointless(st,id,i,to){ return id.charAt(0)==='t'&&i===0&&!st.p[to].length; },
+   stock(st){ if(!st.p.s.length){ if(!st.p.w.length) return 'The stock is empty.'; st.p.s=st.p.w.reverse().map(down); st.p.w=[]; return true; } for(let k=0;k<3&&st.p.s.length;k++) st.p.w.push(up(st.p.s.pop())); return true; },
+   after(st){ for(let t=0;t<4;t++){ const T=st.p['t'+t]; if(T.length) continue; if(st.p.r.length) T.push(up(st.p.r.pop())); else if(st.p.w.length) T.push(st.p.w.pop()); } if(st.p.r.length) up(st.p.r[st.p.r.length-1]); },
+   safe(st,c){ return true; },
+   won(st){ return fcount(st)===52; },
+   status(st){ return 'Base rank '+L.rl(st.base||base)+' · Foundations '+fcount(st)+'/52 · Reserve '+st.p.r.length+' · Stock '+st.p.s.length; }};
+  return TabSol(ctx,G); });
+ /* ───── BAKER'S DOZEN ───── */
+ G0.reg('c_bakers','Baker’s Dozen',CAT,'Thirteen columns of four cards, all face up; any King is moved under the other cards of its column at the deal. Build the four foundations up in suit from Ace to King. On the columns build down by one, in any suit, moving one card at a time. An empty column stays empty. There is no stock: plan ahead.',ctx=>{
+  const G={cols:7,maxw:70,nf:4,
+   deal(){ const d=shuffle(mkDeck(true)), st=emptySt(4,13); for(let t=0;t<13;t++){ const C=[]; for(let k=0;k<4;k++) C.push(up(d.pop())); C.sort((a,b)=>(b.r===13)-(a.r===13)); st.p['t'+t]=C; } return st; },
+   layout(B){ const a=topRowFound(B,4,1.5), gap=Math.round(B.ch*3.1); for(let t=0;t<13;t++){ const row=t<7?0:1, col=t<7?t:t-7+0.5; a.push({id:'t'+t,x:col*B.colW,y:B.ch+14+row*gap,fan:'down',room:row?undefined:gap-B.ch-10}); } return a; },
+   pick(st,id,i){ return id.charAt(0)==='t'&&i===st.p[id].length-1; },
+   drop(st,cs,from,id){ if(cs.length!==1||from.charAt(0)==='f') return false; if(id.charAt(0)==='f') return foundOK(st,cs,id); if(id.charAt(0)!=='t') return false; const T=st.p[id]; if(!T.length) return false; return T[T.length-1].r===cs[0].r+1; },
+   targets(){ const a=['f0','f1','f2','f3']; for(let t=0;t<13;t++) a.push('t'+t); return a; },
+   autoSafe:true, safe(st,c){ return S.safeF(st,c,4); },
+   won(st){ return fcount(st)===52; },
+   status(st){ return 'Foundations '+fcount(st)+'/52'; }};
+  return TabSol(ctx,G); });
+ /* ───── CALCULATION ───── */
+ G0.reg('c_calc','Calculation (Broken Intervals)',CAT,'A patience of arithmetic. An Ace, a 2, a 3 and a 4 start four foundations. Each foundation counts by its own step, ignoring suits and going round after the King: the first by ones (A 2 3 … K), the second by twos (2 4 6 8 10 Q A 3 5 7 9 J K), the third by threes (3 6 9 Q 2 5 8 J A 4 7 10 K), the fourth by fours (4 8 Q 3 7 J 2 6 10 A 5 9 K). Tap the stock to turn one card; it must go onto a foundation that wants it or onto one of the four waste piles before you turn the next. Only the top card of a waste pile may be played, and only to a foundation. Win by finishing all four foundations on a King.',ctx=>{
+  const want=(F,i)=>{ const top=F[F.length-1].r; return ((top-1+(i+1))%13)+1; };
+  const G={cols:6,maxw:84,nf:4,hasStock:true,
+   deal(){ const d=mkDeck(true), st=emptySt(4,4); [1,2,3,4].forEach((r,i)=>{ const k=d.findIndex(c=>c.r===r&&c.s===i); st.p['f'+i].push(up(d.splice(k,1)[0])); }); st.p.s=shuffle(d).map(down); st.p.w=[]; return st; },
+   layout(B){ return [{id:'s',x:0,y:0,count:1},{id:'w',x:B.colW,y:0}].concat(topRowFound(B,4,2)).concat(tabCols(B,4,B.ch+16,2)); },
+   pick(st,id,i){ const P=st.p[id]; return (id==='w'||id.charAt(0)==='t')&&i===P.length-1; },
+   drop(st,cs,from,id){ if(cs.length!==1||from.charAt(0)==='f') return false; const c=cs[0]; if(id.charAt(0)==='f'){ const i=+id.slice(1), F=st.p[id]; if(F[F.length-1].r===13&&F.length===13) return false; return c.r===want(F,i); } if(id.charAt(0)==='t') return from==='w'; return false; },
+   targets(){ return ['f0','f1','f2','f3']; },
+   stock(st){ if(st.p.w.length) return 'Place the turned card first: on a foundation or a waste pile.'; if(!st.p.s.length) return 'The stock is used up.'; st.p.w.push(up(st.p.s.pop())); return true; },
+   won(st){ return fcount(st)===52; },
+   status(st){ return 'Foundations '+fcount(st)+'/52 · next: '+[0,1,2,3].map(i=>{ const F=st.p['f'+i]; return !F.length?'–':F.length===13?'✓':L.rl(want(F,i)); }).join(' · ')+' · Stock '+st.p.s.length; }};
+  return TabSol(ctx,G); });
 })();
 
 </script>
