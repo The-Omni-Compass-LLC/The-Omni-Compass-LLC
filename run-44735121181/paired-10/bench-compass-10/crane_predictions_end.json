@@ -1,0 +1,83 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "prediction.crane.io/v1alpha1",
+            "kind": "TimeSeriesPrediction",
+            "metadata": {
+                "creationTimestamp": "2026-11-20T13:29:02Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "effective-hpa-controller",
+                    "app.kubernetes.io/name": "ehpa-php-apache",
+                    "app.kubernetes.io/part-of": "php-apache",
+                    "app.kubernetes.io/target-kind": "Deployment",
+                    "app.kubernetes.io/target-name": "php-apache",
+                    "app.kubernetes.io/target-namespace": "default",
+                    "autoscaling.crane.io/effective-hpa-uid": "dff078f8-b689-43b7-8ffe-3fdf8aa3f534"
+                },
+                "name": "ehpa-php-apache",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "autoscaling.crane.io/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "EffectiveHorizontalPodAutoscaler",
+                        "name": "php-apache",
+                        "uid": "dff078f8-b689-43b7-8ffe-3fdf8aa3f534"
+                    }
+                ],
+                "resourceVersion": "5552",
+                "uid": "d4f642d8-3997-418c-8555-0011f3f12b36"
+            },
+            "spec": {
+                "predictionMetrics": [
+                    {
+                        "algorithm": {
+                            "algorithmType": "dsp",
+                            "dsp": {
+                                "estimators": {},
+                                "historyLength": "7d",
+                                "sampleInterval": "60s"
+                            }
+                        },
+                        "expressionQuery": {
+                            "expression": "sum(irate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"^php-apache-[a-z0-9]+-[a-z0-9]{5}$\",container!=\"\"}[3m]))"
+                        },
+                        "resourceIdentifier": "resource.cpu",
+                        "type": "ExpressionQuery"
+                    }
+                ],
+                "predictionWindowSeconds": 3600,
+                "targetRef": {
+                    "apiVersion": "apps/v1",
+                    "kind": "Deployment",
+                    "name": "php-apache",
+                    "namespace": "default"
+                }
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-11-20T13:46:32Z",
+                        "message": "not all metric predicted",
+                        "reason": "PredictPartial",
+                        "status": "False",
+                        "type": "Ready"
+                    }
+                ],
+                "predictionMetrics": [
+                    {
+                        "ready": false,
+                        "resourceIdentifier": "resource.cpu"
+                    }
+                ]
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}
