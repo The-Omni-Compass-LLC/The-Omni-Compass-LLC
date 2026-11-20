@@ -58,4 +58,13 @@
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu,[data-ka="close"],[data-kk="close"],[data-kn="close"],[data-lkx]')) homeNow(); },true);
  window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') homeNow(); });
  window.KREMOTE={show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
+ /* ✕ CLOSE, ALWAYS IN REACH: on every screen but home a close button stays pinned at the top right, however far the page is
+    scrolled and even with the remote hidden. It stops every sound and every reading voice and goes home. Escape does the same. */
+ const xcss=document.createElement('style'); xcss.textContent='#kXAll{position:fixed;z-index:9760;top:calc(8px + env(safe-area-inset-top,0px));right:calc(var(--kRailW,58px) + 10px);min-height:44px!important;min-width:44px;padding:4px 12px!important;border-radius:999px!important;background:#b3172f!important;color:#fff!important;font:900 15px system-ui,sans-serif!important;border:2px solid #fff!important;box-shadow:0 4px 16px rgba(0,0,0,.5)}#kXAll[hidden]{display:none!important}body.gated #kXAll{display:none!important}'; document.head.appendChild(xcss);
+ function closeAll(){ stopAll(); const id=cur(); if(id!=='home'){ try{ ACT.close(); }catch(_){ } setTimeout(()=>{ if(cur()!=='home'){ try{ GOHOME(); }catch(_){ } } try{ speechSynthesis.cancel(); }catch(_){ } },250); } }
+ function paintX(){ let b=$('kXAll'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kXAll'; b.setAttribute('data-noul',''); b.setAttribute('aria-label','Close and go home'); b.textContent='✕ Close'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); closeAll(); }); document.body.appendChild(b); }
+  const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40; })(); const hide=id==='home'||menuOpen; if(b.hidden!==hide) b.hidden=hide; }
+ setInterval(paintX,400);
+ document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return; if(cur()!=='home') closeAll(); });
+ window.KREMOTE.closeAll=closeAll;
 })();

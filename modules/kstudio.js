@@ -24,6 +24,7 @@
 html body #rDock#rDock #kdStudio{order:1!important;display:flex!important}
 html body #rDock#rDock #kdSocial{order:1!important;display:flex!important}
 html body #rDock#rDock #kdProfile{order:1!important;display:flex!important}
+html body #rDock#rDock #kdProj{display:flex!important}
 html body #rDock#rDock #kStopBtn.kPlay{background:linear-gradient(180deg,#1f9d55,#137a3f)!important;border-color:#7cff8a!important}
 html body #rDock#rDock #kStopBtn.kStop{background:linear-gradient(180deg,#d42a44,#9c1028)!important}
 @media (max-height:980px){html body #rDock#rDock>button{min-height:0!important;flex:1 1 0!important;max-height:70px!important;padding-top:0!important;padding-bottom:0!important}html body #rDock#rDock>button::before{font-size:min(22px,3.1vh)!important;line-height:1.1!important}html body #rDock#rDock>button::after{font-size:min(11.5px,1.75vh)!important;line-height:1.1!important}html body #rDock#rDock #lpMenu{min-height:0!important;flex:1.2 1 0!important}html body #rDock#rDock{gap:3px!important}}
@@ -54,6 +55,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  function rail(){ railBtn('kdStudio','🎛','Studio','The studio: sequencer, the 24-channel console, pads, keys, DJ and recording',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } setTimeout(()=>{ const h=$('kStudioHead'); if(h) h.scrollIntoView({block:'start'}); },1300); });
   railBtn('kdSocial','🌐','Social','DD Universe Social: your profile, your posts, the feed',()=>{ try{ KSOCIAL.open(); }catch(_){ say('Social is loading. Try again in a moment.'); } });
   railBtn('kdProfile','👤','Profile','Your profile: photo, birth date, sign, compass letter, song, posts',()=>{ try{ KPROFILE.open(); }catch(_){ say('The profile is loading. Try again in a moment.'); } });
+  railBtn('kdProj','📁','Projects','Projects: save, open, continue and export everything you make',()=>{ try{ KPROJ.open(); }catch(_){ say('Projects is loading. Try again in a moment.'); } });
   paintPS(); }
  setInterval(rail,600); rail();
  /* ---------- the 24-channel console ---------- */
