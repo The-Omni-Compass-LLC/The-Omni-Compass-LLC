@@ -53,7 +53,7 @@
  const BYADDR=Object.fromEntries(Object.entries(ADDR).map(([k,v])=>[v,k]));
  const EXTRA={library:()=>{ try{ STORYLIB.open(); }catch(_){} },profile:()=>openMe(),horoscope:()=>openDay(true),cannon:()=>{ try{ KCANNON.open(); }catch(_){} }};
  let routing=false;
- function route(){ const h=(location.hash||'').slice(1).toLowerCase(); if(!h||/^book-/.test(h)) return; routing=true; try{ if(EXTRA[h]) EXTRA[h](); else if(BYADDR[h]&&window.KBAR) KBAR.go(BYADDR[h]); }catch(_){} setTimeout(()=>{ routing=false; },400); }
+ function route(){ const h=(location.hash||'').slice(1).toLowerCase(); if(!h||/^book-/.test(h)) return; routing=true; try{ if(EXTRA[h]) EXTRA[h](); else if(BYADDR[h]&&window.KBAR){ const id=BYADDR[h]; let cur=''; try{ cur=KRAIL.cur(); }catch(_){} const el=document.getElementById(id); if(cur!==id&&!(el&&!el.hidden&&el.getBoundingClientRect().height>0)) KBAR.go(id); } }catch(_){} setTimeout(()=>{ routing=false; },400); }
  window.addEventListener('hashchange',route);
  let routed=false; const first=()=>{ if(routed) return; routed=true; setTimeout(route,600); };
  window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') first(); }); setTimeout(first,4500);
@@ -156,5 +156,5 @@
   if(k==='forget'){ if(Date.now()-forgetArm>4000){ forgetArm=Date.now(); b.textContent='Press again to forget'; return; } P=blankP(); P.at=Date.now(); putLS('kanin-profile',P); if(acct){ try{ await acct.ref.delete(); }catch(_){} } say('Your profile is forgotten.'); openMe(); } }
  document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; ['kMe','kDay','kNetCard'].forEach(id=>{ const x=$(id); if(x&&!x.hidden) x.hidden=true; }); });
  try{ const gh=window.GOHOME; window.GOHOME=function(){ ['kMe','kDay','kNetCard'].forEach(id=>{ const x=$(id); if(x) x.hidden=true; }); return gh&&gh.apply(this,arguments); }; }catch(_){}
- window.KSTARS={open:openMe,day:openDay,profile:()=>Object.assign({},P),sign:signOf,save:saveP,account:()=>!!acct};
+ window.KSTARS={open:openMe,day:openDay,profile:()=>Object.assign({},P),sign:signOf,save:o=>{ if(o&&typeof o==='object') Object.keys(o).forEach(k=>{ if(o[k]!==undefined&&o[k]!=='') P[k]=o[k]; else if(k==='follow') P[k]=!!o[k]; }); return saveP(); },account:()=>!!acct};
 })();

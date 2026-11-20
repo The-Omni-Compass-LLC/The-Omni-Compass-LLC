@@ -29,7 +29,8 @@
  function setup(ctx){ const st={n:2}; const sel=h('select',{'aria-label':'Players'},[2,3,4].map(n=>h('option',{value:String(n)},n+' players'))); return {sel,st}; }
  /* ───── the line games: Draw, Block, All Fives ───── */
  function lineGame(kind){ return ctx=>{ const setTimeout=(f,ms)=>ctx.after(ms,f);
-  const st={players:[],bone:[],chain:[],ends:null,turn:0,scores:[0,0,0,0],n:2,over:false,pend:null,msg:'',target:kind==='fives'?150:100};
+  const O=window.KGOPT?KGOPT.row(ctx,'dm_'+kind,[['target','Play to',[[50,'50 points'],[100,'100 points'],[150,'150 points'],[200,'200 points'],[250,'250 points']],kind==='fives'?150:100]]):{target:kind==='fives'?150:100};
+  const st={players:[],bone:[],chain:[],ends:null,turn:0,scores:[0,0,0,0],n:2,over:false,pend:null,msg:'',target:+O.target||100};
   const top=h('div',{className:'dmBtns'}); const pSel=h('select',{'aria-label':'Players'},[2,3,4].map(n=>h('option',{value:String(n)},n+' players'))); top.appendChild(pSel); const newB=h('button',{type:'button',className:'go'},'🁫 New game'); top.appendChild(newB); ctx.area.appendChild(top);
   const info=h('div',{className:'dmLbl'}); const opp=h('div',{className:'dmRow'}); const felt=h('div',{className:'dmFelt','aria-label':'The line of play'}); const mine=h('div',{className:'dmRow'}); const btns=h('div',{className:'dmBtns'});
   [info,opp,felt,mine,btns].forEach(e=>ctx.area.appendChild(e));
@@ -71,7 +72,7 @@
  /* ───── Mexican Train ───── */
  G.reg('dm_train','Mexican Train',CAT,'Double-twelve set. The engine (12–12) starts in the middle. Play on your own train, on the Mexican train, or on anyone’s train that is open (a train opens when its owner cannot play). Play a double and you go again. Can’t play: draw one; still can’t: your train opens. First out ends the round; everyone else scores their pips, and the lowest total after the rounds wins.',ctx=>{ const setTimeout=(f,ms)=>ctx.after(ms,f);
   const st={n:2,players:[],bone:[],trains:[],eng:12,turn:0,round:1,rounds:4,tot:[0,0,0,0],over:false,msg:'',sel:null};
-  const top=h('div',{className:'dmBtns'}); const pSel=h('select',{'aria-label':'Players'},[2,3,4].map(n=>h('option',{value:String(n)},n+' players'))); const rSel=h('select',{'aria-label':'Rounds'},[[4,'Short game · 4 rounds'],[13,'Full game · 13 rounds']].map(([v,l])=>h('option',{value:String(v)},l))); const nb=h('button',{type:'button',className:'go'},'🚂 New game'); top.append(pSel,rSel,nb); ctx.area.appendChild(top);
+  const top=h('div',{className:'dmBtns'}); const pSel=h('select',{'aria-label':'Players'},[2,3,4].map(n=>h('option',{value:String(n)},n+' players'))); const rSel=h('select',{'aria-label':'Rounds'},[[2,'Quick game · 2 rounds'],[4,'Short game · 4 rounds'],[7,'Medium game · 7 rounds'],[10,'Long game · 10 rounds'],[13,'Full game · 13 rounds']].map(([v,l])=>h('option',{value:String(v)},l))); const nb=h('button',{type:'button',className:'go'},'🚂 New game'); top.append(pSel,rSel,nb); ctx.area.appendChild(top);
   const info=h('div',{className:'dmLbl'}); const board=h('div',{className:'dmFelt',style:'flex-direction:column;align-items:stretch'}); const mine=h('div',{className:'dmRow'}); const btns=h('div',{className:'dmBtns'}); [info,board,mine,btns].forEach(e=>ctx.area.appendChild(e));
   const W=()=>Math.max(22,Math.min(36,Math.floor((ctx.W()-20)/13)));
   function startRound(){ st.bone=set(12); const engT=st.bone.find(t=>t[0]===st.eng&&t[1]===st.eng); st.bone.splice(st.bone.indexOf(engT),1); const k=st.n===2?15:st.n===3?13:12; st.players=[]; for(let i=0;i<st.n;i++) st.players.push(st.bone.splice(0,k));
