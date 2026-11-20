@@ -9,7 +9,7 @@
  function playing(){ try{ const P=window.PADSTUDIO; if(P&&(typeof P.playing==='function'?P.playing():P.playing)) return 'the beat'; }catch(_){ }
   try{ const D=DJBOOTH.D; if(D.A.playing||D.B.playing) return 'the DJ decks'; }catch(_){ }
   try{ if(speechSynthesis.speaking) return 'a voice'; }catch(_){ }
-  for(const m of document.querySelectorAll('audio,video')){ if(!m.paused&&!m.ended&&m.currentTime>0&&!m.muted&&m.volume>0) return m.tagName==='VIDEO'?'a video':'a song'; }
+  for(const m of document.querySelectorAll('audio,video')){ if(m.id==='mAudio'&&window.KMINI&&KMINI.bgOn&&(!window.KRAIL||KRAIL.cur()!=='musicDock')) continue; if(!m.paused&&!m.ended&&m.currentTime>0&&!m.muted&&m.volume>0) return m.tagName==='VIDEO'?'a video':'a song'; }
   return ''; }
  const press=sel=>{ const b=typeof sel==='string'?document.querySelector(sel):sel; if(b){ b.click(); return true; } return false; };
  /* what ▶ Play means on each screen */
