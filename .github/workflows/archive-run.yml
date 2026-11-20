@@ -76,16 +76,20 @@ jobs:
           [ "$sign" = 1 ] || echo "::warning::this pass archives with the sums only: the signing tool or the identity token is missing"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           repo="${{ github.repository }}"
-          # the runs asked for by hand first, then every finished run of every listed workflow since ARCHIVE_SINCE, oldest
-          # first; a cancelled run is taken too when it handed in files (24 October: the one-card GPU run's start step was
-          # cancelled at its time limit while its watch finished every repetition and handed in its files; a run that handed
-          # in nothing is passed over below by its size)
+          # the runs asked for by hand first, then every finished run of every listed workflow since ARCHIVE_SINCE, newest
+          # first, so a run of the engine that stands is never held behind an older one (20 November: oldest first, the five
+          # passes from 18 to 20 November were each stopped at the job's six hours; the one read, run 44627295033, spent its
+          # last hour on omni-v26's 500-copy grid shard 43685177160, 4.2 GB, whose push GitHub refused at every try, and never
+          # reached an omni-v27 run); a cancelled
+          # run is taken too when it handed in files (24 October: the one-card GPU run's start step was cancelled at its time
+          # limit while its watch finished every repetition and handed in its files; a run that handed in nothing is passed
+          # over below by its size)
           { tr ' ' '\n' < .github/archive_request.txt | grep -E '^[0-9]+$' || true
             for wf in $ARCHIVE_WORKFLOWS; do
               gh api --paginate "repos/$repo/actions/workflows/$wf/runs?status=completed&created=>=$ARCHIVE_SINCE&per_page=100" \
                 --jq '.workflow_runs[] | select(.conclusion != "skipped") | .id' \
                 || echo "::warning::$wf: its runs could not be listed; the next pass lists them again" >&2
-            done | sort -n
+            done | sort -rn
             # the backlog last (.github/archive_backlog.txt, tools/census.py): runs of earlier engines whose files GitHub still
             # holds, taken only once every new run is in, so it never holds back a run of the engine that stands
             tr ' ' '\n' < .github/archive_backlog.txt 2>/dev/null | grep -E '^[0-9]+$' || true; } | awk '!seen[$0]++' > runs.txt
