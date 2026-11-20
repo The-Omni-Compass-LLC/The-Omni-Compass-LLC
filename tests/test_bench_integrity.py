@@ -131,7 +131,8 @@ class PodEvidence(unittest.TestCase):
             if len(urls) == len(segments):
                 (root / 'pod_watch.stop').touch()
             return Process(text, code)
-        integrity.collect(root, run=run, popen=popen, sleep=lambda s: None)
+        self.slept = []
+        integrity.collect(root, run=run, popen=popen, sleep=self.slept.append, clock=lambda: sum(self.slept))
         return urls
 
     def test_client_timeout_resumes_at_the_last_version_and_drops_the_cut_line(self):
@@ -234,12 +235,46 @@ class PodEvidence(unittest.TestCase):
                 self.collect_with(root, [(self.EXPIRED_EVENT, 0, '')] * (integrity.RETRIES + 1))
             self.assertFalse(json.loads((root / 'pod_watch_receipt.json').read_text())['complete'])
 
-    def test_repeated_client_failures_fail_the_receipt(self):
+    TLS = 'Unable to connect to the server: net/http: TLS handshake timeout\n'
+
+    def test_an_api_server_stall_is_waited_out_and_nothing_is_lost(self):
+        # run 43759372686, repetition 369 (and 43807915219, 43809655929, 43904675592): after 162 clean segments the
+        # API server refused TLS handshakes; the five 1-second retries were spent in under a minute and the complete,
+        # handed-back Omni-Compass arm was refused. Six failures are now waited out (1+2+4+8+16+30 s) and the watch
+        # resumes at the last version delivered, so the server replays every event after it.
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            with self.assertRaisesRegex(RuntimeError, 'in a row'):
-                self.collect_with(root, [('', 1, 'error: context deadline exceeded\n')] * integrity.RETRIES)
-            self.assertFalse(json.loads((root / 'pod_watch_receipt.json').read_text())['complete'])
+            seen = json.dumps({'type': 'BOOKMARK', 'object': {'metadata': {'resourceVersion': '37355'}}}) + '\n'
+            urls = self.collect_with(root, [(seen, 0, '')] + [('', 1, self.TLS)] * 6 +
+                                     [(json.dumps({'type': 'MODIFIED', 'object': pod(True, True)}) + '\n', 0, '')])
+            self.assertTrue(all('resourceVersion=37355' in url for url in urls[1:]))
+            self.assertEqual(self.slept, [1.0, 2.0, 4.0, 8.0, 16.0, 30.0])
+            receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+            self.assertTrue(receipt['complete'])
+            self.assertEqual((receipt['segments'], receipt['client_retries']), (2, 6))
+            self.assertEqual([(s['seconds'], s['failed_requests']) for s in receipt['stalls']], [(61.0, 6)])
+            self.assertEqual(len((root / 'pod_watch.json').read_text().splitlines()), 3)
+
+    def test_an_api_server_unanswered_for_the_bound_fails_the_receipt(self):
+        # 1+2+4+8+16 s, then 30 s a request: the 34th failed request in a row comes at 31 + 28 * 30 = 871 s, the 35th at
+        # 901 s, past STALL_S (900 s)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(RuntimeError, 'failed 35 times in a row over 901 s'):
+                self.collect_with(root, [('', 1, 'error: context deadline exceeded\n')] * 40)
+            receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+            self.assertFalse(receipt['complete'])
+            self.assertEqual(receipt['client_retries'], 35)
+
+    def test_a_stall_at_the_window_end_leaves_the_judgement_to_validate(self):
+        # the window ends while the API server is unanswered: the collector stops, and validate judges the receipt
+        # against the pods at the end (a missed pod or transition is refused there, never imputed)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.collect_with(root, [('', 1, self.TLS)] * 3)
+            receipt = json.loads((root / 'pod_watch_receipt.json').read_text())
+            self.assertEqual((receipt['complete'], receipt['client_retries']), (True, 3))
+            self.assertEqual([(s['seconds'], s['failed_requests']) for s in receipt['stalls']], [(7.0, 3)])
 
     def test_client_failure_writes_failed_receipt(self):
         with tempfile.TemporaryDirectory() as directory:

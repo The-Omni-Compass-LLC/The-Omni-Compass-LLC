@@ -668,6 +668,28 @@ the founder overrides one in the conversation.
   search reads it (`docs/THE_TUNE.md`, section 4b); the on-site beat is read on the kind rig's own fixed machines, a plant of its
   own, before it is picked.
 
+## Orders of 20 November
+
+- **No new engine; strengthen what stands; a result that carries is not run again** (the founder's words of 20 November: "stop
+  running new engines ... if the old ones are perfect and run, we ain't got to keep running them. Unless you don't have all of my
+  GPUs, CPUs, all the fucking clouds ... We just got to strengthen the ones we got already ... If we got to go back to an older
+  one, I don't give a fuck"). omni-v27 is the last engine number until the founder says otherwise: a fault found in a rig, a
+  harness, a recorder or a page is fixed there, with no new version. The conductor leaves out of the reruns every benchmark whose
+  every table carries to the engine that stands (`scripts/dispatch_grid.py` `carried_workflows`, read from `results/CARRY.json`:
+  on omni-v27 the five data stores, Kafka, the swarm, CityLearn, the power grids and the three-arms showing; their tables stand
+  under their own engine's name); what is missing (a benchmark with no table, a chip, a cloud) and what the engine's change
+  touched (on omni-v27 the Kubernetes governor's benchmarks) run once more, and no more.
+- **The 500-copy grid shards that died at their window's end** (found the same day from the runs' own files, runs
+  43759372686, 43807915219, 43809655929, 43904675592): every arm finished its window and handed everything back; then the pod
+  recorder (`tools/bench_integrity.py`) found that the kind API server had refused TLS handshakes for about a minute, spent its
+  five 1-second retries in under a minute and failed, and the whole arm was refused. Only the Omni-Compass arm met the stall
+  (its native twin, the same repetition, had none): on the kind rig six workers are containers on one 4-core runner, the
+  conveyance given in the first three minutes was kept (the 75% guard held every new raise, 1,152 of 1,152 checks), and the
+  runner read 97% busy or more for about a third of the window (native: 21 readings). The recorder now waits a stall out
+  (1, 2, 4, 8, 16, then 30 s; fails only past 15 minutes unanswered; every stall written in its receipt) and resumes at the last
+  version delivered, so no event is lost; a rig fix, no engine change. The shared runner held at its top in the Omni-Compass arm
+  is recorded here and waits for the founder's word; no engine is changed for it.
+
 ## Orders of 16 November
 
 - **The voice: "My dear Watson, I don't give a damn"** (the founder's words of 16 November: "you will write my shit with such a
