@@ -1,0 +1,58 @@
+# The 500-run set from the jump generator, base 1666194554: the report for the CTO
+
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Engine omni-v26 (digest 75d3c22eed4473b9, 65 files); the set written 2026-11-19T21:10:41Z; GitHub run 44615867514 (engine-runs, commit `4d660290cf`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44615867514). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
+## 1. The answer
+
+Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 462. Omni-Compass certified 500; the plant alone 430. Omni-Compass got there in 5.60 macro steps on average; the plant alone took 9.64. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
+
+| Gauge (what it is for) | Native alone | Omni-Compass on top | Change against native | 95% interval | Reading |
+|---|---|---|---|---|---|
+| runs brought to a basin, conveyed (more is better) | 462 of 500 | 500 of 500 | up 8.2% | raw +5.4 to +10.3 points | GAIN |
+| runs certified in a basin (more is better) | 430 of 500 | 500 of 500 | up 16.3% | raw +11.1 to +17.3 points | GAIN |
+| macro steps to be conveyed, mean (fewer is better) | 9.636 | 5.604 | down 41.8% | raw −4.37 to −3.69 steps | GAIN |
+
+## 2. The proof: three implementations, one digest
+
+| Set | The Python's digest | The C++ harness | The live page's own code |
+|---|---|---|---|
+| the engine's runs | `1c5a3faf56bf39e2…` | `1c5a3faf56bf39e2…`, the same, 500 of 500 runs agree | `1c5a3faf56bf39e2…`, the same |
+| the core's Monte Carlo | `4288fadb1f3e770d…` | `4288fadb1f3e770d…`, the same, 2000 of 2000 run-ways agree | `4288fadb1f3e770d…`, the same |
+
+The ladder: the first 1, 10, 100 and 500 runs of the same set, each its own digest, so a shorter reading by the page or the C++ is checked against the Python's rung.
+
+| Rung | Runs | The Python's digest | The C++ harness's digest | The same |
+|---|---|---|---|---|
+| 1 | 1 | `951f6c82f0924709…` | `951f6c82f0924709…` | yes |
+| 2 | 10 | `44c3ac13dd38682d…` | `44c3ac13dd38682d…` | yes |
+| 3 | 100 | `79994132d4b59478…` | `79994132d4b59478…` | yes |
+| 4 | 500 | `1c5a3faf56bf39e2…` | `1c5a3faf56bf39e2…` | yes |
+
+## 3. Every way of the core's Monte Carlo
+
+| Way | Conveyed (95% interval) | Certified | Mean step conveyed | In a basin at the last step |
+|---|---|---|---|---|
+| Omni-Compass on top, toward the nearest basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.604 | 500 of 500 |
+| native: the plant alone, u = 0 | 462 of 500 (89.7% to 94.4%) | 430 of 500 | 9.636 | 479 of 500 |
+| Omni-Compass aimed at the wrong basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 6.670 | 500 of 500 |
+| Omni-Compass on top, the double well's μ at 0 | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.594 | 500 of 500 |
+
+## 4. Check it yourself
+
+```
+bash scripts/prove_runs.sh 1666194554 500
+```
+
+Or run the public workflow `prove-runs.yml` on GitHub, or the container `deploy/Dockerfile.proof`. The same base gives the same digests on any machine. A different digest is a fault, and it would show.
+
+## 5. Where it stops
+
+- This is a model (class S): the engine's own mathematics on its own ranges, not a benchmark of real software.
+- The measured results (class L, live software; class P, a physical meter) are the three-run tables, each on its own engine, read by the same key, losses included.
+- Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+
+---
+
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
