@@ -992,6 +992,9 @@ body.gated{overflow:hidden}
 .wrap{transition:opacity 1.2s,filter 1.2s}
 #gate{position:fixed;inset:0;z-index:2147483000;touch-action:none;cursor:crosshair}
 body.gated #rDock,body.gated #kRemote,body.gated #tourTab,body.gated #kPanel,body.gated #kaninDiagBox,body.gated #tourCard,body.gated #gtCard,body.gated #tourMini,body.gated .kHas{display:none!important}
+/* v198: while the opening game is up, it is the only thing on the screen: no rail, Menu, remote, panel, toast or landing page */
+body.gated>*:not(#gate):not(#bgfx):not(script):not(style):not(link):not(noscript){visibility:hidden!important;pointer-events:none!important}
+body.gated #gate,body.gated #gate *{visibility:visible!important}
 html body #gate #gateMsg b.big{animation:none!important;visibility:visible!important}
 html body #gate #gateMsg .gBlink{color:#ff4f6d;animation:gBlink .9s steps(2,start) infinite}
 @keyframes gBlink{to{visibility:hidden}}
@@ -1365,7 +1368,7 @@ if __name__ == '__main__':
 <li>Tapping or holding the open screen aims the picked cannon at that spot and fires. The <b>FIRE</b> button and the numbers 1 to 4 at the bottom work too. Several fingers can work several cannons at once. Only spaceships count.</li>
 <li>Every cannon must shoot down one ship. A cannon that scores turns green with a ✓, the message names the cannons still to go, and the next one is picked for you.</li>
 <li>When all four have scored, the message says <i>KAN-IN!</i>, the page comes forward and the universe goes back behind it. Then the tour, the autopilot and every button are open.</li>
-<li>Keyboard: 1 to 4 picks a cannon, the arrow keys aim, the space bar fires. The game comes back each time the app is opened in a new browser session.</li></ol></div>
+<li>Keyboard: 1 to 4 picks a cannon, the arrow keys aim, the space bar fires. The game plays every time the app is opened, before anything else appears.</li></ol></div>
 <div class="howSec" id="hw-arch"><h4>0b. The Story Architecture Cabinet</h4><p>A story is built from parts, and every part has many forms. The cabinet (in Shape the story, next to Story Order) has ten drawers, each a drop-down sorted into categories, each with 12 or more variations:</p><ol>
 <li><b>Story order (the timeline):</b> linear, circular, frame story, reverse (told backwards from the end to the beginning), starts at the end, in the middle of things, climax first, twist first, time loop, braided, mosaic, many tellings. These really move the chapters.</li>
 <li><b>The beginning:</b> once upon a time, long ago and far away, cold open, start at the end, mid-action, a line of dialogue, a question, a confession, an ordinary morning, a letter, a news report, a prophecy, a list, second person, a dream.</li>
@@ -19776,17 +19779,24 @@ ${Array.from({length:10},(_,g)=>`html body #tourTab.lp[data-open="${g}"] .kGrp[d
  async function singAlong(){ if(!lyr.trim()) return msg('Write or load some lyrics first (or press 💥 Cannon song).'); toPrompter(); beat(true); await sleep(250); const f=$('tpFullGo'); if(f) f.click(); }
  /* ---------- recording live ---------- */
  async function record(){ if(recState){ recState.stop(); return; }
-  let st; try{ st=await navigator.mediaDevices.getUserMedia({audio:Object.assign({echoCancellation:true,noiseSuppression:true},inDev?{deviceId:{exact:inDev}}:{})}); }catch(e){ const cap=$('kkCap'); if(cap){ beat(true); try{ cap.click(); }catch(_){ } } return msg(inFrame?'📱 This page cannot reach the microphone directly, so your phone’s own recorder opens: record your voice or a video, press Use, and the take lands here. The beat is playing so you can record against it.':'🎙 The microphone was not allowed. Allow it in the browser’s address bar and press 🎙 Record live again, or use 📱 Record with my phone.'); }
+  let st; try{ st=await navigator.mediaDevices.getUserMedia({audio:Object.assign({echoCancellation:true,noiseSuppression:true},inDev?{deviceId:{exact:inDev}}:{})}); }catch(e){ const cap=$('kkCap'); if(cap){ beat(true); if(layerRec){ playLayers(false); layerRec=false; } try{ cap.click(); }catch(_){ } } return msg(inFrame?'📱 This page cannot reach the microphone directly, so your phone’s own recorder opens: record your voice or a video, press Use, and the take lands here. The beat is playing so you can record against it.':'🎙 The microphone was not allowed. Allow it in the browser’s address bar and press 🎙 Record live again, or use 📱 Record with my phone.'); }
   const c=ac(); const ch=[]; const mr=new MediaRecorder(st); mr.ondataavailable=e=>ch.push(e.data); const t0=performance.now();
   if(monitor===null&&getLS('kanin-kara-mon',false)){ const src=c.createMediaStreamSource(st); chain(c,liveFx,src,c.destination); monitor=src; }
   if(lyr.trim()) toPrompter(); beat(true);
   const mmss=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0'); const capT=window.__kkAuto?0:setTimeout(()=>{ if(recState) recState.stop(); },maxMin*60000);
   recState={stop:()=>{ clearTimeout(capT); try{ mr.stop(); }catch(_){ } }, t:setInterval(()=>msg('⏺ Recording '+mmss((performance.now()-t0)/1000)+' of up to '+maxMin+':00 · press ■ Stop recording when you finish'),300)};
-  mr.onstop=async()=>{ clearInterval(recState.t); recState=null; st.getTracks().forEach(t=>t.stop()); try{ monitor&&monitor.disconnect(); }catch(_){ } monitor=null; beat(false);
+  mr.onstop=async()=>{ clearInterval(recState.t); recState=null; st.getTracks().forEach(t=>t.stop()); try{ monitor&&monitor.disconnect(); }catch(_){ } monitor=null; beat(false); stopLayers();
    try{ let buf=await c.decodeAudioData(await new Blob(ch).arrayBuffer()); if(window.TRIMLAT) buf=TRIMLAT(buf,c); addTake(buf,window.__kkAuto?'Auto take':'Live take'); if(window.__kkAuto&&autoTrack) await track(takes[takes.length-1]); window.__kkAuto=false; }catch(_){ msg('That take could not be read.'); } draw(); };
-  mr.start(); draw(); }
+  mr.start(); if(layerRec){ playLayers(false); layerRec=false; } draw(); }
  async function bringIn(file){ if(!file) return; try{ const buf=await ac().decodeAudioData(await file.arrayBuffer()); addTake(buf,file.name.replace(/\.[^.]+$/,'')); }catch(_){ msg('That file is not an audio file this browser can read.'); } }
- function addTake(buf,name){ takes.push({buf,name:name+' '+(takes.length+1),fx:'none'}); msg('Take '+takes.length+' is in: '+buf.duration.toFixed(1)+' s. Change the voice, put it on a track, chop it or save it.'); draw(); }
+ function addTake(buf,name){ takes.push({buf,name:name+' '+(takes.length+1),fx:'none',mute:false,solo:false,gain:1}); msg('Take '+takes.length+' is in: '+buf.duration.toFixed(1)+' s. Change the voice, put it on a track, chop it or save it.'); draw(); }
+ /* 🎚 THE LAYERS: every take is a layer with its own mute, solo and level; play them together, record a new layer over them, bounce them into one take */
+ let layerSrc=[], layerRec=false;
+ const audible=()=>{ const so=takes.some(t=>t.solo); return takes.filter(t=>so?t.solo:!t.mute); };
+ function stopLayers(){ layerSrc.forEach(s=>{ try{ s.stop(); }catch(_){ } }); layerSrc=[]; }
+ function playLayers(withBeat){ stopLayers(); const L=audible(); if(!L.length){ msg('Every layer is muted. Unmute one, or record a take first.'); return 0; } const c=ac(); const t0=c.currentTime+0.06; L.forEach(t=>{ const s=c.createBufferSource(), g=c.createGain(); s.buffer=t.buf; g.gain.value=t.gain==null?1:t.gain; s.connect(g); g.connect(c.destination); s.start(t0); layerSrc.push(s); }); if(withBeat) beat(true); return L.length; }
+ async function bounce(){ const L=audible(); if(L.length<2) return msg('Bounce needs two or more layers that are not muted.'); const sr=L[0].buf.sampleRate, len=Math.max(...L.map(t=>t.buf.duration)); const oc=new OfflineAudioContext(2,Math.ceil(len*sr),sr); L.forEach(t=>{ const s=oc.createBufferSource(), g=oc.createGain(); s.buffer=t.buf; g.gain.value=t.gain==null?1:t.gain; s.connect(g); g.connect(oc.destination); s.start(0); }); msg('🧲 Bouncing '+L.length+' layers into one take…'); const buf=await oc.startRendering(); let pk=0; for(let ch=0;ch<buf.numberOfChannels;ch++){ const d=buf.getChannelData(ch); for(let i=0;i<d.length;i+=7){ const v=Math.abs(d[i]); if(v>pk) pk=v; } } if(pk>0.98){ const k=0.95/pk; for(let ch=0;ch<buf.numberOfChannels;ch++){ const d=buf.getChannelData(ch); for(let i=0;i<d.length;i++) d[i]*=k; } } addTake(buf,'Bounce of '+L.length+' layers'); }
+ window.KKLAYERS={play:playLayers,stop:stopLayers,bounce,audible:()=>audible().length};
  let playing1=null; function play(buf){ try{ playing1&&playing1.stop(); }catch(_){ } const c=ac(); const s=c.createBufferSource(); s.buffer=buf; s.connect(c.destination); s.start(); playing1=s; }
  async function track(t){ if(typeof window.PADADDLOOP!=='function') return msg('Open the Beat Maker once, then try again.'); const bars=Math.max(1,Math.min(32,Math.round(t.buf.duration/(240/bpm())))); try{ window.PADADDLOOP(t.buf,t.name,bars,{mode:'native',vocal:true,on:new Array(32).fill(false).map((_,b)=>b<bars)}); msg('✅ '+t.name+' is on the vocal track (channel 24) across '+bars+' bar'+(bars>1?'s':'')+'. It plays with the beat and sits in the mixer.'); }catch(e){ msg('The take could not go on a track here: '+(e&&e.message||'')); } }
  async function chop(t){ const inp=$('mutAud'); if(!inp) return; try{ const f=new File([wav(t.buf)],t.name+'.wav',{type:'audio/wav'}); const dt=new DataTransfer(); dt.items.add(f); inp.files=dt.files; inp.dispatchEvent(new Event('change',{bubbles:true})); close(); try{ KRAIL.goTo('mutDock'); }catch(_){ KBAR.go('mutDock'); } say('Your take is in the Mutate studio: chop it onto pads, reverse it, slow it, or put it on deck B.'); }catch(_){ msg('This browser cannot hand the take over; save it and load it in Mutate.'); } }
@@ -19824,9 +19834,13 @@ ${Array.from({length:10},(_,g)=>`html body #tourTab.lp[data-open="${g}"] .kGrp[d
 #kKara .kkMsg{background:rgba(127,255,255,.08);border:1px solid rgba(127,255,255,.35);border-radius:12px;padding:10px 12px;margin:8px 0;font-weight:600}
 #kKara .kkCapL{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;background:#b3172f;color:#fff;font:800 14px system-ui,sans-serif;cursor:pointer}#kKara .kkCapL input{max-width:150px;font-size:11px}
 #kKara .kkTake{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:10px 12px;margin:8px 0}
+#kKara .kkTake.kkMuted{opacity:.55}
+#kKara .kkLay{align-items:center}
+#kKara .kkLay button[aria-pressed="true"]{background:#7a0f22!important;color:#fff}
+#kKara .kkLay input[type=range]{width:120px;vertical-align:middle}
 #kKara .kkTake b{color:#ffe94a}#kKara .kkTake .kkRow button{min-height:40px;padding:0 10px;font-size:14px}#kKara .kkN{font-size:13px;opacity:.85}`; document.head.appendChild(css);
  function box(){ let d=$('kKara'); if(!d){ d=document.createElement('div'); d.id='kKara'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Karaoke Live'); document.body.appendChild(d);
-  d.addEventListener('click',onClick); d.addEventListener('input',e=>{ if(e.target.id==='kkLyr'){ lyr=e.target.value; putLS('kanin-kara-lyrics',lyr); } }); d.addEventListener('change',e=>{ if(e.target.id==='kkMax'){ maxMin=+e.target.value; putLS('kanin-kara-max',maxMin); return msg('⏱ A take can now run up to '+maxMin+' minute'+(maxMin>1?'s':'')+'.'); } if(e.target.id==='kkCap'){ const f=e.target.files&&e.target.files[0]; if(f) bringIn(f).then(()=>{ if(autoTrack&&takes.length) track(takes[takes.length-1]); }); e.target.value=''; return; } if(e.target.id==='kkFile'){ [...e.target.files].forEach(bringIn); e.target.value=''; } if(e.target.id==='kkLive') liveFx=e.target.value; if(e.target.id==='kkIn'){ inDev=e.target.value; putLS('kanin-kara-in',inDev); msg('🎙 Input chosen.'); } if(e.target.id==='kkOut') setOut(e.target.value); if(e.target.id==='kkBars'){ autoBars=+e.target.value; putLS('kanin-kara-bars',autoBars); } if(e.target.id==='kkAutoT'){ autoTrack=e.target.checked; putLS('kanin-kara-autotrack',autoTrack); } if(e.target.id==='kkMon') putLS('kanin-kara-mon',e.target.checked); if(e.target.dataset.fx!=null){ const t=takes[+e.target.dataset.fx]; if(t) t.fx=e.target.value; } }); } return d; }
+  d.addEventListener('click',onClick); d.addEventListener('input',e=>{ const lv=e.target.dataset&&e.target.dataset.lv; if(lv!=null&&takes[+lv]){ takes[+lv].gain=(+e.target.value)/100; const n=d.querySelector('[data-lvn="'+lv+'"]'); if(n) n.textContent=e.target.value+'%'; return; } if(e.target.id==='kkLyr'){ lyr=e.target.value; putLS('kanin-kara-lyrics',lyr); } }); d.addEventListener('change',e=>{ if(e.target.id==='kkMax'){ maxMin=+e.target.value; putLS('kanin-kara-max',maxMin); return msg('⏱ A take can now run up to '+maxMin+' minute'+(maxMin>1?'s':'')+'.'); } if(e.target.id==='kkCap'){ const f=e.target.files&&e.target.files[0]; if(f) bringIn(f).then(()=>{ if(autoTrack&&takes.length) track(takes[takes.length-1]); }); e.target.value=''; return; } if(e.target.id==='kkFile'){ [...e.target.files].forEach(bringIn); e.target.value=''; } if(e.target.id==='kkLive') liveFx=e.target.value; if(e.target.id==='kkIn'){ inDev=e.target.value; putLS('kanin-kara-in',inDev); msg('🎙 Input chosen.'); } if(e.target.id==='kkOut') setOut(e.target.value); if(e.target.id==='kkBars'){ autoBars=+e.target.value; putLS('kanin-kara-bars',autoBars); } if(e.target.id==='kkAutoT'){ autoTrack=e.target.checked; putLS('kanin-kara-autotrack',autoTrack); } if(e.target.id==='kkMon') putLS('kanin-kara-mon',e.target.checked); if(e.target.dataset.fx!=null){ const t=takes[+e.target.dataset.fx]; if(t) t.fx=e.target.value; } }); } return d; }
  function draw(){ const d=box(); const fxSel=(i,v)=>'<select data-fx="'+i+'" aria-label="Voice for this take">'+FX.map(f=>'<option value="'+f[0]+'"'+(f[0]===v?' selected':'')+'>'+f[1]+'</option>').join('')+'</select>';
   d.innerHTML='<div class="kBar" data-sc="kKara"><button type="button" data-ka="close" data-kk="close">✕</button></div><div class="kkIn"><div class="kkBrand">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · Karaoke Live</div><h2>🎤 Karaoke Live</h2><div class="kkN">Sing on the spot over your beat. Record, change your voice, put the take on a track, chop it, spin it on a deck, save it and build the song, all in one place.</div>'+
    '<div class="kkMsg" id="kkMsg" role="status">'+esc(note||(inFrame?'📱 Inside claude.ai, 🎙 Record opens your phone’s own recorder or camera and the take comes straight back here; on KAN-IN’s own website it records from the microphone. A take can run up to 30 minutes, over the beat.':'🎙 Ready: press Record live and allow the microphone. A take can run up to 30 minutes, over the beat.'))+'</div>'+
@@ -19841,7 +19855,8 @@ ${Array.from({length:10},(_,g)=>`html body #tourTab.lp[data-open="${g}"] .kGrp[d
    '<div class="kkRow"><span class="kkN">🎧 Voice in my headphones</span><select id="kkLive" aria-label="Voice while I hear myself">'+FX.filter(f=>!/chip|giant|reverse/.test(f[0])).map(f=>'<option value="'+f[0]+'"'+(f[0]===liveFx?' selected':'')+'>'+f[1]+'</option>').join('')+'</select></div>'+
    '<div class="kkRow"><label class="kkN">⏱ Longest take <select id="kkMax">'+[1,3,5,10,20,30].map(n=>'<option value="'+n+'"'+(n===maxMin?' selected':'')+'>'+n+' minute'+(n>1?'s':'')+'</option>').join('')+'</select></label><label class="kkCapL">📱 Record with my phone or camera <input type="file" id="kkCap" accept="audio/*,video/*" capture></label></div>'+
    '<div class="kkRow"><label class="kkN" style="display:flex;gap:8px;align-items:center">📁 Bring in a recording <input type="file" id="kkFile" accept="audio/*,video/*" multiple></label></div>'+
-   '<h3>4 · Your takes · '+takes.length+'</h3>'+(takes.length?takes.map((t,i)=>'<div class="kkTake"><b>'+esc(t.name)+'</b> <span class="kkN">'+t.buf.duration.toFixed(1)+' s</span><div class="kkRow">'+fxSel(i,t.fx)+'<button type="button" data-kk="hear" data-i="'+i+'" data-noul>▶ Hear it</button><button type="button" data-kk="apply" data-i="'+i+'" data-noul>✨ Make a new take with this voice</button></div><div class="kkRow"><button type="button" data-kk="track" data-i="'+i+'" data-noul>➕ Put it on a track</button><button type="button" data-kk="chop" data-i="'+i+'" data-noul>✂ Chop it</button><button type="button" data-kk="deck" data-i="'+i+'" data-noul>💿 On a DJ deck</button><button type="button" data-kk="save" data-i="'+i+'" data-noul>💾 Download</button><button type="button" data-kk="lib" data-i="'+i+'" data-noul>📚 Save to my library</button><button type="button" data-kk="post" data-i="'+i+'" data-noul>🌐 Post it</button><button type="button" data-kk="del" data-i="'+i+'" data-noul>🗑</button></div></div>').join(''):'<div class="kkN">No takes yet. Record live, or bring a recording in.</div>')+
+   '<h3>4 · Your takes · '+takes.length+'</h3>'+(takes.length?takes.map((t,i)=>'<div class="kkTake'+(t.mute?' kkMuted':'')+'"><b>'+esc(t.name)+'</b> <span class="kkN">'+t.buf.duration.toFixed(1)+' s</span><div class="kkRow kkLay"><span class="kkN">🎚 Layer '+(i+1)+'</span><button type="button" data-kk="lmute" data-i="'+i+'" aria-pressed="'+!!t.mute+'" data-noul>'+(t.mute?'🔇 Muted':'🔊 On')+'</button><button type="button" data-kk="lsolo" data-i="'+i+'" aria-pressed="'+!!t.solo+'" data-noul>'+(t.solo?'⭐ Solo on':'Solo')+'</button><label class="kkN">Level <input type="range" min="0" max="150" step="5" value="'+Math.round((t.gain==null?1:t.gain)*100)+'" data-lv="'+i+'" aria-label="Level of layer '+(i+1)+'"> <span data-lvn="'+i+'">'+Math.round((t.gain==null?1:t.gain)*100)+'%</span></label></div><div class="kkRow">'+fxSel(i,t.fx)+'<button type="button" data-kk="hear" data-i="'+i+'" data-noul>▶ Hear it</button><button type="button" data-kk="apply" data-i="'+i+'" data-noul>✨ Make a new take with this voice</button></div><div class="kkRow"><button type="button" data-kk="track" data-i="'+i+'" data-noul>➕ Put it on a track</button><button type="button" data-kk="chop" data-i="'+i+'" data-noul>✂ Chop it</button><button type="button" data-kk="deck" data-i="'+i+'" data-noul>💿 On a DJ deck</button><button type="button" data-kk="save" data-i="'+i+'" data-noul>💾 Download</button><button type="button" data-kk="lib" data-i="'+i+'" data-noul>📚 Save to my library</button><button type="button" data-kk="post" data-i="'+i+'" data-noul>🌐 Post it</button><button type="button" data-kk="del" data-i="'+i+'" data-noul>🗑</button></div></div>').join(''):'<div class="kkN">No takes yet. Record live, or bring a recording in.</div>')+
+   '<h3 id="kkLayers">🎚 Layers · multitrack</h3><div class="kkN">Every take is a layer. Mute, solo and set the level of each one above, then play them together, record a new layer while the others play, or bounce them into one take. ↶ Undo takes back the last take.</div><div class="kkRow"><button type="button" data-kk="lplay" data-noul>▶ Play the layers</button><button type="button" data-kk="lbeat" data-noul>▶ Layers with the beat</button><button type="button" data-kk="lstop" data-noul>■ Stop the layers</button><button type="button" data-kk="lrec" data-noul>⏺ Record a new layer over them</button><button type="button" data-kk="bounce" data-noul>🧲 Bounce into one take</button><button type="button" data-kk="undo" data-noul>↶ Undo last take</button></div>'+
    '<h3>5 · Build the song</h3><div class="kkRow"><button type="button" data-kk="build" data-noul>🏗 Put every take on the track and open the studio</button><button type="button" data-kk="jump" data-noul>🎰 Cannon Jump Generator</button></div><div class="kkN">The studio opens on the sequencer and the mixing board: your vocal takes sit on channel 24 with the beat, the pads and keys float on top.</div></div>';
   const s=$('kkSrc'); if(s) s.value=lastSrc; }
  let lastSrc='mine';
@@ -19865,6 +19880,13 @@ ${Array.from({length:10},(_,g)=>`html body #tourTab.lp[data-open="${g}"] .kGrp[d
    case 'post': if(t&&window.KLIB&&window.KSOCIAL){ const it=await KLIB.saveAudio(t.buf,t.name,{from:'karaoke'}); close(); KSOCIAL.compose({text:'🎤 '+t.name,media:it.id}); } return;
    case 'undo': if(!takes.length) return msg('No take to undo.'); { const g=takes.pop(); draw(); return msg('↶ '+g.name+' is undone.'); }
    case 'del': takes.splice(i,1); return draw();
+   case 'lmute': if(!t) return; t.mute=!t.mute; draw(); return msg('🎚 '+t.name+(t.mute?' is muted.':' is on.'));
+   case 'lsolo': if(!t) return; t.solo=!t.solo; draw(); return msg('🎚 '+t.name+(t.solo?' is soloed: only soloed layers play.':' is no longer soloed.'));
+   case 'lplay': { const n=playLayers(false); if(n) msg('▶ Playing '+n+' layer'+(n>1?'s':'')+' together.'); return; }
+   case 'lbeat': { const n=playLayers(true); if(n) msg('▶ Playing '+n+' layer'+(n>1?'s':'')+' with the beat.'); return; }
+   case 'lstop': stopLayers(); beat(false); return msg('■ Layers stopped.');
+   case 'lrec': if(!takes.length) return msg('Record a first take, then layer over it.'); layerRec=true; msg('⏺ Recording a new layer: every layer that is on plays while you record.'); return record();
+   case 'bounce': return bounce();
    case 'build': { if(!takes.length) return msg('Record or bring in a take first.'); for(const x of takes) await track(x); toPrompter(); close(); try{ KRAIL.goTo('pad'); }catch(_){ } say('Your song: the beat, '+takes.length+' vocal take'+(takes.length>1?'s':'')+' on the track and the lyrics in the prompter.'); return; }
    case 'jump': close(); try{ KJUMP.open(); }catch(_){ } return; } }
  function close(){ const d=$('kKara'); if(d) d.hidden=true; }
@@ -20122,7 +20144,7 @@ html body :is(#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDoc
  const $=id=>document.getElementById(id); const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const sleep=ms=>new Promise(r=>setTimeout(r,ms)); const say=m=>{ try{ toast(m); }catch(_){ } };
  const shown=e=>!!(e&&!e.hidden&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0);
- const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial,#kAI,#kEasel,#kProj';
+ const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial,#kAI,#kEasel,#kProj,#kKnow,#kLock';
  const css=document.createElement('style'); css.id='kRailCss';
  css.textContent=`
 :root{--kRailW:58px;--kDockH:0px;--rdockH:0px}
@@ -20170,7 +20192,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
  /* ---------- which screen is open ---------- */
  const NAMES={home:'Home'}; try{ (window.KBAR&&KBAR.screens||[]).forEach(s=>NAMES[s.id]=s.name); }catch(_){ }
  function cur(){ const ds=[...document.querySelectorAll(SCREENS+',#sbp')].filter(d=>shown(d)&&getComputedStyle(d).position==='fixed'); if(!ds.length) return 'home'; ds.sort((a,b)=>(+getComputedStyle(b).zIndex||0)-(+getComputedStyle(a).zIndex||0)); return ds[0].id; }
- const nameOf=id=>{ try{ if(!NAMES[id]&&window.KBAR) KBAR.screens.forEach(s=>NAMES[s.id]=s.name); }catch(_){ } return NAMES[id]||({gamesDock:'Games',opsHub:'Game hub',libDock:'Story library',fileDock:'Library',sbp:'Storybook',tac:'TAC-OPS',kHumor:'Humor',kJump:'Cannon Jump Generator',kKara:'Karaoke Live',kOwner:'The owner’s word',kVG:'Video games',kSocial:'DD Universe Social',kAI:'AI',kEasel:'The Easel',kProj:'Projects'}[id])||id; };
+ const nameOf=id=>{ try{ if(!NAMES[id]&&window.KBAR) KBAR.screens.forEach(s=>NAMES[s.id]=s.name); }catch(_){ } return NAMES[id]||({gamesDock:'Games',opsHub:'Game hub',libDock:'Story library',fileDock:'Library',sbp:'Storybook',tac:'TAC-OPS',kHumor:'Humor',kJump:'Cannon Jump Generator',kKara:'Karaoke Live',kOwner:'The owner’s word',kVG:'Video games',kSocial:'DD Universe Social',kAI:'AI',kEasel:'The Easel',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle'}[id])||id; };
  /* ---------- landing exactly on what a link names ---------- */
  const byHead=t=>{ const hs=[...document.querySelectorAll('h2,h3,h4')].filter(h=>!h.closest('.kBar,.ocSec,.ocBrand,[id^=lib-]')&&h.textContent.trim().startsWith(t)); return hs[0]||null; };
  const T=sel=>sel.startsWith('@')?byHead(sel.slice(1)):document.querySelector(sel);
@@ -20179,7 +20201,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
   const top=box.getBoundingClientRect().top-(sc===document.scrollingElement||sc===document.documentElement?0:sc.getBoundingClientRect().top); sc.scrollTop=Math.max(0,sc.scrollTop+top-stick-8); try{ box.animate([{outline:'3px solid #ffe94a'},{outline:'3px solid transparent'}],{duration:1400}); }catch(_){ } return true; }
  const LAND={pad:'#padGrid',djSec:'#djSec',kBand:'#bandSec',kSounds:'#vcSec',keys:'#kbKeys'};
  let want=null, wantAt=0; const aim=(sel)=>{ want=sel; wantAt=Date.now(); [700,1500].forEach(ms=>setTimeout(()=>{ if(want===sel&&Date.now()-wantAt<2500) land(sel); },ms)); setTimeout(()=>{ if(want===sel) want=null; },1700); };
- function goTo(id,sel){ if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } if(id==='kAI'){ closePanel(); try{ KAI.open(); }catch(_){ } return; } if(id==='kEasel'){ closePanel(); try{ KEASEL.open(); }catch(_){ } return; } if(id==='kProj'){ closePanel(); try{ KPROJ.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
+ function goTo(id,sel){ if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } if(id==='kAI'){ closePanel(); try{ KAI.open(); }catch(_){ } return; } if(id==='kEasel'){ closePanel(); try{ KEASEL.open(); }catch(_){ } return; } if(id==='kProj'){ closePanel(); try{ KPROJ.open(); }catch(_){ } return; } if(id==='kKnow'){ closePanel(); try{ KKNOW.open(); }catch(_){ } return; } if(id==='kLock'){ closePanel(); try{ KLOCK.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
  /* every way into the Beat Maker lands on the pads unless it asked for another part */
  try{ const pad=$('pad'); let was=pad&&pad.classList.contains('on'); if(pad) new MutationObserver(()=>{ const on=pad.classList.contains('on'); if(on&&!was){ setTimeout(beatBase,50); if(!(want&&Date.now()-wantAt<2500)) aim('#padGrid'); } was=on; }).observe(pad,{attributes:true,attributeFilter:['class']}); }catch(_){ }
  const MAPID={ttPad:'#padGrid',ttDJ:'#djSec',ttBand:'#bandSec',ttVc:'#vcSec',ttWatch:null};
@@ -20418,7 +20440,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
    [['ttSoc','🌐 DD Universe Social',()=>KSOCIAL.open()],['ttProf','👤 My profile',()=>KSOCIAL.open('profile')],['ttMyLib','📚 My library (on this device)',()=>KSOCIAL.open('library')],['ttPost','➕ Make a post',()=>KSOCIAL.open('create')]].forEach(([id,l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.id=id; b.className='ttMusic'; b.textContent=l; b.style.order=String(101+i); b.dataset.kg='0'; b.dataset.kmSoc='1'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); }
   /* the big buttons at the top, most used first */
   const st=t.querySelector('.kStart'); if(st&&st.textContent!=='⭐ Most used'){ st.textContent='⭐ Most used'; }
-  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['🌞 My horoscope',()=>KSTARS.day(true)],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }]];
+  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['🌞 My horoscope',()=>KSTARS.day(true)],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['🔒 Lock & shuffle',()=>KLOCK.open()],['🎓 Knowledge library',()=>KKNOW.open()],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }]];
    t.querySelectorAll('.kStartB').forEach(b=>b.remove()); TOP.forEach(([l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.className='ttMusic kStartB'; b.textContent=l; b.style.order=String(41+i); b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); } }
  setInterval(menu,1000);
  window.KSTUDIO={playing,play:doPlay,bank:b=>{ bank=b; paintHead(); console24(); }};
@@ -20432,7 +20454,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
  const press=sel=>{ const b=document.querySelector(sel); if(b&&b.getClientRects().length){ b.click(); return true; } if(b){ b.click(); return true; } return false; };
- const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'Horoscope',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
+ const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'Horoscope',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
  const stopAll=()=>{ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ press('#kStopBtn'); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ } try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ if(!m.paused&&!m.muted) m.pause(); }catch(_){ } }); };
  const ACT={
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
@@ -20442,10 +20464,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   loop:()=>{ const id=cur(); if(id==='pad'||id==='kKara'){ if(press('#ktLoop')) return say('🔁 Loop switched.'); } if(id==='musicDock'&&press('#mShuf')) return; say('🔁 Loop works in the Studio and Karaoke.'); },
   close:()=>{ const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
  /* the buttons each screen adds */
- const EXTRA={pad:[['🥁','Pads',()=>{ try{ KRAIL.FLOAT.toggle('pads'); }catch(_){ press('#kdIPads'); } }],['🎹','Keys',()=>{ try{ KRAIL.FLOAT.toggle('keys'); }catch(_){ press('#kdIKeys'); } }],['🎧','DJ',()=>{ try{ KRAIL.FLOAT.toggle('dj'); }catch(_){ press('#kdIDJ'); } }],['🎤','Sing',()=>{ try{ KKARA.open(); }catch(_){ } }]],
+ const EXTRA={pad:[['🥁','Pads',()=>{ try{ KRAIL.FLOAT.toggle('pads'); }catch(_){ press('#kdIPads'); } }],['🎹','Keys',()=>{ try{ KRAIL.FLOAT.toggle('keys'); }catch(_){ press('#kdIKeys'); } }],['🎧','DJ',()=>{ try{ KRAIL.FLOAT.toggle('dj'); }catch(_){ press('#kdIDJ'); } }],['🎤','Sing',()=>{ try{ KKARA.open(); }catch(_){ } }],['×2','Double loop',()=>{ try{ KLOCK.double(); }catch(_){ } }],['🔒','Lock & shuffle',()=>{ try{ KLOCK.open('beat'); }catch(_){ } }]],
   kKara:[['📱','Phone rec',()=>press('#kkCap')],['🎚','Layers',()=>{ const l=$('kkLayers'); if(l) l.scrollIntoView({block:'start'}); else say('Record a take first.'); }],['🏗','Build song',()=>press('#kKara [data-kk="build"]')]],
   kEasel:[['🧹','Clear',()=>KEASEL&&KEASEL.clear()],['💾','Save',()=>KEASEL&&KEASEL.save()],['🌐','Post',()=>KEASEL&&KEASEL.post()]],
   kAI:[['🧹','New chat',()=>window.KAI&&KAI.clear()]],
+  kLock:[['🔀','Partial',()=>press('#kLock [data-lk="part"]')],['🎲','Complete',()=>press('#kLock [data-lk="full"]')]],
+  kKnow:[['🔎','Search',()=>{ const q=$('knQ'); if(q) q.focus(); }]],
   kHumor:[['🔊','Read',()=>press('#kHumor [data-kh="daysay"]')],['🎲','Joke',()=>press('#kHumor [data-kh="rnd"]')]],
   gamesDock:[['🕹','All games',()=>{ try{ KVG.open(); }catch(_){ } }]],
   home:[['🎛','Studio',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } }],['🎤','Karaoke',()=>{ try{ KKARA.open(); }catch(_){ } }],['🎨','Easel',()=>{ try{ KEASEL.open(); }catch(_){ } }],['🤖','AI',()=>{ try{ KAI.open(); }catch(_){ } }]]};
@@ -20476,7 +20500,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   const base=[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['close','✕','Close']];
   const ex=EXTRA[id]||[];
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(min?'Open the remote':'Shrink the remote')+'" data-noul>'+(min?'🎛':'▁')+'</button>'+(min?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
- setInterval(()=>paint(false),700);
+ setInterval(()=>paint(false),400);
+ /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
+ const homeNow=()=>{ const r=$('kRemote'); if(r) r.hidden=true; shownFor=''; [60,300].forEach(t=>setTimeout(()=>paint(true),t)); };
+ try{ const gh=window.GOHOME; if(gh&&!gh.__krm){ const w=function(){ const r=gh.apply(this,arguments); homeNow(); return r; }; w.__krm=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu,[data-ka="close"],[data-kk="close"],[data-kn="close"],[data-lkx]')) homeNow(); },true);
+ window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') homeNow(); });
  window.KREMOTE={show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
 })();
 
@@ -20588,6 +20617,425 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  /* the Menu: 📁 Projects first in "Me" */
  setInterval(()=>{ const t=$('tourTab'); if(!t||$('ttProj')) return; const b=document.createElement('button'); b.type='button'; b.id='ttProj'; b.className='ttMusic'; b.textContent='📁 Projects · my profile, my files, my work'; b.style.order='100'; b.dataset.kg='0'; b.dataset.kmSoc='1'; b.dataset.kmDone='1'; b.setAttribute('data-noul',''); b.style.gridColumn='1/-1'; b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(open,120); }); t.appendChild(b); const g=$('kSocGrp'); if(g) g.textContent='👤 Me: projects, profile and social'; },900);
  window.KPROJ={open,close};
+})();
+
+</script>
+<script>
+(()=>{ /* 🔒 LOCK & SHUFFLE · LOOP TOOLS (v198). Lock any piece of the story or the beat, then shuffle the rest: a partial shuffle moves a few
+   unlocked pieces, a complete shuffle moves every unlocked piece; locked pieces never move. Loop tools: double the loop 1 → 2 → 4 → 8 → 16 → 32
+   bars, copy a bar and paste it over another, every edit undoable. */
+ const $=id=>document.getElementById(id); const Q=s=>[...document.querySelectorAll(s)];
+ const say=m=>{ try{ toast(m); }catch(_){ } }; const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const clone=o=>JSON.parse(JSON.stringify(o==null?null:o));
+ const LOCK=Object.assign({},getLS('kanin-locks',{})); const saveL=()=>putLS('kanin-locks',LOCK);
+ /* a shuffle never lands on adult-only settings: those stay a person's own choice */
+ const ADULT=/\bX\b|adults? only|18\+|\bmature\b|restricted|^R\b|new adult|^adult$/i;
+ const fire=e=>{ ['input','change'].forEach(t=>e.dispatchEvent(new Event(t,{bubbles:true}))); };
+ function pickSel(sel){ if(!sel||sel.disabled) return false; const o=[...sel.options].filter(q=>!q.disabled&&q.value!==''&&q.value!==sel.value&&!ADULT.test(q.text.trim())); if(!o.length) return false; sel.value=o[Math.floor(Math.random()*o.length)].value; fire(sel); return true; }
+ function keyOf(e){ if(e.dataset.cat) return 'cat:'+e.dataset.cat; if(e.id) return '#'+e.id; const cr=e.closest('.castRow'); if(cr) return 'cast:'+cr.dataset.ck+':'+cr.dataset.k+':'+(e.dataset.cf||''); const dr=e.closest('.cabDrawer[data-k]'); if(dr) return 'cab:'+dr.dataset.k; const lb=e.closest('label'); const t=lb?[...lb.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim():''; const box=e.closest('[id]'); return (box?box.id:'')+':'+(e.getAttribute('aria-label')||t); }
+ const some=(arr,frac)=>{ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a.slice(0,Math.max(1,Math.ceil(a.length*frac))); };
+
+ /* ================= THE STORY ================= */
+ const SEL=g=>g.els().filter(e=>e.tagName==='SELECT');
+ const STORY=[
+  {k:'s-content',ic:'📜',n:'Content · the canvases',els:()=>[],run:async full=>{ const b=$(full?'qpBtn':'caQP')||$('qpBtn'); if(!b) return false; b.click(); await sleep(full?2600:1400); return true; }},
+  {k:'s-story',ic:'🧵',n:'Storyline · order and architecture',els:()=>Q('#cabGrid select'),extra:async full=>{ if(full){ const b=$('oShuffle'); if(b){ b.click(); await sleep(250); } } }},
+  {k:'s-cast',ic:'🎭',n:'Characters',els:()=>Q('#s-cast select,#s-cast input[data-cf="name"]'),run:async full=>{ const d=Q('#s-cast [data-cf="dice"]'); const pick=full?d:some(d,0.34); pick.forEach(b=>b.click()); await sleep(250); return pick.length>0; }},
+  {k:'s-demo',ic:'👥',n:'Audience and age group',els:()=>Q('#layAud select,#catRows select[data-cat="audience"],#catRows select[data-cat="rating"]')},
+  {k:'s-genre',ic:'🎬',n:'Genre and kind of work',els:()=>Q('#layKind select,#catRows select[data-cat="format"],#catRows select[data-cat="sub"]')},
+  {k:'s-tone',ic:'🎨',n:'Tone and pace',els:()=>Q('#layTone select,#catRows select[data-cat="tone"],#catRows select[data-cat="pace"],#catRows select[data-cat="hook"]')},
+  {k:'s-form',ic:'📐',n:'Form · point of view, tense, scale',els:()=>Q('#layForm select,#catRows select[data-cat="pov"],#catRows select[data-cat="distance"],#catRows select[data-cat="tense"],#catRows select[data-cat="scale"],#catRows select[data-cat="span"]')}];
+ async function shuffleSels(g,full){ const n0=SEL(g).length; if(!n0) return false; const one=Math.floor(Math.random()*n0); let did=false;
+  for(let i=0;i<24;i++){ const L=SEL(g); if(i>=L.length) break; if(full||i===one){ if(pickSel(L[i])) did=true; await sleep(70); } }
+  if(g.extra) await g.extra(full); return did; }
+ const snapG=g=>g.els().map(e=>({key:keyOf(e),v:e.value}));
+ async function restoreG(g,snap){ for(const s of snap){ const e=g.els().find(x=>keyOf(x)===s.key); if(e&&e.value!==s.v){ e.value=s.v; fire(e); await sleep(60); } } }
+ let busy=false, lastStory=null;
+ async function shuffleStory(full,box){ if(busy) return; const open=STORY.filter(g=>!LOCK[g.k]); if(!open.length) return note(box,'🔒 Everything is locked. Unlock a piece to shuffle it.');
+  busy=true; note(box,(full?'🎲 Complete shuffle':'🔀 Partial shuffle')+': the cannon is moving the unlocked pieces…');
+  try{ UNILAW.fire('story',{quiet:true}); }catch(_){ }
+  lastStory=STORY.map(g=>[g.k,snapG(g)]);
+  const held=STORY.filter(g=>LOCK[g.k]).map(g=>[g,snapG(g)]);
+  const targets=(full?open:some(open,0.4)).sort((a,b)=>(a.k==='s-content'?-1:0)-(b.k==='s-content'?-1:0));
+  const moved=[];
+  for(const g of targets){ let ok=false; try{ ok=g.run?await g.run(full):await shuffleSels(g,full); }catch(_){ } if(ok) moved.push(g.ic+' '+g.n); }
+  for(const [g,s] of held) await restoreG(g,s);
+  busy=false; paintAll();
+  note(box,(moved.length?(full?'🎲 Complete shuffle: ':'🔀 Partial shuffle: ')+moved.join(' · ')+' moved.':'Nothing could move: open the story builder or the Layers once so its pieces are on the page.')+(held.length?' Held by your locks: '+held.map(([g])=>g.ic+' '+g.n).join(' · ')+'.':'')); }
+ async function undoStory(box){ if(busy) return note(box,'One moment: the shuffle is still landing.'); if(!lastStory) return note(box,'No story shuffle to undo yet.'); for(const [k,s] of lastStory){ const g=STORY.find(x=>x.k===k); if(g) await restoreG(g,s); } lastStory=null; note(box,'↶ The story settings are back as they were. The book’s own ↶ Undo in Master control takes back the canvases.'); }
+
+ /* ================= THE BEAT ================= */
+ const PS=()=>window.PADSTUDIO, TH=()=>window.THEORY;
+ const LANES=[['bass','🎸','Bass line'],['chords','🎹','Chords'],['melody','🎵','Melody'],['gtr','🎶','Rhythm guitar']];
+ const BEAT=[{k:'b-tempo',ic:'⏱',n:'Tempo'},{k:'b-genre',ic:'🎶',n:'Genre and style'},{k:'b-key',ic:'🎼',n:'Key and mode'},{k:'b-prog',ic:'🔗',n:'Chord progression'}]
+  .concat(LANES.map(([k,ic,n])=>({k:'b-'+k,ic,n,lane:k}))).concat([{k:'b-drums',ic:'🥁',n:'Drums (every drum track)'}]);
+ const hasHits=(i)=>{ const P=PS(); if(!P) return false; const L=P.bars*P.spb, st=P.pads[i].steps; for(let s=0;s<L;s++) if(st[s]) return true; return false; };
+ function beatSnap(){ const P=PS(), T=TH(); return {bars:P.bars,steps:P.pads.map(p=>p.steps.slice()),on:P.tracks.map(k=>(k.on||[]).slice()),CT:T?clone(T.CT):null,chart:T?clone(T.chart):null,ui:['padBpm','cGen','cKey','cMode','cProg','cBars'].map(id=>[id,($(id)||{}).value])}; }
+ async function beatRestore(o){ const P=PS(), T=TH(); if(!P||!o) return; if(P.bars!==o.bars) P.setBars(o.bars); o.ui.forEach(([id,v])=>{ const e=$(id); if(e&&v!=null&&e.value!==v){ e.value=v; if(id==='padBpm') fire(e); } }); P.pads.forEach((p,i)=>{ p.steps=o.steps[i].slice(); }); P.tracks.forEach((k,i)=>{ if(o.on[i]) k.on=o.on[i].slice(); }); if(T&&o.CT){ T.setCT(clone(o.CT)); try{ T.setChart(clone(o.chart)||[]); }catch(_){ T.redraw(); } } P.refresh(); }
+ function vary(st,i,L,spb){ const on=[]; for(let s=0;s<L;s++) if(st[s]) on.push(s); if(!on.length) return false;
+  const anchor=s=>{ const p=s%spb; return (i<=1&&p===0)||((i===2||i===3)&&(p===spb/4||p===3*spb/4)); };
+  const keep=on.filter(anchor), free=on.filter(s=>!anchor(s)), vel=st[on[0]]||1, out=new Array(L).fill(0); keep.forEach(s=>out[s]=st[s]);
+  const mode=free.length?Math.floor(Math.random()*3):0;
+  if(mode===0) free.forEach(s=>{ let t=(s+(Math.random()<.5?-1:1)+L)%L; if(out[t]||anchor(t)) t=s; out[t]=st[s]; });
+  else if(mode===1){ const n=free.length, rot=Math.floor(Math.random()*L); for(let j=0;j<n;j++){ let t=(Math.floor(j*L/n)+rot)%L, g=0; while(out[t]&&g++<L) t=(t+1)%L; out[t]=vel; } }
+  else free.forEach(s=>{ const b=Math.floor(s/spb)*spb; let t=b+(spb-1-s%spb); if(out[t]) t=s; out[t]=st[s]; });
+  for(let s=0;s<L;s++) st[s]=out[s]; return true; }
+ let lastBeat=null;
+ async function shuffleBeat(full,box){ const P=PS(), T=TH(); if(!P||!T) return note(box,'Open the 🎛 Studio once so the beat is on the page, then shuffle.'); if(busy) return;
+  const laneHeld=LANES.filter(([k])=>LOCK['b-'+k]); const harmony=laneHeld.length>0;
+  const isOpen=g=>!LOCK[g.k]&&!(harmony&&(g.k==='b-key'||g.k==='b-prog'));
+  const drumOpen=[...Array(16).keys()].filter(i=>!LOCK['b-drums']&&!LOCK['p-'+i]);
+  const open=BEAT.filter(isOpen).filter(g=>g.k!=='b-drums'||drumOpen.length);
+  if(!open.length) return note(box,'🔒 Everything is locked. Unlock a piece to shuffle it.');
+  busy=true; try{ UNILAW.fire('beat',{quiet:true}); }catch(_){ }
+  const snap=beatSnap(); lastBeat=snap; const oldBars=P.bars;
+  const T0=new Set((full?open:some(open,0.4)).map(g=>g.k)); const moved=[];
+  if(T0.has('b-tempo')){ const e=$('padBpm'); if(e){ const lo=70,hi=150; let v; do{ v=lo+Math.floor(Math.random()*(hi-lo+1)); }while(v===+e.value); e.value=String(v); fire(e); moved.push('⏱ Tempo '+v+' BPM'); } }
+  let harm=false;
+  if(T0.has('b-genre')&&pickSel($('cGen'))){ harm=true; moved.push('🎶 Genre: '+$('cGen').selectedOptions[0].text); await sleep(60); if(harmony){ snap.ui.forEach(([id,v])=>{ if(/^c(Key|Mode|Prog)$/.test(id)&&$(id)&&v!=null) $(id).value=v; }); } }
+  if(T0.has('b-key')){ let k=pickSel($('cKey')); if(full) k=pickSel($('cMode'))||k; if(k){ harm=true; moved.push('🎼 Key: '+$('cKey').selectedOptions[0].text+' '+$('cMode').value); } }
+  if(T0.has('b-prog')&&pickSel($('cProg'))){ harm=true; moved.push('🔗 Progression: '+$('cProg').selectedOptions[0].text); }
+  const laneT=LANES.filter(([k])=>T0.has('b-'+k));
+  if(laneT.length||harm){ const cb=$('cBars'); if(cb&&[...cb.options].some(o=>+o.value===P.bars)) cb.value=String(P.bars);
+   try{ if(harm&&!harmony) T.compose(); const s=$('cShuf'); if(s) s.click(); else T.composeKeep(); }catch(_){ }
+   await sleep(80); if(P.bars!==oldBars) P.setBars(oldBars);
+   const CT=clone(T.CT)||{}; LANES.forEach(([k])=>{ if(!T0.has('b-'+k)&&!(harm&&!harmony&&!LOCK['b-'+k])) CT[k]=clone(snap.CT[k]||[]); if(LOCK['b-'+k]) CT[k]=clone(snap.CT[k]||[]); });
+   if(harmony){ try{ T.setChart(clone(snap.chart)||[]); }catch(_){ } }
+   T.setCT(CT); T.redraw(); laneT.forEach(([k,ic,n])=>moved.push(ic+' '+n)); }
+  /* the drums: every drum track not chosen or locked comes back exactly as it was */
+  let drumPick=[];
+  if(T0.has('b-drums')){ drumPick=full?drumOpen:some(drumOpen.filter(hasHits).length?drumOpen.filter(hasHits):drumOpen,0.3);
+   if(!P.pads.slice(0,16).some((p,i)=>hasHits(i))){ const cd=$('cDrums'); const was=cd&&cd.value; if(cd&&(was==='keep'||was==='none')) cd.value='genre'; try{ T.writeDrums(); }catch(_){ } if(cd&&was!=null) cd.value=was; }
+   else drumPick.forEach(i=>vary(P.pads[i].steps,i,P.bars*P.spb,P.spb));
+   moved.push('🥁 '+(drumPick.length===drumOpen.length?'Drums':drumPick.map(i=>P.pads[i].name).join(', '))); }
+  for(let i=0;i<16;i++) if(!drumPick.includes(i)) P.pads[i].steps=snap.steps[i].slice();
+  P.refresh(); busy=false; paintAll();
+  const held=BEAT.filter(g=>LOCK[g.k]).map(g=>g.ic+' '+g.n).concat([...Array(16).keys()].filter(i=>LOCK['p-'+i]).map(i=>'🥁 '+P.pads[i].name));
+  note(box,(full?'🎲 Complete shuffle: ':'🔀 Partial shuffle: ')+(moved.join(' · ')||'nothing moved')+'.'+(held.length?' Held by your locks: '+held.join(' · ')+'.':'')+(harmony?' Key and chords stay with your locked lanes, so everything stays in tune.':'')+' ↶ Undo puts it back.'); }
+ async function undoBeat(box){ if(busy) return note(box,'One moment: the shuffle is still landing.'); if(!lastBeat) return note(box,'No beat shuffle to undo yet.'); await beatRestore(lastBeat); lastBeat=null; note(box,'↶ The beat is back as it was before the shuffle.'); }
+
+ /* ================= LOOP TOOLS: double, copy a bar, paste a bar ================= */
+ const EXT=k=>{ try{ return PS().EXT.find(x=>x.key===k); }catch(_){ return null; } };
+ const UNDO=[]; let CLIP=null;
+ async function loopSnap(){ const o=beatSnap(); for(const k of ['keys','seq']){ const x=EXT(k); if(x){ try{ o[k]=clone(await x.full()); }catch(_){ } } } return o; }
+ async function loopRestore(o){ await beatRestore(o); for(const k of ['keys','seq']){ const x=EXT(k); if(x&&o[k]){ try{ await x.load(clone(o[k])); }catch(_){ } } } PS().refresh(); }
+ const dblNotes=(a,L)=>{ const f=(a||[]).filter(n=>n.s<L); return f.concat(f.map(n=>Object.assign({},n,{s:n.s+L}))); };
+ async function double(box){ const P=PS(); if(!P) return note(box,'Open the 🎛 Studio first.'); const b=P.bars; if(b>=32) return note(box,'The loop is at its longest: 32 bars.');
+  const nb=Math.min(32,b*2), L=b*P.spb; UNDO.push(await loopSnap()); if(UNDO.length>20) UNDO.shift();
+  P.setBars(nb);
+  const T=TH(); if(T){ const CT={}; Object.entries(T.CT||{}).forEach(([k,a])=>CT[k]=dblNotes(a,L)); const ch=clone(T.chart)||[]; T.setCT(CT); try{ T.setChart(ch.length===b?ch.concat(clone(ch)):ch); }catch(_){ T.redraw(); } const cb=$('cBars'); if(cb&&[...cb.options].some(o=>+o.value===nb)) cb.value=String(nb); }
+  const xk=EXT('keys'); if(xk){ try{ const o=await xk.full(); o.kt=dblNotes(o.kt,L); await xk.load(o); }catch(_){ } }
+  const xs=EXT('seq'); if(xs){ try{ const o=clone(await xs.full()); (o.ITR||[]).forEach(t=>t.notes=dblNotes(t.notes,L)); Object.keys(o.MASK||{}).forEach(k=>{ const m=o.MASK[k]; if(Array.isArray(m)) o.MASK[k]=m.slice(0,b).concat(m.slice(0,b)); else if(m&&typeof m==='object') for(let i=0;i<b;i++) if(i in m) m[i+b]=m[i]; }); await xs.load(o); }catch(_){ } }
+  P.refresh(); paintAll(); note(box,'🔁 Loop doubled: '+b+' → '+nb+' bar'+(nb>1?'s':'')+'. Every drum, lane and recording was copied, so it plays the same twice; now change the new half. ↶ Undo puts it back.'); }
+ function barNotes(a,b,spb){ return (a||[]).filter(n=>Math.floor(n.s/spb)===b).map(n=>Object.assign({},n,{s:n.s-b*spb})); }
+ async function copyBar(box){ const P=PS(); if(!P) return note(box,'Open the 🎛 Studio first.'); const b=+(($('kLoopFrom')||{}).value||0), spb=P.spb; const T=TH(); const xk=EXT('keys'); let kt=[]; if(xk){ try{ kt=(await xk.full()).kt||[]; }catch(_){ } }
+  CLIP={from:b,steps:P.pads.map(p=>p.steps.slice(b*spb,(b+1)*spb)),CT:T?Object.fromEntries(Object.entries(T.CT||{}).map(([k,a])=>[k,barNotes(a,b,spb)])):{},kt:barNotes(kt,b,spb)};
+  note(box,'⧉ Bar '+(b+1)+' is copied: drums, lanes and keys. Pick a bar and press 📋 Paste bar.'); }
+ async function pasteBar(box){ const P=PS(); if(!P) return note(box,'Open the 🎛 Studio first.'); if(!CLIP) return note(box,'Copy a bar first with ⧉ Copy bar.'); const to=+(($('kLoopTo')||{}).value||0), spb=P.spb;
+  UNDO.push(await loopSnap()); if(UNDO.length>20) UNDO.shift();
+  P.pads.forEach((p,i)=>{ for(let s=0;s<spb;s++) p.steps[to*spb+s]=CLIP.steps[i][s]||0; });
+  const put=(a,c)=>(a||[]).filter(n=>Math.floor(n.s/spb)!==to).concat((c||[]).map(n=>Object.assign({},n,{s:n.s+to*spb})));
+  const T=TH(); if(T){ const CT={}; Object.entries(T.CT||{}).forEach(([k,a])=>CT[k]=put(a,CLIP.CT[k])); T.setCT(CT); T.redraw(); }
+  const xk=EXT('keys'); if(xk){ try{ const o=await xk.full(); o.kt=put(o.kt,CLIP.kt); await xk.load(o); }catch(_){ } }
+  P.refresh(); note(box,'📋 Bar '+(CLIP.from+1)+' is pasted over bar '+(to+1)+'. ↶ Undo puts it back.'); }
+ async function undoLoop(box){ const o=UNDO.pop(); if(!o) return note(box,'Nothing to undo in the loop tools yet.'); await loopRestore(o); paintAll(); note(box,'↶ The loop is back as it was: '+o.bars+' bar'+(o.bars>1?'s':'')+'.'); }
+
+ /* ================= THE BOXES ================= */
+ const css=document.createElement('style'); css.textContent=`
+.kLockBox{border:1px solid rgba(255,233,74,.45);border-radius:14px;padding:10px 12px;margin:8px 0 14px;background:rgba(255,233,74,.05)}
+.kLockBox h4{margin:0 0 4px!important;color:#ffe94a!important;font-size:15px!important}
+.kLockBox .kLockN{margin:0 0 8px;font-size:12.5px;opacity:.85;line-height:1.45}
+.kLockChips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.kLockChips button{min-height:36px!important;padding:4px 10px!important;border-radius:999px!important;font-size:12.5px!important}
+.kLockChips button[aria-pressed="true"]{background:#7a5a00!important;color:#fff!important;border-color:#ffe94a!important}
+.kLockChips button.kHeld{opacity:.6}
+.kLockRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.kLockRow button{min-height:40px!important}
+.kLockMsg{margin-top:8px;font-size:12.5px;line-height:1.45;min-height:1em}
+.kLockSub{font-size:12px;opacity:.8;margin:6px 0 2px}
+#kLoopRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0;padding:6px 8px;border:1px dashed rgba(0,229,255,.4);border-radius:10px}
+#kLoopRow button{min-height:36px!important}
+#kLoopPath b{color:#ffe94a}
+#kLock{position:fixed;inset:0;z-index:9700;background:rgba(5,6,22,.97);overflow:auto;padding:14px 16px calc(230px + env(safe-area-inset-bottom,0px));padding-right:calc(var(--kRailW,58px) + 16px);color:#fff}
+#kLock[hidden]{display:none!important}
+#kLock .kLkIn{max-width:860px;margin:0 auto}
+#kLock .kLkTabs{display:flex;gap:6px;margin:6px 0 10px}
+#kLock .kLkTabs button[aria-pressed="true"]{background:#137a3f!important}`; document.head.appendChild(css);
+ function note(box,m){ (box?[box]:Q('.kLockBox')).forEach(b=>{ const x=b.querySelector('.kLockMsg'); if(x) x.textContent=m; }); say(m.length>120?m.slice(0,118)+'…':m); }
+ function chip(k,ic,n,extra){ return '<button type="button" data-lock="'+k+'" aria-pressed="'+!!LOCK[k]+'" class="'+(extra||'')+'" data-noul>'+(LOCK[k]?'🔒 ':'🔓 ')+ic+' '+esc(n)+'</button>'; }
+ function boxHTML(scope){ const P=PS(); const harmony=LANES.some(([k])=>LOCK['b-'+k]);
+  if(scope==='story') return '<h4>🔒 Lock & Shuffle · the story</h4><p class="kLockN">Lock what you want to keep: the content, the storyline, the characters, the audience, the genre, the tone, the form. 🔀 Partial shuffle lets the cannon move a few unlocked pieces; 🎲 Complete shuffle moves every unlocked piece. Locked pieces never move.</p><div class="kLockChips">'+STORY.map(g=>chip(g.k,g.ic,g.n)).join('')+'</div><div class="kLockRow"><button type="button" data-lk="part" data-noul>🔀 Partial shuffle</button><button type="button" data-lk="full" data-noul>🎲 Complete shuffle</button><button type="button" data-lk="lockall" data-noul>🔒 Lock all</button><button type="button" data-lk="none" data-noul>🔓 Unlock all</button><button type="button" data-lk="undo" data-noul>↶ Undo</button></div><div class="kLockMsg" role="status"></div>';
+  const tracks=P?[...Array(16).keys()].filter(i=>hasHits(i)||LOCK['p-'+i]):[];
+  return '<h4>🔒 Lock & Shuffle · the beat</h4><p class="kLockN">Lock the parts of the beat you love and shuffle the rest. Lock a lane (bass, chords, melody, guitar) and the key and chords stay with it, so everything stays in tune. Lock single drum tracks below.</p><div class="kLockChips">'+BEAT.map(g=>chip(g.k,g.ic,g.n,harmony&&(g.k==='b-key'||g.k==='b-prog')&&!LOCK[g.k]?'kHeld':'')).join('')+'</div>'+
+   '<div class="kLockSub">Drum tracks in this loop'+(tracks.length?'':': none yet. Write or tap a beat and they appear here.')+'</div><div class="kLockChips" data-tr="1">'+tracks.map(i=>chip('p-'+i,'🥁',P.pads[i].name)).join('')+'</div>'+
+   '<div class="kLockRow"><button type="button" data-lk="part" data-noul>🔀 Partial shuffle</button><button type="button" data-lk="full" data-noul>🎲 Complete shuffle</button><button type="button" data-lk="lockall" data-noul>🔒 Lock all</button><button type="button" data-lk="none" data-noul>🔓 Unlock all</button><button type="button" data-lk="undo" data-noul>↶ Undo</button></div><div class="kLockMsg" role="status"></div>'; }
+ function paint(box){ const m=box.querySelector('.kLockMsg'); const keep=m?m.textContent:''; box.innerHTML=boxHTML(box.dataset.scope); const n=box.querySelector('.kLockMsg'); if(n) n.textContent=keep; box.dataset.sig=sig(box.dataset.scope); }
+ const sig=scope=>scope==='beat'&&PS()?[...Array(16).keys()].map(i=>hasHits(i)?1:0).join('')+JSON.stringify(LOCK):JSON.stringify(LOCK);
+ function paintAll(){ Q('.kLockBox[data-scope="story"],.kLockBox[data-scope="beat"]').forEach(paint); paintLoop(); }
+ function onBox(e){ const box=e.target.closest('.kLockBox'); if(!box) return; const b=e.target.closest('button'); if(!b||(!b.dataset.lock&&!b.dataset.lk)) return; e.stopPropagation(); const scope=box.dataset.scope;
+  if(b.dataset.lock){ const k=b.dataset.lock; LOCK[k]=!LOCK[k]; if(!LOCK[k]) delete LOCK[k]; saveL(); paintAll(); return note(box,(LOCK[k]?'🔒 Locked: ':'🔓 Unlocked: ')+b.textContent.replace(/^[🔒🔓]\s*/u,'')+'.'); }
+  const a=b.dataset.lk; if(!a) return;
+  if(a==='lockall'||a==='none'){ const keys=scope==='story'?STORY.map(g=>g.k):BEAT.map(g=>g.k).concat([...Array(16).keys()].map(i=>'p-'+i)); keys.forEach(k=>{ if(a==='lockall'&&(k.indexOf('p-')!==0||hasHits(+k.slice(2)))) LOCK[k]=true; else delete LOCK[k]; }); saveL(); paintAll(); return note(box,a==='lockall'?'🔒 Every piece is locked.':'🔓 Every piece is unlocked.'); }
+  if(a==='undo') return scope==='story'?undoStory(box):undoBeat(box);
+  const full=a==='full'; return scope==='story'?shuffleStory(full,box):shuffleBeat(full,box); }
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('.kLockBox')) onBox(e); },true);
+ function mkBox(scope){ const d=document.createElement('div'); d.className='kLockBox'; d.dataset.scope=scope; paint(d); return d; }
+ /* the loop row beside the loop length */
+ function paintLoop(){ const r=$('kLoopRow'), P=PS(); if(!r||!P) return; const b=P.bars; const path=[1,2,4,8,16,32].map(n=>n===b?'<b>'+n+'</b>':n).join(' → '); const p=$('kLoopPath'); if(p) p.innerHTML=path;
+  ['kLoopFrom','kLoopTo'].forEach(id=>{ const s=$(id); if(!s) return; if(s.options.length!==b){ const v=Math.min(b-1,+s.value||0); s.innerHTML=[...Array(b).keys()].map(i=>'<option value="'+i+'">'+(i+1)+'</option>').join(''); s.value=String(v); } }); }
+ function mountLoop(){ if($('kLoopRow')) return; const lb=$('padLoopBars'); const host=lb&&lb.closest('label'); if(!host||!host.parentElement) return;
+  const r=document.createElement('div'); r.id='kLoopRow'; r.innerHTML='<button type="button" data-lp="dbl" data-noul>×2 Double the loop</button><span class="kLockN" id="kLoopPath"></span><label>Bar <select id="kLoopFrom" aria-label="Bar to copy"></select></label><button type="button" data-lp="copy" data-noul>⧉ Copy bar</button><label>onto bar <select id="kLoopTo" aria-label="Bar to paste over"></select></label><button type="button" data-lp="paste" data-noul>📋 Paste bar</button><button type="button" data-lp="undo" data-noul>↶ Undo</button><span class="kLockMsg" role="status" style="flex-basis:100%"></span>';
+  host.parentElement.insertBefore(r,host.nextSibling); r.classList.add('kLockBox'); r.dataset.scope='loop'; r.style.border='1px dashed rgba(0,229,255,.4)';
+  r.addEventListener('click',e=>{ const b=e.target.closest('[data-lp]'); if(!b) return; e.stopPropagation(); const a=b.dataset.lp; if(a==='dbl') double(r); else if(a==='copy') copyBar(r); else if(a==='paste') pasteBar(r); else undoLoop(r); },true); paintLoop(); }
+ function mount(){ if(!$('kLockStory')){ const drift=$('s-drift'); if(drift&&drift.parentElement){ const d=mkBox('story'); d.id='kLockStory'; drift.parentElement.insertBefore(d,drift); } }
+  if(!$('kLockBeat')){ const cw=$('cmpWrap'); if(cw&&cw.parentElement){ const d=mkBox('beat'); d.id='kLockBeat'; cw.parentElement.insertBefore(d,cw); } }
+  mountLoop(); }
+ /* repaint the drum chips when the beat changes, only while a beat box is on screen */
+ setInterval(()=>{ mount(); Q('.kLockBox[data-scope="beat"]').forEach(b=>{ if(b.getClientRects().length&&b.dataset.sig!==sig('beat')) paint(b); }); paintLoop(); },1500);
+ /* the floating Lock & Shuffle, from the Menu and the remote */
+ function open(scope){ let d=$('kLock'); if(!d){ d=document.createElement('div'); d.id='kLock'; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Lock and shuffle'); d.hidden=true; document.body.appendChild(d);
+   d.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.lkx!=null){ e.stopPropagation(); close(); } if(b.dataset.lkt){ e.stopPropagation(); draw(b.dataset.lkt); } }); }
+  const draw=sc=>{ d.innerHTML='<div class="kBar" data-sc="kLock"><button type="button" data-ka="close" data-lkx="1" aria-label="Close">✕</button></div><div class="kLkIn"><div class="kLockN">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™</div><h2>🔒 Lock & Shuffle</h2><div class="kLkTabs"><button type="button" data-lkt="story" aria-pressed="'+(sc==='story')+'" data-noul>📖 The story</button><button type="button" data-lkt="beat" aria-pressed="'+(sc==='beat')+'" data-noul>🎛 The beat</button></div></div>'; const b=mkBox(sc); d.querySelector('.kLkIn').appendChild(b); };
+  draw(scope==='beat'?'beat':'story'); d.hidden=false; d.scrollTop=0; }
+ function close(){ const d=$('kLock'); if(d) d.hidden=true; }
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('kLock')&&!$('kLock').hidden) close(); });
+ try{ const gh=window.GOHOME; if(gh&&!gh.__klk){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__klk=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(!e.target.closest) return; if(e.target.closest('#kdHome,#lpMenu')) return close(); const r=e.target.closest('#rDock button,#tourTab button'); if(r&&r.id!=='ttLock'&&$('kLock')&&!$('kLock').hidden) close(); },true);
+ /* the Menu: 🔒 Lock & shuffle beside the story and the beat */
+ setInterval(()=>{ const t=$('tourTab'); if(!t||$('ttLock')) return; const b=document.createElement('button'); b.type='button'; b.id='ttLock'; b.className='ttMusic'; b.textContent='🔒 Lock & shuffle · keep what you love, shuffle the rest'; b.style.order='101'; b.dataset.kg='0'; b.dataset.kmDone='1'; b.setAttribute('data-noul',''); b.style.gridColumn='1/-1'; b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>open(),120); }); t.appendChild(b); },900);
+ window.KLOCK={open,close,shuffleStory,shuffleBeat,double:()=>double($('kLoopRow')),copyBar:()=>copyBar($('kLoopRow')),pasteBar:()=>pasteBar($('kLoopRow')),undoLoop:()=>undoLoop($('kLoopRow')),LOCK,mount,get busy(){ return busy; }};
+ setTimeout(mount,1200);
+})();
+
+</script>
+<script>
+(()=>{ /* 📚 THE KNOWLEDGE LIBRARY (v198): cabinets of learning, each a set of drawers, each drawer a set of cards. Music theory, writing, English,
+   psychology, mathematics and games. Every card names the free source it comes from, can be read aloud (with Stop), copied, or saved to Projects. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const W=a=>'https://en.wikipedia.org/wiki/'+a;
+ const MT='https://www.musictheory.net/lessons', OWL='https://owl.purdue.edu/owl/', PSY='https://openstax.org/details/books/psychology-2e', OSM='https://openstax.org/subjects/math', KA='https://www.khanacademy.org/math';
+ /* [term, what it is, source name, source link] */
+ const CAB=[
+ ['music','🎼','Music',[
+  ['The basics',[
+   ['Pitch and the note names','Western music names its notes A B C D E F G, then repeats them one octave higher. Sharps (♯) raise a note a half step and flats (♭) lower it; on a piano the twelve keys from one C to the next are the twelve half steps of an octave.','musictheory.net lessons',MT],
+   ['Octave','The distance from one note to the next note of the same name. The higher note vibrates exactly twice as fast, which is why the two sound like the same note at different heights.','Wikipedia: Octave',W('Octave')],
+   ['Interval','The distance between two notes, counted in letter names and half steps: a major third is four half steps (C to E), a perfect fifth is seven (C to G).','Wikipedia: Interval',W('Interval_(music)')],
+   ['Tempo and BPM','How fast the music moves, in beats per minute. 60 BPM is one beat a second; most pop and hip-hop sits between about 70 and 140.','Wikipedia: Tempo',W('Tempo')],
+   ['Dynamics','How loud or soft the music is played: from pianissimo (pp, very soft) through mezzo-forte (mf) to fortissimo (ff, very loud).','Wikipedia: Dynamics',W('Dynamics_(music)')]]],
+  ['Scales and modes',[
+   ['Major scale','Seven notes in the pattern whole, whole, half, whole, whole, whole, half. C major uses only the white keys: C D E F G A B.','musictheory.net lessons',MT],
+   ['Natural minor scale','The pattern whole, half, whole, whole, half, whole, whole. A minor shares its notes with C major but starts on A, so it sounds darker.','Wikipedia: Minor scale',W('Minor_scale')],
+   ['The modes','Seven scales made by starting the major scale on each of its notes: Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian and Locrian. Dorian sounds soulful, Mixolydian bluesy, Phrygian dark and Spanish.','Wikipedia: Mode',W('Mode_(music)')],
+   ['Pentatonic scale','A five-note scale, found in folk music the world over. The minor pentatonic is the heart of blues, rock and many hip-hop melodies.','Wikipedia: Pentatonic scale',W('Pentatonic_scale')],
+   ['Circle of fifths','The twelve keys arranged so each is a fifth above the last. Neighbours on the circle share all but one note, so moving between them sounds smooth.','Wikipedia: Circle of fifths',W('Circle_of_fifths')]]],
+  ['Chords and harmony',[
+   ['Triad','A three-note chord built in thirds: root, third and fifth. A major triad (C E G) sounds bright; a minor triad (C E♭ G) sounds darker.','musictheory.net lessons',MT],
+   ['Seventh chords','A triad with a fourth note a seventh above the root. Major sevenths sound lush, minor sevenths smooth, and dominant sevenths pull toward home.','Wikipedia: Seventh chord',W('Seventh_chord')],
+   ['Roman numerals','Chords are named by the scale step they stand on: in C major, I is C, IV is F, V is G and vi is A minor. The same numbers work in every key.','Wikipedia: Roman numeral analysis',W('Roman_numeral_analysis')],
+   ['Chord progression','A series of chords. I–V–vi–IV carries thousands of pop songs; ii–V–I is the backbone of jazz; i–♭VII–♭VI–V is the Andalusian cadence.','Wikipedia: Chord progression',W('Chord_progression')],
+   ['Cadence','The chords that end a phrase. An authentic cadence (V to I) sounds finished; a half cadence stops on V and leaves the listener waiting.','Wikipedia: Cadence',W('Cadence')]]],
+  ['Rhythm and meter',[
+   ['Time signature','The two numbers at the start of the music: the top says how many beats are in a bar, the bottom which note gets the beat. 4/4 is four quarter-note beats a bar.','Wikipedia: Time signature',W('Time_signature')],
+   ['Downbeat and backbeat','The downbeat is the first beat of the bar, where the kick usually lands. The backbeat is beats two and four, where the snare or clap lands in most pop, rock and hip-hop.','Wikipedia: Beat',W('Beat_(music)')],
+   ['Syncopation','Accenting the off-beats, the places between the main beats. It makes a groove feel like it pushes and pulls.','Wikipedia: Syncopation',W('Syncopation')],
+   ['Swing','Playing pairs of even notes long-short instead of even, which gives jazz, shuffle and many hip-hop beats their lilt.','Wikipedia: Swing',W('Swing_(jazz_performance_style)')],
+   ['Euclidean rhythm','A rhythm made by spreading a number of hits as evenly as possible over a number of steps. Three hits over eight steps gives the tresillo heard across Latin and pop music.','Wikipedia: Euclidean rhythm',W('Euclidean_rhythm')]]],
+  ['Song form',[
+   ['Verse and chorus','The verse tells the story and changes its words each time; the chorus is the repeated hook that carries the title.','Wikipedia: Song structure',W('Song_structure')],
+   ['Pre-chorus and bridge','A pre-chorus builds tension into the chorus. A bridge brings something new, often new chords, before the last chorus.','Wikipedia: Song structure',W('Song_structure')],
+   ['Hook','The catchiest part of a song, the part people remember: a line, a melody or a sound.','Wikipedia: Hook',W('Hook_(music)')],
+   ['Twelve-bar blues','A twelve-bar form over the I, IV and V chords that underlies blues, early rock and roll and much of jazz.','Wikipedia: Twelve-bar blues',W('Twelve-bar_blues')]]],
+  ['Mixing and production',[
+   ['Equalization (EQ)','Turning frequency ranges up or down: cutting low rumble, giving a vocal presence, taming harsh highs.','Wikipedia: Equalization',W('Equalization_(audio)')],
+   ['Compression','Narrowing the gap between the loud and soft parts of a sound so it sits steady in the mix. Sidechain compression lets a kick push the other parts down for a pumping feel.','Wikipedia: Dynamic range compression',W('Dynamic_range_compression')],
+   ['Reverb and delay','Reverb places a sound in a space, from a small room to a cathedral. Delay repeats it as echoes, often in time with the beat.','Wikipedia: Reverberation',W('Reverberation')],
+   ['Panning and stereo','Placing each sound from left to right. Wide parts and a centred kick, bass and vocal give a clear mix.','Wikipedia: Panning',W('Panning_(audio)')],
+   ['Sampling','Reusing a piece of an existing recording as an instrument. Sampling a record someone else owns needs permission; KAN-IN’s recorded library is CC0, free to use.','Wikipedia: Sampling',W('Sampling_(music)')]]]]],
+ ['writing','✍️','Writing',[
+  ['Story structure',[
+   ['Three-act structure','Setup, confrontation and resolution. The first act sets up the world and the problem, the second raises the stakes, the third resolves them.','Wikipedia: Three-act structure',W('Three-act_structure')],
+   ['Freytag’s pyramid','Exposition, rising action, climax, falling action and resolution: Gustav Freytag’s 1863 map of a drama’s shape.','Wikipedia: Dramatic structure',W('Dramatic_structure')],
+   ['The hero’s journey','Joseph Campbell’s pattern of the call to adventure, the trials, the ordeal and the return home changed. Many myths and films follow it loosely.','Wikipedia: Hero’s journey',W('Hero%27s_journey')],
+   ['Inciting incident','The event that knocks the hero’s ordinary life off balance and starts the story moving.','Wikipedia: Inciting incident',W('Inciting_incident')],
+   ['In medias res','Starting the story in the middle of the action, then filling in what came before.','Wikipedia: In medias res',W('In_medias_res')]]],
+  ['Character',[
+   ['Want and need','What a character wants is the goal they chase; what they need is the lesson that would heal them. The best stories make the two pull against each other.','Purdue OWL: Creative writing',OWL],
+   ['Character arc','How a character changes from the first page to the last: growing, falling or staying firm while the world changes around them.','Wikipedia: Character arc',W('Character_arc')],
+   ['Protagonist and antagonist','The protagonist drives the story; the antagonist, a person, a force or a flaw, stands in their way.','Wikipedia: Protagonist',W('Protagonist')],
+   ['Show, don’t tell','Letting readers see a feeling in action and detail (“her hands shook”) rather than naming it (“she was nervous”).','Wikipedia: Show, don’t tell',W('Show,_don%27t_tell')]]],
+  ['Point of view and voice',[
+   ['First person','The narrator is a character and says “I”. Close and personal, but the reader knows only what the narrator knows.','Wikipedia: Narration',W('Narration')],
+   ['Third person limited','“He” or “she”, staying close to one character’s thoughts at a time.','Wikipedia: Narration',W('Narration')],
+   ['Third person omniscient','A narrator who can see into every character and every place.','Wikipedia: Narration',W('Narration')],
+   ['Unreliable narrator','A narrator whose account cannot be fully trusted, by mistake or on purpose.','Wikipedia: Unreliable narrator',W('Unreliable_narrator')]]],
+  ['Literary devices',[
+   ['Metaphor and simile','A metaphor says one thing is another (“the city is a jungle”); a simile says it is like another (“the city is like a jungle”).','Wikipedia: Metaphor',W('Metaphor')],
+   ['Foreshadowing','Planting hints early of what will happen later.','Wikipedia: Foreshadowing',W('Foreshadowing')],
+   ['Chekhov’s gun','Every important detail shown should matter later: if a gun hangs on the wall in act one, it should go off by act three.','Wikipedia: Chekhov’s gun',W('Chekhov%27s_gun')],
+   ['Irony','A gap between what is said or expected and what is meant or happens. Dramatic irony is when the audience knows something a character does not.','Wikipedia: Irony',W('Irony')],
+   ['Alliteration','Repeating the first sound of nearby words: “Peter Piper picked a peck”.','Wikipedia: Alliteration',W('Alliteration')]]],
+  ['Poetry and lyrics',[
+   ['Rhyme scheme','The pattern of rhymes at the ends of lines, written with letters: ABAB, AABB, ABCB.','Wikipedia: Rhyme scheme',W('Rhyme_scheme')],
+   ['Meter and the iamb','The beat of a line. An iamb is a soft syllable then a strong one (da-DUM); five of them make iambic pentameter, Shakespeare’s line.','Wikipedia: Iambic pentameter',W('Iambic_pentameter')],
+   ['Internal and multisyllabic rhyme','Rhymes inside the line, and rhymes of two or more syllables. Both are central to rap.','Wikipedia: Internal rhyme',W('Internal_rhyme')],
+   ['Haiku','A Japanese form of three lines, traditionally of 5, 7 and 5 sound units, usually tied to a season.','Wikipedia: Haiku',W('Haiku')]]],
+  ['Screenwriting',[
+   ['Logline','The whole story in one or two sentences: the hero, the goal, the obstacle and the stakes.','Wikipedia: Log line',W('Log_line')],
+   ['Slug line','The heading of every scene: INT. or EXT., the place and the time of day.','Wikipedia: Screenplay',W('Screenplay')],
+   ['Screenplay page','Set in Courier 12 pt, a screenplay page runs about one minute of screen time.','Wikipedia: Screenplay',W('Screenplay')]]]]],
+ ['english','📘','English',[
+  ['Parts of speech',[
+   ['Noun and pronoun','A noun names a person, place, thing or idea; a pronoun (he, she, they, it) stands in for one.','Purdue OWL',OWL],
+   ['Verb','A word for an action or a state: run, think, is. Every complete sentence has one.','Wikipedia: Verb',W('Verb')],
+   ['Adjective and adverb','Adjectives describe nouns (a red car); adverbs describe verbs, adjectives or other adverbs (drove quickly, very red).','Wikipedia: Part of speech',W('Part_of_speech')],
+   ['Preposition and conjunction','Prepositions show relation (in, on, under, after); conjunctions join words and clauses (and, but, or, because).','Wikipedia: Part of speech',W('Part_of_speech')]]],
+  ['Punctuation',[
+   ['Comma','Separates items in a list, sets off introductory words, and joins two complete sentences with and, but, or, so.','Purdue OWL: Commas',OWL],
+   ['Serial (Oxford) comma','The comma before the last item of a list: red, white, and blue. Style guides differ; whichever you choose, keep it consistent.','Wikipedia: Serial comma',W('Serial_comma')],
+   ['Semicolon','Joins two closely related complete sentences without a conjunction: It rained; we stayed in.','Wikipedia: Semicolon',W('Semicolon')],
+   ['Apostrophe','Shows possession (the cat’s toy) or a missing letter (don’t). It is never used to make a plain plural: one cat, two cats.','Wikipedia: Apostrophe',W('Apostrophe')],
+   ['Colon and dash','A colon introduces what follows (a list, an explanation); a dash marks a sudden break or adds emphasis.','Purdue OWL',OWL]]],
+  ['Sentences',[
+   ['Subject and predicate','The subject is who or what the sentence is about; the predicate says what it does or is.','Wikipedia: Predicate',W('Predicate_(grammar)')],
+   ['Clause','A group of words with a subject and a verb. An independent clause can stand alone; a dependent clause (because it rained) cannot.','Wikipedia: Clause',W('Clause')],
+   ['Run-on and fragment','A run-on jams two sentences together without the right punctuation; a fragment is missing a subject or a verb.','Purdue OWL',OWL],
+   ['Active and passive voice','Active: the dog chased the ball. Passive: the ball was chased by the dog. Active is usually clearer and shorter.','Wikipedia: Active voice',W('Active_voice')],
+   ['Dangling modifier','A describing phrase attached to the wrong word: “Walking home, the rain started.” (The rain was not walking.)','Wikipedia: Dangling modifier',W('Dangling_modifier')]]],
+  ['Words often confused',[
+   ['Their, there, they’re','Their = belonging to them. There = that place. They’re = they are.','Wiktionary','https://en.wiktionary.org/wiki/their'],
+   ['Your and you’re','Your = belonging to you. You’re = you are.','Wiktionary','https://en.wiktionary.org/wiki/your'],
+   ['Its and it’s','Its = belonging to it. It’s = it is or it has.','Wiktionary','https://en.wiktionary.org/wiki/its'],
+   ['Affect and effect','Affect is usually the verb (the song affects me); effect is usually the noun (the song has an effect on me).','Wiktionary','https://en.wiktionary.org/wiki/affect'],
+   ['Then and than','Then is about time (first this, then that); than compares (taller than me).','Wiktionary','https://en.wiktionary.org/wiki/than']]]]],
+ ['psych','🧠','Psychology',[
+  ['Memory and learning',[
+   ['Working memory','The mind’s small notepad that holds what you are thinking about right now. It holds only a few items at once, so big tasks go better in small steps.','Wikipedia: Working memory',W('Working_memory')],
+   ['Forgetting curve','Hermann Ebbinghaus found that new learning fades fast in the first hours and days unless it is reviewed.','Wikipedia: Forgetting curve',W('Forgetting_curve')],
+   ['Spacing effect','Studying in several short sessions spread over time beats one long session of the same length.','Wikipedia: Spacing effect',W('Spacing_effect')],
+   ['Testing effect','Trying to recall something, as in a quiz, strengthens memory more than reading it again.','Wikipedia: Testing effect',W('Testing_effect')]]],
+  ['Motivation and emotion',[
+   ['Intrinsic and extrinsic motivation','Intrinsic motivation is doing something because it is satisfying in itself; extrinsic is doing it for a reward or to avoid a penalty.','OpenStax Psychology 2e',PSY],
+   ['Maslow’s hierarchy of needs','Abraham Maslow’s model of needs from the physical, through safety, belonging and esteem, to self-actualization. It is a popular model, and research supports it only in part.','Wikipedia: Maslow’s hierarchy',W('Maslow%27s_hierarchy_of_needs')],
+   ['Flow','Mihaly Csikszentmihalyi’s name for being fully absorbed in a task whose challenge matches your skill.','Wikipedia: Flow',W('Flow_(psychology)')],
+   ['Growth mindset','Carol Dweck’s idea that believing abilities can grow with effort helps people keep learning. Later studies find its effects real but often small.','Wikipedia: Mindset',W('Mindset')]]],
+  ['Thinking and bias',[
+   ['Confirmation bias','The habit of noticing and trusting what agrees with what we already believe.','Wikipedia: Confirmation bias',W('Confirmation_bias')],
+   ['Anchoring','The first number we see pulls later estimates toward it, even when it is unrelated.','Wikipedia: Anchoring effect',W('Anchoring_effect')],
+   ['Availability heuristic','Judging how likely something is by how easily examples come to mind, which makes vivid events seem more common than they are.','Wikipedia: Availability heuristic',W('Availability_heuristic')],
+   ['Dunning–Kruger effect','People with little skill in an area tend to overrate their ability in it.','Wikipedia: Dunning–Kruger effect',W('Dunning%E2%80%93Kruger_effect')]]],
+  ['Development',[
+   ['Piaget’s stages','Jean Piaget’s four stages of thinking in childhood: sensorimotor, preoperational, concrete operational and formal operational.','Wikipedia: Piaget’s theory',W('Piaget%27s_theory_of_cognitive_development')],
+   ['Erikson’s stages','Erik Erikson’s eight stages across the whole life, each a challenge such as trust against mistrust or identity against role confusion.','Wikipedia: Erikson’s stages',W('Erikson%27s_stages_of_psychosocial_development')],
+   ['Attachment','The bond between a child and the people who care for them, which shapes how safe the child feels to explore.','Wikipedia: Attachment theory',W('Attachment_theory')]]],
+  ['People together',[
+   ['Social proof','People look to what others are doing to decide what is right, especially when unsure.','Wikipedia: Social proof',W('Social_proof')],
+   ['Bystander effect','People are less likely to help in an emergency when others are present, each expecting someone else to act.','Wikipedia: Bystander effect',W('Bystander_effect')],
+   ['Cognitive dissonance','The discomfort of holding two beliefs that clash, or acting against a belief, and the urge to ease it.','Wikipedia: Cognitive dissonance',W('Cognitive_dissonance')],
+   ['Mere-exposure effect','People tend to like things more the more often they meet them, songs included.','Wikipedia: Mere-exposure effect',W('Mere-exposure_effect')]]],
+  ['Creativity',[
+   ['Divergent thinking','Producing many different ideas from one starting point, as in brainstorming. Convergent thinking then picks the best one.','Wikipedia: Divergent thinking',W('Divergent_thinking')],
+   ['Incubation','Stepping away from a problem for a while often helps a solution appear later.','Wikipedia: Incubation',W('Incubation_(psychology)')],
+   ['Constraints','Limits, a word count, a form, a set of sounds, often make people more creative, not less.','OpenStax Psychology 2e',PSY]]]]],
+ ['math','➗','Mathematics',[
+  ['Numbers',[
+   ['Order of operations','Brackets first, then exponents, then multiplication and division from left to right, then addition and subtraction from left to right. 2 + 3 × 4 = 14.','Wikipedia: Order of operations',W('Order_of_operations')],
+   ['Prime numbers','Whole numbers above 1 divisible only by 1 and themselves: 2, 3, 5, 7, 11, 13… Every whole number above 1 is a product of primes in exactly one way.','Wikipedia: Prime number',W('Prime_number')],
+   ['Fractions, decimals and percentages','Three ways to write a part of a whole: ½ = 0.5 = 50%. A percentage is a fraction out of 100.','Khan Academy',KA],
+   ['Ratio','A comparison of two amounts: 3 : 2. Musical intervals are ratios of frequencies: the octave is 2 : 1, the perfect fifth about 3 : 2.','Wikipedia: Ratio',W('Ratio')]]],
+  ['Algebra',[
+   ['Variables and equations','A letter stands for an unknown number; an equation says two expressions are equal. Whatever you do to one side, do to the other.','OpenStax math',OSM],
+   ['Linear equation','A straight line: y = mx + b, where m is the slope and b where the line crosses the y-axis.','Wikipedia: Linear equation',W('Linear_equation')],
+   ['Quadratic formula','For ax² + bx + c = 0, x = (−b ± √(b² − 4ac)) ÷ 2a.','Wikipedia: Quadratic formula',W('Quadratic_formula')],
+   ['Exponents','Repeated multiplication: 2⁵ = 2 × 2 × 2 × 2 × 2 = 32. Doubling a loop five times from one bar gives 2⁵ = 32 bars.','Khan Academy',KA]]],
+  ['Geometry',[
+   ['Pythagorean theorem','In a right triangle, a² + b² = c², where c is the side opposite the right angle.','Wikipedia: Pythagorean theorem',W('Pythagorean_theorem')],
+   ['Circle','Circumference = 2πr; area = πr². π is about 3.14159.','Wikipedia: Circle',W('Circle')],
+   ['Angles','A full turn is 360°, a straight line 180°, a right angle 90°. The angles of a triangle add up to 180°.','OpenStax math',OSM]]],
+  ['Chance and data',[
+   ['Probability','The chance of an event, from 0 (impossible) to 1 (certain): favourable outcomes ÷ all equally likely outcomes. A fair die shows a six with probability 1/6.','Wikipedia: Probability',W('Probability')],
+   ['Expected value','The long-run average of a chance event: each outcome times its probability, added up. The expected roll of one die is 3.5.','Wikipedia: Expected value',W('Expected_value')],
+   ['Law of large numbers','The more times you repeat a chance event, the closer the average comes to the expected value.','Wikipedia: Law of large numbers',W('Law_of_large_numbers')],
+   ['Mean, median and mode','The mean is the sum divided by the count; the median is the middle value in order; the mode is the most common value.','Khan Academy',KA],
+   ['Standard deviation','How spread out a set of numbers is around its mean.','Wikipedia: Standard deviation',W('Standard_deviation')],
+   ['Permutations and combinations','Ways to arrange or choose things. Arranging n things gives n! orders (3! = 6); choosing k of n, order not mattering, is n! ÷ (k!(n − k)!).','Wikipedia: Combination',W('Combination')]]],
+  ['Math in music and art',[
+   ['Equal temperament','Modern tuning splits the octave into 12 equal half steps; each is the twelfth root of 2 (about 1.0595) times the one below.','Wikipedia: 12 equal temperament',W('12_equal_temperament')],
+   ['Fibonacci sequence','1, 1, 2, 3, 5, 8, 13…, each number the sum of the two before it. Its ratios approach the golden ratio, about 1.618.','Wikipedia: Fibonacci sequence',W('Fibonacci_sequence')],
+   ['Symmetry','A shape or pattern that stays the same when mirrored, turned or shifted, in art, crystals and rhythm alike.','Wikipedia: Symmetry',W('Symmetry')]]]]],
+ ['games','🎲','Games',[
+  ['Game design',[
+   ['Game mechanics','The rules and actions a player can take, and how the game answers them.','Wikipedia: Game mechanics',W('Game_mechanics')],
+   ['Core loop','The action the player repeats again and again, such as aim, fire, score, which carries most of the fun.','Wikipedia: Game mechanics',W('Game_mechanics')],
+   ['Balance','Making sure no single strategy, character or move always wins, so choices stay interesting.','Wikipedia: Game balance',W('Game_balance')],
+   ['Difficulty curve','How the challenge rises as the player improves: too flat is boring, too steep is frustrating.','Wikipedia: Game difficulty',W('Game_difficulty')]]],
+  ['Strategy',[
+   ['Zero-sum game','A game where one player’s gain is exactly another’s loss, as in chess or poker.','Wikipedia: Zero-sum game',W('Zero-sum_game')],
+   ['Nash equilibrium','A set of choices where no player can do better by changing only their own move.','Wikipedia: Nash equilibrium',W('Nash_equilibrium')],
+   ['Minimax','Choosing the move whose worst possible result is the best; the basis of many board-game computer players.','Wikipedia: Minimax',W('Minimax')],
+   ['Tempo and initiative','In board games, being the player who makes threats while the other must answer them.','Wikipedia: Initiative',W('Initiative_(chess)')]]],
+  ['Chance in games',[
+   ['Two dice','Rolling two dice, 7 is the most likely total (6 ways in 36, 1/6) and 2 and 12 the least (1 way each, 1/36).','Wikipedia: Dice',W('Dice')],
+   ['Gambler’s fallacy','The mistaken belief that past results change the odds of independent events: after five heads, the next fair coin toss is still 50-50.','Wikipedia: Gambler’s fallacy',W('Gambler%27s_fallacy')],
+   ['Monty Hall problem','Three doors, one prize. After the host opens an empty door, switching wins 2/3 of the time and staying only 1/3.','Wikipedia: Monty Hall problem',W('Monty_Hall_problem')],
+   ['House edge','In casino games the rules give the house a small built-in advantage, so over many plays the house comes out ahead. KAN-IN’s casino uses play chips only.','Wikipedia: Casino game',W('Casino_game')]]],
+  ['Classic games',[
+   ['Chess','Two players, sixteen pieces each, on an 8 × 8 board. The goal is checkmate: the king is attacked and cannot escape.','Wikipedia: Rules of chess',W('Rules_of_chess')],
+   ['Checkers (draughts)','Pieces move diagonally forward and jump to capture; a piece that reaches the far row becomes a king and moves both ways.','Wikipedia: English draughts',W('English_draughts')],
+   ['Go','Two players place black and white stones to surround territory on a 19 × 19 grid; stones fully surrounded are captured.','Wikipedia: Go',W('Go_(game)')],
+   ['Mancala','A family of “count and capture” games where seeds are sown around pits on a board, played across Africa and Asia for centuries.','Wikipedia: Mancala',W('Mancala')],
+   ['Tic-tac-toe','Three in a row on a 3 × 3 grid. With perfect play by both players it always ends in a draw.','Wikipedia: Tic-tac-toe',W('Tic-tac-toe')]]],
+  ['Puzzles',[
+   ['Sudoku','Fill a 9 × 9 grid so every row, column and 3 × 3 box holds 1 to 9 once each.','Wikipedia: Sudoku',W('Sudoku')],
+   ['Tower of Hanoi','Move a stack of discs to another peg, one disc at a time, never a larger one on a smaller. n discs take 2ⁿ − 1 moves at best.','Wikipedia: Tower of Hanoi',W('Tower_of_Hanoi')],
+   ['Nonogram','A picture puzzle: the numbers beside each row and column say how many filled cells run together there.','Wikipedia: Nonogram',W('Nonogram')]]]]]];
+ const COUNT=CAB.reduce((a,c)=>a+c[3].reduce((b,d)=>b+d[1].length,0),0);
+ let cab=null, q='';
+ const css=document.createElement('style'); css.textContent=`
+#kKnow{position:fixed;inset:0;z-index:9700;background:rgba(5,6,22,.97);overflow:auto;color:#fff;padding:14px 16px calc(230px + env(safe-area-inset-bottom,0px));padding-right:calc(var(--kRailW,58px) + 16px)}
+#kKnow[hidden]{display:none!important}
+#kKnow .knIn{max-width:920px;margin:0 auto}
+#kKnow .knN{font-size:12.5px;opacity:.85;line-height:1.5}
+#kKnow .knCabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin:10px 0}
+#kKnow .knCabs button{min-height:58px!important;border-radius:14px!important;font-size:14px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#kKnow .knCabs button[aria-pressed="true"]{background:#137a3f!important}
+#kKnow .knCabs button span{font-size:22px}
+#kKnow details{border:1px solid rgba(255,255,255,.18);border-radius:12px;margin:8px 0;background:rgba(255,255,255,.03)}
+#kKnow summary{cursor:pointer;padding:10px 12px;font-weight:800;color:#ffe94a;min-height:24px}
+#kKnow .knCard{border-top:1px solid rgba(255,255,255,.1);padding:10px 12px}
+#kKnow .knCard b{display:block;font-size:15px;margin-bottom:3px}
+#kKnow .knCard p{margin:0 0 6px;line-height:1.55;font-size:14px}
+#kKnow .knRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#kKnow .knRow button{min-height:36px!important;padding:4px 10px!important;font-size:12.5px!important}
+#kKnow .knRow a{color:#7fe0ff;font-size:12.5px}
+#kKnow input[type=search]{width:100%;max-width:520px;min-height:40px;font-size:15px;padding:6px 10px;border-radius:10px}`; document.head.appendChild(css);
+ function box(){ let d=$('kKnow'); if(d) return d; d=document.createElement('div'); d.id='kKnow'; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Knowledge library'); d.hidden=true; document.body.appendChild(d);
+  d.addEventListener('click',onClick); d.addEventListener('input',e=>{ if(e.target.id==='knQ'){ q=e.target.value; paintList(); } }); return d; }
+ const match=(c)=>{ if(!q.trim()) return true; const t=(c[0]+' '+c[1]).toLowerCase(); return q.toLowerCase().split(/\s+/).filter(Boolean).every(w=>t.includes(w)); };
+ function cardHTML(c,id){ return '<div class="knCard"><b>'+esc(c[0])+'</b><p>'+esc(c[1])+'</p><div class="knRow"><button type="button" data-kn="read" data-id="'+id+'" data-noul>🔊 Read</button><button type="button" data-kn="stop" data-noul>⏹ Stop</button><button type="button" data-kn="copy" data-id="'+id+'" data-noul>📋 Copy</button><button type="button" data-kn="save" data-id="'+id+'" data-noul>📁 Save to Projects</button><a href="'+esc(c[3])+'" target="_blank" rel="noopener noreferrer">Source: '+esc(c[2])+' ↗</a></div></div>'; }
+ const find=id=>{ const [a,b,c]=id.split('.').map(Number); return CAB[a][3][b][1][c]; };
+ function paintList(){ const L=$('knList'); if(!L) return; let html='', n=0;
+  CAB.forEach((C,a)=>{ if(cab!=null&&cab!==a&&!q.trim()) return; C[3].forEach((D,b)=>{ const cards=D[1].map((c,i)=>[c,a+'.'+b+'.'+i]).filter(([c])=>match(c)); if(!cards.length) return; n+=cards.length; html+='<details'+(q.trim()?' open':'')+'><summary>'+C[1]+' '+esc(C[2])+' · '+esc(D[0])+' <span class="knN">('+cards.length+')</span></summary>'+cards.map(([c,id])=>cardHTML(c,id)).join('')+'</details>'; }); });
+  L.innerHTML=html||'<p class="knN">Nothing found. Try another word.</p>'; const s=$('knCount'); if(s) s.textContent=q.trim()?n+' card'+(n===1?'':'s')+' found':''; }
+ function paint(){ const d=box(); d.innerHTML='<div class="kBar" data-sc="kKnow"><button type="button" data-ka="close" data-kn="close" aria-label="Close">✕</button></div><div class="knIn"><div class="knN">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · Knowledge library</div><h2>📚 The knowledge library</h2><p class="knN">'+COUNT+' cards in '+CAB.length+' cabinets: music theory, writing, English, psychology, mathematics and games. Every card names the free source it comes from; tap the source to read further. Read any card aloud, copy it, or save it to your Projects.</p><input type="search" id="knQ" placeholder="Search every card, for example: chord, comma, memory, probability" aria-label="Search the knowledge library" value="'+esc(q)+'"> <span class="knN" id="knCount"></span><div class="knCabs">'+CAB.map((C,a)=>'<button type="button" data-kn="cab" data-a="'+a+'" aria-pressed="'+(cab===a)+'" data-noul><span>'+C[1]+'</span>'+esc(C[2])+'</button>').join('')+'<button type="button" data-kn="cab" data-a="-1" aria-pressed="'+(cab==null)+'" data-noul><span>🗄</span>Every cabinet</button></div><div id="knList"></div></div>'; paintList(); }
+ async function onClick(e){ const b=e.target.closest('[data-kn]'); if(!b) return; const k=b.dataset.kn;
+  if(k==='close') return close(); if(k==='cab'){ const a=+b.dataset.a; cab=a<0?null:a; q=''; return paint(); }
+  if(k==='stop'){ try{ speechSynthesis.cancel(); }catch(_){ } return; }
+  const c=find(b.dataset.id); if(!c) return; const text=c[0]+'. '+c[1];
+  if(k==='read'){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); try{ const v=window.KVOICE&&KVOICE('en'); if(v) u.voice=v; }catch(_){ } speechSynthesis.speak(u); }catch(_){ say('Read-aloud is not available on this device.'); } return; }
+  if(k==='copy'){ try{ await navigator.clipboard.writeText(text+'\nSource: '+c[2]+' '+c[3]); say('📋 Copied.'); }catch(_){ say('Copy was blocked here: select the text and copy it by hand.'); } return; }
+  if(k==='save'){ try{ await KLIB.save({kind:'file',name:'Note · '+c[0],blob:new Blob([text+'\n\nSource: '+c[2]+'\n'+c[3]+'\n'],{type:'text/plain'}),meta:{from:'knowledge'}}); say('📁 Saved to your Projects: Note · '+c[0]+'.'); }catch(_){ say('This card could not be saved on this device.'); } return; } }
+ function open(c){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay','kHumor','kJump','kKara','kOwner','kVG','kSocial','kAI','kEasel','kProj','kLock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ }
+  if(typeof c==='string'){ const a=CAB.findIndex(C=>C[0]===c); cab=a<0?null:a; } d.hidden=false; d.scrollTop=0; paint(); }
+ function close(){ const d=$('kKnow'); if(d) d.hidden=true; try{ speechSynthesis.cancel(); }catch(_){ } }
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('kKnow')&&!$('kKnow').hidden) close(); });
+ try{ const gh=window.GOHOME; if(gh&&!gh.__kkn){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__kkn=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(!e.target.closest) return; if(e.target.closest('#kdHome,#lpMenu')) return close(); const r=e.target.closest('#rDock button,#tourTab button'); if(r&&r.id!=='ttKnow'&&$('kKnow')&&!$('kKnow').hidden) close(); },true);
+ setInterval(()=>{ const t=$('tourTab'); if(!t||$('ttKnow')) return; const b=document.createElement('button'); b.type='button'; b.id='ttKnow'; b.className='ttMusic'; b.textContent='📚 Knowledge library · music, writing, English, psychology, math, games'; b.style.order='102'; b.dataset.kg='0'; b.dataset.kmDone='1'; b.setAttribute('data-noul',''); b.style.gridColumn='1/-1'; b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>open(),120); }); t.appendChild(b); },900);
+ window.KKNOW={open,close,get count(){ return COUNT; },CAB};
 })();
 
 </script>

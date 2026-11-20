@@ -4,7 +4,7 @@
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
  const press=sel=>{ const b=document.querySelector(sel); if(b&&b.getClientRects().length){ b.click(); return true; } if(b){ b.click(); return true; } return false; };
- const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'Horoscope',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
+ const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'Horoscope',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
  const stopAll=()=>{ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ press('#kStopBtn'); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ } try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ if(!m.paused&&!m.muted) m.pause(); }catch(_){ } }); };
  const ACT={
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
@@ -14,10 +14,12 @@
   loop:()=>{ const id=cur(); if(id==='pad'||id==='kKara'){ if(press('#ktLoop')) return say('🔁 Loop switched.'); } if(id==='musicDock'&&press('#mShuf')) return; say('🔁 Loop works in the Studio and Karaoke.'); },
   close:()=>{ const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
  /* the buttons each screen adds */
- const EXTRA={pad:[['🥁','Pads',()=>{ try{ KRAIL.FLOAT.toggle('pads'); }catch(_){ press('#kdIPads'); } }],['🎹','Keys',()=>{ try{ KRAIL.FLOAT.toggle('keys'); }catch(_){ press('#kdIKeys'); } }],['🎧','DJ',()=>{ try{ KRAIL.FLOAT.toggle('dj'); }catch(_){ press('#kdIDJ'); } }],['🎤','Sing',()=>{ try{ KKARA.open(); }catch(_){ } }]],
+ const EXTRA={pad:[['🥁','Pads',()=>{ try{ KRAIL.FLOAT.toggle('pads'); }catch(_){ press('#kdIPads'); } }],['🎹','Keys',()=>{ try{ KRAIL.FLOAT.toggle('keys'); }catch(_){ press('#kdIKeys'); } }],['🎧','DJ',()=>{ try{ KRAIL.FLOAT.toggle('dj'); }catch(_){ press('#kdIDJ'); } }],['🎤','Sing',()=>{ try{ KKARA.open(); }catch(_){ } }],['×2','Double loop',()=>{ try{ KLOCK.double(); }catch(_){ } }],['🔒','Lock & shuffle',()=>{ try{ KLOCK.open('beat'); }catch(_){ } }]],
   kKara:[['📱','Phone rec',()=>press('#kkCap')],['🎚','Layers',()=>{ const l=$('kkLayers'); if(l) l.scrollIntoView({block:'start'}); else say('Record a take first.'); }],['🏗','Build song',()=>press('#kKara [data-kk="build"]')]],
   kEasel:[['🧹','Clear',()=>KEASEL&&KEASEL.clear()],['💾','Save',()=>KEASEL&&KEASEL.save()],['🌐','Post',()=>KEASEL&&KEASEL.post()]],
   kAI:[['🧹','New chat',()=>window.KAI&&KAI.clear()]],
+  kLock:[['🔀','Partial',()=>press('#kLock [data-lk="part"]')],['🎲','Complete',()=>press('#kLock [data-lk="full"]')]],
+  kKnow:[['🔎','Search',()=>{ const q=$('knQ'); if(q) q.focus(); }]],
   kHumor:[['🔊','Read',()=>press('#kHumor [data-kh="daysay"]')],['🎲','Joke',()=>press('#kHumor [data-kh="rnd"]')]],
   gamesDock:[['🕹','All games',()=>{ try{ KVG.open(); }catch(_){ } }]],
   home:[['🎛','Studio',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } }],['🎤','Karaoke',()=>{ try{ KKARA.open(); }catch(_){ } }],['🎨','Easel',()=>{ try{ KEASEL.open(); }catch(_){ } }],['🤖','AI',()=>{ try{ KAI.open(); }catch(_){ } }]]};
@@ -48,6 +50,11 @@
   const base=[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['close','✕','Close']];
   const ex=EXTRA[id]||[];
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(min?'Open the remote':'Shrink the remote')+'" data-noul>'+(min?'🎛':'▁')+'</button>'+(min?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
- setInterval(()=>paint(false),700);
+ setInterval(()=>paint(false),400);
+ /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
+ const homeNow=()=>{ const r=$('kRemote'); if(r) r.hidden=true; shownFor=''; [60,300].forEach(t=>setTimeout(()=>paint(true),t)); };
+ try{ const gh=window.GOHOME; if(gh&&!gh.__krm){ const w=function(){ const r=gh.apply(this,arguments); homeNow(); return r; }; w.__krm=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu,[data-ka="close"],[data-kk="close"],[data-kn="close"],[data-lkx]')) homeNow(); },true);
+ window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') homeNow(); });
  window.KREMOTE={show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
 })();
