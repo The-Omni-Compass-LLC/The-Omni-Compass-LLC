@@ -10,7 +10,12 @@
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
   stop:()=>{ stopAll(); say('■ Stopped.'); },
   rec:()=>{ const id=cur(); if(id==='pad') return press('#bbRec')||say('Open the Studio first.'); if(id==='kKara') return press('#kKara [data-kk="rec"]'); try{ KKARA.open(); setTimeout(()=>press('#kKara [data-kk="rec"]'),500); }catch(_){ } },
-  undo:()=>{ const id=cur(); const m={pad:'#padUndo',kKara:'#kKara [data-kk="undo"]',gamesDock:'#gmUndo',musicDock:'#mUndo'}; if(id==='kEasel'&&window.KEASEL) return KEASEL.undo(); if(m[id]&&press(m[id])) return; if(id==='pad'&&press('#kbUndo')) return; say('Nothing to undo here yet.'); },
+  undo:()=>{ if(window.KUNDO) return KUNDO.any(); ACT.undoScreen(); },
+  rew:()=>{ const id=cur(); if(id==='pad'&&press('#ktRew')) return say('⏮ Back to bar 1.'); const s=id==='home'?null:$(id); let n=0; (s?s.querySelectorAll('audio,video'):[]).forEach(m=>{ try{ m.currentTime=0; n++; }catch(_){ } }); say(n?'⏮ Back to the start.':'⏮ Nothing playing here to rewind.'); },
+  save:()=>{ const id=cur(); const m={pad:'#padSave',kKara:'#kKara [data-kk="save"]'}; if(id==='kEasel'&&window.KEASEL){ KEASEL.save(); } else if(!(m[id]&&press(m[id]))){ const s=$(id); const b=s&&[...s.querySelectorAll('button')].find(b=>b.getClientRects().length&&(/save/i.test(b.id)||/^💾/.test(b.textContent.trim()))); if(b) b.click(); else { try{ KPROJ.open(); }catch(_){ } say('💾 Your work saves on this device as you go. Your projects are here.'); } } try{ KUNDO.saved(); }catch(_){ } },
+  new:()=>{ const id=cur(); if(id==='kAI'&&window.KAI&&KAI.clear) return KAI.clear(); try{ KPROJ.open(); }catch(_){ } say('🆕 Pick what to start new: a story, a beat, a song, a drawing.'); },
+  open:()=>{ try{ KPROJ.open(); }catch(_){ } say('📂 Your projects: tap one to open it.'); },
+  undoScreen:()=>{ const id=cur(); const m={pad:'#padUndo',kKara:'#kKara [data-kk="undo"]',gamesDock:'#gmUndo',musicDock:'#mUndo'}; if(id==='kEasel'&&window.KEASEL) return KEASEL.undo(); if(m[id]&&press(m[id])) return; if(id==='pad'&&press('#kbUndo')) return; say('Nothing to undo here yet.'); },
   loop:()=>{ const id=cur(); if(id==='pad'||id==='kKara'){ if(press('#ktLoop')) return say('🔁 Loop switched.'); } if(id==='musicDock'&&press('#mShuf')) return; say('🔁 Loop works in the Studio and Karaoke.'); },
   close:()=>{ const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
  /* the buttons each screen adds */
@@ -37,7 +42,12 @@
 #kRemote .rmBtns button[data-r="rec"]{background:#7a0f22!important}
 #kRemote.min .rmBtns{display:none}
 #kRemote.min .rmHead b{display:none}
-#kRemote[hidden]{display:none!important}`; document.head.appendChild(css);
+#kRemote[hidden]{display:none!important}
+#kRemote.easy .rmBtns button{min-width:clamp(64px,6vw,128px);min-height:clamp(64px,6vw,128px)!important;font-size:clamp(12px,1vw,20px)}
+#kRemote.easy .rmBtns button span{font-size:clamp(24px,2.2vw,46px)}
+@media (max-width:600px){ #kRemote:not(.easy) .rmBtns button{min-width:44px;min-height:44px!important;font-size:9.5px} #kRemote:not(.easy) .rmBtns button span{font-size:17px} }
+@media (min-width:1700px){ #kRemote:not(.easy) .rmBtns button{min-width:66px;min-height:66px!important;font-size:13.5px} #kRemote:not(.easy) .rmBtns button span{font-size:25px} #kRemote .rmHead b{font-size:15px} }
+@media (min-width:2500px){ #kRemote:not(.easy) .rmBtns button{min-width:88px;min-height:88px!important;font-size:17px} #kRemote:not(.easy) .rmBtns button span{font-size:34px} #kRemote .rmHead b{font-size:19px} }`; document.head.appendChild(css);
  let min=getLS('kanin-remote-min',false), shownFor='';
  function box(){ let r=$('kRemote'); if(r) return r; r=document.createElement('div'); r.id='kRemote'; r.setAttribute('role','toolbar'); r.setAttribute('aria-label','Remote control'); document.body.appendChild(r);
   const g=getLS('kanin-remote-pos',null); if(g){ r.style.setProperty('--rx',g.x+'px'); r.style.setProperty('--ry',g.y+'px'); r.style.setProperty('--rb','auto'); }
@@ -47,9 +57,9 @@
   const up=()=>{ if(!drag) return; drag=null; const rc=r.getBoundingClientRect(); putLS('kanin-remote-pos',{x:Math.round(rc.left),y:Math.round(rc.top)}); }; r.addEventListener('pointerup',up); r.addEventListener('pointercancel',up);
   return r; }
  function paint(force){ const r=box(); const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&!t.hidden&&t.getBoundingClientRect().width>40; })();
-  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'; if(r.hidden) return; const key=id+'|'+min; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
-  const base=[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['close','✕','Close']];
-  const ex=EXTRA[id]||[];
+  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); const key=id+'|'+min+'|'+LVL; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
+  const base=LVL==='easy'?[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['save','💾','Save'],['close','✕','Close']]:[['rew','⏮','Rewind'],['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['save','💾','Save'],['new','🆕','New'],['open','📂','Open'],['close','✕','Close']];
+  const ex=LVL==='easy'?[]:(EXTRA[id]||[]); r.classList.toggle('easy',LVL==='easy');
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(min?'Open the remote':'Shrink the remote')+'" data-noul>'+(min?'🎛':'▁')+'</button>'+(min?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
  setInterval(()=>paint(false),400);
  /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
@@ -57,7 +67,7 @@
  try{ const gh=window.GOHOME; if(gh&&!gh.__krm){ const w=function(){ const r=gh.apply(this,arguments); homeNow(); return r; }; w.__krm=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu,[data-ka="close"],[data-kk="close"],[data-kn="close"],[data-lkx]')) homeNow(); },true);
  window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') homeNow(); });
- window.KREMOTE={show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
+ window.KREMOTE={undoScreen:()=>ACT.undoScreen(),show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
  /* ✕ CLOSE, ALWAYS IN REACH: on every screen but home a close button stays pinned at the top right, however far the page is
     scrolled and even with the remote hidden. It stops every sound and every reading voice and goes home. Escape does the same. */
  const xcss=document.createElement('style'); xcss.textContent='#kXAll{position:fixed;z-index:9760;top:calc(8px + env(safe-area-inset-top,0px));right:calc(var(--kRailW,58px) + 10px);min-height:44px!important;min-width:44px;padding:4px 12px!important;border-radius:999px!important;background:#b3172f!important;color:#fff!important;font:900 15px system-ui,sans-serif!important;border:2px solid #fff!important;box-shadow:0 4px 16px rgba(0,0,0,.5)}#kXAll[hidden]{display:none!important}body.gated #kXAll{display:none!important}'; document.head.appendChild(xcss);

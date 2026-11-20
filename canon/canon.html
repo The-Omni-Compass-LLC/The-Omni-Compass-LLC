@@ -20496,7 +20496,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
   stop:()=>{ stopAll(); say('■ Stopped.'); },
   rec:()=>{ const id=cur(); if(id==='pad') return press('#bbRec')||say('Open the Studio first.'); if(id==='kKara') return press('#kKara [data-kk="rec"]'); try{ KKARA.open(); setTimeout(()=>press('#kKara [data-kk="rec"]'),500); }catch(_){ } },
-  undo:()=>{ const id=cur(); const m={pad:'#padUndo',kKara:'#kKara [data-kk="undo"]',gamesDock:'#gmUndo',musicDock:'#mUndo'}; if(id==='kEasel'&&window.KEASEL) return KEASEL.undo(); if(m[id]&&press(m[id])) return; if(id==='pad'&&press('#kbUndo')) return; say('Nothing to undo here yet.'); },
+  undo:()=>{ if(window.KUNDO) return KUNDO.any(); ACT.undoScreen(); },
+  rew:()=>{ const id=cur(); if(id==='pad'&&press('#ktRew')) return say('⏮ Back to bar 1.'); const s=id==='home'?null:$(id); let n=0; (s?s.querySelectorAll('audio,video'):[]).forEach(m=>{ try{ m.currentTime=0; n++; }catch(_){ } }); say(n?'⏮ Back to the start.':'⏮ Nothing playing here to rewind.'); },
+  save:()=>{ const id=cur(); const m={pad:'#padSave',kKara:'#kKara [data-kk="save"]'}; if(id==='kEasel'&&window.KEASEL){ KEASEL.save(); } else if(!(m[id]&&press(m[id]))){ const s=$(id); const b=s&&[...s.querySelectorAll('button')].find(b=>b.getClientRects().length&&(/save/i.test(b.id)||/^💾/.test(b.textContent.trim()))); if(b) b.click(); else { try{ KPROJ.open(); }catch(_){ } say('💾 Your work saves on this device as you go. Your projects are here.'); } } try{ KUNDO.saved(); }catch(_){ } },
+  new:()=>{ const id=cur(); if(id==='kAI'&&window.KAI&&KAI.clear) return KAI.clear(); try{ KPROJ.open(); }catch(_){ } say('🆕 Pick what to start new: a story, a beat, a song, a drawing.'); },
+  open:()=>{ try{ KPROJ.open(); }catch(_){ } say('📂 Your projects: tap one to open it.'); },
+  undoScreen:()=>{ const id=cur(); const m={pad:'#padUndo',kKara:'#kKara [data-kk="undo"]',gamesDock:'#gmUndo',musicDock:'#mUndo'}; if(id==='kEasel'&&window.KEASEL) return KEASEL.undo(); if(m[id]&&press(m[id])) return; if(id==='pad'&&press('#kbUndo')) return; say('Nothing to undo here yet.'); },
   loop:()=>{ const id=cur(); if(id==='pad'||id==='kKara'){ if(press('#ktLoop')) return say('🔁 Loop switched.'); } if(id==='musicDock'&&press('#mShuf')) return; say('🔁 Loop works in the Studio and Karaoke.'); },
   close:()=>{ const id=cur(); if(id==='home') return say('You are on the home page.'); const s=id==='pad'?$('pad'):$(id); const x=s&&s.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"]'); stopAll(); if(x) x.click(); else { try{ GOHOME(); }catch(_){ } } setTimeout(paint,300); }};
  /* the buttons each screen adds */
@@ -20523,7 +20528,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
 #kRemote .rmBtns button[data-r="rec"]{background:#7a0f22!important}
 #kRemote.min .rmBtns{display:none}
 #kRemote.min .rmHead b{display:none}
-#kRemote[hidden]{display:none!important}`; document.head.appendChild(css);
+#kRemote[hidden]{display:none!important}
+#kRemote.easy .rmBtns button{min-width:clamp(64px,6vw,128px);min-height:clamp(64px,6vw,128px)!important;font-size:clamp(12px,1vw,20px)}
+#kRemote.easy .rmBtns button span{font-size:clamp(24px,2.2vw,46px)}
+@media (max-width:600px){ #kRemote:not(.easy) .rmBtns button{min-width:44px;min-height:44px!important;font-size:9.5px} #kRemote:not(.easy) .rmBtns button span{font-size:17px} }
+@media (min-width:1700px){ #kRemote:not(.easy) .rmBtns button{min-width:66px;min-height:66px!important;font-size:13.5px} #kRemote:not(.easy) .rmBtns button span{font-size:25px} #kRemote .rmHead b{font-size:15px} }
+@media (min-width:2500px){ #kRemote:not(.easy) .rmBtns button{min-width:88px;min-height:88px!important;font-size:17px} #kRemote:not(.easy) .rmBtns button span{font-size:34px} #kRemote .rmHead b{font-size:19px} }`; document.head.appendChild(css);
  let min=getLS('kanin-remote-min',false), shownFor='';
  function box(){ let r=$('kRemote'); if(r) return r; r=document.createElement('div'); r.id='kRemote'; r.setAttribute('role','toolbar'); r.setAttribute('aria-label','Remote control'); document.body.appendChild(r);
   const g=getLS('kanin-remote-pos',null); if(g){ r.style.setProperty('--rx',g.x+'px'); r.style.setProperty('--ry',g.y+'px'); r.style.setProperty('--rb','auto'); }
@@ -20533,9 +20543,9 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   const up=()=>{ if(!drag) return; drag=null; const rc=r.getBoundingClientRect(); putLS('kanin-remote-pos',{x:Math.round(rc.left),y:Math.round(rc.top)}); }; r.addEventListener('pointerup',up); r.addEventListener('pointercancel',up);
   return r; }
  function paint(force){ const r=box(); const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&!t.hidden&&t.getBoundingClientRect().width>40; })();
-  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'; if(r.hidden) return; const key=id+'|'+min; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
-  const base=[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['close','✕','Close']];
-  const ex=EXTRA[id]||[];
+  r.hidden=getLS('kanin-remote-off',false)||menuOpen||id==='home'||(id==='pad'&&(()=>{ try{ return KLEVEL.get()==='easy'; }catch(_){ return false; } })()); if(r.hidden) return; const LVL=(()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } })(); const key=id+'|'+min+'|'+LVL; if(!force&&key===shownFor) return; shownFor=key; r.classList.toggle('min',min);
+  const base=LVL==='easy'?[['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['save','💾','Save'],['close','✕','Close']]:[['rew','⏮','Rewind'],['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['undo','↶','Undo'],['loop','🔁','Loop'],['save','💾','Save'],['new','🆕','New'],['open','📂','Open'],['close','✕','Close']];
+  const ex=LVL==='easy'?[]:(EXTRA[id]||[]); r.classList.toggle('easy',LVL==='easy');
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(min?'Open the remote':'Shrink the remote')+'" data-noul>'+(min?'🎛':'▁')+'</button>'+(min?'':'<button type="button" data-rm="hide" title="Hide the remote" data-noul>✕</button>')+'</div><div class="rmBtns">'+base.filter(b=>!(id==='home'&&(b[0]==='close'||b[0]==='undo'||b[0]==='loop'))).map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>'; }
  setInterval(()=>paint(false),400);
  /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
@@ -20543,7 +20553,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  try{ const gh=window.GOHOME; if(gh&&!gh.__krm){ const w=function(){ const r=gh.apply(this,arguments); homeNow(); return r; }; w.__krm=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome,#lpMenu,[data-ka="close"],[data-kk="close"],[data-kn="close"],[data-lkx]')) homeNow(); },true);
  window.addEventListener('kanin',e=>{ if(e.detail==='gate-open') homeNow(); });
- window.KREMOTE={show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
+ window.KREMOTE={undoScreen:()=>ACT.undoScreen(),show:()=>{ putLS('kanin-remote-off',false); paint(true); },hide:()=>{ putLS('kanin-remote-off',true); paint(true); },act:ACT};
  /* ✕ CLOSE, ALWAYS IN REACH: on every screen but home a close button stays pinned at the top right, however far the page is
     scrolled and even with the remote hidden. It stops every sound and every reading voice and goes home. Escape does the same. */
  const xcss=document.createElement('style'); xcss.textContent='#kXAll{position:fixed;z-index:9760;top:calc(8px + env(safe-area-inset-top,0px));right:calc(var(--kRailW,58px) + 10px);min-height:44px!important;min-width:44px;padding:4px 12px!important;border-radius:999px!important;background:#b3172f!important;color:#fff!important;font:900 15px system-ui,sans-serif!important;border:2px solid #fff!important;box-shadow:0 4px 16px rgba(0,0,0,.5)}#kXAll[hidden]{display:none!important}body.gated #kXAll{display:none!important}'; document.head.appendChild(xcss);
@@ -21363,6 +21373,208 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  document.addEventListener('change',e=>{ if(e.target&&(e.target.id==='padRecMode'||e.target.id==='padClickDiv')) setTiming(e.target); });
  setInterval(()=>{ mountTiming(); mountIO(); labelStrips(); },1200);
  window.KIO={paint:paintIO,setRoute,routeOf,get recMode(){ return window.PADRECMODE; }};
+})();
+
+</script>
+<script>
+(()=>{ /* FIT (v209): every label stays inside its button, on a phone, a laptop, a desktop or a TV. The rail's labels are sized from the
+   rail's own width, so its longest word ("Everyday", "Projects", "Karaoke") always fits; nothing is cut off with "…". Buttons and labels
+   anywhere in the app that would spill out of their box wrap inside it instead. */
+ const css=document.createElement('style'); css.textContent=`
+html body #rDock#rDock button[data-kd-i]::after{font-size:clamp(8px,calc((var(--kRailW,58px) - 12px) / 5.1),15px)!important;letter-spacing:-.02em!important;text-overflow:clip!important;white-space:nowrap!important;overflow:visible!important;max-width:none!important}
+html body #rDock#rDock>button{padding-left:1px!important;padding-right:1px!important;overflow:hidden}
+@media (min-width:1700px){ :root{--kRailW:96px} html body #rDock#rDock button[data-kd-i]::before{font-size:30px!important} }
+@media (min-width:2500px){ :root{--kRailW:124px} html body #rDock#rDock button[data-kd-i]::before{font-size:40px!important} }
+/* any button's own words wrap inside the button instead of running out of it */
+html body button:not([data-kd-i]):not(.pd):not(.mxs button){white-space:normal;overflow-wrap:anywhere;max-width:100%}
+html body select,html body input{max-width:100%}
+/* pop-ups never run under the rail: they stay between the left edge and the rail, and their close button stays in reach */
+html body #qpDone{transform:none!important;translate:none!important;left:max(8px,calc((100vw - var(--kRailW,58px) - 960px) / 2))!important;right:max(calc(var(--kRailW,58px) + 8px),calc((100vw + var(--kRailW,58px) - 960px) / 2))!important;font-size:clamp(15px,1vw,22px)!important;width:auto!important;max-width:none!important;box-sizing:border-box!important;overflow-wrap:anywhere}
+html body #qpDone button{max-width:100%}`; document.head.appendChild(css);
+})();
+
+</script>
+<script>
+(()=>{ /* LEVEL PANELS AND ONE UNDO (v209). The level a person picks decides how much control they see.
+   🟢 Easy: the most elementary panels. The home page is a few giant buttons, the Studio is a few giant buttons over the 16 pads, the
+   rail and the remote carry only the essentials, and the Menu shows only the most used. 🟡 Everyday: the tools creators use.
+   🔴 Pro: every engine, knob and library. Nothing is deleted: a higher level brings everything back.
+   ↶ UNDO: one button, pinned on every screen at every level (and Ctrl+Z / ⌘Z), takes back the last move: a knob, slider, picker or
+   switch anywhere, or the screen's own last edit (the beat, the drawing, the take). It goes back step by step to the last save. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const lv=()=>{ try{ return KLEVEL.get(); }catch(_){ return 'avg'; } };
+ const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
+ const press=sel=>{ const b=document.querySelector(sel); if(b){ b.click(); return true; } return false; };
+ const fold=()=>{ try{ LAUNCHPAD.fold(); }catch(_){ } };
+ const studio=then=>{ try{ KRAIL.goTo('pad'); }catch(_){ } if(then) setTimeout(then,900); };
+ /* ── the giant-button panels ── */
+ const css=document.createElement('style'); css.textContent=`
+.kEasy{display:none;margin:10px auto;max-width:min(1800px,100%);box-sizing:border-box;padding:clamp(10px,1.4vw,28px);border:3px solid #ffe94a;border-radius:clamp(14px,1.4vw,28px);background:linear-gradient(160deg,#1c1850,#0d0b2a);color:#fff}
+html.lvl-easy .kEasy{display:block}
+.kEasy h3{margin:0 0 4px;font:900 clamp(20px,2.2vw,44px)/1.15 system-ui,sans-serif;color:#ffe94a;text-wrap:balance}
+.kEasy p{margin:0 0 clamp(8px,1vw,18px);font:600 clamp(15px,1.3vw,26px)/1.45 system-ui,sans-serif;color:#d9d4ff}
+.kEasy .ezGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp(130px,16vw,340px),1fr));gap:clamp(8px,1vw,20px)}
+.kEasy .ezGrid button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,.5vw,10px);min-height:clamp(96px,11vw,240px)!important;padding:clamp(8px,1vw,20px)!important;border-radius:clamp(14px,1.3vw,26px)!important;border:2px solid rgba(255,255,255,.25)!important;background:#2a2470!important;color:#fff!important;font:800 clamp(16px,1.5vw,30px)/1.2 system-ui,sans-serif!important;white-space:normal!important;overflow-wrap:anywhere;text-align:center;box-sizing:border-box;min-width:0}
+.kEasy .ezGrid button i{font-style:normal;font-size:clamp(32px,3.6vw,84px);line-height:1}
+.kEasy .ezGrid button.go{background:#137a3f!important}.kEasy .ezGrid button.st{background:#b3172f!important}.kEasy .ezGrid button.ud{background:#ffe94a!important;color:#14163a!important}
+.kEasy .ezMore{margin-top:clamp(8px,1vw,18px);display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:700 clamp(14px,1.2vw,24px)/1.4 system-ui,sans-serif;color:#bfb8ff}
+.kEasy .ezMore button{min-height:44px;padding:4px 14px!important;border-radius:999px!important;font:800 clamp(14px,1.2vw,24px) system-ui,sans-serif!important}
+html.lvl-easy #rDock#rDock :is(#kdProj,#kdSocial,#kdAI,#kdPanel,#kdTour,#kdIDJ){display:none!important}
+html.lvl-easy #rDock#rDock button[data-kd-i]::before{font-size:calc(var(--kRailW,58px) * .44)!important}
+html.lvl-easy #tourTab>*:not(.lpHead):not(.kLvlRow):not(.kStart):not([data-easy]){display:none!important}
+html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!important;font:800 clamp(17px,1.5vw,30px)/1.25 system-ui,sans-serif!important}
+#kUndoAll{position:fixed;z-index:9760;top:calc(8px + env(safe-area-inset-top,0px));right:calc(var(--kRailW,58px) + 10px);min-height:44px!important;min-width:44px;padding:4px 12px!important;border-radius:999px!important;background:#ffe94a!important;color:#14163a!important;font:900 15px system-ui,sans-serif!important;border:2px solid #14163a!important;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+#kUndoAll[hidden]{display:none!important}body.gated #kUndoAll{display:none!important}
+@media (min-width:1700px){ #kUndoAll,#kXAll{min-height:56px!important;font-size:20px!important;padding:6px 18px!important} }
+@media (min-width:2500px){ #kUndoAll,#kXAll{min-height:72px!important;font-size:26px!important;padding:8px 24px!important} }`; document.head.appendChild(css);
+ const btn=(i,l,cls,act)=>'<button type="button" data-ez="'+act+'" class="'+(cls||'')+'" data-noul><i>'+i+'</i>'+l+'</button>';
+ const more='<div class="ezMore">Want more buttons? <button type="button" data-ez="lv:avg" data-noul>🟡 Everyday</button><button type="button" data-ez="lv:pro" data-noul>🔴 Pro</button></div>';
+ const HOME=[['📖','Make a story','','story'],['🥁','Make a beat','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['🗺','Show me around','','tour']];
+ const STU=[['🎲','Make me a beat','go','auto'],['▶','Play','go','play'],['■','Stop','st','stop'],['🎨','Change the style','','style'],['↶','Undo','ud','undo'],['💾','Save','','save'],['🎤','Sing on it','','sing'],['❓','How do I?','','how']];
+ const ACT={
+  story:()=>{ fold(); try{ GOHOME(); }catch(_){ } setTimeout(()=>{ press('#mQP')||press('#qpBtn'); setTimeout(()=>{ const d=document.querySelector('section.desk'); if(d&&d.getClientRects().length) d.scrollIntoView({behavior:'smooth',block:'start'}); say('📖 Your story is written. Scroll to read it, or tap 📖 Make a story again for another.'); },1800); },150); },
+  beat:()=>{ fold(); studio(()=>{ press('#cAuto'); say('🥁 A beat is ready. Tap ▶ Play.'); }); },
+  sing:()=>{ fold(); try{ KKARA.open(); }catch(_){ } },
+  laugh:()=>{ fold(); try{ KHUMOR.open('day'); }catch(_){ } },
+  game:()=>{ fold(); try{ if(window.KVG) KVG.open(); else GAMES.open('m_merge'); }catch(_){ } },
+  draw:()=>{ fold(); try{ KEASEL.open(); }catch(_){ } },
+  zod:()=>{ fold(); try{ KRAIL.goTo('zodDock'); }catch(_){ } },
+  me:()=>{ fold(); try{ KPROFILE.open(); }catch(_){ try{ KRAIL.goTo('kProfile'); }catch(_){ } } },
+  help:()=>{ fold(); try{ KAI.open(); }catch(_){ press('#askBtn'); } },
+  tour:()=>{ fold(); press('#kHomeBar [data-ka="tour"]')||press('#ttTour'); },
+  auto:()=>{ press('#cAuto'); say('🎲 A new beat is written. Tap ▶ Play.'); },
+  play:()=>{ try{ KSTUDIO.play(); }catch(_){ press('#bbPlay'); } },
+  stop:()=>{ try{ KREMOTE.act.stop(); }catch(_){ press('#bbStop'); } },
+  style:()=>{ const s=$('padKit'); if(!s||!s.options.length) return say('Open the Studio first.'); s.selectedIndex=(s.selectedIndex+1)%s.options.length; s.dispatchEvent(new Event('change',{bubbles:true})); say('🎨 Style: '+s.options[s.selectedIndex].text+'. Tap ▶ Play to hear it.'); },
+  undo:()=>KUNDO.any(),
+  save:()=>{ try{ KREMOTE.act.save(); }catch(_){ press('#padSave'); } },
+  how:()=>say('Tap a colored pad to hear it. Tap 🎲 Make me a beat for a whole beat, then ▶ Play. ↶ Undo takes back your last move.')};
+ function panel(id,where,pos,title,sub,list){ let p=$(id); const host=typeof where==='function'?where():where; if(!host) return; if(p&&p.isConnected) return p;
+  p=document.createElement('div'); p.id=id; p.className='kEasy'; p.innerHTML='<h3>'+title+'</h3><p>'+sub+'</p><div class="ezGrid">'+list.map(x=>btn(x[0],x[1],x[2],x[3])).join('')+'</div>'+more;
+  host.insertAdjacentElement(pos,p); p.addEventListener('click',e=>{ const b=e.target.closest('[data-ez]'); if(!b) return; e.preventDefault(); e.stopPropagation(); const a=b.dataset.ez; if(a.startsWith('lv:')){ try{ KLEVEL.set(a.slice(3)); }catch(_){ } return; } const f=ACT[a]; if(f) f(); }); return p; }
+ /* what each level hides: on Easy the deep parts of home and the Studio step aside (nothing deleted) */
+ const HOME_DEEP=['master','contents','manual','monitors','control','s-rail','s-words','s-drive','shape','outputs','s-referee'];
+ const HOME_DEEP_CLS=['nav.stagenav','section.monitors','section.bay','section.deck','section.outbay'];
+ const PAD_DEEP=['bbBar','crSec','kTrans','mxBanks','kStudioHead','kIO','padMixer','kDjStrips','trBar','kLockBeat','cmpWrap','vocSec','kSeqTools'];
+ const EASY_MENU=/^(🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
+ const tagLv=e=>{ if(e&&e.dataset.lvl!=='avg'&&e.dataset.lvl!=='pro') e.dataset.lvl='avg'; };
+ let easyPadFor='';
+ function tag(){ HOME_DEEP.forEach(id=>tagLv($(id))); HOME_DEEP_CLS.forEach(s=>document.querySelectorAll('.wrap>'+s).forEach(tagLv)); PAD_DEEP.forEach(id=>tagLv($(id)));
+  const pad=$('pad'); if(pad){ pad.querySelectorAll('h4').forEach(h=>{ if(/^🎚 Mixer/.test(h.textContent.trim())){ tagLv(h); const n=h.nextElementSibling; if(n&&n.tagName==='P') tagLv(n); } }); pad.querySelectorAll(':scope div').forEach(d=>{ if(d.children.length&&d.children.length<12&&/^▶ Play loop/.test(d.textContent.trim())&&!d.querySelector('#bbBar')) tagLv(d); }); }
+  const t=$('tourTab'); if(t) t.querySelectorAll('.kStartB').forEach(b=>{ const on=EASY_MENU.test(b.textContent.trim()); if(on&&!b.hasAttribute('data-easy')) b.setAttribute('data-easy',''); });
+  panel('kEasyHome',()=>document.querySelector('.wrap>header.mast')||document.querySelector('.wrap>header'),'afterend','🟢 What do you want to do?','Tap one big button. That is all it takes.',HOME);
+  /* on Easy the 16 pads sit in the page under the giant buttons, not in a floating window over them */
+  const L=lv(), id=cur(); if(L==='easy'&&id==='pad'&&easyPadFor!==id+L){ easyPadFor=id+L; try{ if(KRAIL.FLOAT.isOpen('pads')) KRAIL.FLOAT.close('pads'); }catch(_){ } } if(id!=='pad'||L!=='easy') easyPadFor='';
+  panel('kEasyStudio',()=>$('bbBar'),'beforebegin','🟢 Easy Studio','Tap 🎲 Make me a beat, then ▶ Play. Or tap the colored pads below to play sounds yourself.',STU); }
+ setInterval(tag,1000); tag();
+ /* ── ONE UNDO ── every knob, slider, picker and switch remembers its last value; the screen's own undo covers its own edits */
+ const stack=[]; const lastAct={}; const OWN=new Set(['pad','kKara','kEasel','gamesDock','musicDock']); let restoring=false;
+ const valOf=e=>e.type==='checkbox'||e.type==='radio'?e.checked:e.value;
+ const isCtl=e=>e&&e.matches&&e.matches('input,select,textarea')&&!/^(file|password|button|submit|hidden)$/.test(e.type||'')&&!e.closest('#kAI,#gateWrap,.kSearch');
+ const nameOf=e=>{ const l=e.closest('label'); const t=(e.getAttribute('aria-label')||e.title||(l&&l.textContent)||e.name||e.id||'a setting').trim().replace(/\s+/g,' '); return t.slice(0,40); };
+ const snap=e=>{ if(isCtl(e)&&e.__kuOld===undefined) e.__kuOld=valOf(e); };
+ document.addEventListener('focusin',e=>snap(e.target),true); document.addEventListener('pointerdown',e=>{ const c=e.target.closest&&e.target.closest('input,select,textarea'); if(c) snap(c); const l=e.target.closest&&e.target.closest('label'); if(l){ const i=l.querySelector('input,select'); if(i) snap(i); } },true);
+ document.addEventListener('change',e=>{ const t=e.target; if(restoring||!isCtl(t)) return; const old=t.__kuOld; const now=valOf(t); t.__kuOld=now; if(old===undefined||old===now) return; stack.push({el:t,old,now,at:performance.now(),scr:cur(),name:nameOf(t)}); if(stack.length>200) stack.shift(); paintU(); },true);
+ const PINS='#kSeqTools,#kRemote,#rDock,#kXAll,#kUndoAll,#tourTab,.kEasy [data-ez="undo"],.kEasy [data-ez="save"],.kEasy [data-ez="play"],.kEasy [data-ez="stop"],.kEasy [data-ez="how"]';
+ const SAVES='[id$="Save"],[data-kk="save"],[data-pj="save"],[data-r="save"],[data-ez="save"]';
+ document.addEventListener('click',e=>{ const t=e.target; if(!t.closest) return; if(t.closest(SAVES)||/^💾/.test((t.closest('button')||{}).textContent||'')){ stack.length=0; Object.keys(lastAct).forEach(k=>delete lastAct[k]); setTimeout(paintU,50); return; } if(t.closest(PINS)) return; if(t.closest('button,canvas,.pd,[data-step]')) lastAct[cur()]=performance.now(); },true);
+ function undoOne(){ const g=stack.pop(); if(!g) return false; if(g.fn){ try{ g.fn(); }catch(_){ } say('↶ Undid: '+g.name+(stack.length?' · '+stack.length+' more to undo':'')); paintU(); return true; } if(g.el&&g.el.isConnected){ restoring=true; try{ if(g.el.type==='checkbox'||g.el.type==='radio') g.el.checked=g.old; else g.el.value=g.old; g.el.__kuOld=g.old; g.el.dispatchEvent(new Event('input',{bubbles:true})); g.el.dispatchEvent(new Event('change',{bubbles:true})); }catch(_){ } restoring=false; say('↶ Undid: '+g.name+(stack.length?' · '+stack.length+' more to undo':'')); } else return undoOne(); paintU(); return true; }
+ function any(){ const id=cur(); const g=stack.length?stack[stack.length-1]:null; const own=OWN.has(id);
+  if(g&&(!own||g.at>=(lastAct[id]||0))) return undoOne();
+  if(own){ try{ KREMOTE.undoScreen(); }catch(_){ } return true; }
+  say('Nothing to undo since your last save.'); return false; }
+ document.addEventListener('keydown',e=>{ if(!(e.ctrlKey||e.metaKey)||e.shiftKey||e.altKey||(e.key||'').toLowerCase()!=='z') return; const t=e.target; if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA)$/.test(t.tagName)&&!/^(range|checkbox|radio|color)$/.test(t.type||''))) return; if(document.body.classList.contains('gated')) return; e.preventDefault(); any(); },true);
+ /* the pinned ↶ Undo: beside ✕ Close at the top, on every screen where there is something to take back */
+ function paintU(){ let b=$('kUndoAll'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kUndoAll'; b.setAttribute('data-noul',''); b.setAttribute('aria-label','Undo the last move'); b.title='Undo the last move (Ctrl+Z)'; b.textContent='↶ Undo'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); any(); }); document.body.appendChild(b); }
+  const t=$('tourTab'); const menuOpen=t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40; const id=cur();
+  const narrow=innerWidth<600; const tx=narrow?'↶':'↶ Undo'; if(b.textContent!==tx) b.textContent=tx; const xc=$('kXAll'); if(xc){ const t2=narrow?'✕':'✕ Close'; if(xc.textContent!==t2) xc.textContent=t2; }
+  b.hidden=!!menuOpen||!(stack.length||OWN.has(id)); if(b.hidden) return; const x=$('kXAll'); const rw=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kRailW'))||58;
+  const off=(x&&!x.hidden&&x.getClientRects().length)?x.getBoundingClientRect().width+8:0; b.style.right=(rw+10+off)+'px'; }
+ setInterval(paintU,400);
+ window.KUNDO={push:(fn,name)=>{ stack.push({fn,name:name||'the last edit',at:performance.now(),scr:cur()}); if(stack.length>200) stack.shift(); paintU(); },any,undo:undoOne,get count(){ return stack.length; },saved:()=>{ stack.length=0; paintU(); }};
+ window.KEASY={act:ACT,tag};
+})();
+
+</script>
+<script>
+(()=>{ /* ✏️ SEQUENCER EDIT TOOLS (v209): the channel rack edits like a production program. Tools: ✏️ Draw (tap or drag to draw hits),
+   🧽 Erase (tap or drag to rub them out), 🔲 Select (drag a block of steps across rows), 🎚 Velocity (tap a hit to make it softer),
+   📌 Paste (tap where the copied block starts). On the block (or the whole bar when nothing is picked): ✂ Cut, 📋 Copy, ⧉ Duplicate,
+   🗑 Delete, ◀ ▶ Nudge, ⇄ Reverse, ▦ Select all. Every edit can be taken back with ↶ Undo, one move at a time, back to the last save.
+   Keys: Ctrl/⌘ + C, X, V, D, and Delete. MIDI keyboards and pads play into it through 🎚 Inputs. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const PS=()=>window.PADSTUDIO; const spb=()=>PS().spbN, total=()=>PS().spbN*PS().barsN; const pg=()=>{ try{ return CRACK.state.page||0; }catch(_){ return 0; } };
+ let open=false, tool='draw', sel=null, clip=null, drag=null, eatClick=false;
+ const TOOLS=[['draw','✏️','Draw','Tap or drag across the steps to draw hits.'],['erase','🧽','Erase','Tap or drag across the steps to rub hits out.'],['select','🔲','Select','Drag from one step to another to pick a block, across as many rows as you like.'],['vel','🎚','Velocity','Tap a hit to make it softer: full, ¾, ½, ¼, then full again.'],['paste','📌','Paste','Tap the step where the copied block should start.']];
+ const ACTS=[['cut','✂','Cut'],['copy','📋','Copy'],['dup','⧉','Duplicate'],['del','🗑','Delete'],['left','◀','Nudge'],['right','▶','Nudge'],['rev','⇄','Reverse'],['all','▦','Select all'],['none','⬚','Unselect'],['undo','↶','Undo'],['how','❓','How']];
+ const css=document.createElement('style'); css.textContent=`
+#kSeqTools{margin:6px 0;padding:6px 8px;border:1px dashed rgba(255,233,74,.65);border-radius:12px;background:rgba(22,18,64,.75);color:#fff}
+#kSeqTools .stHead{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#kSeqTools .stHead>b{font:800 clamp(12px,1vw,18px) system-ui,sans-serif;color:#ffe94a;letter-spacing:.04em}
+#kSeqTools button{min-height:40px;border-radius:10px;padding:4px 10px!important;font:700 clamp(12.5px,.95vw,19px)/1.2 system-ui,sans-serif;white-space:normal;max-width:100%}
+#kSeqTools button.on{background:#ffe94a!important;color:#14163a!important}
+#kSeqTools .stRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#kSeqTools .stInfo{font:600 clamp(12.5px,.95vw,18px)/1.45 system-ui,sans-serif;color:#d6d0ff;margin-top:6px;overflow-wrap:anywhere}
+#kSeqTools:not(.open) .stRow,#kSeqTools:not(.open) .stInfo{display:none}
+#crSec.kTools .crSteps{touch-action:none}
+#crSec.kTools[data-tool="erase"] .crS,#crSec.kTools[data-tool="paste"] .crS{cursor:crosshair}
+#crSec.kTools[data-tool="select"] .crS{cursor:cell}
+#crRows .crS.kSel{outline:2px solid #ffe94a;outline-offset:-2px;box-shadow:inset 0 0 0 99px rgba(255,233,74,.28)}`; document.head.appendChild(css);
+ const rowsShown=()=>[...document.querySelectorAll('#crRows .crRow')].map(r=>+r.dataset.i);
+ const at=(x,y)=>{ const e=document.elementFromPoint(x,y); const b=e&&e.closest&&e.closest('#crRows .crS'); if(!b) return null; const r=b.closest('.crRow'); return {b,i:+r.dataset.i,s:pg()*spb()+ +b.dataset.s}; };
+ const snap=()=>PS().pads.map(p=>Array.from(p.steps));
+ function remember(name){ const S=snap(); try{ KUNDO.push(()=>{ PS().pads.forEach((p,i)=>{ if(S[i]) p.steps=S[i].slice(); }); redraw(); },name); }catch(_){ } }
+ function redraw(){ try{ CRACK.render(); }catch(_){ } try{ PS().refresh(); }catch(_){ } mark(); info(); }
+ const block=()=>{ if(sel) return sel; const n=spb(), o=pg()*n; return {rows:rowsShown(),a:o,b:o+n-1,whole:true}; };
+ function grow(to){ let g=0; while(to>total()&&PS().barsN<16&&g<5){ try{ PS().setBars(PS().barsN*2); }catch(_){ break; } g++; } }
+ const ACT={
+  copy:(q)=>{ const B=block(); clip={len:B.b-B.a+1,rows:B.rows.map(i=>({i,v:Array.from(PS().pads[i].steps.slice(B.a,B.b+1))}))}; if(!q) say('📋 Copied '+clip.len+' steps on '+clip.rows.length+' rows. Pick 📌 Paste and tap where it goes.'); },
+  cut:()=>{ ACT.copy(true); remember('Cut'); const B=block(); B.rows.forEach(i=>{ for(let s=B.a;s<=B.b;s++) PS().pads[i].steps[s]=0; }); redraw(); say('✂ Cut. Pick 📌 Paste and tap where it goes.'); },
+  del:()=>{ remember('Delete'); const B=block(); B.rows.forEach(i=>{ for(let s=B.a;s<=B.b;s++) PS().pads[i].steps[s]=0; }); redraw(); say('🗑 Deleted.'); },
+  dup:()=>{ const B=block(); const len=B.b-B.a+1; remember('Duplicate'); grow(B.b+1+len); B.rows.forEach(i=>{ const st=PS().pads[i].steps; for(let k=0;k<len;k++){ const t=B.b+1+k; if(t<total()) st[t]=st[B.a+k]; } }); if(sel) sel={rows:B.rows,a:B.b+1,b:Math.min(total()-1,B.b+len)}; redraw(); say('⧉ Duplicated right after itself.'+(B.b+1>=pg()*spb()+spb()?' Turn the page to see it.':'')); },
+  left:()=>rot(-1), right:()=>rot(1),
+  rev:()=>{ const B=block(); remember('Reverse'); B.rows.forEach(i=>{ const st=PS().pads[i].steps; const seg=Array.from(st.slice(B.a,B.b+1)).reverse(); seg.forEach((v,k)=>st[B.a+k]=v); }); redraw(); say('⇄ Reversed.'); },
+  all:()=>{ sel={rows:rowsShown(),a:0,b:total()-1}; mark(); info(); say('▦ Everything is picked.'); },
+  none:()=>{ sel=null; mark(); info(); },
+  undo:()=>{ try{ KUNDO.any(); }catch(_){ } },
+  how:()=>say('Pick a tool, then use it on the steps. 🔲 Select a block, then ✂ Cut, 📋 Copy, ⧉ Duplicate, 🗑 Delete, ◀ ▶ Nudge or ⇄ Reverse it. 📌 Paste puts the copy where you tap. ↶ Undo takes back the last move.')};
+ function rot(d){ const B=block(); remember(d<0?'Nudge left':'Nudge right'); B.rows.forEach(i=>{ const st=PS().pads[i].steps; const seg=Array.from(st.slice(B.a,B.b+1)); const n=seg.length; seg.forEach((v,k)=>st[B.a+((k+d)%n+n)%n]=v); }); redraw(); }
+ function paste(i0,s0){ if(!clip) return say('Copy or cut a block first.'); remember('Paste'); grow(s0+clip.len); clip.rows.forEach(r=>{ const st=PS().pads[r.i].steps; r.v.forEach((v,k)=>{ const t=s0+k; if(t<total()) st[t]=v; }); }); sel={rows:clip.rows.map(r=>r.i),a:s0,b:Math.min(total()-1,s0+clip.len-1)}; redraw(); say('📌 Pasted.'); }
+ function mark(){ document.querySelectorAll('#crRows .crS').forEach(b=>{ let on=false; if(sel){ const r=b.closest('.crRow'); const i=+r.dataset.i, s=pg()*spb()+ +b.dataset.s; on=sel.rows.includes(i)&&s>=sel.a&&s<=sel.b; } if(b.classList.contains('kSel')!==on) b.classList.toggle('kSel',on); }); }
+ function info(){ const e=document.querySelector('#kSeqTools .stInfo'); if(!e) return; const T=TOOLS.find(t=>t[0]===tool); e.textContent='Tool: '+T[1]+' '+T[2]+' · '+T[3]+' · Picked: '+(sel?(sel.b-sel.a+1)+' steps on '+sel.rows.length+' rows':'nothing (actions use this bar)')+' · Copied: '+(clip?clip.len+' steps':'nothing'); }
+ function paint(){ const box=$('kSeqTools'); if(!box) return; box.classList.toggle('open',open); const sec=$('crSec'); if(sec){ sec.classList.toggle('kTools',open); sec.dataset.tool=tool; }
+  box.querySelectorAll('[data-st]').forEach(b=>b.classList.toggle('on',b.dataset.st===tool)); const h=box.querySelector('[data-sx="open"]'); if(h){ h.classList.toggle('on',open); h.setAttribute('aria-expanded',open); } info(); }
+ /* the floating 16 pads shrink to their title bar while editing, so every step can be reached; 🥁 Pads brings them back */
+ function clearView(){ try{ if(KRAIL.FLOAT.isOpen('pads')){ const f=document.querySelector('.pmain.kFOn:not(.kMin) > .kFHead [data-fh="min"]'); if(f){ f.click(); say('🥁 The pads shrank so you can reach every step. Tap 🥁 Pads to bring them back.'); } } }catch(_){ } }
+ function build(){ const rows=$('crRows'); if(!rows||$('kSeqTools')) return; const box=document.createElement('div'); box.id='kSeqTools';
+  box.innerHTML='<div class="stHead"><button type="button" data-sx="open" data-noul aria-expanded="false" title="Open the editing tools">✏️ Edit tools</button><b>Draw · Erase · Select · Cut · Copy · Paste · Undo</b></div>'
+   +'<div class="stRow" role="radiogroup" aria-label="Editing tool">'+TOOLS.map(t=>'<button type="button" data-st="'+t[0]+'" title="'+t[3]+'" data-noul>'+t[1]+' '+t[2]+'</button>').join('')+'</div>'
+   +'<div class="stRow">'+ACTS.map(a=>'<button type="button" data-sa="'+a[0]+'" title="'+a[2]+'" data-noul>'+a[1]+' '+a[2]+'</button>').join('')+'</div><div class="stInfo" aria-live="polite"></div>';
+  rows.insertAdjacentElement('beforebegin',box);
+  box.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; e.stopPropagation(); if(b.dataset.sx==='open'){ open=!open; if(!open){ tool='draw'; } else clearView(); paint(); return; } if(b.dataset.st){ tool=b.dataset.st; if(!open) clearView(); open=true; paint(); say(TOOLS.find(t=>t[0]===tool).slice(1).join(' ')); return; } const f=ACT[b.dataset.sa]; if(f) f(); });
+  paint(); }
+ /* the gestures on the steps */
+ document.addEventListener('pointerdown',e=>{ const h=e.target.closest&&e.target.closest('#crRows .crS'); if(!h||!open) return; const p=at(e.clientX,e.clientY); if(!p) return;
+  if(tool==='draw'||tool==='erase'){ e.preventDefault(); const st=PS().pads[p.i].steps; const val=tool==='erase'?0:(st[p.s]?0:1); drag={kind:'paint',val,before:snap(),hit:false}; st[p.s]=val; drag.hit=true; if(val&&!PS().playing) try{ PS().hitPad(p.i); }catch(_){ } p.b.classList.toggle('on',!!val); eatClick=true; }
+  else if(tool==='select'){ e.preventDefault(); drag={kind:'sel',a:p}; sel={rows:[p.i],a:p.s,b:p.s}; mark(); eatClick=true; } },true);
+ document.addEventListener('pointermove',e=>{ if(!drag) return; const p=at(e.clientX,e.clientY); if(!p) return;
+  if(drag.kind==='paint'){ const st=PS().pads[p.i].steps; if((st[p.s]?1:0)!==drag.val){ st[p.s]=drag.val; p.b.classList.toggle('on',!!drag.val); } }
+  else { const R=rowsShown(); const ia=R.indexOf(drag.a.i), ib=R.indexOf(p.i); const r0=Math.min(ia,ib), r1=Math.max(ia,ib); sel={rows:R.slice(r0,r1+1),a:Math.min(drag.a.s,p.s),b:Math.max(drag.a.s,p.s)}; mark(); } },true);
+ const up=()=>{ if(!drag) return; const d=drag; drag=null; setTimeout(()=>{ eatClick=false; },0); if(d.kind==='paint'){ const S=d.before; try{ KUNDO.push(()=>{ PS().pads.forEach((p,i)=>{ if(S[i]) p.steps=S[i].slice(); }); redraw(); },tool==='erase'?'Erase':'Draw'); }catch(_){ } redraw(); } else { info(); } };
+ document.addEventListener('pointerup',up,true); document.addEventListener('pointercancel',up,true);
+ document.addEventListener('click',e=>{ const h=e.target.closest&&e.target.closest('#crRows .crS'); if(!h) return;
+  if(eatClick){ eatClick=false; e.stopPropagation(); e.preventDefault(); return; }
+  if(!open||tool==='draw'){ remember('Step'); return; } /* the rack's own tap toggles the step; it can be undone */
+  e.stopPropagation(); e.preventDefault(); const p=at(e.clientX,e.clientY)||(()=>{ const r=h.closest('.crRow'); return {i:+r.dataset.i,s:pg()*spb()+ +h.dataset.s}; })();
+  if(tool==='erase'){ remember('Erase'); PS().pads[p.i].steps[p.s]=0; redraw(); }
+  else if(tool==='vel'){ remember('Velocity'); const st=PS().pads[p.i].steps; const v=st[p.s]||0; const n=!v?1:v>.8?.75:v>.6?.5:v>.3?.25:1; st[p.s]=n; redraw(); say('🎚 '+Math.round(n*100)+'%'); }
+  else if(tool==='paste') paste(p.i,p.s); },true);
+ document.addEventListener('keydown',e=>{ if(!$('kSeqTools')) return; let id='home'; try{ id=KRAIL.cur(); }catch(_){ } if(id!=='pad') return; const t=e.target; if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+  const k=(e.key||'').toLowerCase(); const mod=e.ctrlKey||e.metaKey; let f=null;
+  if(mod&&k==='c') f=()=>ACT.copy(); else if(mod&&k==='x') f=ACT.cut; else if(mod&&k==='d') f=ACT.dup; else if(mod&&k==='v') f=()=>paste(0,sel?sel.a:pg()*spb()); else if(!mod&&(k==='delete'||k==='backspace')&&sel) f=ACT.del;
+  if(f){ e.preventDefault(); e.stopPropagation(); f(); } },true);
+ setInterval(()=>{ build(); if(sel||document.querySelector('#crRows .crS.kSel')) mark(); },300);
+ window.KSEQTOOLS={act:ACT,get tool(){ return tool; },setTool:t=>{ tool=t; open=true; paint(); },open:()=>{ open=true; paint(); },get sel(){ return sel; },get clip(){ return clip; }};
 })();
 
 </script>
