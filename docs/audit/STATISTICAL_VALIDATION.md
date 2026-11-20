@@ -4,7 +4,7 @@
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
-Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `26060ee48ab03ea7`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v27. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
+Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.json` (its digest `5d99e48e9e31d411`), which `tools/verdict_audit.py` writes from every three-run table's stored native, Omni-Compass and difference. The engine that stands: omni-v27. Every row is in `docs/audit/BENCHMARK_DISCREPANCIES.csv`, one line per gauge, with each run's native and Omni-Compass values, the raw change with its true sign, the key's word, its class, the confidence, the practical significance and the run-to-run stability, apart from one another.
 
 ## The rule
 
@@ -17,7 +17,7 @@ Written by `tools/audit_export.py` from `results/verdict_audit/VERDICT_AUDIT.jso
 
 ## The independent check
 
-Every one of the 17,806 rows was classed twice: as the key wrote it, and by `independent()` in `tools/audit_export.py`, written from the rule above with no code shared with `tools/readings.py` and each run's difference recomputed as Omni-Compass minus native from the stored values. **16,609 agree; 0 differ**; 1,197 cannot be recomputed from the committed record, for the reasons counted here (none of them is changed by this report: a table's words stay as its runner printed them).
+Every one of the 18,101 rows was classed twice: as the key wrote it, and by `independent()` in `tools/audit_export.py`, written from the rule above with no code shared with `tools/readings.py` and each run's difference recomputed as Omni-Compass minus native from the stored values. **16,904 agree; 0 differ**; 1,197 cannot be recomputed from the committed record, for the reasons counted here (none of them is changed by this report: a table's words stay as its runner printed them).
 
 | Why a row cannot be recomputed | the road | superseded | standing | taken out |
 |---|---:|---:|---:|---:|
@@ -33,19 +33,20 @@ Each benchmark's newest table on its own engine. A table on an older engine stan
 
 | Engine | GAIN | LOSS | POWER GIVEN | STEADY (EXACT) | BELOW PRACTICAL THRESHOLD | STATISTICALLY INCONCLUSIVE | RUNS DISAGREE | RUNS DIFFER IN RIG | INVALID OR MISSING | SHOWN, NEVER JUDGED | TUNING, NEVER COUNTED |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| omni-v26 | 452 | 231 | 193 | 325 | 202 | 0 | 184 | 32 | 0 | 596 | 201 |
+| omni-v27 | 50 | 31 | 14 | 27 | 23 | 0 | 18 | 0 | 0 | 81 | 0 |
+| omni-v26 | 408 | 198 | 176 | 297 | 179 | 0 | 166 | 32 | 0 | 515 | 201 |
 | omni-v25 | 27 | 55 | 12 | 20 | 10 | 0 | 7 | 0 | 0 | 54 | 0 |
 | omni-v12 | 13 | 6 | 0 | 7 | 3 | 0 | 15 | 0 | 0 | 18 | 0 |
-| **all** | **492** | **292** | **205** | **352** | **215** | **0** | **206** | **32** | **0** | **668** | **201** |
+| **all** | **498** | **290** | **202** | **351** | **215** | **0** | **206** | **32** | **0** | **668** | **201** |
 
 ## Confidence of the GAIN, LOSS and power given rows (standing, against native)
 
 | Confidence | Rows |
 |---|---:|
-| strong | 387 |
-| statistically inconclusive | 247 |
-| moderate | 129 |
-| weak | 119 |
+| strong | 381 |
+| statistically inconclusive | 251 |
+| moderate | 127 |
+| weak | 124 |
 | deterministic, reproduced in all three runs | 104 |
 | not recorded (a table that printed its changes only) | 3 |
 
@@ -53,7 +54,7 @@ Each benchmark's newest table on its own engine. A table on an older engine stan
 
 | The runs | Rows |
 |---|---:|
-| moved one direction (0.5% or more) | 951 |
+| moved one direction (0.5% or more) | 952 |
 | moved in opposite directions (0.5% or more) | 201 |
 
 The rows that disagree are not resolved by this report: each is a test unstable at that gauge, to be looked into (workload instability, the shared runner, baseline drift or too few repetitions) and run again; a disagreement is never counted as a GAIN or a LOSS.

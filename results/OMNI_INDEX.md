@@ -10,7 +10,7 @@ Every measure of every test is a ratio oriented so that above 1 is a GAIN agains
 
 The reading declared on 4 October, every measure scored, the modelled energy included: **20.5%, GAIN**, printed beside the headline so nothing moves out of sight; its energy is a model's estimate, never a meter's.
 
-A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`): GAIN, LOSS or power given in all three of our runs counts, as the geometric mean of the runs' ratios; STEADY (no difference beyond the noise) counts as exactly 1, so nothing inside the noise is claimed either way. Every test is read on one engine, the newest with every test's three-run table whole: 14 on omni-v26; an index never mixes engines, so a newer engine's tables join it together once its last test's table lands; no table is pooled across engines, and every row below names its table. Real Kubernetes, the real database, real messaging, the real cache, the real database's storage-engine cache and the real database's buffer pool are the real categories in; the steady and wandering Kubernetes tests join when their omni-v27 runs land, Azure and the card as their three-run tables land. A category's tuning workload is shown in its own table and never counted. Where native sat at its knee by design (nine tenths of its measured capacity), a queue that Omni keeps short makes the speed ratio large: that is what the test measures, and the resource it takes stands beside it. Each table names the engine it ran on.
+A measure enters only as its three-run reading allows (`docs/OMNI_V1.md`): GAIN, LOSS or power given in all three of our runs counts, as the geometric mean of the runs' ratios; STEADY (no difference beyond the noise) counts as exactly 1, so nothing inside the noise is claimed either way. Every test is read on one engine, the newest with every test's three-run table whole: 14 on omni-v26; an index never mixes engines, so a newer engine's tables join it together once its last test's table lands (omni-v27's tables so far stand in their own rows, the benefit sheet's, under their own engine); no table is pooled across engines, and every row below names its table. Real Kubernetes, the real database, real messaging, the real cache, the real database's storage-engine cache and the real database's buffer pool are the real categories in; the steady and wandering Kubernetes tests join when their omni-v27 runs land, Azure and the card as their three-run tables land. A category's tuning workload is shown in its own table and never counted. Where native sat at its knee by design (nine tenths of its measured capacity), a queue that Omni keeps short makes the speed ratio large: that is what the test measures, and the resource it takes stands beside it. Each table names the engine it ran on.
 
 | Category | Index (work, speed, machines) | Service reading (work and speed only) | More work by | Faster by (native p95 / omni p95) | Fewer machines by | Less energy by (shown, not scored where no meter read it) | Tests |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -60,6 +60,20 @@ Read: every column points the same way: a plus is a GAIN against the system's de
 | Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `read_only`: the buffer pool's size, three paired repetitions, three runs | **14.9% power given** | 3.4% GAIN | the runs disagree (counted as 1) | 7.0% GAIN | 50.9% power given | 2.9% GAIN | `results/live/V26_SYSBENCH.json` |
 | Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `read_write`: the buffer pool's size, three paired repetitions, three runs | **8.2% power given** | 21.3% GAIN | 1.5% GAIN | 45.1% GAIN | 51.8% power given | 6.8% GAIN | `results/live/V26_SYSBENCH.json` |
 | Real database buffer pool (MySQL under sysbench, GitHub) | sysbench `update_index`: the buffer pool's size, three paired repetitions, three runs | **16.7% power given** | 7.4% GAIN | 15.3% GAIN | the runs disagree (counted as 1) | 58.3% power given | 3.8% GAIN | `results/live/V26_SYSBENCH.json` |
+
+## On a newer engine, outside the index until every test lands
+
+Each test below has its three-run table on a newer engine than the index's; it is scored by the same rule and shown under its own engine, and joins the index with the rest of its engine's tables, never alone.
+
+| Category | Test | Score by the index's rule | Service reading | Source |
+|---|---|---:|---:|---|
+| Real Kubernetes (GitHub) | Steady same work: the load in steps at a fixed rate, ten pairs, three runs | 30.8% GAIN | 71.1% GAIN | `results/live/V27_STEADY.json` |
+| Real Kubernetes (GitHub) | Demand that wanders: up and down one step at a time, ten pairs, three runs | 26.5% GAIN | 102.3% GAIN | `results/live/V27_WANDERING.json` |
+| Real Kubernetes (GitHub) | All four in one run: load up and down one step at a time, ten pairs, three runs | 30.1% GAIN | 69.2% GAIN | `results/live/V27_ALL_FOUR.json` |
+| Real Kubernetes (GitHub) | Fairness: a noisy neighbour, ten pairs, three runs | 2.7% LOSS | 7.8% LOSS | `results/live/V27_FAIRNESS.json` |
+| Real Kubernetes (GitHub) | Faults: machine down, spike, runaway pod, blind probe, ten pairs, three runs | 27.2% GAIN | 106.0% GAIN | `results/live/V27_FAULTS.json` |
+| Real Kubernetes (GitHub) | A queue of jobs: cruise, then the emergency brake, ten pairs, three runs | 9.2% GAIN | 7.4% GAIN | `results/live/V27_BATCH.json` |
+| Real Kubernetes (GitHub) | A public day of demand: the Google cluster trace of 2011 replayed one step at a time, ten pairs, three runs | 36.1% GAIN | 152.3% GAIN | `results/live/V27_TRACE_GOOGLE2011.json` |
 
 ---
 

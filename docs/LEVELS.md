@@ -14,7 +14,7 @@ The founder's order of 17 October: Omni-Compass is shown on top at every level, 
 |---|---|---|---:|---:|---:|---:|---:|---|
 | The muscle, alone (1,107 muscles, each on its own native controller, under its own load) | omni-v8 | S (our model) | 530 | 577 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
 | The organism, the stack: the seven organisms under three loads (own load, the climb, work waiting in line) | omni-v8 | S (our model) | 21 | 0 | 0 | 0 | 0 | no: every judged gauge GAIN or STEADY |
-| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v26 | L | 36 | 41 | 14 | 19 | 19 | **yes: 38, listed below** |
+| The cluster: real Kubernetes, native its own HPA and scheduler | omni-v26, omni-v27 | L | 40 | 39 | 13 | 22 | 15 | **yes: 37, listed below** |
 | The cluster with its add-ons native: KEDA, Goldilocks, CruiseKube | omni-v26 | L | 18 | 20 | 11 | 8 | 7 | **yes: 15, listed below** |
 | A muscle inside a running service: database, broker, cache | omni-v26 | L | 170 | 81 | 83 | 6 | 32 | **yes: 38, listed below** |
 | A physical plant in an independent simulator: buildings, power grids, robot arms, drone swarms | omni-v26 | independent simulator | 101 | 164 | 10 | 0 | 0 | no LOSS; resources put in shown as power given |
@@ -38,42 +38,41 @@ Tables: `results/realms_v5/REALMS_V5.md`.
 
 ### The cluster: real Kubernetes, native its own HPA and scheduler
 
-Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v26. Evidence: L.
-Tables: `results/live/V26_ALL_FOUR.md`, `results/live/V26_BATCH.md`, `results/live/V26_CAPACITY.md`, `results/live/V26_FAIRNESS.md`, `results/live/V26_FAULTS.md`, `results/live/V26_TRACE_GOOGLE2011.md`, `results/live/V26_ROBUST_KILL.md`, `results/live/V26_ROBUST_LONG.md`.
+Native at this level: Kubernetes as shipped with the operator's HPA target. Engine: omni-v26, omni-v27. Evidence: L.
+Tables: `results/live/V27_ALL_FOUR.md`, `results/live/V27_BATCH.md`, `results/live/V26_CAPACITY.md`, `results/live/V27_FAIRNESS.md`, `results/live/V27_FAULTS.md`, `results/live/V27_TRACE_GOOGLE2011.md`, `results/live/V26_ROBUST_KILL.md`, `results/live/V26_ROBUST_LONG.md`.
 
 Goes the other way:
 
-- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
-- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
-- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
-- V26_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): time over the response line (% of samples) (the runs disagree)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (LOSS)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (LOSS)
-- V26_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v26): batch: queue finished (s) (LOSS)
+- V27_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v27): failed requests (%) (the runs disagree)
+- V27_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v27): pod start wait, total (s) (LOSS)
+- V27_ALL_FOUR.md: All four in one run: more work, faster, fewer machines, less energy (load rising 1 to 8 and back): the A/B/C three-run table (Omni v27): pod start wait, mean (s) (LOSS)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): response time (ms), 95th percentile (LOSS)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): response time (ms), 99th percentile (LOSS)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): time over the response line (% of samples) (the runs disagree)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): failed requests (%) (LOSS)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (LOSS)
+- V27_BATCH.md: Batch queue: 240 CPU jobs and cruise: the A/B/C three-run table (Omni v27): batch: queue finished (s) (LOSS)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1 (the runs disagree)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1.5 (LOSS)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 1.5 (LOSS)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 2 (LOSS)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 2 (the runs disagree)
 - V26_CAPACITY.md: The capacity test, native and Omni-Compass on top at the same resource cap: the A/B/C three-run table (Omni v26): 3 (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): response time (ms), 95th percentile (LOSS)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): time over the response line (% of samples) (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: response time (ms), 95th percentile (LOSS)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: response time (ms), 99th percentile (the runs disagree)
-- V26_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v26): second app: failed requests (%) (LOSS)
-- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): failed requests (%) (the runs disagree)
-- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
-- V26_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
-- V26_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
-- V26_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): response time (ms), mean (the runs disagree)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): response time (ms), 95th percentile (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): response time (ms), 99th percentile (the runs disagree)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): time over the response line (% of samples) (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) (the runs disagree)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): pod start wait, total (s) (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): pod start wait, mean (s) (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): second app: response time (ms), 95th percentile (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): second app: response time (ms), 99th percentile (the runs disagree)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): second app: time over the response line (% of samples) (LOSS)
+- V27_FAIRNESS.md: Fairness: a noisy neighbour on the same workers: the A/B/C three-run table (Omni v27): second app: failed requests (%) (LOSS)
+- V27_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v27): pod start wait, total (s) (the runs disagree)
+- V27_FAULTS.md: Faults: a machine down, a spike, a runaway pod, a blind probe: the A/B/C three-run table (Omni v27): pod start wait, mean (s) (the runs disagree)
+- V27_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v27): pod start wait, total (s) (LOSS)
+- V27_TRACE_GOOGLE2011.md: A public day of demand: the Google cluster trace of 2011 replayed one step at a time (2 3 3 3 3 4 4 3 2 2 2 2 2 3 2 3 4 4 3 4 5 6 5 4): the A/B/C three-run table (Omni v27): pod start wait, mean (s) (the runs disagree)
 - V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): response time (ms), 99th percentile (the runs disagree)
 - V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): pod start wait, total (s) (LOSS)
 - V26_ROBUST_KILL.md: Robustness: the governor killed outright mid-run (the lease), real Kubernetes, 10 pairs: the A/B/C three-run table (Omni v26): pod start wait, mean (s) (the runs disagree)

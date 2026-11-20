@@ -4,7 +4,7 @@
 
 Every benchmark's newest three-run table, the engine files its runner imports (followed import by import through the fingerprint), and whether any of them has moved since the table's own engine. A result **carries** when every one of those files has the same bytes on its engine and on omni-v27: the engine that stands runs exactly the code the table measured, and the benchmark need not run again for the version number alone. A result **runs again** when one moved; the files that moved are named. A carried record stays its own engine's, under its own engine's name. Written by `python3 tools/carry.py` from the fingerprints (`OMNI_V<n>.json`) and the tables; `verify.py` fails a push where it differs (the founder's order of 7 November, evening).
 
-On omni-v27: 0 on the engine that stands, 18 carry, 100 run again.
+On omni-v27: 11 on the engine that stands, 18 carry, 89 run again.
 
 | Benchmark | Its newest table | Its engine | The runner | Engine files it runs | Moved since its engine | On omni-v27 |
 |---|---|---|---|---:|---|---|
@@ -21,13 +21,13 @@ On omni-v27: 0 on the engine that stands, 18 carry, 100 run again.
 | AKS_FULL_BURST | `results/live/V26_AKS_FULL_BURST.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | AKS_STEADY | `results/live/V1_AKS_STEADY.json` | omni-v1 | `omni_controller/controller.py` | 16 | `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/compass_law.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/nervous_system.py`, `omnicompass/verdict.py` | **runs again** |
 | AKS_WORK_METER | `results/live/V26_AKS_WORK_METER.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| ALL_FOUR | `results/live/V26_ALL_FOUR.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| ALL_FOUR | `results/live/V27_ALL_FOUR.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | ARMADA_4W_BARE | `results/live/V25_ARMADA_4W_BARE.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | ARMADA_4W_BOTH | `results/live/V25_ARMADA_4W_BOTH.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | ARMADA_4W_ORCH | `results/live/V25_ARMADA_4W_ORCH.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | ARMADA_4W_TOP | `results/live/V25_ARMADA_4W_TOP.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | ARMADA_4W_VS | `results/live/V25_ARMADA_4W_VS.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| BATCH | `results/live/V26_BATCH.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| BATCH | `results/live/V27_BATCH.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | BIG_ORGANISM | `results/live/V3_BIG_ORGANISM.json` | omni-v3 | `omni_controller/controller.py` | 16 | `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/compass_law.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/nervous_system.py`, `omnicompass/verdict.py` | **runs again** |
 | BINPACK | `results/live/V26_BINPACK.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | BINPACK_4W_BARE | `results/live/V26_BINPACK_4W_BARE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
@@ -45,8 +45,8 @@ On omni-v27: 0 on the engine that stands, 18 carry, 100 run again.
 | CRANE_4W_VS | `results/live/V26_CRANE_4W_VS.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | CRUISEKUBE | `results/live/V26_CRUISEKUBE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | CRUISEKUBE_RECORDER | `results/live/V26_CRUISEKUBE_RECORDER.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| FAIRNESS | `results/live/V26_FAIRNESS.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| FAULTS | `results/live/V26_FAULTS.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| FAIRNESS | `results/live/V27_FAIRNESS.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
+| FAULTS | `results/live/V27_FAULTS.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | FAULTS_EXTENDED | `results/live/V26_FAULTS_EXTENDED.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | GODEL_4W_BARE | `results/live/V26_GODEL_4W_BARE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | GODEL_4W_BOTH | `results/live/V26_GODEL_4W_BOTH.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
@@ -81,7 +81,7 @@ On omni-v27: 0 on the engine that stands, 18 carry, 100 run again.
 | KUBERAY_4W_ORCH | `results/live/V26_KUBERAY_4W_ORCH.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | KUBERAY_4W_TOP | `results/live/V26_KUBERAY_4W_TOP.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | KUBERAY_4W_VS | `results/live/V26_KUBERAY_4W_VS.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| KUEUE | `results/live/V26_KUEUE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| KUEUE | `results/live/V27_KUEUE.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | KUEUE_4W_BARE | `results/live/V26_KUEUE_4W_BARE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | KUEUE_4W_BOTH | `results/live/V26_KUEUE_4W_BOTH.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | KUEUE_4W_ORCH | `results/live/V26_KUEUE_4W_ORCH.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
@@ -104,24 +104,24 @@ On omni-v27: 0 on the engine that stands, 18 carry, 100 run again.
 | ROBUST_KILL | `results/live/V26_ROBUST_KILL.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | ROBUST_LONG | `results/live/V26_ROBUST_LONG.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | SIX_KUBE | `results/live/V3_SIX_KUBE.json` | omni-v3 | `omni_controller/controller.py` | 16 | `omni_controller/capacity.py`, `omni_controller/controller.py`, `omni_controller/muscles.py`, `omni_controller/quota.py`, `omnicompass/__init__.py`, `omnicompass/adapter.py`, `omnicompass/compass_law.py`, `omnicompass/edge.py`, `omnicompass/immune.py`, `omnicompass/master.py`, `omnicompass/nervous_system.py`, `omnicompass/verdict.py` | **runs again** |
-| SOLO | `results/live/V26_SOLO.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| SOLO | `results/live/V27_SOLO.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | SOLO_2 | `results/live/V26_SOLO_2.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | SOLO_2_VS_ON_NATIVE | `results/live/V26_SOLO_2_VS_ON_NATIVE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| SOLO_VS_ON_NATIVE | `results/live/V26_SOLO_VS_ON_NATIVE.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| STEADY | `results/live/V26_STEADY.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| SOLO_VS_ON_NATIVE | `results/live/V27_SOLO_VS_ON_NATIVE.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
+| STEADY | `results/live/V27_STEADY.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | SWARM | `results/live/V26_SWARM.md` | omni-v26 | `tools/run_swarm.py` | 2 | none | **carries** |
 | SYSBENCH | `results/live/V26_SYSBENCH.json` | omni-v26 | `tools/run_sysbench.py` | 7 | none | **carries** |
 | SYSBENCH_SERVICE | `results/live/V26_SYSBENCH_SERVICE.json` | omni-v26 | `tools/run_sysbench.py` | 7 | none | **carries** |
 | SYSBENCH_SHIPPED | `results/live/V26_SYSBENCH_SHIPPED.json` | omni-v26 | `tools/run_sysbench.py` | 7 | none | **carries** |
-| TRACE_GOOGLE2011 | `results/live/V26_TRACE_GOOGLE2011.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| TRACE_GOOGLE2011 | `results/live/V27_TRACE_GOOGLE2011.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | VANILLA | `results/live/V26_VANILLA.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| VOLCANO | `results/live/V26_VOLCANO.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| VOLCANO | `results/live/V27_VOLCANO.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | VOLCANO_4W_BARE | `results/live/V25_VOLCANO_4W_BARE.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | VOLCANO_4W_BOTH | `results/live/V25_VOLCANO_4W_BOTH.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | VOLCANO_4W_ORCH | `results/live/V25_VOLCANO_4W_ORCH.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | VOLCANO_4W_TOP | `results/live/V25_VOLCANO_4W_TOP.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
 | VOLCANO_4W_VS | `results/live/V25_VOLCANO_4W_VS.json` | omni-v25 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
-| WANDERING | `results/live/V26_WANDERING.json` | omni-v26 | `omni_controller/controller.py` | 16 | `omni_controller/controller.py`, `omni_controller/muscles.py` | **runs again** |
+| WANDERING | `results/live/V27_WANDERING.json` | omni-v27 | `omni_controller/controller.py` | 16 | none | **on the engine that stands** |
 | YCSB | `results/live/V26_YCSB.json` | omni-v26 | `tools/run_ycsb.py` | 6 | none | **carries** |
 | YCSB_SERVICE | `results/live/V26_YCSB_SERVICE.json` | omni-v26 | `tools/run_ycsb.py` | 6 | none | **carries** |
 | YCSB_SHIPPED | `results/live/V26_YCSB_SHIPPED.json` | omni-v26 | `tools/run_ycsb.py` | 6 | none | **carries** |

@@ -33,7 +33,7 @@ Every version of the engine, in order, read from the repository's own records (`
 | omni-v24 | 2 Nov 01:30 | `66c8f2d94b3e4725` | 65 | [V24_VS_V23.md](model_gate/V24_VS_V23.md): GAIN 6, STEADY 98 | 0 | none |
 | omni-v25 | 3 Nov 21:00 | `cf56fc0a7b707452` | 65 | [V25_VS_V24.md](model_gate/V25_VS_V24.md): STEADY 104 | 92 | GAIN 605, LOSS 518, power given 264, the runs disagree 247, STEADY 640 |
 | omni-v26 | 7 Nov 14:31 | `75d3c22eed4473b9` | 65 | [V26_VS_V25.md](model_gate/V26_VS_V25.md): STEADY 104 | 78 | GAIN 509, LOSS 392, power given 255, the runs disagree 260, STEADY 551 |
-| omni-v27 | 15 Nov 18:30 | `34548e45437a05bd` | 65 | [V27_VS_V26.md](model_gate/V27_VS_V26.md): GAIN 7, LOSS 15, power given 20, STEADY 62 | 0 | none |
+| omni-v27 | 15 Nov 18:30 | `34548e45437a05bd` | 65 | [V27_VS_V26.md](model_gate/V27_VS_V26.md): GAIN 7, LOSS 15, power given 20, STEADY 62 | 11 | GAIN 55, LOSS 39, power given 18, the runs disagree 21, STEADY 62 |
 
 ## What each version changed, and why
 
@@ -62,6 +62,22 @@ Every version of the engine, in order, read from the repository's own records (`
 - **omni-v5** (11 Oct 22:40): the max as the default brain on the 1,107-muscle catalog; re-declared while in development
 
 ## Each version's own tables
+
+### omni-v27
+
+| Table | Judged rows |
+|---|---|
+| [V27_ALL_FOUR.md](live/V27_ALL_FOUR.md) | GAIN 6, LOSS 2, power given 2, the runs disagree 1, STEADY 6 |
+| [V27_BATCH.md](live/V27_BATCH.md) | GAIN 8, LOSS 5, power given 1, the runs disagree 1, STEADY 3 |
+| [V27_FAIRNESS.md](live/V27_FAIRNESS.md) | GAIN 1, LOSS 7, power given 2, the runs disagree 4, STEADY 6 |
+| [V27_FAULTS.md](live/V27_FAULTS.md) | GAIN 6, power given 2, the runs disagree 2, STEADY 6 |
+| [V27_KUEUE.md](live/V27_KUEUE.md) | GAIN 6, LOSS 9, power given 2, STEADY 5 |
+| [V27_SOLO.md](live/V27_SOLO.md) | GAIN 5, LOSS 3, power given 2, STEADY 6 |
+| [V27_SOLO_VS_ON_NATIVE.md](live/V27_SOLO_VS_ON_NATIVE.md) | LOSS 5, power given 2, the runs disagree 3, STEADY 6 |
+| [V27_STEADY.md](live/V27_STEADY.md) | GAIN 7, power given 1, the runs disagree 1, STEADY 7 |
+| [V27_TRACE_GOOGLE2011.md](live/V27_TRACE_GOOGLE2011.md) | GAIN 6, LOSS 1, power given 2, the runs disagree 1, STEADY 6 |
+| [V27_VOLCANO.md](live/V27_VOLCANO.md) | GAIN 5, LOSS 5, the runs disagree 7, STEADY 5 |
+| [V27_WANDERING.md](live/V27_WANDERING.md) | GAIN 5, LOSS 2, power given 2, the runs disagree 1, STEADY 6 |
 
 ### omni-v26
 
