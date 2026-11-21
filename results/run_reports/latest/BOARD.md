@@ -1,16 +1,16 @@
-# The 500-run set from the jump generator, base 1809585610: the report for the boardroom
+# The 500-run set from the jump generator, base 1943364323: the report for the boardroom
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-20T15:07:57Z; GitHub run 44759258570 (engine-runs, commit `4bcef0237f`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44759258570). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-21T10:17:18Z; GitHub run 44893037283 (engine-runs, commit `7bc819952e`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44893037283). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## The answer
 
-Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 481. Omni-Compass certified 500; the plant alone 443. Omni-Compass got there in 5.52 macro steps on average; the plant alone took 9.47. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
+Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 468. Omni-Compass certified 500; the plant alone 440. Omni-Compass got there in 5.52 macro steps on average; the plant alone took 9.23. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
 
 ## Check it
 
-One command on any machine: `bash scripts/prove_runs.sh 1809585610 500`. It prints the three digests side by side. They are the same, or the set is wrong. Every set GitHub runs is proved this way and kept in the run ledger (`results/RUNS_LEDGER.md`).
+One command on any machine: `bash scripts/prove_runs.sh 1943364323 500`. It prints the three digests side by side. They are the same, or the set is wrong. Every set GitHub runs is proved this way and kept in the run ledger (`results/RUNS_LEDGER.md`).
 
 ## Where it stops
 
@@ -22,9 +22,9 @@ One command on any machine: `bash scripts/prove_runs.sh 1809585610 500`. It prin
 
 | Gauge (what it is for) | Native alone | Omni-Compass on top | Change against native | 95% interval | Reading |
 |---|---|---|---|---|---|
-| runs brought to a basin, conveyed (more is better) | 481 of 500 | 500 of 500 | up 4.0% | raw +2.2 to +5.9 points | GAIN |
-| runs certified in a basin (more is better) | 443 of 500 | 500 of 500 | up 12.9% | raw +8.8 to +14.5 points | GAIN |
-| macro steps to be conveyed, mean (fewer is better) | 9.466 | 5.518 | down 41.7% | raw −4.29 to −3.60 steps | GAIN |
+| runs brought to a basin, conveyed (more is better) | 468 of 500 | 500 of 500 | up 6.8% | raw +4.4 to +8.9 points | GAIN |
+| runs certified in a basin (more is better) | 440 of 500 | 500 of 500 | up 13.6% | raw +9.3 to +15.1 points | GAIN |
+| macro steps to be conveyed, mean (fewer is better) | 9.226 | 5.516 | down 40.2% | raw −4.04 to −3.38 steps | GAIN |
 
 GAIN: the gauge moved toward what it is for (more runs brought home, fewer steps taken). LOSS: away from it. STEADY: a change under half of one percent. The word is decided by what the gauge is for, never by a plus or minus sign.
 
