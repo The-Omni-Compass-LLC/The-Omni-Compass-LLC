@@ -26,11 +26,19 @@ Read line by line:
 4. **grad L(X) . G(X) <= 0.** There is a function L, the energy of the compass, that never increases along the motion.
    This is a Lyapunov condition.
 5. **=> X(t) settles in M*.** Together, an invariant container and a non-increasing energy force every path into the
-   set M* where the energy stops falling: the bottom of the compass.
+   set M* where the energy stops falling: the bottom of the compass. This is LaSalle's invariance principle, and it
+   holds under its own conditions: Omega closed and bounded, and G smooth enough (locally Lipschitz) that each path is
+   unique. M* is the largest set the motion can stay in where grad L . G = 0; it is a single point only where that set
+   is one.
 
-The power of the statement is that it does not depend on the particular disturbance. Every input up to the size the
-container is built for has the same answer before it is asked: the state stays inside and returns. That is what I mean
-when I say that a closed circle holds the answer to every question that can be put to it.
+The power of the statement is that it does not depend on the particular disturbance. A disturbance that moves the state
+to another point inside the container is a new starting point, and the same law runs from it: the state stays inside
+and returns. That is what I mean when I say that a closed circle holds the answer to every question that can be put to
+it. Two things the statement does not say. A disturbance that keeps pushing while the law runs is a different question
+(input-to-state stability): there the state can be held only to a neighbourhood of M* whose size grows with the push,
+and that needs its own proof. And the statement is written in continuous time, while the engine decides once a beat:
+the discrete form needs its own step condition, which the engine's proofs carry channel by channel
+(`docs/TRACKING_THEOREM.md`, `docs/FORMAL_STATUS.md`).
 
 ## Closure, admissibility, boundedness
 
@@ -89,11 +97,13 @@ next step: unity without divergence, a single bounded law with no singularity an
 
 The software uses the engineering core of this principle, and every part of that core is checked:
 
-- The six-state engine, its bounded control command held through the integration step, and the convergence of its
-  alignment state to its pole are proved (`docs/TRACKING_THEOREM.md`) and tested against a C++ twin.
+- The convergence of the six-state engine's alignment state to its pole, under its bounded control command held
+  through the integration step, is proved (`docs/TRACKING_THEOREM.md`) and tested against a C++ twin. That proof
+  covers the alignment channel; the stability of the whole forced six-state engine is not proved
+  (`docs/FORMAL_STATUS.md`).
 - The invariance and boundedness of each engine state were checked state by state (Chapter "Closing the Circle").
 - The compass law pulls every muscle's service reading to the middle of its band under a bounded, smooth force, and its
-  behavior is measured in simulation and on real software.
+  behavior is modelled (class S) and measured on real software (class L).
 
 The wider claims - one law across every physical scale, the cosmological and quantum readings, the candidate unified
 action - are the theory from which Omni-Compass was built. They are stated here so that the engineer understands where
