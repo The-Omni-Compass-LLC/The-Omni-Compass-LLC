@@ -1,49 +1,49 @@
-# The 500-run set from the jump generator, base 1924527315: the report for the engineer
+# The 500-run set from the jump generator, base 1943364323: the report for the engineer
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-21T06:59:16Z; GitHub run 44874200275 (engine-runs, commit `a26ad9dbf2`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44874200275). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-21T10:17:18Z; GitHub run 44893037283 (engine-runs, commit `7bc819952e`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/44893037283). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 1. The answer
 
-Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 478. Omni-Compass certified 500; the plant alone 438. Omni-Compass got there in 5.48 macro steps on average; the plant alone took 9.14. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
+Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 468. Omni-Compass certified 500; the plant alone 440. Omni-Compass got there in 5.52 macro steps on average; the plant alone took 9.23. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
 
 | Gauge (what it is for) | Native alone | Omni-Compass on top | Change against native | 95% interval | Reading |
 |---|---|---|---|---|---|
-| runs brought to a basin, conveyed (more is better) | 478 of 500 | 500 of 500 | up 4.6% | raw +2.7 to +6.6 points | GAIN |
-| runs certified in a basin (more is better) | 438 of 500 | 500 of 500 | up 14.2% | raw +9.7 to +15.6 points | GAIN |
-| macro steps to be conveyed, mean (fewer is better) | 9.138 | 5.478 | down 40.1% | raw −3.99 to −3.33 steps | GAIN |
+| runs brought to a basin, conveyed (more is better) | 468 of 500 | 500 of 500 | up 6.8% | raw +4.4 to +8.9 points | GAIN |
+| runs certified in a basin (more is better) | 440 of 500 | 500 of 500 | up 13.6% | raw +9.3 to +15.1 points | GAIN |
+| macro steps to be conveyed, mean (fewer is better) | 9.226 | 5.516 | down 40.2% | raw −4.04 to −3.38 steps | GAIN |
 
 ## 2. The proof: three implementations, one digest
 
 | Set | The Python's digest | The C++ harness | The live page's own code |
 |---|---|---|---|
-| the engine's runs | `e3c5db168fd4f788…` | `e3c5db168fd4f788…`, the same, 500 of 500 runs agree | `e3c5db168fd4f788…`, the same |
-| the core's Monte Carlo | `4f21f8b39f649da8…` | `4f21f8b39f649da8…`, the same, 2000 of 2000 run-ways agree | `4f21f8b39f649da8…`, the same |
+| the engine's runs | `9c806b6be5bcc196…` | `9c806b6be5bcc196…`, the same, 500 of 500 runs agree | `9c806b6be5bcc196…`, the same |
+| the core's Monte Carlo | `160bdf7eb1bae2aa…` | `160bdf7eb1bae2aa…`, the same, 2000 of 2000 run-ways agree | `160bdf7eb1bae2aa…`, the same |
 
 The ladder: the first 1, 10, 100 and 500 runs of the same set, each its own digest, so a shorter reading by the page or the C++ is checked against the Python's rung.
 
 | Rung | Runs | The Python's digest | The C++ harness's digest | The same |
 |---|---|---|---|---|
-| 1 | 1 | `3341099976cd1dfe…` | `3341099976cd1dfe…` | yes |
-| 2 | 10 | `021978320ec54ce0…` | `021978320ec54ce0…` | yes |
-| 3 | 100 | `14fc5a2a1dec77a4…` | `14fc5a2a1dec77a4…` | yes |
-| 4 | 500 | `e3c5db168fd4f788…` | `e3c5db168fd4f788…` | yes |
+| 1 | 1 | `a2a9fe2b55e8889c…` | `a2a9fe2b55e8889c…` | yes |
+| 2 | 10 | `841535f8d5f77b1a…` | `841535f8d5f77b1a…` | yes |
+| 3 | 100 | `36b853d9f87878eb…` | `36b853d9f87878eb…` | yes |
+| 4 | 500 | `9c806b6be5bcc196…` | `9c806b6be5bcc196…` | yes |
 
 ## 3. Every way of the core's Monte Carlo
 
 | Way | Conveyed (95% interval) | Certified | Mean step conveyed | In a basin at the last step |
 |---|---|---|---|---|
-| Omni-Compass on top, toward the nearest basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.478 | 500 of 500 |
-| native: the plant alone, u = 0 | 478 of 500 (93.4% to 97.1%) | 438 of 500 | 9.138 | 480 of 500 |
-| Omni-Compass aimed at the wrong basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 6.732 | 500 of 500 |
-| Omni-Compass on top, the double well's μ at 0 | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.476 | 500 of 500 |
+| Omni-Compass on top, toward the nearest basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.516 | 500 of 500 |
+| native: the plant alone, u = 0 | 468 of 500 (91.1% to 95.4%) | 440 of 500 | 9.226 | 482 of 500 |
+| Omni-Compass aimed at the wrong basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 6.764 | 500 of 500 |
+| Omni-Compass on top, the double well's μ at 0 | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.510 | 500 of 500 |
 
 ## 4. The mathematics
 
 The seeds. Run k of the set draws its seed from the jump generator and feeds a mulberry32 stream:
 
-  seedₖ = base + k·0x9E3779B9 mod 2³²,  k = 0, 1, …, 499;  base = 1924527315
+  seedₖ = base + k·0x9E3779B9 mod 2³²,  k = 0, 1, …, 499;  base = 1943364323
 
 The core (the monograph, section 3.2): the state z = (E, U, I[U], S, B, Ḃ) evolves by
 
@@ -65,18 +65,18 @@ The intervals. A share k of n is given its Wilson score interval; a difference o
 
 ## 5. The engine's runs: the brain, the compass law and the verdict
 
-Each of the 500 runs is 288 decisions of the brain (RK4), 80 steps of the compass law and one give-back trial judged by the verdict. The verdict allowed 185 of 500 trials (32.9% to 41.3% at 95%) and refused the rest. The verdict is do no harm as a trigger (the monograph, section 3.6): on log costs, d[v] = mean ln y[trial] − mean ln y[ref] with interval d[v] ± 1.96·se and allowance ln(1 + tol); an interval wholly above zero is a LOSS and the step is undone, otherwise the step stands only if the median and the mean lie within the allowance. Over all runs the brain's pushes sum to 1708.720; grants to expand 647850, to contract 226275. Every run's receipt is in `SET_ENGINE_RUNS.csv` beside this report.
+Each of the 500 runs is 288 decisions of the brain (RK4), 80 steps of the compass law and one give-back trial judged by the verdict. The verdict allowed 194 of 500 trials (34.6% to 43.1% at 95%) and refused the rest. The verdict is do no harm as a trigger (the monograph, section 3.6): on log costs, d[v] = mean ln y[trial] − mean ln y[ref] with interval d[v] ± 1.96·se and allowance ln(1 + tol); an interval wholly above zero is a LOSS and the step is undone, otherwise the step stands only if the median and the mean lie within the allowance. Over all runs the brain's pushes sum to 1706.981; grants to expand 648810, to contract 227497. Every run's receipt is in `SET_ENGINE_RUNS.csv` beside this report.
 
 ## 6. Check it yourself
 
 ```
 cmake -S cpp -B build && cmake --build build --target oc_engine_runs oc_core_runs
-python3 tools/engine_runs.py --runs 500 --base 1924527315 --cpp build/oc_engine_runs --out er.json
-python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all --runs 500 --base 1924527315
-python3 tools/core_runs.py --runs 500 --base 1924527315 --cpp build/oc_core_runs --out cr.json
+python3 tools/engine_runs.py --runs 500 --base 1943364323 --cpp build/oc_engine_runs --out er.json
+python3 tools/engine_runs.py --verify docs/engine/OMNI_COMPASS_LIVE_ENGINE.html --all --runs 500 --base 1943364323
+python3 tools/core_runs.py --runs 500 --base 1943364323 --cpp build/oc_core_runs --out cr.json
 ```
 
-Both digests equal the records' or the run is wrong: `e3c5db168fd4f7882162b768c4f6bebdfc18b9549ef3e73ea6ba281bcbc51038` and `4f21f8b39f649da82beb6aee6584b25bee491ce106a6e0b69eef2a9b76ff58aa`. The records: `results/engine_runs/ENGINE_RUNS_500_1924527315.md` and `results/core_runs/CORE_RUNS_500_1924527315.md`.
+Both digests equal the records' or the run is wrong: `9c806b6be5bcc19634eb9b4dc620c51987d958f6c26fdfc27589cde40ac2ab17` and `160bdf7eb1bae2aa403ffe5db1324423cd7dc843d1569b212fbfe00c683be109`. The records: `results/engine_runs/ENGINE_RUNS_500_1943364323.md` and `results/core_runs/CORE_RUNS_500_1943364323.md`.
 
 ## 7. Where it stops
 
