@@ -34,6 +34,14 @@ against the repository's own records. The numbers a page may show, each with its
 | 15 | Two repository names: `The-Omni-Compass-LLC/The-Omni-Compass` (button, `git clone`, data fetches) and `The-Omni-Compass-LLC/The-Omni-Compass-LLC` (the second engine card) | The repository moved to `The-Omni-Compass-LLC/The-Omni-Compass-LLC`; GitHub forwards the old name today, and a forward can be lost when a new repository takes the old name. | Use `https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC` everywhere, the raw data fetches included. |
 | 16 | "View Results on GitHub" and "Open Live Engine on GitHub" lead nowhere | The buttons carry no link. | Link them to `results/OMNI_INDEX.md` and `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` on the repository, or to the live engine link the site already uses. |
 
+| 17 | The clone block: `git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass`, then `python harness/run_benchmark.py --verify` | The script does not exist. The outside AI's replacement of 21 November is cut short (`git clone https://github.com` with no path) and runs `python3 tools/verify_receipt.py` with no folder, which checks nothing. | Three lines: `git clone https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC`, `cd The-Omni-Compass-LLC`, `bash scripts/prove_runs.sh` (the engine that stands and its digest, then the newest set run again by the Python, the C++ harness and the page's own code, three digests side by side; `bash scripts/prove_runs.sh BASE 500` for any set). An archived run's signed receipt: `bash scripts/raw_archive.sh open /run-<id>/` then `python3 tools/verify_receipt.py results/live/raw/run-<id>`. |
+| 18 | "SHA-256 sealed" (the outside AI asks for "SHA-256 & Sigstore cryptographically sealed") | Three different seals: the engine's 65 files by SHA-256 (`OMNI_V27.json`), the 18 twins by SHA-256 after their parity tests (`results/SEAL.json`), and every run archived since 31 October 2026 signed with Sigstore, keyless, in its public log (`SHA256SUMS_ALL.txt.sigstore.json` beside each run on the branch `raw`). | Say each seal for what it seals; the engine itself is fingerprinted, not Sigstore-signed. |
+
+A `robots.txt` that turns away GPTBot, ClaudeBot, Google-Extended and CCBot (the outside AI's file) keeps those companies' models from
+training on the site, and also keeps their assistants from reading it when someone asks them who made Omni-Compass. Google's own
+search, and Google's AI answers built on it, are governed by Googlebot, which that file does not name. Which way to go is the founder's
+decision; the repository's `llms.txt` asks every AI that reads it to print the notice.
+
 ## Tier 3: legal words, for the company's counsel (nothing here is changed by this page)
 
 - **"UNDER CONSTRUCTION" / "THIS SITE IS UNDER ACTIVE DEVELOPMENT"** stands on every page. The repository's own disclosure
