@@ -17,7 +17,7 @@
  const DIRS={arrows:['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'],wasd:['w','s','a','d']};
  let padMode=getLS('kanin-pad','auto'), padSize=getLS('kanin-pad-size','m');
  const touchy=()=>{ try{ return matchMedia('(pointer:coarse)').matches; }catch(_){ return false; } };
- const padOn=()=>padMode==='on'||(padMode==='auto'&&touchy());
+ const padOn=()=>padMode==='on'||(padMode==='auto'&&touchy())||(padMode==='phone'&&touchy()&&innerWidth<760)||(padMode==='tablet'&&touchy()&&innerWidth>=760);
  const cur=()=>{ const s=document.querySelectorAll('#gamesDock .gmTop select'); return s[1]&&s[1].value||''; };
  const CODE={' ':'Space','Enter':'Enter','ArrowUp':'ArrowUp','ArrowDown':'ArrowDown','ArrowLeft':'ArrowLeft','ArrowRight':'ArrowRight','p':'KeyP','Escape':'Escape'};
  function send(key,down){ try{ document.dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{key,code:CODE[key]||('Key'+key.toUpperCase()),bubbles:true,cancelable:true})); }catch(_){ } }
@@ -55,7 +55,7 @@
 .kKeyMon .kmMap span b{color:#ffe94a;font-family:ui-monospace,monospace}
 .kKeyMon .kmPad{font-size:12.5px;opacity:.85;margin-top:4px}
 #kPadV{--ps:120px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px auto 4px;max-width:720px;user-select:none;-webkit-user-select:none;touch-action:none}
-#kPadV.s{--ps:96px}#kPadV.l{--ps:150px}
+#kPadV.xs{--ps:80px}#kPadV.s{--ps:96px}#kPadV.xl{--ps:180px}#kPadV.l{--ps:150px}
 #kPadV .kpStick{width:var(--ps);height:var(--ps);border-radius:50%;background:radial-gradient(circle,#26305c,#0c1024);border:2px solid #6fe8ff;position:relative;touch-action:none;flex:0 0 auto}
 #kPadV .kpStick .kpNub{position:absolute;left:50%;top:50%;width:40%;height:40%;margin:-20% 0 0 -20%;border-radius:50%;background:#6fe8ff;opacity:.85;pointer-events:none}
 #kPadV .kpStick small{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font:800 10px ui-monospace,monospace;color:#7ff;letter-spacing:.1em}
@@ -118,7 +118,7 @@ html body #rDock#rDock #kdVG{order:4!important;display:flex!important}html body 
    '<h3>⭐ New: our own arcade classics</h3><div class="vgCards">'+NEW.map(([id,n,st,t])=>'<div class="vgCard"><i>'+esc(st)+'</i><b>'+esc(n)+'</b><span class="vgN">'+esc(t)+'</span><button type="button" data-vg="play" data-id="'+id+'" data-noul>▶ Play '+esc(n)+'</button></div>').join('')+'</div>'+
    '<h3>🗂 Every game, by kind</h3>'+cats.map(c=>'<details><summary>'+(ICON[c]||'🎮')+' '+esc(c)+' · '+by[c].length+' games</summary><div class="vgList">'+by[c].map(g=>'<button type="button" data-vg="play" data-id="'+esc(g.id)+'" data-noul>▶ '+esc(g.name)+'</button>').join('')+'</div></details>').join('')+
    '<h3>⌨ Controls monitor</h3><div class="vgRow"><label>Show the controls for <select id="vgCtl">'+L.map(g=>'<option value="'+esc(g.id)+'"'+(g.id==='vg_arena'?' selected':'')+'>'+esc(g.name)+'</option>').join('')+'</select></label></div><div id="vgMon">'+monitor('vg_arena',true)+'</div>'+
-   '<h3>🎮 Controller</h3><div class="vgRow"><label>On-screen controller <select id="vgPad"><option value="auto"'+(padMode==='auto'?' selected':'')+'>Automatic (on phones and tablets)</option><option value="on"'+(padMode==='on'?' selected':'')+'>Always show</option><option value="off"'+(padMode==='off'?' selected':'')+'>Hide</option></select></label><label>Size <select id="vgPadS"><option value="s"'+(padSize==='s'?' selected':'')+'>Small</option><option value="m"'+(padSize==='m'?' selected':'')+'>Medium</option><option value="l"'+(padSize==='l'?' selected':'')+'>Large</option></select></label></div><div class="vgN" id="vgGp"></div>'+
+   '<h3>🎮 Controller</h3><div class="vgRow"><label>On-screen controller <select id="vgPad"><option value="auto"'+(padMode==='auto'?' selected':'')+'>Automatic (on phones and tablets)</option><option value="on"'+(padMode==='on'?' selected':'')+'>Always show</option><option value="phone"'+(padMode==='phone'?' selected':'')+'>Only on phones</option><option value="tablet"'+(padMode==='tablet'?' selected':'')+'>Only on tablets</option><option value="off"'+(padMode==='off'?' selected':'')+'>Hide</option></select></label><label>Size <select id="vgPadS"><option value="xs"'+(padSize==='xs'?' selected':'')+'>Extra small</option><option value="s"'+(padSize==='s'?' selected':'')+'>Small</option><option value="m"'+(padSize==='m'?' selected':'')+'>Medium</option><option value="l"'+(padSize==='l'?' selected':'')+'>Large</option><option value="xl"'+(padSize==='xl'?' selected':'')+'>Extra large</option></select></label></div><div class="vgN" id="vgGp"></div>'+
    '<details><summary>📚 Libraries, kits and sources</summary><div class="vgList vgLinks">'+SRC.map(([t,u])=>'<a href="'+u+'" target="_blank" rel="noopener">'+esc(t)+' ↗</a>').join('')+'</div></details>'+
    '<p class="vgN" style="margin-top:22px">© 2026 The Omni-Compass LLC and DD Universe Multi-Media Studios. All rights reserved. Every game here is original code with its own names, characters and levels; the classic board, card and dice games are public domain.</p></div>'; paintGp(); try{ window.KGHUB&&KGHUB.shelf(d); }catch(_){ } }
  function box(){ let d=$('kVG'); if(!d){ d=document.createElement('div'); d.id='kVG'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Video games'); document.body.appendChild(d);
