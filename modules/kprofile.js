@@ -27,6 +27,7 @@
   try{ KSTARS.save({name:m.name||'',date:x.birth||'',time:x.time||'',city:x.city||'New York'}); }catch(_){ } }
  let tab='posts', editing=false, songEl=null, urls=[];
  const css=document.createElement('style'); css.textContent=`
+#kProfile .pfPrevRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}#kProfile .pfPrev{flex:none;width:56px;height:56px;border-radius:50%;background:#222 center/cover no-repeat;border:2px solid #7ff}#kProfile .pfPrev.wide{width:112px;border-radius:10px}
 #kProfile{position:fixed;inset:0;z-index:9700;background:rgba(5,6,22,.98);overflow:auto;color:#fff;padding:0 0 calc(230px + env(safe-area-inset-bottom,0px));padding-right:var(--kRailW,58px)}
 #kProfile[hidden]{display:none!important}
 #kProfile .pfIn{max-width:920px;margin:0 auto;padding:0 16px}
@@ -66,11 +67,12 @@
   d.addEventListener('click',onClick); d.addEventListener('change',onChange); return d; }
  const url=b=>{ try{ const u=URL.createObjectURL(b); urls.push(u); return u; }catch(_){ return ''; } };
  function freeUrls(){ urls.forEach(u=>{ try{ URL.revokeObjectURL(u); }catch(_){ } }); urls=[]; }
+ const shrink=(f,max)=>new Promise((res,rej)=>{ try{ const r=new FileReader(); r.onerror=()=>rej(r.error); r.onload=()=>{ const im=new Image(); im.onload=()=>{ try{ const k=Math.min(1,max/Math.max(im.naturalWidth||1,im.naturalHeight||1)); const w=Math.max(1,Math.round(im.naturalWidth*k)), h=Math.max(1,Math.round(im.naturalHeight*k)); const cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); res(cv.toDataURL('image/jpeg',.85)); }catch(e){ res(String(r.result||'')); } }; im.onerror=()=>rej(new Error('not an image')); im.src=r.result; }; r.readAsDataURL(f); }catch(e){ rej(e); } });
  async function img(id){ if(!id) return ''; try{ const it=await KLIB.get(id); return it&&it.blob?url(it.blob):''; }catch(_){ return ''; } }
  async function paint(){ const d=box(); freeUrls(); const {m,x}=me(); const z=zprof(); const birth=x.birth||z.date||''; const s=sunOf(birth), an=animalOf(birth), L=letterOf(birth);
   let posts=[], works=[]; try{ posts=await KLIB.list('post'); }catch(_){ } try{ works=(await KLIB.list()).filter(i=>i.kind!=='post'); }catch(_){ }
   const likes=posts.reduce((a,p)=>a+((p.meta&&p.meta.likes)||0),0);
-  const cover=await img(x.cover), photo=m.photo?await img(m.photo):'';
+  const cover=x.coverData||await img(x.cover), photo=m.photoData||(m.photo?await img(m.photo):'');
   if(editing) return paintEdit(d,m,x,z);
   const chips=[]; if(s!=null) chips.push(SIGNS[s][0]+' '+SIGNS[s][1]); if(an) chips.push('🏮 '+an+' (Chinese zodiac)'); if(L!=null) chips.push('🧭 '+ring(L)[0]+' '+ring(L)[1]+' · your compass letter'); if(x.city||z.city) chips.push('📍 '+(x.city||z.city)); (x.music||[]).forEach(g=>chips.push('🎵 '+g)); (x.story||[]).forEach(g=>chips.push('📖 '+g));
   const song=x.song?('<div class="pfSong"><span>🎶 Profile song: <b>'+esc(x.song.name)+'</b></span><button type="button" data-pf="songplay" data-noul>▶ Play</button><button type="button" data-pf="songstop" data-noul>■ Stop</button></div>'):'';
@@ -99,7 +101,7 @@
   d.innerHTML='<div class="kBar" data-sc="kProfile"><button type="button" data-ka="close" data-pf="close" aria-label="Close">✕</button></div><div class="pfIn" style="padding-top:12px"><h2>✏️ Edit profile</h2><div class="pfForm">'+
    '<label>Name<input id="pfNm" maxlength="40" value="'+esc(m.name||'')+'"></label><label>@handle<input id="pfHd" maxlength="24" value="'+esc(m.handle||'')+'"></label><label>Bio<textarea id="pfBio" rows="3" maxlength="300">'+esc(m.bio||'')+'</textarea></label>'+
    '<label>Birth date (picks your sign and your compass letter)<input type="date" id="pfBd" value="'+esc(x.birth||z.date||'')+'"></label><label>Birth time (optional, for LuvMyZodiac’s full chart)<input type="time" id="pfBt" value="'+esc(x.time||z.time||'')+'"></label><label>Birth city<input id="pfBc" maxlength="60" value="'+esc(x.city||z.city||'')+'"></label>'+
-   '<label>Photo<input type="file" id="pfPh" accept="image/*"></label><label>Cover picture<input type="file" id="pfCv" accept="image/*"></label>'+
+   '<label>Photo<span class="pfPrevRow"><span id="pfPhPrev" class="pfPrev"'+(m.photoData?' style="background-image:url('+m.photoData+')"':'')+'></span><input type="file" id="pfPh" accept="image/*"></span></label><label>Cover picture<span class="pfPrevRow"><span id="pfCvPrev" class="pfPrev wide"'+(x.coverData?' style="background-image:url('+x.coverData+')"':'')+'></span><input type="file" id="pfCv" accept="image/*"></span></label>'+
    '<div><b style="font-size:13px">Avatar (shown when there is no photo)</b><div class="pfPick">'+AV.map(a=>'<button type="button" data-pfa="'+a+'" aria-pressed="'+(m.avatar===a)+'" data-noul>'+a+'</button>').join('')+'</div></div>'+
    '<label>Profile song<select id="pfSg"><option value="">Pick from my music…</option></select></label><label>…or upload a song<input type="file" id="pfSu" accept="audio/*"></label>'+
    '<div><b style="font-size:13px">Favourite music genres</b><div class="pfPick pfInt" data-grp="music">'+sel(MUSIC,x.music)+'</div></div>'+
@@ -110,8 +112,14 @@
   KLIB.list().then(L=>{ const s=$('pfSg'); if(!s) return; L.filter(i=>i.kind==='audio').forEach(i=>{ const o=document.createElement('option'); o.value=i.id; o.textContent=i.name; if(x.song&&x.song.id===i.id) o.selected=true; s.appendChild(o); }); }).catch(()=>{}); }
  let draft=null;
  async function onChange(e){ const t=e.target; if(!draft) return; const f=t.files&&t.files[0];
-  if(t.id==='pfPh'&&f){ const it=await KLIB.save({kind:'image',name:'Profile photo',blob:f,meta:{from:'profile'}}); draft.m.photo=it.id||it; say('📷 Photo ready. Press 💾 Save profile.'); }
-  if(t.id==='pfCv'&&f){ const it=await KLIB.save({kind:'image',name:'Profile cover',blob:f,meta:{from:'profile'}}); draft.x.cover=it.id||it; say('🖼 Cover ready. Press 💾 Save profile.'); }
+  if(t.id==='pfPh'&&f){ say('📷 Putting your photo on…'); let data='', id=null; try{ data=await shrink(f,512); }catch(_){ } try{ const it=await KLIB.save({kind:'image',name:'Profile photo',blob:f,meta:{from:'profile'}}); id=it&&(it.id||it); }catch(_){ }
+   if(!data&&!id) return say('📷 That file is not a picture this browser can read. Try a JPG or PNG photo.');
+   draft.m.photo=id||draft.m.photo||''; draft.m.photoData=data||''; const cur=me(); cur.m.photo=draft.m.photo; cur.m.photoData=draft.m.photoData; await saveAll(cur.m,cur.x);
+   const pv=$('pfPhPrev'); if(pv) pv.style.backgroundImage='url('+(data||await img(id))+')'; say('📷 Your photo is on your profile and in Social.'); }
+  if(t.id==='pfCv'&&f){ say('🖼 Putting your cover on…'); let data='', id=null; try{ data=await shrink(f,1200); }catch(_){ } try{ const it=await KLIB.save({kind:'image',name:'Profile cover',blob:f,meta:{from:'profile'}}); id=it&&(it.id||it); }catch(_){ }
+   if(!data&&!id) return say('🖼 That file is not a picture this browser can read. Try a JPG or PNG.');
+   draft.x.cover=id||draft.x.cover||''; draft.x.coverData=data||''; const cur=me(); cur.x.cover=draft.x.cover; cur.x.coverData=draft.x.coverData; await saveAll(cur.m,cur.x);
+   const pv=$('pfCvPrev'); if(pv) pv.style.backgroundImage='url('+(data||await img(id))+')'; say('🖼 Your cover is on your profile.'); }
   if(t.id==='pfSu'&&f){ const it=await KLIB.save({kind:'audio',name:f.name.replace(/\.[^.]+$/,''),blob:f,meta:{from:'profile'}}); draft.x.song={id:it.id||it,name:f.name.replace(/\.[^.]+$/,'')}; say('🎶 Song ready. Press 💾 Save profile.'); }
   if(t.id==='pfSg'){ draft.x.song=t.value?{id:t.value,name:t.selectedOptions[0].textContent}:null; } }
  function stopSong(){ if(songEl){ try{ songEl.pause(); }catch(_){ } songEl=null; } }

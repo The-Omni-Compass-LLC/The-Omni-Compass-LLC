@@ -69,7 +69,7 @@
 })();
 </script>
 
-<title>KAN-IN Story Builder</title>
+<title>DD UNIVERSE MULTI-MEDIA STUDIOS PLATFORM</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7069,7 +7069,7 @@ window.STOCK=STOCK;
  function sched(){ const c=AC; const T=total(); const anySolo=pads.some(P=>P.solo); while(nextT<c.currentTime+.12){ const s=step%T; const sw=(s%2)?(+$('padSwing').value)*stepDur():0; const t=nextT+sw;
    const barOn=!(window.ARRMASK&&ARRMASK('pads',Math.floor(s/spb))===false); pads.forEach((P,i)=>{ if(barOn&&!(window.ARRMASK&&ARRMASK('p'+i,Math.floor(s/spb))===false)&&P.steps[s]&&!P.mute&&(!anySolo||P.solo)) voice(c,SD(c,out(),chOf(i)),Math.max(c.currentTime+.002,t+human(stepDur())+((P.offs&&P.offs[s])||0)*stepDur()),i,(s%(spb/4)===0?1:.85)*(P.steps[s]<1?Math.max(.15,P.steps[s]):1)); });
    trackSched(c,out(),t,s,stepDur()); STEPHOOKS.forEach(f=>{ try{ f(c,out(),t,s,stepDur()); }catch(e){} });
-   if(click&&s%Math.max(1,Math.round(spb/(window.PADCLICKDIV||4)))===0) osc(c,SD(c,out(),39),t,'square',s%spb===0?1800:s%(spb/4)===0?1300:950,null,s%(spb/4)===0?.08:.045,.03);
+   if(click&&s%Math.max(1,Math.round(spb/(window.PADCLICKDIV||4)))===0){ const lvl=s%spb===0?2:s%(spb/4)===0?1:0; let done=false; try{ done=!!(window.KCLICK&&KCLICK.play(c,SD(c,out(),39),t,lvl)); }catch(_){ } if(!done) osc(c,SD(c,out(),39),t,'square',s%spb===0?1800:s%(spb/4)===0?1300:950,null,s%(spb/4)===0?.08:.045,.03); };
    const d=Math.max(0,(t-c.currentTime)*1000); setTimeout(()=>playhead(s),d);
    if(s%spb===0&&perform) setTimeout(sing,d);
    nextT+=stepDur(); step++; } }
@@ -7464,7 +7464,7 @@ window.PADSTUDIO={renderBeat,refresh:()=>renderAll(),setBars(n){ $('padLoopBars'
 <script>
 (()=>{ const $=id=>document.getElementById(id); const P=window.PADSTUDIO; const pin=document.querySelector('#pad .pin'); if(!P||!pin) return;
  const box=document.createElement('div'); box.id='kbWrap';
- const PRE=[['piano','Grand piano'],['epiano','Electric piano'],['organ','Organ'],['strings','Strings'],['pad','Synth pad'],['lead','Synth lead'],['bass','Synth bass'],['brass','Brass'],['bells','Bells'],['choir','Choir'],['pluck','Pluck'],['chip','8-bit'],['sample','Your sample (uploaded)']];
+ const PRE=[['piano','Grand piano'],['epiano','Electric piano'],['organ','Organ'],['strings','Strings'],['pad','Synth pad'],['lead','Synth lead'],['bass','Synth bass'],['brass','Brass'],['bells','Bells'],['choir','Choir'],['pluck','Pluck'],['chip','8-bit'],['marimba','Marimba'],['vibes','Vibraphone'],['kalimba','Kalimba'],['harp','Harp'],['guitar','Nylon guitar'],['flute','Flute'],['sample','Your sample (uploaded)']];
  const SCALES={off:null,major:[0,2,4,5,7,9,11],minor:[0,2,3,5,7,8,10],penta:[0,2,4,7,9],blues:[0,3,5,6,7,10],dorian:[0,2,3,5,7,9,10]};
  const CHORDS={off:[0],maj:[0,4,7],min:[0,3,7],sev:[0,4,7,10],sus:[0,5,7],pow:[0,7,12]};
  const LV=['Off','Low','Medium','High','Max'];
@@ -7560,6 +7560,12 @@ window.PADSTUDIO={renderBeat,refresh:()=>renderAll(),setBars(n){ $('padLoopBars'
   else if(pre==='brass'){ const lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.setValueAtTime(600,t); lp.frequency.linearRampToValueAtTime(3000,t+.12); lp.connect(g); o('sawtooth',1,0,.45,lp); o('sawtooth',1,6,.25,lp); rel=env(.06,.3,.8,.2,.45); }
   else if(pre==='bells'){ o('sine',1,0,.5); o('sine',2.76,0,.25); o('sine',5.4,0,.12); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.5*vel,t+.003); g.gain.exponentialRampToValueAtTime(.001*vel+.0001,t+2.5); rel=1.2; }
   else if(pre==='choir'){ const bp1=c.createBiquadFilter(), bp2=c.createBiquadFilter(); bp1.type=bp2.type='bandpass'; bp1.frequency.value=700; bp2.frequency.value=1150; bp1.Q.value=bp2.Q.value=6; bp1.connect(g); bp2.connect(g); const x1=o('sawtooth',1,-6,.6,bp1); x1.connect(bp2); o('sawtooth',1,6,.6,bp2); rel=env(.3,.5,.9,.6,.9); }
+  else if(pre==='marimba'){ o('sine',1,0,.55); o('sine',4,0,.12); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.55*vel,t+.002); g.gain.exponentialRampToValueAtTime(.001*vel+.0001,t+.7); rel=.3; }
+  else if(pre==='vibes'){ o('sine',1,0,.5); o('sine',4,0,.08); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.5*vel,t+.004); g.gain.exponentialRampToValueAtTime(.001*vel+.0001,t+2.2); rel=1; }
+  else if(pre==='kalimba'){ o('sine',1,0,.5); o('sine',5.95,0,.1); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.5*vel,t+.002); g.gain.exponentialRampToValueAtTime(.001*vel+.0001,t+1); rel=.5; }
+  else if(pre==='harp'){ o('triangle',1,0,.45); o('sine',2,0,.15); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.5*vel,t+.003); g.gain.exponentialRampToValueAtTime(.001*vel+.0001,t+1.8); rel=.8; }
+  else if(pre==='guitar'){ const lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.setValueAtTime(4000,t); lp.frequency.exponentialRampToValueAtTime(900,t+.5); lp.connect(g); o('sawtooth',1,0,.3,lp); o('triangle',1,4,.3,lp); rel=env(.003,.9,.15,.4,.6); }
+  else if(pre==='flute'){ const lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3000; lp.connect(g); o('sine',1,0,.5,lp); o('triangle',2,0,.06,lp); rel=env(.08,.2,.85,.25,.4); }
   else if(pre==='pluck'){ const lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.setValueAtTime(6000,t); lp.frequency.exponentialRampToValueAtTime(400,t+.25); lp.connect(g); o('sawtooth',1,0,.5,lp); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.55*vel,t+.002); g.gain.exponentialRampToValueAtTime(.0005,t+.6); rel=.1; }
   else if(pre==='chip'){ o('square',1,0,.25); rel=env(.002,.1,.7,.05,.35); }
   const v={g,nodes,rel,c};
@@ -19240,7 +19246,7 @@ html body #rDock#rDock #kdSocial.on{background:#ffe94a!important}`; document.hea
  function box(){ let d=$('kSocial'); if(!d){ d=document.createElement('div'); d.id='kSocial'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','DD Universe Social'); document.body.appendChild(d); d.addEventListener('click',onClick); d.addEventListener('change',onChange); d.addEventListener('input',onInput); } return d; }
  const av=(p)=>'<div class="soAv">'+(p&&p.photoUrl?'<img alt="" src="'+esc(p.photoUrl)+'">':esc((p&&p.avatar)||'🌟'))+'</div>';
  const TABS=[['feed','🏠 Feed'],['create','➕ Create'],['profile','👤 Profile'],['library','📚 Library'],['about','ℹ About']];
- async function paint(){ const d=box(); if(d.hidden) return; await loadMine(); if(me&&me.photo){ const u=await mediaURL(me.photo); me.photoUrl=u&&u.url; }
+ async function paint(){ const d=box(); if(d.hidden) return; await loadMine(); if(me&&me.photoData){ me.photoUrl=me.photoData; } else if(me&&me.photo){ const u=await mediaURL(me.photo); me.photoUrl=u&&u.url; }
   let body='';
   if(needMe()&&tab!=='about') body=profileForm(true);
   else if(tab==='feed') body=await feed(); else if(tab==='create') body=createForm(); else if(tab==='profile') body=await profile(); else if(tab==='library') body=await library(); else body=about();
@@ -19337,7 +19343,7 @@ html body #rDock#rDock #kdSocial.on{background:#ffe94a!important}`; document.hea
    case 'ldel': if(lc){ if(!b.dataset.sure){ b.dataset.sure='1'; b.textContent='Tap again'; return; } await KLIB.del(lc.dataset.lid); say('🗑 Deleted from this device.'); paint(); } return; } }
  async function onChange(e){ const t=e.target; const f=t.files&&t.files[0];
   if((t.id==='soFile'||t.id==='soCam')&&f){ draft.text=($('soText')||{}).value||draft.text; const it=await addFile(f); draft.media=it.id; t.value=''; return hydrate(); }
-  if(t.id==='soPhoto'&&f){ const it=await addFile(f,'Profile photo'); me=me||{}; me.photo=it.id; const keep=Object.assign({},me); delete keep.photoUrl; putLS('kanin-me',keep); return paint(); }
+  if(t.id==='soPhoto'&&f){ const shrink=(f,max)=>new Promise((res,rej)=>{ try{ const r=new FileReader(); r.onerror=()=>rej(r.error); r.onload=()=>{ const im=new Image(); im.onload=()=>{ try{ const k=Math.min(1,max/Math.max(im.naturalWidth||1,im.naturalHeight||1)); const w=Math.max(1,Math.round(im.naturalWidth*k)), h=Math.max(1,Math.round(im.naturalHeight*k)); const cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); res(cv.toDataURL('image/jpeg',.85)); }catch(e){ res(String(r.result||'')); } }; im.onerror=()=>rej(new Error('not an image')); im.src=r.result; }; r.readAsDataURL(f); }catch(e){ rej(e); } }); let data='', id=null; try{ data=await shrink(f,512); }catch(_){ } try{ const it=await addFile(f,'Profile photo'); id=it&&it.id; }catch(_){ } if(!data&&!id){ say('🖼 That file is not a picture this browser can read. Try a JPG or PNG photo.'); return; } me=me||{}; me.photo=id||me.photo||''; me.photoData=data||''; const keep=Object.assign({},me); delete keep.photoUrl; putLS('kanin-me',keep); say('🖼 Your photo is on your profile.'); return paint(); }
   if(t.id==='soAdd'&&t.files){ for(const x of t.files) await addFile(x); say('➕ Added to your library.'); t.value=''; return paint(); }
   if(t.id==='soMemeImg'&&f){ draft.meme={img:await loadImg(f)}; return drawMeme(); }
   if(t.id==='soMemeLib'&&t.value){ const it=await KLIB.get(t.value); if(it&&it.blob){ draft.meme={img:await loadImg(it.blob)}; drawMeme(); } } }
@@ -21255,6 +21261,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   try{ KSTARS.save({name:m.name||'',date:x.birth||'',time:x.time||'',city:x.city||'New York'}); }catch(_){ } }
  let tab='posts', editing=false, songEl=null, urls=[];
  const css=document.createElement('style'); css.textContent=`
+#kProfile .pfPrevRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}#kProfile .pfPrev{flex:none;width:56px;height:56px;border-radius:50%;background:#222 center/cover no-repeat;border:2px solid #7ff}#kProfile .pfPrev.wide{width:112px;border-radius:10px}
 #kProfile{position:fixed;inset:0;z-index:9700;background:rgba(5,6,22,.98);overflow:auto;color:#fff;padding:0 0 calc(230px + env(safe-area-inset-bottom,0px));padding-right:var(--kRailW,58px)}
 #kProfile[hidden]{display:none!important}
 #kProfile .pfIn{max-width:920px;margin:0 auto;padding:0 16px}
@@ -21294,11 +21301,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   d.addEventListener('click',onClick); d.addEventListener('change',onChange); return d; }
  const url=b=>{ try{ const u=URL.createObjectURL(b); urls.push(u); return u; }catch(_){ return ''; } };
  function freeUrls(){ urls.forEach(u=>{ try{ URL.revokeObjectURL(u); }catch(_){ } }); urls=[]; }
+ const shrink=(f,max)=>new Promise((res,rej)=>{ try{ const r=new FileReader(); r.onerror=()=>rej(r.error); r.onload=()=>{ const im=new Image(); im.onload=()=>{ try{ const k=Math.min(1,max/Math.max(im.naturalWidth||1,im.naturalHeight||1)); const w=Math.max(1,Math.round(im.naturalWidth*k)), h=Math.max(1,Math.round(im.naturalHeight*k)); const cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); res(cv.toDataURL('image/jpeg',.85)); }catch(e){ res(String(r.result||'')); } }; im.onerror=()=>rej(new Error('not an image')); im.src=r.result; }; r.readAsDataURL(f); }catch(e){ rej(e); } });
  async function img(id){ if(!id) return ''; try{ const it=await KLIB.get(id); return it&&it.blob?url(it.blob):''; }catch(_){ return ''; } }
  async function paint(){ const d=box(); freeUrls(); const {m,x}=me(); const z=zprof(); const birth=x.birth||z.date||''; const s=sunOf(birth), an=animalOf(birth), L=letterOf(birth);
   let posts=[], works=[]; try{ posts=await KLIB.list('post'); }catch(_){ } try{ works=(await KLIB.list()).filter(i=>i.kind!=='post'); }catch(_){ }
   const likes=posts.reduce((a,p)=>a+((p.meta&&p.meta.likes)||0),0);
-  const cover=await img(x.cover), photo=m.photo?await img(m.photo):'';
+  const cover=x.coverData||await img(x.cover), photo=m.photoData||(m.photo?await img(m.photo):'');
   if(editing) return paintEdit(d,m,x,z);
   const chips=[]; if(s!=null) chips.push(SIGNS[s][0]+' '+SIGNS[s][1]); if(an) chips.push('🏮 '+an+' (Chinese zodiac)'); if(L!=null) chips.push('🧭 '+ring(L)[0]+' '+ring(L)[1]+' · your compass letter'); if(x.city||z.city) chips.push('📍 '+(x.city||z.city)); (x.music||[]).forEach(g=>chips.push('🎵 '+g)); (x.story||[]).forEach(g=>chips.push('📖 '+g));
   const song=x.song?('<div class="pfSong"><span>🎶 Profile song: <b>'+esc(x.song.name)+'</b></span><button type="button" data-pf="songplay" data-noul>▶ Play</button><button type="button" data-pf="songstop" data-noul>■ Stop</button></div>'):'';
@@ -21327,7 +21335,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   d.innerHTML='<div class="kBar" data-sc="kProfile"><button type="button" data-ka="close" data-pf="close" aria-label="Close">✕</button></div><div class="pfIn" style="padding-top:12px"><h2>✏️ Edit profile</h2><div class="pfForm">'+
    '<label>Name<input id="pfNm" maxlength="40" value="'+esc(m.name||'')+'"></label><label>@handle<input id="pfHd" maxlength="24" value="'+esc(m.handle||'')+'"></label><label>Bio<textarea id="pfBio" rows="3" maxlength="300">'+esc(m.bio||'')+'</textarea></label>'+
    '<label>Birth date (picks your sign and your compass letter)<input type="date" id="pfBd" value="'+esc(x.birth||z.date||'')+'"></label><label>Birth time (optional, for LuvMyZodiac’s full chart)<input type="time" id="pfBt" value="'+esc(x.time||z.time||'')+'"></label><label>Birth city<input id="pfBc" maxlength="60" value="'+esc(x.city||z.city||'')+'"></label>'+
-   '<label>Photo<input type="file" id="pfPh" accept="image/*"></label><label>Cover picture<input type="file" id="pfCv" accept="image/*"></label>'+
+   '<label>Photo<span class="pfPrevRow"><span id="pfPhPrev" class="pfPrev"'+(m.photoData?' style="background-image:url('+m.photoData+')"':'')+'></span><input type="file" id="pfPh" accept="image/*"></span></label><label>Cover picture<span class="pfPrevRow"><span id="pfCvPrev" class="pfPrev wide"'+(x.coverData?' style="background-image:url('+x.coverData+')"':'')+'></span><input type="file" id="pfCv" accept="image/*"></span></label>'+
    '<div><b style="font-size:13px">Avatar (shown when there is no photo)</b><div class="pfPick">'+AV.map(a=>'<button type="button" data-pfa="'+a+'" aria-pressed="'+(m.avatar===a)+'" data-noul>'+a+'</button>').join('')+'</div></div>'+
    '<label>Profile song<select id="pfSg"><option value="">Pick from my music…</option></select></label><label>…or upload a song<input type="file" id="pfSu" accept="audio/*"></label>'+
    '<div><b style="font-size:13px">Favourite music genres</b><div class="pfPick pfInt" data-grp="music">'+sel(MUSIC,x.music)+'</div></div>'+
@@ -21338,8 +21346,14 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   KLIB.list().then(L=>{ const s=$('pfSg'); if(!s) return; L.filter(i=>i.kind==='audio').forEach(i=>{ const o=document.createElement('option'); o.value=i.id; o.textContent=i.name; if(x.song&&x.song.id===i.id) o.selected=true; s.appendChild(o); }); }).catch(()=>{}); }
  let draft=null;
  async function onChange(e){ const t=e.target; if(!draft) return; const f=t.files&&t.files[0];
-  if(t.id==='pfPh'&&f){ const it=await KLIB.save({kind:'image',name:'Profile photo',blob:f,meta:{from:'profile'}}); draft.m.photo=it.id||it; say('📷 Photo ready. Press 💾 Save profile.'); }
-  if(t.id==='pfCv'&&f){ const it=await KLIB.save({kind:'image',name:'Profile cover',blob:f,meta:{from:'profile'}}); draft.x.cover=it.id||it; say('🖼 Cover ready. Press 💾 Save profile.'); }
+  if(t.id==='pfPh'&&f){ say('📷 Putting your photo on…'); let data='', id=null; try{ data=await shrink(f,512); }catch(_){ } try{ const it=await KLIB.save({kind:'image',name:'Profile photo',blob:f,meta:{from:'profile'}}); id=it&&(it.id||it); }catch(_){ }
+   if(!data&&!id) return say('📷 That file is not a picture this browser can read. Try a JPG or PNG photo.');
+   draft.m.photo=id||draft.m.photo||''; draft.m.photoData=data||''; const cur=me(); cur.m.photo=draft.m.photo; cur.m.photoData=draft.m.photoData; await saveAll(cur.m,cur.x);
+   const pv=$('pfPhPrev'); if(pv) pv.style.backgroundImage='url('+(data||await img(id))+')'; say('📷 Your photo is on your profile and in Social.'); }
+  if(t.id==='pfCv'&&f){ say('🖼 Putting your cover on…'); let data='', id=null; try{ data=await shrink(f,1200); }catch(_){ } try{ const it=await KLIB.save({kind:'image',name:'Profile cover',blob:f,meta:{from:'profile'}}); id=it&&(it.id||it); }catch(_){ }
+   if(!data&&!id) return say('🖼 That file is not a picture this browser can read. Try a JPG or PNG.');
+   draft.x.cover=id||draft.x.cover||''; draft.x.coverData=data||''; const cur=me(); cur.x.cover=draft.x.cover; cur.x.coverData=draft.x.coverData; await saveAll(cur.m,cur.x);
+   const pv=$('pfCvPrev'); if(pv) pv.style.backgroundImage='url('+(data||await img(id))+')'; say('🖼 Your cover is on your profile.'); }
   if(t.id==='pfSu'&&f){ const it=await KLIB.save({kind:'audio',name:f.name.replace(/\.[^.]+$/,''),blob:f,meta:{from:'profile'}}); draft.x.song={id:it.id||it,name:f.name.replace(/\.[^.]+$/,'')}; say('🎶 Song ready. Press 💾 Save profile.'); }
   if(t.id==='pfSg'){ draft.x.song=t.value?{id:t.value,name:t.selectedOptions[0].textContent}:null; } }
  function stopSong(){ if(songEl){ try{ songEl.pause(); }catch(_){ } songEl=null; } }
@@ -26625,7 +26639,7 @@ html body #kbTop.kFloat.kFOn > h4{order:-7}html body #kbTop.kFloat.kFOn > #kbWhe
 <script>
 (()=>{ /* ⏱ THE SPEED KNOB, THE CLICK AND THE BEAT LIGHT (v225), built into both floating devices (the 16 pads and the keyboard).
    The knob is the studio's one tempo (40 to 240 BPM): drag it up or down, roll the wheel, or use the arrow keys; its gauge shows where
-   you are, green to red. 🔔 CLICK switches the studio's metronome. The light flashes on every beat (red on bar one). The sequencer,
+   you are, green to red. 🔔 CLICK switches the studio's metronome, and its sound list picks beep, woodblock, cowbell, rim click, hi-hat or soft tick. The light flashes on every beat (red on bar one). The sequencer,
    the mixing board and every device follow the same tempo, because it is the same control. */
  const $=id=>document.getElementById(id); const PS=()=>window.PADSTUDIO; const press=id=>{ const b=$(id); if(b){ b.click(); return true; } return false; };
  const clickOn=()=>{ const c=$('padClick'); const t=c?c.textContent:''; return /on/i.test(t)&&!/off/i.test(t); };
@@ -26646,28 +26660,41 @@ html body .kSpd .knob{width:58px!important;height:58px!important;min-width:0!imp
 .kSpd .led{width:14px;height:14px;border-radius:50%;background:#2a2f3a;border:2px solid #444a5a;flex:none}
 .kSpd .led.b{background:#7cff8a;box-shadow:0 0 10px #7cff8a}.kSpd .led.d{background:#ff3b4f;box-shadow:0 0 12px #ff3b4f}
 .kSpd .lbl{font:800 10px system-ui,sans-serif;color:#9aa3b8;letter-spacing:.08em;text-transform:uppercase}
+html body .kSpd select.snd{min-height:30px!important;max-width:112px;border-radius:8px!important;font:700 12px system-ui,sans-serif!important;background:#2c303b!important;color:#fff!important;border:2px solid #444a5a!important;padding:0 4px!important}
 @media (max-height:700px){ html body .kSpd .knob{width:44px!important;height:44px!important;max-width:44px!important} .kSpd .col > .lbl{display:none} .kSpd .clk{min-height:36px!important;min-width:48px} .kSpd .fine button{min-height:22px!important} }`; document.head.appendChild(css);
+ /* 🔔 the click's sound: the sequencer asks KCLICK.play for every click; Beep keeps the studio's own square-wave click */
+ const SND=[['beep','Beep'],['wood','Woodblock'],['cow','Cowbell'],['rim','Rim click'],['hat','Hi-hat'],['soft','Soft tick']];
+ let snd='beep'; try{ snd=localStorage.getItem('kanin-click-snd')||'beep'; }catch(_){ } if(!SND.some(x=>x[0]===snd)) snd='beep';
+ const envl=(g,t,peak,dec)=>{ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+0.002); g.gain.exponentialRampToValueAtTime(0.0001,t+dec); };
+ let nbuf=null; const noiseBuf=c=>{ if(nbuf&&nbuf.sampleRate===c.sampleRate) return nbuf; const b=c.createBuffer(1,Math.floor(c.sampleRate*0.1),c.sampleRate); const ch=b.getChannelData(0); for(let i=0;i<ch.length;i++) ch[i]=Math.random()*2-1; nbuf=b; return b; };
+ function clickPlay(c,dst,t,lvl){ if(snd==='beep') return false; lvl=Math.max(0,Math.min(2,lvl|0)); const amp=[.35,.55,.8][lvl];
+  if(snd==='wood'||snd==='soft'){ const o=c.createOscillator(), g=c.createGain(); o.type=snd==='wood'?'triangle':'sine'; o.frequency.value=(snd==='wood'?[820,1000,1250]:[660,880,1320])[lvl]; o.connect(g); g.connect(dst); envl(g,t,amp*(snd==='soft'?.5:1),snd==='wood'?.06:.08); o.start(t); o.stop(t+.12); return true; }
+  if(snd==='cow'){ const g=c.createGain(), bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=900; bp.Q.value=3; [540,800].forEach(f=>{ const o=c.createOscillator(); o.type='square'; o.frequency.value=f*(lvl===2?1.12:1); o.connect(bp); o.start(t); o.stop(t+.2); }); bp.connect(g); g.connect(dst); envl(g,t,amp*.6,.16); return true; }
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c); const f=c.createBiquadFilter(); if(snd==='rim'){ f.type='bandpass'; f.frequency.value=[2600,3200,3800][lvl]; f.Q.value=4; } else { f.type='highpass'; f.frequency.value=7000; } const g=c.createGain(); src.connect(f); f.connect(g); g.connect(dst); envl(g,t,amp*(snd==='rim'?1.2:.7),snd==='rim'?.03:.045); src.start(t); src.stop(t+.08); return true; }
+ let pctx=null; function preview(){ try{ pctx=pctx||new (window.AudioContext||window.webkitAudioContext)(); if(pctx.state==='suspended') pctx.resume(); const t=pctx.currentTime+0.02; if(!clickPlay(pctx,pctx.destination,t,2)){ const o=pctx.createOscillator(), g=pctx.createGain(); o.type='square'; o.frequency.value=1800; o.connect(g); g.connect(pctx.destination); envl(g,t,.3,.03); o.start(t); o.stop(t+.06); } }catch(_){ } }
  const R=24, C=29, A0=-135, A1=135; const pt=a=>{ const r=(a-90)*Math.PI/180; return [C+R*Math.cos(r),C+R*Math.sin(r)]; };
  const arc=(a,b)=>{ const [x0,y0]=pt(a), [x1,y1]=pt(b); return 'M'+x0.toFixed(2)+' '+y0.toFixed(2)+' A'+R+' '+R+' 0 '+(b-a>180?1:0)+' 1 '+x1.toFixed(2)+' '+y1.toFixed(2); };
  const col=f=>f<.5?'#7cff8a':f<.78?'#ffe94a':'#ff6b6b';
  function knobSVG(v){ const f=(v-40)/200, a=A0+f*(A1-A0); const [px,py]=pt(a); return '<svg viewBox="0 0 58 58" width="100%" height="100%" aria-hidden="true"><circle cx="29" cy="29" r="27" fill="#14161c" stroke="#3a3f4d" stroke-width="2"/><path d="'+arc(A0,A1)+'" stroke="#2c303b" stroke-width="5" fill="none" stroke-linecap="round"/><path d="'+arc(A0,Math.max(A0+1,a))+'" stroke="'+col(f)+'" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="'+px.toFixed(2)+'" cy="'+py.toFixed(2)+'" r="3.5" fill="#fff"/><text x="29" y="32" text-anchor="middle">'+v+'</text><text class="u" x="29" y="42" text-anchor="middle">BPM</text></svg>'; }
- function block(){ const d=document.createElement('div'); d.className='kSpd'; d.innerHTML='<div class="col"><span class="lbl">Speed</span><div class="knob" role="slider" tabindex="0" aria-label="Speed (tempo)" aria-valuemin="40" aria-valuemax="240"></div></div><div class="col"><div class="fine"><button type="button" data-sp="-1" aria-label="One slower" data-noul>−</button><button type="button" data-sp="1" aria-label="One faster" data-noul>+</button></div><span class="led" aria-hidden="true"></span></div><button type="button" class="clk" data-sp="click" title="Metronome click" data-noul>🔔<span>Click</span></button>';
+ function block(){ const d=document.createElement('div'); d.className='kSpd'; d.innerHTML='<div class="col"><span class="lbl">Speed</span><div class="knob" role="slider" tabindex="0" aria-label="Speed (tempo)" aria-valuemin="40" aria-valuemax="240"></div></div><div class="col"><div class="fine"><button type="button" data-sp="-1" aria-label="One slower" data-noul>−</button><button type="button" data-sp="1" aria-label="One faster" data-noul>+</button></div><span class="led" aria-hidden="true"></span></div><button type="button" class="clk" data-sp="click" title="Metronome click" data-noul>🔔<span>Click</span></button><select class="snd" aria-label="Click sound" data-nodice>'+SND.map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join('')+'</select>';
   const k=d.querySelector('.knob'); let drag=null;
   k.addEventListener('pointerdown',e=>{ drag={y:e.clientY,v:bpmNow()}; try{ k.setPointerCapture(e.pointerId); }catch(_){ } e.preventDefault(); e.stopPropagation(); });
   k.addEventListener('pointermove',e=>{ if(!drag) return; setBpm(drag.v+(drag.y-e.clientY)/2.5); paint(); });
   const end=()=>{ drag=null; }; k.addEventListener('pointerup',end); k.addEventListener('pointercancel',end);
   k.addEventListener('wheel',e=>{ e.preventDefault(); setBpm(bpmNow()+(e.deltaY<0?1:-1)*(e.shiftKey?5:1)); paint(); },{passive:false});
   k.addEventListener('keydown',e=>{ const s={ArrowUp:1,ArrowRight:1,ArrowDown:-1,ArrowLeft:-1,PageUp:10,PageDown:-10}[e.key]; if(s){ e.preventDefault(); e.stopPropagation(); setBpm(bpmNow()+s); paint(); } });
+  d.addEventListener('change',e=>{ if(!e.target.classList.contains('snd')) return; e.stopPropagation(); snd=e.target.value; try{ localStorage.setItem('kanin-click-snd',snd); }catch(_){ } preview(); paint(); });
   d.addEventListener('click',e=>{ const b=e.target.closest('[data-sp]'); if(!b) return; e.stopPropagation(); if(b.dataset.sp==='click') press('padClick'); else setBpm(bpmNow()+(+b.dataset.sp)); paint(); });
   return d; }
  function ensure(host){ if(!host) return null; let d=host.querySelector('.kSpd'); if(d) return d; const row=host.querySelector('.mr2'); if(!row) return null; d=block(); row.insertBefore(d,row.firstChild); return d; }
  let lastV=-1, lastClick=null;
- function paint(){ const v=bpmNow(), ck=clickOn(); document.querySelectorAll('.kSpd').forEach(d=>{ const k=d.querySelector('.knob'); if(k.__v!==v){ k.innerHTML=knobSVG(v); k.__v=v; k.setAttribute('aria-valuenow',String(v)); } d.querySelector('.clk').classList.toggle('on',ck); }); }
+ function paint(){ const v=bpmNow(), ck=clickOn(); document.querySelectorAll('.kSpd').forEach(d=>{ const k=d.querySelector('.knob'); if(k.__v!==v){ k.innerHTML=knobSVG(v); k.__v=v; k.setAttribute('aria-valuenow',String(v)); } d.querySelector('.clk').classList.toggle('on',ck); const sl=d.querySelector('.snd'); if(sl&&sl.value!==snd) sl.value=snd; }); }
  /* the beat light follows the loop's own playhead */
  let lastBeat=-1; function led(){ const P=window.PADS||{}; const ps=PS(); const spb=(ps&&ps.spbN)||16, per=Math.max(1,spb/4); let cls=''; if(P.playing&&P.step>=0){ const beat=Math.floor(P.step/per); if(P.step%per===0||beat!==lastBeat){ lastBeat=beat; } const within=(P.step%per)/per; if(within<0.5) cls=P.step%spb<per?'d':'b'; } else lastBeat=-1; document.querySelectorAll('.kSpd .led').forEach(l=>{ if(l.className!=='led'+(cls?' '+cls:'')) l.className='led'+(cls?' '+cls:''); }); requestAnimationFrame(led); }
  requestAnimationFrame(led);
  setInterval(()=>{ const pad=$('pad'); if(!pad||!pad.classList.contains('on')) return; ensure($('mpcBar')); ensure($('kbDash')); paint(); },300);
  window.KSPEED={setBpm,bpm:bpmNow,paint};
+ window.KCLICK={sounds:SND,get sound(){ return snd; },set(v){ if(SND.some(x=>x[0]===v)){ snd=v; try{ localStorage.setItem('kanin-click-snd',v); }catch(_){ } paint(); } },play:clickPlay};
 })();
 
 </script>
@@ -27659,6 +27686,24 @@ html body .kSpd .knob{width:58px!important;height:58px!important;min-width:0!imp
   if(!vis('pad')) floatsShut(); }
  setInterval(watch,400); watch();
  window.KONE={open:openNow,closeAllBut,closeApp};
+})();
+
+</script>
+<script>
+(()=>{ /* GAME FAMILIES IN ORDER OF USE (v230). The Games screen's Category list runs from the families people reach for most to the
+   least, each with its count: video games, arcade, cards, board, puzzle, word, mobile hits, game shows, casino, dice, carnival and
+   sports, dominoes, mahjong. The values stay the family names, so every part of the games engine reads them as before. */
+ const ORDER=['Video games','Arcade','Cards','Board','Puzzle','Word','Mobile hits','Game Shows','Casino','Dice','Carnival & Sports','Dominoes','Mahjong'];
+ const rank=v=>{ const i=ORDER.indexOf(v); return i<0?ORDER.length:i; };
+ function fix(){ const g=document.getElementById('gamesDock'); if(!g||!window.GAMES||!GAMES.list) return;
+  const s=[...g.querySelectorAll('select')].find(x=>x.getAttribute('aria-label')==='Category'); if(!s||!s.options.length) return;
+  const cnt={}; GAMES.list.forEach(x=>{ cnt[x.cat]=(cnt[x.cat]||0)+1; });
+  const opts=[...s.options]; const sorted=opts.slice().sort((a,b)=>rank(a.value)-rank(b.value));
+  const inOrder=sorted.every((o,i)=>o===opts[i]); const label=o=>o.value+(cnt[o.value]?' · '+cnt[o.value]:'');
+  if(inOrder&&opts.every(o=>o.textContent===label(o))) return;
+  const keep=s.value; sorted.forEach(o=>{ o.textContent=label(o); s.appendChild(o); }); s.value=keep; }
+ setInterval(fix,700); fix();
+ window.KGORD={order:ORDER,fix};
 })();
 
 </script>

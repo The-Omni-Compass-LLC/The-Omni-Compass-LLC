@@ -58,7 +58,7 @@ html body #rDock#rDock #kdSocial.on{background:#ffe94a!important}`; document.hea
  function box(){ let d=$('kSocial'); if(!d){ d=document.createElement('div'); d.id='kSocial'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','DD Universe Social'); document.body.appendChild(d); d.addEventListener('click',onClick); d.addEventListener('change',onChange); d.addEventListener('input',onInput); } return d; }
  const av=(p)=>'<div class="soAv">'+(p&&p.photoUrl?'<img alt="" src="'+esc(p.photoUrl)+'">':esc((p&&p.avatar)||'🌟'))+'</div>';
  const TABS=[['feed','🏠 Feed'],['create','➕ Create'],['profile','👤 Profile'],['library','📚 Library'],['about','ℹ About']];
- async function paint(){ const d=box(); if(d.hidden) return; await loadMine(); if(me&&me.photo){ const u=await mediaURL(me.photo); me.photoUrl=u&&u.url; }
+ async function paint(){ const d=box(); if(d.hidden) return; await loadMine(); if(me&&me.photoData){ me.photoUrl=me.photoData; } else if(me&&me.photo){ const u=await mediaURL(me.photo); me.photoUrl=u&&u.url; }
   let body='';
   if(needMe()&&tab!=='about') body=profileForm(true);
   else if(tab==='feed') body=await feed(); else if(tab==='create') body=createForm(); else if(tab==='profile') body=await profile(); else if(tab==='library') body=await library(); else body=about();
@@ -155,7 +155,7 @@ html body #rDock#rDock #kdSocial.on{background:#ffe94a!important}`; document.hea
    case 'ldel': if(lc){ if(!b.dataset.sure){ b.dataset.sure='1'; b.textContent='Tap again'; return; } await KLIB.del(lc.dataset.lid); say('🗑 Deleted from this device.'); paint(); } return; } }
  async function onChange(e){ const t=e.target; const f=t.files&&t.files[0];
   if((t.id==='soFile'||t.id==='soCam')&&f){ draft.text=($('soText')||{}).value||draft.text; const it=await addFile(f); draft.media=it.id; t.value=''; return hydrate(); }
-  if(t.id==='soPhoto'&&f){ const it=await addFile(f,'Profile photo'); me=me||{}; me.photo=it.id; const keep=Object.assign({},me); delete keep.photoUrl; putLS('kanin-me',keep); return paint(); }
+  if(t.id==='soPhoto'&&f){ const shrink=(f,max)=>new Promise((res,rej)=>{ try{ const r=new FileReader(); r.onerror=()=>rej(r.error); r.onload=()=>{ const im=new Image(); im.onload=()=>{ try{ const k=Math.min(1,max/Math.max(im.naturalWidth||1,im.naturalHeight||1)); const w=Math.max(1,Math.round(im.naturalWidth*k)), h=Math.max(1,Math.round(im.naturalHeight*k)); const cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); res(cv.toDataURL('image/jpeg',.85)); }catch(e){ res(String(r.result||'')); } }; im.onerror=()=>rej(new Error('not an image')); im.src=r.result; }; r.readAsDataURL(f); }catch(e){ rej(e); } }); let data='', id=null; try{ data=await shrink(f,512); }catch(_){ } try{ const it=await addFile(f,'Profile photo'); id=it&&it.id; }catch(_){ } if(!data&&!id){ say('🖼 That file is not a picture this browser can read. Try a JPG or PNG photo.'); return; } me=me||{}; me.photo=id||me.photo||''; me.photoData=data||''; const keep=Object.assign({},me); delete keep.photoUrl; putLS('kanin-me',keep); say('🖼 Your photo is on your profile.'); return paint(); }
   if(t.id==='soAdd'&&t.files){ for(const x of t.files) await addFile(x); say('➕ Added to your library.'); t.value=''; return paint(); }
   if(t.id==='soMemeImg'&&f){ draft.meme={img:await loadImg(f)}; return drawMeme(); }
   if(t.id==='soMemeLib'&&t.value){ const it=await KLIB.get(t.value); if(it&&it.blob){ draft.meme={img:await loadImg(it.blob)}; drawMeme(); } } }
