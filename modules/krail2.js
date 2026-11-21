@@ -45,8 +45,8 @@ html body #tourTab > .kMenuH:first-of-type{grid-column:1!important}`; document.h
  /* ☰ THE MENU IN TWO COLUMNS, MOST USED FIRST: ✍️ Make on the left, 🎮 Play & explore on the right, each in the order people use
     them most (story builder, games, studio, Omni-Compass, LuvMyZodiac first); the cannon, the level and the quote move under the list. */
  const LEFT=['📖 Make a story','🎛 Studio','🎤 Karaoke','🎵 Music','✍️ Songwriter','🎨 The Easel','🎬 Video studio','🎙 Voices','📖 Storybook','🗂 Story library','📚 My library','📁 Projects','🧭 Layers','🛠 Craft','🧬 Mutate','🌐 Language','🔒 Lock & shuffle','⌨ Keyboards'];
- const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','🎓 Cooking school','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
- const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','🎓 Cooking school','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
  function menu(){ const t=document.getElementById('tourTab'); if(!t||!t.getClientRects().length) return; if(t.style.gridAutoFlow!=='row dense') t.style.gridAutoFlow='row dense';
   if(!t.querySelector('.kMenuH')){ [['✍️ Make','Stories, beats, songs, art, video',1,36],['🎮 Play & explore','Games, Compass, Zodiac, recipes, AI',2,37]].forEach(([h,sm,col,o])=>{ const e=document.createElement('div'); e.className='kMenuH'; e.innerHTML=h+'<small>'+sm+'</small>'; e.style.gridColumn=String(col); e.style.order=String(o); t.appendChild(e); }); }
   const cnt={1:0,2:0};
@@ -57,4 +57,8 @@ html body #tourTab > .kMenuH:first-of-type{grid-column:1!important}`; document.h
  setInterval(menu,700); document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#lpMenu')) setTimeout(menu,60); },true);
  window.KMENU2={menu};
  window.KRAILFIT=fit;
+ /* v228: Recipes alone in the Menu (the cooking school entry is gone). */
+ const xs=document.createElement('style'); xs.textContent='#tourTab #ttSchool,#ttSchool{display:none!important}'; document.head.appendChild(xs);
+ /* the Menu's game count follows the games as they load (it read 209 when it was made before the last games registered) */
+ setInterval(()=>{ const b=document.getElementById('ttVG'); if(b&&window.GAMES&&GAMES.list){ const t='🕹 Video games: '+GAMES.list.length+' games'; if(b.textContent!==t) b.textContent=t; } },2000);
 })();

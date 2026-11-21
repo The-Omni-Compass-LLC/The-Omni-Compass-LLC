@@ -20430,7 +20430,7 @@ html body #rDock#rDock :is(#kdIPads,#kdIKeys,#kdIDJ)[hidden]{display:none!import
  const press=sel=>{ const b=typeof sel==='string'?document.querySelector(sel):sel; if(b){ b.click(); return true; } return false; };
  /* what ▶ Play means on each screen */
  const PLAY={pad:()=>press('#bbPlay')||(PADSTUDIO.play(),true),kKara:()=>press('#kKara [data-kk="play"]'),musicDock:()=>press('#mPP'),voiceDock:()=>press('#vcRead'),langDock:()=>press('#lRead'),zodDock:()=>press('#zodSay'),omniDock:()=>press('#otPlay'),aivDock:()=>press('#aivPlay'),sbDock:()=>press('#sbpPlay'),sbp:()=>press('#sbpPlay'),mutDock:()=>press('#mutAPlay'),swDock:()=>press('#swBeat'),kHumor:()=>press('#kHumor [data-kh="daysay"]'),kOwner:()=>press('#kOwner [data-ko="say"]'),
-  gamesDock:()=>{ const b=[...document.querySelectorAll('#gamesDock .gbar button')].find(x=>/Start|Play|Resume|again/.test(x.textContent)); return press(b); }};
+  gamesDock:()=>{ const all=[...document.querySelectorAll('#gamesDock button')].filter(x=>x.getClientRects().length&&!x.disabled); const b=all.find(x=>x.closest('.gbar')&&/Start|Play|Resume|again/.test(x.textContent))||all.find(x=>/^▶/.test(x.textContent.trim())&&!/^▶▶/.test(x.textContent.trim())); return b?press(b):false; }};
  const WHAT={pad:'your beat',kKara:'the karaoke track',musicDock:'the music',voiceDock:'the voices',langDock:'the reading',zodDock:'your reading',omniDock:'the compass',aivDock:'the video',sbDock:'the storybook',sbp:'the storybook',mutDock:'the song',swDock:'the song’s beat',kHumor:'the joke of the day',kOwner:'the owner’s word',gamesDock:'the game'};
  function doPlay(){ const id=cur(); const f=PLAY[id]; let ok=false; try{ ok=f?f():false; }catch(_){ }
   if(!ok){ try{ PADSTUDIO.play(); ok=true; say('▶ Playing your beat. Open 🎛 Studio to change it.'); }catch(_){ say('Open a screen with something to play, like 🎛 Studio or 🎤 Karaoke.'); } }
@@ -20495,7 +20495,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
    [['ttSoc','🌐 DD Universe Social',()=>KSOCIAL.open()],['ttProf','👤 My profile',()=>KSOCIAL.open('profile')],['ttMyLib','📚 My library (on this device)',()=>KSOCIAL.open('library')],['ttPost','➕ Make a post',()=>KSOCIAL.open('create')]].forEach(([id,l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.id=id; b.className='ttMusic'; b.textContent=l; b.style.order=String(101+i); b.dataset.kg='0'; b.dataset.kmSoc='1'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); }
   /* the big buttons at the top, most used first */
   const st=t.querySelector('.kStart'); if(st&&st.textContent!=='⭐ Most used'){ st.textContent='⭐ Most used'; }
-  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['🔒 Lock & shuffle',()=>KLOCK.open()],['🎓 Knowledge library',()=>KKNOW.open()],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }],['🎲 Games · 143',()=>KRAIL.goTo('gamesDock')],['✍️ Songwriter',()=>KRAIL.goTo('swDock')],['📖 Storybook',()=>KRAIL.goTo('sbDock')],['🎙 Voices',()=>KRAIL.goTo('voiceDock')],['🌐 Language',()=>KRAIL.goTo('langDock')],['🧭 Layers',()=>KRAIL.goTo('layDock')],['🛠 Craft',()=>KRAIL.goTo('craftDock')],['🧬 Mutate',()=>KRAIL.goTo('mutDock')],['🗂 Story library',()=>{ GOHOME(); setTimeout(()=>{ const e=document.getElementById('s-lib'); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },500); }],['🗺 All sections',()=>KRAIL.goTo('mapDock')],['❓ Ask KAN-IN',()=>KRAIL.goTo('askDock')]];
+  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['🔒 Lock & shuffle',()=>KLOCK.open()],['🎓 Knowledge library',()=>KKNOW.open()],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }],['🎲 Games · '+((window.GAMES&&GAMES.list&&GAMES.list.length)||239),()=>KRAIL.goTo('gamesDock')],['✍️ Songwriter',()=>KRAIL.goTo('swDock')],['📖 Storybook',()=>KRAIL.goTo('sbDock')],['🎙 Voices',()=>KRAIL.goTo('voiceDock')],['🌐 Language',()=>KRAIL.goTo('langDock')],['🧭 Layers',()=>KRAIL.goTo('layDock')],['🛠 Craft',()=>KRAIL.goTo('craftDock')],['🧬 Mutate',()=>KRAIL.goTo('mutDock')],['🗂 Story library',()=>{ GOHOME(); setTimeout(()=>{ const e=document.getElementById('s-lib'); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },500); }],['🗺 All sections',()=>KRAIL.goTo('mapDock')],['❓ Ask KAN-IN',()=>KRAIL.goTo('askDock')]];
    t.querySelectorAll('.kStartB').forEach(b=>b.remove()); TOP.forEach(([l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.className='ttMusic kStartB'; b.textContent=l; b.style.order=String(41+i); b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); } }
  setInterval(menu,1000);
  window.KSTUDIO={playing,play:doPlay,bank:b=>{ bank=b; paintHead(); console24(); }};
@@ -20504,7 +20504,8 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
 </script>
 <script>
 (()=>{ /* THE REMOTE: one small control panel floating over every screen's canvas. Drag it anywhere (phone or desktop), shrink it to a
-   bubble, open it again. ▶ Play · ■ Stop · ⏺ Record · ↶ Undo · 🔁 Loop · ✕ Close, plus the buttons that screen needs. */
+   bubble, open it again. The same seven buttons on every screen: ⏮ Rewind · ▶ Play · ■ Stop · ⏺ Record · ⏭ Skip · ↶ Undo · ✕ Close.
+   Play plays what is on the screen (a paused track or video, else the screen's own play button, else the studio song). */
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
@@ -20539,7 +20540,12 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  const ovl=()=>{ for(const id of Object.keys(OVL)){ const e=$(id); if(e&&!e.hidden&&getComputedStyle(e).display!=='none') return id; } return null; };
  const here=()=>ovl()||cur(); NAME.kRec='Recipes'; NAME.kFind='Find'; let lastHere='';
  const ACT={
-  play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
+  play:()=>{ const id=here(); const k=$('kStopBtn'); const SAME=['pad','kKara','musicDock','voiceDock','langDock','zodDock','omniDock','aivDock','sbDock','sbp','mutDock','swDock','kHumor','kOwner','gamesDock','home'];
+   if(!ovl()&&SAME.includes(id)&&k){ if(k.classList.contains('kStop')) return say('▶ Already playing. ■ Stop ends it.'); k.click(); return; }
+   const scr=ovl()?$(ovl()):$(id)||document.body; const vis=b=>b.getClientRects().length&&!b.disabled&&!b.closest('#kRemote,#rDock,#kXAll');
+   const media=[...scr.querySelectorAll('audio,video')].find(m=>m.paused&&(m.currentSrc||m.src)); if(media){ try{ const p=media.play(); if(p&&p.catch) p.catch(()=>{}); say('▶ Playing.'); return; }catch(_){ } }
+   const own=[...scr.querySelectorAll('button')].filter(vis).find(b=>{ const t=(b.textContent||'').trim(), a=(b.getAttribute('aria-label')||'')+' '+(b.title||''); return /^(▶|⏯)/.test(t)&&!/^▶▶/.test(t)||/^play\b/i.test(t)||/^play\b/i.test(a.trim()); });
+   if(own){ own.click(); return; } try{ KSTUDIO.play(); say('▶ Playing your studio song.'); }catch(_){ say('▶ Nothing to play on this screen.'); } },
   stop:()=>{ stopAll(); say('■ Stopped.'); },
   rec:()=>{ const id=cur(); if(id==='pad') return press('#bbRec')||say('Open the Studio first.'); if(id==='kKara') return press('#kKara [data-kk="rec"]'); try{ KKARA.open(); setTimeout(()=>press('#kKara [data-kk="rec"]'),500); }catch(_){ } },
   undo:()=>{ if(window.KUNDO) return KUNDO.any(); ACT.undoScreen(); },
@@ -23389,7 +23395,7 @@ items:[['Building a menu','Balance: hot and cold, rich and fresh, color and crun
  const KEYS={cul:d=>d.cul===S.cul,gen:d=>S.gen==='fav'?S.fav.includes(d.id):d.gen.includes(S.gen),meth:d=>d.meth.includes(S.meth),diet:d=>d.diet.includes(S.diet),reg:d=>d.reg.includes(S.reg),sub:d=>d.sub.includes(S.sub),meal:d=>d.meal.includes(S.meal),course:d=>d.c===S.course,size:d=>d.size.includes(S.size),ingr:d=>d.ingr.includes(S.ingr)};
  const filtered=(skip)=>{ const q=S.q.trim().toLowerCase(); const ws=q.split(/\s+/).filter(Boolean); return D.filter(d=>FILT.every(k=>k===skip||!S[k]||KEYS[k](d))&&(!ws.length||ws.every(w=>(d.name+' '+d.cul+' '+d.ing+' '+COURSE[d.c][0]+' '+d.gen.join(' ')+' '+d.meth.join(' ')+' '+d.ingr.join(' ')).toLowerCase().includes(w)))); };
  const sorted=L=>{ const s=S.sort; if(s==='az') return L.slice().sort((a,b)=>a.name.localeCompare(b.name)); if(s==='quick') return L.slice().sort((a,b)=>TIME[a.c]-TIME[b.c]||a.rank-b.rank); if(s==='cul') return L.slice().sort((a,b)=>a.cul.localeCompare(b.cul)||a.rank-b.rank); if(s==='course'){ const o=Object.keys(COURSE); return L.slice().sort((a,b)=>o.indexOf(a.c)-o.indexOf(b.c)||a.rank-b.rank); } return L; };
- const TABS=()=>[['cul','🌍 Cultures'],['reg','🗺 Regions'],['meal','🕐 Meals'],['course','🍽 Courses & sizes'],['gen','📚 Genres'],['ing','🥩 Ingredients'],['meth','🔥 Methods'],['diet','🥦 Diets & tastes'],['school','🎓 Cooking school'],['fav','⭐ Favorites ('+S.fav.length+')'],['list','🛒 Shopping list ('+S.list.length+')']];
+ const TABS=()=>[['cul','🌍 Cultures'],['reg','🗺 Regions'],['meal','🕐 Meals'],['course','🍽 Courses & sizes'],['gen','📚 Genres'],['ing','🥩 Ingredients'],['meth','🔥 Methods'],['diet','🥦 Diets & tastes'],['fav','⭐ Favorites ('+S.fav.length+')'],['list','🛒 Shopping list ('+S.list.length+')']];
  function render(){ const b=box(); b.innerHTML='<div class="rcTop"><h2>🍳 Recipes</h2><input id="rcQ" type="search" placeholder="Search '+D.length.toLocaleString()+' dishes and '+LESSONS.length+' lessons…" value="'+esc(S.q)+'" aria-label="Search recipes and cooking lessons"><button type="button" class="rcX" data-rc="close" aria-label="Close">✕</button></div>'
    +'<div class="rcTabs" role="tablist">'+TABS().map(([k,l])=>'<button type="button" role="tab" data-tab="'+k+'" class="'+(S.view===k||(k==='list'&&S.view==='shop')||(k==='fav'&&S.view==='list'&&S.gen==='fav')?'on':'')+'">'+l+'</button>').join('')+'</div><div class="rcChips" id="rcChips"></div><div class="rcBody" id="rcBody"></div>'; body(); try{ const on=b.querySelector('.rcTabs .on'), row=b.querySelector('.rcTabs'); if(on&&row&&row.scrollWidth>row.clientWidth) row.scrollLeft=Math.max(0,on.offsetLeft-row.clientWidth/2+on.offsetWidth/2); }catch(_){ } }
  const lab=(arr,k)=>{ const x=arr.find(a=>a[0]===k); return x?x[1]:k; };
@@ -23411,9 +23417,9 @@ items:[['Building a menu','Balance: hot and cold, rich and fresh, color and crun
    if(S.view==='course'&&!S.course&&!S.size){ el.innerHTML='<h3 class="rcH">📏 Little things to big things</h3><div class="rcTiles">'+SIZE.map(z=>tile('size',z[0],z[1],esc(z[3])+' · '+cnt(d=>d.size.includes(z[0]))+' dishes','#6a1b9a')).join('')+'</div><h3 class="rcH">🍽 Every course</h3><div class="rcTiles">'+Object.entries(COURSE).map(([k,[n,i]])=>tile('course',k,i+' '+esc(n),cnt(d=>d.c===k)+' dishes','#5c3a1c')).join('')+'</div>'; return; }
    if(S.view==='ing'&&!S.ingr){ el.innerHTML='<div class="rcTiles">'+ING.map(x=>tile('ingr',x[0],x[1],cnt(d=>d.ingr.includes(x[0]))+' dishes','#7a2e1c')).join('')+'</div>'; return; }
    if(S.view==='diet'&&!S.diet){ el.innerHTML='<div class="rcTiles">'+DIET.map(x=>tile('diet',x[0],x[1],cnt(d=>d.diet.includes(x[0]))+' dishes','#5c1f2e')).join('')+'</div>'; return; }
-   if(S.view==='meth'&&!S.meth){ el.innerHTML='<div class="rcTiles">'+METH.map(m=>tile('meth',m[0],m[1],cnt(d=>d.meth.includes(m[0]))+' dishes','#8a2f1a')).join('')+'</div><p class="rcNote" style="margin-top:10px">How each method works, step by step, with temperatures and times: <button type="button" data-tab="school" style="min-height:36px;border-radius:999px;padding:0 12px">🎓 Cooking school</button></p>'; return; }
+   if(S.view==='meth'&&!S.meth){ el.innerHTML='<div class="rcTiles">'+METH.map(m=>tile('meth',m[0],m[1],cnt(d=>d.meth.includes(m[0]))+' dishes','#8a2f1a')).join('')+'</div>'; return; }
   }
-  const L=sorted(filtered()); const les=S.q.trim()?schoolHits(S.q):[];
+  const L=sorted(filtered()); const les=[];
   const crs=S.course?'':Object.keys(COURSE).map(k=>[k,L.filter(d=>d.c===k).length]).filter(x=>x[1]).map(([k,n])=>'<button type="button" data-course="'+k+'">'+COURSE[k][1]+' '+COURSE[k][0]+' ('+n+')</button>').join('');
   let h='';
   if(les.length) h+='<h3 class="rcH">🎓 From the cooking school</h3><div class="rcTiles">'+les.slice(0,8).map(l=>'<button type="button" class="rcTile" data-les="'+l.sec+':'+l.k+'" style="background:linear-gradient(135deg,#25603a,#1b0f05)">'+l.icon+' '+esc(l.t)+'<small>'+esc(l.sect)+(l.f?' · '+esc(l.f.slice(0,70)):'')+'</small></button>').join('')+'</div>';
@@ -23429,7 +23435,7 @@ items:[['Building a menu','Balance: hot and cold, rich and fresh, color and crun
   if(!d.veg&&/beef|steak|pork|lamb|veal|goat|venison|bison|ribeye|chops|roast/i.test(t)&&!/ground|minced|mince/i.test(t)) temps.push('Whole cuts of beef, pork, lamb, veal: 145°F (63°C) and rest 3 minutes; tough cuts are tender at 195–205°F');
   if(d.ingr.includes('fish')||d.ingr.includes('shellfish')) temps.push('Fish and shellfish: 145°F (63°C), or opaque and flaking; raw dishes need fish sold for raw eating');
   if(d.gen.includes('eggs')&&!d.veg||/\beggs?\b|custard|quiche|frittata/i.test(t)) temps.push('Egg dishes: 160°F (71°C)');
-  return '<div class="rcSec"><h4>🎓 How to cook it</h4>'+(L.length?'<div class="rcOpt">'+L.join('')+'</div>':'<p class="rcNote">Open 🎓 Cooking school for every method, step and term.</p>')+(temps.length?'<ul class="rcNote">'+temps.map(x=>'<li>🌡 '+esc(x)+'</li>').join('')+'</ul>':'')+'<div class="rcOpt"><button type="button" data-les="steps:0">📋 How to follow any recipe</button><button type="button" data-les="safety:0">🧼 Food safety</button></div></div>'; }
+  return '<div class="rcSec"><h4>🎓 How to cook it</h4>'+(L.length?'<div class="rcOpt">'+L.join('')+'</div>':'')+(temps.length?'<ul class="rcNote">'+temps.map(x=>'<li>🌡 '+esc(x)+'</li>').join('')+'</ul>':'')+'<div class="rcOpt"><button type="button" data-les="steps:0">📋 How to follow any recipe</button><button type="button" data-les="safety:0">🧼 Food safety</button></div></div>'; }
  function detail(el){ const d=dish(S.open); if(!d){ S.open=null; return body(); } const r=S.recipe;
   el.innerHTML='<div class="rcDetail"><div class="rcBtns"><button type="button" data-rc="back">◀ Back</button></div><div class="rcHero" style="background:linear-gradient(135deg,'+d.col+',#2b1a0d)"><h3>'+COURSE[d.c][1]+' '+esc(d.name)+'</h3><p>'+d.flag+' '+esc(d.cul)+' · '+COURSE[d.c][0]+' · about '+TIME[d.c]+' min'+(d.veg?' · vegetarian':'')+'</p><p>Key ingredients: '+esc(d.ing)+'</p><p>'+d.meal.map(g=>lab(MEAL,g)).concat(d.gen.map(g=>lab(GEN,g)),d.ingr.map(g=>lab(ING,g)),d.meth.map(g=>lab(METH,g)),d.diet.map(g=>lab(DIET,g))).join(' · ')+'</p></div>'
    +'<div class="rcOpt">Servings '+[2,4,6,8,12,20].map(n=>'<button type="button" data-srv="'+n+'" class="'+(S.srv===n?'on':'')+'">'+n+'</button>').join('')+' · Units '+['US','Metric'].map(u=>'<button type="button" data-units="'+u+'" class="'+(S.units===u?'on':'')+'">'+u+'</button>').join('')+'</div>'
@@ -23529,12 +23535,11 @@ items:[['Building a menu','Balance: hot and cold, rich and fresh, color and crun
  let IDX=null;
  function build(){ const L=[]; const add=(grp,icon,label,sub,go)=>L.push({grp,icon,label,sub:sub||'',go,t:(label+' '+(sub||'')).toLowerCase()});
   const t=$('tourTab'); if(t) [...t.querySelectorAll('button')].forEach(b=>{ if(b.closest('.kLvlRow')) return; const tx=(b.textContent||'').trim().replace(/\s+/g,' '); if(!tx||tx.length>80) return; add('Places in KAN-IN','📍',tx,'from the Menu',()=>{ b.click(); }); });
-  [['🏠 Home',()=>{ try{ GOHOME(); }catch(_){ } }],['🎛 Studio',()=>KRAIL.goTo('pad')],['🎤 Karaoke',()=>KKARA.open()],['🤖 AI',()=>KAI.open()],['🍳 Recipes',()=>KREC.open()],['🎓 Cooking school',()=>KREC.school()],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['⌨ Keyboards and controllers',()=>KKBD.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['📁 Projects',()=>KPROJ.open()],['🎨 Easel',()=>KEASEL.open()],['🕹 All games',()=>KRAIL.goTo('gamesDock')],['🎓 Knowledge library',()=>KKNOW.open()],['🔒 Lock & shuffle',()=>KLOCK.open()]].forEach(([l,f])=>add('Places in KAN-IN',l.split(' ')[0],l.slice(l.indexOf(' ')+1),'screen',()=>{ try{ f(); }catch(_){ } }));
+  [['🏠 Home',()=>{ try{ GOHOME(); }catch(_){ } }],['🎛 Studio',()=>KRAIL.goTo('pad')],['🎤 Karaoke',()=>KKARA.open()],['🤖 AI',()=>KAI.open()],['🍳 Recipes',()=>KREC.open()],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['⌨ Keyboards and controllers',()=>KKBD.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['📁 Projects',()=>KPROJ.open()],['🎨 Easel',()=>KEASEL.open()],['🕹 All games',()=>KRAIL.goTo('gamesDock')],['🎓 Knowledge library',()=>KKNOW.open()],['🔒 Lock & shuffle',()=>KLOCK.open()]].forEach(([l,f])=>add('Places in KAN-IN',l.split(' ')[0],l.slice(l.indexOf(' ')+1),'screen',()=>{ try{ f(); }catch(_){ } }));
   try{ (KEYMAP.SECTIONS||[]).forEach(([,n,sel])=>add('Studio','🎛',n,'Studio section',()=>{ KRAIL.goTo('pad'); setTimeout(()=>{ const e=document.querySelector(sel); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },1300); })); }catch(_){ }
   [['🎚 Mixer · 40 tracks','#padMixer'],['🎚 40-track sequencer','#k40Seq'],['🧭 Omni-Compass governors','#kGovBoard'],['🎛 Console returns · reverb and echo','#kFXRet'],['🎚 Inputs','#kIO']].forEach(([n,sel])=>add('Studio','🎛',n.slice(n.indexOf(' ')+1),'Studio',()=>{ KRAIL.goTo('pad'); setTimeout(()=>{ if(sel==='#k40Seq'){ try{ K40.tab('40'); }catch(_){ } } const e=document.querySelector(sel); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },1300); }));
   try{ GAMES.list.forEach(g=>add('Games','🕹',g.name,g.cat,()=>{ try{ KRAIL.goTo('gamesDock'); }catch(_){ } setTimeout(()=>GAMES.open(g.id),300); })); }catch(_){ }
   try{ KREC.dishes().forEach(d=>add('Recipes','🍳',d.name,d.cul+' · '+d.ing,()=>KREC.open(d.name))); }catch(_){ }
-  try{ KREC.lessons().forEach(l=>add('Cooking school','🎓',l.t,l.sect+(l.f?' · '+l.f:''),()=>KREC.goLesson(l.sec+':'+l.k))); }catch(_){ }
   IDX=L; return L; }
  function search(q){ const L=IDX||build(); const words=q.toLowerCase().split(/\s+/).filter(Boolean); if(!words.length) return [];
   let R=L.map(x=>{ let s=0; for(const w of words){ const i=x.t.indexOf(w); if(i<0) return null; s+=(i===0?6:x.t.indexOf(' '+w)>=0?3:1)+(x.label.toLowerCase().includes(w)?4:0); } return [s,x]; }).filter(Boolean);
@@ -26418,8 +26423,8 @@ html body #tourTab > .kMenuH:first-of-type{grid-column:1!important}`; document.h
  /* ☰ THE MENU IN TWO COLUMNS, MOST USED FIRST: ✍️ Make on the left, 🎮 Play & explore on the right, each in the order people use
     them most (story builder, games, studio, Omni-Compass, LuvMyZodiac first); the cannon, the level and the quote move under the list. */
  const LEFT=['📖 Make a story','🎛 Studio','🎤 Karaoke','🎵 Music','✍️ Songwriter','🎨 The Easel','🎬 Video studio','🎙 Voices','📖 Storybook','🗂 Story library','📚 My library','📁 Projects','🧭 Layers','🛠 Craft','🧬 Mutate','🌐 Language','🔒 Lock & shuffle','⌨ Keyboards'];
- const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','🎓 Cooking school','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
- const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','🎓 Cooking school','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
  function menu(){ const t=document.getElementById('tourTab'); if(!t||!t.getClientRects().length) return; if(t.style.gridAutoFlow!=='row dense') t.style.gridAutoFlow='row dense';
   if(!t.querySelector('.kMenuH')){ [['✍️ Make','Stories, beats, songs, art, video',1,36],['🎮 Play & explore','Games, Compass, Zodiac, recipes, AI',2,37]].forEach(([h,sm,col,o])=>{ const e=document.createElement('div'); e.className='kMenuH'; e.innerHTML=h+'<small>'+sm+'</small>'; e.style.gridColumn=String(col); e.style.order=String(o); t.appendChild(e); }); }
   const cnt={1:0,2:0};
@@ -26430,6 +26435,10 @@ html body #tourTab > .kMenuH:first-of-type{grid-column:1!important}`; document.h
  setInterval(menu,700); document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#lpMenu')) setTimeout(menu,60); },true);
  window.KMENU2={menu};
  window.KRAILFIT=fit;
+ /* v228: Recipes alone in the Menu (the cooking school entry is gone). */
+ const xs=document.createElement('style'); xs.textContent='#tourTab #ttSchool,#ttSchool{display:none!important}'; document.head.appendChild(xs);
+ /* the Menu's game count follows the games as they load (it read 209 when it was made before the last games registered) */
+ setInterval(()=>{ const b=document.getElementById('ttVG'); if(b&&window.GAMES&&GAMES.list){ const t='🕹 Video games: '+GAMES.list.length+' games'; if(b.textContent!==t) b.textContent=t; } },2000);
 })();
 
 </script>
@@ -27605,6 +27614,50 @@ html body .kSpd .knob{width:58px!important;height:58px!important;min-width:0!imp
   function tapFound(fi){ if(!st.run||!st.sel) return; const cs=peek(0,st.sel); if(cs.length===1&&cs[0]&&fOK(cs[0],fi)){ toFound(0,cs[0]); take(0,st.sel); st.sel=null; if(!st.pl[0].nz.length) return endRound(0); } else st.sel=null; render(); }
   deal(); window.__kgst=()=>st; return {state:()=>st};
  });
+})();
+
+</script>
+<script>
+(()=>{ /* ONE APP AT A TIME (v228). KAN-IN shows one app at a time: opening any app first closes the one that is open and stops its
+   sound, the way a TV switches channels. Find and the Menu are not apps: they float over the open app and close when you pick one.
+   The 16 pads, the keyboard and the DJ decks belong to the Studio: they stay while the Studio is open and close with it.
+   Two layers keep the rule: every app's own open() is wrapped to close the others first, and a watcher closes any app left open
+   underneath, keeping the newest. */
+ const $=id=>document.getElementById(id);
+ const OV={kAI:'KAI',kKara:'KKARA',kEasel:'KEASEL',kVG:'KVG',kRec:'KREC',kSocial:'KSOCIAL',kProj:'KPROJ',kProfile:'KPROFILE',kKnow:'KKNOW',kLock:'KLOCK',kJump:'KJUMP',kHumor:'KHUMOR',kOwner:'KOWNER'};
+ const DOCKS=['pad','swDock','zodDock','omniDock','gamesDock','libDock','fileDock','sbDock','musicDock','aivDock','voiceDock','langDock','layDock','craftDock','mutDock','mapDock','askDock'];
+ const APPS=[...DOCKS,...Object.keys(OV)];
+ const vis=id=>{ const e=$(id); if(!e||e.hidden) return false; if(id==='pad') return e.classList.contains('on'); const cs=getComputedStyle(e); if(cs.display==='none'||cs.visibility==='hidden') return false; const r=e.getBoundingClientRect(); return r.width>20&&r.height>20; };
+ const openNow=()=>APPS.filter(vis);
+ function stopSound(){ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ const k=$('kStopBtn'); if(k) k.click(); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ }
+  try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ }
+  document.querySelectorAll('audio,video').forEach(m=>{ try{ if(m.id==='mAudio'&&window.KMINI&&KMINI.bgOn) return; if(!m.paused) m.pause(); }catch(_){ } }); }
+ const floatsShut=()=>{ try{ ['pads','keys','dj'].forEach(k=>{ if(KRAIL.FLOAT.isOpen&&KRAIL.FLOAT.isOpen(k)) KRAIL.FLOAT.close(k); }); }catch(_){ } };
+ let busy=false;
+ function closeApp(id){ if(!vis(id)) return; busy=true; try{
+   const g=OV[id]; if(g&&window[g]&&typeof window[g].close==='function'){ try{ window[g].close(); }catch(_){ } }
+   if(vis(id)){ const e=$(id); const x=e&&e.querySelector('.kBar [data-ka="close"],[data-kk="close"],[data-so="close"],[data-ko="close"],[data-vg="close"],[data-ea="close"],[data-ai="close"],[data-kh="close"],[data-kj="close"],.mClose');
+    if(x&&x.getClientRects().length){ try{ x.click(); }catch(_){ } } }
+   if(id==='pad'){ floatsShut(); if(vis('pad')){ try{ $('pad').classList.remove('on'); }catch(_){ } } }
+   else if(vis(id)){ try{ $(id).hidden=true; }catch(_){ } }
+  } finally { busy=false; } }
+ function closeAllBut(keep){ openNow().forEach(id=>{ if(id!==keep) closeApp(id); }); try{ if(keep&&window.KFINDALL&&vis('kFind')) KFINDALL.close(); }catch(_){ } }
+ /* layer 1: wrap every app's own open() so the others close first */
+ function wrapOverlays(){ for(const [id,g] of Object.entries(OV)){ const o=window[g]; if(!o||typeof o.open!=='function'||o.open.__kone) continue; const f=o.open;
+   const w=function(...a){ if(!vis(id)){ const others=openNow().filter(x=>x!==id); if(others.length){ stopSound(); others.forEach(closeApp); } } try{ if(vis('kFind')) KFINDALL.close(); }catch(_){ } return f.apply(this,a); };
+   w.__kone=true; o.open=w; } }
+ function wrapRail(){ const R=window.KRAIL; if(!R||typeof R.goTo!=='function'||R.goTo.__kone) return; const f=R.goTo;
+  const w=function(id,...a){ const target=id; const ovs=openNow().filter(x=>OV[x]); const curDock=DOCKS.find(vis);
+   if(target&&target!==curDock&&(ovs.length||curDock)){ if(curDock&&target!=='home'||ovs.length) stopSound(); ovs.forEach(closeApp); if(curDock==='pad'&&target!=='pad') floatsShut(); }
+   try{ if(vis('kFind')) KFINDALL.close(); }catch(_){ } return f.call(this,id,...a); };
+  w.__kone=true; R.goTo=w; }
+ /* layer 2: the watcher keeps only the newest app open */
+ const seen=new Map(); let tick=0;
+ function watch(){ wrapOverlays(); wrapRail(); if(busy) return; tick++; const open=openNow(); open.forEach(id=>{ if(!seen.has(id)) seen.set(id,tick); }); [...seen.keys()].forEach(id=>{ if(!open.includes(id)) seen.delete(id); });
+  if(open.length>1){ const keep=open.slice().sort((a,b)=>seen.get(b)-seen.get(a))[0]; open.forEach(id=>{ if(id!==keep) closeApp(id); }); }
+  if(!vis('pad')) floatsShut(); }
+ setInterval(watch,400); watch();
+ window.KONE={open:openNow,closeAllBut,closeApp};
 })();
 
 </script>

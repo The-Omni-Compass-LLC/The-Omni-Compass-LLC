@@ -1,5 +1,6 @@
 (()=>{ /* THE REMOTE: one small control panel floating over every screen's canvas. Drag it anywhere (phone or desktop), shrink it to a
-   bubble, open it again. ▶ Play · ■ Stop · ⏺ Record · ↶ Undo · 🔁 Loop · ✕ Close, plus the buttons that screen needs. */
+   bubble, open it again. The same seven buttons on every screen: ⏮ Rewind · ▶ Play · ■ Stop · ⏺ Record · ⏭ Skip · ↶ Undo · ✕ Close.
+   Play plays what is on the screen (a paused track or video, else the screen's own play button, else the studio song). */
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
@@ -34,7 +35,12 @@
  const ovl=()=>{ for(const id of Object.keys(OVL)){ const e=$(id); if(e&&!e.hidden&&getComputedStyle(e).display!=='none') return id; } return null; };
  const here=()=>ovl()||cur(); NAME.kRec='Recipes'; NAME.kFind='Find'; let lastHere='';
  const ACT={
-  play:()=>{ try{ KSTUDIO.play(); }catch(_){ } },
+  play:()=>{ const id=here(); const k=$('kStopBtn'); const SAME=['pad','kKara','musicDock','voiceDock','langDock','zodDock','omniDock','aivDock','sbDock','sbp','mutDock','swDock','kHumor','kOwner','gamesDock','home'];
+   if(!ovl()&&SAME.includes(id)&&k){ if(k.classList.contains('kStop')) return say('▶ Already playing. ■ Stop ends it.'); k.click(); return; }
+   const scr=ovl()?$(ovl()):$(id)||document.body; const vis=b=>b.getClientRects().length&&!b.disabled&&!b.closest('#kRemote,#rDock,#kXAll');
+   const media=[...scr.querySelectorAll('audio,video')].find(m=>m.paused&&(m.currentSrc||m.src)); if(media){ try{ const p=media.play(); if(p&&p.catch) p.catch(()=>{}); say('▶ Playing.'); return; }catch(_){ } }
+   const own=[...scr.querySelectorAll('button')].filter(vis).find(b=>{ const t=(b.textContent||'').trim(), a=(b.getAttribute('aria-label')||'')+' '+(b.title||''); return /^(▶|⏯)/.test(t)&&!/^▶▶/.test(t)||/^play\b/i.test(t)||/^play\b/i.test(a.trim()); });
+   if(own){ own.click(); return; } try{ KSTUDIO.play(); say('▶ Playing your studio song.'); }catch(_){ say('▶ Nothing to play on this screen.'); } },
   stop:()=>{ stopAll(); say('■ Stopped.'); },
   rec:()=>{ const id=cur(); if(id==='pad') return press('#bbRec')||say('Open the Studio first.'); if(id==='kKara') return press('#kKara [data-kk="rec"]'); try{ KKARA.open(); setTimeout(()=>press('#kKara [data-kk="rec"]'),500); }catch(_){ } },
   undo:()=>{ if(window.KUNDO) return KUNDO.any(); ACT.undoScreen(); },
