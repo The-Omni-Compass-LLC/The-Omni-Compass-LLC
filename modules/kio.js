@@ -3,7 +3,7 @@
    the beat, the eighth, the sixteenth, the triplet, the half or the bar. */
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
- const REC=[['live','🎵 Real time: exactly as played'],['step','🎯 The step grid (factory)'],['32','Latch 1/32'],['24','Latch 1/16 triplet'],['16','Latch 1/16'],['12','Latch 1/8 triplet'],['8','Latch 1/8'],['4','Latch 1/4']];
+ const REC=[['live','🎵 Real time: exactly as played (factory)'],['step','🎯 Latch to the step grid'],['32','Latch 1/32'],['24','Latch 1/16 triplet'],['16','Latch 1/16'],['12','Latch 1/8 triplet'],['8','Latch 1/8'],['4','Latch 1/4']];
  const CLK=[['4','1/4 · every beat (factory)'],['8','1/8'],['16','1/16'],['12','1/8 triplet'],['2','1/2'],['1','1 bar']];
  /* ROUTING: channels 1-16 are the drum pads A1-A16, one pad per channel, locked; every other source has a drop-down that wires it
     into any of channels 17-24 (several sources may share a channel). The engine's own channel for each source is its factory route. */
@@ -13,7 +13,7 @@
  function setRoute(native,to){ if(+to===native) delete window.KCHMAP[native]; else window.KCHMAP[native]=+to; putLS('kanin-chmap',window.KCHMAP); labelStrips(); }
  function labelStrips(){ const m=$('padMixer'); if(!m) return; for(let ci=16;ci<24;ci++){ const st=m.querySelector('.mxs[data-c="'+ci+'"]'); if(!st) continue; const sm=st.querySelector('small'); if(!sm) continue; if(sm.dataset.orig==null) sm.dataset.orig=sm.textContent; const feeds=SRC.filter(([,n])=>routeOf(n)===ci).map(([,,l])=>l.replace(/^\S+\s/,'').split(/[ ,(]/)[0]); const txt=feeds.length?feeds.join(' + '):'(open)'; if(sm.textContent!==txt){ sm.textContent=txt; sm.title='Channel '+(ci+1)+': '+txt; } } }
  const chOpts=cur=>Array.from({length:8},(_,k)=>16+k).map(ci=>'<option value="'+ci+'"'+(ci===cur?' selected':'')+'>Channel '+(ci+1)+'</option>').join('');
- window.PADRECMODE=getLS('kanin-recmode','step'); window.PADCLICKDIV=+getLS('kanin-clickdiv',4)||4;
+ window.PADRECMODE=getLS('kanin-recmode','live'); window.PADCLICKDIV=+getLS('kanin-clickdiv',4)||4;
  const opt=(L,v)=>L.map(([k,t])=>'<option value="'+k+'"'+(String(v)===k?' selected':'')+'>'+t+'</option>').join('');
  const css=document.createElement('style'); css.textContent=`
 #kIO{border:1px solid rgba(0,229,255,.4);border-radius:12px;padding:8px 10px;margin:8px 0;background:rgba(0,229,255,.05)}

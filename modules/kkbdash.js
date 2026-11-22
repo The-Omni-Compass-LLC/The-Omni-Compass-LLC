@@ -22,13 +22,14 @@ html body #kbTop.kFloat.kFOn > h4{order:-7}html body #kbTop.kFloat.kFOn > #kbWhe
 @keyframes mpcBlink{50%{opacity:.55}}`; document.head.appendChild(css);
  function build(){ const top=$('kbTop'), keys=$('kbKeys'); if(!top||!keys||!PS()) return null; let d=$('kbDash'); if(d) return d; d=document.createElement('div'); d.id='kbDash'; d.setAttribute('role','toolbar'); d.setAttribute('aria-label','Keyboard controls'); d.addEventListener('click',onClick); d.addEventListener('change',onChange);
   const pre=$('kbPre'); const opts=pre?[...pre.options].map(o=>'<option value="'+o.value+'">'+o.textContent+'</option>').join(''):'';
-  d.innerHTML='<div class="mr"><button type="button" class="rec" data-k="rec" data-noul>● REC</button><button type="button" class="play" data-k="play" data-noul>▶ PLAY</button><button type="button" data-k="undo" data-noul>↶ UNDO</button><button type="button" data-k="clear" data-noul>🗑 CLEAR</button></div>'
+  d.innerHTML='<div class="mr"><button type="button" class="rec" data-k="rec" data-noul>● REC</button><button type="button" class="play" data-k="play" data-noul>▶ PLAY</button><button type="button" data-k="undo" data-noul>↶ UNDO</button><button type="button" data-k="clear" data-noul>🗑 CLEAR</button><button type="button" data-k="latch" data-noul>🔒 LATCH</button></div>'
    +'<div class="mr2"><span class="lbl">Octave</span><button type="button" class="sm" data-k="octdn" aria-label="Octave down" data-noul>−</button><span class="oct" id="kbDashOct">C3</span><button type="button" class="sm" data-k="octup" aria-label="Octave up" data-noul>+</button>'
    +(opts?'<span class="selw"><select id="kbDashPre" aria-label="Sound" data-nodice="1">'+opts+'</select></span>':'')
    +'<span class="lbl">Bars</span><button type="button" class="sm" data-k="bars" data-v="1" data-noul>1</button><button type="button" class="sm" data-k="bars" data-v="2" data-noul>2</button><button type="button" class="sm" data-k="bars" data-v="4" data-noul>4</button>'
    +'<button type="button" class="sm" data-k="bpm" data-v="-5" aria-label="Slower" data-noul>−</button><span class="oct" id="kbDashBpm">90</span><button type="button" class="sm" data-k="bpm" data-v="5" aria-label="Faster" data-noul>+</button></div>';
   top.insertBefore(d,keys); return d; }
  function paint(){ const d=build(); if(!d) return; const ps=PS(); const r=d.querySelector('[data-k="rec"]'), p=d.querySelector('[data-k="play"]');
+  const lt=d.querySelector('[data-k="latch"]'); if(lt){ lt.classList.toggle('on',!!window.KBLATCH); const tx=window.KBLATCH?'🔒 LATCH ON':'🔒 LATCH'; if(lt.textContent!==tx) lt.textContent=tx; }
   r.classList.toggle('on',recOn()); const rt=recOn()?'● REC ON':'● REC'; if(r.textContent!==rt) r.textContent=rt; p.classList.toggle('on',!!ps.playing); const pt=ps.playing?'■ STOP':'▶ PLAY'; if(p.textContent!==pt) p.textContent=pt;
   d.querySelectorAll('[data-k="bars"]').forEach(b=>b.classList.toggle('on',+b.dataset.v===ps.barsN));
   const oc=$('kbOct'), od=$('kbDashOct'); if(oc&&od){ const t='C'+oc.value; if(od.textContent!==t) od.textContent=t; }
@@ -41,6 +42,7 @@ html body #kbTop.kFloat.kFOn > h4{order:-7}html body #kbTop.kFloat.kFOn > #kbWhe
   else if(a==='play'){ if(ps.playing){ ps.stop(); if(recOn()) press('kbRec'); } else ps.play(); }
   else if(a==='undo'){ press('kbUndo'); }
   else if(a==='clear'){ press('kbClear'); }
+  else if(a==='latch'){ press('kbLatch'); say(window.KBLATCH?'🔒 Latch on: a key keeps sounding until you press it again.':'🔓 Latch off: a key sounds only while you hold it.'); }
   else if(a==='octdn'||a==='octup'){ const oc=$('kbOct'); if(oc){ const v=Math.max(1,Math.min(6,(+oc.value||3)+(a==='octup'?1:-1))); if([...oc.options].some(o=>+o.value===v)) fire(oc,v); } }
   else if(a==='bars'){ ps.setBars(+b.dataset.v); }
   else if(a==='bpm'){ const bp=$('padBpm'); if(bp) fire(bp,Math.max(40,Math.min(240,(+bp.value||90)+(+b.dataset.v)))); }

@@ -7,7 +7,7 @@
  const PS=()=>window.PADSTUDIO; const press=id=>{ const b=$(id); if(b){ b.click(); return true; } return false; };
  const recOn=()=>{ const b=$('padRecLive'); return !!b&&(b.classList.contains('rec')||/on$/i.test(b.textContent.trim())); };
  const clickOn=()=>{ const c=$('padClick'); const t=c?c.textContent:''; return /on/i.test(t)&&!/off/i.test(t); };
- const QS=[['step','1/16'],['8','1/8'],['4','1/4'],['32','1/32'],['live','Live']];
+ const QS=[['live','Real time'],['step','1/16'],['8','1/8'],['4','1/4'],['32','1/32']];
  const css=document.createElement('style'); css.textContent=`
 #mpcBar{order:-2;display:flex;flex-direction:column;gap:5px;margin:2px 0 8px;padding:6px;border-radius:12px;background:linear-gradient(180deg,#22252e,#15171d);border:1px solid #3a3f4d}
 #mpcBar .mr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
@@ -38,7 +38,7 @@
   const nb=ps.barsN; m.querySelectorAll('[data-m="bars"]').forEach(b=>b.classList.toggle('on',+b.dataset.v===nb));
   const bp=$('padBpm'); const bv=$('mpcBpm'); if(bp&&bv&&bv.textContent!==bp.value) bv.textContent=bp.value;
   const ck=m.querySelector('[data-m="click"]'); ck.classList.toggle('on',clickOn());
-  const md=window.PADRECMODE||'step'; const q=m.querySelector('[data-m="q"]'); const ql='Q '+(QS.find(x=>x[0]===md)||QS[0])[1]; if(q.textContent!==ql) q.textContent=ql;
+  const md=window.PADRECMODE||'live'; const q=m.querySelector('[data-m="q"]'); const ql='Q '+(QS.find(x=>x[0]===md)||QS[0])[1]; if(q.textContent!==ql) q.textContent=ql;
   const P=window.PADS||{}; const pos=$('mpcPos'); const spb=ps.spbN||16; const txt=P.playing&&P.step>=0?('Bar '+(Math.floor(P.step/spb)+1)+' · '+((Math.floor((P.step%spb)/(spb/4)))+1)):(nb+' bar'+(nb>1?'s':'')+' · '+(ps.bpm?ps.bpm():90)); if(pos.textContent!==txt) pos.textContent=txt; }
  function clearAll(){ const ps=PS(); clearedBackup=ps.pads.map(P=>({steps:P.steps.slice(),offs:P.offs?{...P.offs}:null})); ps.pads.forEach(P=>{ P.steps=P.steps.map(()=>0); if(P.offs) P.offs={}; }); try{ ps.refresh(); }catch(_){ } lastAct='clear'; say('🗑 Loop cleared: an empty '+ps.barsN+'-bar loop. ↶ UNDO brings it back.'); }
  function undo(){ const ps=PS(); if(lastAct==='clear'&&clearedBackup){ ps.pads.forEach((P,i)=>{ const b=clearedBackup[i]; if(b){ P.steps=b.steps; if(b.offs) P.offs=b.offs; } }); clearedBackup=null; lastAct=''; try{ ps.refresh(); }catch(_){ } return say('↶ The loop is back.'); } press('padUndo'); }
@@ -50,7 +50,7 @@
   else if(a==='bars'){ ps.setBars(+b.dataset.v); say('🔁 '+b.dataset.v+'-bar loop.'); }
   else if(a==='bpm'){ const bp=$('padBpm'); if(bp){ bp.value=String(Math.max(40,Math.min(240,(+bp.value||90)+(+b.dataset.v)))); bp.dispatchEvent(new Event('input',{bubbles:true})); bp.dispatchEvent(new Event('change',{bubbles:true})); } }
   else if(a==='click') press('padClick');
-  else if(a==='q'){ const md=window.PADRECMODE||'step'; const i=QS.findIndex(x=>x[0]===md); const nx=QS[(i+1)%QS.length][0]; window.PADRECMODE=nx; try{ localStorage.setItem('kanin-recmode',JSON.stringify(nx)); }catch(_){ } say('Timing grid: '+QS.find(x=>x[0]===nx)[1]+(nx==='live'?' (hits stay exactly where you played them)':'')); }
+  else if(a==='q'){ const md=window.PADRECMODE||'live'; const i=QS.findIndex(x=>x[0]===md); const nx=QS[(i+1)%QS.length][0]; window.PADRECMODE=nx; try{ localStorage.setItem('kanin-recmode',JSON.stringify(nx)); }catch(_){ } say('Timing grid: '+QS.find(x=>x[0]===nx)[1]+(nx==='live'?' (hits stay exactly where you played them)':'')); }
   paint(); }
  setInterval(()=>{ const pad=$('pad'); if(pad&&pad.classList.contains('on')) paint(); },200);
  window.KMPC={paint,clearAll};
