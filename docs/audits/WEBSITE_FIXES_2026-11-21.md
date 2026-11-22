@@ -29,7 +29,7 @@ against the repository's own records. The numbers a page may show, each with its
 
 | # | What a visitor sees | Why | The change |
 |---|---|---|---|
-| 10 | "—" in the arm cells, "+0.0%" in the live panel, "loading…", "Fetching live data…" | The page reads `results/ABC_TABLE.json`, which is not in the repository (it answers 404; the model table moved to `docs/history/model_tables/` and is class S, never a result). | Read `results/SITE_NUMBERS.json` (`show[].sentence`, `four_arms`); when it cannot be read, say "the record could not be read just now", never a typed or cached number. |
+| 10 | "—" in the arm cells, "+0.0%" in the live panel, "loading…", "Fetching live data…" | The page reads results/ABC_TABLE.json (no longer in the repository), which is not in the repository (it answers 404; the model table moved to `docs/history/model_tables/` and is class S, never a result). | Read `results/SITE_NUMBERS.json` (`show[].sentence`, `four_arms`); when it cannot be read, say "the record could not be read just now", never a typed or cached number. |
 | 11 | "--fingerprint=" with no value; "omni-v26 []" in the terminal block | The value is never filled. | Fill both from `OMNI_V27.json` at build time. |
 | 12 | To a crawler or a text reader, `/pilot` (and every page drawn in the browser) is the banner, the disclosure and the footer; in a browser `/pilot` shows its whole 90-day pilot page. `/licensing`, `/market/licensing`, the theory pages and the methodology pages ask for a name and an email first. | The pages are drawn by the page's script after it loads, and the gated pages are behind the registration form. | For search engines and buyers' tools to read the pages, serve them as finished HTML (pre-rendering or server rendering). Whether the licensing terms and the methodology stay behind the form is the founder's decision: a buyer's counsel and every search engine meet the form first. |
 | 13 | (withdrawn) The top ticker reads twice in the page's text | Its second copy sits off the screen, the usual way a scrolling ticker loops; a visitor sees it once. | Nothing. |
@@ -58,7 +58,7 @@ decision; the repository's `llms.txt` asks every AI that reads it to print the n
 
 ## Tier 3: legal words, for the company's counsel (nothing here is changed by this page)
 
-- **Who owns the rights**: the IP notice says the inventor assigned the rights to The Omni-Compass LLC, and elsewhere names the owner
+- **Who owns the rights**: the IP notice names one of the two companies as the assignee of the inventor's rights, and elsewhere names the owner
   as Dubra Software Inc. / The Omni-Compass LLC. Counsel matches every page to the assignments actually signed.
 
 - **"UNDER CONSTRUCTION" / "THIS SITE IS UNDER ACTIVE DEVELOPMENT"** stands on every page. The repository's own disclosure
