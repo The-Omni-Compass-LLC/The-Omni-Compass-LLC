@@ -970,7 +970,7 @@ differs.
 | Less energy for the work, on the chip | **GAIN in all three of our runs** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: energy per served request in runs A, B and C GAIN, 1.79%; GAIN, 1.35%; GAIN, 0.78% (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: STEADY, under the floor (the three runs' mean 0.12%) (`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |
 | More work for the bill on a GPU | **the runs disagree** (P, omni-v23) | The A10's work for each dollar, its three runs up 1.46%, up 0.73%, down 0.69% (`results/TWO_BILLS.md`) |
 | One governor over every muscle and organism | **Modelled** (S) | 1,107 muscles in our own models: 530 GAIN, 577 STEADY, 0 LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real systems |
-| Its mathematics | **Machine-checked where stated** | 24 of 24 theorems proved by SMT and interval arithmetic on the engine as it executes: the compass law, the plug's clip, the verdict, the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |
+| Its mathematics | **Machine-checked where stated** | 29 of 29 theorems proved by SMT and interval arithmetic on the engine as it executes: the compass law, the compass loop on its declared model (held near the centre under a bounded push, settled at it with none), the plug's clip, the verdict, the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: the damped, lagging compass loop the wires run (computed, class S), CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |
 <!-- end of results: referee_claims -->
 
 ### 2.3 Real Kubernetes, each gain beside its cost (L, three runs of ten pairs, kind on one GitHub runner)
@@ -1063,9 +1063,10 @@ measurement exists.
    comment says (`docs/LIMITATIONS.md`, section 3), and by the wires outside the fingerprint (`docs/CHANGE_CONTROL.md`).
 3. **Engine stability.** The rules and the record of every version, why it changed and how results stay tied to it
    (`docs/CHANGE_CONTROL.md`); the pace itself is unchanged.
-4. **Mathematics.** 24 of 24 theorems proved by machine on the engine as it executes: the compass law, the plug, the verdict,
-   the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, and the bath's stability
-   (`docs/ENGINE_PROOFS.md`).
+4. **Mathematics.** 29 of 29 theorems proved by machine on the engine as it executes: the compass law, the compass loop on
+   its declared model (held near the centre under a bounded push, settled at it with none; the damped, lagging loop the
+   wires run is computed, class S, not proved), the plug, the verdict, the invariance of E, I and S, the tracking bound
+   inside the basin and the steps to reach it, and the bath's stability (`docs/ENGINE_PROOFS.md`).
 5. **Method.** The smallest change every judged row can see (`docs/POWER.md`); every change to every preregistration with
    its timing (`docs/DEVIATIONS.md`); the chance of a false three-run reading, 3.1 × 10⁻⁵ a row (`docs/LIMITATIONS.md`).
 6. **Real Kubernetes.** The omni-v11 tables for Goldilocks, both KEDA setups and fixed capacity: 0 LOSS; the omni-v10 LOSS
@@ -1388,7 +1389,9 @@ it. Two things the statement does not say. A disturbance that keeps pushing whil
 (input-to-state stability): there the state can be held only to a neighbourhood of M* whose size grows with the push,
 and that needs its own proof. And the statement is written in continuous time, while the engine decides once a beat:
 the discrete form needs its own step condition, which the engine's proofs carry channel by channel
-(`docs/TRACKING_THEOREM.md`, `docs/FORMAL_STATUS.md`).
+(`docs/TRACKING_THEOREM.md`, `docs/FORMAL_STATUS.md`). For the compass loop itself, one decision a beat, both halves are
+proved on a declared model (`docs/ENGINE_PROOFS.md`, section 1b): with no push the reading settles at the centre, and
+under a push of size D it is held inside a ball of radius (A / kp) artanh(D / (b A)) that grows with the push.
 
 ### 6.2 Closure, admissibility, boundedness
 
@@ -2380,7 +2383,8 @@ Evidence class of everything on this page: **T**, proved. Two machine methods ca
   - −1 < tanh x < 1;
   - tanh x has the sign of x;
   - tanh is increasing;
-  - tanh is 1-Lipschitz: |tanh x − tanh y| ≤ |x − y|.
+  - tanh is 1-Lipschitz: |tanh x − tanh y| ≤ |x − y|;
+  - for the compass loop (section 17.2) also: tanh is odd, tanh(−x) = −tanh(x).
 
   So whatever is proved for every function with these facts holds for tanh.
 - **Interval arithmetic with outward rounding** (mpmath's interval arithmetic at 40 digits). Every enclosure computed is a
@@ -2404,8 +2408,71 @@ For every reading position p, velocity estimate v, gains kp > 0 and kd ≥ 0, au
 | C6 | at one p: v₁ ≤ v₂ ⇒ f(v₁) ≤ f(v₂) | proved |
 | C7 | inside the band, away from the wall and the take-back rule: abs(f(p₁) − f(p₂)) ≤ kp abs(p₁ − p₂) (smooth, never a hammer) | proved |
 | C8 | the default damping kd = max(0, 2 √(kp τ / Δt) − 1) Δt is never negative | proved |
+| C9 | for kp > 0 and kd ≥ 0, raw < 0 never holds while v > 0 and p > centre: the take-back line can never act, and C3 holds by the sign of the pull alone | proved |
 
-### 17.2 The plug's clip (`Plug.write`)
+C9 is a finding about the code, not a fault in it: the line that zeroes a negative force while the reading climbs above
+the centre never changes a decision for any admissible gain. Taking it out would change no decision and would change the
+engine's fingerprint, so it stays until the next engine version.
+
+### 17.2 The compass loop, one decision a beat (model M1)
+
+C1 to C9 are about one force. L1 to L4 are about the loop that force closes, on a declared model, so each is conditional
+on that model and its conditions, and on nothing else.
+
+**Model M1.** The lever moves by its gain times the force, and the reading follows the lever within the beat. With
+e = p − centre, the next position is
+
+    p′ = p − b f(p) + d,   b = b[up] when f ≥ 0, b = b[down] when f < 0,   abs(d) ≤ D
+
+where a force that adds capacity lowers the reading, b[up] and b[down] are each side's effect on the reading per unit of
+force, and d is the beat's disturbance: the load's own move in the beat, and the lever's rounding to its step (half a
+step at most). **Conditions:** kd = 0 (no damping); b kp ≤ 1 on each side (one beat's move is never longer than the
+distance it closes); b[up] A ≤ w[high] − centre (the fail-up step is never longer than the wall's distance from the
+centre); and the lever inside its cover (at its cover a muscle has nothing more to give, and nothing below holds). The
+solver is given one more true fact of tanh here: it is odd, tanh(−x) = −tanh(x).
+
+| Claim | Statement | Result |
+|---|---|---|
+| L1 | p ≥ centre ⇒ centre ≤ p − b f ≤ p, and p ≤ centre ⇒ p ≤ p − b f ≤ centre: the move goes toward the centre and never past it | proved |
+| L2 | p ≠ centre ⇒ abs(p − b f − centre) < abs(p − centre): away from the centre every move shortens the distance | proved |
+| L3 | if b A tanh(kp R / A) ≥ D on each side, then abs(e) ≤ R ⇒ abs(e′) ≤ R for every d with abs(d) ≤ D: the ball of radius R is never left | proved |
+| L4 | if b A tanh(kp R / A) ≥ D + δ on each side, δ > 0, then abs(e) ≥ R ⇒ abs(e′) ≤ abs(e) − δ: outside it every beat closes at least δ | proved |
+
+**What follows, by elementary argument from L3 and L4.** Write b[min] = min(b[up], b[down]).
+
+1. *A bounded push: the reading is held near the centre, not at it (practical, input-to-state stability).* For
+   D < b[min] A the smallest ball L3 keeps has radius R*(D) = (A / kp) artanh(D / (b[min] A)). For every R′ > R*, put
+   δ = b[min] A tanh(kp R′ / A) − D > 0: from any start the reading is inside the ball of radius R′ within
+   ⌈(abs(e₀) − R′) / δ⌉ beats (L4) and never leaves it after (L3). So limsup abs(eₖ) ≤ R*(D). R* is 0 at D = 0, rises
+   with D, and has no finite value once D reaches b[min] A.
+2. *No push: the reading settles at the centre (asymptotic stability).* With D = 0 every ball of radius R′ > 0 is
+   entered and kept, so eₖ → 0, and by L2 the distance falls at every beat.
+3. *A push as large as the muscle's whole pull* (D ≥ b[min] A): nothing is claimed. The disturbance outruns the muscle;
+   it is at its limit.
+4. *A lever that moves in whole steps* (a clock in MHz steps, whole replicas) enters through d: D = D[load] + β q / 2,
+   with q the step and β the reading's move per unit of lever.
+
+**Where the proof stops, and what was computed there instead.** No live wire runs the proof's exact case: every one
+builds the law with its default damping (`omni_controller/gpu_compass.py`, `omni_orchestrator/brain.py`,
+`realms/compass_arm.py` and the data stores' runners), and the Kubernetes governor uses the force as a gate for whole
+machine steps rather than as a lever's move. A muscle that lags its lever (τ beyond the beat) is outside M1 as well. Both
+were run instead on the engine's own `CompassLaw.force` (`tools/compass_loop.py`, `results/model_gate/COMPASS_LOOP.md`;
+our own model, class S, never a proof), every row kept whichever way it fell:
+
+- M1, the proof's own case: 8 of 8 rows at or under R*, the largest tail 1.000 R* (a push held outward settles exactly on
+  R*: the bound is tight).
+- M2, a muscle that lags its lever by τ = 0.25, 1, 2 and 4 beats: without damping 24 of 32 rows at or under R*, the
+  largest 1.870 R* (a slow push, τ = 4 beats); with the default damping for that τ, 31 of 32, the largest 1.105 R*; with
+  three times the default, 32 of 32.
+- M1 with the damping set for a lag the muscle does not have: with the default, 31 of 32, the largest 1.147 R*; with three
+  times the default, 17 of 32, the largest 2.629 R*.
+
+So on a lagging muscle the damping keeps the reading inside the proved radius where the undamped loop overshoots it, and a
+damping set from a response time the muscle does not have can cost more than it gives: each wire's declared τ is part of
+its tune. A proof of the damped, lagging loop (three states: the reading, the lever and the velocity estimate) is open
+(section 17.6).
+
+### 17.3 The plug's clip (`Plug.write`)
 
 | Claim | Statement | Result |
 |---|---|---|
@@ -2413,7 +2480,7 @@ For every reading position p, velocity estimate v, gains kp > 0 and kd ≥ 0, au
 | P2 | lo ≤ x ≤ hi ⇒ clamp(x) = x: nothing inside the cover is clipped | proved |
 | P3 | clamp(clamp(x)) = clamp(x) | proved |
 
-### 17.3 The verdict's rule (`omnicompass/verdict.py`, judge "interval")
+### 17.4 The verdict's rule (`omnicompass/verdict.py`, judge "interval")
 
 A trial step is allowed when three things hold: it does not read LOSS (no 95% interval wholly above zero), its median
 cost mk ≤ min(m₀, m[native]) (1 + tol), and the largest estimated change is at most τ = ln(1 + tol).
@@ -2424,7 +2491,7 @@ cost mk ≤ min(m₀, m[native]) (1 + tol), and the largest estimated change is 
 | V2 | allowed ⇒ every estimated change ≤ τ and mk ≤ m₀ (1 + tol) | proved |
 | V3 | allowed ⇒ mk ≤ m[native] (1 + tol): stepwise, steps cannot add up past the cost first measured at native | proved |
 
-### 17.4 The core engine as executed (`omnicompass/core.py`)
+### 17.5 The core engine as executed (`omnicompass/core.py`)
 
 The engine does not run the continuous law. Per micro step h = 0.01 it:
 1. computes the command u[k] from x[k];
@@ -2482,7 +2549,7 @@ the 500 fixtures reached, which lies inside it. Theorem 4's discrete half moves 
 those four states. U5 also proves that CONVEY-5 passes for every admissible fixture: at least 9 of the 20 macro steps
 end inside the basin.
 
-### 17.5 What is still open
+### 17.6 What is still open
 
 - **CERT-10 for every fixture.** U5's bound guarantees 9 macro steps inside, not 10. Every one of the 500 frozen fixtures
   certifies (V), but a proof for the whole box needs a tighter entry bound: a, b and q are worst-case constants over the
@@ -2495,8 +2562,13 @@ end inside the basin.
 - **Starts below S₋.** From there S leaves every bound (the basin's negative side, `docs/book/THEORY.md`). They are
   outside every claim on this page, and the quartic closure named in the theory is the engine change that would remove
   them.
+- **The damped, lagging compass loop.** L1 to L4 prove the loop without damping on a muscle that follows its lever within
+  the beat (section 17.2). With the default damping, and on a muscle that lags, the loop is computed (class S), not proved;
+  the proof needs a Lyapunov function, or an interval certificate, over the reading, the lever and the velocity estimate
+  together.
 - **The live governors** (`omni_controller/*`) are proved here only through the parts they share: the compass law, the
-  plug's clip and the verdict. Their Kubernetes, GPU and cloud wiring is tested, not proved.
+  plug's clip and the verdict. Their Kubernetes, GPU and cloud wiring is tested, not proved; none of them runs the compass
+  loop's proved case (section 17.2).
 
 ## 18. The Conveyance Law
 
@@ -2637,8 +2709,11 @@ Held:
   frozen fixtures (V), the ultimate bound 0.0315 lies inside the 0.10 basin (Theorem 3).
 - (T continuous, V on frozen fixtures; conditional computer-assisted T for named coordinates) Admissibility: the later `docs/ENGINE_PROOFS.md` states E1–E2 (E), S1 (S), I1 (I[U]) and U1–U5 (U) over its declared admissible start set, with outward-rounded intervals / SMT obligations. The RK4 sampled U-error ultimate bound is at most 0.0677 on that set. This is **not** the older claim of monotone discrete U error and not a global closed-loop external plant theorem.
 - (T conditional on the named engine proof) B1 bounds the damped bath under bounded S; it does **not** supply an explicit numerical bath-amplitude bound or convergence of the full forced system.
+- (T conditional on model M1) The compass loop, one decision a beat (`docs/ENGINE_PROOFS.md`, section 1b, L1–L4): without damping, with b kp ≤ 1 on each side and the fail-up step inside the wall, the reading moves toward the centre and never past it; under a push of size D < b[min] A it is held in the ball of radius R*(D) = (A / kp) artanh(D / (b[min] A)), entered at a fixed rate per beat (practical, input-to-state stability, not convergence to a point); with no push it settles at the centre. The damped and lagging loops the live wires run are computed (class S, `results/model_gate/COMPASS_LOOP.md`), not proved.
 
 Open:
+
+- The damped, lagging compass loop: a Lyapunov function or interval certificate over the reading, the lever and the velocity estimate together, for the default damping and a muscle that lags its lever (`docs/ENGINE_PROOFS.md`, section 5).
 
 - Independent rerun and machine checking of the stated whole-domain certificates on the current frozen engine, including exact hypotheses, floating-point semantics and non-vacuous premises. The **older blanket open statement** about all discrete bounds is superseded only for E1–E2, S1, I1, U1–U5 and B1 on their declared domains; it is not a new proof of unrestricted six-state convergence.
 - CERT-10 for every start in the admissible domain; the current worst-case U5 entry argument guarantees at least nine macro-steps, not ten. Starts below S₋ are excluded.
@@ -7540,7 +7615,7 @@ differs.
 | Less energy for the work, on the chip | **GAIN in all three of our runs** on one card (P, omni-v23) | An A10 fully loaded, its own power meter: energy per served request in runs A, B and C GAIN, 1.79%; GAIN, 1.35%; GAIN, 0.78% (`results/gpu/V23_A10_CAP_FULL_ABC.md`); an A100 on omni-v21: STEADY, under the floor (the three runs' mean 0.12%) (`results/gpu/V21_A100_CAP_ABC.md`); energy at the software end is a declared model (S), never scored |
 | More work for the bill on a GPU | **the runs disagree** (P, omni-v23) | The A10's work for each dollar, its three runs up 1.46%, up 0.73%, down 0.69% (`results/TWO_BILLS.md`) |
 | One governor over every muscle and organism | **Modelled** (S) | 1,107 muscles in our own models: 530 GAIN, 577 STEADY, 0 LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real systems |
-| Its mathematics | **Machine-checked where stated** | 24 of 24 theorems proved by SMT and interval arithmetic on the engine as it executes: the compass law, the plug's clip, the verdict, the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |
+| Its mathematics | **Machine-checked where stated** | 29 of 29 theorems proved by SMT and interval arithmetic on the engine as it executes: the compass law, the compass loop on its declared model (held near the centre under a bounded push, settled at it with none), the plug's clip, the verdict, the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: the damped, lagging compass loop the wires run (computed, class S), CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |
 <!-- end of results: referee_claims -->
 
 ### 52.2 Receipt by receipt

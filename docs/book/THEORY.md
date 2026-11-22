@@ -38,7 +38,9 @@ it. Two things the statement does not say. A disturbance that keeps pushing whil
 (input-to-state stability): there the state can be held only to a neighbourhood of M* whose size grows with the push,
 and that needs its own proof. And the statement is written in continuous time, while the engine decides once a beat:
 the discrete form needs its own step condition, which the engine's proofs carry channel by channel
-(`docs/TRACKING_THEOREM.md`, `docs/FORMAL_STATUS.md`).
+(`docs/TRACKING_THEOREM.md`, `docs/FORMAL_STATUS.md`). For the compass loop itself, one decision a beat, both halves are
+proved on a declared model (`docs/ENGINE_PROOFS.md`, section 1b): with no push the reading settles at the centre, and
+under a push of size D it is held inside a ball of radius (A / kp) artanh(D / (b A)) that grows with the push.
 
 ## Closure, admissibility, boundedness
 

@@ -14,8 +14,11 @@ Held:
   frozen fixtures (V), the ultimate bound 0.0315 lies inside the 0.10 basin (Theorem 3).
 - (T continuous, V on frozen fixtures; conditional computer-assisted T for named coordinates) Admissibility: the later `docs/ENGINE_PROOFS.md` states E1–E2 (E), S1 (S), I1 (I[U]) and U1–U5 (U) over its declared admissible start set, with outward-rounded intervals / SMT obligations. The RK4 sampled U-error ultimate bound is at most 0.0677 on that set. This is **not** the older claim of monotone discrete U error and not a global closed-loop external plant theorem.
 - (T conditional on the named engine proof) B1 bounds the damped bath under bounded S; it does **not** supply an explicit numerical bath-amplitude bound or convergence of the full forced system.
+- (T conditional on model M1) The compass loop, one decision a beat (`docs/ENGINE_PROOFS.md`, section 1b, L1–L4): without damping, with b kp ≤ 1 on each side and the fail-up step inside the wall, the reading moves toward the centre and never past it; under a push of size D < b[min] A it is held in the ball of radius R*(D) = (A / kp) artanh(D / (b[min] A)), entered at a fixed rate per beat (practical, input-to-state stability, not convergence to a point); with no push it settles at the centre. The damped and lagging loops the live wires run are computed (class S, `results/model_gate/COMPASS_LOOP.md`), not proved.
 
 Open:
+
+- The damped, lagging compass loop: a Lyapunov function or interval certificate over the reading, the lever and the velocity estimate together, for the default damping and a muscle that lags its lever (`docs/ENGINE_PROOFS.md`, section 5).
 
 - Independent rerun and machine checking of the stated whole-domain certificates on the current frozen engine, including exact hypotheses, floating-point semantics and non-vacuous premises. The **older blanket open statement** about all discrete bounds is superseded only for E1–E2, S1, I1, U1–U5 and B1 on their declared domains; it is not a new proof of unrestricted six-state convergence.
 - CERT-10 for every start in the admissible domain; the current worst-case U5 entry argument guarantees at least nine macro-steps, not ten. Starts below S₋ are excluded.

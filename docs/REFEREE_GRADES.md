@@ -43,9 +43,10 @@ measurement exists.
    comment says (`docs/LIMITATIONS.md`, section 3), and by the wires outside the fingerprint (`docs/CHANGE_CONTROL.md`).
 3. **Engine stability.** The rules and the record of every version, why it changed and how results stay tied to it
    (`docs/CHANGE_CONTROL.md`); the pace itself is unchanged.
-4. **Mathematics.** 24 of 24 theorems proved by machine on the engine as it executes: the compass law, the plug, the verdict,
-   the invariance of E, I and S, the tracking bound inside the basin and the steps to reach it, and the bath's stability
-   (`docs/ENGINE_PROOFS.md`).
+4. **Mathematics.** 29 of 29 theorems proved by machine on the engine as it executes: the compass law, the compass loop on
+   its declared model (held near the centre under a bounded push, settled at it with none; the damped, lagging loop the
+   wires run is computed, class S, not proved), the plug, the verdict, the invariance of E, I and S, the tracking bound
+   inside the basin and the steps to reach it, and the bath's stability (`docs/ENGINE_PROOFS.md`).
 5. **Method.** The smallest change every judged row can see (`docs/POWER.md`); every change to every preregistration with
    its timing (`docs/DEVIATIONS.md`); the chance of a false three-run reading, 3.1 × 10⁻⁵ a row (`docs/LIMITATIONS.md`).
 6. **Real Kubernetes.** The omni-v11 tables for Goldilocks, both KEDA setups and fixed capacity: 0 LOSS; the omni-v10 LOSS

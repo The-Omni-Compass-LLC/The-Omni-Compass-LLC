@@ -19,7 +19,8 @@ Evidence class of everything on this page: **T**, proved. Two machine methods ca
   - −1 < tanh x < 1;
   - tanh x has the sign of x;
   - tanh is increasing;
-  - tanh is 1-Lipschitz: |tanh x − tanh y| ≤ |x − y|.
+  - tanh is 1-Lipschitz: |tanh x − tanh y| ≤ |x − y|;
+  - for the compass loop (section 1b) also: tanh is odd, tanh(−x) = −tanh(x).
 
   So whatever is proved for every function with these facts holds for tanh.
 - **Interval arithmetic with outward rounding** (mpmath's interval arithmetic at 40 digits). Every enclosure computed is a
@@ -43,6 +44,69 @@ For every reading position p, velocity estimate v, gains kp > 0 and kd ≥ 0, au
 | C6 | at one p: v₁ ≤ v₂ ⇒ f(v₁) ≤ f(v₂) | proved |
 | C7 | inside the band, away from the wall and the take-back rule: abs(f(p₁) − f(p₂)) ≤ kp abs(p₁ − p₂) (smooth, never a hammer) | proved |
 | C8 | the default damping kd = max(0, 2 √(kp τ / Δt) − 1) Δt is never negative | proved |
+| C9 | for kp > 0 and kd ≥ 0, raw < 0 never holds while v > 0 and p > centre: the take-back line can never act, and C3 holds by the sign of the pull alone | proved |
+
+C9 is a finding about the code, not a fault in it: the line that zeroes a negative force while the reading climbs above
+the centre never changes a decision for any admissible gain. Taking it out would change no decision and would change the
+engine's fingerprint, so it stays until the next engine version.
+
+## 1b. The compass loop, one decision a beat (model M1)
+
+C1 to C9 are about one force. L1 to L4 are about the loop that force closes, on a declared model, so each is conditional
+on that model and its conditions, and on nothing else.
+
+**Model M1.** The lever moves by its gain times the force, and the reading follows the lever within the beat. With
+e = p − centre, the next position is
+
+    p′ = p − b f(p) + d,   b = b[up] when f ≥ 0, b = b[down] when f < 0,   abs(d) ≤ D
+
+where a force that adds capacity lowers the reading, b[up] and b[down] are each side's effect on the reading per unit of
+force, and d is the beat's disturbance: the load's own move in the beat, and the lever's rounding to its step (half a
+step at most). **Conditions:** kd = 0 (no damping); b kp ≤ 1 on each side (one beat's move is never longer than the
+distance it closes); b[up] A ≤ w[high] − centre (the fail-up step is never longer than the wall's distance from the
+centre); and the lever inside its cover (at its cover a muscle has nothing more to give, and nothing below holds). The
+solver is given one more true fact of tanh here: it is odd, tanh(−x) = −tanh(x).
+
+| Claim | Statement | Result |
+|---|---|---|
+| L1 | p ≥ centre ⇒ centre ≤ p − b f ≤ p, and p ≤ centre ⇒ p ≤ p − b f ≤ centre: the move goes toward the centre and never past it | proved |
+| L2 | p ≠ centre ⇒ abs(p − b f − centre) < abs(p − centre): away from the centre every move shortens the distance | proved |
+| L3 | if b A tanh(kp R / A) ≥ D on each side, then abs(e) ≤ R ⇒ abs(e′) ≤ R for every d with abs(d) ≤ D: the ball of radius R is never left | proved |
+| L4 | if b A tanh(kp R / A) ≥ D + δ on each side, δ > 0, then abs(e) ≥ R ⇒ abs(e′) ≤ abs(e) − δ: outside it every beat closes at least δ | proved |
+
+**What follows, by elementary argument from L3 and L4.** Write b[min] = min(b[up], b[down]).
+
+1. *A bounded push: the reading is held near the centre, not at it (practical, input-to-state stability).* For
+   D < b[min] A the smallest ball L3 keeps has radius R*(D) = (A / kp) artanh(D / (b[min] A)). For every R′ > R*, put
+   δ = b[min] A tanh(kp R′ / A) − D > 0: from any start the reading is inside the ball of radius R′ within
+   ⌈(abs(e₀) − R′) / δ⌉ beats (L4) and never leaves it after (L3). So limsup abs(eₖ) ≤ R*(D). R* is 0 at D = 0, rises
+   with D, and has no finite value once D reaches b[min] A.
+2. *No push: the reading settles at the centre (asymptotic stability).* With D = 0 every ball of radius R′ > 0 is
+   entered and kept, so eₖ → 0, and by L2 the distance falls at every beat.
+3. *A push as large as the muscle's whole pull* (D ≥ b[min] A): nothing is claimed. The disturbance outruns the muscle;
+   it is at its limit.
+4. *A lever that moves in whole steps* (a clock in MHz steps, whole replicas) enters through d: D = D[load] + β q / 2,
+   with q the step and β the reading's move per unit of lever.
+
+**Where the proof stops, and what was computed there instead.** No live wire runs the proof's exact case: every one
+builds the law with its default damping (`omni_controller/gpu_compass.py`, `omni_orchestrator/brain.py`,
+`realms/compass_arm.py` and the data stores' runners), and the Kubernetes governor uses the force as a gate for whole
+machine steps rather than as a lever's move. A muscle that lags its lever (τ beyond the beat) is outside M1 as well. Both
+were run instead on the engine's own `CompassLaw.force` (`tools/compass_loop.py`, `results/model_gate/COMPASS_LOOP.md`;
+our own model, class S, never a proof), every row kept whichever way it fell:
+
+- M1, the proof's own case: 8 of 8 rows at or under R*, the largest tail 1.000 R* (a push held outward settles exactly on
+  R*: the bound is tight).
+- M2, a muscle that lags its lever by τ = 0.25, 1, 2 and 4 beats: without damping 24 of 32 rows at or under R*, the
+  largest 1.870 R* (a slow push, τ = 4 beats); with the default damping for that τ, 31 of 32, the largest 1.105 R*; with
+  three times the default, 32 of 32.
+- M1 with the damping set for a lag the muscle does not have: with the default, 31 of 32, the largest 1.147 R*; with three
+  times the default, 17 of 32, the largest 2.629 R*.
+
+So on a lagging muscle the damping keeps the reading inside the proved radius where the undamped loop overshoots it, and a
+damping set from a response time the muscle does not have can cost more than it gives: each wire's declared τ is part of
+its tune. A proof of the damped, lagging loop (three states: the reading, the lever and the velocity estimate) is open
+(section 5).
 
 ## 2. The plug's clip (`Plug.write`)
 
@@ -134,8 +198,13 @@ end inside the basin.
 - **Starts below S₋.** From there S leaves every bound (the basin's negative side, `docs/book/THEORY.md`). They are
   outside every claim on this page, and the quartic closure named in the theory is the engine change that would remove
   them.
+- **The damped, lagging compass loop.** L1 to L4 prove the loop without damping on a muscle that follows its lever within
+  the beat (section 1b). With the default damping, and on a muscle that lags, the loop is computed (class S), not proved;
+  the proof needs a Lyapunov function, or an interval certificate, over the reading, the lever and the velocity estimate
+  together.
 - **The live governors** (`omni_controller/*`) are proved here only through the parts they share: the compass law, the
-  plug's clip and the verdict. Their Kubernetes, GPU and cloud wiring is tested, not proved.
+  plug's clip and the verdict. Their Kubernetes, GPU and cloud wiring is tested, not proved; none of them runs the compass
+  loop's proved case (section 1b).
 
 ---
 
