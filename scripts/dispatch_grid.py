@@ -594,7 +594,7 @@ def rerun_blocks(path=None):
     blocks = [[]]
     for ln in lines:
         ln = ln.strip()
-        if not ln or ln.startswith("#"):
+        if not ln or ln.startswith("#") or ln.startswith("switch="):
             continue
         if ln.startswith("added="):
             blocks.append([])
@@ -1069,6 +1069,11 @@ def main(argv=None):
         queue = [q for q in rq if cloud_of(q[2]) is None and q[2] not in carried]   # a cloud's reruns stand in its own line
         for wf in sorted(carried):
             print(f"carries to {ENGINE}, not run again: {wf}")
+        if not cloud_switch(RERUNS):
+            # the founder's order of 20 November: no receipt is made again where the number already holds; the reruns'
+            # own switch (switch=off in scripts/reruns.txt) holds every one of them until his word
+            print(f"the reruns are held: switch=off in {RERUNS.relative_to(ROOT)} (the founder's order of 20 November)")
+            queue = []
         if queue:
             for run, name, wf, kv in reruns_to_start(queue, reruns_started(queue))[:a.reruns_per_tick]:
                 if inflight >= target:

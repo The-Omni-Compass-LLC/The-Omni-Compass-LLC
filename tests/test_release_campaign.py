@@ -316,6 +316,17 @@ class ReleaseCampaign(unittest.TestCase):
         self.assertEqual(len(calls), 10)
         self.assertEqual(running, 1000)
 
+    def test_the_reruns_are_held_while_their_switch_reads_off(self):
+        """The founder's order of 20 November: no receipt is made again where the number already holds. scripts/reruns.txt's
+        own switch line holds every rerun while it reads off, and is never read as an entry."""
+        self.assertFalse(grid.cloud_switch(grid.RERUNS))
+        self.assertFalse(any(q[1].startswith("switch=") or q[2].startswith("switch=") for q in grid.rerun_queue()))
+        with tempfile.TemporaryDirectory() as tmp:
+            on = Path(tmp) / "reruns.txt"
+            on.write_text("switch=on\ncore benchmark|benchmark.yml|\n")
+            self.assertTrue(grid.cloud_switch(on))
+            self.assertEqual([q[1] for q in grid.rerun_queue(on)], ["core benchmark"] * 3)
+
     def test_a_result_that_carries_is_not_run_again(self):
         """The founder's orders of 7 and 20 November: a benchmark whose every table carries to the engine that stands is
         left out of the reruns; one whose engine code moved (the Kubernetes governor on omni-v27) runs as before, and a
