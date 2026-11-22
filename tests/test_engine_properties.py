@@ -74,6 +74,89 @@ class CompassLawProperties(unittest.TestCase):
             self.assertGreater(f, 0.0)
 
 
+class CompassLoopProperties(unittest.TestCase):
+    """L1-L4 on the engine's own CompassLaw.force, run as the loop of model M1 (docs/ENGINE_PROOFS.md, section 1b): the
+    next position is p - b f + d, b the side's gain, |d| <= D, the damping off (kd = 0), b kp <= 1 on each side and
+    b_up A <= wall - centre. The disturbance is drawn at random and, every other beat, pushed straight outward at its
+    full size, the worst a push of size D can do."""
+    TOL = 1e-9
+
+    @staticmethod
+    def setup(kp, A, center, su, sd):
+        g = CompassLaw(Band(lo=0.0, hi=1.0, center=center), dt=60.0, tau=60.0, kp=kp, kd=0.0, authority=A)
+        room = g.band.wall_high - center
+        bu = min(su / kp, su * room / A)                  # inside both conditions on the add side
+        bd = sd / kp
+        return g, bu, bd
+
+    @staticmethod
+    def beat(g, p, bu, bd, d):
+        f = g.force(p)
+        m = p - (bu if f >= 0 else bd) * f
+        return m, m + d
+
+    @SET
+    @given(kp=st.floats(0.1, 20), A=st.floats(0.05, 2), center=st.floats(0.3, 0.7), su=st.floats(0.05, 1),
+           sd=st.floats(0.05, 1), p=st.floats(-1, 2, **finite))
+    def test_the_move_goes_toward_the_centre_and_never_past_it(self, kp, A, center, su, sd, p):
+        g, bu, bd = self.setup(kp, A, center, su, sd)
+        m, _ = self.beat(g, p, bu, bd, 0.0)
+        if p >= center:
+            self.assertTrue(center - self.TOL <= m <= p + self.TOL)              # L1
+        else:
+            self.assertTrue(p - self.TOL <= m <= center + self.TOL)
+        if abs(p - center) > 1e-6:
+            self.assertLess(abs(m - center), abs(p - center))                    # L2
+
+    @SET
+    @given(kp=st.floats(0.1, 20), A=st.floats(0.05, 2), center=st.floats(0.3, 0.7), su=st.floats(0.05, 1),
+           sd=st.floats(0.05, 1), R=st.floats(0.01, 0.6), share=st.floats(0.05, 1), start=st.floats(-1, 1),
+           seed=st.integers(0, 10 ** 6))
+    def test_the_ball_is_never_left(self, kp, A, center, su, sd, R, share, start, seed):
+        import random
+        g, bu, bd = self.setup(kp, A, center, su, sd)
+        D = share * min(bu, bd) * A * math.tanh(kp * R / A)                   # the ball's premise, with a real push
+        rng = random.Random(seed)
+        p = center + start * R
+        for k in range(120):
+            e = p - center
+            d = (D if e >= 0 else -D) if k % 2 else rng.uniform(-D, D)          # outward at full size every other beat
+            _, p = self.beat(g, p, bu, bd, d)
+            self.assertLessEqual(abs(p - center), R + self.TOL)                 # L3
+
+    @SET
+    @given(kp=st.floats(0.1, 20), A=st.floats(0.05, 2), center=st.floats(0.3, 0.7), su=st.floats(0.05, 1),
+           sd=st.floats(0.05, 1), R=st.floats(0.01, 0.3), share=st.floats(0, 0.9), start=st.floats(1.0, 4.0),
+           side=st.sampled_from([-1, 1]), seed=st.integers(0, 10 ** 6))
+    def test_outside_the_ball_every_beat_closes_delta_and_the_ball_is_reached_in_time(self, kp, A, center, su, sd, R,
+                                                                                      share, start, side, seed):
+        import random
+        g, bu, bd = self.setup(kp, A, center, su, sd)
+        pull = min(bu, bd) * A * math.tanh(kp * R / A)
+        D = share * pull
+        delta = pull - D                                                          # L4's premise: pull >= D + delta
+        rng = random.Random(seed)
+        p = center + side * start * R
+        beats = math.ceil((abs(p - center) - R) / delta) if abs(p - center) > R else 0
+        for k in range(beats + 1):
+            e = abs(p - center)
+            if e < R:
+                break
+            d = (D if p >= center else -D) if k % 2 else rng.uniform(-D, D)
+            _, p = self.beat(g, p, bu, bd, d)
+            self.assertLessEqual(abs(p - center), e - delta + self.TOL)         # L4
+        self.assertLess(abs(p - center), R + self.TOL)                          # inside within the counted beats
+
+    def test_with_no_push_the_reading_comes_home(self):
+        for kp, A, center in ((1.0, 1.0, 0.5), (4.0, 0.2, 0.3), (0.5, 2.0, 0.7)):
+            g, bu, bd = self.setup(kp, A, center, 0.8, 0.6)
+            for p0 in (-0.5, 0.0, 0.2, 0.94, 0.99, 1.6):
+                p = p0
+                for _ in range(400):
+                    _, p = self.beat(g, p, bu, bd, 0.0)
+                self.assertLess(abs(p - center), 1e-6)
+
+
 class Lever(Plug):
     def __init__(self, lo, hi, start):
         super().__init__(lo, hi)

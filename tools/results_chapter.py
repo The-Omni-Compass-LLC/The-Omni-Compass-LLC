@@ -252,9 +252,11 @@ def referee_claims_block() -> list:
          f"GAIN, {mus['limit'] + mus['same']} STEADY, {mus['loss']} LOSS (`results/realms_v5/REALMS_V5.md`); a few dozen knobs on real "
          "systems |",
          f"| Its mathematics | **Machine-checked where stated** | {proofs['proved']} of {proofs['of']} theorems proved by SMT and "
-         "interval arithmetic on the engine as it executes: the compass law, the plug's clip, the verdict, the invariance of E, I and "
+         "interval arithmetic on the engine as it executes: the compass law, the compass loop on its declared model (held near "
+         "the centre under a bounded push, settled at it with none), the plug's clip, the verdict, the invariance of E, I and "
          "S, the tracking bound inside the basin and the steps to reach it, the bath's stability (`docs/ENGINE_PROOFS.md`); open: "
-         "CERT-10 for every fixture, convergence of the whole six-state system (`docs/FORMAL_STATUS.md`) |"]
+         "the damped, lagging compass loop the wires run (computed, class S), CERT-10 for every fixture, convergence of the "
+         "whole six-state system (`docs/FORMAL_STATUS.md`) |"]
     return L
 
 

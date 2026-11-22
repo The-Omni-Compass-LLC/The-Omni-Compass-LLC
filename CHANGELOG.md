@@ -2,6 +2,22 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
+## 2026-11-22: the compass loop proved on its declared model; where the proof stops, computed (no engine change; omni-v27 stands)
+- **L1 to L4** (`tools/prove_engine.py`, `docs/ENGINE_PROOFS.md`, section 1b): the compass law's loop, one decision a beat, on
+  model M1 (the reading follows the lever within the beat, no damping, b kp ≤ 1 on each side, the fail-up step inside the wall).
+  The move goes toward the centre and never past it; under a push of size D it is held in the ball of radius
+  R*(D) = (A / kp) artanh(D / (b[min] A)), entered at a fixed rate a beat; with no push it settles at the centre. That is
+  practical (input-to-state) stability under a push and asymptotic stability without one, said apart, as the outside audits of
+  21 November asked. Machine-checked by z3; the engine's own `CompassLaw.force` run through the same loop on generated cases
+  (`tests/test_engine_properties.py`, `CompassLoopProperties`). 29 of 29 claims proved.
+- **C9**: the take-back line in `CompassLaw.force` never acts for any admissible gain (C3 holds by the sign of the pull
+  alone); it stays until the next engine version, since removing it changes the fingerprint and no decision.
+- **Where the proof stops** (`tools/compass_loop.py`, `results/model_gate/COMPASS_LOOP.md`, our own model, class S): no live
+  wire runs the proved case, since each builds the law with its default damping. On a muscle that lags its lever, without
+  damping 24 of 32 rows stay at or under R* (the largest 1.870 R*), with the default damping 31 of 32 (1.105 R*), with three
+  times it 32 of 32; with the damping set for a lag the muscle does not have, three times the default reaches 2.629 R*. The
+  damped, lagging loop's proof is open (`docs/FORMAL_STATUS.md`).
+
 ## 2026-11-15: omni-v27 stands: no pod asked for that no machine can take; the scale-up looks forward; the stand-ins
 - **The faults** (the Azure work meter's own audits on omni-v26, runs 43005182097, 43177138720, 43364393684; the founder's orders of
   14 and 15 November): work per dollar read GAIN in all three runs, and the pods waiting for a machine stood three to four times

@@ -19,9 +19,13 @@ Two kinds of proof, each over every input in its declared set, never over sample
   python3 tools/prove_engine.py --quiet    the same, printing only the summary line
 
 What is proved (each item names its theorem in docs/ENGINE_PROOFS.md):
-  C1-C8  the compass law's force (omnicompass/compass_law.py): bounded by its authority, fails up at the wall, never
+  C1-C9  the compass law's force (omnicompass/compass_law.py): bounded by its authority, fails up at the wall, never
          takes back while the reading climbs above the centre, points home at rest, is monotone in position and in
-         velocity, is Lipschitz (no hammer) inside the band, and its default damping is never negative
+         velocity, is Lipschitz (no hammer) inside the band, its default damping is never negative, and its take-back line
+         never acts (C3 holds by the sign of the pull alone)
+  L1-L4  the compass loop, one decision a beat, on the declared model M1 without damping: the move goes toward the
+         centre and never past it, shortens the distance, never leaves a ball the pull outweighs the push in, and closes a
+         fixed share of the distance outside it (held near the centre under a bounded push, settled at it with none)
   P1-P3  the plug's clip: every write inside the cover, nothing clipped that was inside, clipping idempotent
   V1-V3  the verdict's rule (omnicompass/verdict.py, judge="interval"): an allowed step never reads LOSS, never passes the
          allowance, and stepwise never adds up past the cost first measured at native
@@ -123,6 +127,39 @@ def smt_proofs():
     kd_default = z3.If(2 * s - 1 > 0, 2 * s - 1, 0) * dt
     prove("C8", [kp > 0, tau >= 0, dt > 0, s >= 0, s * s * dt == kp * tau], kd_default >= 0,
           "the default damping (critical for the muscle's response time) is never negative")
+    prove("C9", law, z3.Not(z3.And(kp * (p - c) + kd * v < 0, v > 0, p > c)),
+          "the take-back line never acts: the raw pull cannot be below zero while the reading climbs above the centre, so "
+          "C3 holds by the sign of the pull alone")
+
+    # L1-L4: the compass loop, one decision a beat, on the declared model M1 (docs/ENGINE_PROOFS.md, section 1b): the
+    # lever moves by its gain times the force and the reading follows within the beat, so the next position is
+    # n = p - b f + d, b = b_up when the force adds (f >= 0) and b_down when it takes back, and d the disturbance of the
+    # beat (the load's own move, the lever's rounding), |d| <= D. Without damping (kd = 0), with the step condition
+    # b kp <= 1 on each side and the fail-up step no longer than the wall's distance from the centre (b_up A <= wall - centre)
+    bu, bd, D, dd, R_, xR, z0 = Real("b_up"), Real("b_down"), Real("D"), Real("d"), Real("R"), Real("xR"), Real("zero")
+    f0, d0 = force(p, v, x)
+    b = z3.If(f0 >= 0, bu, bd)
+    m = p - b * f0                                    # the beat's move without the disturbance
+    nx = m + dd                                       # the next position
+    absv = lambda q: z3.If(q >= 0, q, -q)
+    loop = law + d0 + [kd == 0, bu > 0, bd > 0, bu * kp <= 1, bd * kp <= 1, bu * A <= wh - c, z0 == 0]
+    prove("L1", loop + tanh_facts(x, z0),
+          z3.And(z3.Implies(p >= c, z3.And(m >= c, m <= p)), z3.Implies(p <= c, z3.And(m <= c, m >= p))),
+          "the compass loop: the beat's move takes the reading toward the centre and never past it")
+    prove("L2", loop + tanh_facts(x, z0), z3.Implies(p != c, absv(m - c) < absv(p - c)),
+          "the compass loop: away from the centre every beat's move shortens the distance to it")
+    nR = Real("minus_xR")
+    odd = [nR == -xR, T(nR) == -T(xR)]               # tanh is odd: the take-back side is the add side's mirror
+    ball = [R_ >= 0, A * xR == kp * R_, D >= 0, absv(dd) <= D, bu * A * T(xR) >= D, bd * A * T(xR) >= D] + odd
+    prove("L3", loop + ball + tanh_facts(x, xR, nR, z0), z3.Implies(absv(p - c) <= R_, absv(nx - c) <= R_),
+          "the compass loop: a ball around the centre whose radius R the muscle's pull at R outweighs (b A tanh(kp R / A) "
+          ">= D on each side) is never left, whatever the disturbance up to D")
+    dl = Real("delta")
+    outside = [R_ > 0, A * xR == kp * R_, D >= 0, dl > 0, absv(dd) <= D, bu * A * T(xR) >= D + dl,
+               bd * A * T(xR) >= D + dl] + odd
+    prove("L4", loop + outside + tanh_facts(x, xR, nR, z0), z3.Implies(absv(p - c) >= R_, absv(nx - c) <= absv(p - c) - dl),
+          "the compass loop: outside a ball where the pull outweighs the disturbance by delta, every beat closes at least "
+          "delta of the distance to the centre")
 
     # the plug's clip (Plug.write: v = clamp(value, lo, hi))
     lo, hi, val = Real("lo"), Real("hi"), Real("value")
