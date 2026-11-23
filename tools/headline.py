@@ -385,7 +385,7 @@ def places_block(m) -> list:
          "and out of Omni-Compass's reach (it governs what the cloud gives, through the cloud's own Kubernetes). Four arms in all: on "
          "the chip **A**, native, and **B**, Omni-Compass on top of native; through the cloud **C**, native, and **D**, Omni-Compass on "
          "top of native. Each box is that arm's bill beside the work done inside it; the "
-         "reading is the work for each dollar. The bill should hold; the benefit is the work inside it. The two places are never added "
+         "reading is the work for each dollar. The bill may rise or fall; a gain requires useful work to increase proportionally more than the bill. The two places are never added "
          "together: a system runs in one or the other. The four arms, A and B on the chip, C and D in the cloud, are written once in "
          "[`results/TWO_BILLS.md`](results/TWO_BILLS.md) (`tools/two_bills.py`); these boxes read it.", "",
          "**The one equation** (the founder's words of 2 November: the one thing to prove is more work for the bill): in each place "
@@ -675,9 +675,9 @@ def markdown(m) -> str:
               f"([`results/WHOLE_SYSTEM.md`](results/WHOLE_SYSTEM.md), `tools/whole_system.py`; {', '.join(w['engines'])}), the cluster and "
               f"the services on it, by the rule that counts only what held in all three runs: {composed_said(w)}; the composition's index over "
               f"work, speed and machines, a second reading under its own rule and never the headline, {index_word(w['index'])} "
-              f"{abs(w['index']):.1f}%. The energy and the cloud's bill are held at native's and never counted: the "
-              "same power and the same bill (on the cluster the energy is a declared model of the machines, never a meter; the cloud is the "
-              "wire), and the chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read its work and its energy STEADY, "
+              f"{abs(w['index']):.1f}%. The energy and the cloud's bill are not measured by this composition and are not counted in its index; "
+              "neither unchanged energy nor an unchanged bill may be inferred (on the cluster energy is a declared model of machines, not a meter; "
+              "the cloud is the wire). The chip enters that composition as exactly 1 (the A100's three runs on omni-v21 read its work and energy STEADY, "
               "its response times LOSS by the mean of the three runs, `results/gpu/V21_A100_CAP_ABC.md`); the chip's own receipt, on "
               f"{chip_engine()}, is the bare-metal box above. What the benefit "
               "cost the chip, the energy and the wire is listed row by row in section 3b of `results/WHOLE_SYSTEM.md`. A composition across engines "
@@ -764,8 +764,8 @@ def place_readme(text: str, block: str) -> str:
     if BEGIN in text:
         a = text.index(BEGIN); z = text.index(END, a) + len(END)
         return text[:a] + block + text[z:]
-    tag = ("**The aim, in the founder's words: more work, faster, on fewer machines, for the same energy and the same bill, on top of "
-           "the stack you already run.** It is an aim, not a result: the record reads the work and the speed (the Omni index below); "
+    tag = ("**The operating objective: more useful work per billed dollar, with service and safety constraints, on top of "
+           "the stack you already run.** It is an aim, not a result: work and bills can both increase; the gain is their ratio. The record reads the work and the speed (the Omni index below); "
            "the machines are not yet fewer, and the whole organism's composition reads them more, power given (`results/WHOLE_SYSTEM.md`).")
     i = text.index(tag) + len(tag)
     return text[:i] + "\n\n" + block + text[i:]
