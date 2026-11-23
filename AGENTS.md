@@ -20,6 +20,10 @@ All active documents, manuscripts, generated reports, product metadata and assis
 
 The website's hero, ticker, tours, Q&A, investor material and licensing copy must derive published metrics from `results/WEBSITE_SURFACE_CONTRACT.json`, rebuilt with `python3 tools/site_surface_contract.py --write` only when its source receipts change; gate with `python3 tools/site_surface_contract.py --check`. Its source of truth is `results/SITE_NUMBERS.json`, not typed UI fallback percentages. The company attribution is **Dubra Software Inc. / The Omni-Compass LLC**; proposed commercial rates are recorded distinctly from measured savings in `docs/COMMERCIAL_TERMS_PROPOSAL.md`. Website deployment is a separate verified release, not implied by GitHub publication.
 
+## Work-per-bill terminology and attribution (mandatory)
+
+The primary economic objective is **more useful work per billed dollar**, measured on matched workload, time window and accounting boundary. Let W denote admissible useful work and B the attributable bill, with both positive: `G = (W_omni/B_omni)/(W_native/B_native) - 1 = (1 + delta_W)/(1 + delta_B) - 1`. A positive G is a gain even if both W and B rise, provided the work rises proportionally more; the bill increase is **power given** and must be disclosed alongside G. A lower bill alone does not establish greater total useful work. Never claim the founder required **the same bill**, **no increase in bills**, or **the same energy** as the general economic condition, and do not invent founder quotations. Explain that zero bill change is a particular scenario, not an invariant. Do not equate a software composite index with physical savings or dollars; compare physical meters, live software, and models separately. Retain safety, latency, unschedulable pods, and other adverse outcomes. Generated pages and website contracts must adopt the same distinction.
+
 ## What Omni-Compass is
 
 Omni-Compass is a **supervisory governor**. It always sits on top of a native controller (the Kubernetes HPA, GPU
