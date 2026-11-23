@@ -258,8 +258,9 @@ below native; where it cannot bring a muscle a GAIN, that muscle stays native. I
 after, reads back every write, puts every give-back to its own trial, records every decision with its reason, walks every
 setting home if it stops (the lease) and stops at once on the kill switch. Its first rule is do no harm, judged at the
 organism: never less work or health than native (`DISCLOSURES.md`, section 3). The one headline is an aim, not a result.
-The aim: more work, faster, on fewer machines, for the same energy and the same bill, from the hardware and the controllers
-already in place, every benefit made at the software end; in a cloud and at the chip, Omni-Compass holds. The record reads
+The objective: more useful work per billed dollar, subject to the service and safety constraints, from the hardware and controllers
+already in place. Neither a fixed bill nor a fixed energy draw is required; if resource spending rises, the useful-work increase must
+outweigh it proportionally for the work-per-bill ratio to improve. All resource increases and service tradeoffs remain visible. The record reads
 the work and the speed (the Omni index, `results/OMNI_INDEX.md`); the machines are not yet fewer: the whole organism's
 composition reads them more, power given (`results/WHOLE_SYSTEM.md`).
 
