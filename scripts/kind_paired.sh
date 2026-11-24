@@ -37,6 +37,9 @@ k=${#arms[@]}; off=$(( (REP - 1) % k ))
 order=( "${arms[@]:off}" "${arms[@]:0:off}" )
 echo "repetition $REP, order: ${order[*]}"
 for arm in "${order[@]}"; do
+  # Receipt readers split bench-<arm>-<rep> at the first two dashes.
+  receipt_arm="$arm"
+  if [ "$arm" = compass-no-resize ]; then receipt_arm=compassnoresize; fi
   # a fresh cluster for every arm; a creation that fails (the node image refused by its registry, a control plane not
   # Ready in time) is cleared and tried again, twice, before the job gives up
   for t in 1 2 3; do
@@ -46,7 +49,7 @@ for arm in "${order[@]}"; do
     echo "kind cluster not created (try $t): trying again in 30 s"; sleep 30
   done
   echo "######## ARM $arm (repetition $REP)"
-  mkdir -p "bench-$arm-$REP" && echo "$cluster${KIND_NODE_IMAGE:+ image=$KIND_NODE_IMAGE}" > "bench-$arm-$REP/kind_cluster.txt"
+  mkdir -p "bench-$receipt_arm-$REP" && echo "$cluster${KIND_NODE_IMAGE:+ image=$KIND_NODE_IMAGE}" > "bench-$receipt_arm-$REP/kind_cluster.txt"
   # the four ways (docs/BATCH_QUEUE_PREREGISTRATION.md, amendment 6): an arm named ...bare runs on the organism alone, no
   # orchestrator installed (on the batch rig the stream placed by the cluster's own default scheduler, on the serving rig the
   # service's HPA as Kubernetes ships it, no add-on: docs/CRANE_PREREGISTRATION.md), native (nativebare) or with
@@ -61,10 +64,10 @@ for arm in "${order[@]}"; do
   # Keep the v27 controller unchanged; omit only its serving-pod CPU cap target.
   resize=enabled
   if [ "$base" = compass-no-resize ]; then base=compass; resize=disabled; fi
-  if ! OMNI_BENCH_CPU_RESIZE="$resize" OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-}}" ARM="$base" BATCH_QUEUE="$queue" ADDONS="$addons" CRUISEKUBE="$cruise" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
+  if ! OMNI_BENCH_CPU_RESIZE="$resize" OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-}}" ARM="$base" BATCH_QUEUE="$queue" ADDONS="$addons" CRUISEKUBE="$cruise" OUT_DIR="bench-$receipt_arm-$REP" bash scripts/kind_bench.sh; then
     # a run that fails its own checks is recorded as invalid and left out of the table, never silently counted
     echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid"
-    [ -f "bench-$arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$arm-$REP/INVALID"
+    [ -f "bench-$receipt_arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$receipt_arm-$REP/INVALID"
     fail=1
   fi
 done
