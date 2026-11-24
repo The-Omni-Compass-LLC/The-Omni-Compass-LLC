@@ -58,7 +58,10 @@ for arm in "${order[@]}"; do
   # engine's default, every 60 s (omni-v17)
   pace=""
   if [[ "$base" =~ ^compass([0-9]+)$ ]]; then pace="${BASH_REMATCH[1]}"; base=compass; fi
-  if ! OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-}}" ARM="$base" BATCH_QUEUE="$queue" ADDONS="$addons" CRUISEKUBE="$cruise" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
+  # Keep the v27 controller unchanged; omit only its serving-pod CPU cap target.
+  resize=enabled
+  if [ "$base" = compass-no-resize ]; then base=compass; resize=disabled; fi
+  if ! OMNI_BENCH_CPU_RESIZE="$resize" OMNI_INTERVAL="${pace:-${OMNI_INTERVAL:-}}" ARM="$base" BATCH_QUEUE="$queue" ADDONS="$addons" CRUISEKUBE="$cruise" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
     # a run that fails its own checks is recorded as invalid and left out of the table, never silently counted
     echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid"
     [ -f "bench-$arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$arm-$REP/INVALID"

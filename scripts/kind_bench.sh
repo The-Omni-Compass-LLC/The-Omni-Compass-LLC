@@ -123,6 +123,12 @@ case "$METER" in ""|rapl) ;; *) echo "METER must be empty or rapl (got $METER)";
 # the power cap writes the service's CPU limit; with CruiseKube the limit is CruiseKube's own (it resizes the running
 # pods in place), so the cap is left out of that set and its reset checks read the operator's limit on the Deployment
 CAP_ARGS="--cap-deployments default/php-apache"; [ -z "$CRUISEKUBE" ] || CAP_ARGS=""
+case "${OMNI_BENCH_CPU_RESIZE:-enabled}" in
+  enabled) ;;
+  disabled) CAP_ARGS="" ;;
+  *) echo "invalid OMNI_BENCH_CPU_RESIZE" >&2; exit 2 ;;
+esac
+printf '%s\n' "${OMNI_BENCH_CPU_RESIZE:-enabled}" > "$OUT_DIR/cpu_resize_mode.txt"
 # The same wiring on every platform, the whole engine at the max (the founder's order of 31 October: no hard rule; the
 # cloud's tune-down on the machines alone of 14 October, its machines-only switch and the governor's give-back-only flag, is
 # struck): the service sensed, the processor conveyed, the declared power model read, and the machine lever on top of the
