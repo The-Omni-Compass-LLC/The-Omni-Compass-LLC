@@ -101,6 +101,9 @@ jobs:
         continue-on-error: true
         run: |
           python tools/tour_voice.py --status || {
+            if ! command -v ffmpeg >/dev/null; then
+              sudo apt-get update && sudo apt-get install -y ffmpeg || exit 1
+            fi
             python -m venv "$RUNNER_TEMP/voice" && "$RUNNER_TEMP/voice/bin/pip" install -q kokoro-onnx==0.6.1 soundfile==0.14.0 &&
             "$RUNNER_TEMP/voice/bin/python" tools/tour_voice.py | tee -a "$GITHUB_STEP_SUMMARY"; }
       - name: Rebuild the page from the engine that stands and the repository's own results
