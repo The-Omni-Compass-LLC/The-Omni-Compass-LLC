@@ -155,15 +155,12 @@ def milli_cpu(q):
     return f"{int(float(q) * 1000)}m"
 
 
-# The factory beat for its place (omni-v24; the founder's order of 23 October: the factory beat is the best beat the sweeps
-# read). The corrected model's ladder of 31 October (results/model_gate/V23_LADDER_CORRECTED.md, class S, amendment 4's frozen rule)
-# read a decision every 10 s undominated on site and no faster beat admissible through a cloud, where 60 s stands. The place
-# is read from the cluster itself, once at the start: a node whose providerID names a public cloud's machine makes the
-# cluster a cloud's; any other node (kind, the owner's own machines, a private cloud of the owner's, no providerID) is on
-# site. A reading that fails, or finds no node, keeps the longer beat. --interval set by hand always wins.
+# Default full decisions every 10 s on identified clusters. Use the same cadence when discovery fails.
+# An explicit operator interval still wins.
+DEFAULT_DECISION_S = 10.0
 CLOUD_PROVIDERS = ("azure://", "gce://", "aws://", "oci://", "digitalocean://", "linode://", "ibm://", "alicloud://",
                    "hcloud://", "scaleway://", "vultr://")
-FACTORY_BEAT = {"on site": 10.0, "through the cloud": 60.0}
+FACTORY_BEAT = {"on site": DEFAULT_DECISION_S, "through the cloud": DEFAULT_DECISION_S}
 
 
 def factory_beat(kube) -> tuple:
@@ -171,10 +168,10 @@ def factory_beat(kube) -> tuple:
     try:
         got = kube.get("get", "nodes", "-o", "json")
         items = [n for n in (got.get("items") or []) if isinstance(n, dict)] if isinstance(got, dict) else []
-    except Exception as e:                                   # a blind reading decides nothing (omni-v11): the longer beat
-        return FACTORY_BEAT["through the cloud"], "unread", f"the cluster's nodes could not be read ({type(e).__name__}): the longer beat"
+    except Exception as e:                                   # a blind reading decides nothing (omni-v11): default decision interval
+        return DEFAULT_DECISION_S, "unread", f"the cluster's nodes could not be read ({type(e).__name__}): default decision interval"
     if not items:
-        return FACTORY_BEAT["through the cloud"], "unread", "no node read: the longer beat"
+        return DEFAULT_DECISION_S, "unread", "no node read: default decision interval"
     ids = [str((n.get("spec") or {}).get("providerID") or "") for n in items]
     clouds = sorted({i.split("://")[0] for i in ids if i.lower().startswith(CLOUD_PROVIDERS)})
     if clouds:
@@ -1964,10 +1961,10 @@ def parser():
     # the heartbeat, a dial (omni-v17, the founder's word of 22 October, afternoon): any beat can be set (5, 15, 30, 60, 75, 90,
     # 120 s and every value between), each shown beside native; the fast checks run every 5 s at every beat. Every rule counts
     # seconds (omni-v16), so either can be turned alone. The factory beat is the best the sweeps read for the place (omni-v24)
-    # omni-v24: unset, the factory beat for the cluster's place, read from its nodes (10 s on site, 60 s through a cloud)
+    # omni-v24: unset, the factory beat for the cluster's place, read from its nodes (10 s on site or through a cloud)
     ap.add_argument("--interval", type=float, default=None,
                     help="seconds between governor decisions (the heartbeat, a dial); unset: the factory beat for the cluster's "
-                         "place, 10 s on site and 60 s through a cloud, read from its nodes at the start")
+                         "place, 10 s on site and through a cloud, read from its nodes at the start")
     ap.add_argument("--print-factory-beat", action="store_true",
                     help="print the factory beat for this cluster's place (seconds) and exit; the rigs read it (scripts/factory_beat.sh)")
     ap.add_argument("--floor-interval", type=float, default=5.0, help="seconds between the fast checks: the scheduling floor, the pod reflex, the conveyance's clock (nodepool mode)")

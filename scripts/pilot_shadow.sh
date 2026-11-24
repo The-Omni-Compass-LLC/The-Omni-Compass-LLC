@@ -5,7 +5,7 @@
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 # Shadow pilot on any Kubernetes cluster (the current kubectl context): Omni-Compass runs read-only beside the cluster's
-# own autoscalers, decides what it would do at the engine's factory beat (60 s; OMNI_INTERVAL sets another) with the
+# own autoscalers, decides what it would do at the engine's factory beat (10 s on a readable cluster; OMNI_INTERVAL sets another) with the
 # benchmarked closure law, and writes nothing.
 #   1. applies deploy/pilot/rbac-shadow.yaml and proves with `kubectl auth can-i` that the identity can read and cannot
 #      write (the run stops if any write permission exists);
