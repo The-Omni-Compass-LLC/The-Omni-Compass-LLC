@@ -1,48 +1,48 @@
-# The 500-run set from the jump generator, base 2861140407: the report for the CTO
+# The 500-run set from the jump generator, base 2949628466: the report for the CTO
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-26T12:50:01Z; GitHub run 45810813367 (engine-runs, commit `830f3e1524`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/45810813367). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
+Engine omni-v27 (digest 34548e45437a05bd, 65 files); the set written 2026-11-26T21:41:06Z; GitHub run 45899301426 (engine-runs, commit `b1b0504034`, https://github.com/The-Omni-Compass-LLC/The-Omni-Compass-LLC/actions/runs/45899301426). Evidence class S: the engine's own models, run on its own ranges. It shows that the Python, the C++ harness and the live engine's page compute the same mathematics, and what that mathematics does; it is never a benchmark of real software or hardware (the live engine's monograph, section 4.1). Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results.
 
 ## 1. The answer
 
-Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 477. Omni-Compass certified 500; the plant alone 427. Omni-Compass got there in 5.60 macro steps on average; the plant alone took 9.63. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
+Omni-Compass brought 500 of 500 runs to a stable basin. The plant left alone brought 477. Omni-Compass certified 500; the plant alone 439. Omni-Compass got there in 5.53 macro steps on average; the plant alone took 9.20. Every gauge reads GAIN, in the engine's own mathematics (class S). Three implementations, the Python, the C++ harness and the page's own code, computed it independently and gave the same digest on all 500 runs. That is not an opinion. It is arithmetic, and anyone can repeat it.
 
 | Gauge (what it is for) | Native alone | Omni-Compass on top | Change against native | 95% interval | Reading |
 |---|---|---|---|---|---|
 | runs brought to a basin, conveyed (more is better) | 477 of 500 | 500 of 500 | up 4.8% | raw +2.9 to +6.8 points | GAIN |
-| runs certified in a basin (more is better) | 427 of 500 | 500 of 500 | up 17.1% | raw +11.7 to +18.0 points | GAIN |
-| macro steps to be conveyed, mean (fewer is better) | 9.629 | 5.600 | down 41.8% | raw −4.37 to −3.69 steps | GAIN |
+| runs certified in a basin (more is better) | 439 of 500 | 500 of 500 | up 13.9% | raw +9.5 to +15.4 points | GAIN |
+| macro steps to be conveyed, mean (fewer is better) | 9.197 | 5.532 | down 39.9% | raw −4.00 to −3.33 steps | GAIN |
 
 ## 2. The proof: three implementations, one digest
 
 | Set | The Python's digest | The C++ harness | The live page's own code |
 |---|---|---|---|
-| the engine's runs | `6d6b445953b25e57…` | `6d6b445953b25e57…`, the same, 500 of 500 runs agree | `6d6b445953b25e57…`, the same |
-| the core's Monte Carlo | `1369daf1163464c2…` | `1369daf1163464c2…`, the same, 2000 of 2000 run-ways agree | `1369daf1163464c2…`, the same |
+| the engine's runs | `e2a65bde2872f8cb…` | `e2a65bde2872f8cb…`, the same, 500 of 500 runs agree | `e2a65bde2872f8cb…`, the same |
+| the core's Monte Carlo | `9e8c2ba786ceb2f5…` | `9e8c2ba786ceb2f5…`, the same, 2000 of 2000 run-ways agree | `9e8c2ba786ceb2f5…`, the same |
 
 The ladder: the first 1, 10, 100 and 500 runs of the same set, each its own digest, so a shorter reading by the page or the C++ is checked against the Python's rung.
 
 | Rung | Runs | The Python's digest | The C++ harness's digest | The same |
 |---|---|---|---|---|
-| 1 | 1 | `f9f53da4abdbd391…` | `f9f53da4abdbd391…` | yes |
-| 2 | 10 | `cf775c71b2b104cb…` | `cf775c71b2b104cb…` | yes |
-| 3 | 100 | `502f5815c206270b…` | `502f5815c206270b…` | yes |
-| 4 | 500 | `6d6b445953b25e57…` | `6d6b445953b25e57…` | yes |
+| 1 | 1 | `767bf7899f05ed68…` | `767bf7899f05ed68…` | yes |
+| 2 | 10 | `b0e36bf0d8e7291b…` | `b0e36bf0d8e7291b…` | yes |
+| 3 | 100 | `124705ee302b51ea…` | `124705ee302b51ea…` | yes |
+| 4 | 500 | `e2a65bde2872f8cb…` | `e2a65bde2872f8cb…` | yes |
 
 ## 3. Every way of the core's Monte Carlo
 
 | Way | Conveyed (95% interval) | Certified | Mean step conveyed | In a basin at the last step |
 |---|---|---|---|---|
-| Omni-Compass on top, toward the nearest basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.600 | 500 of 500 |
-| native: the plant alone, u = 0 | 477 of 500 (93.2% to 96.9%) | 427 of 500 | 9.629 | 477 of 500 |
-| Omni-Compass aimed at the wrong basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 6.722 | 500 of 500 |
-| Omni-Compass on top, the double well's μ at 0 | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.584 | 500 of 500 |
+| Omni-Compass on top, toward the nearest basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.532 | 500 of 500 |
+| native: the plant alone, u = 0 | 477 of 500 (93.2% to 96.9%) | 439 of 500 | 9.197 | 486 of 500 |
+| Omni-Compass aimed at the wrong basin | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 6.738 | 500 of 500 |
+| Omni-Compass on top, the double well's μ at 0 | 500 of 500 (99.2% to 100.0%) | 500 of 500 | 5.522 | 500 of 500 |
 
 ## 4. Check it yourself
 
 ```
-bash scripts/prove_runs.sh 2861140407 500
+bash scripts/prove_runs.sh 2949628466 500
 ```
 
 Or run the public workflow `prove-runs.yml` on GitHub, or the container `deploy/Dockerfile.proof`. The same base gives the same digests on any machine. A different digest is a fault, and it would show.
