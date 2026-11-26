@@ -4,9 +4,10 @@
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
 # Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
-"""The two bills: four arms, read by the bill and the work done inside it (the founder's design of 1 November 2026: "we gauge
-those two bills with the amount of work done native in both. Then ... OmniCompass on native in both. We will see that the bill
-should be the same, but that we hopefully will be getting more work done within the bill ... It's four arms, A, B, C, D").
+"""The two bills: four arms, measuring billed cost and useful work in each native-versus-Omni comparison.
+The controlling objective is additional useful work per billed dollar, not a requirement that bills stay fixed.
+Costs can rise if the proportional improvement in useful work exceeds the proportional increase in cost.
+Do not attribute a fixed-bill requirement to the founder.
 
   A  the chip, native                      a rented graphics card run directly; its bill is the rental (hours x the hourly price)
   B  the chip, Omni-Compass on native      the same card and the same hours

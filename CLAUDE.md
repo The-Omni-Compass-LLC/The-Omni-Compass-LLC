@@ -26,10 +26,11 @@ the founder overrides one in the conversation.
   bring a knob a GAIN, that knob stays native. The 2% verdict (`omnicompass/verdict.py`) is the engine's trigger, not a
   stamp on a report. The trade between muscles, judged on the organism, is the next version's work (the model gate first).
   Gains are uncapped.
-- Headline: more work, faster, on fewer machines, for the same energy and the same bill (the founder's words of 31 October: every
-  benefit made at the software end, the chip and the cloud's wire where Omni-Compass holds; until then the line read "with less
-  energy"). One combined number: the Omni index, the software end's reading (work, speed and machines; energy scored only where a
-  meter read it, a model's estimate shown and never scored).
+- Headline and economic objective: **more useful work per billed dollar**, with admissibility, latency, reliability and other service
+  constraints. The bill and energy can increase or decrease: a bill increase is **power given**, and the gain holds only when useful
+  work increases by a greater proportion, `G = (1 + delta_work)/(1 + delta_bill) - 1 > 0`. Do not attribute a fixed-bill or fixed-energy
+  requirement to the founder. A second reading, the Omni index, is the software end's composite of work, speed and machines;
+  it is neither physical energy metering nor a total cloud-bill reduction. Report each receipt's engine and adverse results.
 - **The max is the default brain** (12 October): every muscle runs at its own limit, never past it and never below
   native; it rides the edge, not the middle. "We're never looking to shave energy": the energy it takes is **power
   given**, shown beside the work, the speed and the wear it bought, never called a loss; on the engine that stands the
