@@ -444,10 +444,13 @@ TERMS = [
     T("Omni-Compass", A, "A supervisory governor. It always sits on top of a native controller and never in its place: the "
       "Kubernetes pod autoscaler, GPU firmware, cooling, batteries, a grid's tap changer, a robot's servo. It treats each setting "
       "a native controller already exposes as a muscle and the whole stack as one body. The aim it is built for, CLAUDE.md's headline "
-      "line, an aim and never a result: more work, faster, on fewer machines, for the same energy and the same bill; what the "
-      "tables read stands in section 2a, the machines it took shown beside the work as power given.",
+      "line, an aim and never a result: more useful work per billed dollar, inside the service's own lines of speed and "
+      "reliability. The bill may rise or fall: a rise is power given, and the gain holds only when the useful work rises by a "
+      "greater proportion, G = (1 + ΔW) / (1 + ΔB) − 1 above zero; what the tables read stands in section 2a, the machines it "
+      "took shown beside the work as power given.",
       [(CL, "Omni-Compass is a **supervisory governor**."),
-       (CL, "Headline: more work, faster, on fewer machines, for the same energy and the same bill")]),
+       (CL, "Headline and economic objective: **more useful work per billed dollar**"),
+       (CL, "a bill increase is **power given**, and the gain holds only when useful work increases by a greater proportion")]),
     T("native", A, "The whole system by itself with everything it ships with: every muscle under its own native controller. Every "
       "benchmark's baseline, and the controller Omni-Compass always sits on top of. Amber on the page.",
       [(MAN, "The whole system by itself with everything it ships with"),
