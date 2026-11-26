@@ -25,6 +25,7 @@
   [['🎚 Mixer · 40 tracks','#padMixer'],['🎚 40-track sequencer','#k40Seq'],['🧭 Omni-Compass governors','#kGovBoard'],['🎛 Console returns · reverb and echo','#kFXRet'],['🎚 Inputs','#kIO']].forEach(([n,sel])=>add('Studio','🎛',n.slice(n.indexOf(' ')+1),'Studio',()=>{ KRAIL.goTo('pad'); setTimeout(()=>{ if(sel==='#k40Seq'){ try{ K40.tab('40'); }catch(_){ } } const e=document.querySelector(sel); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },1300); }));
   try{ GAMES.list.forEach(g=>add('Games','🕹',g.name,g.cat,()=>{ try{ KRAIL.goTo('gamesDock'); }catch(_){ } setTimeout(()=>GAMES.open(g.id),300); })); }catch(_){ }
   try{ KREC.dishes().forEach(d=>add('Recipes','🍳',d.name,d.cul+' · '+d.ing,()=>KREC.open(d.name))); }catch(_){ }
+  try{ (window.KFINDX||[]).forEach(f=>{ try{ f(add); }catch(_){ } }); }catch(_){ }
   IDX=L; return L; }
  function search(q){ const L=IDX||build(); const words=q.toLowerCase().split(/\s+/).filter(Boolean); if(!words.length) return [];
   let R=L.map(x=>{ let s=0; for(const w of words){ const i=x.t.indexOf(w); if(i<0) return null; s+=(i===0?6:x.t.indexOf(' '+w)>=0?3:1)+(x.label.toLowerCase().includes(w)?4:0); } return [s,x]; }).filter(Boolean);

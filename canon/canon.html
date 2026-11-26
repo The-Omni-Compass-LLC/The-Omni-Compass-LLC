@@ -20243,7 +20243,7 @@ html body :is(#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDoc
  const $=id=>document.getElementById(id); const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const sleep=ms=>new Promise(r=>setTimeout(r,ms)); const say=m=>{ try{ toast(m); }catch(_){ } };
  const shown=e=>!!(e&&!e.hidden&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0);
- const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial,#kAI,#kEasel,#kProj,#kKnow,#kLock,#kProfile';
+ const SCREENS='#pad.on,#swDock,#zodDock,#omniDock,#opsHub,#gamesDock,#tac,#libDock,#fileDock,#sbDock,#musicDock,#aivDock,#voiceDock,#langDock,#layDock,#craftDock,#mutDock,#mapDock,#askDock,#kHumor,#kJump,#kKara,#kOwner,#kVG,#kSocial,#kAI,#kEasel,#kProj,#kKnow,#kLock,#kProfile,#kNews,#kRelig,#kMarket';
  const css=document.createElement('style'); css.id='kRailCss';
  css.textContent=`
 :root{--kRailW:58px;--kDockH:0px;--rdockH:0px}
@@ -20300,7 +20300,7 @@ html body #tourTab.lp{left:8px!important;right:calc(var(--kRailW) + 8px)!importa
   const top=box.getBoundingClientRect().top-(sc===document.scrollingElement||sc===document.documentElement?0:sc.getBoundingClientRect().top); sc.scrollTop=Math.max(0,sc.scrollTop+top-stick-8); try{ box.animate([{outline:'3px solid #ffe94a'},{outline:'3px solid transparent'}],{duration:1400}); }catch(_){ } return true; }
  const LAND={pad:'#padGrid',djSec:'#djSec',kBand:'#bandSec',kSounds:'#vcSec',keys:'#kbKeys'};
  let want=null, wantAt=0; const aim=(sel)=>{ want=sel; wantAt=Date.now(); [700,1500].forEach(ms=>setTimeout(()=>{ if(want===sel&&Date.now()-wantAt<2500) land(sel); },ms)); setTimeout(()=>{ if(want===sel) want=null; },1700); };
- function goTo(id,sel){ if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } if(id==='kAI'){ closePanel(); try{ KAI.open(); }catch(_){ } return; } if(id==='kEasel'){ closePanel(); try{ KEASEL.open(); }catch(_){ } return; } if(id==='kProj'){ closePanel(); try{ KPROJ.open(); }catch(_){ } return; } if(id==='kKnow'){ closePanel(); try{ KKNOW.open(); }catch(_){ } return; } if(id==='kProfile'){ closePanel(); try{ KPROFILE.open(); }catch(_){ } return; } if(id==='kLock'){ closePanel(); try{ KLOCK.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
+ function goTo(id,sel){ if(id==='kNews'||id==='kRelig'||id==='kMarket'){ closePanel(); try{ ({kNews:window.KNEWS,kRelig:window.KRELIG,kMarket:window.KMARKET})[id].open(); }catch(_){ } return; } if(id==='kKara'){ closePanel(); try{ KKARA.open(); }catch(_){ } return; } if(id==='kJump'){ closePanel(); try{ KJUMP.open(); }catch(_){ } return; } if(id==='kHumor'){ closePanel(); try{ KHUMOR.open(); }catch(_){ } return; } if(id==='kOwner'){ closePanel(); try{ KOWNER.open(); }catch(_){ } return; } if(id==='kVG'){ closePanel(); try{ KVG.open(); }catch(_){ } return; } if(id==='kSocial'){ closePanel(); try{ KSOCIAL.open(); }catch(_){ } return; } if(id==='kAI'){ closePanel(); try{ KAI.open(); }catch(_){ } return; } if(id==='kEasel'){ closePanel(); try{ KEASEL.open(); }catch(_){ } return; } if(id==='kProj'){ closePanel(); try{ KPROJ.open(); }catch(_){ } return; } if(id==='kKnow'){ closePanel(); try{ KKNOW.open(); }catch(_){ } return; } if(id==='kProfile'){ closePanel(); try{ KPROFILE.open(); }catch(_){ } return; } if(id==='kLock'){ closePanel(); try{ KLOCK.open(); }catch(_){ } return; } try{ ['kManual','kMe','kCan','kNetCard','kDay','libDock','fileDock'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } const target=sel||LAND[id]; if(target) want=target, wantAt=Date.now(); try{ KBAR.go(id==='keys'?'pad':id); }catch(_){ } if(target) aim(target); closePanel(); }
  /* every way into the Beat Maker lands on the pads unless it asked for another part */
  try{ const pad=$('pad'); let was=pad&&pad.classList.contains('on'); if(pad) new MutationObserver(()=>{ const on=pad.classList.contains('on'); if(on&&!was){ setTimeout(beatBase,50); if(!(want&&Date.now()-wantAt<2500)) aim('#padGrid'); } was=on; }).observe(pad,{attributes:true,attributeFilter:['class']}); }catch(_){ }
  const MAPID={ttPad:'#padGrid',ttDJ:'#djSec',ttBand:'#bandSec',ttVc:'#vcSec',ttWatch:null};
@@ -20543,7 +20543,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
    [['ttSoc','🌐 DD Universe Social',()=>KSOCIAL.open()],['ttProf','👤 My profile',()=>KSOCIAL.open('profile')],['ttMyLib','📚 My library (on this device)',()=>KSOCIAL.open('library')],['ttPost','➕ Make a post',()=>KSOCIAL.open('create')]].forEach(([id,l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.id=id; b.className='ttMusic'; b.textContent=l; b.style.order=String(101+i); b.dataset.kg='0'; b.dataset.kmSoc='1'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); }
   /* the big buttons at the top, most used first */
   const st=t.querySelector('.kStart'); if(st&&st.textContent!=='⭐ Most used'){ st.textContent='⭐ Most used'; }
-  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['🔒 Lock & shuffle',()=>KLOCK.open()],['🎓 Knowledge library',()=>KKNOW.open()],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }],['🎲 Games · '+((window.GAMES&&GAMES.list&&GAMES.list.length)||239),()=>KRAIL.goTo('gamesDock')],['✍️ Songwriter',()=>KRAIL.goTo('swDock')],['📖 Storybook',()=>KRAIL.goTo('sbDock')],['🎙 Voices',()=>KRAIL.goTo('voiceDock')],['🌐 Language',()=>KRAIL.goTo('langDock')],['🧭 Layers',()=>KRAIL.goTo('layDock')],['🛠 Craft',()=>KRAIL.goTo('craftDock')],['🧬 Mutate',()=>KRAIL.goTo('mutDock')],['🗂 Story library',()=>{ GOHOME(); setTimeout(()=>{ const e=document.getElementById('s-lib'); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },500); }],['🗺 All sections',()=>KRAIL.goTo('mapDock')],['❓ Ask KAN-IN',()=>KRAIL.goTo('askDock')]];
+  if(st&&!t.dataset.kmTop&&t.querySelector('.kStartB')){ t.dataset.kmTop='1'; const TOP=[['📁 Projects · my work',()=>KPROJ.open()],['👤 My profile',()=>KPROFILE.open()],['🌐 Social',()=>KSOCIAL.open()],['🕹 Video games',()=>KVG.open()],['🎬 Video studio',()=>KRAIL.goTo('aivDock')],['🤖 AI · talk and create',()=>KAI.open()],['🎨 The Easel · draw',()=>KEASEL.open()],['🎛 Studio · make a beat',()=>KRAIL.goTo('pad')],['🎤 Karaoke · record',()=>KKARA.open()],['🎵 Music',()=>KRAIL.goTo('musicDock')],['😂 Laugh',()=>KHUMOR.open('day')],['♈ LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['🧭 Omni-Compass',()=>KRAIL.goTo('omniDock')],['📖 Make a story',()=>{ GOHOME(); const b=$('mQP')||$('qpBtn'); if(b) b.click(); }],['📚 My library',()=>KSOCIAL.open('library')],['🔒 Lock & shuffle',()=>KLOCK.open()],['🎓 Knowledge library',()=>KKNOW.open()],['📰 Current News',()=>KNEWS.open()],['✝️ Cultures & Religion',()=>KRELIG.open()],['📈 Stock Market',()=>KMARKET.open()],['💥 Surprise me',()=>{ KJUMP.open(); setTimeout(()=>KJUMP.jump(),300); }],['🗺 Show me around',()=>{ const b=document.querySelector('#kHomeBar [data-ka="tour"]'); if(b) b.click(); }],['🎲 Games · '+((window.GAMES&&GAMES.list&&GAMES.list.length)||239),()=>KRAIL.goTo('gamesDock')],['✍️ Songwriter',()=>KRAIL.goTo('swDock')],['📖 Storybook',()=>KRAIL.goTo('sbDock')],['🎙 Voices',()=>KRAIL.goTo('voiceDock')],['🌐 Language',()=>KRAIL.goTo('langDock')],['🧭 Layers',()=>KRAIL.goTo('layDock')],['🛠 Craft',()=>KRAIL.goTo('craftDock')],['🧬 Mutate',()=>KRAIL.goTo('mutDock')],['🗂 Story library',()=>{ GOHOME(); setTimeout(()=>{ const e=document.getElementById('s-lib'); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },500); }],['🗺 All sections',()=>KRAIL.goTo('mapDock')],['❓ Ask KAN-IN',()=>KRAIL.goTo('askDock')]];
    t.querySelectorAll('.kStartB').forEach(b=>b.remove()); TOP.forEach(([l,fn],i)=>{ const b=document.createElement('button'); b.type='button'; b.className='ttMusic kStartB'; b.textContent=l; b.style.order=String(41+i); b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); try{ LAUNCHPAD.fold(); }catch(_){ } setTimeout(()=>{ try{ fn(); }catch(_){ } },120); }); t.appendChild(b); }); } }
  setInterval(menu,1000);
  window.KSTUDIO={playing,play:doPlay,bank:b=>{ bank=b; paintHead(); console24(); }};
@@ -20558,7 +20558,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
  const press=sel=>{ const b=document.querySelector(sel); if(b&&b.getClientRects().length){ b.click(); return true; } if(b){ b.click(); return true; } return false; };
- const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'LuvMyZodiac',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',kProfile:'Profile',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
+ const NAME={pad:'Studio',kKara:'Karaoke',kEasel:'Easel',kAI:'AI',kSocial:'Social',kHumor:'Humor',kVG:'Video games',gamesDock:'Game',musicDock:'Music',aivDock:'Video',voiceDock:'Voices',langDock:'Language',zodDock:'LuvMyZodiac',swDock:'Songwriter',sbDock:'Storybook',sbp:'Storybook',craftDock:'Craft',mutDock:'Mutate',omniDock:'Compass',kJump:'Cannon',kOwner:'Owner’s word',kNews:'Current News',kRelig:'Cultures & Religion',kMarket:'Stock Market',kProj:'Projects',kKnow:'Knowledge library',kLock:'Lock & shuffle',kProfile:'Profile',libDock:'Library',fileDock:'Files',layDock:'Layers',mapDock:'Sections',askDock:'Ask',tac:'TAC-OPS',home:'Home'};
  const stopAll=()=>{ try{ if(window.KSTUDIO&&KSTUDIO.playing()){ press('#kStopBtn'); } }catch(_){ } try{ KAUDIO.stopAll(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } try{ PADSTUDIO.stop(); }catch(_){ } try{ ['A','B'].forEach(d=>{ if(DJBOOTH.D[d].playing) DJBOOTH.pause(d); }); }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ if(!m.paused&&!m.muted) m.pause(); }catch(_){ } }); };
  /* 🎮 THE CONTROL PAD: ◀ ▲ ▼ ▶ move a big yellow light to the nearest button in that direction on whatever screen is open
     (scrolling the page when the next one is out of sight); OK presses the lit button. Nothing to aim, nothing small to hit. */
@@ -23597,6 +23597,7 @@ items:[['Building a menu','Balance: hot and cold, rich and fresh, color and crun
   [['🎚 Mixer · 40 tracks','#padMixer'],['🎚 40-track sequencer','#k40Seq'],['🧭 Omni-Compass governors','#kGovBoard'],['🎛 Console returns · reverb and echo','#kFXRet'],['🎚 Inputs','#kIO']].forEach(([n,sel])=>add('Studio','🎛',n.slice(n.indexOf(' ')+1),'Studio',()=>{ KRAIL.goTo('pad'); setTimeout(()=>{ if(sel==='#k40Seq'){ try{ K40.tab('40'); }catch(_){ } } const e=document.querySelector(sel); if(e) e.scrollIntoView({block:'start',behavior:'smooth'}); },1300); }));
   try{ GAMES.list.forEach(g=>add('Games','🕹',g.name,g.cat,()=>{ try{ KRAIL.goTo('gamesDock'); }catch(_){ } setTimeout(()=>GAMES.open(g.id),300); })); }catch(_){ }
   try{ KREC.dishes().forEach(d=>add('Recipes','🍳',d.name,d.cul+' · '+d.ing,()=>KREC.open(d.name))); }catch(_){ }
+  try{ (window.KFINDX||[]).forEach(f=>{ try{ f(add); }catch(_){ } }); }catch(_){ }
   IDX=L; return L; }
  function search(q){ const L=IDX||build(); const words=q.toLowerCase().split(/\s+/).filter(Boolean); if(!words.length) return [];
   let R=L.map(x=>{ let s=0; for(const w of words){ const i=x.t.indexOf(w); if(i<0) return null; s+=(i===0?6:x.t.indexOf(' '+w)>=0?3:1)+(x.label.toLowerCase().includes(w)?4:0); } return [s,x]; }).filter(Boolean);
@@ -26482,8 +26483,8 @@ html body #tourTab > .kMenuH:first-of-type{grid-column:1!important}`; document.h
  /* ☰ THE MENU IN TWO COLUMNS, MOST USED FIRST: ✍️ Make on the left, 🎮 Play & explore on the right, each in the order people use
     them most (story builder, games, studio, Omni-Compass, LuvMyZodiac first); the cannon, the level and the quote move under the list. */
  const LEFT=['📖 Make a story','🎛 Studio','🎤 Karaoke','🎵 Music','✍️ Songwriter','🎨 The Easel','🎬 Video studio','🎙 Voices','📖 Storybook','🗂 Story library','📚 My library','📁 Projects','🧭 Layers','🛠 Craft','🧬 Mutate','🌐 Language','🔒 Lock & shuffle','⌨ Keyboards'];
- const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
- const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RIGHT=['🕹 Video games','🧭 Omni-Compass governors','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','📰 Current News','✝️ Cultures & Religion','📈 Stock Market','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
+ const RANK_R=['🕹 Video games','🧭 Omni-Compass','♈ LuvMyZodiac','🎲 Games','🍳 Recipes','😂 Laugh','🤖 AI','📰 Current News','✝️ Cultures & Religion','📈 Stock Market','🎓 Knowledge library','💥 Surprise me','👤 My profile','🌐 Social','🧭 Omni-Compass governors','❓ Ask KAN-IN','🗺 Show me around','🗺 All sections'];
  function menu(){ const t=document.getElementById('tourTab'); if(!t||!t.getClientRects().length) return; if(t.style.gridAutoFlow!=='row dense') t.style.gridAutoFlow='row dense';
   if(!t.querySelector('.kMenuH')){ [['✍️ Make','Stories, beats, songs, art, video',1,36],['🎮 Play & explore','Games, Compass, Zodiac, recipes, AI',2,37]].forEach(([h,sm,col,o])=>{ const e=document.createElement('div'); e.className='kMenuH'; e.innerHTML=h+'<small>'+sm+'</small>'; e.style.gridColumn=String(col); e.style.order=String(o); t.appendChild(e); }); }
   const cnt={1:0,2:0};
@@ -27698,7 +27699,7 @@ html body .kSpd select.snd{min-height:30px!important;max-width:112px;border-radi
    Two layers keep the rule: every app's own open() is wrapped to close the others first, and a watcher closes any app left open
    underneath, keeping the newest. */
  const $=id=>document.getElementById(id);
- const OV={kAI:'KAI',kKara:'KKARA',kEasel:'KEASEL',kVG:'KVG',kRec:'KREC',kSocial:'KSOCIAL',kProj:'KPROJ',kProfile:'KPROFILE',kKnow:'KKNOW',kLock:'KLOCK',kJump:'KJUMP',kHumor:'KHUMOR',kOwner:'KOWNER'};
+ const OV={kAI:'KAI',kKara:'KKARA',kEasel:'KEASEL',kVG:'KVG',kRec:'KREC',kSocial:'KSOCIAL',kProj:'KPROJ',kProfile:'KPROFILE',kKnow:'KKNOW',kLock:'KLOCK',kJump:'KJUMP',kHumor:'KHUMOR',kOwner:'KOWNER',kNews:'KNEWS',kRelig:'KRELIG',kMarket:'KMARKET'};
  const DOCKS=['pad','swDock','zodDock','omniDock','gamesDock','libDock','fileDock','sbDock','musicDock','aivDock','voiceDock','langDock','layDock','craftDock','mutDock','mapDock','askDock'];
  const APPS=[...DOCKS,...Object.keys(OV)];
  const vis=id=>{ const e=$(id); if(!e||e.hidden) return false; if(id==='pad') return e.classList.contains('on'); const cs=getComputedStyle(e); if(cs.display==='none'||cs.visibility==='hidden') return false; const r=e.getBoundingClientRect(); return r.width>20&&r.height>20; };
@@ -28116,6 +28117,718 @@ html body .kSpd select.snd{min-height:30px!important;max-width:112px;border-radi
      if(k==='ksound'&&e.target.value!==''){ const g=d.querySelector('[data-bk="kgroup"]').value; loadKeys(g,+e.target.value); } }); } } }
  setInterval(()=>{ const pad=$('pad'); if(pad&&pad.classList.contains('on')) ensure(); },700);
  window.KBANK={groups,loadPads,loadKeys,itemsOf,get state(){ return {cur,page,bank:bank()}; }};
+})();
+
+</script>
+<script>
+(()=>{ /* ✝️ CULTURES & RELIGION (v238, the Cultures & Religion page of www.omni-galaxy.com): its own platform inside KAN-IN. The five largest world religions with their scriptures and
+   books, every other living tradition we could document, a scripture shelf, a side-by-side comparison, holy days by month, a quiz,
+   and Ask AI. Each tradition is described the way it describes itself and the way scholars record it; nothing is ranked as true or
+   false. Numbers: Pew Research Center, figures for 2020 (published 2025); smaller traditions are estimates and are marked so.
+   Read aloud, copy and save to Projects on every card; the reading links open the texts on public sites in a new tab. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
+ const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ /* [title, what it is, reading link] */
+ const BIG=[
+ {id:'christianity',icon:'✝️',name:'Christianity',people:'2.3 billion',share:28.8,region:'Worldwide',began:'1st century CE, Judea (today Israel and the Palestinian territories)',age:2000,
+  founder:'The followers of Jesus of Nazareth',god:'One God in three persons, Father, Son and Holy Spirit (the Trinity)',day:'Sunday',worship:'Church, chapel, cathedral',city:'Jerusalem, Bethlehem, Rome',
+  sum:'Christians believe Jesus of Nazareth is the Son of God and the promised Messiah, that he died by crucifixion and rose from the dead, and that through him people are forgiven and reconciled with God.',
+  beliefs:['Jesus’s life, death and resurrection','Salvation by God’s grace, received through faith','The two great commandments: love God and love your neighbour (Mark 12:30–31)','The Lord’s Prayer (Matthew 6:9–13)','Sacraments such as baptism and Holy Communion'],
+  branches:['Catholic, about 1.3 billion, led by the Pope in Rome','Protestant: Lutheran, Reformed, Anglican, Baptist, Methodist, Pentecostal and many more','Eastern Orthodox, about 220 million','Oriental Orthodox: Coptic, Ethiopian, Eritrean, Armenian, Syriac','Other Christian bodies, among them the Latter-day Saints and Jehovah’s Witnesses'],
+  books:[['The Bible','Two parts. The Old Testament: 39 books in Protestant Bibles, 46 in Catholic Bibles (with the deuterocanonical books) and more in Orthodox ones. The New Testament: 27 books.','https://www.biblegateway.com/'],
+   ['The four Gospels','Matthew, Mark, Luke and John: the life, teaching, death and resurrection of Jesus.','https://www.biblegateway.com/passage/?search=Matthew+5'],
+   ['Acts and the Letters','Acts tells of the first churches; 21 letters (the Epistles), many by the apostle Paul, teach the new communities; Revelation closes the Bible.','https://www.biblegateway.com/passage/?search=Romans+8'],
+   ['The Psalms','150 songs and prayers shared with Judaism, the most read book of the Old Testament in Christian worship.','https://www.biblegateway.com/passage/?search=Psalm+23'],
+   ['The Creeds','The Apostles’ Creed and the Nicene Creed (councils of 325 and 381 CE): the faith in a few lines, said in services worldwide.',''],
+   ['Augustine, Confessions','Written about 400 CE, the first great spiritual autobiography.','https://www.gutenberg.org/ebooks/3296'],
+   ['The Imitation of Christ','Thomas à Kempis, about 1420s, one of the most widely read Christian devotional books.','https://www.gutenberg.org/ebooks/1653'],
+   ['Catechism of the Catholic Church','1992, the summary of Catholic teaching.',''],
+   ['Book of Common Prayer','First edition 1549, the prayer book of the Anglican churches.','']],
+  days:['Christmas, 25 December (many Orthodox churches keep it on 7 January)','Lent, the 40 days before Easter','Holy Week and Good Friday','Easter, a Sunday in March or April','Pentecost, seven weeks after Easter','Sunday worship every week'],
+  places:['Jerusalem: the Church of the Holy Sepulchre','Bethlehem: the Church of the Nativity','Nazareth and the Sea of Galilee','Vatican City: St Peter’s Basilica','Santiago de Compostela, Lourdes and Fátima: pilgrim routes and shrines']},
+ {id:'islam',icon:'☪️',name:'Islam',people:'2.0 billion',share:25.6,region:'Middle East',began:'610 CE, Mecca and Medina, Arabia',age:1400,
+  founder:'The Prophet Muhammad (about 570–632 CE)',god:'One God, Allah (Arabic for “God”); tawhid, the oneness of God',day:'Friday (congregational prayer, Jumu’ah)',worship:'Mosque (masjid)',city:'Mecca, Medina, Jerusalem',
+  sum:'Muslims believe the Quran is the word of God revealed to the Prophet Muhammad through the angel Gabriel, the last in a line of prophets that includes Adam, Abraham, Moses and Jesus.',
+  beliefs:['The Five Pillars: the declaration of faith (shahada), prayer five times a day (salat), giving to those in need (zakat), fasting in Ramadan (sawm), the pilgrimage to Mecca once in a lifetime for those able (hajj)','The six articles of faith: God, the angels, the revealed books, the prophets, the Day of Judgement and divine decree','Submission to God’s will (the meaning of the word islam)','Prayer facing the Kaaba in Mecca'],
+  branches:['Sunni, about 85 to 90 percent of Muslims','Shia, about 10 to 15 percent: Twelver, Ismaili and Zaydi','Ibadi, mainly in Oman','Sufism, the mystical path found among both Sunni and Shia'],
+  books:[['The Quran','114 chapters (surahs) and about 6,236 verses (ayat) in Arabic, revealed between 610 and 632 CE and gathered into one written text under the third caliph, Uthman, about 650 CE.','https://quran.com/'],
+   ['Al-Fatiha','The opening chapter, seven verses, recited in every unit of the daily prayers.','https://quran.com/1'],
+   ['The Hadith','Reports of the Prophet’s words and actions. Sunni Muslims hold six major collections, led by Sahih al-Bukhari and Sahih Muslim; Shia Muslims hold the Four Books, led by al-Kafi.','https://sunnah.com/'],
+   ['The Sira','Biographies of the Prophet, the earliest by Ibn Ishaq (8th century).',''],
+   ['Tafsir','Commentaries that explain the Quran verse by verse, such as al-Tabari’s (10th century).',''],
+   ['Nahj al-Balagha','Sermons and sayings attributed to Ali, gathered in the 10th century, especially treasured by Shia Muslims.',''],
+   ['Rumi, the Masnavi','13th-century Sufi poem in Persian, about 25,000 verses.','']],
+  days:['Ramadan, the month of fasting from dawn to sunset','Eid al-Fitr, the festival that ends Ramadan','Eid al-Adha, the festival of sacrifice during the Hajj','Islamic New Year and Ashura','Friday prayer every week','The Islamic calendar is lunar, so each date comes about 11 days earlier every year'],
+  places:['Mecca: the Kaaba and the Masjid al-Haram','Medina: the Prophet’s Mosque','Jerusalem: the Al-Aqsa Mosque and the Dome of the Rock','Karbala and Najaf in Iraq, holy to Shia Muslims']},
+ {id:'hinduism',icon:'🕉️',name:'Hinduism',people:'1.2 billion',share:14.9,region:'South Asia',began:'Roots over 3,500 years old, the Indian subcontinent (the Vedic period, about 1500 BCE)',age:3500,
+  founder:'No single founder; it calls itself Sanatana Dharma, “the eternal way”',god:'Brahman, the one ultimate reality, worshipped in many forms: Vishnu, Shiva, Devi the Goddess, Ganesha, Krishna, Rama and more',day:'No single weekly day; daily worship at home and temple',worship:'Mandir (temple) and the home shrine',city:'Varanasi, Ayodhya, Vrindavan',
+  sum:'Hindus seek to live by dharma, right living and duty, and over many lifetimes to reach moksha, freedom from the cycle of birth and rebirth.',
+  beliefs:['Dharma: duty and right living','Karma: every action has its consequence','Samsara: the cycle of birth, death and rebirth','Moksha: liberation from that cycle','Atman, the self, and Brahman, ultimate reality','Four paths: devotion (bhakti), knowledge (jnana), selfless action (karma yoga) and meditation (raja yoga)'],
+  branches:['Vaishnavism: Vishnu and his forms Krishna and Rama','Shaivism: Shiva','Shaktism: the Goddess (Devi, Durga, Kali)','Smartism: several deities as forms of one Brahman','Many regional, family and temple traditions'],
+  books:[['The four Vedas','Rigveda, Samaveda, Yajurveda and Atharvaveda: hymns and rites, the oldest scriptures (shruti, “what was heard”). The Rigveda alone holds 1,028 hymns in ten books.','https://www.sacred-texts.com/hin/'],
+   ['The Upanishads','Over 100 philosophical texts, about 13 of them principal, on Brahman and the self.','https://www.sacred-texts.com/hin/upan/'],
+   ['The Bhagavad Gita','700 verses in 18 chapters: the god Krishna counsels the warrior Arjuna on duty, devotion and the self. Part of the Mahabharata.','https://www.holy-bhagavad-gita.org/'],
+   ['The Mahabharata','Attributed to the sage Vyasa; one of the longest poems ever written, about 100,000 couplets in its longest form.','https://www.sacred-texts.com/hin/maha/'],
+   ['The Ramayana','Attributed to the poet Valmiki; about 24,000 verses in seven books telling the life of Prince Rama and Sita.','https://www.sacred-texts.com/hin/rama/'],
+   ['The Puranas','Eighteen major Puranas of stories, genealogies and worship, among them the Bhagavata Purana.',''],
+   ['The Yoga Sutras of Patanjali','196 short sutras on the practice of yoga and meditation.',''],
+   ['Ramcharitmanas','Tulsidas, 16th century: the Rama story retold in Awadhi, sung across north India.','']],
+  days:['Diwali, the festival of lights, October or November','Holi, the spring festival of colours, usually March','Navaratri and Durga Puja, autumn','Janmashtami, Krishna’s birth, August or September','Maha Shivaratri, February or March','Kumbh Mela, the great pilgrimage gathering on the sacred rivers','Dates follow a lunisolar calendar, so they move each year'],
+  places:['Varanasi and the River Ganges','Ayodhya, Vrindavan and Mathura','Tirupati, Puri and Kedarnath','Angkor Wat in Cambodia, built as a Hindu temple in the 12th century']},
+ {id:'buddhism',icon:'☸️',name:'Buddhism',people:'324 million',share:4.1,region:'East Asia',began:'About the 5th century BCE, northern India and Nepal',age:2500,
+  founder:'Siddhartha Gautama, the Buddha, “the awakened one”',god:'No creator God at the centre; the goal is awakening (nirvana). Many traditions honour buddhas and bodhisattvas.',day:'Observance days on the moon’s phases (uposatha)',worship:'Temple, monastery, stupa, meditation hall',city:'Bodh Gaya, Lumbini, Lhasa',
+  sum:'Buddhists follow the Buddha’s teaching, the Dharma, to end suffering through wisdom, ethical living and meditation.',
+  beliefs:['The Four Noble Truths: suffering exists; it has a cause, craving; it can end; and there is a path that ends it','The Noble Eightfold Path: right view, intention, speech, action, livelihood, effort, mindfulness and concentration','The Three Jewels: the Buddha, the Dharma and the Sangha (the community)','Karma and rebirth','The Five Precepts: no killing, stealing, sexual misconduct, false speech or intoxicants'],
+  branches:['Theravada: Sri Lanka, Thailand, Myanmar, Cambodia, Laos','Mahayana: China, Japan, Korea, Vietnam, including Zen and Pure Land','Vajrayana: Tibet, Bhutan, Mongolia'],
+  books:[['The Pali Canon (Tipitaka)','The “three baskets”: the Vinaya (rules for monks and nuns), the Suttas (the Buddha’s discourses) and the Abhidhamma (analysis). First written down in Sri Lanka in the 1st century BCE.','https://suttacentral.net/'],
+   ['The Dhammapada','423 verses in 26 chapters, the best-known collection of the Buddha’s sayings.','https://suttacentral.net/dhp'],
+   ['The Lotus Sutra','Central Mahayana scripture teaching that every being can become a buddha.',''],
+   ['The Heart Sutra','A few hundred words on emptiness, chanted daily across East Asia.',''],
+   ['The Diamond Sutra','A printed copy dated 868 CE, found at Dunhuang, is the oldest dated printed book known.','https://www.bl.uk/collection-items/the-diamond-sutra'],
+   ['The Kangyur and Tengyur','The Tibetan canon: the Buddha’s words and the great commentaries.',''],
+   ['The Tibetan Book of the Dead','The Bardo Thodol, a guide read to the dying and the dead.',''],
+   ['Shantideva, The Way of the Bodhisattva','8th century, a guide to the life of compassion.','']],
+  days:['Vesak: the Buddha’s birth, awakening and passing, at the full moon of April or May','Magha Puja and Asalha Puja','Losar, the Tibetan New Year','Obon in Japan, honouring ancestors','Uposatha observance days each lunar month'],
+  places:['Lumbini, Nepal: the Buddha’s birthplace','Bodh Gaya, India: where he awoke under the Bodhi tree','Sarnath: his first teaching','Kushinagar: his passing','Borobudur (Indonesia), the Shwedagon Pagoda (Myanmar), the Potala Palace (Lhasa)']},
+ {id:'judaism',icon:'✡️',name:'Judaism',people:'14.8 million',share:0.2,region:'Middle East',began:'Ancient Israel, about 3,000 to 4,000 years ago',age:3500,
+  founder:'Traced to Abraham and the covenant; the Torah given through Moses at Mount Sinai',god:'One God. The Shema: “Hear, O Israel: the LORD our God, the LORD is one” (Deuteronomy 6:4)',day:'Shabbat, Friday sunset to Saturday night',worship:'Synagogue (shul) and the home',city:'Jerusalem',
+  sum:'Judaism is the religion of the Jewish people, built on the covenant between God and Israel and on living by the Torah’s commandments. Small in number, it is the root from which Christianity and Islam grew.',
+  beliefs:['One God and the covenant with the people of Israel','The 613 commandments (mitzvot) of the Torah','Shabbat, the weekly day of rest','Justice, charity (tzedakah) and repairing the world (tikkun olam)','Study and debate of the texts as worship','The hope of a messianic age'],
+  branches:['Orthodox, including Haredi and Modern Orthodox','Conservative (Masorti)','Reform','Reconstructionist','Ashkenazi, Sephardi and Mizrahi heritage'],
+  books:[['The Tanakh (Hebrew Bible)','24 books in three parts: Torah (teaching), Nevi’im (prophets) and Ketuvim (writings). The name is made from their first letters.','https://www.sefaria.org/texts/Tanakh'],
+   ['The Torah','The five books of Moses: Genesis, Exodus, Leviticus, Numbers, Deuteronomy. Read in the synagogue from a handwritten scroll, the whole of it each year.','https://www.sefaria.org/Genesis.1'],
+   ['The Talmud','The Mishnah, compiled about 200 CE by Rabbi Judah ha-Nasi, with the Gemara’s discussion of it. The Babylonian Talmud was completed about 500 CE; there is also a Jerusalem Talmud.','https://www.sefaria.org/texts/Talmud'],
+   ['Pirkei Avot','“Ethics of the Fathers”, the Mishnah’s book of wisdom sayings.','https://www.sefaria.org/Pirkei_Avot.1'],
+   ['The Midrash','Commentary and story that open up the meaning of the Bible.',''],
+   ['The Siddur','The prayer book for daily, Shabbat and festival prayer.',''],
+   ['Mishneh Torah','Maimonides’ code of Jewish law, about 1170 to 1180.',''],
+   ['Shulchan Aruch','Joseph Karo’s code of Jewish law, printed 1565.',''],
+   ['The Zohar','The central text of Kabbalah, Jewish mysticism, which appeared in 13th-century Spain.','']],
+  days:['Shabbat every week','Rosh Hashanah, the new year, September or October','Yom Kippur, the Day of Atonement, ten days later','Sukkot, the festival of booths','Passover (Pesach), spring','Shavuot, Hanukkah (December) and Purim','A lunisolar calendar, so dates move against the Gregorian one'],
+  places:['Jerusalem: the Western Wall, the remaining wall of the Second Temple’s mount','Hebron: the Cave of the Patriarchs','Safed and Tiberias','Mount Sinai, by tradition']}];
+ const OTH=[
+ {id:'sikhism',icon:'☬',name:'Sikhism',people:'about 25 to 30 million (estimate)',region:'South Asia',age:550,began:'1469, the Punjab',founder:'Guru Nanak (1469–1539) and the nine Gurus after him',
+  sum:'One God (Ik Onkar), equality of all people, honest work, sharing and service (seva). Initiated Sikhs keep the Five Ks, among them uncut hair and the steel bracelet (kara).',
+  books:[['Guru Granth Sahib','1,430 pages (angs). Compiled as the Adi Granth by Guru Arjan in 1604 and declared the eternal Guru by Guru Gobind Singh in 1708; it holds hymns of six Gurus and of Hindu and Muslim saints.','https://www.searchgurbani.com/'],['Japji Sahib','Guru Nanak’s morning prayer, the opening of the Granth.',''],['Dasam Granth','Writings attributed to Guru Gobind Singh.','']],
+  days:['Vaisakhi (April): the founding of the Khalsa in 1699','Gurpurabs: the Gurus’ anniversaries','Bandi Chhor Divas, with Diwali'],places:['Harmandir Sahib, the Golden Temple, Amritsar','Nankana Sahib, Guru Nanak’s birthplace','Every gurdwara’s langar, a free kitchen open to all']},
+ {id:'taoism',icon:'☯️',name:'Taoism (Daoism)',people:'estimates vary widely; many practise it alongside folk religion and Buddhism',region:'East Asia',age:2400,began:'About the 4th century BCE onward, China',founder:'Laozi (traditional author of the Tao Te Ching) and Zhuangzi',
+  sum:'Living in harmony with the Tao, the Way behind all things: simplicity, effortless action (wu wei), balance of yin and yang, long life and care of the body.',
+  books:[['Tao Te Ching','81 short chapters, about 5,000 Chinese characters, among the most translated books in the world.','https://ctext.org/dao-de-jing'],['Zhuangzi','Stories and parables, including the famous butterfly dream.','https://ctext.org/zhuangzi'],['The Daozang','The Taoist canon; its Ming dynasty edition of 1445 holds about 1,500 texts.',''],['I Ching','The Book of Changes, shared with Confucianism.','https://ctext.org/book-of-changes']],
+  days:['Chinese New Year and the Lantern Festival','Laozi’s birthday','Temple festivals of the immortals'],places:['Mount Wudang','Mount Tai and the other sacred mountains','White Cloud Temple, Beijing']},
+ {id:'confucianism',icon:'📜',name:'Confucianism',people:'a way of life rather than a membership; it shaped China, Korea, Japan and Vietnam',region:'East Asia',age:2500,began:'5th century BCE, China',founder:'Confucius (Kong Fuzi, 551–479 BCE)',
+  sum:'Humaneness (ren), right conduct and ritual (li), respect for parents and elders (filial piety), learning and good government.',
+  books:[['The Analects','Sayings of Confucius gathered by his students.','https://ctext.org/analects'],['The Four Books','The Analects, the Mencius, the Great Learning and the Doctrine of the Mean.','https://ctext.org/mengzi'],['The Five Classics','The Book of Songs, the Book of Documents, the Book of Rites, the I Ching and the Spring and Autumn Annals.','']],
+  days:['Confucius’s birthday, kept as Teachers’ Day in Taiwan on 28 September','Ancestor rites at Qingming'],places:['The Temple of Confucius and the Kong family mansion, Qufu']},
+ {id:'shinto',icon:'⛩️',name:'Shinto',people:'many Japanese take part, often alongside Buddhism; membership is hard to count',region:'East Asia',age:1500,began:'Ancient Japan, no founder',founder:'None',
+  sum:'Reverence for the kami, the sacred powers in nature, places and ancestors; purity, gratitude and the life of the local shrine.',
+  books:[['Kojiki','“Record of Ancient Matters”, 712 CE: the creation of Japan and the kami.','https://www.sacred-texts.com/shi/kj/'],['Nihon Shoki','“Chronicles of Japan”, 720 CE.',''],['Engishiki','927 CE, the court’s book of rites and prayers.','']],
+  days:['Hatsumode, the first shrine visit of the New Year','Shichi-Go-San, for children aged three, five and seven','Local matsuri festivals'],places:['Ise Grand Shrine','Fushimi Inari Taisha, Kyoto','Izumo Taisha','Meiji Shrine, Tokyo']},
+ {id:'jainism',icon:'🤚',name:'Jainism',people:'about 4 to 6 million (estimate)',region:'South Asia',age:2500,began:'Ancient India; Mahavira lived in the 6th to 5th century BCE',founder:'Mahavira, the 24th Tirthankara (“ford-maker”)',
+  sum:'Non-violence to every living being (ahimsa), many-sidedness of truth (anekantavada) and non-attachment (aparigraha). Two main communities, Svetambara and Digambara.',
+  books:[['The Agamas','The canonical scriptures; the Svetambara canon counts 45 texts.',''],['Tattvartha Sutra','Umaswati’s summary of Jain teaching, accepted by every Jain community.',''],['Kalpa Sutra','The lives of the Tirthankaras, read during Paryushana.','https://www.sacred-texts.com/jai/sbe22/']],
+  days:['Paryushana, the festival of forgiveness','Mahavir Jayanti, March or April','Diwali, Mahavira’s liberation'],places:['Palitana and the Shatrunjaya hills','Shravanabelagola and its statue of Bahubali','Ranakpur and the Dilwara temples at Mount Abu']},
+ {id:'bahai',icon:'✴️',name:'Bahá’í Faith',people:'about 5 to 8 million (the community’s figures)',region:'Worldwide',age:180,began:'1844 to 1863, Persia',founder:'Bahá’u’lláh (1817–1892), heralded by the Báb',
+  sum:'The oneness of God, of religion and of humanity; the equality of women and men; the harmony of science and religion; world peace.',
+  books:[['Kitáb-i-Aqdas','“The Most Holy Book”, written by Bahá’u’lláh about 1873.','https://www.bahai.org/library/'],['Kitáb-i-Íqán','“The Book of Certitude”.',''],['The Hidden Words','Short verses of spiritual counsel.','']],
+  days:['Naw-Rúz, the new year at the March equinox','Riḍván, 21 April to 2 May','The Twin Holy Birthdays'],places:['The Bahá’í World Centre in Haifa and Acre, with the Shrine of the Báb','The Lotus Temple, New Delhi']},
+ {id:'zoroastrianism',icon:'🔥',name:'Zoroastrianism',people:'about 110,000 to 200,000 (estimate), many of them Parsis in India',region:'Middle East',age:3000,began:'Ancient Iran; dates for its prophet range from about 1500 to 500 BCE',founder:'Zarathustra (Zoroaster)',
+  sum:'Ahura Mazda, the wise lord; the choice between good and evil; “good thoughts, good words, good deeds”. Fire is a symbol of purity.',
+  books:[['The Avesta','The scripture; its oldest part is the Gathas, 17 hymns attributed to Zarathustra.','https://www.avesta.org/'],['The Yasna','The main liturgy, which contains the Gathas.',''],['Khordeh Avesta','Daily prayers for lay people.','']],
+  days:['Nowruz, the new year at the March equinox','The six Gahambar seasonal feasts','Khordad Sal, Zarathustra’s birthday'],places:['Fire temples (Atash Behram) at Udvada, India, and Yazd, Iran']},
+ {id:'folk',icon:'🏮',name:'Chinese folk religion',people:'hundreds of millions take part (estimates vary)',region:'East Asia',age:3000,began:'Ancient China',founder:'None',
+  sum:'Honouring ancestors, local gods such as Mazu and Guan Yu, festivals, offerings and feng shui, often mixed with Taoism and Buddhism.',
+  books:[['No single scripture','Almanacs (the Tong Shu), temple texts and “morality books” (shanshu) guide practice.','']],
+  days:['Chinese New Year','Qingming, tomb-sweeping day','The Ghost Festival','The Mid-Autumn Festival'],places:['Mazu temples, beginning on Meizhou Island','Local temples in every town']},
+ {id:'indigenous',icon:'🌍',name:'Indigenous and traditional religions',people:'many millions worldwide; the oldest living traditions',region:'Worldwide',age:10000,began:'Prehistory to today',founder:'None',
+  sum:'Religions of a people and a land: the Yoruba orisha tradition of West Africa (carried to the Americas as Santería or Lucumí and Candomblé), Native American traditions, Aboriginal Australian spirituality (the Dreaming), Māori, Sámi and Siberian traditions, and many more.',
+  books:[['Mostly oral','Teaching passes by story, song, ceremony and elders rather than a written book.',''],['Odù Ifá','The 256 odù of the Yoruba Ifá system, recited by its priests (babalawo); proclaimed by UNESCO a masterpiece of oral heritage in 2005.',''],['Popol Vuh','The K’iche’ Maya story of creation, written down in the 16th century.','https://www.sacred-texts.com/nam/pvuheng.htm']],
+  days:['Seasonal and harvest ceremonies','Solstice and new-moon rites','Yoruba Odun festivals'],places:['Osun-Osogbo Sacred Grove, Nigeria','Uluru, Australia']},
+ {id:'lds',icon:'✝️',name:'Latter-day Saints',people:'about 17 million members (the church’s figure; counted within Christianity)',region:'Americas',age:195,began:'1830, New York, United States',founder:'Joseph Smith',
+  sum:'A Christian restorationist church that holds further scripture beside the Bible.',
+  books:[['The Book of Mormon','Published 1830.','https://www.churchofjesuschrist.org/study/scriptures'],['Doctrine and Covenants','Revelations to the church.',''],['Pearl of Great Price','Further writings.','']],
+  days:['General Conference, April and October'],places:['Salt Lake Temple, Utah']},
+ {id:'rastafari',icon:'🦁',name:'Rastafari',people:'estimates range up to about 1 million',region:'Americas',age:95,began:'1930s, Jamaica',founder:'Grew from the crowning of Haile Selassie I of Ethiopia in 1930',
+  sum:'Faith in Jah, the dignity of Africa and its diaspora, natural living (ital), and resistance to “Babylon”, the system of oppression.',
+  books:[['The Bible','Read with particular weight on the Old Testament.',''],['Kebra Nagast','14th-century Ethiopian epic of the Queen of Sheba and Solomon.',''],['The Holy Piby','1920s text read by early Rastafari.','']],
+  days:['Groundation Day, 21 April (Haile Selassie’s visit to Jamaica, 1966)','Ethiopian Christmas, 7 January'],places:['Shashamane, Ethiopia','Jamaica']},
+ {id:'druze',icon:'⭐',name:'Druze faith',people:'about 1 million (estimate)',region:'Middle East',age:1000,began:'11th century, Egypt',founder:'Grew from an Ismaili movement',
+  sum:'A closed community of faith with its own teaching on the oneness of God, living mainly in Lebanon, Syria, Israel and Jordan.',
+  books:[['The Epistles of Wisdom','Rasa’il al-Hikma, the community’s scripture.','']],days:['Eid al-Adha, kept in its own way'],places:['The shrine of Nabi Shu’ayb, Galilee']},
+ {id:'yazidi',icon:'🦚',name:'Yazidism',people:'about 700,000 to 1 million (estimate)',region:'Middle East',age:900,began:'Northern Iraq; reformed in the 12th century',founder:'Sheikh Adi ibn Musafir is its great saint',
+  sum:'One God and seven holy beings led by Tawûsî Melek, the Peacock Angel. Faith passes by birth and oral hymn.',
+  books:[['The qewls','Sacred hymns passed down orally by hereditary singers.','']],days:['Yazidi New Year (Çarşema Sor), in April'],places:['Lalish, the holy valley in northern Iraq']},
+ {id:'mandaean',icon:'💧',name:'Mandaeism',people:'about 60,000 to 100,000 (estimate)',region:'Middle East',age:1900,began:'Ancient Mesopotamia',founder:'They revere John the Baptist as a great teacher',
+  sum:'A gnostic faith of light and life; frequent baptism in flowing water.',books:[['Ginza Rabba','“The Great Treasure”, the main scripture.','']],days:['Parwanaya, the five-day festival of creation'],places:['Rivers of southern Iraq and Iran']},
+ {id:'samaritan',icon:'📜',name:'Samaritanism',people:'about 900 people',region:'Middle East',age:2500,began:'Ancient Israel',founder:'Traces itself to the Israelites who stayed in the land',
+  sum:'One of the smallest and oldest faiths: the Torah alone, worship on Mount Gerizim.',books:[['The Samaritan Pentateuch','Their own text of the five books of Moses in the old Hebrew script.','']],days:['Passover sacrifice on Mount Gerizim'],places:['Mount Gerizim, near Nablus']},
+ {id:'caodai',icon:'👁️',name:'Cao Đài',people:'about 2 to 4 million (estimate)',region:'East Asia',age:100,began:'1926, Vietnam',founder:'Ngô Văn Chiêu and others',
+  sum:'A faith that honours the teachers of many religions under one Supreme Being, symbolised by the Divine Eye.',books:[['The Holy Scriptures of Cao Đài','Messages received at séances in the 1920s.','']],days:['Festival of the Supreme Being, ninth day of the first lunar month'],places:['The Holy See at Tây Ninh']},
+ {id:'tenrikyo',icon:'🌸',name:'Tenrikyo',people:'about 1 to 2 million (estimate)',region:'East Asia',age:190,began:'1838, Japan',founder:'Nakayama Miki',
+  sum:'God the Parent, who created people to live the “Joyous Life” of helping one another.',books:[['Ofudesaki','“The Tip of the Writing Brush”, Nakayama Miki’s verses.','']],days:['Grand Service, 26 January and 26 October'],places:['The church headquarters, Tenri, Nara']},
+ {id:'pagan',icon:'🌙',name:'Wicca and modern Paganism',people:'estimates vary; growing in Europe and the Americas',region:'Europe',age:75,began:'20th century, Britain and beyond',founder:'Wicca: Gerald Gardner, 1950s; many Pagan paths have no founder',
+  sum:'Reverence for nature, the cycle of the seasons, and in many paths a goddess and a god.',books:[['The Book of Shadows','A personal or coven book of rites, not one fixed text.','']],days:['The eight sabbats: Samhain, Yule, Imbolc, Ostara, Beltane, Litha, Lughnasadh and Mabon'],places:['Stonehenge at the solstices']},
+ {id:'none',icon:'🔭',name:'No religion (the unaffiliated)',people:'1.9 billion, 24.2% (not a religion; counted for the full picture)',region:'Worldwide',age:0,began:'Today the world’s third-largest group after Christians and Muslims',founder:'None',
+  sum:'Atheists, agnostics and people who say “nothing in particular”. Many still hold spiritual beliefs or keep family customs.',books:[['No scripture','Many draw on philosophy, science and humanist writing.','']],days:['None shared'],places:['None shared']}];
+ const ALL=[...BIG,...OTH];
+ const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ const HOLY=[[1,'✝️','Orthodox Christmas','7 January in churches on the Julian calendar'],[1,'✝️','Epiphany','6 January'],[1,'🕉️','Makar Sankranti','about 14 January, a solar festival'],[1,'🏮','Lunar New Year','late January or February; moves'],
+  [2,'🏮','Lunar New Year','if it falls late'],[2,'🕉️','Maha Shivaratri','February or March; moves'],[2,'☪️','Ramadan begins','in 2026 and 2027 in February; moves about 11 days earlier each year'],[2,'✝️','Ash Wednesday, Lent begins','February or March; moves'],[2,'☸️','Magha Puja','February or March; moves'],
+  [3,'🕉️','Holi','usually March'],[3,'🔥','Nowruz and Naw-Rúz','the March equinox, about 20 or 21 March'],[3,'✡️','Purim','February or March'],[3,'☪️','Eid al-Fitr','in 2026 and 2027 in March; moves'],[3,'✝️','Easter','March or April'],
+  [4,'✡️','Passover','March or April'],[4,'☬','Vaisakhi','13 or 14 April'],[4,'✴️','Riḍván','21 April to 2 May'],[4,'🤚','Mahavir Jayanti','March or April'],[4,'🦁','Groundation Day','21 April'],[4,'🦚','Yazidi New Year','in April'],
+  [5,'☸️','Vesak','the full moon of April, May or June'],[5,'✡️','Shavuot','May or June'],[5,'✝️','Pentecost','May or June'],[5,'☪️','Eid al-Adha','in 2026 in late May; moves'],
+  [6,'☪️','Islamic New Year and Ashura','in 2026 in June; moves'],[6,'🌙','Litha, midsummer','about 21 June'],
+  [7,'☸️','Asalha Puja','July'],[7,'☸️','Obon','mid-July or mid-August by region'],
+  [8,'🕉️','Janmashtami','August or September'],[8,'🕉️','Ganesh Chaturthi','August or September'],[8,'🤚','Paryushana','August or September'],
+  [9,'✡️','Rosh Hashanah and Yom Kippur','September or October'],[9,'🕉️','Navaratri','September or October'],[9,'📜','Teachers’ Day for Confucius','28 September in Taiwan'],
+  [10,'✡️','Sukkot and Simchat Torah','September or October'],[10,'🕉️','Diwali','October or November'],[10,'🌙','Samhain','31 October'],
+  [11,'✝️','All Saints’ Day','1 November'],[11,'☬','Guru Nanak Gurpurab','November, at the full moon of Kartik'],[11,'☬','Bandi Chhor Divas','with Diwali'],[11,'✝️','Advent begins','late November or early December'],
+  [12,'✝️','Christmas','25 December'],[12,'✡️','Hanukkah','November or December'],[12,'☸️','Bodhi Day','8 December in Japan'],[12,'🌙','Yule','the December solstice']];
+ const QUIZ=[['How many chapters (surahs) does the Quran have?',['114','99','150','66'],0],['Which book holds Krishna’s counsel to Arjuna?',['The Bhagavad Gita','The Lotus Sutra','The Analects','The Avesta'],0],
+  ['How many books are in the New Testament?',['27','39','24','66'],0],['What are the five books of Moses called in Judaism?',['The Torah','The Talmud','The Zohar','The Midrash'],0],
+  ['Where did the Buddha awaken?',['Bodh Gaya','Lumbini','Mecca','Varanasi'],0],['Which scripture is the living Guru of the Sikhs?',['Guru Granth Sahib','Dasam Granth','The Vedas','Kitáb-i-Aqdas'],0],
+  ['The Tao Te Ching has how many chapters?',['81','114','18','27'],0],['Which is the oldest dated printed book known?',['A copy of the Diamond Sutra, 868 CE','The Gutenberg Bible','The Book of Kells','The Kojiki'],0],
+  ['Which religion has the most followers?',['Christianity','Islam','Hinduism','Buddhism'],0],['The Kojiki and Nihon Shoki belong to which tradition?',['Shinto','Taoism','Jainism','Zoroastrianism'],0],
+  ['How many verses does the Dhammapada have?',['423','700','1,028','6,236'],0],['Who compiled the Mishnah, about 200 CE?',['Rabbi Judah ha-Nasi','Maimonides','Joseph Karo','Rashi'],0]];
+ let tab=getLS('kanin-relig-tab','big'), pick=getLS('kanin-relig-pick',''), sort=getLS('kanin-relig-sort','size'), reg=getLS('kanin-relig-reg','all'), mon=getLS('kanin-relig-mon',new Date().getMonth()+1), q='', qi=0, qs=0, qa=0, busy=null, sample=null, aiAns='';
+ (async()=>{ try{ if(window.claude&&claude.use) sample=await claude.use('sample'); }catch(_){ sample=null; } })();
+ const css=document.createElement('style'); css.textContent=`
+#kRelig{position:fixed;inset:0;z-index:9700;overflow:auto;color:#f4ecdc;background:radial-gradient(ellipse at 50% -20%,#3b2a5c 0,#151027 45%,#0a0816 100%);padding:14px 16px calc(230px + env(safe-area-inset-bottom,0px));padding-right:calc(var(--kRailW,58px) + 16px);font:15px/1.6 system-ui,sans-serif}
+#kRelig[hidden]{display:none!important}
+#kRelig .rgIn{max-width:980px;margin:0 auto}
+#kRelig .rgBrand{font:700 11.5px ui-monospace,monospace;letter-spacing:.1em;color:#d9b45a;text-transform:uppercase}
+#kRelig h2{font:800 clamp(26px,5.5vw,40px)/1.15 Georgia,'Times New Roman',serif;color:#ffd76a;margin:8px 0 4px;text-wrap:balance}
+#kRelig h3{font:800 20px/1.3 Georgia,serif;color:#fff;margin:0 0 4px}
+#kRelig h4{font:800 13px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#d9b45a;margin:12px 0 4px}
+#kRelig .rgSub{color:#cdbfe6;font-size:14px;margin:0 0 10px}
+#kRelig .rgTabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+#kRelig .rgTabs button{min-height:42px!important;border-radius:12px!important;padding:4px 12px!important;font:800 14px system-ui,sans-serif!important}
+#kRelig .rgTabs button[aria-pressed="true"]{background:#ffd76a!important;color:#1a1030!important}
+#kRelig .rgCtl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+#kRelig .rgCtl select,#kRelig .rgCtl input{min-height:40px;border-radius:10px;font:600 14px system-ui,sans-serif;padding:4px 8px;max-width:100%}
+#kRelig .rgCtl input{flex:1 1 220px}
+#kRelig .rgGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+#kRelig .rgCard{background:rgba(255,255,255,.05);border:1px solid rgba(255,215,106,.25);border-radius:16px;padding:14px;min-width:0}
+#kRelig .rgCard .rgIco{font-size:34px;line-height:1}
+#kRelig .rgStat{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin:4px 0}
+#kRelig .rgStat b{font:800 22px Georgia,serif;color:#ffd76a}
+#kRelig .rgBar{height:8px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;margin:4px 0 8px}
+#kRelig .rgBar i{display:block;height:100%;background:linear-gradient(90deg,#d9b45a,#ffd76a)}
+#kRelig ul{margin:4px 0 8px;padding-left:20px}
+#kRelig li{margin:2px 0}
+#kRelig .rgBook{border-top:1px solid rgba(255,255,255,.1);padding:8px 0}
+#kRelig .rgBook b{color:#fff}
+#kRelig .rgRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#kRelig .rgRow button{min-height:38px!important;padding:4px 10px!important;border-radius:10px!important;font:700 13px system-ui,sans-serif!important}
+#kRelig a{color:#9fdcff}
+#kRelig .rgTbl{overflow-x:auto;border:1px solid rgba(255,215,106,.25);border-radius:12px}
+#kRelig table{border-collapse:collapse;min-width:760px;width:100%;font-size:13.5px}
+#kRelig th,#kRelig td{border-bottom:1px solid rgba(255,255,255,.1);padding:8px;text-align:left;vertical-align:top}
+#kRelig th{color:#ffd76a;background:rgba(0,0,0,.25);position:sticky;top:0}
+#kRelig .rgNote{font-size:12.5px;color:#b9add3;line-height:1.5}
+#kRelig .rgQ button.opt{display:block;width:100%;text-align:left;margin:6px 0;min-height:44px!important;border-radius:12px!important;font:700 15px system-ui,sans-serif!important}
+#kRelig .rgQ button.ok{background:#137a3f!important}#kRelig .rgQ button.no{background:#8a1c2c!important}
+#kRelig textarea{width:100%;min-height:80px;border-radius:12px;font:15px system-ui,sans-serif;padding:8px;box-sizing:border-box}
+#kRelig .rgAns{white-space:pre-wrap;background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:8px;min-height:24px}
+@media (max-width:560px){ #kRelig .rgGrid{grid-template-columns:minmax(0,1fr)} #kRelig h2{font-size:26px} }`; document.head.appendChild(css);
+ function box(){ let d=$('kRelig'); if(d) return d; d=document.createElement('div'); d.id='kRelig'; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Cultures and Religion'); d.hidden=true; document.body.appendChild(d);
+  d.addEventListener('click',onClick); d.addEventListener('change',onChange); d.addEventListener('input',e=>{ if(e.target.dataset.rg==='q'){ q=e.target.value; paintBody(); } }); return d; }
+ const byId=id=>ALL.find(r=>r.id===id);
+ const words=r=>(r.name+' '+(r.sum||'')+' '+(r.books||[]).map(b=>b[0]+' '+b[1]).join(' ')+' '+(r.region||'')+' '+(r.founder||'')+' '+(r.places||[]).join(' ')).toLowerCase();
+ const match=r=>{ if(reg!=='all'&&r.region!==reg) return false; if(pick&&r.id!==pick) return false; const t=q.trim().toLowerCase(); return !t||t.split(/\s+/).every(w=>words(r).includes(w)); };
+ const sorted=L=>{ const s=L.slice(); const size=r=>r.share!=null?r.share:(r.id==='none'?24.2:0); if(sort==='size') s.sort((a,b)=>size(b)-size(a)); else if(sort==='age') s.sort((a,b)=>(b.age||0)-(a.age||0)); else if(sort==='az') s.sort((a,b)=>a.name.localeCompare(b.name)); else if(sort==='region') s.sort((a,b)=>(a.region||'').localeCompare(b.region||'')||a.name.localeCompare(b.name)); else if(sort==='books') s.sort((a,b)=>(b.books||[]).length-(a.books||[]).length); return s; };
+ const link=(u,t)=>u&&/^https:\/\//.test(u)?' <a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(t||'Read it online ↗')+'</a>':'';
+ const acts=(id)=>'<div class="rgRow"><button type="button" data-rg="read" data-id="'+id+'" data-noul>🔊 Read aloud</button><button type="button" data-rg="stop" data-noul>⏹ Stop</button><button type="button" data-rg="copy" data-id="'+id+'" data-noul>📋 Copy</button><button type="button" data-rg="save" data-id="'+id+'" data-noul>📁 Save</button><button type="button" data-rg="ask" data-id="'+id+'" data-noul>🤖 Ask AI</button></div>';
+ function bigCard(r){ return '<div class="rgCard"><div class="rgIco">'+r.icon+'</div><h3>'+esc(r.name)+'</h3><div class="rgStat"><b>'+esc(r.people)+'</b><span>'+r.share+'% of the world</span></div><div class="rgBar"><i style="width:'+Math.max(1,Math.min(100,r.share/28.8*100))+'%"></i></div>'+
+  '<p>'+esc(r.sum)+'</p><h4>Began</h4><p>'+esc(r.began)+'. '+esc(r.founder)+'.</p><h4>God</h4><p>'+esc(r.god)+'</p><h4>What they believe</h4><ul>'+r.beliefs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><h4>Branches</h4><ul>'+r.branches.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+  '<h4>Scriptures and books ('+r.books.length+')</h4>'+r.books.map(b=>'<div class="rgBook"><b>📖 '+esc(b[0])+'</b><br>'+esc(b[1])+link(b[2])+'</div>').join('')+
+  '<h4>Holy days</h4><ul>'+r.days.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><h4>Holy places</h4><ul>'+r.places.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><p class="rgNote">Worship: '+esc(r.worship)+' · Weekly: '+esc(r.day)+'</p>'+acts(r.id)+'</div>'; }
+ function othCard(r){ return '<div class="rgCard"><div class="rgIco">'+r.icon+'</div><h3>'+esc(r.name)+'</h3><div class="rgStat"><span>'+esc(r.people)+'</span></div><p>'+esc(r.sum)+'</p><h4>Began</h4><p>'+esc(r.began)+(r.founder&&r.founder!=='None'?'. '+esc(r.founder):'')+'.</p>'+
+  '<h4>Scriptures and books ('+r.books.length+')</h4>'+r.books.map(b=>'<div class="rgBook"><b>📖 '+esc(b[0])+'</b><br>'+esc(b[1])+link(b[2])+'</div>').join('')+'<h4>Holy days</h4><ul>'+(r.days||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><h4>Holy places</h4><ul>'+(r.places||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+acts(r.id)+'</div>'; }
+ function paintBody(){ const B=$('rgBody'); if(!B) return; let h='';
+  if(tab==='big'){ const L=sorted(BIG.filter(match)); h='<p class="rgSub">The five largest world religions by followers. Together they hold about 73% of the world’s people.</p><div class="rgGrid">'+(L.map(bigCard).join('')||'<p>Nothing matches. Clear the search or the filters.</p>')+'</div>'; }
+  else if(tab==='all'){ const L=sorted(ALL.filter(match)); h='<p class="rgSub">'+L.length+' of '+ALL.length+' traditions shown. The five largest are first under “Largest first”.</p><div class="rgGrid">'+(L.map(r=>BIG.includes(r)?bigCard(r):othCard(r)).join('')||'<p>Nothing matches.</p>')+'</div>'; }
+  else if(tab==='shelf'){ const rows=[]; sorted(ALL.filter(r=>reg==='all'||r.region===reg)).forEach(r=>{ if(pick&&r.id!==pick) return; (r.books||[]).forEach((b,i)=>{ const t=q.trim().toLowerCase(); if(t&&!t.split(/\s+/).every(w=>(b[0]+' '+b[1]+' '+r.name).toLowerCase().includes(w))) return; rows.push([r,b,i]); }); });
+   h='<p class="rgSub">'+rows.length+' scriptures and books. Search a title: Quran, Gita, Torah, Talmud, Sutra, Granth…</p><div class="rgTbl"><table><thead><tr><th>Book</th><th>Tradition</th><th>What it is</th><th>Read</th></tr></thead><tbody>'+rows.map(([r,b])=>'<tr><td><b>'+esc(b[0])+'</b></td><td>'+r.icon+' '+esc(r.name)+'</td><td>'+esc(b[1])+'</td><td>'+(b[2]&&/^https:\/\//.test(b[2])?'<a href="'+esc(b[2])+'" target="_blank" rel="noopener">Open ↗</a>':'—')+'</td></tr>').join('')+'</tbody></table></div>'; }
+  else if(tab==='compare'){ const R=[['Followers',r=>r.people],['Share of the world',r=>r.share+'%'],['Began',r=>r.began],['Founder',r=>r.founder],['God',r=>r.god],['Main scripture',r=>r.books[0][0]],['Weekly day',r=>r.day],['Place of worship',r=>r.worship],['Holy cities',r=>r.city],['Main branches',r=>r.branches.slice(0,3).map(x=>x.split(/[,:]/)[0]).join(' · ')]];
+   h='<p class="rgSub">The five side by side. Scroll sideways on a phone.</p><div class="rgTbl"><table><thead><tr><th></th>'+BIG.map(r=>'<th>'+r.icon+' '+esc(r.name)+'</th>').join('')+'</tr></thead><tbody>'+R.map(([k,f])=>'<tr><th>'+esc(k)+'</th>'+BIG.map(r=>'<td>'+esc(f(r))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'; }
+  else if(tab==='days'){ const L=HOLY.filter(x=>x[0]===+mon); h='<p class="rgSub">Holy days that usually fall in '+MONTHS[mon-1]+'. Many follow the moon, so they move from year to year: check a calendar for this year’s exact date.</p><div class="rgGrid">'+L.map(x=>'<div class="rgCard"><div class="rgIco">'+x[1]+'</div><h3>'+esc(x[2])+'</h3><p>'+esc(x[3])+'</p></div>').join('')+'</div>'; }
+  else if(tab==='quiz'){ const Q=QUIZ[qi%QUIZ.length]; const order=[0,1,2,3].sort((a,b)=>((a*7+qi*3)%4)-((b*7+qi*3)%4));
+   h='<div class="rgCard rgQ"><p class="rgNote">Question '+(qi%QUIZ.length+1)+' of '+QUIZ.length+' · score '+qs+' of '+qa+'</p><h3>'+esc(Q[0])+'</h3>'+order.map(i=>'<button type="button" class="opt" data-rg="ans" data-i="'+i+'" data-noul>'+esc(Q[1][i])+'</button>').join('')+'<div class="rgRow"><button type="button" data-rg="next" data-noul>⏭ Next question</button><button type="button" data-rg="restart" data-noul>↺ Start over</button></div></div>'; }
+  else if(tab==='ask'){ h='<div class="rgCard"><h3>🤖 Ask about any religion</h3><p class="rgNote">The answer comes from the AI and describes each faith the way it describes itself. It does not judge any faith true or false.</p><textarea id="rgAsk" placeholder="For example: What is the difference between Sunni and Shia Islam? What does the Bhagavad Gita teach about duty?"></textarea><div class="rgRow"><button type="button" data-rg="aiGo" data-noul>Ask</button><button type="button" data-rg="aiStop" data-noul>⏹ Stop</button><button type="button" data-rg="aiRead" data-noul>🔊 Read the answer</button></div><div class="rgAns" id="rgAns"></div>'+(sample?'':'<p class="rgNote">The AI answers inside claude.ai. Here, open the 🤖 AI screen from the Menu.</p>')+'</div>'; }
+  B.innerHTML=h; if(tab==='ask'){ const a=$('rgAns'); if(a) a.textContent=aiAns; } }
+ function paint(){ const d=box(); const T=[['big','⭐ The big five'],['all','🌍 Every tradition'],['shelf','📚 Scripture shelf'],['compare','⚖️ Compare'],['days','📅 Holy days'],['quiz','❓ Quiz'],['ask','🤖 Ask AI']];
+  const regs=['all','Worldwide','Middle East','South Asia','East Asia','Africa','Americas','Europe'];
+  d.innerHTML='<div class="kBar" data-sc="kRelig"><button type="button" data-ka="close" data-rg="close" aria-label="Close">✕</button></div><div class="rgIn"><div class="rgBrand">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · Cultures & Religion</div><h2>✝️ ☪️ 🕉️ ☸️ ✡️ Cultures & Religion</h2><p class="rgSub">'+ALL.length+' traditions and '+ALL.reduce((n,r)=>n+(r.books||[]).length,0)+' scriptures and books. Each faith is described the way it describes itself; numbers from the Pew Research Center (2020 figures), smaller groups marked as estimates.</p>'+
+   '<div class="rgTabs" role="tablist">'+T.map(([k,t])=>'<button type="button" data-rg="tab" data-t="'+k+'" aria-pressed="'+(tab===k)+'" data-noul>'+t+'</button>').join('')+'</div>'+
+   '<div class="rgCtl"><input type="search" data-rg="q" aria-label="Search religions and scriptures" placeholder="🔎 Search: a faith, a book, a place…" value="'+esc(q)+'">'+
+   '<select data-rg="pick" aria-label="Tradition" data-nodice><option value="">Every tradition</option>'+ALL.map(r=>'<option value="'+r.id+'"'+(pick===r.id?' selected':'')+'>'+r.icon+' '+esc(r.name)+'</option>').join('')+'</select>'+
+   '<select data-rg="sort" aria-label="Order" data-nodice>'+[['size','Largest first'],['age','Oldest first'],['az','A to Z'],['region','By region'],['books','Most books first']].map(([v,t])=>'<option value="'+v+'"'+(sort===v?' selected':'')+'>'+t+'</option>').join('')+'</select>'+
+   '<select data-rg="reg" aria-label="Region" data-nodice>'+regs.map(v=>'<option value="'+v+'"'+(reg===v?' selected':'')+'>'+(v==='all'?'Every region':v)+'</option>').join('')+'</select>'+
+   (tab==='days'?'<select data-rg="mon" aria-label="Month" data-nodice>'+MONTHS.map((m,i)=>'<option value="'+(i+1)+'"'+(+mon===i+1?' selected':'')+'>'+m+'</option>').join('')+'</select>':'')+
+   '</div><div id="rgBody"></div><p class="rgNote" style="margin-top:16px">Figures: Pew Research Center, “How the Global Religious Landscape Changed From 2010 to 2020” (2025). Reading links open public sites in a new tab. © 2026 The Omni-Compass LLC. All rights reserved.</p></div>';
+  paintBody(); }
+ const textOf=id=>{ const r=byId(id); if(!r) return ''; return r.name+'. '+(r.people?r.people+'. ':'')+(r.sum||'')+' Scriptures: '+(r.books||[]).map(b=>b[0]+': '+b[1]).join(' ')+(r.days?' Holy days: '+r.days.join('; ')+'.':''); };
+ function speak(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); try{ const v=window.KVOICE&&KVOICE('en'); if(v) u.voice=v; }catch(_){ } speechSynthesis.speak(u); }catch(_){ say('Read-aloud is not available on this device.'); } }
+ async function ask(text){ if(!sample){ try{ close(); KAI.open(text); }catch(_){ } return; } if(busy) try{ busy.abort(); }catch(_){ } busy=new AbortController(); aiAns='Thinking…'; const a=$('rgAns'); if(a) a.textContent=aiAns;
+  const prompt='You answer questions about world religions inside a family-friendly multimedia app. Describe each faith accurately and respectfully, the way its own followers and mainstream scholars describe it. Never rank religions or call one true or false. Name scriptures with chapter and verse where useful. Keep it under 250 words, plain language, no markdown headings.\n\nQuestion: '+text;
+  try{ const r=await sample(prompt,{signal:busy.signal,cache:false,onText:({text:t})=>{ aiAns=t; const el=$('rgAns'); if(el) el.textContent=t; }}); aiAns=(r&&r.text)||aiAns; const el=$('rgAns'); if(el) el.textContent=aiAns; }
+  catch(e){ if(e&&e.name==='AbortError') return; aiAns=e&&e.code==='rate_limited'?'The AI is busy right now. Try again in a minute.':e&&e.code==='not_granted'?'The AI is switched off for this page.':'The AI could not answer just now. Try again.'; const el=$('rgAns'); if(el) el.textContent=aiAns; } finally{ busy=null; } }
+ async function onClick(e){ const b=e.target.closest('[data-rg]'); if(!b) return; const k=b.dataset.rg;
+  if(k==='close') return close();
+  if(k==='tab'){ tab=b.dataset.t; putLS('kanin-relig-tab',tab); return paint(); }
+  if(k==='stop'){ try{ speechSynthesis.cancel(); }catch(_){ } return; }
+  if(k==='read') return speak(textOf(b.dataset.id));
+  if(k==='copy'){ const t=textOf(b.dataset.id); try{ await navigator.clipboard.writeText(t); say('📋 Copied.'); }catch(_){ say('Copy was blocked here: select the text and copy it by hand.'); } return; }
+  if(k==='save'){ const r=byId(b.dataset.id); try{ await KLIB.save({kind:'file',name:'Religion · '+r.name,blob:new Blob([textOf(r.id)+'\n\nSource: Pew Research Center (2020 figures) and the tradition’s own texts.\n'],{type:'text/plain'}),meta:{from:'religions'}}); say('📁 Saved to your Projects: Religion · '+r.name+'.'); }catch(_){ say('This card could not be saved on this device.'); } return; }
+  if(k==='ask'){ const r=byId(b.dataset.id); tab='ask'; paint(); const t=$('rgAsk'); const qq='Tell me about '+r.name+': its main beliefs, its scriptures and how its followers worship.'; if(t) t.value=qq; return ask(qq); }
+  if(k==='aiGo'){ const t=$('rgAsk'); const v=t&&t.value.trim(); if(!v) return say('Type a question first.'); return ask(v); }
+  if(k==='aiStop'){ if(busy) try{ busy.abort(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } return; }
+  if(k==='aiRead'){ if(aiAns) speak(aiAns); return; }
+  if(k==='ans'){ const Q=QUIZ[qi%QUIZ.length]; const i=+b.dataset.i; if(b.parentElement.querySelector('.ok,.no')) return; qa++; if(i===Q[2]){ qs++; b.classList.add('ok'); say('✅ Right.'); } else { b.classList.add('no'); const right=b.parentElement.querySelector('[data-i="'+Q[2]+'"]'); if(right) right.classList.add('ok'); say('The answer: '+Q[1][Q[2]]+'.'); } const s=b.parentElement.querySelector('.rgNote'); if(s) s.textContent='Question '+(qi%QUIZ.length+1)+' of '+QUIZ.length+' · score '+qs+' of '+qa; return; }
+  if(k==='next'){ qi++; return paintBody(); }
+  if(k==='restart'){ qi=0; qs=0; qa=0; return paintBody(); } }
+ function onChange(e){ const k=e.target.dataset.rg; if(!k) return; e.stopPropagation(); const v=e.target.value;
+  if(k==='pick'){ pick=v; putLS('kanin-relig-pick',pick); } if(k==='sort'){ sort=v; putLS('kanin-relig-sort',sort); } if(k==='reg'){ reg=v; putLS('kanin-relig-reg',reg); } if(k==='mon'){ mon=+v; putLS('kanin-relig-mon',mon); } paintBody(); }
+ function open(which){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ }
+  if(typeof which==='string'){ if(byId(which)){ pick=which; tab=BIG.some(r=>r.id===which)?'big':'all'; } else if(['big','all','shelf','compare','days','quiz','ask'].includes(which)) tab=which; }
+  d.hidden=false; d.scrollTop=0; paint(); }
+ function close(){ const d=$('kRelig'); if(d) d.hidden=true; try{ speechSynthesis.cancel(); }catch(_){ } if(busy) try{ busy.abort(); }catch(_){ } }
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('kRelig')&&!$('kRelig').hidden) close(); });
+ try{ const gh=window.GOHOME; if(gh&&!gh.__krg){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__krg=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(!e.target.closest) return; if(e.target.closest('#kdHome,#lpMenu')) return close(); const r=e.target.closest('#rDock button'); if(r&&$('kRelig')&&!$('kRelig').hidden) close(); },true);
+ /* Find: every tradition and every book can be found by name */
+ (window.KFINDX=window.KFINDX||[]).push(add=>{ ALL.forEach(r=>{ add('Cultures & Religion',r.icon,r.name,'Religion · '+(r.people||''),()=>open(r.id)); (r.books||[]).forEach(b=>add('Cultures & Religion','📖',b[0],r.name+' · scripture',()=>{ open(r.id); }) ); }); });
+ window.KRELIG={open,close,get count(){ return ALL.length; },get books(){ return ALL.reduce((n,r)=>n+(r.books||[]).length,0); },ALL,BIG};
+})();
+
+</script>
+<script>
+(()=>{ /* 📈 STOCK MARKET (v238): its own platform inside KAN-IN, matching the Stock Market page of www.omni-galaxy.com.
+   Live, from this device’s clock: whether Wall Street is open right now (holidays and early closes counted), the countdown to the
+   bell, and 13 world exchanges open or closed. Every index, coin and commodity has a one-tap live quote on the site you pick
+   (Yahoo Finance, Google, CNBC, MarketWatch or Nasdaq), because live prices cannot load inside the app itself. Plus what each index
+   is and how it is built, the Dow’s 30 companies, the 11 sectors, a watchlist, money calculators, the words of the market, and Ask AI.
+   Education only, never investment advice. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
+ const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ /* [name, Yahoo symbol, what it is, start year, how many] */
+ const US=[['Dow Jones Industrial Average (DJIA)','^DJI','30 large, well-known US companies. The oldest famous index. It is price-weighted: a $1 move in any of its stocks moves it the same number of points.','1896','30'],
+  ['S&P 500','^GSPC','About 500 of the largest US companies, about 80% of the value of the US stock market. Weighted by company size (float-adjusted market value). The index most professionals watch.','1957','about 500'],
+  ['NASDAQ Composite','^IXIC','Every common stock on the Nasdaq exchange, heavy in technology. Weighted by company size.','1971','3,000+'],
+  ['NASDAQ-100','^NDX','The 100 largest companies on Nasdaq that are not banks or other financials. The QQQ fund follows it.','1985','100'],
+  ['Russell 2000','^RUT','2,000 small US companies: a read on small business and the home economy. The IWM fund follows it.','1984','2,000'],
+  ['Russell 3000','^RUA','About 98% of the US stock market: the Russell 1000 large companies plus the Russell 2000 small ones.','1984','about 3,000'],
+  ['NYSE Composite','^NYA','Every common stock listed on the New York Stock Exchange.','1966','about 1,900'],
+  ['Dow Jones Transportation Average','^DJT','20 airlines, railroads, truckers and shippers. Begun as a railroad average by Charles Dow.','1884','20'],
+  ['Wilshire 5000','^W5000','Nearly every US public company: the “total market” index.','1974','3,500+'],
+  ['VIX, the fear gauge','^VIX','Not stocks: the market’s expected swing in the S&P 500 over the next 30 days, read from options prices. Above 30 usually means fear; below 20, calm.','1993','—']];
+ const WORLD=[['FTSE 100','^FTSE','London','The 100 largest companies on the London Stock Exchange.','1984'],['DAX 40','^GDAXI','Frankfurt','Germany’s 40 largest companies (30 until 2021).','1988'],['CAC 40','^FCHI','Paris','France’s 40 leading companies.','1987'],
+  ['Euro Stoxx 50','^STOXX50E','Eurozone','50 leaders across the countries that use the euro.','1998'],['IBEX 35','^IBEX','Madrid','Spain’s 35 most traded companies.','1992'],['AEX','^AEX','Amsterdam','The Netherlands’ leading companies.','1983'],['SMI','^SSMI','Zurich','Switzerland’s 20 largest companies.','1988'],
+  ['Nikkei 225','^N225','Tokyo','225 leading Japanese companies, price-weighted like the Dow.','1950'],['Hang Seng','^HSI','Hong Kong','The largest companies on the Hong Kong exchange.','1969'],['Shanghai Composite','000001.SS','Shanghai','Every stock on the Shanghai exchange.','1991'],
+  ['Shenzhen Component','399001.SZ','Shenzhen','500 leading Shenzhen stocks.','1995'],['KOSPI','^KS11','Seoul','Every common stock on Korea’s main board.','1983'],['TAIEX','^TWII','Taipei','Taiwan’s main index.','1967'],['BSE Sensex','^BSESN','Mumbai','30 leading Indian companies, India’s oldest index.','1986'],
+  ['Nifty 50','^NSEI','Mumbai','50 leading companies on India’s National Stock Exchange.','1996'],['S&P/ASX 200','^AXJO','Sydney','Australia’s 200 largest companies.','2000'],['S&P/TSX Composite','^GSPTSE','Toronto','Canada’s main index.','1977'],
+  ['Bovespa (Ibovespa)','^BVSP','São Paulo','Brazil’s main index.','1968'],['S&P/BMV IPC','^MXX','Mexico City','Mexico’s leading companies.','1978'],['JSE All Share','^J203.JO','Johannesburg','South Africa’s main index.','1995']];
+ const CRYPTO=[['Bitcoin','BTC-USD','The first cryptocurrency, 2009. At most 21 million will ever exist.'],['Ethereum','ETH-USD','2015. A blockchain that runs programs (“smart contracts”).'],['Solana','SOL-USD','2020. A fast, low-fee blockchain.'],['XRP','XRP-USD','2012. Built for moving money between banks and countries.'],
+  ['BNB','BNB-USD','2017. The coin of the Binance exchange and its chain.'],['Cardano','ADA-USD','2017. A research-led proof-of-stake blockchain.'],['Dogecoin','DOGE-USD','2013. Began as a joke with a dog picture; now widely held.'],['Tron','TRX-USD','2017. A blockchain much used for stablecoin payments.'],
+  ['Avalanche','AVAX-USD','2020. A network of fast blockchains.'],['Chainlink','LINK-USD','2017. Feeds outside data, such as prices, into blockchains.'],['Polkadot','DOT-USD','2020. Links many blockchains together.'],['Litecoin','LTC-USD','2011. An early, faster cousin of Bitcoin.']];
+ const COMM=[['Gold','GC=F','Metals','Ounce. The classic safe place for money in hard times.'],['Silver','SI=F','Metals','Ounce. Money metal and an industrial metal.'],['Platinum','PL=F','Metals','Ounce. Car exhaust catalysts and jewellery.'],['Palladium','PA=F','Metals','Ounce. Mostly car catalysts.'],
+  ['Copper','HG=F','Metals','Pound. Wiring and building; called “Doctor Copper” for reading the economy.'],['WTI crude oil','CL=F','Energy','Barrel. The US oil benchmark.'],['Brent crude oil','BZ=F','Energy','Barrel. The world oil benchmark.'],['Natural gas','NG=F','Energy','Heat and power stations.'],
+  ['Heating oil','HO=F','Energy','Gallon. Diesel and heating fuel.'],['Gasoline (RBOB)','RB=F','Energy','Gallon. What pumps at the gas station follow.'],['Corn','ZC=F','Farm','Bushel. Food, animal feed and ethanol.'],['Wheat','ZW=F','Farm','Bushel. Bread and pasta.'],
+  ['Soybeans','ZS=F','Farm','Bushel. Oil, animal feed and tofu.'],['Coffee','KC=F','Farm','Pound. Arabica coffee beans.'],['Sugar','SB=F','Farm','Pound. Raw sugar.'],['Cocoa','CC=F','Farm','Tonne. Chocolate.'],['Cotton','CT=F','Farm','Pound. Clothing.'],['Live cattle','LE=F','Farm','Pound. Beef cattle.']];
+ /* the 30 Dow companies as of the November 2024 change (Nvidia and Sherwin-Williams in, Intel and Dow Inc. out); S&P Dow Jones Indices can change the list at any time */
+ const DOW=[['3M','MMM','Industrials'],['American Express','AXP','Financials'],['Amgen','AMGN','Health care'],['Amazon','AMZN','Consumer discretionary'],['Apple','AAPL','Information technology'],['Boeing','BA','Industrials'],['Caterpillar','CAT','Industrials'],['Chevron','CVX','Energy'],
+  ['Cisco','CSCO','Information technology'],['Coca-Cola','KO','Consumer staples'],['Disney','DIS','Communication services'],['Goldman Sachs','GS','Financials'],['Home Depot','HD','Consumer discretionary'],['Honeywell','HON','Industrials'],['IBM','IBM','Information technology'],
+  ['Johnson & Johnson','JNJ','Health care'],['JPMorgan Chase','JPM','Financials'],['McDonald’s','MCD','Consumer discretionary'],['Merck','MRK','Health care'],['Microsoft','MSFT','Information technology'],['Nike','NKE','Consumer discretionary'],['Nvidia','NVDA','Information technology'],
+  ['Procter & Gamble','PG','Consumer staples'],['Salesforce','CRM','Information technology'],['Sherwin-Williams','SHW','Materials'],['Travelers','TRV','Financials'],['UnitedHealth','UNH','Health care'],['Verizon','VZ','Communication services'],['Visa','V','Financials'],['Walmart','WMT','Consumer staples']];
+ const SECT=[['Information technology','XLK','Chips, software, computers: Apple, Microsoft, Nvidia'],['Health care','XLV','Drug makers, insurers, hospitals: Eli Lilly, UnitedHealth, Johnson & Johnson'],['Financials','XLF','Banks, card networks, insurers: JPMorgan Chase, Visa, Berkshire Hathaway'],
+  ['Consumer discretionary','XLY','Things people want but can skip: Amazon, Tesla, Home Depot'],['Communication services','XLC','Search, social media, phone and TV: Alphabet, Meta, Netflix'],['Industrials','XLI','Planes, machines, railroads: Caterpillar, GE Aerospace, Union Pacific'],
+  ['Consumer staples','XLP','Things people buy anyway: Walmart, Procter & Gamble, Coca-Cola'],['Energy','XLE','Oil and gas: ExxonMobil, Chevron'],['Utilities','XLU','Electricity and water: NextEra Energy, Duke Energy'],['Real estate','XLRE','Landlords and towers: Prologis, American Tower'],['Materials','XLB','Chemicals, paint, mining: Linde, Sherwin-Williams']];
+ const BIG=[['Nvidia','NVDA'],['Apple','AAPL'],['Microsoft','MSFT'],['Alphabet (Google)','GOOGL'],['Amazon','AMZN'],['Meta (Facebook)','META'],['Broadcom','AVGO'],['Tesla','TSLA'],['Berkshire Hathaway','BRK-B'],['Taiwan Semiconductor','TSM'],['JPMorgan Chase','JPM'],['Eli Lilly','LLY'],['Walmart','WMT'],['Visa','V'],['Oracle','ORCL'],['Netflix','NFLX']];
+ /* exchanges: [name, city, time zone, sessions [[h,m,h,m],...]] */
+ const EXCH=[['NYSE and Nasdaq','New York','America/New_York',[[9,30,16,0]]],['TSX','Toronto','America/Toronto',[[9,30,16,0]]],['B3','São Paulo','America/Sao_Paulo',[[10,0,17,0]]],['London Stock Exchange','London','Europe/London',[[8,0,16,30]]],
+  ['Xetra','Frankfurt','Europe/Berlin',[[9,0,17,30]]],['Euronext','Paris','Europe/Paris',[[9,0,17,30]]],['JSE','Johannesburg','Africa/Johannesburg',[[9,0,17,0]]],['NSE and BSE','Mumbai','Asia/Kolkata',[[9,15,15,30]]],
+  ['Shanghai Stock Exchange','Shanghai','Asia/Shanghai',[[9,30,11,30],[13,0,15,0]]],['HKEX','Hong Kong','Asia/Hong_Kong',[[9,30,12,0],[13,0,16,0]]],['Tokyo Stock Exchange','Tokyo','Asia/Tokyo',[[9,0,11,30],[12,30,15,30]]],['Korea Exchange','Seoul','Asia/Seoul',[[9,0,15,30]]],['ASX','Sydney','Australia/Sydney',[[10,0,16,0]]]];
+ /* the New York Stock Exchange’s holidays and 1 p.m. early closes */
+ const HOL={'2026-01-01':'New Year’s Day','2026-01-19':'Martin Luther King Jr. Day','2026-02-16':'Washington’s Birthday','2026-04-03':'Good Friday','2026-05-25':'Memorial Day','2026-06-19':'Juneteenth','2026-07-03':'Independence Day (observed)','2026-09-07':'Labor Day','2026-11-26':'Thanksgiving Day','2026-12-25':'Christmas Day',
+  '2027-01-01':'New Year’s Day','2027-01-18':'Martin Luther King Jr. Day','2027-02-15':'Washington’s Birthday','2027-03-26':'Good Friday','2027-05-31':'Memorial Day','2027-06-18':'Juneteenth (observed)','2027-07-05':'Independence Day (observed)','2027-09-06':'Labor Day','2027-11-25':'Thanksgiving Day','2027-12-24':'Christmas Day (observed)'};
+ const EARLY={'2026-11-27':'the day after Thanksgiving','2026-12-24':'Christmas Eve','2027-11-26':'the day after Thanksgiving'};
+ const GLOSS=[['Bull market','Prices rising for a long stretch; often said after a 20% rise from a low.'],['Bear market','A fall of 20% or more from a high.'],['Correction','A fall of 10% to 20% from a high.'],['Index','A basket of stocks tracked as one number, to show how a group is doing.'],
+  ['Point','The unit an index moves in. 500 points on a 45,000 Dow is about 1.1%.'],['Market cap','A company’s value: share price × number of shares.'],['Blue chip','A large, long-established, trusted company.'],['Small cap','A small company by market value, roughly under $2 billion.'],
+  ['Share (stock)','A small piece of ownership in a company.'],['Dividend','Cash a company pays its owners, usually every quarter.'],['Yield','Yearly dividend ÷ share price, as a percent.'],['P/E ratio','Price ÷ yearly earnings per share: how many years of profit you pay for.'],
+  ['Earnings','A company’s profit, reported every three months.'],['ETF','A fund that trades like a stock and holds a basket, such as the whole S&P 500.'],['Index fund','A fund that simply copies an index, with low fees.'],['Volatility','How much and how fast prices swing.'],
+  ['Bid and ask','The best price a buyer will pay and a seller will take. The gap is the spread.'],['Market order','Buy or sell now at the best price available.'],['Limit order','Buy or sell only at your price or better.'],['Short selling','Borrowing shares to sell, hoping to buy them back cheaper.'],
+  ['IPO','A company’s first sale of shares to the public.'],['Fed funds rate','The interest rate the Federal Reserve sets; it moves every loan rate.'],['Inflation (CPI)','How fast prices rise, read monthly from the Consumer Price Index.'],['Recession','A broad fall in the economy lasting months.'],
+  ['All-time high','The highest level ever reached.'],['Circuit breaker','Trading in every US stock pauses for 15 minutes if the S&P 500 falls 7% (level 1) or 13% (level 2) before 3:25 p.m.; at 20% (level 3) it stops for the day.'],['Pre-market and after-hours','Trading before 9:30 a.m. and after 4 p.m. New York time, thinner and jumpier.'],['Diversify','Spread money over many companies so one bad one hurts less.']];
+ const NEWS=[['Reuters Markets','https://www.reuters.com/markets/'],['AP Financial Markets','https://apnews.com/hub/financial-markets'],['CNBC Markets','https://www.cnbc.com/markets/'],['MarketWatch','https://www.marketwatch.com/'],['Yahoo Finance','https://finance.yahoo.com/'],['Bloomberg Markets','https://www.bloomberg.com/markets'],['Wall Street Journal Markets','https://www.wsj.com/market-data'],['Nasdaq Market Activity','https://www.nasdaq.com/market-activity'],['S&P Dow Jones Indices','https://www.spglobal.com/spdji/en/'],['NYSE holidays and hours','https://www.nyse.com/markets/hours-calendars']];
+ const SITES=[['yahoo','Yahoo Finance'],['google','Google'],['cnbc','CNBC'],['mw','MarketWatch'],['nasdaq','Nasdaq.com']];
+ const IDXMAP={cnbc:{'^DJI':'.DJI','^GSPC':'.SPX','^IXIC':'.IXIC','^NDX':'.NDX','^RUT':'.RUT','^VIX':'.VIX'},mw:{'^DJI':'index/djia','^GSPC':'index/spx','^IXIC':'index/comp','^NDX':'index/ndx','^RUT':'index/rut','^VIX':'index/vix'},nasdaq:{'^IXIC':'index/comp','^NDX':'index/ndx','^GSPC':'index/spx'}};
+ let tab=getLS('kanin-mkt-tab','today'), site=getLS('kanin-mkt-site','yahoo'), dsort=getLS('kanin-mkt-dsort','name'), wgrp=getLS('kanin-mkt-wgrp','all'), watch=getLS('kanin-mkt-watch',[]), q='', busy=null, sample=null, aiAns='', clock=0;
+ if(!Array.isArray(watch)) watch=[];
+ (async()=>{ try{ if(window.claude&&claude.use) sample=await claude.use('sample'); }catch(_){ sample=null; } })();
+ /* the last close, gathered by the studio into the app’s database with its date and source */
+ let snap=null, snapState='idle';
+ async function loadSnap(){ if(snapState!=='idle') return; snapState='loading'; let db=null; try{ if(window.claude&&claude.use) db=await claude.use('db'); }catch(_){ db=null; } if(!db){ snapState='none'; return; }
+  const to=setTimeout(()=>{ if(snapState==='loading') snapState='none'; },10000); try{ const d=await db.doc('markets/snapshot').get(); clearTimeout(to); snap=d&&d.exists?d.data():null; snapState=snap?'done':'none'; if(tab==='today') paintBody(); }catch(_){ clearTimeout(to); snapState='none'; } }
+ const fmtN=v=>{ const n=+v; return isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:2}):'—'; };
+ function snapHTML(){ if(!snap||!Array.isArray(snap.rows)) return ''; return '<div class="mkCard" style="margin-top:12px"><h3>🔔 Last close: '+esc(snap.asOf||'')+'</h3><div class="mkTbl"><table><thead><tr><th>Index</th><th>Close</th><th>Change</th></tr></thead><tbody>'+snap.rows.map(r=>{ const c=+r.pct; return '<tr><td><b>'+esc(r.name)+'</b></td><td>'+fmtN(r.close)+'</td><td class="'+(c>=0?'up':'down')+'">'+(c>=0?'▲ +':'▼ ')+(isFinite(c)?Math.abs(c).toFixed(2):'—')+'%</td></tr>'; }).join('')+'</tbody></table></div>'+(snap.note?'<p>'+esc(snap.note)+'</p>':'')+'<p class="mkNote">Gathered '+esc(snap.gathered||'')+' from '+esc(snap.source||'market reports')+(/^https:\/\//.test(snap.url||'')?' · <a href="'+esc(snap.url)+'" target="_blank" rel="noopener">source ↗</a>':'')+'. Today’s live numbers: the 📈 Live price buttons.</p></div>'; }
+ function quoteURL(sym,name,kind){ const s=String(sym); const isIdx=s[0]==='^'||/\.(SS|SZ|JO)$/.test(s); const isFut=/=F$/.test(s), isCoin=/-USD$/.test(s);
+  if(site==='google') return 'https://www.google.com/search?q='+encodeURIComponent((name||s)+(isIdx||isFut||isCoin?' price today':' stock'));
+  if(site==='cnbc'){ if(isIdx&&IDXMAP.cnbc[s]) return 'https://www.cnbc.com/quotes/'+encodeURIComponent(IDXMAP.cnbc[s]); if(!isIdx&&!isFut&&!isCoin) return 'https://www.cnbc.com/quotes/'+encodeURIComponent(s.replace('-','.')); }
+  if(site==='mw'){ if(isIdx&&IDXMAP.mw[s]) return 'https://www.marketwatch.com/investing/'+IDXMAP.mw[s]; if(!isIdx&&!isFut&&!isCoin) return 'https://www.marketwatch.com/investing/stock/'+encodeURIComponent(s.toLowerCase().replace('-','.')); }
+  if(site==='nasdaq'){ if(isIdx&&IDXMAP.nasdaq[s]) return 'https://www.nasdaq.com/market-activity/'+IDXMAP.nasdaq[s]; if(!isIdx&&!isFut&&!isCoin) return 'https://www.nasdaq.com/market-activity/stocks/'+encodeURIComponent(s.toLowerCase().replace('-','.')); }
+  return 'https://finance.yahoo.com/quote/'+encodeURIComponent(s); }
+ const qlink=(sym,name)=>{ const u=quoteURL(sym,name); const where=/yahoo/.test(u)?'Yahoo Finance':/google/.test(u)?'Google':/cnbc/.test(u)?'CNBC':/marketwatch/.test(u)?'MarketWatch':'Nasdaq.com'; return '<a class="mkQ" href="'+esc(u)+'" target="_blank" rel="noopener" title="Live price on '+where+'">📈 Live price ↗</a>'; };
+ /* ---------- the clocks ---------- */
+ function partsIn(tz,d){ const f=new Intl.DateTimeFormat('en-US',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'short',hour12:false}); const o={}; f.formatToParts(d).forEach(p=>{ o[p.type]=p.value; }); const h=(+o.hour)%24; return {y:+o.year,mo:+o.month,d:+o.day,h,mi:+o.minute,s:+o.second,wd:o.weekday,key:o.year+'-'+o.month+'-'+o.day}; }
+ const fmtT=(h,m)=>{ const ap=h>=12?'p.m.':'a.m.'; const hh=((h+11)%12)+1; return hh+':'+String(m).padStart(2,'0')+' '+ap; };
+ const dur=sec=>{ sec=Math.max(0,Math.round(sec)); const d=Math.floor(sec/86400), h=Math.floor(sec%86400/3600), m=Math.floor(sec%3600/60), s=sec%60; return (d?d+'d ':'')+(d||h?h+'h ':'')+m+'m '+(d?'':s+'s'); };
+ function nyStatus(now){ const p=partsIn('America/New_York',now); const t=p.h*3600+p.mi*60+p.s; const wkend=p.wd==='Sat'||p.wd==='Sun'; const hol=HOL[p.key]; const early=EARLY[p.key]; const close=early?13*3600:16*3600;
+  let st, why, next='';
+  if(wkend){ st='closed'; why='It is the weekend in New York.'; }
+  else if(hol){ st='closed'; why='Closed today for '+hol+'.'; }
+  else if(t<4*3600){ st='closed'; why='Overnight. Pre-market trading starts at 4:00 a.m.'; next='Opens in '+dur(9.5*3600-t); }
+  else if(t<9.5*3600){ st='pre'; why='Pre-market trading (thin and jumpy).'; next='The opening bell rings in '+dur(9.5*3600-t); }
+  else if(t<close){ st='open'; why='Regular trading'+(early?' — an early close today at 1:00 p.m. for '+early:'')+'.'; next='The closing bell rings in '+dur(close-t); }
+  else if(t<20*3600){ st='after'; why='After-hours trading until 8:00 p.m.'; next=''; }
+  else { st='closed'; why='Closed for the night.'; }
+  if(st!=='open'&&st!=='pre'){ /* next opening day */ let probe=new Date(now.getTime()); for(let i=0;i<10;i++){ probe=new Date(probe.getTime()+86400000); const q2=partsIn('America/New_York',probe); if(q2.wd!=='Sat'&&q2.wd!=='Sun'&&!HOL[q2.key]){ next='Next opening bell: '+q2.wd+' '+q2.mo+'/'+q2.d+' at 9:30 a.m. New York time'; break; } } }
+  return {st,why,next,p,early}; }
+ function exStatus(e,now){ const p=partsIn(e[2],now); if(p.wd==='Sat'||p.wd==='Sun') return ['closed',p]; const t=p.h*60+p.mi; for(const s of e[3]){ if(t>=s[0]*60+s[1]&&t<s[2]*60+s[3]) return ['open',p]; } if(e[3].length>1&&t>=e[3][0][2]*60+e[3][0][3]&&t<e[3][1][0]*60+e[3][1][1]) return ['lunch',p]; return ['closed',p]; }
+ function nextHolidays(n){ const now=new Date(); const k=partsIn('America/New_York',now).key; return Object.keys(HOL).filter(x=>x>=k).sort().slice(0,n).map(x=>[x,HOL[x]]); }
+ function tickClock(){ const el=$('mkClock'); if(!el){ clearInterval(clock); clock=0; return; } const now=new Date(); const S=nyStatus(now); const lab={open:'🟢 OPEN',pre:'🟡 PRE-MARKET',after:'🟡 AFTER-HOURS',closed:'🔴 CLOSED'}[S.st];
+  el.innerHTML='<div class="mkBig '+S.st+'">'+lab+'</div><div class="mkNow">New York time: <b>'+fmtT(S.p.h,S.p.mi)+'</b> · '+S.p.wd+' '+S.p.mo+'/'+S.p.d+'/'+S.p.y+'</div><p>'+esc(S.why)+'</p>'+(S.next?'<p class="mkNext">⏱ '+esc(S.next)+'</p>':'')+'<p class="mkNote">Regular hours 9:30 a.m. to 4:00 p.m. New York time, Monday to Friday.</p>';
+  const W=$('mkWorld'); if(W){ W.innerHTML=EXCH.map(e=>{ const [st,p]=exStatus(e,now); const isNY=e[1]==='New York'; const s2=isNY?(S.st==='open'?'open':S.st==='closed'?'closed':'ext'):st; return '<div class="mkEx '+s2+'"><b>'+esc(e[1])+'</b><span>'+esc(e[0])+'</span><span class="mkT">'+fmtT(p.h,p.mi)+' '+p.wd+'</span><i>'+(s2==='open'?'🟢 Open':s2==='lunch'?'🟡 Lunch break':s2==='ext'?'🟡 Extended hours':'🔴 Closed')+'</i></div>'; }).join(''); } }
+ const css=document.createElement('style'); css.textContent=`
+#kMarket{position:fixed;inset:0;z-index:9700;overflow:auto;color:#e6f1ff;background:linear-gradient(180deg,#06121f 0,#081a2e 40%,#050c16 100%);padding:14px 16px calc(230px + env(safe-area-inset-bottom,0px));padding-right:calc(var(--kRailW,58px) + 16px);font:15px/1.55 system-ui,sans-serif}
+#kMarket[hidden]{display:none!important}
+#kMarket .mkIn{max-width:1000px;margin:0 auto}
+#kMarket .mkBrand{font:700 11.5px ui-monospace,monospace;letter-spacing:.1em;color:#5fd38d;text-transform:uppercase}
+#kMarket h2{font:900 clamp(26px,5.5vw,40px)/1.15 system-ui,sans-serif;color:#fff;margin:8px 0 4px;text-wrap:balance}
+#kMarket h3{font:800 18px/1.3 system-ui,sans-serif;color:#fff;margin:0 0 4px}
+#kMarket .mkSub{color:#a9c1dc;font-size:14px;margin:0 0 10px}
+#kMarket .mkWarn{background:rgba(255,200,60,.12);border:1px solid rgba(255,200,60,.45);border-radius:12px;padding:8px 12px;font-size:13.5px;color:#ffe6a3;margin:8px 0}
+#kMarket .mkTabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+#kMarket .mkTabs button{min-height:42px!important;border-radius:12px!important;padding:4px 12px!important;font:800 14px system-ui,sans-serif!important}
+#kMarket .mkTabs button[aria-pressed="true"]{background:#5fd38d!important;color:#04150b!important}
+#kMarket .mkCtl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+#kMarket .mkCtl select,#kMarket .mkCtl input,#kMarket .mkCalc input{min-height:40px;border-radius:10px;font:600 14px system-ui,sans-serif;padding:4px 8px;max-width:100%;box-sizing:border-box}
+#kMarket .mkCtl input{flex:1 1 200px}
+#kMarket .mkGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#kMarket .mkCard{background:rgba(255,255,255,.045);border:1px solid rgba(95,211,141,.28);border-radius:14px;padding:12px;min-width:0}
+#kMarket .mkSym{font:700 12px ui-monospace,monospace;color:#5fd38d}
+#kMarket .mkCard p{margin:4px 0 8px;font-size:14px}
+#kMarket .mkMeta{font-size:12.5px;color:#9fb6d0}
+#kMarket a.mkQ{display:inline-flex;align-items:center;min-height:38px;padding:0 12px;border-radius:10px;background:#0f5132;color:#eafff2;font:800 13.5px system-ui,sans-serif;text-decoration:none}
+#kMarket a{color:#8fd1ff}
+#kMarket .mkBig{font:900 clamp(30px,8vw,52px)/1.1 system-ui,sans-serif;letter-spacing:.02em}
+#kMarket .mkBig.open{color:#5fd38d}#kMarket .mkBig.closed{color:#ff6b7d}#kMarket .mkBig.pre,#kMarket .mkBig.after{color:#ffd166}
+#kMarket .mkNow{font:600 16px system-ui,sans-serif;margin:6px 0}
+#kMarket .mkNext{font:800 17px system-ui,sans-serif;color:#fff}
+#kMarket .mkNote{font-size:12.5px;color:#93a9c3;line-height:1.5}
+#kMarket .mkWorld{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-top:8px}
+#kMarket .mkEx{border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;gap:2px;font-size:13px}
+#kMarket .mkEx b{font-size:15px}#kMarket .mkEx.open{border-color:#2f9e5f}#kMarket .mkEx.closed{opacity:.8}
+#kMarket .mkEx .mkT{font:700 13px ui-monospace,monospace}
+#kMarket .mkTbl{overflow-x:auto;border:1px solid rgba(95,211,141,.28);border-radius:12px}
+#kMarket table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+#kMarket th,#kMarket td{border-bottom:1px solid rgba(255,255,255,.08);padding:8px;text-align:left;vertical-align:middle}
+#kMarket th{color:#5fd38d;background:rgba(0,0,0,.3)}
+#kMarket .mkRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#kMarket .mkRow button{min-height:40px!important;padding:4px 12px!important;border-radius:10px!important;font:700 13.5px system-ui,sans-serif!important}
+#kMarket .mkCalc{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;align-items:end}
+#kMarket .mkCalc label{display:flex;flex-direction:column;gap:3px;font:700 12.5px system-ui,sans-serif;color:#a9c1dc}
+#kMarket .mkOut{font:800 17px system-ui,sans-serif;color:#fff;margin-top:8px;min-height:24px}
+#kMarket .up{color:#5fd38d}#kMarket .down{color:#ff6b7d}
+#kMarket textarea{width:100%;min-height:80px;border-radius:12px;font:15px system-ui,sans-serif;padding:8px;box-sizing:border-box}
+#kMarket .mkAns{white-space:pre-wrap;background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:8px;min-height:24px}
+@media (max-width:560px){ #kMarket .mkGrid{grid-template-columns:minmax(0,1fr)} }`; document.head.appendChild(css);
+ function box(){ let d=$('kMarket'); if(d) return d; d=document.createElement('div'); d.id='kMarket'; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Stock market'); d.hidden=true; document.body.appendChild(d);
+  d.addEventListener('click',onClick); d.addEventListener('change',onChange); d.addEventListener('input',e=>{ const k=e.target.dataset.mk; if(k==='q'){ q=e.target.value; paintBody(); } else if(k&&k.startsWith('c_')) calc(); }); return d; }
+ const hit=(...xs)=>{ const t=q.trim().toLowerCase(); if(!t) return true; const s=xs.join(' ').toLowerCase(); return t.split(/\s+/).every(w=>s.includes(w)); };
+ function card(name,sym,what,meta){ return '<div class="mkCard"><div class="mkSym">'+esc(sym)+'</div><h3>'+esc(name)+'</h3><p>'+esc(what)+'</p>'+(meta?'<div class="mkMeta">'+meta+'</div>':'')+'<div class="mkRow">'+qlink(sym,name)+'<button type="button" data-mk="add" data-s="'+esc(sym)+'" data-n="'+esc(name)+'" data-noul>⭐ Watch</button></div></div>'; }
+ function paintBody(){ const B=$('mkBody'); if(!B) return; let h='';
+  if(tab==='today'){ loadSnap(); h='<div class="mkCard"><h3>🇺🇸 Wall Street right now</h3><div id="mkClock"></div></div>'+snapHTML()+'<h3 style="margin-top:14px">🌍 The world’s markets right now</h3><p class="mkNote">Regular weekday hours in each city. New York counts its holidays; other cities’ own holidays are not counted.</p><div id="mkWorld" class="mkWorld"></div>'+
+    '<h3 style="margin-top:14px">⭐ The big three, live</h3><div class="mkGrid">'+US.slice(0,3).map(x=>card(x[0],x[1],x[2],'Since '+x[3]+' · '+x[4]+' companies')).join('')+'</div>'+
+    '<h3 style="margin-top:14px">📅 Next market holidays (New York)</h3><ul>'+nextHolidays(5).map(([d,n])=>'<li>'+esc(d)+': '+esc(n)+'</li>').join('')+'</ul>'; }
+  else if(tab==='us'){ const L=US.filter(x=>hit(x[0],x[1],x[2])); h='<p class="mkSub">'+L.length+' US indexes. The first three are the ones the news quotes every day.</p><div class="mkGrid">'+L.map(x=>card(x[0],x[1],x[2],'Since '+x[3]+' · '+x[4]+(x[4]==='—'?'':' companies'))).join('')+'</div>'; }
+  else if(tab==='world'){ const L=WORLD.filter(x=>hit(x[0],x[1],x[2],x[3])); h='<p class="mkSub">'+L.length+' world indexes.</p><div class="mkGrid">'+L.map(x=>card(x[0],x[1],x[3],'📍 '+esc(x[2])+' · since '+x[4])).join('')+'</div>'; }
+  else if(tab==='dow'){ let L=DOW.filter(x=>hit(x[0],x[1],x[2])); if(dsort==='name') L.sort((a,b)=>a[0].localeCompare(b[0])); else if(dsort==='ticker') L.sort((a,b)=>a[1].localeCompare(b[1])); else if(dsort==='sector') L.sort((a,b)=>a[2].localeCompare(b[2])||a[0].localeCompare(b[0]));
+   h='<p class="mkSub">The 30 companies in the Dow Jones Industrial Average, as of the November 2024 change (Nvidia and Sherwin-Williams joined; Intel and Dow Inc. left). The list can change; S&P Dow Jones Indices keeps the official one.</p><div class="mkTbl"><table><thead><tr><th>Company</th><th>Ticker</th><th>Sector</th><th>Live</th><th></th></tr></thead><tbody>'+L.map(x=>'<tr><td><b>'+esc(x[0])+'</b></td><td class="mkSym">'+esc(x[1])+'</td><td>'+esc(x[2])+'</td><td>'+qlink(x[1],x[0])+'</td><td><button type="button" data-mk="add" data-s="'+esc(x[1])+'" data-n="'+esc(x[0])+'" data-noul>⭐</button></td></tr>').join('')+'</tbody></table></div>'+
+    '<h3 style="margin-top:14px">💎 The biggest US-listed companies</h3><p class="mkNote">Their order by size changes every day.</p><div class="mkGrid">'+BIG.filter(x=>hit(x[0],x[1])).map(x=>card(x[0],x[1],'One of the largest companies in the US market.','')).join('')+'</div>'; }
+  else if(tab==='sectors'){ h='<p class="mkSub">Every company is filed in one of 11 sectors (the GICS system). Each sector has a fund that holds its S&P 500 companies; its ticker opens the live price.</p><div class="mkGrid">'+SECT.filter(x=>hit(x[0],x[1],x[2])).map(x=>card(x[0],x[1],x[2],'Sector fund: '+esc(x[1]))).join('')+'</div>'; }
+  else if(tab==='crypto'){ h='<p class="mkSub">12 major cryptocurrencies. They trade all day, every day, with very large swings.</p><div class="mkGrid">'+CRYPTO.filter(x=>hit(x[0],x[1],x[2])).map(x=>card(x[0],x[1],x[2],'Trades 24/7')).join('')+'</div>'; }
+  else if(tab==='comm'){ const L=COMM.filter(x=>(wgrp==='all'||x[2]===wgrp)&&hit(x[0],x[1],x[2],x[3])); h='<p class="mkSub">'+L.length+' commodities: metals, energy and farm goods, traded as futures.</p><div class="mkGrid">'+L.map(x=>card(x[0],x[1],x[3],esc(x[2]))).join('')+'</div>'; }
+  else if(tab==='watch'){ h='<div class="mkCard"><h3>⭐ My watchlist</h3><p class="mkNote">Kept on this device. Add any ticker. Type the price you saw to track your own change.</p><div class="mkCtl"><input data-mk="wsym" id="mkWSym" placeholder="Ticker, e.g. AAPL, BTC-USD, ^GSPC" maxlength="14" aria-label="Ticker"><button type="button" data-mk="wadd" data-noul>＋ Add</button><button type="button" data-mk="wclear" data-noul>🗑 Clear list</button></div>'+
+    (watch.length?'<div class="mkTbl"><table><thead><tr><th>Ticker</th><th>Name</th><th>Price I paid / saw</th><th>Price now (type it)</th><th>Change</th><th>Live</th><th></th></tr></thead><tbody>'+watch.map((w,i)=>{ const a=+w.a, b=+w.b; const ch=a>0&&b>0?(b-a)/a*100:null; return '<tr><td class="mkSym">'+esc(w.s)+'</td><td>'+esc(w.n||'')+'</td><td><input data-mk="wa" data-i="'+i+'" inputmode="decimal" value="'+esc(w.a||'')+'" style="width:100px" aria-label="Price paid"></td><td><input data-mk="wb" data-i="'+i+'" inputmode="decimal" value="'+esc(w.b||'')+'" style="width:100px" aria-label="Price now"></td><td class="'+(ch==null?'':ch>=0?'up':'down')+'">'+(ch==null?'—':(ch>=0?'▲ +':'▼ ')+ch.toFixed(2)+'%')+'</td><td>'+qlink(w.s,w.n)+'</td><td><button type="button" data-mk="wdel" data-i="'+i+'" data-noul aria-label="Remove">✕</button></td></tr>'; }).join('')+'</tbody></table></div>':'<p>Your list is empty. Tap ⭐ Watch on any card, or quick-add:</p>')+
+    '<div class="mkRow">'+BIG.slice(0,8).map(x=>'<button type="button" data-mk="add" data-s="'+x[1]+'" data-n="'+esc(x[0])+'" data-noul>＋ '+esc(x[1])+'</button>').join('')+'</div></div>'; }
+  else if(tab==='calc'){ h='<div class="mkGrid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">'+
+    '<div class="mkCard"><h3>📊 Percent change</h3><div class="mkCalc"><label>From<input data-mk="c_a" id="c_a" inputmode="decimal" value="100"></label><label>To<input data-mk="c_b" id="c_b" inputmode="decimal" value="112"></label></div><div class="mkOut" id="o_pct"></div></div>'+
+    '<div class="mkCard"><h3>📉 Points to percent</h3><div class="mkCalc"><label>Index level<input data-mk="c_l" id="c_l" inputmode="decimal" value="45000"></label><label>Move in points<input data-mk="c_p" id="c_p" inputmode="decimal" value="-500"></label></div><div class="mkOut" id="o_pts"></div></div>'+
+    '<div class="mkCard"><h3>🌱 Grow my money</h3><div class="mkCalc"><label>Start ($)<input data-mk="c_s" id="c_s" inputmode="decimal" value="1000"></label><label>Add each month ($)<input data-mk="c_m" id="c_m" inputmode="decimal" value="100"></label><label>Yearly return (%)<input data-mk="c_r" id="c_r" inputmode="decimal" value="7"></label><label>Years<input data-mk="c_y" id="c_y" inputmode="decimal" value="20"></label></div><div class="mkOut" id="o_grow"></div><p class="mkNote">An example only: real returns go up and down and are never promised.</p></div>'+
+    '<div class="mkCard"><h3>⏳ Rule of 72</h3><div class="mkCalc"><label>Yearly return (%)<input data-mk="c_72" id="c_72" inputmode="decimal" value="8"></label></div><div class="mkOut" id="o_72"></div></div>'+
+    '<div class="mkCard"><h3>💵 Dividend yield</h3><div class="mkCalc"><label>Yearly dividend ($)<input data-mk="c_dv" id="c_dv" inputmode="decimal" value="2"></label><label>Share price ($)<input data-mk="c_dp" id="c_dp" inputmode="decimal" value="50"></label></div><div class="mkOut" id="o_dy"></div></div>'+
+    '<div class="mkCard"><h3>🧾 My position</h3><div class="mkCalc"><label>Shares<input data-mk="c_n" id="c_n" inputmode="decimal" value="10"></label><label>Price paid ($)<input data-mk="c_pp" id="c_pp" inputmode="decimal" value="150"></label><label>Price now ($)<input data-mk="c_pn" id="c_pn" inputmode="decimal" value="180"></label></div><div class="mkOut" id="o_pos"></div></div></div>'; }
+  else if(tab==='learn'){ h='<p class="mkSub">The words of the market in plain English.</p><div class="mkGrid">'+GLOSS.filter(x=>hit(x[0],x[1])).map(x=>'<div class="mkCard"><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div>').join('')+'</div>'+
+    '<div class="mkCard" style="margin-top:12px"><h3>How the big three are built</h3><p><b>The Dow</b> adds up the prices of its 30 stocks and divides by the “Dow divisor”, a number S&P Dow Jones Indices adjusts after splits and changes, so a high-priced stock counts more than a big company with a low share price.</p><p><b>The S&P 500 and the Nasdaq</b> weigh each company by its total market value, so the giants (Nvidia, Apple, Microsoft and the like) move them most.</p><p><b>Why one day the Dow is up and the Nasdaq is down:</b> they hold different companies. Tech-heavy Nasdaq follows the tech giants; the Dow follows 30 old-line leaders.</p></div>'; }
+  else if(tab==='news'){ h='<p class="mkSub">Today’s market news and live numbers, on the sites that report them. Each opens in a new tab.</p><div class="mkGrid">'+NEWS.map(x=>'<div class="mkCard"><h3>📰 '+esc(x[0])+'</h3><a class="mkQ" href="'+esc(x[1])+'" target="_blank" rel="noopener">Open ↗</a></div>').join('')+'</div>'; }
+  else if(tab==='ask'){ h='<div class="mkCard"><h3>🤖 Ask about the market</h3><p class="mkNote">The AI explains how markets work. It cannot see today’s prices and never gives personal investment advice: for today’s numbers, use the 📈 Live price buttons.</p><textarea id="mkAsk" placeholder="For example: Why does the Dow fall when interest rates rise? What is the difference between the S&P 500 and the Nasdaq?"></textarea><div class="mkRow"><button type="button" data-mk="aiGo" data-noul>Ask</button><button type="button" data-mk="aiStop" data-noul>⏹ Stop</button><button type="button" data-mk="aiRead" data-noul>🔊 Read the answer</button></div><div class="mkAns" id="mkAns"></div>'+(sample?'':'<p class="mkNote">The AI answers inside claude.ai. Here, open the 🤖 AI screen from the Menu.</p>')+'</div>'; }
+  B.innerHTML=h; if(tab==='today'){ tickClock(); if(!clock) clock=setInterval(tickClock,1000); } if(tab==='calc') calc(); if(tab==='ask'){ const a=$('mkAns'); if(a) a.textContent=aiAns; } }
+ const num=id=>{ const e=$(id); return e?parseFloat(String(e.value).replace(/[,$\s]/g,'')):NaN; };
+ const money=v=>'$'+(isFinite(v)?v.toLocaleString('en-US',{maximumFractionDigits:2,minimumFractionDigits:2}):'—');
+ function setOut(id,html){ const e=$(id); if(e) e.innerHTML=html; }
+ function calc(){ const a=num('c_a'), b=num('c_b'); if($('o_pct')) setOut('o_pct',a?((b-a)/a*100>=0?'<span class="up">▲ up ':'<span class="down">▼ down ')+Math.abs((b-a)/a*100).toFixed(2)+'%</span>':'Type a starting number above zero.');
+  const l=num('c_l'), p=num('c_p'); if($('o_pts')) setOut('o_pts',l>0?(p>=0?'<span class="up">▲ up ':'<span class="down">▼ down ')+Math.abs(p/l*100).toFixed(2)+'%</span>':'Type the index level.');
+  const s=num('c_s')||0, m=num('c_m')||0, r=num('c_r')||0, y=Math.max(0,Math.min(80,num('c_y')||0)); if($('o_grow')){ const n=Math.round(y*12), i=r/100/12; const fv=i?s*Math.pow(1+i,n)+m*(Math.pow(1+i,n)-1)/i:s+m*n; const put=s+m*n; setOut('o_grow','After '+y+' years: '+money(fv)+'<br><span class="mkNote">You put in '+money(put)+'; growth '+money(fv-put)+'.</span>'); }
+  const r72=num('c_72'); if($('o_72')) setOut('o_72',r72>0?'Money doubles in about '+(72/r72).toFixed(1)+' years.':'Type a return above zero.');
+  const dv=num('c_dv'), dp=num('c_dp'); if($('o_dy')) setOut('o_dy',dp>0?'Yield: '+(dv/dp*100).toFixed(2)+'% a year':'Type the share price.');
+  const n=num('c_n'), pp=num('c_pp'), pn=num('c_pn'); if($('o_pos')){ const cost=n*pp, val=n*pn, g=val-cost; setOut('o_pos',isFinite(g)&&cost>0?'Worth '+money(val)+' · '+(g>=0?'<span class="up">gain '+money(g):'<span class="down">loss '+money(-g))+' ('+(g/cost*100).toFixed(2)+'%)</span>':'Type shares and prices.'); } }
+ function paint(){ const d=box(); const T=[['today','🟢 Right now'],['us','🇺🇸 US indexes'],['world','🌍 World'],['dow','🏛 Inside the Dow'],['sectors','🏭 Sectors'],['crypto','🪙 Crypto'],['comm','🛢 Commodities'],['watch','⭐ Watchlist'],['calc','🧮 Calculators'],['learn','📘 Learn'],['news','📰 News'],['ask','🤖 Ask AI']];
+  d.innerHTML='<div class="kBar" data-sc="kMarket"><button type="button" data-ka="close" data-mk="close" aria-label="Close">✕</button></div><div class="mkIn"><div class="mkBrand">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · on Omni-Galaxy · Stock Market</div><h2>📈 Stock Market</h2>'+
+   '<p class="mkSub">'+US.length+' US indexes, '+WORLD.length+' world indexes, the Dow’s 30 companies, 11 sectors, '+CRYPTO.length+' cryptocurrencies and '+COMM.length+' commodities.</p><div class="mkWarn">📈 Live prices open on the site you pick below, in a new tab: this app cannot load prices itself. The clocks here are live. Education only, not investment advice.</div>'+
+   '<div class="mkTabs" role="tablist">'+T.map(([k,t])=>'<button type="button" data-mk="tab" data-t="'+k+'" aria-pressed="'+(tab===k)+'" data-noul>'+t+'</button>').join('')+'</div>'+
+   '<div class="mkCtl"><input type="search" data-mk="q" aria-label="Search the market" placeholder="🔎 Search: Apple, gold, Nikkei, bitcoin…" value="'+esc(q)+'"><select data-mk="site" aria-label="Live prices from" data-nodice>'+SITES.map(([v,t])=>'<option value="'+v+'"'+(site===v?' selected':'')+'>Live prices: '+t+'</option>').join('')+'</select>'+
+   (tab==='dow'?'<select data-mk="dsort" aria-label="Order" data-nodice>'+[['name','A to Z'],['ticker','By ticker'],['sector','By sector'],['list','Index order'],['rev','As listed']].map(([v,t])=>'<option value="'+v+'"'+(dsort===v?' selected':'')+'>'+t+'</option>').join('')+'</select>':'')+
+   (tab==='comm'?'<select data-mk="wgrp" aria-label="Group" data-nodice>'+[['all','Every commodity'],['Metals','Metals'],['Energy','Energy'],['Farm','Farm goods'],['all','Show all again']].map(([v,t],i)=>'<option value="'+v+'"'+(wgrp===v&&i<4?' selected':'')+'>'+t+'</option>').join('')+'</select>':'')+
+   '</div><div id="mkBody"></div><p class="mkNote" style="margin-top:16px">Hours and holidays: New York Stock Exchange calendar for 2026 and 2027. Index facts: the index providers. © 2026 The Omni-Compass LLC. All rights reserved.</p></div>';
+  paintBody(); }
+ function speak(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); try{ const v=window.KVOICE&&KVOICE('en'); if(v) u.voice=v; }catch(_){ } speechSynthesis.speak(u); }catch(_){ say('Read-aloud is not available on this device.'); } }
+ async function ask(text){ if(!sample){ try{ close(); KAI.open(text); }catch(_){ } return; } if(busy) try{ busy.abort(); }catch(_){ } busy=new AbortController(); aiAns='Thinking…'; const a=$('mkAns'); if(a) a.textContent=aiAns;
+  const prompt='You explain the stock market inside a family-friendly multimedia app. You have NO live prices: never state a current price, level or today’s move; say the user can tap the Live price buttons. Never give personal investment advice or tell anyone to buy or sell. Explain clearly, in plain language, under 220 words, no markdown headings.\n\nQuestion: '+text;
+  try{ const r=await sample(prompt,{signal:busy.signal,cache:false,onText:({text:t})=>{ aiAns=t; const el=$('mkAns'); if(el) el.textContent=t; }}); aiAns=(r&&r.text)||aiAns; const el=$('mkAns'); if(el) el.textContent=aiAns; }
+  catch(e){ if(e&&e.name==='AbortError') return; aiAns=e&&e.code==='rate_limited'?'The AI is busy right now. Try again in a minute.':e&&e.code==='not_granted'?'The AI is switched off for this page.':'The AI could not answer just now. Try again.'; const el=$('mkAns'); if(el) el.textContent=aiAns; } finally{ busy=null; } }
+ function addWatch(s,n){ s=String(s||'').trim().toUpperCase(); if(!/^[\^A-Z0-9.=\-]{1,14}$/.test(s)) return say('That does not look like a ticker. Try AAPL, BTC-USD or ^GSPC.'); if(watch.some(w=>w.s===s)) return say('⭐ '+s+' is already on your list.'); watch.push({s,n:n||'',a:'',b:''}); putLS('kanin-mkt-watch',watch); say('⭐ Added '+s+' to your watchlist.'); if(tab==='watch') paintBody(); }
+ async function onClick(e){ const b=e.target.closest('[data-mk]'); if(!b) return; const k=b.dataset.mk;
+  if(k==='close') return close();
+  if(k==='tab'){ tab=b.dataset.t; putLS('kanin-mkt-tab',tab); return paint(); }
+  if(k==='add') return addWatch(b.dataset.s,b.dataset.n);
+  if(k==='wadd'){ const i=$('mkWSym'); addWatch(i&&i.value); if(i) i.value=''; return; }
+  if(k==='wdel'){ const i=+b.dataset.i; const w=watch[i]; watch.splice(i,1); putLS('kanin-mkt-watch',watch); paintBody(); try{ KUNDO.push(()=>{ watch.splice(i,0,w); putLS('kanin-mkt-watch',watch); if(tab==='watch') paintBody(); },'the watchlist'); }catch(_){ } return; }
+  if(k==='wclear'){ if(!watch.length) return; const old=watch.slice(); watch=[]; putLS('kanin-mkt-watch',watch); paintBody(); say('🗑 List cleared. ↶ Undo brings it back.'); try{ KUNDO.push(()=>{ watch=old; putLS('kanin-mkt-watch',watch); if(tab==='watch') paintBody(); },'the watchlist'); }catch(_){ } return; }
+  if(k==='aiGo'){ const t=$('mkAsk'); const v=t&&t.value.trim(); if(!v) return say('Type a question first.'); return ask(v); }
+  if(k==='aiStop'){ if(busy) try{ busy.abort(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } return; }
+  if(k==='aiRead'){ if(aiAns) speak(aiAns); return; } }
+ function onChange(e){ const k=e.target.dataset.mk; if(!k) return; e.stopPropagation(); const v=e.target.value;
+  if(k==='site'){ site=v; putLS('kanin-mkt-site',site); return paintBody(); } if(k==='dsort'){ dsort=v; putLS('kanin-mkt-dsort',dsort); return paintBody(); } if(k==='wgrp'){ wgrp=v; putLS('kanin-mkt-wgrp',wgrp); return paintBody(); }
+  if(k==='wa'||k==='wb'){ const i=+e.target.dataset.i; if(watch[i]){ watch[i][k==='wa'?'a':'b']=String(v).replace(/[^0-9.]/g,''); putLS('kanin-mkt-watch',watch); paintBody(); } } }
+ function open(which){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ }
+  if(typeof which==='string'&&['today','us','world','dow','sectors','crypto','comm','watch','calc','learn','news','ask'].includes(which)) tab=which; d.hidden=false; d.scrollTop=0; paint(); }
+ function close(){ const d=$('kMarket'); if(d) d.hidden=true; clearInterval(clock); clock=0; try{ speechSynthesis.cancel(); }catch(_){ } if(busy) try{ busy.abort(); }catch(_){ } }
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('kMarket')&&!$('kMarket').hidden) close(); });
+ try{ const gh=window.GOHOME; if(gh&&!gh.__kmk){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__kmk=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(!e.target.closest) return; if(e.target.closest('#kdHome,#lpMenu')) return close(); const r=e.target.closest('#rDock button'); if(r&&$('kMarket')&&!$('kMarket').hidden) close(); },true);
+ (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Stock Market','📈','Stock Market: is Wall Street open?','live clocks',()=>open('today'));
+  US.forEach(x=>add('Stock Market','📈',x[0],'US index · '+x[1],()=>open('us'))); WORLD.forEach(x=>add('Stock Market','🌍',x[0],x[2]+' index',()=>open('world')));
+  DOW.forEach(x=>add('Stock Market','🏛',x[0]+' ('+x[1]+')','Dow company',()=>open('dow'))); CRYPTO.forEach(x=>add('Stock Market','🪙',x[0],'crypto · '+x[1],()=>open('crypto'))); COMM.forEach(x=>add('Stock Market','🛢',x[0],'commodity',()=>open('comm'))); });
+ window.KMARKET={open,close,nyStatus,quoteURL,get watch(){ return watch.slice(); },counts:{us:US.length,world:WORLD.length,dow:DOW.length,crypto:CRYPTO.length,comm:COMM.length,sectors:SECT.length}};
+})();
+
+</script>
+<script>
+(()=>{ /* 📰 CURRENT NEWS (v238): its own platform inside KAN-IN, matching the Current News page of www.omni-galaxy.com.
+   Today’s headlines are gathered by the studio from named news sources and kept in the app’s own database with the date they were
+   gathered and a link to each story (the app cannot load the web by itself, so the list is as fresh as its date says). Every topic
+   has one-tap links to the major newsrooms, there is local news for any town, a fact-check shelf, live world clocks, and Ask AI to
+   explain a story in plain words. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
+ const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const safeURL=u=>/^https:\/\//.test(String(u||''))?String(u):'';
+ const TOPICS=[['top','⭐ Top stories',[['AP News','https://apnews.com/'],['Reuters','https://www.reuters.com/'],['BBC News','https://www.bbc.com/news'],['NPR News','https://www.npr.org/sections/news/'],['Google News','https://news.google.com/']]],
+  ['world','🌍 World',[['AP World','https://apnews.com/world-news'],['Reuters World','https://www.reuters.com/world/'],['BBC World','https://www.bbc.com/news/world'],['Al Jazeera','https://www.aljazeera.com/'],['The Guardian World','https://www.theguardian.com/world']]],
+  ['us','🇺🇸 United States',[['AP U.S.','https://apnews.com/us-news'],['Reuters U.S.','https://www.reuters.com/world/us/'],['NPR National','https://www.npr.org/sections/national/'],['PBS NewsHour','https://www.pbs.org/newshour/'],['USA Today','https://www.usatoday.com/news/nation/']]],
+  ['politics','🏛 Politics',[['AP Politics','https://apnews.com/politics'],['Reuters Politics','https://www.reuters.com/world/us/'],['NPR Politics','https://www.npr.org/sections/politics/'],['Politico','https://www.politico.com/'],['The Hill','https://thehill.com/']]],
+  ['business','💼 Business & money',[['AP Business','https://apnews.com/business'],['Reuters Business','https://www.reuters.com/business/'],['CNBC','https://www.cnbc.com/'],['MarketWatch','https://www.marketwatch.com/'],['Yahoo Finance','https://finance.yahoo.com/']]],
+  ['tech','💻 Technology',[['AP Technology','https://apnews.com/technology'],['Reuters Technology','https://www.reuters.com/technology/'],['The Verge','https://www.theverge.com/'],['Ars Technica','https://arstechnica.com/'],['TechCrunch','https://techcrunch.com/']]],
+  ['science','🔬 Science & space',[['AP Science','https://apnews.com/science'],['NASA News','https://www.nasa.gov/news/'],['Science News','https://www.sciencenews.org/'],['Scientific American','https://www.scientificamerican.com/'],['New Scientist','https://www.newscientist.com/']]],
+  ['health','🏥 Health',[['AP Health','https://apnews.com/health'],['Reuters Health','https://www.reuters.com/business/healthcare-pharmaceuticals/'],['CDC Newsroom','https://www.cdc.gov/media/'],['WHO News','https://www.who.int/news'],['NPR Health','https://www.npr.org/sections/health/']]],
+  ['sports','⚽ Sports',[['AP Sports','https://apnews.com/sports'],['ESPN','https://www.espn.com/'],['BBC Sport','https://www.bbc.com/sport'],['CBS Sports','https://www.cbssports.com/'],['Yahoo Sports','https://sports.yahoo.com/']]],
+  ['ent','🎬 Entertainment',[['AP Entertainment','https://apnews.com/entertainment'],['Variety','https://variety.com/'],['The Hollywood Reporter','https://www.hollywoodreporter.com/'],['Billboard','https://www.billboard.com/'],['Rolling Stone','https://www.rollingstone.com/']]],
+  ['weather','⛅ Weather',[['National Weather Service','https://www.weather.gov/'],['NOAA','https://www.noaa.gov/news'],['National Hurricane Center','https://www.nhc.noaa.gov/'],['Weather Underground','https://www.wunderground.com/'],['AccuWeather','https://www.accuweather.com/']]]];
+ const CHECK=[['AP Fact Check','https://apnews.com/hub/ap-fact-check'],['Reuters Fact Check','https://www.reuters.com/fact-check/'],['PolitiFact','https://www.politifact.com/'],['FactCheck.org','https://www.factcheck.org/'],['Snopes','https://www.snopes.com/']];
+ const CLOCKS=[['New York','America/New_York'],['Los Angeles','America/Los_Angeles'],['London','Europe/London'],['Paris','Europe/Paris'],['Dubai','Asia/Dubai'],['Mumbai','Asia/Kolkata'],['Beijing','Asia/Shanghai'],['Tokyo','Asia/Tokyo'],['Sydney','Australia/Sydney'],['Lagos','Africa/Lagos'],['São Paulo','America/Sao_Paulo'],['Mexico City','America/Mexico_City']];
+ const HOWTO=[['Who wrote it?','A named newsroom and reporter you can check.'],['When?','Look at the date: old stories get shared as new.'],['Where is the proof?','Good stories name sources, documents and places.'],['Who else says so?','Check whether two or three other newsrooms report the same thing.'],['Is it news or opinion?','Opinion pages argue a side; news pages report facts.'],['Does it make you angry fast?','Stories built to enrage are often slanted. Slow down and check.']];
+ let tab=getLS('kanin-news-tab','today'), topic=getLS('kanin-news-topic','top'), town=getLS('kanin-news-town',''), q='', items=null, gathered='', loadState='idle', busy=null, sample=null, aiAns='', clock=0, unsub=null;
+ (async()=>{ try{ if(window.claude&&claude.use) sample=await claude.use('sample'); }catch(_){ sample=null; } })();
+ async function load(){ if(loadState!=='idle') return; /* asked once per visit; never again from inside a paint */ loadState='loading'; let db=null; try{ if(window.claude&&claude.use) db=await claude.use('db'); }catch(_){ db=null; }
+  if(!db){ loadState='none'; paintBody(); return; }
+  const to=setTimeout(()=>{ if(loadState==='loading'){ loadState='none'; paintBody(); } },10000);
+  try{ unsub=db.collection('news/today/items').orderBy('rank').limit(60).onSnapshot(snap=>{ clearTimeout(to); const L=[]; snap.forEach(d=>{ const x=d.data()||{}; L.push(x); }); items=L; loadState='done';
+     db.doc('news/today').get().then(m=>{ const x=m&&m.exists?m.data():null; gathered=x&&x.gathered?String(x.gathered):''; paintBody(); }).catch(()=>paintBody()); },()=>{ clearTimeout(to); loadState='none'; paintBody(); }); }
+  catch(_){ clearTimeout(to); loadState='none'; paintBody(); } }
+ const css=document.createElement('style'); css.textContent=`
+#kNews{position:fixed;inset:0;z-index:9700;overflow:auto;color:#eef2fb;background:linear-gradient(180deg,#14161d 0,#1b1f2a 50%,#101219 100%);padding:14px 16px calc(230px + env(safe-area-inset-bottom,0px));padding-right:calc(var(--kRailW,58px) + 16px);font:15px/1.55 system-ui,sans-serif}
+#kNews[hidden]{display:none!important}
+#kNews .nwIn{max-width:980px;margin:0 auto}
+#kNews .nwBrand{font:700 11.5px ui-monospace,monospace;letter-spacing:.1em;color:#ff8a65;text-transform:uppercase}
+#kNews h2{font:900 clamp(26px,5.5vw,40px)/1.12 Georgia,'Times New Roman',serif;color:#fff;margin:8px 0 4px;text-wrap:balance}
+#kNews h3{font:800 18px/1.3 Georgia,serif;color:#fff;margin:0 0 4px}
+#kNews .nwSub{color:#b9c2d6;font-size:14px;margin:0 0 10px}
+#kNews .nwTabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+#kNews .nwTabs button{min-height:42px!important;border-radius:12px!important;padding:4px 12px!important;font:800 14px system-ui,sans-serif!important}
+#kNews .nwTabs button[aria-pressed="true"]{background:#ff8a65!important;color:#1a0d07!important}
+#kNews .nwCtl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+#kNews .nwCtl select,#kNews .nwCtl input{min-height:40px;border-radius:10px;font:600 14px system-ui,sans-serif;padding:4px 8px;max-width:100%;box-sizing:border-box}
+#kNews .nwCtl input{flex:1 1 200px}
+#kNews .nwGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+#kNews .nwCard{background:rgba(255,255,255,.05);border:1px solid rgba(255,138,101,.3);border-radius:14px;padding:12px;min-width:0}
+#kNews .nwStory{border-left:4px solid #ff8a65;background:rgba(255,255,255,.04);border-radius:10px;padding:10px 12px;margin:0 0 10px}
+#kNews .nwStory b{display:block;font:800 17px/1.35 Georgia,serif;color:#fff}
+#kNews .nwStory p{margin:4px 0 6px;font-size:14px;color:#d8deeb}
+#kNews .nwTag{display:inline-block;font:800 11px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#ffb199;margin-right:8px}
+#kNews .nwMeta{font-size:12.5px;color:#9aa6bd}
+#kNews a.nwGo{display:inline-flex;align-items:center;min-height:38px;padding:0 12px;border-radius:10px;background:#7a2e17;color:#fff;font:800 13.5px system-ui,sans-serif;text-decoration:none;margin:3px 4px 3px 0}
+#kNews a{color:#9fd0ff}
+#kNews .nwRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#kNews .nwRow button{min-height:38px!important;padding:4px 10px!important;border-radius:10px!important;font:700 13px system-ui,sans-serif!important}
+#kNews .nwClocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+#kNews .nwClk{border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+#kNews .nwClk b{display:block;font:800 22px ui-monospace,monospace;color:#fff}
+#kNews .nwNote{font-size:12.5px;color:#9aa6bd;line-height:1.5}
+#kNews .nwWarn{background:rgba(255,200,60,.1);border:1px solid rgba(255,200,60,.4);border-radius:12px;padding:8px 12px;font-size:13.5px;color:#ffe6a3;margin:8px 0}
+#kNews textarea{width:100%;min-height:80px;border-radius:12px;font:15px system-ui,sans-serif;padding:8px;box-sizing:border-box}
+#kNews .nwAns{white-space:pre-wrap;background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:8px;min-height:24px}
+@media (max-width:560px){ #kNews .nwGrid{grid-template-columns:minmax(0,1fr)} }`; document.head.appendChild(css);
+ function box(){ let d=$('kNews'); if(d) return d; d=document.createElement('div'); d.id='kNews'; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Current news'); d.hidden=true; document.body.appendChild(d);
+  d.addEventListener('click',onClick); d.addEventListener('change',onChange); d.addEventListener('input',e=>{ if(e.target.dataset.nw==='q'){ q=e.target.value; paintBody(); } }); return d; }
+ const hit=(...xs)=>{ const t=q.trim().toLowerCase(); if(!t) return true; const s=xs.join(' ').toLowerCase(); return t.split(/\s+/).every(w=>s.includes(w)); };
+ const links=L=>L.map(([n,u])=>'<a class="nwGo" href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(n)+' ↗</a>').join('');
+ function story(x,i){ const u=safeURL(x.url); return '<div class="nwStory"><span class="nwTag">'+esc(x.topic||'News')+'</span><b>'+esc(x.title)+'</b>'+(x.summary?'<p>'+esc(x.summary)+'</p>':'')+'<div class="nwMeta">'+esc(x.source||'')+(x.date?' · '+esc(x.date):'')+'</div><div class="nwRow">'+(u?'<a class="nwGo" href="'+esc(u)+'" target="_blank" rel="noopener">Read the story ↗</a>':'')+'<button type="button" data-nw="read" data-i="'+i+'" data-noul>🔊 Read aloud</button><button type="button" data-nw="explain" data-i="'+i+'" data-noul>🤖 Explain it</button></div></div>'; }
+ function paintBody(){ const B=$('nwBody'); if(!B) return; let h='';
+  if(tab==='today'){ load();
+   if(loadState==='done'&&items&&items.length){ const L=items.map((x,i)=>[x,i]).filter(([x])=>hit(x.title,x.summary,x.source,x.topic)); h='<p class="nwSub">'+L.length+' headlines'+(gathered?', gathered '+esc(gathered):'')+'. Each links to the newsroom that reported it. For the newest news since then, open a newsroom under 🗂 Topics.</p>'+(L.map(([x,i])=>story(x,i)).join('')||'<p>Nothing matches your search.</p>'); }
+   else if(loadState==='loading'||loadState==='idle') h='<p class="nwSub">Loading today’s headlines…</p>';
+   else h='<div class="nwWarn">Today’s headline list opens when you are signed in to claude.ai. Every newsroom below works for everyone.</div><h3>⭐ Top stories now</h3><div>'+links(TOPICS[0][2])+'</div>';
+   h+='<h3 style="margin-top:16px">🕒 The time around the world</h3><div class="nwClocks" id="nwClocks"></div>'; }
+  else if(tab==='topics'){ const T=TOPICS.find(t=>t[0]===topic)||TOPICS[0]; h='<p class="nwSub">Pick a topic; each button opens that newsroom’s live page in a new tab.</p><div class="nwGrid">'+TOPICS.filter(t=>hit(t[1],t[2].map(x=>x[0]).join(' '))).map(t=>'<div class="nwCard"'+(t===T?' style="border-color:#ff8a65"':'')+'><h3>'+t[1]+'</h3>'+links(t[2])+'</div>').join('')+'</div>'; }
+  else if(tab==='local'){ const t=town.trim(); h='<div class="nwCard"><h3>📍 News near me</h3><p class="nwNote">Type a town, city, state or country.</p><div class="nwCtl"><input id="nwTown" data-nw="town" value="'+esc(town)+'" placeholder="e.g. Orlando, Florida" aria-label="Town or city"><button type="button" data-nw="townGo" data-noul>Show news</button></div>'+
+    (t?'<div>'+links([['Google News: '+t,'https://news.google.com/search?q='+encodeURIComponent(t)],['Weather: '+t,'https://www.google.com/search?q='+encodeURIComponent('weather '+t)],['Local TV and papers: '+t,'https://www.google.com/search?q='+encodeURIComponent(t+' local news')],['Events: '+t,'https://www.google.com/search?q='+encodeURIComponent(t+' events this week')],['Traffic: '+t,'https://www.google.com/search?q='+encodeURIComponent(t+' traffic')]])+'</div>':'')+'</div>'; }
+  else if(tab==='check'){ h='<p class="nwSub">Before you share a story, check it.</p><div class="nwGrid">'+HOWTO.map(x=>'<div class="nwCard"><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div>').join('')+'</div><h3 style="margin-top:14px">🔎 Fact-checkers</h3><div>'+links(CHECK)+'</div>'; }
+  else if(tab==='ask'){ h='<div class="nwCard"><h3>🤖 Ask about the news</h3><p class="nwNote">The AI explains a story, a word or the background in plain language. It does not see today’s news by itself: paste the headline or the story’s text in your question.</p><textarea id="nwAsk" placeholder="Paste a headline and ask: what does this mean? Why does it matter?"></textarea><div class="nwRow"><button type="button" data-nw="aiGo" data-noul>Ask</button><button type="button" data-nw="aiStop" data-noul>⏹ Stop</button><button type="button" data-nw="aiRead" data-noul>🔊 Read the answer</button></div><div class="nwAns" id="nwAns"></div>'+(sample?'':'<p class="nwNote">The AI answers inside claude.ai. Here, open the 🤖 AI screen from the Menu.</p>')+'</div>'; }
+  B.innerHTML=h; if(tab==='today'){ tickClocks(); if(!clock) clock=setInterval(tickClocks,1000); } if(tab==='ask'){ const a=$('nwAns'); if(a) a.textContent=aiAns; } }
+ function tickClocks(){ const el=$('nwClocks'); if(!el){ clearInterval(clock); clock=0; return; } const now=new Date(); el.innerHTML=CLOCKS.map(([c,tz])=>{ let t='', d=''; try{ t=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit'}).format(now); d=new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',month:'short',day:'numeric'}).format(now); }catch(_){ } return '<div class="nwClk"><span>'+esc(c)+'</span><b>'+esc(t)+'</b><span class="nwNote">'+esc(d)+'</span></div>'; }).join(''); }
+ function paint(){ const d=box(); const T=[['today','📰 Today'],['topics','🗂 Topics'],['local','📍 Near me'],['check','✅ Check a story'],['ask','🤖 Ask AI']];
+  d.innerHTML='<div class="kBar" data-sc="kNews"><button type="button" data-ka="close" data-nw="close" aria-label="Close">✕</button></div><div class="nwIn"><div class="nwBrand">The Omni-Compass LLC · DD Universe Multi-Media Studios’ KAN-IN™ · on Omni-Galaxy · Current News</div><h2>📰 Current News</h2>'+
+   '<p class="nwSub">Today’s headlines with their sources, '+TOPICS.length+' topics and '+TOPICS.reduce((n,t)=>n+t[2].length,0)+' newsrooms, local news for any town, and a fact-check shelf.</p>'+
+   '<div class="nwTabs" role="tablist">'+T.map(([k,t])=>'<button type="button" data-nw="tab" data-t="'+k+'" aria-pressed="'+(tab===k)+'" data-noul>'+t+'</button>').join('')+'</div>'+
+   '<div class="nwCtl"><input type="search" data-nw="q" aria-label="Search the news" placeholder="🔎 Search headlines and topics" value="'+esc(q)+'"><select data-nw="topic" aria-label="Topic" data-nodice>'+TOPICS.map(t=>'<option value="'+t[0]+'"'+(topic===t[0]?' selected':'')+'>'+t[1]+'</option>').join('')+'</select></div>'+
+   '<div id="nwBody"></div><p class="nwNote" style="margin-top:16px">Headlines belong to the newsrooms that reported them; each links to its source. © 2026 The Omni-Compass LLC. All rights reserved.</p></div>';
+  paintBody(); }
+ function speak(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); try{ const v=window.KVOICE&&KVOICE('en'); if(v) u.voice=v; }catch(_){ } speechSynthesis.speak(u); }catch(_){ say('Read-aloud is not available on this device.'); } }
+ async function ask(text){ if(!sample){ try{ close(); KAI.open(text); }catch(_){ } return; } if(busy) try{ busy.abort(); }catch(_){ } busy=new AbortController(); aiAns='Thinking…'; const a=$('nwAns'); if(a) a.textContent=aiAns;
+  const prompt='You explain news stories inside a family-friendly multimedia app. You cannot see today’s news: work only from what the user gives you and well-known background, and say plainly when something may have changed since your knowledge. Be neutral and factual, present the main sides fairly, no opinions of your own, under 220 words, plain language, no markdown headings.\n\nQuestion: '+text;
+  try{ const r=await sample(prompt,{signal:busy.signal,cache:false,onText:({text:t})=>{ aiAns=t; const el=$('nwAns'); if(el) el.textContent=t; }}); aiAns=(r&&r.text)||aiAns; const el=$('nwAns'); if(el) el.textContent=aiAns; }
+  catch(e){ if(e&&e.name==='AbortError') return; aiAns=e&&e.code==='rate_limited'?'The AI is busy right now. Try again in a minute.':e&&e.code==='not_granted'?'The AI is switched off for this page.':'The AI could not answer just now. Try again.'; const el=$('nwAns'); if(el) el.textContent=aiAns; } finally{ busy=null; } }
+ function onClick(e){ const b=e.target.closest('[data-nw]'); if(!b) return; const k=b.dataset.nw;
+  if(k==='close') return close();
+  if(k==='tab'){ tab=b.dataset.t; putLS('kanin-news-tab',tab); return paint(); }
+  if(k==='read'){ const x=items&&items[+b.dataset.i]; if(x) speak(x.title+'. '+(x.summary||'')+' From '+(x.source||'the newsroom')+'.'); return; }
+  if(k==='explain'){ const x=items&&items[+b.dataset.i]; if(!x) return; tab='ask'; paint(); const t=$('nwAsk'); const qq='Explain this news story in plain words, with the background someone needs: "'+x.title+'". '+(x.summary||''); if(t) t.value=qq; return ask(qq); }
+  if(k==='townGo'){ const i=$('nwTown'); town=(i&&i.value||'').slice(0,80); putLS('kanin-news-town',town); return paintBody(); }
+  if(k==='aiGo'){ const t=$('nwAsk'); const v=t&&t.value.trim(); if(!v) return say('Type a question first.'); return ask(v); }
+  if(k==='aiStop'){ if(busy) try{ busy.abort(); }catch(_){ } try{ speechSynthesis.cancel(); }catch(_){ } return; }
+  if(k==='aiRead'){ if(aiAns) speak(aiAns); return; } }
+ function onChange(e){ const k=e.target.dataset.nw; if(!k) return; e.stopPropagation(); if(k==='topic'){ topic=e.target.value; putLS('kanin-news-topic',topic); tab='topics'; putLS('kanin-news-tab',tab); paint(); } }
+ function open(which){ const d=box(); try{ ['libDock','fileDock','kManual','kMe','kCan','kDay'].forEach(i=>{ const x=$(i); if(x) x.hidden=true; }); }catch(_){ } try{ LAUNCHPAD.fold(); }catch(_){ } try{ (window.__kGoHome0||function(){})(); }catch(_){ }
+  if(typeof which==='string'&&['today','topics','local','check','ask'].includes(which)) tab=which; d.hidden=false; d.scrollTop=0; paint(); }
+ function close(){ const d=$('kNews'); if(d) d.hidden=true; clearInterval(clock); clock=0; try{ speechSynthesis.cancel(); }catch(_){ } if(busy) try{ busy.abort(); }catch(_){ } }
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('kNews')&&!$('kNews').hidden) close(); });
+ try{ const gh=window.GOHOME; if(gh&&!gh.__knw){ const w=function(){ close(); return gh.apply(this,arguments); }; w.__knw=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
+ document.addEventListener('click',e=>{ if(!e.target.closest) return; if(e.target.closest('#kdHome,#lpMenu')) return close(); const r=e.target.closest('#rDock button'); if(r&&$('kNews')&&!$('kNews').hidden) close(); },true);
+ (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Current News','📰','Current News: today’s headlines','news',()=>open('today')); TOPICS.forEach(t=>add('Current News','📰',t[1].replace(/^\S+\s/,'')+' news','topic',()=>{ topic=t[0]; open('topics'); })); add('Current News','📍','Local news near me','news',()=>open('local')); add('Current News','✅','Fact-check a story','news',()=>open('check')); });
+ window.KNEWS={open,close,get items(){ return (items||[]).slice(); },get state(){ return loadState; }};
+})();
+
+</script>
+<script>
+(()=>{ /* 🎮 SIMPLE GAMES (v238): the Games screen made elementary, for everyone, on every screen. Opening Games shows eight big picture
+   groups, the same as the Games page of www.omni-galaxy.com: Cards, Board & Tiles, Dice & Casino, Word & Puzzle, Arcade, Sports &
+   Carnival, Solitaire and Game Shows, plus the games played lately. Tap a group, tap a game: the game opens with four big buttons
+   only (🗂 Games, 🆕 New, ↶ Undo, ❓ How to play). Every expert control (the dropdowns, dice, hub, records) is still there behind
+   ⚙ All options, and 🧒 Simple brings this view back. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
+ const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const SOL=/solitaire|spider|freecell|yukon|forty thieves|golf|tripeaks|tri-peaks|pyramid|accordion|clock patience|canfield|scorpion|baker|calculation/i;
+ const GROUPS=[['cards','🃏','Cards','Poker, Blackjack, Go Fish, Spades, Hearts…',g=>g.cat==='Cards'&&!SOL.test(g.name)],['board','♟','Board & Tiles','Chess, Checkers, Dominoes, Mahjong…',g=>g.cat==='Board'||g.cat==='Dominoes'||g.cat==='Mahjong'],
+  ['dice','🎲','Dice & Casino','Yacht, Farkle, Roulette, Slots, Bingo… play chips only',g=>g.cat==='Dice'||g.cat==='Casino'],['word','🔤','Word & Puzzle','Word Hunt, Crossword, Sudoku, Memory…',g=>g.cat==='Word'||g.cat==='Puzzle'],
+  ['arcade','🕹','Arcade','Serpent, Brick Breaker, the video games…',g=>g.cat==='Arcade'||g.cat==='Mobile hits'||g.cat==='Video games'],['sports','⚽','Sports & Carnival','Ring Toss, Skee-Ball, Cornhole…',g=>g.cat==='Carnival & Sports'],
+  ['sol','🂡','Solitaire','Klondike, Spider, FreeCell, Pyramid…',g=>g.cat==='Cards'&&SOL.test(g.name)],['shows','📺','Game Shows','Spin & Solve, Money Ladder…',g=>g.cat==='Game Shows']];
+ let simple=getLS('kanin-gsimple',true), view='groups', grp='', picking=true, wasOpen=false, pickAt=0;
+ let recent=getLS('kanin-gsimple-recent',[]); if(!Array.isArray(recent)) recent=[];
+ const list=()=>{ try{ return (window.GAMES&&GAMES.list)||[]; }catch(_){ return []; } };
+ const css=document.createElement('style'); css.textContent=`
+#gamesDock.gsimp .gmTop .ocBrand,#gamesDock.gsimp .gmTop .gmSel,#gamesDock.gsimp .gmTop .gbar,#gamesDock.gsimp #gcBar,#gamesDock.gsimp .ghStrip{display:none!important}
+#gamesDock.gsimp #gmMini{display:flex!important;box-sizing:border-box;width:calc(100% - 118px);max-width:calc(100% - 118px)}
+#gamesDock.gsimp #gmMini [data-gm="opts"]{display:none!important}
+#gamesDock.gsimp .kKeyMon,#gamesDock.gsimp .kLib{display:none!important}
+@media (min-width:761px){ #gamesDock.gsimp{padding-top:72px!important} #gamesDock.gsimp #gmMini{position:fixed!important;top:calc(8px + env(safe-area-inset-top,0px));left:12px;z-index:9600;width:auto!important;max-width:calc(100vw - var(--kRailW,58px) - 280px)!important;background:rgba(24,14,80,.94);border:2px solid #b9a6ff;border-radius:16px;padding:6px 8px!important;box-shadow:0 8px 24px rgba(0,0,0,.45)} #gamesDock.gsimp #gmMini button{min-height:46px!important;font-size:16px!important} }
+#gsPick{position:fixed;inset:0;right:var(--kRailW,58px);z-index:9650;overflow:auto;background:linear-gradient(180deg,#2a1680 0,#1c0f5c 55%,#120a3e 100%);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(200px + env(safe-area-inset-bottom,0px));font:16px/1.5 system-ui,sans-serif;box-sizing:border-box}
+#gsPick[hidden]{display:none!important}
+#gsPick .gsIn{max-width:1000px;margin:0 auto}
+#gsPick h2{font:900 clamp(28px,6vw,44px)/1.1 system-ui,sans-serif;margin:4px 0 2px}
+#gsPick .gsSub{font:600 17px system-ui,sans-serif;color:#d9d0ff;margin:0 0 14px}
+#gsPick .gsTiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+#gsPick .gsTile{display:flex!important;flex-direction:column;align-items:flex-start;gap:4px;min-height:120px!important;padding:14px!important;border-radius:20px!important;text-align:left;background:linear-gradient(160deg,#4b2fd6,#2b188f)!important;border:2px solid #b9a6ff!important}
+#gsPick .gsTile:hover{border-color:#ffe94a!important}
+#gsPick .gsTile i{font-style:normal;font-size:44px;line-height:1}
+#gsPick .gsTile b{font:900 22px system-ui,sans-serif}
+#gsPick .gsTile small{font:600 13.5px/1.35 system-ui,sans-serif;color:#e4dcff}
+#gsPick .gsTile em{font:800 12px system-ui,sans-serif;font-style:normal;color:#ffe94a}
+#gsPick .gsGames{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+#gsPick .gsGame{display:flex!important;flex-direction:column;align-items:flex-start;gap:2px;min-height:72px!important;padding:10px 14px!important;border-radius:16px!important;text-align:left;font:800 18px system-ui,sans-serif!important}
+#gsPick .gsGame small{font:600 13px/1.35 system-ui,sans-serif;color:#d9d0ff}
+#gsPick .gsBar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+#gsPick .gsBar button{min-height:48px!important;padding:0 16px!important;border-radius:14px!important;font:900 16px system-ui,sans-serif!important}
+#gsPick .gsBack{background:#ffe94a!important;color:#14163a!important;border-color:#ffe94a!important}
+#gsPick .gsRecent{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+#gsPick .gsRecent button{min-height:44px!important;border-radius:999px!important;padding:0 14px!important;font:800 15px system-ui,sans-serif!important}
+#gsPick .gsExpert{margin-top:22px;font:600 14px system-ui,sans-serif;color:#cfc4ff}
+#gsPick .gsExpert button{min-height:40px!important;border-radius:12px!important;padding:0 12px!important;font:700 14px system-ui,sans-serif!important}
+#gsSimpleBtn{position:fixed;z-index:9640;left:calc(10px + env(safe-area-inset-left,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px));min-height:44px!important;border-radius:999px!important;padding:0 14px!important;font:900 15px system-ui,sans-serif!important;background:#ffe94a!important;color:#14163a!important;border:2px solid #fff!important;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+#gsSimpleBtn[hidden]{display:none!important}
+@media (max-width:560px){ #gsPick .gsTiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} #gsPick .gsTile{min-height:112px!important;padding:12px!important} #gsPick .gsTile i{font-size:38px} #gsPick .gsTile b{font-size:18px} #gsPick .gsTile small{display:none} #gsPick .gsGames{grid-template-columns:minmax(0,1fr)} }`; document.head.appendChild(css);
+ const dock=()=>$('gamesDock');
+ const dockOpen=()=>{ const d=dock(); if(!d||d.hidden) return false; const cs=getComputedStyle(d); return cs.display!=='none'&&d.getBoundingClientRect().width>40; };
+ function pickEl(){ let p=$('gsPick'); if(p) return p; p=document.createElement('div'); p.id='gsPick'; p.hidden=true; p.setAttribute('role','dialog'); p.setAttribute('aria-label','Pick a game'); document.body.appendChild(p);
+  p.addEventListener('click',onPick); return p; }
+ const first=s=>{ const t=String(s||'').replace(/\s+/g,' ').trim(); const m=t.match(/^.{0,90}?[.!?](\s|$)/); return (m?m[0]:t.slice(0,90)).trim(); };
+ function paintPick(){ const p=pickEl(); const L=list(); let h='<div class="gsIn">';
+  if(view==='groups'){ const rc=recent.map(id=>L.find(g=>g.id===id)).filter(Boolean).slice(0,6);
+   h+='<h2>🎮 Games</h2><p class="gsSub">Tap a group. Then tap a game. That’s it.</p><div class="gsTiles">'+GROUPS.map(([k,ic,nm,sm,f])=>{ const n=L.filter(f).length; return '<button type="button" class="gsTile" data-gs="grp" data-k="'+k+'" data-noul><i>'+ic+'</i><b>'+esc(nm)+'</b><small>'+esc(sm)+'</small><em>'+n+' games</em></button>'; }).join('')+'</div>'+
+    (rc.length?'<div class="gsRecent"><b style="width:100%">⭐ Played lately</b>'+rc.map(g=>'<button type="button" data-gs="game" data-id="'+esc(g.id)+'" data-noul>▶ '+esc(g.name)+'</button>').join('')+'</div>':'')+
+    '<p class="gsExpert">Want every control? <button type="button" data-gs="expert" data-noul>⚙ All options</button></p>'; }
+  else { const G=GROUPS.find(x=>x[0]===grp)||GROUPS[0]; const games=L.filter(G[4]);
+   h+='<div class="gsBar"><button type="button" class="gsBack" data-gs="back" data-noul>◀ All groups</button></div><h2>'+G[1]+' '+esc(G[2])+'</h2><p class="gsSub">'+games.length+' games. Tap one to play. The computer plays every empty seat.</p><div class="gsGames">'+games.map(g=>'<button type="button" class="gsGame" data-gs="game" data-id="'+esc(g.id)+'" data-noul>▶ '+esc(g.name)+'<small>'+esc(first(g.how))+'</small></button>').join('')+'</div>'; }
+  p.innerHTML=h+'</div>'; }
+ function showPick(v){ view=v||'groups'; picking=true; pickAt=Date.now(); const p=pickEl(); paintPick(); p.hidden=false; p.scrollTop=0; paintBtn(); }
+ function hidePick(){ picking=false; const p=$('gsPick'); if(p) p.hidden=true; paintBtn(); }
+ function play(id){ const g=list().find(x=>x.id===id); if(!g) return; recent=[id,...recent.filter(x=>x!==id)].slice(0,8); putLS('kanin-gsimple-recent',recent); hidePick(); try{ GAMES.open(id); }catch(_){ } setTimeout(()=>{ try{ KGPHONE.focusBoard(); }catch(_){ } const d=dock(); if(d) try{ (document.getElementById('gmMini')||d).scrollIntoView({block:'start'}); }catch(_){ } },120); say('▶ '+g.name+'. Tap 🗂 Games to pick another.'); }
+ function onPick(e){ const b=e.target.closest('[data-gs]'); if(!b) return; e.stopPropagation(); const k=b.dataset.gs;
+  if(k==='grp'){ grp=b.dataset.k; view='list'; paintPick(); pickEl().scrollTop=0; return; }
+  if(k==='back'){ view='groups'; paintPick(); return; }
+  if(k==='game') return play(b.dataset.id);
+  if(k==='expert'){ simple=false; putLS('kanin-gsimple',false); hidePick(); paint(); say('⚙ All options shown. Tap 🧒 Simple to go back.'); return; } }
+ function paintBtn(){ let b=$('gsSimpleBtn'); const want=dockOpen()&&!simple; if(!b){ if(!want) return; b=document.createElement('button'); b.type='button'; b.id='gsSimpleBtn'; b.setAttribute('data-noul',''); b.textContent='🧒 Simple'; b.title='Big buttons, fewer controls'; b.addEventListener('click',e=>{ e.stopPropagation(); simple=true; putLS('kanin-gsimple',true); paint(); showPick('groups'); }); document.body.appendChild(b); }
+  if(b.hidden!==!want) b.hidden=!want; }
+ function paint(){ const d=dock(); if(!d) return; d.classList.toggle('gsimp',!!simple); paintBtn(); }
+ /* the slim bar’s 🗂 All games goes back to the big groups; the old ⚙ Options is replaced by ⚙ All options inside the picker */
+ document.addEventListener('click',e=>{ if(!simple||!e.target.closest) return; const b=e.target.closest('#gmMini [data-gm="all"]'); if(b){ e.stopImmediatePropagation(); e.preventDefault(); showPick('groups'); } },true);
+ /* the rail’s 🕹 Games button opens the big groups straight away (the long list of every game stays under 🕹 Video games in the Menu) */
+ document.addEventListener('click',e=>{ if(!simple||!e.target.closest) return; const b=e.target.closest('#kdGames'); if(!b) return; e.stopImmediatePropagation(); e.preventDefault(); try{ if(!dockOpen()) KRAIL.goTo('gamesDock'); }catch(_){ } setTimeout(()=>{ paint(); showPick('groups'); wasOpen=dockOpen(); },dockOpen()?0:450); },true);
+ /* the slim bar names its first button for what it does here */
+ function relabel(){ const a=document.querySelector('#gmMini [data-gm="all"]'); if(a&&simple&&a.textContent!=='🗂 Games'){ a.textContent='🗂 Games'; const m=a.parentElement; if(m&&m.firstChild!==a) m.insertBefore(a,m.firstChild); } }
+ setInterval(()=>{ const open=dockOpen(); if(open&&!wasOpen){ paint(); if(simple) showPick('groups'); } if(!open&&wasOpen){ hidePick(); } if(!open){ const p=$('gsPick'); if(p&&!p.hidden) p.hidden=true; }
+  wasOpen=open; if(open){ paint(); relabel(); } else paintBtn(); },300);
+ /* opening a game any other way (Find, a link, the remote) closes the picker */
+ const wrap=()=>{ const G=window.GAMES; if(!G||typeof G.open!=='function'||G.open.__gs) return; const f=G.open; const w=function(...a){ const r=f.apply(this,a); if(picking&&Date.now()-pickAt>1500) hidePick(); return r; }; w.__gs=1; G.open=w; }; setInterval(wrap,700);
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const p=$('gsPick'); if(p&&!p.hidden&&view==='list'){ view='groups'; paintPick(); e.stopPropagation(); } } },true);
+ window.KGSIMPLE={show:showPick,hide:hidePick,get simple(){ return simple; },set simple(v){ simple=!!v; putLS('kanin-gsimple',simple); paint(); },groups:GROUPS.map(g=>g[0])};
 })();
 
 </script>
