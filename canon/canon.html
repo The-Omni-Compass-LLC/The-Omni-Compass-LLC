@@ -69,7 +69,7 @@
 })();
 </script>
 
-<title>DD UNIVERSE MULTI-MEDIA STUDIOS PLATFORM</title>
+<title>OMNI-GALAXY MULTI-MEDIA STUDIOS PLATFORM</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20429,12 +20429,12 @@ html body #rDock#rDock :is(#kdIPads,#kdIKeys,#kdIDJ)[hidden]{display:none!import
  const INST={pads:{get:()=>document.querySelector('#pad .pmain'),t:'🥁 Beat machine · 16 pads',i:'🥁',l:'Pads'},keys:{get:()=>$('kbTop'),t:'🎹 MIDI keyboard',i:'🎹',l:'Keys'},dj:{get:()=>$('djSec'),t:'🎧 Virtual DJ',i:'🎧',l:'DJ'}};
  const GEN={}; let fz=70;
  const isPhone=()=>innerWidth<=760;
- function geo(key){ const W=innerWidth-(isPhone()?58:76), H=innerHeight; const g=(()=>{ try{ return JSON.parse(localStorage.getItem('kanin-float-'+key)||'null'); }catch(_){ return null; } })(); if(g&&g.x<W-40&&g.y<H-40) return g;
+ function geo(key){ const W=innerWidth-(isPhone()?58:76), H=innerHeight; const g=(()=>{ try{ return JSON.parse(localStorage.getItem('kanin-float-'+key)||'null'); }catch(_){ return null; } })(); if(g&&g.w>=Math.min(220,W-8)&&g.x>=0&&g.x<W-40&&g.y<H-40&&(!g.h||g.h>=120)){ const w=Math.min(g.w,W-8); return {x:Math.max(0,Math.min(g.x,W-w)),y:g.y,w,h:g.h}; } /* a saved place that is off the screen or has no size (a hidden window) is never used */
   if(isPhone()) return {x:4,y:key==='keys'?Math.round(H*0.42):56,w:W-8,h:null};
   return ({pads:{x:Math.round(W*0.42),y:70,w:Math.min(520,Math.round(W*0.55)),h:null},keys:{x:16,y:Math.round(H*0.48),w:Math.min(640,Math.round(W*0.6)),h:null},dj:{x:Math.round(W*0.2),y:90,w:Math.min(720,Math.round(W*0.7)),h:null}})[key]||{x:Math.round(W*0.25),y:80,w:Math.min(560,Math.round(W*0.6)),h:null}; }
- const topMin=()=>{ const b=document.getElementById('bbBar'); const pad=document.getElementById('pad'); if(!b||!pad||!pad.classList.contains('on')||!b.getClientRects().length) return 0; return Math.max(0,Math.round(b.getBoundingClientRect().bottom)+4); };
- function place(el,g){ g.y=Math.max(g.y,topMin()); el.style.setProperty('--fx',Math.round(g.x)+'px'); el.style.setProperty('--fy',Math.round(g.y)+'px'); el.style.setProperty('--fw',Math.round(g.w)+'px'); if(g.h) el.style.setProperty('--fh',Math.round(g.h)+'px'); else el.style.removeProperty('--fh'); }
- function save(key,el){ const r=el.getBoundingClientRect(); try{ localStorage.setItem('kanin-float-'+key,JSON.stringify({x:r.left,y:r.top,w:r.width,h:el.classList.contains('kMin')?null:r.height})); }catch(_){ } }
+ const topMin=()=>{ if(innerWidth<=760) return 0; /* a phone: the window has its own REC and PLAY, so it may cover the transport */ const b=document.getElementById('bbBar'); const pad=document.getElementById('pad'); if(!b||!pad||!pad.classList.contains('on')||!b.getClientRects().length) return 0; return Math.max(0,Math.round(b.getBoundingClientRect().bottom)+4); };
+ function place(el,g){ const W=innerWidth-(isPhone()?58:76); g.w=Math.max(Math.min(220,W-8),Math.min(g.w||420,W-8)); g.x=Math.max(0,Math.min(g.x||0,W-g.w)); g.y=Math.max(g.y,topMin()); el.style.setProperty('--fx',Math.round(g.x)+'px'); el.style.setProperty('--fy',Math.round(g.y)+'px'); el.style.setProperty('--fw',Math.round(g.w)+'px'); if(g.h) el.style.setProperty('--fh',Math.round(g.h)+'px'); else el.style.removeProperty('--fh'); }
+ function save(key,el){ const r=el.getBoundingClientRect(); if(r.width<160||r.height<40||!el.getClientRects().length||el.classList.contains('kFOff')) return; /* a window hidden with its screen is not saved as a place */ try{ localStorage.setItem('kanin-float-'+key,JSON.stringify({x:r.left,y:r.top,w:r.width,h:el.classList.contains('kMin')?null:r.height})); }catch(_){ } }
  function front(el){ fz+=1; el.style.setProperty('--fz',String(el.parentElement===document.body?9600+fz:fz)); }
  function head(key,el,title,generic){ let hd=el.querySelector(':scope > .kFHead'); if(hd) return hd; hd=document.createElement('div'); hd.className='kFHead'; hd.innerHTML='<b></b><button type="button" data-fh="min" aria-label="Shrink or grow" data-noul>▁</button><button type="button" data-fh="x" aria-label="'+(generic?'Put it back in the page':'Put it away')+'" data-noul>'+(generic?'⤓':'✕')+'</button>'; hd.querySelector('b').textContent=title; el.insertBefore(hd,el.firstChild);
   let drag=null; hd.addEventListener('pointerdown',e=>{ if(e.target.closest('button')) return; front(el); const r=el.getBoundingClientRect(); drag={dx:e.clientX-r.left,dy:e.clientY-r.top}; try{ hd.setPointerCapture(e.pointerId); }catch(_){ } e.preventDefault(); });
@@ -26404,13 +26404,15 @@ html body #pad .pmain.kFloat.kFOn[style*="--pdH"] #padGrid > .pd{aspect-ratio:au
 html body .kFloat.kFlash{box-shadow:0 0 0 4px #ffe94a,0 18px 44px rgba(0,0,0,.65)!important}`; document.head.appendChild(css);
  const vis=e=>!!e&&!e.hidden&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;
  function band(el){ let top=6, bottom=innerHeight-6; const bb=$('bbBar'), pad=$('pad');
-  if(bb&&pad&&pad.classList.contains('on')&&vis(bb)){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<innerHeight*0.6) top=Math.max(top,Math.round(r.bottom)+4); }
+  if(innerWidth<=760){ const xa=$('kXAll'); if(vis(xa)){ const r=xa.getBoundingClientRect(); if(r.bottom<innerHeight*0.25) top=Math.max(top,Math.round(r.bottom)+4); } } /* a phone: just under the app's Undo and Close, so the window's own buttons show */
+  if(innerWidth>760&&bb&&pad&&pad.classList.contains('on')&&vis(bb)){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<innerHeight*0.6) top=Math.max(top,Math.round(r.bottom)+4); }
   const rm=$('kRemote'); if(vis(rm)){ const r=rm.getBoundingClientRect(), e=el?el.getBoundingClientRect():null; const overlapX=!e||(r.left<e.right&&r.right>e.left); if(overlapX&&r.top>innerHeight*0.35) bottom=Math.min(bottom,Math.round(r.top)-6); }
   if(bottom-top<160) bottom=Math.min(innerHeight-6,top+160); return {top,bottom}; }
  function fit(el,toTop){ if(!el||!el.classList.contains('kFOn')||el.classList.contains('kFOff')) return; const b=band(el); const avail=b.bottom-b.top; el.style.setProperty('--fmh',avail+'px');
   const g=el.querySelector('#padGrid')||el.querySelector('#kbKeys'); if(g&&!el.classList.contains('kMin')){
    if(g.id==='padGrid'){ /* a short band: the pads shrink so all sixteen still show */ el.style.removeProperty('--pdH'); const n0=Math.ceil(g.getBoundingClientRect().bottom-el.getBoundingClientRect().top+el.scrollTop+10); if(n0>avail){ const gh=g.getBoundingClientRect().height, rest=n0-gh, rowH=Math.max(32,Math.floor((avail-rest-15)/4)); el.style.setProperty('--pdH',rowH+'px'); } }
    const need=Math.ceil(g.getBoundingClientRect().bottom-el.getBoundingClientRect().top+el.scrollTop+10), fh=parseFloat(el.style.getPropertyValue('--fh'))||0; if(toTop==='size'||(fh&&fh<need)) el.style.setProperty('--fh',Math.min(avail,need)+'px'); }
+  /* sideways too: never off the left edge, never under the rail, never a sliver */ { const W=innerWidth-(innerWidth<=760?58:76), q=el.getBoundingClientRect(), mw=Math.min(220,W-8); let w=q.width, x=q.left; if(w<mw||w>W-4){ w=Math.max(mw,Math.min(w,W-8)); el.style.setProperty('--fw',Math.round(w)+'px'); } if(x<0||x+w>W){ x=Math.max(0,Math.min(x,W-w)); el.style.setProperty('--fx',Math.round(x)+'px'); } }
   const r=el.getBoundingClientRect(); let y=toTop?b.top:r.top; const h=Math.min(el.scrollHeight+4,avail); if(y<b.top) y=b.top; if(y+h>b.bottom) y=Math.max(b.top,b.bottom-h); if(Math.abs(y-r.top)>1) el.style.setProperty('--fy',Math.round(y)+'px'); }
  const getEl=key=>{ try{ const F=KRAIL.FLOAT; return key==='pads'?document.querySelector('#pad .pmain'):key==='keys'?$('kbTop'):key==='dj'?$('djSec'):null; }catch(_){ return null; } };
  function inFront(el){ const r=el.getBoundingClientRect(); const pts=[]; for(const fx of [.12,.5,.88]) for(const fy of [.1,.5,.9]) pts.push([r.left+r.width*fx,r.top+r.height*fy]); return pts.every(([x,y])=>{ const t=document.elementFromPoint(Math.max(0,Math.min(innerWidth-1,x)),Math.max(0,Math.min(innerHeight-1,y))); return t&&el.contains(t); }); }
