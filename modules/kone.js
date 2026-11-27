@@ -4,7 +4,7 @@
    Two layers keep the rule: every app's own open() is wrapped to close the others first, and a watcher closes any app left open
    underneath, keeping the newest. */
  const $=id=>document.getElementById(id);
- const OV={kAI:'KAI',kKara:'KKARA',kEasel:'KEASEL',kVG:'KVG',kRec:'KREC',kSocial:'KSOCIAL',kProj:'KPROJ',kProfile:'KPROFILE',kKnow:'KKNOW',kLock:'KLOCK',kJump:'KJUMP',kHumor:'KHUMOR',kOwner:'KOWNER',kNews:'KNEWS',kRelig:'KRELIG',kMarket:'KMARKET'};
+ const OV={kAI:'KAI',kKara:'KKARA',kEasel:'KEASEL',kVG:'KVG',kRec:'KREC',kSocial:'KSOCIAL',kProj:'KPROJ',kProfile:'KPROFILE',kKnow:'KKNOW',kLock:'KLOCK',kJump:'KJUMP',kHumor:'KHUMOR',kOwner:'KOWNER',kNews:'KNEWS',kRelig:'KRELIG',kMarket:'KMARKET',kSports:'KSPORTS'};
  const DOCKS=['pad','swDock','zodDock','omniDock','gamesDock','libDock','fileDock','sbDock','musicDock','aivDock','voiceDock','langDock','layDock','craftDock','mutDock','mapDock','askDock'];
  const APPS=[...DOCKS,...Object.keys(OV)];
  const vis=id=>{ const e=$(id); if(!e||e.hidden) return false; if(id==='pad') return e.classList.contains('on'); const cs=getComputedStyle(e); if(cs.display==='none'||cs.visibility==='hidden') return false; const r=e.getBoundingClientRect(); return r.width>20&&r.height>20; };

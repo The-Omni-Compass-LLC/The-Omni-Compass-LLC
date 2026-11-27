@@ -32,7 +32,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
 @media (min-width:2500px){ #kUndoAll,#kXAll{min-height:72px!important;font-size:26px!important;padding:8px 24px!important} }`; document.head.appendChild(css);
  const btn=(i,l,cls,act)=>'<button type="button" data-ez="'+act+'" class="'+(cls||'')+'" data-noul><i>'+i+'</i>'+l+'</button>';
  const more='<div class="ezMore">Want more buttons? <button type="button" data-ez="lv:avg" data-noul>🟡 Everyday</button><button type="button" data-ez="lv:pro" data-noul>🔴 Pro</button></div>';
- const HOME=[['📖','Make a story','','story'],['🎛','Music Studio','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['📰','News','','news'],['✝️','Religion','','faith'],['📈','Stock market','','market'],['🗺','Show me around','','tour']];
+ const HOME=[['📖','Make a story','','story'],['🎛','Music Studio','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['📰','News','','news'],['✝️','Religion','','faith'],['📈','Stock market','','market'],['🏆','Sports','','sports'],['🗺','Show me around','','tour']];
  const STU=[['🎲','Make me a beat','go','auto'],['▶','Play','go','play'],['■','Stop','st','stop'],['🎨','Change the style','','style'],['↶','Undo','ud','undo'],['💾','Save','','save'],['🎤','Sing on it','','sing'],['❓','How do I?','','how']];
  const ACT={
   story:()=>{ fold(); try{ GOHOME(); }catch(_){ } setTimeout(()=>{ press('#mQP')||press('#qpBtn'); setTimeout(()=>{ const d=document.querySelector('section.desk'); if(d&&d.getClientRects().length) d.scrollIntoView({behavior:'smooth',block:'start'}); say('📖 Your story is written. Scroll to read it, or tap 📖 Make a story again for another.'); },1800); },150); },
@@ -42,7 +42,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
   game:()=>{ fold(); try{ KRAIL.goTo('gamesDock'); setTimeout(()=>{ try{ KGSIMPLE.show('groups'); }catch(_){ } },450); }catch(_){ try{ KVG.open(); }catch(__){ } } },
   news:()=>{ fold(); try{ KNEWS.open('today'); }catch(_){ } },
   faith:()=>{ fold(); try{ KRELIG.open('big'); }catch(_){ } },
-  market:()=>{ fold(); try{ KMARKET.open('today'); }catch(_){ } },
+  market:()=>{ fold(); try{ KMARKET.open('today'); }catch(_){ } },sports:()=>{ fold(); try{ KSPORTS.open(); }catch(_){ } },
   draw:()=>{ fold(); try{ KEASEL.open(); }catch(_){ } },
   zod:()=>{ fold(); try{ KRAIL.goTo('zodDock'); }catch(_){ } },
   me:()=>{ fold(); try{ KPROFILE.open(); }catch(_){ try{ KRAIL.goTo('kProfile'); }catch(_){ } } },
