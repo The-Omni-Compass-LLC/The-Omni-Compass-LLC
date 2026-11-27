@@ -32,14 +32,17 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
 @media (min-width:2500px){ #kUndoAll,#kXAll{min-height:72px!important;font-size:26px!important;padding:8px 24px!important} }`; document.head.appendChild(css);
  const btn=(i,l,cls,act)=>'<button type="button" data-ez="'+act+'" class="'+(cls||'')+'" data-noul><i>'+i+'</i>'+l+'</button>';
  const more='<div class="ezMore">Want more buttons? <button type="button" data-ez="lv:avg" data-noul>🟡 Everyday</button><button type="button" data-ez="lv:pro" data-noul>🔴 Pro</button></div>';
- const HOME=[['📖','Make a story','','story'],['🥁','Make a beat','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['🗺','Show me around','','tour']];
+ const HOME=[['📖','Make a story','','story'],['🥁','Make a beat','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['📰','News','','news'],['✝️','Religion','','faith'],['📈','Stock market','','market'],['🗺','Show me around','','tour']];
  const STU=[['🎲','Make me a beat','go','auto'],['▶','Play','go','play'],['■','Stop','st','stop'],['🎨','Change the style','','style'],['↶','Undo','ud','undo'],['💾','Save','','save'],['🎤','Sing on it','','sing'],['❓','How do I?','','how']];
  const ACT={
   story:()=>{ fold(); try{ GOHOME(); }catch(_){ } setTimeout(()=>{ press('#mQP')||press('#qpBtn'); setTimeout(()=>{ const d=document.querySelector('section.desk'); if(d&&d.getClientRects().length) d.scrollIntoView({behavior:'smooth',block:'start'}); say('📖 Your story is written. Scroll to read it, or tap 📖 Make a story again for another.'); },1800); },150); },
   beat:()=>{ fold(); studio(()=>{ press('#cAuto'); say('🥁 A beat is ready. Tap ▶ Play.'); }); },
   sing:()=>{ fold(); try{ KKARA.open(); }catch(_){ } },
   laugh:()=>{ fold(); try{ KHUMOR.open('day'); }catch(_){ } },
-  game:()=>{ fold(); try{ if(window.KVG) KVG.open(); else GAMES.open('m_merge'); }catch(_){ } },
+  game:()=>{ fold(); try{ KRAIL.goTo('gamesDock'); setTimeout(()=>{ try{ KGSIMPLE.show('groups'); }catch(_){ } },450); }catch(_){ try{ KVG.open(); }catch(__){ } } },
+  news:()=>{ fold(); try{ KNEWS.open('today'); }catch(_){ } },
+  faith:()=>{ fold(); try{ KRELIG.open('big'); }catch(_){ } },
+  market:()=>{ fold(); try{ KMARKET.open('today'); }catch(_){ } },
   draw:()=>{ fold(); try{ KEASEL.open(); }catch(_){ } },
   zod:()=>{ fold(); try{ KRAIL.goTo('zodDock'); }catch(_){ } },
   me:()=>{ fold(); try{ KPROFILE.open(); }catch(_){ try{ KRAIL.goTo('kProfile'); }catch(_){ } } },
@@ -59,7 +62,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
  const HOME_DEEP=['master','contents','manual','monitors','control','s-rail','s-words','s-drive','shape','outputs','s-referee'];
  const HOME_DEEP_CLS=['nav.stagenav','section.monitors','section.bay','section.deck','section.outbay'];
  const PAD_DEEP=[]; /* the Studio keeps every part at every level: the sequencer and mixer first, every module below */
- const EASY_MENU=/^(🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
+ const EASY_MENU=/^(🎲 Games|📰 Current News|✝️ Cultures & Religion|📈 Stock Market|🍳 Recipes|📁 Projects|🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
  const tagLv=e=>{ if(e&&e.dataset.lvl!=='avg'&&e.dataset.lvl!=='pro') e.dataset.lvl='avg'; };
  let easyPadFor='';
  function tag(){ HOME_DEEP.forEach(id=>tagLv($(id))); HOME_DEEP_CLS.forEach(s=>document.querySelectorAll('.wrap>'+s).forEach(tagLv)); PAD_DEEP.forEach(id=>tagLv($(id)));

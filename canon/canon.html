@@ -18561,7 +18561,7 @@ html.kClr #tourCard:not(.kUnder){top:calc(var(--kClr) + 8px)!important;bottom:au
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const LV=[['easy','🟢','Easy','Easy: the essentials in plain words. Best for anyone and first-timers.'],['avg','🟡','Everyday','Everyday: the tools creators and influencers use.'],['pro','🔴','Pro','Pro: every engine, knob and library, for producers, writers and engineers.']];
  /* the factory setting: every open of KAN-IN starts on 🟡 Everyday; a person can switch for the visit, and the next open is Everyday again */
- let lv='avg';
+ let lv='easy'; /* v240: every open starts on 🟢 Easy, the essentials in plain words; 🟡 Everyday and 🔴 Pro are one tap away */
  /* which parts belong to which level (anything not listed is for everyone) */
  const MAP={
   avg:['mpcSec','chopSec','seSec','slSec','vcSec','bandSec','sqWrap','sesWrap','kbWrap','rollWrap','autoSec','shSec','tpWrap','zodExtra','z4Today','z4Chart','z4Moons','z4China','z4Syn','z4Spin','z4Beat','z4Book','omniOrg','swAna','kkIn','kkOut'],
@@ -18578,7 +18578,7 @@ html body #rDock#rDock #kdLvl{order:4!important;display:flex!important}
 #kPanel .kLvlRow{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 8px}`; document.head.appendChild(css);
  function apply(quiet){ const h=document.documentElement; h.classList.remove('lvl-easy','lvl-avg','lvl-pro'); h.classList.add('lvl-'+lv); tag(); rail(); document.querySelectorAll('.kLvlRow button').forEach(b=>b.classList.toggle('on',b.dataset.lv===lv)); if(!quiet){ const L=LV.find(x=>x[0]===lv); say(L[1]+' '+L[3]); } }
  function setLv(v,quiet){ lv=v; putLS('kanin-level',lv); apply(quiet); panelLv(); }
- document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#mFactory')) setTimeout(()=>{ setLv('avg',true); const t=document.querySelector('#tourTab .kLvlRow'); if(t) t.innerHTML=row(); },60); },true);
+ document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#mFactory')) setTimeout(()=>{ setLv('easy',true); const t=document.querySelector('#tourTab .kLvlRow'); if(t) t.innerHTML=row(); },60); },true);
  function rail(){ const d=$('rDock'); if(!d) return; let b=$('kdLvl'); const L=LV.find(x=>x[0]===lv); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kdLvl'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); const i=LV.findIndex(x=>x[0]===lv); setLv(LV[(i+1)%LV.length][0]); }); d.appendChild(b); } b.dataset.kdI=L[1]; b.dataset.kdL=L[2]; b.title='Level: '+L[3]+' Tap to change.'; b.setAttribute('aria-label','Level: '+L[2]+'. Tap to change.'); }
  const row=()=>'<span class="kN" style="flex:1 1 100%;font:700 12px ui-monospace,monospace;letter-spacing:.1em;color:#7ff">HOW DO YOU WANT TO USE KAN-IN?</span>'+LV.map(x=>'<button type="button" data-lv="'+x[0]+'" class="'+(x[0]===lv?'on':'')+'" title="'+x[3]+'" data-noul>'+x[1]+' '+x[2]+'</button>').join('');
  /* the menu: a level switch and, for everyone, ⭐ Start here with plain big buttons */
@@ -18593,7 +18593,7 @@ html body #rDock#rDock #kdLvl{order:4!important;display:flex!important}
  setInterval(()=>{ tag(); rail(); menu(); const p=$('kPanel'); if(p&&!p.hidden&&!p.querySelector('.kLvlRow')) panelLv(); },1000);
  document.addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdPanel')) setTimeout(panelLv,30); },true);
  apply(true); menu();
- window.KLEVEL={get:()=>lv,set:setLv,levels:LV.map(x=>x[0]),factory:'avg'};
+ window.KLEVEL={get:()=>lv,set:setLv,levels:LV.map(x=>x[0]),factory:'easy'};
 })();
 
 </script>
@@ -21554,14 +21554,17 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
 @media (min-width:2500px){ #kUndoAll,#kXAll{min-height:72px!important;font-size:26px!important;padding:8px 24px!important} }`; document.head.appendChild(css);
  const btn=(i,l,cls,act)=>'<button type="button" data-ez="'+act+'" class="'+(cls||'')+'" data-noul><i>'+i+'</i>'+l+'</button>';
  const more='<div class="ezMore">Want more buttons? <button type="button" data-ez="lv:avg" data-noul>🟡 Everyday</button><button type="button" data-ez="lv:pro" data-noul>🔴 Pro</button></div>';
- const HOME=[['📖','Make a story','','story'],['🥁','Make a beat','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['🗺','Show me around','','tour']];
+ const HOME=[['📖','Make a story','','story'],['🥁','Make a beat','go','beat'],['🎤','Sing karaoke','','sing'],['😂','Laugh','','laugh'],['🕹','Play a game','','game'],['🎨','Draw','','draw'],['♈','LuvMyZodiac','','zod'],['👤','My profile','','me'],['🤖','Ask for help','','help'],['📰','News','','news'],['✝️','Religion','','faith'],['📈','Stock market','','market'],['🗺','Show me around','','tour']];
  const STU=[['🎲','Make me a beat','go','auto'],['▶','Play','go','play'],['■','Stop','st','stop'],['🎨','Change the style','','style'],['↶','Undo','ud','undo'],['💾','Save','','save'],['🎤','Sing on it','','sing'],['❓','How do I?','','how']];
  const ACT={
   story:()=>{ fold(); try{ GOHOME(); }catch(_){ } setTimeout(()=>{ press('#mQP')||press('#qpBtn'); setTimeout(()=>{ const d=document.querySelector('section.desk'); if(d&&d.getClientRects().length) d.scrollIntoView({behavior:'smooth',block:'start'}); say('📖 Your story is written. Scroll to read it, or tap 📖 Make a story again for another.'); },1800); },150); },
   beat:()=>{ fold(); studio(()=>{ press('#cAuto'); say('🥁 A beat is ready. Tap ▶ Play.'); }); },
   sing:()=>{ fold(); try{ KKARA.open(); }catch(_){ } },
   laugh:()=>{ fold(); try{ KHUMOR.open('day'); }catch(_){ } },
-  game:()=>{ fold(); try{ if(window.KVG) KVG.open(); else GAMES.open('m_merge'); }catch(_){ } },
+  game:()=>{ fold(); try{ KRAIL.goTo('gamesDock'); setTimeout(()=>{ try{ KGSIMPLE.show('groups'); }catch(_){ } },450); }catch(_){ try{ KVG.open(); }catch(__){ } } },
+  news:()=>{ fold(); try{ KNEWS.open('today'); }catch(_){ } },
+  faith:()=>{ fold(); try{ KRELIG.open('big'); }catch(_){ } },
+  market:()=>{ fold(); try{ KMARKET.open('today'); }catch(_){ } },
   draw:()=>{ fold(); try{ KEASEL.open(); }catch(_){ } },
   zod:()=>{ fold(); try{ KRAIL.goTo('zodDock'); }catch(_){ } },
   me:()=>{ fold(); try{ KPROFILE.open(); }catch(_){ try{ KRAIL.goTo('kProfile'); }catch(_){ } } },
@@ -21581,7 +21584,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
  const HOME_DEEP=['master','contents','manual','monitors','control','s-rail','s-words','s-drive','shape','outputs','s-referee'];
  const HOME_DEEP_CLS=['nav.stagenav','section.monitors','section.bay','section.deck','section.outbay'];
  const PAD_DEEP=[]; /* the Studio keeps every part at every level: the sequencer and mixer first, every module below */
- const EASY_MENU=/^(🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
+ const EASY_MENU=/^(🎲 Games|📰 Current News|✝️ Cultures & Religion|📈 Stock Market|🍳 Recipes|📁 Projects|🎛 Studio|🎤 Karaoke|📖 Make a story|😂 Laugh|🕹 Video games|♈ LuvMyZodiac|👤 My profile|🎨 The Easel|🤖 AI|🗺 Show me around|🎵 Music|🧭 Omni-Compass)/;
  const tagLv=e=>{ if(e&&e.dataset.lvl!=='avg'&&e.dataset.lvl!=='pro') e.dataset.lvl='avg'; };
  let easyPadFor='';
  function tag(){ HOME_DEEP.forEach(id=>tagLv($(id))); HOME_DEEP_CLS.forEach(s=>document.querySelectorAll('.wrap>'+s).forEach(tagLv)); PAD_DEEP.forEach(id=>tagLv($(id)));
@@ -28894,6 +28897,77 @@ html body .kSpd .clk{min-width:56px!important;white-space:nowrap!important;word-
  setInterval(()=>{ paint(); fold(); },300);
  let rf=0; document.addEventListener('scroll',e=>{ if(rf) return; const t=e.target; if(t!==$('pad')&&t!==document&&t!==document.documentElement) return; rf=requestAnimationFrame(()=>{ rf=0; fold(); }); },true);
  window.KDEVTX={act,paint};
+})();
+
+</script>
+<script>
+(()=>{ /* ⌨ YOUR COMPUTER KEYS, STRAIGHT AND TRUE (v240). Any standard laptop or desktop keyboard, nothing special:
+   🥁 The 16 pads are the 4 × 4 block on the left of the keyboard, laid out on screen exactly as the keys sit:
+        1 2 3 4  /  Q W E R  /  A S D F  /  Z X C V      (the pads are always 4 across, so each pad is where its key is).
+   🎹 The piano is the two letter rows, the way music programs use a typing keyboard:
+        lower octave: Z X C V B N M are the white keys, S D G H J the black keys;
+        upper octave: Q W E R T Y U I are the white keys, 2 3 5 6 7 the black keys.   Every piano key shows its letter.
+   Your keys play ONE device at a time: the one you touched last (or the only one open). Each window says so in big words, and one
+   tap switches. Space plays and stops. The extra controls of each device fold behind ⚙ More, so each window shows only the essentials. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
+ const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const PADK='1234qwerasdfzxcv', KMAP='zsxdcvgbhnjmq2w3er5t6y7ui';
+ let owner=getLS('kanin-keyowner','pads'); const was={pads:false,keys:false}; let more=getLS('kanin-devmore',{pads:false,keys:false}); if(!more||typeof more!=='object') more={pads:false,keys:false};
+ const physical=()=>{ try{ return matchMedia('(hover:hover) and (pointer:fine)').matches||window.INPUTMODE==='keys'||window.INPUTMODE==='both'&&!matchMedia('(pointer:coarse)').matches; }catch(_){ return true; } };
+ const css=document.createElement('style'); css.textContent=`
+html body #padGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.kKeyOwn{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 6px;padding:6px 10px;border-radius:12px;font:900 14px system-ui,sans-serif;background:#2a2d38;color:#c9cede;border:2px dashed #555b6e;cursor:pointer}
+.kKeyOwn b{font-size:15px;color:#fff}
+.kKeyOwn small{font:700 12px system-ui,sans-serif;color:#aab}
+.kKeyOwn.on{background:#ffe94a;color:#14163a;border:2px solid #fff;cursor:default}
+.kKeyOwn.on b{color:#14163a}.kKeyOwn.on small{color:#3b3500}
+.kKeyOwn button{margin-left:auto;min-height:34px!important;border-radius:10px!important;padding:0 10px!important;font:800 12.5px system-ui,sans-serif!important}
+.kKeyOwn[hidden]{display:none!important}
+#kbKeys .kKL{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;font:900 12px ui-monospace,monospace;pointer-events:none;padding:1px 4px;border-radius:5px;background:#ffe94a;color:#14163a;line-height:1.2}
+#kbKeys .kKL.blk{bottom:8px;background:#ff9de2}
+#kbKeys:not(.kKLon) .kKL{display:none}
+.kLess .kMoreOnly{display:none!important}
+.kMoreBtn{min-height:36px!important;border-radius:10px!important;padding:0 10px!important;font:800 12.5px system-ui,sans-serif!important;background:#33384a!important}
+.kMoreBtn.on{background:#ffe94a!important;color:#14163a!important}`; document.head.appendChild(css);
+ const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
+ const isOpen=k=>{ const f=F(); try{ return !!(f&&f.isOpen(k)); }catch(_){ return false; } };
+ function setOwner(k,quiet){ if(k!=='pads'&&k!=='keys') return; const ch=owner!==k; owner=k; putLS('kanin-keyowner',k); apply(); if(ch&&!quiet&&physical()) say(k==='keys'?'🎹 Your keys now play the PIANO: Z X C V B N M and Q W E R T Y U I, black keys on S D G H J and 2 3 5 6 7.':'🥁 Your keys now play the PADS: 1 2 3 4 · Q W E R · A S D F · Z X C V.'); }
+ function apply(){ const sel=$('kbKeyMode'); const want=owner==='keys'?'keys':'pads'; if(sel&&sel.value!==want){ sel.value=want; sel.dispatchEvent(new Event('change',{bubbles:true})); } paint(); }
+ /* the device you touch takes your keys */
+ document.addEventListener('pointerdown',e=>{ const t=e.target; if(!t||!t.closest) return; if(t.closest('#kbTop')) setOwner('keys'); else if(t.closest('#pad .pmain.kFloat')) setOwner('pads'); },true);
+ function strip(dev){ const bar=dev==='pads'?$('mpcBar'):$('kbDash'); if(!bar) return null; let s=bar.querySelector(':scope > .kKeyOwn'); if(s) return s; s=document.createElement('div'); s.className='kKeyOwn'; s.setAttribute('role','button'); s.tabIndex=0;
+  s.addEventListener('click',e=>{ e.stopPropagation(); if(e.target.closest('[data-ko="map"]')){ try{ KKBD.open(dev==='pads'?'pads':'piano'); }catch(_){ } return; } setOwner(dev); });
+  bar.insertBefore(s,bar.firstChild); return s; }
+ function letters(){ const kb=$('kbKeys'); if(!kb) return; const on=physical(); kb.classList.toggle('kKLon',on); if(!on) return;
+  for(let k=0;k<KMAP.length;k++){ const el=kb.querySelector('[data-n="'+k+'"]'); if(!el) continue; let l=el.querySelector(':scope > .kKL'); const blk=/(^|\s)(bk|black|b)(\s|$)/.test(el.className)||[1,3,6,8,10].includes(k%12); if(!l){ l=document.createElement('span'); l.className='kKL'+(blk?' blk':''); l.textContent=KMAP[k].toUpperCase(); if(getComputedStyle(el).position==='static') el.style.position='relative'; el.appendChild(l); } } }
+ function fold(dev){ const bar=dev==='pads'?$('mpcBar'):$('kbDash'); if(!bar) return; const row=bar.querySelector(':scope > .mr2'); if(!row) return;
+  const extra=dev==='pads'?[...row.querySelectorAll(':scope > [data-m="click"], :scope > [data-m="q"], .kPadInst, .kPadMode, .kBank')]
+   :[...row.querySelectorAll(':scope > button.sm:not([data-k]), :scope > [data-k="bars"], :scope > [data-k="bpm"], #kbDashBpm, .kBank')].concat([...row.querySelectorAll(':scope > span.lbl')].filter(x=>/bars/i.test(x.textContent)));
+  extra.forEach(x=>{ if(!x.classList.contains('kMoreBtn')&&!x.classList.contains('kMoreOnly')) x.classList.add('kMoreOnly'); });
+  let b=row.querySelector(':scope > .kMoreBtn'); if(!b){ b=document.createElement('button'); b.type='button'; b.className='kMoreBtn'; b.setAttribute('data-noul',''); b.addEventListener('click',e=>{ e.stopPropagation(); more[dev]=!more[dev]; putLS('kanin-devmore',more); paint(); try{ KPADFLOAT.fit(dev); }catch(_){ } }); row.appendChild(b); } else if(row.lastElementChild!==b) row.appendChild(b);
+  const on=!!more[dev]; const t=on?'⚙ Less':'⚙ More'; if(b.textContent!==t) b.textContent=t; b.classList.toggle('on',on); b.title=on?'Hide the extra controls':'Sound banks, instruments, pad modes, latch to grid, bars and more'; bar.classList.toggle('kLess',!on); }
+ function paint(){ const show=physical();
+  ['pads','keys'].forEach(dev=>{ fold(dev); const s=strip(dev); if(!s) return; if(s.hidden!==!show) s.hidden=!show; if(!show) return; const on=owner===dev;
+   const html=dev==='pads'?(on?'⌨ <b>Your keys play the PADS</b><small>1 2 3 4 · Q W E R · A S D F · Z X C V</small>':'⌨ <b>Tap here to play the pads with your keys</b><small>1 2 3 4 · Q W E R · A S D F · Z X C V</small>')
+    :(on?'⌨ <b>Your keys play the PIANO</b><small>Z X C V B N M · Q W E R T Y U I</small>':'⌨ <b>Tap here to play the piano with your keys</b><small>Z X C V B N M · Q W E R T Y U I</small>');
+   const full=html+'<button type="button" data-ko="map" data-noul>🗺 Key map</button>'; if(s.dataset.h!==full){ s.dataset.h=full; s.innerHTML=full; } s.classList.toggle('on',on); });
+  letters(); }
+ setInterval(()=>{ const po=isOpen('pads'), ko=isOpen('keys');
+  if(ko&&!was.keys) setOwner('keys',true); else if(po&&!was.pads&&!ko) setOwner('pads',true);
+  if(!ko&&owner!=='pads') setOwner('pads',true); if(ko&&!po&&owner!=='keys') setOwner('keys',true);
+  was.pads=po; was.keys=ko; apply(); },400);
+ /* while the piano has your keys, the pad-only keys (1 and 4) stay quiet instead of firing a pad behind your back */
+ addEventListener('keydown',e=>{ if(owner!=='keys'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; const k=(e.key||'').toLowerCase(); if(PADK.includes(k)&&!KMAP.includes(k)&&$('pad')&&$('pad').classList.contains('on')){ e.stopImmediatePropagation(); } },true);
+ /* the "/" key sits right next to the piano keys: while a pad or piano window is open in the Studio it does nothing (Ctrl+K still opens Find) */
+ addEventListener('keydown',e=>{ if(e.key!=='/'||e.ctrlKey||e.metaKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; if($('pad')&&$('pad').classList.contains('on')&&(isOpen('pads')||isOpen('keys'))){ e.stopImmediatePropagation(); e.preventDefault(); } },true);
+ /* the keyboard window never lands on top of the pad window on a laptop: it sits beside it, or below it when there is no room */
+ function apart(){ if(innerWidth<=760||!isOpen('pads')||!isOpen('keys')) return; const pe=document.querySelector('#pad .pmain'), ke=$('kbTop'); if(!pe||!ke||ke.dataset.kApart==='1') return; const a=pe.getBoundingClientRect(), b=ke.getBoundingClientRect();
+  const over=!(b.right<=a.left||b.left>=a.right||b.bottom<=a.top||b.top>=a.bottom); if(!over) { ke.dataset.kApart='1'; return; }
+  if(a.left-24>=380){ ke.style.setProperty('--fx','8px'); ke.style.setProperty('--fw',Math.round(a.left-20)+'px'); } else if(innerHeight-a.bottom>=260){ ke.style.setProperty('--fy',Math.round(a.bottom+8)+'px'); } ke.dataset.kApart='1'; }
+ setInterval(()=>{ const ke=$('kbTop'); if(ke&&!isOpen('keys')) delete ke.dataset.kApart; apart(); },500);
+ const css2=document.createElement('style'); css2.textContent='#kbTop label:has(#kbKeyMode),#kbPlayHint{display:none!important}html body #kbKeys [data-kbd]::before,html body #kbKeys [data-kbd]::after{content:none!important;display:none!important}'; document.head.appendChild(css2);
+ window.KKEYROUTE={get owner(){ return owner; },set owner(v){ setOwner(v,true); },PADK,KMAP};
 })();
 
 </script>
