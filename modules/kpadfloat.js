@@ -22,6 +22,8 @@ html body .kFloat.kFlash{box-shadow:0 0 0 4px #ffe94a,0 18px 44px rgba(0,0,0,.65
   if(innerWidth<=760){ const xa=$('kXAll'); if(vis(xa)){ const r=xa.getBoundingClientRect(); if(r.bottom<innerHeight*0.25) top=Math.max(top,Math.round(r.bottom)+4); } } /* a phone: just under the app's Undo and Close, so the window's own buttons show */
   if(innerWidth>760&&bb&&pad&&pad.classList.contains('on')&&vis(bb)){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<innerHeight*0.6) top=Math.max(top,Math.round(r.bottom)+4); }
   const rm=$('kRemote'); if(vis(rm)){ const r=rm.getBoundingClientRect(), e=el?el.getBoundingClientRect():null; const overlapX=!e||(r.left<e.right&&r.right>e.left); if(overlapX&&r.top>innerHeight*0.35) bottom=Math.min(bottom,Math.round(r.top)-6); }
+  /* the track sequencer docks at the bottom of a wide screen: the pad and keyboard windows live in the space above it */
+  const sq=$('kSeqWin'); if(innerWidth>760&&el&&el!==sq&&sq&&sq.classList.contains('kFOn')&&!sq.classList.contains('kFOff')&&!sq.classList.contains('kMin')){ const r=sq.getBoundingClientRect(); if(r.top>innerHeight*0.3&&r.height>60) bottom=Math.min(bottom,Math.round(r.top)-6); }
   if(bottom-top<160) bottom=Math.min(innerHeight-6,top+160); return {top,bottom}; }
  function fit(el,toTop){ if(!el||!el.classList.contains('kFOn')||el.classList.contains('kFOff')) return; const b=band(el); const avail=b.bottom-b.top; el.style.setProperty('--fmh',avail+'px');
   const g=el.querySelector('#padGrid')||el.querySelector('#kbKeys'); if(g&&!el.classList.contains('kMin')){

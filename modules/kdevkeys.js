@@ -26,7 +26,7 @@
  const RKEY={k:'rew',l:'play',';':'stop',"'":'rec',',':'undo','\\':'skip'};
  const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
  addEventListener('keydown',e=>{ if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||e.repeat) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return;
-  const pad=$('pad'); const d0=pad&&pad.classList.contains('on')?dev():null;
+  const pad=$('pad'); const d0=pad&&(pad.classList.contains('on')||document.body.classList.contains('kDevOver'))?dev():null;
   if(!d0){ const c=cur(); const a=RKEY[(e.key||'').toLowerCase()]; if(a&&UNIV.has(c)){ let R=null; try{ R=KREMOTE.act; }catch(_){ } if(R&&R[a]){ e.preventDefault(); e.stopImmediatePropagation(); R[a](); const b=document.querySelector('#kRemote [data-r="'+a+'"]'); if(b) flash(b); } } return; }
   const d=d0; const k=(e.key||'').toLowerCase(); const act=(d==='pads'?PADS:KEYS)[k]; if(!act) return;
   e.preventDefault(); e.stopImmediatePropagation(); run(d,act); },true);

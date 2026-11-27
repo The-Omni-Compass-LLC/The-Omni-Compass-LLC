@@ -76,8 +76,8 @@
    if(k==='kup'){ const u=$('kbSampleBtn'); if(u) u.click(); } });
   host.appendChild(d); return d; }
  /* ---------- building the two screens ---------- */
- const SOFT={pads:[['kitp','◀','KIT'],['kitn','▶','KIT'],['bank0','A','BANK','bank'],['bank1','B','BANK','bank'],['bank2','C','BANK','bank'],['bank3','D','BANK','bank'],['snd','🗂','SOUNDS'],['up','⬆','UPLOAD'],['latch','🔒','LATCH'],['rep','🔁','REPEAT'],['loop','🔄','LOOP'],['q','🧲','Q'],['tap','👆','TAP']],
-  keys:[['prgp','◀','PROG'],['prgn','▶','PROG'],['octd','−','OCT'],['octu','+','OCT'],['snd','🗂','SOUNDS'],['up','⬆','UPLOAD'],['latch','🔒','LATCH'],['arp','🎼','ARP'],['loop','🔄','LOOP'],['q','🧲','Q'],['tap','👆','TAP']]};
+ const SOFT={pads:[['kitp','◀','KIT'],['kitn','▶','KIT'],['bank0','A','BANK','bank'],['bank1','B','BANK','bank'],['bank2','C','BANK','bank'],['bank3','D','BANK','bank'],['snd','⬇','LOAD'],['up','⬆','UPLOAD'],['latch','🔒','LATCH'],['rep','🔁','REPEAT'],['loop','🔄','LOOP'],['q','🧲','Q'],['tap','👆','TAP']],
+  keys:[['prgp','◀','PROG'],['prgn','▶','PROG'],['octd','−','OCT'],['octu','+','OCT'],['snd','⬇','LOAD'],['up','⬆','UPLOAD'],['latch','🔒','LATCH'],['arp','🎼','ARP'],['loop','🔄','LOOP'],['q','🧲','Q'],['tap','👆','TAP']]};
  function build(dev){ const bar=dev==='pads'?$('mpcBar'):$('kbDash'); if(!bar) return null; let s=bar.querySelector(':scope > .kScr'); if(s){ if(bar.firstElementChild!==s) bar.insertBefore(s,bar.firstChild); return s; }
   s=document.createElement('div'); s.className='kScr '+(dev==='pads'?'mpc':'wks'); s.setAttribute('role','group'); s.setAttribute('aria-label',dev==='pads'?'Beat machine screen':'Keyboard screen');
   s.innerHTML='<div class="kLcd" aria-live="off"></div><div class="kSoft">'+SOFT[dev].map(([k,i,l,c])=>'<button type="button" data-sf="'+k+'"'+(c?' class="'+c+'"':'')+' title="'+l+(c?' '+i:'')+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+'</div>';
@@ -118,7 +118,7 @@
     const rec=(()=>{ const b=$('kbRec'); return !!b&&(b.classList.contains('rec')||/: on$/i.test(b.textContent.trim())); })(); let KT=[]; try{ KT=KEYS.KT||[]; }catch(_){ }
     const last=KT.length?nm(KT[KT.length-1].m):'—'; const lat=!!window.KBLATCH; const av=arp&&arp.value!=='off'?arp.options[arp.selectedIndex].text:'';
     html=line('PROG '+pad(pi+1,3)+': '+esc(pn),'OCT '+esc(ov))+line((rec?'<b class="rec">● REC</b> ':'')+(p.playing?'<b class="on">▶ PLAY</b>':'■ STOP')+'  BAR '+pad(p.bar,2)+'.'+p.beat+'.'+pad(p.tick,2),p.bpm+' BPM')+
-     line('LOOP '+p.bars+' BAR'+(p.bars>1?'S':'')+'  '+qtxt,(lat?'<b class="on">LATCH</b> ':'')+(av?'<b class="on">ARP '+esc(av)+'</b>':''))+line('KEYS TRACK: '+KT.length+' NOTE'+(KT.length===1?'':'S'),'LAST '+last);
+     line('LOOP '+p.bars+' BAR'+(p.bars>1?'S':'')+'  '+qtxt,(lat?'<b class="on">LATCH</b> ':'')+(av?'<b class="on">ARP '+esc(av)+'</b>':''))+(()=>{ let nmT='KEYS TRACK', cnt=KT.length, lst=last; try{ const T=KSEQ.tracks.find(x=>x.id===(KSEQ.keysId||KSEQ.armed)); if(T&&T.kind==='keys'){ nmT='● '+T.name.replace(/^\S+\s/,'').toUpperCase(); cnt=T.notes.length; lst=cnt?nm(T.notes[cnt-1].m):'—'; } }catch(_){ } return line(esc(nmT)+': '+cnt+' NOTE'+(cnt===1?'':'S'),'LAST '+lst); })();
     s.querySelector('[data-sf="latch"]').classList.toggle('on',lat); s.querySelector('[data-sf="arp"]').classList.toggle('on',!!av); }
    s.querySelector('[data-sf="q"]').classList.toggle('on',md!=='live');
    if(lcd.dataset.h!==html){ lcd.dataset.h=html; lcd.innerHTML=html; } }); }

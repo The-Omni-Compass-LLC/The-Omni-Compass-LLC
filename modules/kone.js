@@ -35,7 +35,7 @@
  const seen=new Map(); let tick=0;
  function watch(){ wrapOverlays(); wrapRail(); if(busy) return; tick++; const open=openNow(); open.forEach(id=>{ if(!seen.has(id)) seen.set(id,tick); }); [...seen.keys()].forEach(id=>{ if(!open.includes(id)) seen.delete(id); });
   if(open.length>1){ const keep=open.slice().sort((a,b)=>seen.get(b)-seen.get(a))[0]; open.forEach(id=>{ if(id!==keep) closeApp(id); }); }
-  if(!vis('pad')) floatsShut(); }
+  if(!vis('pad')&&!document.body.classList.contains('kDevOver')) floatsShut(); /* v242: the devices brought over Karaoke stay up */ }
  setInterval(watch,400); watch();
  window.KONE={open:openNow,closeAllBut,closeApp};
 })();

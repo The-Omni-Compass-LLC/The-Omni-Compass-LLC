@@ -22,9 +22,9 @@ html.lvl-easy .kEasy{display:block}
 .kEasy .ezGrid button.go{background:#137a3f!important}.kEasy .ezGrid button.st{background:#b3172f!important}.kEasy .ezGrid button.ud{background:#ffe94a!important;color:#14163a!important}
 .kEasy .ezMore{margin-top:clamp(8px,1vw,18px);display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:700 clamp(14px,1.2vw,24px)/1.4 system-ui,sans-serif;color:#bfb8ff}
 .kEasy .ezMore button{min-height:44px;padding:4px 14px!important;border-radius:999px!important;font:800 clamp(14px,1.2vw,24px) system-ui,sans-serif!important}
-html.lvl-easy #rDock#rDock :is(#kdProj,#kdSocial,#kdAI,#kdPanel,#kdTour,#kdIDJ){display:none!important}
+/* v242: every level keeps the whole Menu and the whole rail; Easy only simplifies the home page and the Studio */
 html.lvl-easy #rDock#rDock button[data-kd-i]::before{font-size:calc(var(--kRailW,58px) * .44)!important}
-html.lvl-easy #tourTab>*:not(.lpHead):not(.kLvlRow):not(.kStart):not([data-easy]){display:none!important}
+/* v242: every level keeps the whole Menu and the whole rail; Easy only simplifies the home page and the Studio */
 html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!important;font:800 clamp(17px,1.5vw,30px)/1.25 system-ui,sans-serif!important}
 #kUndoAll{position:fixed;z-index:9760;top:calc(8px + env(safe-area-inset-top,0px));right:calc(var(--kRailW,58px) + 10px);min-height:44px!important;min-width:44px;padding:4px 12px!important;border-radius:999px!important;background:#ffe94a!important;color:#14163a!important;font:900 15px system-ui,sans-serif!important;border:2px solid #14163a!important;box-shadow:0 4px 16px rgba(0,0,0,.5)}
 #kUndoAll[hidden]{display:none!important}body.gated #kUndoAll{display:none!important}
