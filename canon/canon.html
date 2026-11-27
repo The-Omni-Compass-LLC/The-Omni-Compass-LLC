@@ -29695,47 +29695,7 @@ html.lvl-easy .kEzMoreChip{display:inline-flex;align-items:center;justify-conten
 })();
 
 </script>
-<script>
-(()=>{ /* 🪟 THE MUSIC STUDIO'S PANELS, LAID OUT FOR THE SCREEN (v245). Every device is its own floating panel and any number can be up at
-   once over the mixing board: 🥁 pads, 🎹 keyboard, 🎼 track sequencer, 🎧 DJ decks, 🎤 Karaoke mic. One tap on 🪟 ARRANGE lays the open
-   panels out for the screen you are on:
-   • A LAPTOP OR A BIG MONITOR tiles them side by side across the whole screen, full height, none covering another: pads, keyboard,
-     track sequencer, DJ decks and mic, each as wide as the screen allows (a big monitor gives each more room).
-   • A PHONE stacks them full width, one in front, with a strip of panel buttons at the bottom to bring any panel to the front.
-   Drag any panel by its top bar to move it anywhere, stack them or set them side by side; ▁ shrinks one, ✕ closes it; every panel stays
-   live wherever it sits. ● REC on the pads or the keyboard records both: one sequencer, one mixing board. */
- const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
- const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
- const KEYS=[['pads','🥁','Pads',1],['keys','🎹','Keys',1.5],['dj','🎧','DJ',1.3],['kara','🎤','Mic',.9],['seq','🎼','Tracks',0]];
- const phone=()=>innerWidth<=760;
- const openKeys=()=>KEYS.filter(([k])=>{ try{ return F().isOpen(k); }catch(_){ return false; } });
- const put=(k,g)=>{ try{ localStorage.setItem('kanin-float-'+k,JSON.stringify(g)); }catch(_){ } };
- function arrange(quiet){ const f=F(); if(!f) return; let L=openKeys(); if(!L.length){ ['pads','keys','seq'].forEach(k=>{ try{ f.open(k); }catch(_){ } }); L=openKeys(); }
-  const W=innerWidth-(phone()?58:76), H=innerHeight, gap=8; let top=8; const bb=$('bbBar'); if(!phone()&&bb&&bb.getClientRects().length){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<H*.6) top=Math.round(r.bottom)+4; }
-  if(phone()){ L.forEach(([k])=>put(k,{x:4,y:56,w:W-8,h:Math.round(H*.72)})); }
-  else { const WT={pads:1,keys:1.4,dj:1.2,kara:.9,seq:1.6}; const order=['pads','keys','seq','dj','kara']; const cols=order.map(k=>L.find(x=>x[0]===k)).filter(Boolean); const tot=cols.reduce((a,[k])=>a+WT[k],0)||1; const avail=W-gap*(cols.length+1); let x=gap;
-   cols.forEach(([k])=>{ const w=Math.max(280,Math.round(avail*WT[k]/tot)); put(k,{x:Math.min(x,W-w-gap),y:top,w,h:H-top-gap}); x+=w+gap; }); }
-  L.forEach(([k])=>{ try{ f.open(k); }catch(_){ } }); if(!quiet) say(phone()?'🪟 The panels are stacked for the phone: the strip at the bottom brings any one to the front.':'🪟 The panels are laid out across the screen over the mixing board. Drag any top bar to move one.'); paint(); }
- /* the phone strip: bring any open panel to the front */
- const css=document.createElement('style'); css.textContent=`
-#kPanelStrip{position:fixed;z-index:9740;left:calc(6px + env(safe-area-inset-left,0px));right:calc(var(--kRailW,58px) + 6px);bottom:calc(6px + env(safe-area-inset-bottom,0px));display:none;gap:6px;justify-content:center;background:rgba(10,8,30,.92);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:6px}
-#kPanelStrip.on{display:flex}
-#kPanelStrip button{flex:1 1 0;min-height:44px!important;border-radius:10px!important;font:800 13px system-ui,sans-serif!important;padding:0 4px!important}`; document.head.appendChild(css);
- function strip(){ let s=$('kPanelStrip'); if(!s){ s=document.createElement('div'); s.id='kPanelStrip'; s.setAttribute('role','toolbar'); s.setAttribute('aria-label','Panels'); s.addEventListener('click',e=>{ const b=e.target.closest('[data-pk]'); if(!b) return; e.stopPropagation(); try{ F().open(b.dataset.pk); }catch(_){ } }); document.body.appendChild(s); } return s; }
- function paint(){ const pad=$('pad'); const live=!!pad&&(pad.classList.contains('on')||document.body.classList.contains('kDevOver')); const L=live?openKeys():[]; const s=strip(); const on=phone()&&L.length>=2; s.classList.toggle('on',on); if(on){ const h=L.map(([k,i,l])=>'<button type="button" data-pk="'+k+'" data-noul>'+i+' '+l+'</button>').join(''); if(s.dataset.h!==h){ s.dataset.h=h; s.innerHTML=h; } }
-  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-arr]')){ const b=document.createElement('button'); b.type='button'; b.dataset.arr='1'; b.setAttribute('data-noul',''); b.textContent='🪟 Arrange'; b.title='Lay the open panels out for this screen'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); arrange(); },true); bb.appendChild(b); } }
- /* 🔗 ONE RECORD BUTTON FOR THE WHOLE RIG: the pads and the keyboard feed one sequencer and one mixing board, so ● REC on either one
-    records both (each onto its selected track), and stopping either stops both. */
- const padRec=()=>{ const b=$('padRecLive'); return !!b&&(b.classList.contains('rec')||/on$/i.test(b.textContent.trim())); };
- const keyRec=()=>{ const b=$('kbRec'); return !!b&&(b.classList.contains('rec')||/: on$/i.test(b.textContent.trim())); };
- let was={p:false,k:false}, syncing=false;
- setInterval(()=>{ if(syncing) return; const p=padRec(), k=keyRec(); if(p!==was.p&&k===was.k&&p!==k){ syncing=true; const b=$('kbRec'); if(b) b.click(); setTimeout(()=>{ syncing=false; was={p:padRec(),k:keyRec()}; },250); return; }
-  if(k!==was.k&&p===was.p&&p!==k){ syncing=true; const b=$('padRecLive'); if(b) b.click(); setTimeout(()=>{ syncing=false; was={p:padRec(),k:keyRec()}; },250); return; } was={p,k}; },120);
- setInterval(paint,800);
- window.KLAYOUT={arrange,get recording(){ return padRec()||keyRec(); }};
-})();
 
-</script>
 <script>
 (()=>{ /* ⌨ ONE KEYBOARD, SPLIT LEFT AND RIGHT (v245). Every laptop and desktop keyboard (the standard QWERTY layout) plays the pads and the
    piano at the same time, so both devices can be open, played and recorded together with no key shared between them:
@@ -29924,216 +29884,7 @@ body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
 
 </script>
 
-<script>
-(()=>{ /* 🔐 SIGN IN · ACCOUNT · MY PAGE (v243). The first thing after the landing game opens the app (four cannon hits) is SIGN IN.
-   • Signing in needs an account. A person with no account is shown CREATE YOUR ACCOUNT (a display name, a unique @handle, an avatar,
-     a short bio, interests, the birthday that sets their LuvMyZodiac sign, public or private page, and the house rules), and only
-     then SIGN IN. The account is tied to who is viewing (the platform's own sign-in), so nobody needs a password here and nobody can
-     sign in as somebody else.
-   • MY PAGE: every person gets their own platform inside the platform: a cover in their colour, their avatar, name, @handle and bio,
-     followers and following, their posts, their feed (the people they follow, the official DD Universe posts and their own), the
-     people directory (search, follow, unfollow, open anyone's page), MY APPS (the parts of KAN-IN they pin to their own page, in their
-     own order: their studio, their games, their zodiac, their recipes…) and settings (edit, sign out, delete the account).
-   • Posts can share what they made (a beat, a story, a song, a game score: the app it came from is linked), get ❤ likes and 💬 replies.
-     Everyone signed in reads every public page; each person writes only their own page (the owner of DD Universe moderates).
-   Data: people/<id> (the account and page) and wall/<id> (that person's posts, likes and replies); the profile on the device
-   (kanin-me) is kept in step, so the Profile tab, Social and LuvMyZodiac agree. */
- const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
- const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
- const getSS=k=>{ try{ return sessionStorage.getItem(k); }catch(_){ return null; } }, putSS=(k,v)=>{ try{ v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v); }catch(_){ } };
- const ago=t=>{ const s=(Date.now()-t)/1000; return s<60?'just now':s<3600?Math.floor(s/60)+' min':s<86400?Math.floor(s/3600)+' h':Math.floor(s/86400)+' d'; };
- const AV=['🦁','🐯','🦊','🐼','🐸','🐙','🦄','🐲','🦅','🐬','🦋','🌟','🔥','⚡','🌙','🌈','🎧','🎤','🎸','🥁','🎹','🎬','🎨','🕹','👑','💎','🚀','🤖','👽','🧠','🧙','🦸'];
- const COLS=['#ff2d95','#7a2cff','#00b7ff','#00c46a','#ffb800','#ff5a1f','#e0245e','#14b8a6'];
- const INTERESTS=['Hip-hop','R&B','Pop','Rock','Gospel','Jazz','Country','Latin','Afrobeats','EDM','Comedy','Film','Gaming','Art','Poetry','Astrology','Science','Faith','Fitness','Fashion','Food','Travel','Stories','Beats'];
- const APPS=[['story','📖','Story builder',()=>KRAIL.goTo('home')],['studio','🎛','Studio',()=>KRAIL.goTo('pad')],['tracks','🎼','Track sequencer',()=>KSEQ.open()],['karaoke','🎤','Karaoke',()=>KKARA.open()],['music','🎵','Music',()=>KRAIL.goTo('musicDock')],['games','🕹','Games',()=>KVG.open()],['zodiac','♈','LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['compass','🧭','Omni-Compass',()=>KRAIL.goTo('omniDock')],['recipes','🍳','Recipes',()=>KRAIL.goTo('recipeDock')],['laugh','😂','Laugh',()=>KHUMOR.open('day')],['ai','🤖','AI',()=>KAI.open()],['easel','🎨','The Easel',()=>KEASEL.open()],['video','🎬','Video studio',()=>KRAIL.goTo('aivDock')],['news','📰','Current News',()=>KNEWS.open()],['faith','✝️','Cultures & Religion',()=>KRELIG.open()],['market','📈','Stock Market',()=>KMARKET.open()],['library','📚','My library',()=>KSOCIAL.open('lib')],['projects','📁','Projects',()=>KRAIL.goTo('fileDock')]];
- const appOf=k=>APPS.find(a=>a[0]===k);
- let db=null, user=null, uid=null, state='boot', acct=null, wall=null, people={}, walls={}, unsubP=null, unsubW=null, tab='posts', viewing=null, q='', news=[], assets=null, dls=null;
- const signedIn=()=>!!acct&&getSS('kanin-signed')===uid;
- /* ---------- connect ---------- */
- async function boot(){ try{ if(!window.claude||!claude.use){ state='none'; return; } [db,user]=await Promise.all([claude.use('db').catch(()=>null),claude.use('user').catch(()=>null)]); if(!db||!user){ state='none'; paint(); return; } uid=await user.id().catch(()=>null); if(!uid){ state='none'; paint(); return; }
-   state='loading'; const to=setTimeout(()=>{ if(state==='loading'){ state='none'; paint(); } },10000);
-   db.doc('people/'+uid).onSnapshot(s=>{ clearTimeout(to); acct=s.exists?s.data():null; state=acct?'have':'new'; paint(); },()=>{ clearTimeout(to); state='none'; paint(); });
-   db.doc('wall/'+uid).onSnapshot(s=>{ wall=s.exists?s.data():null; paint(); },()=>{}); }catch(_){ state='none'; paint(); } }
- function listenAll(){ if(!db||unsubP) return; unsubP=db.collection('people').limit(500).onSnapshot(s=>{ people={}; s.docs.forEach(d=>{ people[d.id]=d.data()||{}; }); paint(); },()=>{}); unsubW=db.collection('wall').limit(500).onSnapshot(s=>{ walls={}; s.docs.forEach(d=>{ walls[d.id]=d.data()||{}; }); paint(); },()=>{}); db.collection('news/today/items').orderBy('rank').limit(8).onSnapshot(s=>{ news=s.docs.map(d=>d.data()||{}); paint(); },()=>{}); }
- /* ---------- writes: one at a time, only my own page ---------- */
- let busy=Promise.resolve(); const write=(path,fn)=>{ busy=busy.then(async()=>{ try{ await fn(db.doc(path)); }catch(e){ say(e&&e.code==='not_granted'?'This viewer can read pages but cannot write here. Ask the owner for Contributor access.':'That did not save. Try again.'); throw e; } }).catch(()=>{}); return busy; };
- const myWall=()=>Object.assign({posts:[],likes:[]},wall||{});
- /* ---------- the screens ---------- */
- const css=document.createElement('style'); css.textContent=`
-#kAcct{position:fixed;inset:0;right:var(--kRailW,58px);z-index:9700;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3b0f5c,#07051a 70%);color:#eef;font:15px/1.5 system-ui,sans-serif;padding:calc(14px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 40px}
-#kAcct[hidden]{display:none!important}
-#kAcct .kaIn{max-width:860px;margin:0 auto}
-#kAcct .kaCard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:16px;margin:12px 0}
-#kAcct h2{font:900 26px/1.15 system-ui,sans-serif;margin:4px 0;color:#ffe94a}#kAcct h3{font:800 18px system-ui,sans-serif;margin:4px 0 8px}
-#kAcct label{display:block;font:700 13px system-ui,sans-serif;margin:10px 0 4px;color:#cfe}
-#kAcct input[type=text],#kAcct input[type=date],#kAcct textarea,#kAcct select{width:100%;box-sizing:border-box;min-height:44px;border-radius:12px;padding:8px 12px;font:16px system-ui,sans-serif}
-#kAcct textarea{min-height:80px}
-#kAcct .kaRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-#kAcct button{min-height:44px;border-radius:12px;padding:0 16px;font:800 15px system-ui,sans-serif;cursor:pointer}
-#kAcct .kaGo{background:linear-gradient(135deg,#ffe94a,#ff7a00)!important;color:#1a0f00!important;font-size:17px!important;min-height:52px!important}
-#kAcct .kaChip{min-height:36px;padding:0 12px;border-radius:99px;font:700 13px system-ui,sans-serif}
-#kAcct .kaChip.on{background:#ff2d95!important;color:#fff!important}
-#kAcct .kaAv{font-size:24px;min-width:44px;padding:0}
-#kAcct .kaAv.on{outline:3px solid #ffe94a}
-#kAcct .kaCover{border-radius:18px;padding:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-#kAcct .kaBig{font-size:56px;width:84px;height:84px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,0,0,.25);border:3px solid #fff}
-#kAcct .kaName{font:900 24px system-ui,sans-serif}#kAcct .kaHandle{opacity:.85;font-weight:700}
-#kAcct .kaTabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
-#kAcct .kaTabs button.on{background:#ffe94a!important;color:#14163a!important}
-#kAcct .kaPost{background:rgba(0,0,0,.25);border-radius:14px;padding:10px 12px;margin:8px 0}
-#kAcct .kaPost .who{font-weight:800}#kAcct .kaPost .t{white-space:pre-wrap;word-wrap:break-word;margin:4px 0}
-#kAcct .kaPost .kaRow button{min-height:36px;padding:0 10px;font-size:13px}
-#kAcct .kaApps{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
-#kAcct .kaApps button{min-height:64px;font-size:14px;white-space:normal}
-#kAcct .kaApps .kaRow{flex-wrap:nowrap!important;gap:4px!important;margin-top:4px}
-#kAcct .kaApps .kaRow .kaChip{min-width:0!important;min-height:32px!important;height:32px;padding:0 10px!important;flex:1 1 0;font-size:13px!important}
-#kAcct .kaApps [data-app]{font-size:15px!important}
-#kAcct .kaPeople .kaPost{display:flex;gap:10px;align-items:center}
-#kAcct .kaNote{font-size:13px;opacity:.85}
-#kAcct .kaErr{color:#ffb4c8;font-weight:700}
-#kAcct .kaStats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
-#kAcct .kaStats div{background:rgba(0,0,0,.25);border-radius:12px;padding:8px 10px}
-#kAcct .kaStats b{display:block;font:900 20px system-ui,sans-serif;color:#ffe94a}
-#kAcct .kaStats span{font-size:12.5px;opacity:.85}
-#kAcct .kaPost a{color:#7ff;font-weight:700}`; document.head.appendChild(css);
- function host(){ let d=$('kAcct'); if(d) return d; d=document.createElement('div'); d.id='kAcct'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Account and my page'); document.body.appendChild(d); d.addEventListener('click',onClick); d.addEventListener('input',onInput); return d; }
- let form=null; const blankForm=()=>{ const me=getLS('kanin-me',{})||{}; return {name:me.name||'',handle:(me.handle||'').replace(/^@/,''),av:me.av||AV[Math.floor(Math.random()*AV.length)],color:me.color||COLS[0],bio:me.bio||'',birth:me.birth||'',likes:Array.isArray(me.likes)?me.likes.slice(0,8):[],pub:true,rules:false}; };
- const legal='<p class="kaNote">© 2026 The Omni-Compass LLC and DD Universe Multi-Media Studios. All rights reserved. Evaluation and simulation use only. Any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p>';
- function render(){ const d=host(); if(d.hidden) return; let h='<div class="kaIn"><div class="kaRow" style="justify-content:space-between"><b style="font:900 14px system-ui,sans-serif;letter-spacing:.08em;color:#7ff">🔐 DD UNIVERSE · MY ACCOUNT</b><button type="button" data-ka="x" data-noul>✕ Close</button></div>';
-  if(state==='boot'||state==='loading') h+='<div class="kaCard"><h2>🔐 Sign in</h2><p>Finding your account…</p></div>';
-  else if(state==='none') h+='<div class="kaCard"><h2>🔐 Sign in</h2><p>Accounts need the platform\'s sign-in, and this view does not have it (you are signed out, or opened a public copy). Sign in to claude.ai and open the app again to create your account.</p><div class="kaRow"><button type="button" data-ka="guest" data-noul>👀 Look around as a guest</button></div><p class="kaNote">As a guest everything you make stays on this device. Posting, following and your own page need an account.</p></div>';
-  else if(state==='new'&&!form) h+='<div class="kaCard"><h2>🔐 Sign in</h2><p class="kaErr">You do not have an account yet, so you cannot sign in.</p><p>Create your account first: it takes a minute and gives you your own page inside DD Universe, with your posts, your people and your apps.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="create" data-noul>✨ Create my account</button><button type="button" data-ka="guest" data-noul>👀 Look around as a guest</button></div></div>';
-  else if(state==='new'&&form) h+=formHTML(false);
-  else if(state==='have'&&!signedIn()&&!form) h+='<div class="kaCard"><h2>🔐 Sign in</h2><div class="kaCover" style="background:'+esc(acct.color||COLS[0])+'"><div class="kaBig">'+esc(acct.av||'🙂')+'</div><div><div class="kaName">'+esc(acct.name||'')+'</div><div class="kaHandle">@'+esc(acct.handle||'')+'</div></div></div><p>Welcome back. This is your account on this sign-in.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="signin" data-noul>➡ Sign in as @'+esc(acct.handle||'')+'</button></div></div>';
-  else if(form) h+=formHTML(true);
-  else h+=page();
-  d.innerHTML=h+legal+'</div>'; }
- function formHTML(edit){ const f=form; return '<div class="kaCard"><h2>'+(edit?'✏️ Edit my account':'✨ Create your account')+'</h2>'+
-  '<label>Display name</label><input type="text" data-f="name" maxlength="40" value="'+esc(f.name)+'" placeholder="Your name">'+
-  '<label>@handle (letters, numbers and _, 3 to 20; nobody else can have it)</label><input type="text" data-f="handle" maxlength="20" value="'+esc(f.handle)+'" placeholder="yourhandle"><div class="kaNote" id="kaHandleNote"></div>'+
-  '<label>Avatar</label><div class="kaRow">'+AV.map(a=>'<button type="button" class="kaAv'+(a===f.av?' on':'')+'" data-av="'+a+'" data-noul>'+a+'</button>').join('')+'</div>'+
-  '<label>Page colour</label><div class="kaRow">'+COLS.map(c=>'<button type="button" class="kaAv'+(c===f.color?' on':'')+'" data-col="'+c+'" style="background:'+c+'" aria-label="Colour '+c+'" data-noul>&nbsp;</button>').join('')+'</div>'+
-  '<label>Bio</label><textarea data-f="bio" maxlength="200" placeholder="A line about you">'+esc(f.bio)+'</textarea>'+
-  '<label>Birthday (sets your LuvMyZodiac sign; only the month and day show)</label><input type="date" data-f="birth" value="'+esc(f.birth)+'">'+
-  '<label>Interests (up to 8)</label><div class="kaRow">'+INTERESTS.map(x=>'<button type="button" class="kaChip'+(f.likes.includes(x)?' on':'')+'" data-like="'+esc(x)+'" data-noul>'+esc(x)+'</button>').join('')+'</div>'+
-  '<label>Who sees my page</label><div class="kaRow"><button type="button" class="kaChip'+(f.pub?' on':'')+'" data-pub="1" data-noul>🌐 Everyone signed in</button><button type="button" class="kaChip'+(!f.pub?' on':'')+'" data-pub="0" data-noul>🔒 Hidden (off the people list and feeds)</button></div>'+
-  (edit?'':'<label><input type="checkbox" data-f="rules"'+(f.rules?' checked':'')+'> I agree to the house rules: be kind, post only what is mine to share, no hate, no harassment, nothing unsafe. The owner may remove posts that break them.</label>')+
-  '<p class="kaErr" id="kaErr"></p><div class="kaRow"><button type="button" class="kaGo" data-ka="'+(edit?'save':'make')+'" data-noul>'+(edit?'💾 Save':'✅ Create my account')+'</button><button type="button" data-ka="cancel" data-noul>Cancel</button></div></div>'; }
- const handleOK=h=>/^[A-Za-z0-9_]{3,20}$/.test(h);
- const taken=h=>Object.entries(people).some(([id,p])=>id!==uid&&String(p.handle||'').toLowerCase()===h.toLowerCase());
- /* ---------- my page and anyone's page ---------- */
- const nameOf=id=>{ const p=people[id]||(id===uid?acct:null)||{}; return {av:p.av||'🙂',name:p.name||'Someone',handle:p.handle||'',color:p.color||COLS[0],pub:p.pub!==false}; };
- const postsOf=id=>{ const w=id===uid?myWall():Object.assign({posts:[]},walls[id]||{}); return (w.posts||[]).map(p=>Object.assign({by:id},p)); };
- const likesFor=(by,pid)=>Object.values(Object.assign({},walls,uid?{[uid]:myWall()}:{})).reduce((n,w)=>n+((w.likes||[]).includes(by+':'+pid)?1:0),0);
- const repliesFor=(by,pid)=>{ const out=[]; Object.entries(Object.assign({},walls,uid?{[uid]:myWall()}:{})).forEach(([id,w])=>(w.posts||[]).forEach(p=>{ if(p.re&&p.re.by===by&&p.re.id===pid) out.push(Object.assign({by:id},p)); })); return out.sort((a,b)=>a.at-b.at); };
- const okURL=u=>typeof u==='string'&&(u.startsWith('/_blob/')||u.startsWith('https://')||u.startsWith('blob:'));
- const mediaTag=(kind,url)=>!okURL(url)?'':kind==='image'?'<img src="'+esc(url)+'" alt="" style="max-width:100%;max-height:280px;border-radius:10px;display:block;margin:6px 0">':kind==='video'?'<video src="'+esc(url)+'" controls playsinline style="max-width:100%;max-height:280px;border-radius:10px;display:block;margin:6px 0"></video>':kind==='audio'?'<audio src="'+esc(url)+'" controls style="width:100%;margin:6px 0"></audio>':'';
- function postHTML(p,deep){ const n=nameOf(p.by); const liked=myWall().likes.includes(p.by+':'+p.id); const a=p.app&&appOf(p.app); const reps=deep?repliesFor(p.by,p.id):[];
-  return '<div class="kaPost"><div class="who" data-ka="open" data-id="'+esc(p.by)+'" style="cursor:pointer">'+esc(n.av)+' '+esc(n.name)+' <span class="kaNote">@'+esc(n.handle)+' · '+ago(p.at||Date.now())+'</span></div>'+(p.re?'<div class="kaNote">↪ replying to @'+esc(nameOf(p.re.by).handle)+'</div>':'')+'<div class="t">'+esc(p.text)+'</div>'+(p.media?mediaTag(p.media.type,p.media.url):'')+(a?'<div class="kaRow"><button type="button" data-app="'+a[0]+'" data-noul>'+a[1]+' Open '+esc(a[2])+'</button></div>':'')+
-   (p.re?'':'<div class="kaRow"><button type="button" data-ka="like" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" data-noul>'+(liked?'❤️':'🤍')+' '+likesFor(p.by,p.id)+'</button><button type="button" data-ka="reply" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" data-noul>💬 '+repliesFor(p.by,p.id).length+'</button>'+(p.by===uid?'<button type="button" data-ka="del" data-pid="'+esc(p.id)+'" data-noul>🗑</button>':'')+'</div>')+
-   reps.map(r=>'<div class="kaPost" style="margin-left:18px"><div class="who">'+esc(nameOf(r.by).av)+' '+esc(nameOf(r.by).name)+' <span class="kaNote">'+ago(r.at)+'</span></div><div class="t">'+esc(r.text)+'</div></div>').join('')+'</div>'; }
- function page(){ listenAll(); const id=viewing||uid; const n=nameOf(id), mine=id===uid; const P=people[id]||(mine?acct:{})||{}; const fol=(mine?acct:P).following||[]; const followers=Object.entries(people).filter(([,p])=>(p.following||[]).includes(id)).length;
-  let h='<div class="kaCover" style="background:linear-gradient(135deg,'+esc(n.color)+',#14163a)"><div class="kaBig">'+esc(n.av)+'</div><div style="flex:1;min-width:0"><div class="kaName">'+esc(n.name)+'</div><div class="kaHandle">@'+esc(n.handle)+(n.pub?'':' · 🔒 hidden')+'</div><div>'+esc(P.bio||'')+'</div><div class="kaNote">'+followers+' followers · '+fol.length+' following'+((P.likes||[]).length?' · '+esc((P.likes||[]).join(', ')):'')+'</div></div>'+
-   (mine?'<div class="kaRow"><button type="button" data-ka="edit" data-noul>✏️ Edit</button></div>':'<div class="kaRow"><button type="button" data-ka="follow" data-id="'+esc(id)+'" data-noul>'+((acct.following||[]).includes(id)?'✓ Following':'➕ Follow')+'</button><button type="button" data-ka="home" data-noul>⬅ My page</button></div>')+'</div>';
-  if(!mine){ h+=(n.pub?postsOf(id).filter(p=>!p.re).sort((a,b)=>b.at-a.at).map(p=>postHTML(p,true)).join('')||'<p>No posts yet.</p>':'<p>🔒 This page is hidden.</p>'); return h; }
-  const T=[['posts','📝 My posts'],['feed','🌐 My feed'],['cannon','💥 My Cannon'],['people','🌌 Community'],['apps','📱 My apps'],['set','⚙ Settings']];
-  h+='<div class="kaTabs">'+T.map(([k,l])=>'<button type="button" data-tab="'+k+'" class="'+(tab===k?'on':'')+'" data-noul>'+l+'</button>').join('')+'</div>';
-  if(tab==='posts'||tab==='feed') h+='<div class="kaCard"><textarea data-f="post" maxlength="500" placeholder="'+(replyTo?'Write your reply…':'What are you making today?')+'"></textarea><div class="kaRow"><select data-f="app" aria-label="Share from" data-nodice data-die="1"><option value="">Share from… (optional)</option>'+APPS.map(a=>'<option value="'+a[0]+'">'+a[1]+' '+esc(a[2])+'</option>').join('')+'</select><button type="button" class="kaGo" data-ka="post" data-noul>'+(replyTo?'💬 Reply':'📣 Post')+'</button>'+(replyTo?'<button type="button" data-ka="noreply" data-noul>Cancel reply</button>':'')+'</div></div>';
-  if(tab==='posts'){ h+=actHTML(); setTimeout(()=>{ markSeen(); badge(); },1500); }
-  if(tab==='posts') h+=postsOf(uid).filter(p=>!p.re).sort((a,b)=>b.at-a.at).map(p=>postHTML(p,true)).join('')||'<p>Your first post goes here.</p>';
-  if(tab==='cannon') h+=cannonHTML();
-  if(tab==='feed'&&news.length) h+='<div class="kaCard"><h3>📰 Today\'s headlines</h3>'+news.slice(0,5).map(x=>'<div class="kaPost"><b>'+esc(x.title||'')+'</b><div class="kaNote">'+esc(x.summary||'')+'</div>'+(typeof x.url==='string'&&x.url.startsWith('https://')?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">Read the source ↗</a>':'')+'</div>').join('')+'<div class="kaRow"><button type="button" data-app="news" data-noul>📰 All the news</button></div></div>';
-  if(tab==='feed'){ const ids=[uid].concat(acct.following||[]); const all=[]; ids.forEach(i=>{ if(i===uid||nameOf(i).pub) postsOf(i).filter(p=>!p.re).forEach(p=>all.push(p)); }); all.sort((a,b)=>b.at-a.at); h+=all.slice(0,80).map(p=>postHTML(p,true)).join('')||'<p>Follow people (👥 People) and their posts land here.</p>'; h+='<div class="kaRow"><button type="button" data-ka="official" data-noul>📣 The official DD Universe feed</button></div>'; }
-  if(tab==='people'){ const members=Object.entries(people).filter(([i,p])=>p.pub!==false||i===uid).length; const all=[]; Object.keys(Object.assign({},walls,{[uid]:1})).forEach(i=>{ if(i===uid||nameOf(i).pub) postsOf(i).filter(p=>!p.re).forEach(p=>all.push(p)); }); all.sort((a,b)=>b.at-a.at);
-   h+='<div class="kaCard"><h3>🌌 The Omni-Galaxy Community</h3><p class="kaNote">Every signed-in member belongs to one community: '+members+' member'+(members===1?'':'s')+'. Everyone’s public posts land in this one feed; follow anyone to keep them in yours.</p></div>'+(all.slice(0,40).map(p=>postHTML(p,true)).join('')||'<p>The community feed fills as members post.</p>')+'<h3 style="margin-top:14px">👥 Members</h3>';
-   const L=Object.entries(people).filter(([i,p])=>i!==uid&&p.pub!==false&&(!q||(p.name+' '+p.handle).toLowerCase().includes(q.toLowerCase()))); h+='<input type="text" data-f="q" placeholder="🔎 Search people" value="'+esc(q)+'"><div class="kaPeople">'+(L.map(([i,p])=>'<div class="kaPost"><div class="kaBig" style="width:48px;height:48px;font-size:28px">'+esc(p.av||'🙂')+'</div><div style="flex:1;min-width:0" data-ka="open" data-id="'+esc(i)+'"><b>'+esc(p.name||'')+'</b> <span class="kaNote">@'+esc(p.handle||'')+'</span><div class="kaNote">'+esc(p.bio||'')+'</div></div><button type="button" data-ka="follow" data-id="'+esc(i)+'" data-noul>'+((acct.following||[]).includes(i)?'✓ Following':'➕ Follow')+'</button></div>').join('')||'<p>No one else yet. Share the app link and they appear here when they make an account.</p>')+'</div>'; }
-  if(tab==='apps'){ const pins=acct.apps||['studio','tracks','karaoke','games','zodiac','story']; h+='<div class="kaCard"><h3>📱 My apps</h3><p class="kaNote">Your own page of KAN-IN: tap to open, ★ to pin or unpin, ◀ ▶ to move.</p><div class="kaApps">'+pins.map((k,i)=>{ const a=appOf(k); return a?'<div><button type="button" data-app="'+k+'" style="width:100%" data-noul>'+a[1]+'<br>'+esc(a[2])+'</button><div class="kaRow" style="justify-content:center"><button type="button" class="kaChip" data-mv="'+i+'" data-d="-1" data-noul>◀</button><button type="button" class="kaChip on" data-pin="'+k+'" data-noul>★</button><button type="button" class="kaChip" data-mv="'+i+'" data-d="1" data-noul>▶</button></div></div>':''; }).join('')+'</div><h3 style="margin-top:14px">Add to my page</h3><div class="kaRow">'+APPS.filter(a=>!pins.includes(a[0])).map(a=>'<button type="button" class="kaChip" data-pin="'+a[0]+'" data-noul>☆ '+a[1]+' '+esc(a[2])+'</button>').join('')+'</div></div>'; }
-  if(tab==='set') h+='<div class="kaCard"><h3>⚙ Settings</h3><div class="kaRow"><button type="button" data-ka="edit" data-noul>✏️ Edit my account</button><button type="button" data-ka="profile" data-noul>👤 Full profile (zodiac, song, photos)</button><button type="button" data-ka="signout" data-noul>🚪 Sign out</button><button type="button" data-ka="delask" data-noul>🗑 Delete my account</button></div><p class="kaNote" id="kaDelNote"></p></div>';
-  return h; }
- /* ---------- 🔔 ACTIVITY: who liked, replied to or followed me ---------- */
- function activity(){ if(!uid) return []; const out=[]; Object.entries(walls).forEach(([id,w])=>{ if(id===uid) return; (w.likes||[]).forEach(k=>{ if(k.startsWith(uid+':')) out.push({key:'l:'+id+':'+k,type:'like',by:id,pid:k.slice(uid.length+1),at:0}); }); (w.posts||[]).forEach(p=>{ if(p.re&&p.re.by===uid) out.push({key:'r:'+id+':'+p.id,type:'reply',by:id,pid:p.re.id,text:p.text,at:p.at||0}); }); });
-  Object.entries(people).forEach(([id,p])=>{ if(id!==uid&&(p.following||[]).includes(uid)) out.push({key:'f:'+id,type:'follow',by:id,at:0}); }); return out.sort((a,b)=>b.at-a.at); }
- const seenSet=()=>new Set(getLS('kanin-act-seen',[])||[]);
- const unseen=()=>{ const S=seenSet(); return activity().filter(a=>!S.has(a.key)); };
- function markSeen(){ const A=activity(); if(!A.length) return; putLS('kanin-act-seen',A.map(a=>a.key).slice(0,800)); }
- function actHTML(){ const A=activity(), S=seenSet(); if(!A.length) return ''; const myPost=pid=>((myWall().posts||[]).find(p=>p.id===pid)||{}).text||'your post';
-  return '<div class="kaCard"><h3>🔔 Activity'+(A.some(a=>!S.has(a.key))?' <span class="kaNote">· '+A.filter(a=>!S.has(a.key)).length+' new</span>':'')+'</h3>'+A.slice(0,12).map(a=>{ const n=nameOf(a.by); const what=a.type==='like'?'❤️ liked “'+esc(String(myPost(a.pid)).slice(0,60))+'”':a.type==='reply'?'💬 replied: “'+esc(String(a.text||'').slice(0,80))+'”':'➕ followed you'; return '<div class="kaNote" style="margin:4px 0'+(S.has(a.key)?'':';font-weight:800;opacity:1')+'"><span data-ka="open" data-id="'+esc(a.by)+'" style="cursor:pointer">'+esc(n.av)+' '+esc(n.name)+'</span> '+what+(a.at?' · '+ago(a.at):'')+'</div>'; }).join('')+'</div>'; }
- function badge(){ const b=document.getElementById('kdProfile'); if(!b) return; const n=signedIn()?unseen().length:0; let s=b.querySelector(':scope > .kaBadge'); if(!n){ if(s) s.remove(); return; } if(getComputedStyle(b).position==='static') b.style.position='relative'; if(!s){ s=document.createElement('span'); s.className='kaBadge'; s.style.cssText='position:absolute;top:2px;right:2px;min-width:18px;height:18px;border-radius:9px;background:#ff2d55;color:#fff;font:900 11px/18px system-ui,sans-serif;text-align:center;padding:0 4px;pointer-events:none;z-index:2'; b.appendChild(s); } const t=n>99?'99+':String(n); if(s.textContent!==t) s.textContent=t; }
- setInterval(()=>{ if(signedIn()) listenAll(); badge(); },2000);
- /* ---------- 💥 MY CANNON: everything you and the cannon make, held in one place, ready to post ---------- */
- const KIND={audio:['🎵','Sounds and songs','karaoke'],image:['🖼','Pictures and drawings','easel'],video:['🎬','Videos','video'],post:['📝','Posts kept on this device','library'],file:['📄','Files and notes','library']};
- let inv=null, invBusy=false, objURL={}, invArm=null;
- async function loadInv(){ if(invBusy) return; invBusy=true; try{ inv=await KLIB.list(); }catch(_){ inv=[]; } invBusy=false; render(); }
- try{ KLIB.on(()=>{ if(inv!=null){ inv=null; if(tab==='cannon') paint(); } }); }catch(_){ }
- const shots=()=>getLS('kanin-shots',[])||[];
 
- function cannonHTML(){ if(inv==null){ loadInv(); return '<div class="kaCard"><p>Opening your inventory…</p></div>'; }
-  const n=+getLS('kanin-shotn',0)||0, S=shots(), counts={}; inv.forEach(x=>{ const k=KIND[x.kind]?x.kind:'file'; counts[k]=(counts[k]||0)+1; });
-  const stats=[['💥',n,'cannon shots'],['📝',myWall().posts.length,'posts on my page'],['👥',(acct.following||[]).length,'following'],['🎒',inv.length,'things I made']].concat(Object.keys(KIND).map(k=>[KIND[k][0],counts[k]||0,KIND[k][1]]));
-  let h='<div class="kaCard"><h3>💥 My Cannon</h3><p class="kaNote">The cannon makes things for you: a story, a beat, a song, a game, a reading. Everything you and the cannon make lands here. Hold it, open it, and post it to your page.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="fire" data-noul>💥 Fire the cannon</button><button type="button" data-ka="lib" data-noul>📚 Whole library</button><button type="button" data-app="projects" data-noul>📁 Projects</button><button type="button" data-ka="mydata" data-noul>⬇ Download my data</button></div><div class="kaStats">'+stats.map(([i,v,l])=>'<div><b>'+i+' '+v+'</b><span>'+esc(l)+'</span></div>').join('')+'</div>'+(S.length?'<h3 style="margin-top:12px">Last shots</h3>'+S.slice(0,5).map(x=>'<div class="kaNote">💥 '+ago(x.at)+' · '+esc(x.what||'a surprise')+'</div>').join(''):'')+'</div>';
-  h+='<div class="kaCard"><h3>🎒 My inventory</h3>'+(inv.length?inv.slice(0,40).map(x=>{ const K=KIND[x.kind]||KIND.file; const media=x.blob&&/^(audio|image|video)$/.test(x.kind); return '<div class="kaPost"><div class="who">'+K[0]+' '+esc(x.name||'Untitled')+' <span class="kaNote">'+ago(x.at)+(x.meta&&x.meta.secs?' · '+esc(x.meta.secs)+' s':'')+'</span></div>'+(objURL[x.id]?mediaTag(x.kind,objURL[x.id]):'')+(x.kind==='post'&&x.meta&&x.meta.text?'<div class="t">'+esc(x.meta.text)+'</div>':'')+'<div class="kaRow">'+(media?'<button type="button" data-inv="open" data-id="'+esc(x.id)+'" data-noul>'+(objURL[x.id]?'✕ Hide':'▶ Open')+'</button>':'')+'<button type="button" data-inv="post" data-id="'+esc(x.id)+'" data-noul>📣 Post to my page</button>'+(x.blob?'<button type="button" data-inv="save" data-id="'+esc(x.id)+'" data-noul>⬇ Save</button>':'')+'<button type="button" data-inv="del" data-id="'+esc(x.id)+'" data-noul>'+(invArm===x.id?'Tap again to delete':'🗑')+'</button></div></div>'; }).join(''):'<p>Nothing yet. Fire the cannon, make a beat, sing a take or draw a picture and save it: it shows up here.</p>')+'</div>';
-  return h; }
- const extOf=x=>{ const t=(x.blob&&x.blob.type)||''; return /wav/.test(t)?'.wav':/mpeg|mp3/.test(t)?'.mp3':/png/.test(t)?'.png':/jpe?g/.test(t)?'.jpg':/webm/.test(t)?'.webm':/mp4/.test(t)?'.mp4':/json/.test(t)?'.json':/plain/.test(t)?'.txt':''; };
- async function invAct(k,id){ const x=(inv||[]).find(y=>y.id===id); if(!x) return;
-  if(k==='open'){ if(objURL[id]){ try{ URL.revokeObjectURL(objURL[id]); }catch(_){ } delete objURL[id]; } else { try{ objURL[id]=URL.createObjectURL(x.blob); }catch(_){ } } return render(); }
-  if(k==='save'){ try{ dls=dls||await claude.use('downloads'); if(!dls) throw 0; await dls.save({filename:(x.name||'kan-in')+extOf(x),data:x.blob}); }catch(e){ say(e&&e.code==='declined'?'Not saved.':'This view cannot save files.'); } return; }
-  if(k==='del'){ if(invArm!==id){ invArm=id; return render(); } invArm=null; try{ await KLIB.del(id); }catch(_){ } inv=(inv||[]).filter(y=>y.id!==id); say('🗑 Deleted from your library.'); return render(); }
-  if(k==='post'){ const K=KIND[x.kind]||KIND.file; let media=null;
-   if(x.blob&&/^(audio|image|video)$/.test(x.kind)&&x.blob.size<=20*1024*1024){ try{ assets=assets||await claude.use('assets'); if(assets){ say('📣 Posting '+(x.name||'it')+'…'); const r=await assets.upload(x.blob); if(r&&r.url) media={type:x.kind,url:r.url,id:r.id}; } }catch(_){ media=null; } }
-   const w=myWall(); const p={id:Date.now().toString(36),at:Date.now(),text:(K[0]+' '+(x.name||'Something I made')+(x.kind==='post'&&x.meta&&x.meta.text?'\n'+x.meta.text:'')).slice(0,500),app:K[2]}; if(media) p.media=media;
-   await write('wall/'+uid,r=>r.set({posts:[p].concat(w.posts||[]).slice(0,60),likes:w.likes||[]})); say(media?'📣 Posted to your page with the '+(x.kind==='image'?'picture':x.kind==='video'?'video':'sound')+'.':'📣 Posted to your page (the title; the file stays on this device for this viewer).'); tab='posts'; return render(); } }
- let replyTo=null, delArm=false;
- /* ---------- actions ---------- */
- async function onClick(e){ const b=e.target.closest('[data-ka],[data-tab],[data-av],[data-col],[data-like],[data-pub],[data-app],[data-pin],[data-mv],[data-inv]'); if(!b) return; e.stopPropagation(); const k=b.dataset.ka;  if(b.dataset.inv) return invAct(b.dataset.inv,b.dataset.id);
-  if(k==='fire'){ close(); setTimeout(()=>{ try{ KJUMP.open(); setTimeout(()=>{ try{ KJUMP.jump(); }catch(_){ } },350); }catch(_){ say('The cannon is loading. Try again in a moment.'); } },150); return; }
-  if(k==='lib'){ close(); try{ KSOCIAL.open('library'); }catch(_){ } return; }
-  if(k==='mydata'){ try{ dls=dls||await claude.use('downloads'); if(!dls) throw 0; const data={account:acct,posts:myWall().posts,likes:myWall().likes,following:acct.following||[],inventory:(inv||[]).map(x=>({name:x.name,kind:x.kind,at:x.at,meta:x.meta})),cannonShots:shots()}; await dls.save({filename:'my-kan-in-data.json',data:JSON.stringify(data,null,2)}); }catch(e2){ say('This view cannot save files.'); } return; }
-
-  if(b.dataset.tab){ tab=b.dataset.tab; viewing=null; return render(); }
-  if(b.dataset.av){ form.av=b.dataset.av; return render(); } if(b.dataset.col){ form.color=b.dataset.col; return render(); }
-  if(b.dataset.like){ const x=b.dataset.like; form.likes=form.likes.includes(x)?form.likes.filter(y=>y!==x):form.likes.concat(x).slice(0,8); return render(); }
-  if(b.dataset.pub){ form.pub=b.dataset.pub==='1'; return render(); }
-  if(b.dataset.app){ const a=appOf(b.dataset.app); if(a){ close(); setTimeout(()=>{ try{ a[3](); }catch(_){ say('That part is loading. Try again in a moment.'); } },150); } return; }
-  if(b.dataset.pin){ const pins=(acct.apps||['studio','tracks','karaoke','games','zodiac','story']).slice(); const i=pins.indexOf(b.dataset.pin); if(i>=0) pins.splice(i,1); else pins.push(b.dataset.pin); return write('people/'+uid,r=>r.update({apps:pins})); }
-  if(b.dataset.mv){ const pins=(acct.apps||['studio','tracks','karaoke','games','zodiac','story']).slice(); const i=+b.dataset.mv, j=i+(+b.dataset.d); if(j<0||j>=pins.length) return; [pins[i],pins[j]]=[pins[j],pins[i]]; return write('people/'+uid,r=>r.update({apps:pins})); }
-  if(k==='x'||k==='guest'){ if(k==='guest') putSS('kanin-guest','1'); return close(); }
-  if(k==='create'){ form=blankForm(); listenAll(); return render(); }
-  if(k==='cancel'){ form=null; return render(); }
-  if(k==='make'||k==='save'){ const f=form; const err=m=>{ const el=$('kaErr'); if(el) el.textContent=m; };
-   if(!f.name.trim()) return err('Write your display name.'); if(!handleOK(f.handle)) return err('Your @handle needs 3 to 20 letters, numbers or _.'); if(taken(f.handle)) return err('@'+f.handle+' is taken. Pick another.'); if(k==='make'&&!f.rules) return err('Tick the house rules to create your account.');
-   const data={name:f.name.trim().slice(0,40),handle:f.handle,av:f.av,color:f.color,bio:f.bio.slice(0,200),birth:f.birth?f.birth.slice(5):'' ,likes:f.likes,pub:f.pub,at:acct&&acct.at||Date.now(),following:acct&&acct.following||[],apps:acct&&acct.apps||['studio','tracks','karaoke','games','zodiac','story']};
-   await write('people/'+uid,r=>r.set(data)); const me=getLS('kanin-me',{})||{}; putLS('kanin-me',Object.assign(me,{name:data.name,handle:'@'+data.handle,av:data.av,color:data.color,bio:data.bio,likes:data.likes},f.birth?{birth:f.birth}:{}));
-   form=null; putSS('kanin-signed',uid); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
-  if(k==='signin'){ putSS('kanin-signed',uid); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
-  if(k==='signout'){ putSS('kanin-signed',null); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
-  if(k==='edit'){ form=Object.assign(blankForm(),{name:acct.name,handle:acct.handle,av:acct.av,color:acct.color,bio:acct.bio,likes:acct.likes||[],pub:acct.pub!==false,rules:true}); return render(); }
-  if(k==='profile'){ close(); try{ KPROFILE.open(); }catch(_){ } return; }
-  if(k==='official'){ close(); try{ KSOCIAL.open(); }catch(_){ } return; }
-  if(k==='open'){ viewing=b.dataset.id===uid?null:b.dataset.id; return render(); } if(k==='home'){ viewing=null; return render(); }
-  if(k==='follow'){ const id=b.dataset.id; const f=(acct.following||[]).slice(); const i=f.indexOf(id); if(i>=0) f.splice(i,1); else f.push(id); return write('people/'+uid,r=>r.update({following:f.slice(-500)})); }
-  if(k==='post'){ const ta=$('kAcct').querySelector('[data-f="post"]'); const t=(ta&&ta.value||'').trim(); if(!t) return say('Write something first.'); const app=($('kAcct').querySelector('[data-f="app"]')||{}).value||''; const w=myWall(); const p={id:Date.now().toString(36),at:Date.now(),text:t.slice(0,500)}; if(app) p.app=app; if(replyTo) p.re=replyTo; const posts=[p].concat(w.posts||[]).slice(0,60); replyTo=null; await write('wall/'+uid,r=>r.set({posts,likes:w.likes||[]})); say('📣 Posted.'); return; }
-  if(k==='reply'){ replyTo={by:b.dataset.by,id:b.dataset.pid}; if(tab!=='posts'&&tab!=='feed') tab='feed'; viewing=null; render(); const ta=$('kAcct').querySelector('[data-f="post"]'); if(ta) ta.focus(); return; }
-  if(k==='noreply'){ replyTo=null; return render(); }
-  if(k==='like'){ const key=b.dataset.by+':'+b.dataset.pid; const w=myWall(); const L=(w.likes||[]).slice(); const i=L.indexOf(key); if(i>=0) L.splice(i,1); else L.push(key); return write('wall/'+uid,r=>r.set({posts:w.posts||[],likes:L.slice(-400)})); }
-  if(k==='del'){ const w=myWall(); const posts=(w.posts||[]).filter(p=>p.id!==b.dataset.pid); return write('wall/'+uid,r=>r.set({posts,likes:w.likes||[]})); }
-  if(k==='delask'){ if(!delArm){ delArm=true; const n=$('kaDelNote'); if(n) n.textContent='Tap 🗑 Delete my account again to delete your account, your posts, likes and replies for good.'; return; } delArm=false; await write('wall/'+uid,r=>r.delete()); await write('people/'+uid,r=>r.delete()); putSS('kanin-signed',null); say('🗑 Your account is deleted.'); return render(); } }
- function onInput(e){ const f=e.target.dataset.f; if(!f) return; if(f==='q'){ q=e.target.value; const pos=e.target.selectionStart; render(); const el=$('kAcct').querySelector('[data-f="q"]'); if(el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){ } } return; }
-  if(!form||f==='post'||f==='app') return; form[f]=e.target.type==='checkbox'?e.target.checked:e.target.value; if(f==='handle'){ const n=$('kaHandleNote'); if(n) n.textContent=!form.handle?'':!handleOK(form.handle)?'3 to 20 letters, numbers or _':taken(form.handle)?'@'+form.handle+' is taken':'@'+form.handle+' is free ✓'; } }
- /* repaint on data, but never while someone is typing in the page */
- function paint(){ const d=$('kAcct'); if(!d||d.hidden) return; const ae=document.activeElement; if(ae&&d.contains(ae)&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return; render(); }
- function open(t){ if(typeof t==='string'){ tab=t; viewing=null; } const d=host(); d.hidden=false; try{ ['kKara','libDock','fileDock','kManual','kMe'].forEach(i=>{ const x=$(i); if(x&&x!==d) x.hidden=true; }); }catch(_){ } render(); }
- function close(){ const d=$('kAcct'); if(d) d.hidden=true; form=null; }
- /* the landing game opens the app, then SIGN IN comes up */
- addEventListener('kanin',e=>{ if(e.detail==='gate-open'&&!signedIn()&&!getSS('kanin-guest')) setTimeout(open,700); });
- /* the rail's 👤 Profile opens the account: sign in first, then my page */
- document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#kdProf,#kdProfile,[data-kd-l="Profile"]'); if(!b) return; e.preventDefault(); e.stopImmediatePropagation(); open(); },true);
- (window.KFINDX=window.KFINDX||[]).push(add=>{ add('You','🔐','Sign in, my account and my page','Account',()=>open()); });
- boot();
- window.KACCT={open,close,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
-})();
-
-</script>
 <script>
 (()=>{ /* 🏆 SPORTS (v247): a platform of its own. Every major sport in the world by family (team ball sports, racket, combat, racing and
    motor, water, winter, strength and precision, mind and electronic), each with how you win, how many play, and its biggest
@@ -30359,6 +30110,8 @@ body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
 })();
 
 </script>
+
+
 <script>
 (()=>{ /* ⚖️ LEGAL & SAFETY (v250): one page of disclosures, disclaimers and safety resources, reachable from the footer of every screen, from the bottom of the landing page, and from a one-time notice the first time the app opens (13+, the terms, the
    betting age). Plain words; it does not replace the advice of a lawyer, and the owners may update it at any time. */
@@ -30400,7 +30153,7 @@ body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
   d.innerHTML='<div class="lgIn"><div class="lgTop"><h2>⚖️ Legal & Safety</h2><button type="button" data-lg="x" data-noul>✕ Close</button></div><p>Please read before you use KAN-IN. By using the app you agree to what is on this page.</p>'+SEC.map(([i,t,b])=>'<section><h3>'+i+' '+t+'</h3><p>'+b+'</p></section>').join('')+'<p style="opacity:.75;font-size:13px;margin-top:14px">© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and simulation use only. Any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p></div>';
   d.addEventListener('click',e=>{ if(e.target.closest('[data-lg="x"]')){ e.stopPropagation(); close(); } }); return d; }
  function open(){ box().hidden=false; box().scrollTop=0; }
- function close(){ const d=$('kLegal'); if(d) d.hidden=true; const g=$('kAgree'); if(g&&!getLS('kanin-agree-v1',false)) g.hidden=false; }
+ function close(){ const d=$('kLegal'); if(d) d.hidden=true; const g=$('kAgree'); if(g&&(()=>{ try{ return sessionStorage.getItem('kanin-agree-s')!=='1'; }catch(_){ return true; } })()) g.hidden=false; }
  document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('.kLegalLink'); if(!b) return; e.preventDefault(); e.stopPropagation(); open(); },true);
  const link=()=>{ const b=document.createElement('button'); b.type='button'; b.className='kLegalLink'; b.setAttribute('data-noul',''); b.textContent='⚖️ Legal & safety · 13+'; return b; };
  /* the header and footer of every screen, and the bottom of the landing page */
@@ -30408,12 +30161,365 @@ body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
   const wrap=document.querySelector('.wrap'); if(wrap&&!$('kLegalBar')){ const f=document.createElement('div'); f.id='kLegalBar'; f.innerHTML='<span>⚖️ This app is for ages 13+. Not legal, financial, medical or betting advice. No real-money gambling in the app; betting links are 21+ and lead to outside sites. Use at your own risk. Need help? Call or text 988.</span>'; f.appendChild(link()); wrap.appendChild(f); } }
  setInterval(place,1500);
  /* the first time the app opens: the age and the terms */
- function agree(){ if(getLS('kanin-agree-v1',false)) return; let a=$('kAgree'); if(!a){ a=document.createElement('div'); a.id='kAgree'; a.innerHTML='<div class="agCard" role="dialog" aria-label="Before you start"><h3>⚖️ Before you start</h3><p>KAN-IN is for ages <b>13 and up</b> (under 18 with a parent’s or guardian’s permission). It is for entertainment and information, not legal, financial, medical or betting advice. Games use play chips only; betting links are for adults 21+ where legal and leave the app. Use it at your own risk.</p><div class="agRow"><button type="button" data-ag="ok" data-noul>✅ I am 13 or older and I agree</button><button type="button" data-ag="read" data-noul>📄 Read Legal & Safety</button></div></div>'; document.body.appendChild(a);
-   a.addEventListener('click',e=>{ const b=e.target.closest('[data-ag]'); if(!b) return; e.stopPropagation(); if(b.dataset.ag==='read'){ a.hidden=true; return open(); } putLS('kanin-agree-v1',true); a.hidden=true; }); }
+ function agree(){ if((()=>{ try{ return sessionStorage.getItem('kanin-agree-s')==='1'; }catch(_){ return false; } })()) return; let a=$('kAgree'); if(!a){ a=document.createElement('div'); a.id='kAgree'; a.innerHTML='<div class="agCard" role="dialog" aria-label="Before you start"><h3>⚖️ Before you start</h3><p>KAN-IN is for ages <b>13 and up</b> (under 18 with a parent’s or guardian’s permission). It is for entertainment and information, not legal, financial, medical or betting advice. Games use play chips only; betting links are for adults 21+ where legal and leave the app. Use it at your own risk.</p><div class="agRow"><button type="button" data-ag="ok" data-noul>✅ I am 13 or older and I agree</button><button type="button" data-ag="read" data-noul>📄 Read Legal & Safety</button></div></div>'; document.body.appendChild(a);
+   a.addEventListener('click',e=>{ const b=e.target.closest('[data-ag]'); if(!b) return; e.stopPropagation(); if(b.dataset.ag==='read'){ a.hidden=true; return open(); } try{ sessionStorage.setItem('kanin-agree-s','1'); }catch(_){ } a.hidden=true; }); }
   a.hidden=false; }
  addEventListener('kanin',e=>{ if(e.detail==='gate-open') setTimeout(agree,300); });
  (window.KFINDX=window.KFINDX||[]).push(add=>{ add('You','⚖️','Legal & safety: disclaimers, age, gambling, help lines','Legal',()=>open()); });
  window.KLEGAL={open,close,agree};
+})();
+
+</script>
+<script>
+(()=>{ /* 🎛 THE STEP SEQUENCER AS ITS OWN PANEL (v252): the channel rack, a Reason / FL-style grid of 16 steps for every sound, layered
+   row under row and played from the same clock, floats like the pads and the keyboard: drag it, stack it, ▁ shrink it, ✕ close it, and
+   🪟 Arrange tiles it with the other panels. It opens from 🎛 Steps on the transport bar. */
+ const $=id=>document.getElementById(id);
+ const css=document.createElement('style'); css.textContent=`
+html.lvl-easy #pad #crSec.kFloat.kFOn:not(.kFOff){display:block!important}
+#crSec.kFloat.kFOn:not(.kFOff){overflow:auto}
+#crSec.kFloat.kFOn button,#crSec.kFloat.kFOn select{max-width:100%}`; document.head.appendChild(css);
+ function reg(){ let F; try{ F=KRAIL.FLOAT; }catch(_){ return; } const cr=$('crSec'); if(!F||!F.add||!cr) return; if(!reg.done){ F.add('rack',{get:()=>$('crSec'),t:'🎛 Step sequencer · 16 steps a sound',i:'🎛',l:'Steps'}); reg.done=true;
+   try{ if(!localStorage.getItem('kanin-float-rack')){ const W=innerWidth-(innerWidth<=760?58:76); localStorage.setItem('kanin-float-rack',JSON.stringify(innerWidth<=760?{x:4,y:56,w:W-8,h:Math.round(innerHeight*.7)}:{x:Math.round(W*.25),y:120,w:Math.round(W*.7),h:Math.round(innerHeight*.6)})); } }catch(_){ } }
+  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-rko]')){ const b=document.createElement('button'); b.type='button'; b.dataset.rko='1'; b.setAttribute('data-noul',''); b.textContent='🎛 Steps'; b.title='The 16-step sequencer, as a floating panel'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); try{ F.toggle('rack'); }catch(_){ } },true); bb.appendChild(b); } }
+ setInterval(reg,900);
+ window.KRACK={open:()=>{ try{ KRAIL.FLOAT.open('rack'); }catch(_){ } }};
+})();
+
+</script>
+<script>
+(()=>{ /* 🪟 THE MUSIC STUDIO'S PANELS, LAID OUT FOR THE SCREEN (v245). Every device is its own floating panel and any number can be up at
+   once over the mixing board: 🥁 pads, 🎹 keyboard, 🎼 track sequencer, 🎧 DJ decks, 🎤 Karaoke mic. One tap on 🪟 ARRANGE lays the open
+   panels out for the screen you are on:
+   • A LAPTOP OR A BIG MONITOR tiles them side by side across the whole screen, full height, none covering another: pads, keyboard,
+     track sequencer, DJ decks and mic, each as wide as the screen allows (a big monitor gives each more room).
+   • A PHONE stacks them full width, one in front, with a strip of panel buttons at the bottom to bring any panel to the front.
+   Drag any panel by its top bar to move it anywhere, stack them or set them side by side; ▁ shrinks one, ✕ closes it; every panel stays
+   live wherever it sits. ● REC on the pads or the keyboard records both: one sequencer, one mixing board. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
+ const KEYS=[['pads','🥁','Pads',1],['keys','🎹','Keys',1.5],['rack','🎛','Steps',1.6],['dj','🎧','DJ',1.3],['kara','🎤','Mic',.9],['seq','🎼','Tracks',0]];
+ const phone=()=>innerWidth<=760;
+ const openKeys=()=>KEYS.filter(([k])=>{ try{ return F().isOpen(k); }catch(_){ return false; } });
+ const put=(k,g)=>{ try{ localStorage.setItem('kanin-float-'+k,JSON.stringify(g)); }catch(_){ } };
+ function arrange(quiet){ const f=F(); if(!f) return; let L=openKeys(); if(!L.length){ ['pads','keys','seq'].forEach(k=>{ try{ f.open(k); }catch(_){ } }); L=openKeys(); }
+  const W=innerWidth-(phone()?58:76), H=innerHeight, gap=8; let top=8; const bb=$('bbBar'); if(!phone()&&bb&&bb.getClientRects().length){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<H*.6) top=Math.round(r.bottom)+4; }
+  if(phone()){ L.forEach(([k])=>put(k,{x:4,y:56,w:W-8,h:Math.round(H*.72)})); }
+  else { const WT={pads:1,keys:1.4,rack:1.6,dj:1.2,kara:.9,seq:1.6}; const order=['pads','keys','rack','seq','dj','kara']; const cols=order.map(k=>L.find(x=>x[0]===k)).filter(Boolean); const tot=cols.reduce((a,[k])=>a+WT[k],0)||1; const avail=W-gap*(cols.length+1); let x=gap;
+   cols.forEach(([k])=>{ const w=Math.max(280,Math.round(avail*WT[k]/tot)); put(k,{x:Math.min(x,W-w-gap),y:top,w,h:H-top-gap}); x+=w+gap; }); }
+  L.forEach(([k])=>{ try{ f.open(k); }catch(_){ } }); if(!quiet) say(phone()?'🪟 The panels are stacked for the phone: the strip at the bottom brings any one to the front.':'🪟 The panels are laid out across the screen over the mixing board. Drag any top bar to move one.'); paint(); }
+ /* the phone strip: bring any open panel to the front */
+ const css=document.createElement('style'); css.textContent=`
+#kPanelStrip{position:fixed;z-index:9740;left:calc(6px + env(safe-area-inset-left,0px));right:calc(var(--kRailW,58px) + 6px);bottom:calc(6px + env(safe-area-inset-bottom,0px));display:none;gap:6px;justify-content:center;background:rgba(10,8,30,.92);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:6px}
+#kPanelStrip.on{display:flex}
+#kPanelStrip button{flex:1 1 0;min-height:44px!important;border-radius:10px!important;font:800 13px system-ui,sans-serif!important;padding:0 4px!important}`; document.head.appendChild(css);
+ function strip(){ let s=$('kPanelStrip'); if(!s){ s=document.createElement('div'); s.id='kPanelStrip'; s.setAttribute('role','toolbar'); s.setAttribute('aria-label','Panels'); s.addEventListener('click',e=>{ const b=e.target.closest('[data-pk]'); if(!b) return; e.stopPropagation(); try{ F().open(b.dataset.pk); }catch(_){ } }); document.body.appendChild(s); } return s; }
+ function paint(){ const pad=$('pad'); const live=!!pad&&(pad.classList.contains('on')||document.body.classList.contains('kDevOver')); const L=live?openKeys():[]; const s=strip(); const on=phone()&&L.length>=2; s.classList.toggle('on',on); if(on){ const h=L.map(([k,i,l])=>'<button type="button" data-pk="'+k+'" data-noul>'+i+' '+l+'</button>').join(''); if(s.dataset.h!==h){ s.dataset.h=h; s.innerHTML=h; } }
+  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-arr]')){ const b=document.createElement('button'); b.type='button'; b.dataset.arr='1'; b.setAttribute('data-noul',''); b.textContent='🪟 Arrange'; b.title='Lay the open panels out for this screen'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); arrange(); },true); bb.appendChild(b); } }
+ /* 🔗 ONE RECORD BUTTON FOR THE WHOLE RIG: the pads and the keyboard feed one sequencer and one mixing board, so ● REC on either one
+    records both (each onto its selected track), and stopping either stops both. */
+ const padRec=()=>{ const b=$('padRecLive'); return !!b&&(b.classList.contains('rec')||/on$/i.test(b.textContent.trim())); };
+ const keyRec=()=>{ const b=$('kbRec'); return !!b&&(b.classList.contains('rec')||/: on$/i.test(b.textContent.trim())); };
+ let was={p:false,k:false}, syncing=false;
+ setInterval(()=>{ if(syncing) return; const p=padRec(), k=keyRec(); if(p!==was.p&&k===was.k&&p!==k){ syncing=true; const b=$('kbRec'); if(b) b.click(); setTimeout(()=>{ syncing=false; was={p:padRec(),k:keyRec()}; },250); return; }
+  if(k!==was.k&&p===was.p&&p!==k){ syncing=true; const b=$('padRecLive'); if(b) b.click(); setTimeout(()=>{ syncing=false; was={p:padRec(),k:keyRec()}; },250); return; } was={p,k}; },120);
+ setInterval(paint,800);
+ window.KLAYOUT={arrange,get recording(){ return padRec()||keyRec(); }};
+})();
+
+</script>
+<script>
+(()=>{ /* 🔐 SIGN IN · ACCOUNT · MY PAGE (v243). The first thing after the landing game opens the app (four cannon hits) is SIGN IN.
+   • Signing in needs an account. A person with no account is shown CREATE YOUR ACCOUNT (a display name, a unique @handle, an avatar,
+     a short bio, interests, the birthday that sets their LuvMyZodiac sign, public or private page, and the house rules), and only
+     then SIGN IN. The account is tied to who is viewing (the platform's own sign-in), so nobody needs a password here and nobody can
+     sign in as somebody else.
+   • MY PAGE: every person gets their own platform inside the platform: a cover in their colour, their avatar, name, @handle and bio,
+     followers and following, their posts, their feed (the people they follow, the official DD Universe posts and their own), the
+     people directory (search, follow, unfollow, open anyone's page), MY APPS (the parts of KAN-IN they pin to their own page, in their
+     own order: their studio, their games, their zodiac, their recipes…) and settings (edit, sign out, delete the account).
+   • Posts can share what they made (a beat, a story, a song, a game score: the app it came from is linked), get ❤ likes and 💬 replies.
+     Everyone signed in reads every public page; each person writes only their own page (the owner of DD Universe moderates).
+   Data: people/<id> (the account and page) and wall/<id> (that person's posts, likes and replies); the profile on the device
+   (kanin-me) is kept in step, so the Profile tab, Social and LuvMyZodiac agree. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const getSS=k=>{ try{ return sessionStorage.getItem(k); }catch(_){ return null; } }, putSS=(k,v)=>{ try{ v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v); }catch(_){ } };
+ const ago=t=>{ const s=(Date.now()-t)/1000; return s<60?'just now':s<3600?Math.floor(s/60)+' min':s<86400?Math.floor(s/3600)+' h':Math.floor(s/86400)+' d'; };
+ const AV=['🦁','🐯','🦊','🐼','🐸','🐙','🦄','🐲','🦅','🐬','🦋','🌟','🔥','⚡','🌙','🌈','🎧','🎤','🎸','🥁','🎹','🎬','🎨','🕹','👑','💎','🚀','🤖','👽','🧠','🧙','🦸'];
+ const COLS=['#ff2d95','#7a2cff','#00b7ff','#00c46a','#ffb800','#ff5a1f','#e0245e','#14b8a6'];
+ const INTERESTS=['Hip-hop','R&B','Pop','Rock','Gospel','Jazz','Country','Latin','Afrobeats','EDM','Comedy','Film','Gaming','Art','Poetry','Astrology','Science','Faith','Fitness','Fashion','Food','Travel','Stories','Beats'];
+ const APPS=[['story','📖','Story builder',()=>KRAIL.goTo('home')],['studio','🎛','Studio',()=>KRAIL.goTo('pad')],['tracks','🎼','Track sequencer',()=>KSEQ.open()],['karaoke','🎤','Karaoke',()=>KKARA.open()],['music','🎵','Music',()=>KRAIL.goTo('musicDock')],['games','🕹','Games',()=>KVG.open()],['zodiac','♈','LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['compass','🧭','Omni-Compass',()=>KRAIL.goTo('omniDock')],['recipes','🍳','Recipes',()=>KRAIL.goTo('recipeDock')],['laugh','😂','Laugh',()=>KHUMOR.open('day')],['ai','🤖','AI',()=>KAI.open()],['easel','🎨','The Easel',()=>KEASEL.open()],['video','🎬','Video studio',()=>KRAIL.goTo('aivDock')],['news','📰','Current News',()=>KNEWS.open()],['faith','✝️','Cultures & Religion',()=>KRELIG.open()],['market','📈','Stock Market',()=>KMARKET.open()],['library','📚','My library',()=>KSOCIAL.open('lib')],['projects','📁','Projects',()=>KRAIL.goTo('fileDock')]];
+ const appOf=k=>APPS.find(a=>a[0]===k);
+ let db=null, user=null, uid=null, state='boot', acct=null, wall=null, people={}, walls={}, unsubP=null, unsubW=null, tab='posts', viewing=null, q='', news=[], assets=null, dls=null;
+ const signedIn=()=>!!acct&&getSS('kanin-signed')===uid;
+ /* ---------- connect ---------- */
+ async function boot(){ try{ if(!window.claude||!claude.use){ state='none'; return; } [db,user]=await Promise.all([claude.use('db').catch(()=>null),claude.use('user').catch(()=>null)]); if(!db||!user){ state='none'; paint(); return; } uid=await user.id().catch(()=>null); if(!uid){ state='none'; paint(); return; }
+   state='loading'; const to=setTimeout(()=>{ if(state==='loading'){ state='none'; paint(); } },10000);
+   db.doc('people/'+uid).onSnapshot(s=>{ clearTimeout(to); acct=s.exists?s.data():null; state=acct?'have':'new'; paint(); },()=>{ clearTimeout(to); state='none'; paint(); });
+   db.doc('wall/'+uid).onSnapshot(s=>{ wall=s.exists?s.data():null; paint(); },()=>{}); }catch(_){ state='none'; paint(); } }
+ function listenAll(){ if(!db||unsubP) return; unsubP=db.collection('people').limit(500).onSnapshot(s=>{ people={}; s.docs.forEach(d=>{ people[d.id]=d.data()||{}; }); paint(); },()=>{}); unsubW=db.collection('wall').limit(500).onSnapshot(s=>{ walls={}; s.docs.forEach(d=>{ walls[d.id]=d.data()||{}; }); paint(); },()=>{}); db.collection('news/today/items').orderBy('rank').limit(8).onSnapshot(s=>{ news=s.docs.map(d=>d.data()||{}); paint(); },()=>{}); }
+ /* ---------- writes: one at a time, only my own page ---------- */
+ let busy=Promise.resolve(); const write=(path,fn)=>{ busy=busy.then(async()=>{ try{ await fn(db.doc(path)); }catch(e){ say(e&&e.code==='not_granted'?'This viewer can read pages but cannot write here. Ask the owner for Contributor access.':'That did not save. Try again.'); throw e; } }).catch(()=>{}); return busy; };
+ const myWall=()=>Object.assign({posts:[],likes:[]},wall||{});
+ /* ---------- the screens ---------- */
+ const css=document.createElement('style'); css.textContent=`
+#kAcct{position:fixed;inset:0;right:var(--kRailW,58px);z-index:9700;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3b0f5c,#07051a 70%);color:#eef;font:15px/1.5 system-ui,sans-serif;padding:calc(14px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 40px}
+#kAcct[hidden]{display:none!important}
+#kAcct .kaIn{max-width:860px;margin:0 auto}
+#kAcct .kaCard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:16px;margin:12px 0}
+#kAcct h2{font:900 26px/1.15 system-ui,sans-serif;margin:4px 0;color:#ffe94a}#kAcct h3{font:800 18px system-ui,sans-serif;margin:4px 0 8px}
+#kAcct label{display:block;font:700 13px system-ui,sans-serif;margin:10px 0 4px;color:#cfe}
+#kAcct input[type=text],#kAcct input[type=date],#kAcct textarea,#kAcct select{width:100%;box-sizing:border-box;min-height:44px;border-radius:12px;padding:8px 12px;font:16px system-ui,sans-serif}
+#kAcct textarea{min-height:80px}
+#kAcct .kaRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#kAcct button{min-height:44px;border-radius:12px;padding:0 16px;font:800 15px system-ui,sans-serif;cursor:pointer}
+#kAcct .kaGo{background:linear-gradient(135deg,#ffe94a,#ff7a00)!important;color:#1a0f00!important;font-size:17px!important;min-height:52px!important}
+#kAcct .kaChip{min-height:36px;padding:0 12px;border-radius:99px;font:700 13px system-ui,sans-serif}
+#kAcct .kaChip.on{background:#ff2d95!important;color:#fff!important}
+#kAcct .kaAv{font-size:24px;min-width:44px;padding:0}
+#kAcct .kaAv.on{outline:3px solid #ffe94a}
+#kAcct .kaCover{border-radius:18px;padding:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#kAcct .kaBig{font-size:56px;width:84px;height:84px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,0,0,.25);border:3px solid #fff}
+#kAcct .kaName{font:900 24px system-ui,sans-serif}#kAcct .kaHandle{opacity:.85;font-weight:700}
+#kAcct .kaTabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+#kAcct .kaTabs button.on{background:#ffe94a!important;color:#14163a!important}
+#kAcct .kaPost{background:rgba(0,0,0,.25);border-radius:14px;padding:10px 12px;margin:8px 0}
+#kAcct .kaPost .who{font-weight:800}#kAcct .kaPost .t{white-space:pre-wrap;word-wrap:break-word;margin:4px 0}
+#kAcct .kaPost .kaRow button{min-height:36px;padding:0 10px;font-size:13px}
+#kAcct .kaApps{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+#kAcct .kaApps button{min-height:64px;font-size:14px;white-space:normal}
+#kAcct .kaApps .kaRow{flex-wrap:nowrap!important;gap:4px!important;margin-top:4px}
+#kAcct .kaApps .kaRow .kaChip{min-width:0!important;min-height:32px!important;height:32px;padding:0 10px!important;flex:1 1 0;font-size:13px!important}
+#kAcct .kaApps [data-app]{font-size:15px!important}
+#kAcct .kaPeople .kaPost{display:flex;gap:10px;align-items:center}
+#kAcct .kaNote{font-size:13px;opacity:.85}
+#kAcct .kaErr{color:#ffb4c8;font-weight:700}
+#kAcct .kaStats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
+#kAcct .kaStats div{background:rgba(0,0,0,.25);border-radius:12px;padding:8px 10px}
+#kAcct .kaStats b{display:block;font:900 20px system-ui,sans-serif;color:#ffe94a}
+#kAcct .kaStats span{font-size:12.5px;opacity:.85}
+#kAcct .kaPost a{color:#7ff;font-weight:700}
+#kAcct .kaTag{color:#7ff;font-weight:800;cursor:pointer}
+#kAcct .kaDet{display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0;font:700 13px system-ui,sans-serif;opacity:.95}
+#kAcct .kaDet a{color:#7ff}
+#kAcct .kaUp{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:4px 12px 4px 12px;background:#2a4fa8;color:#fff;font:800 14px system-ui,sans-serif;cursor:pointer;margin:0}
+#kAcct .kaGrid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 12px}
+#kAcct .kaPhotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+#kAcct .kaPhotos figure{margin:0}
+#kAcct .kaPhotos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+#kAcct .kaPhotos figcaption{font-size:11.5px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kAcct .kaQuote{border-left:3px solid #7ff;background:rgba(255,255,255,.05);border-radius:2px 10px 2px 10px;padding:6px 10px;margin:6px 0}
+#kAcct .kaPoll{display:flex;flex-direction:column;gap:5px;margin:6px 0}
+#kAcct .kaPoll button{text-align:left;min-height:40px!important}
+#kAcct .kaPollIn{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-top:6px}
+#kAcct .kaPollIn input{min-height:40px;border-radius:10px;padding:0 10px}
+#kAcct .kaStories{display:flex;gap:10px;overflow-x:auto;padding:6px 2px 10px}
+#kAcct .kaStories button{display:flex;flex-direction:column;align-items:center;gap:4px;background:none!important;border:0!important;min-width:72px}
+#kAcct .kaRing{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;background:#14163a;box-shadow:0 0 0 3px #ff2d95,0 0 0 6px #ffe94a}
+#kAcct .kaStories small{font:700 11px system-ui,sans-serif;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#kaStory{position:fixed;inset:0;z-index:9750;background:rgba(5,4,16,.94);display:flex;align-items:center;justify-content:center;padding:16px}
+#kaStory .kaStoryIn{width:min(460px,100%);background:linear-gradient(160deg,#2a1450,#0c0820);border:2px solid #ff2d95;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+#kaStory .kaBars{display:flex;gap:4px}
+#kaStory .kaBars i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.25)}
+#kaStory .kaBars i.done,#kaStory .kaBars i.on{background:#ffe94a}`; document.head.appendChild(css);
+ function host(){ let d=$('kAcct'); if(d) return d; d=document.createElement('div'); d.id='kAcct'; d.className='kHas'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Account and my page'); document.body.appendChild(d); d.addEventListener('click',onClick); d.addEventListener('input',onInput); d.addEventListener('change',e=>{ if(e.target&&e.target.dataset&&e.target.dataset.up) onFile(e); else onInput(e); }); return d; }
+ let form=null; const blankForm=()=>{ const me=getLS('kanin-me',{})||{}; return {name:me.name||'',handle:(me.handle||'').replace(/^@/,''),av:me.av||AV[Math.floor(Math.random()*AV.length)],color:me.color||COLS[0],bio:me.bio||'',birth:me.birth||'',likes:Array.isArray(me.likes)?me.likes.slice(0,8):[],pub:true,rules:false,photo:me.photo||'',cover:me.cover||'',location:'',hometown:'',gender:'',pronouns:'',work:'',school:'',langs:'',rel:'',website:'',showAge:false}; };
+ const legal='<p class="kaNote">© 2026 The Omni-Compass LLC and DD Universe Multi-Media Studios. All rights reserved. Evaluation and simulation use only. Any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com</p>';
+ function render(){ const d=host(); if(d.hidden) return; let h='<div class="kaIn"><div class="kaRow" style="justify-content:space-between"><b style="font:900 14px system-ui,sans-serif;letter-spacing:.08em;color:#7ff">🔐 DD UNIVERSE · MY ACCOUNT</b><button type="button" data-ka="x" data-noul>✕ Close</button></div>';
+  if(state==='boot'||state==='loading') h+='<div class="kaCard"><h2>🔐 Sign in</h2><p>Finding your account…</p></div>';
+  else if(state==='none') h+='<div class="kaCard"><h2>🔐 Sign in</h2><p>Accounts need the platform\'s sign-in, and this view does not have it (you are signed out, or opened a public copy). Sign in to claude.ai and open the app again to create your account.</p><div class="kaRow"><button type="button" data-ka="guest" data-noul>👀 Look around as a guest</button></div><p class="kaNote">As a guest everything you make stays on this device. Posting, following and your own page need an account.</p></div>';
+  else if(state==='new'&&!form) h+='<div class="kaCard"><h2>🔐 Sign in</h2><p class="kaErr">You do not have an account yet, so you cannot sign in.</p><p>Create your account first: it takes a minute and gives you your own page inside DD Universe, with your posts, your people and your apps.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="create" data-noul>✨ Create my account</button><button type="button" data-ka="guest" data-noul>👀 Look around as a guest</button></div></div>';
+  else if(state==='new'&&form) h+=formHTML(false);
+  else if(state==='have'&&!signedIn()&&!form) h+='<div class="kaCard"><h2>🔐 Sign in</h2><div class="kaCover" style="background:'+esc(acct.color||COLS[0])+'"><div class="kaBig">'+esc(acct.av||'🙂')+'</div><div><div class="kaName">'+esc(acct.name||'')+'</div><div class="kaHandle">@'+esc(acct.handle||'')+'</div></div></div><p>Welcome back. This is your account on this sign-in.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="signin" data-noul>➡ Sign in as @'+esc(acct.handle||'')+'</button></div></div>';
+  else if(form) h+=formHTML(true);
+  else h+=page();
+  d.innerHTML=h+legal+'</div>'; }
+ function formHTML(edit){ const f=form; return '<div class="kaCard"><h2>'+(edit?'✏️ Edit my account':'✨ Create your account')+'</h2>'+
+  '<label>Display name</label><input type="text" data-f="name" maxlength="40" value="'+esc(f.name)+'" placeholder="Your name">'+
+  '<label>@handle (letters, numbers and _, 3 to 20; nobody else can have it)</label><input type="text" data-f="handle" maxlength="20" value="'+esc(f.handle)+'" placeholder="yourhandle"><div class="kaNote" id="kaHandleNote"></div>'+
+  '<label>Avatar</label><div class="kaRow">'+AV.map(a=>'<button type="button" class="kaAv'+(a===f.av?' on':'')+'" data-av="'+a+'" data-noul>'+a+'</button>').join('')+'</div>'+
+  '<label>Page colour</label><div class="kaRow">'+COLS.map(c=>'<button type="button" class="kaAv'+(c===f.color?' on':'')+'" data-col="'+c+'" style="background:'+c+'" aria-label="Colour '+c+'" data-noul>&nbsp;</button>').join('')+'</div>'+
+  '<label>Profile photo and cover</label><div class="kaRow kaPics"><span class="kaBig" style="width:72px;height:72px;overflow:hidden;font-size:40px">'+(okImg(f.photo)?'<img src="'+esc(f.photo)+'" alt="" style="width:72px;height:72px;object-fit:cover">':esc(f.av))+'</span><label class="kaUp">📷 Upload a photo<input type="file" accept="image/*" data-up="photo" hidden></label>'+(f.photo?'<button type="button" data-ka="nophoto" data-noul>Remove photo</button>':'')+'<label class="kaUp">🖼 Upload a cover<input type="file" accept="image/*" data-up="cover" hidden></label>'+(f.cover?'<button type="button" data-ka="nocover" data-noul>Remove cover</button>':'')+'</div>'+(okImg(f.cover)?'<img src="'+esc(f.cover)+'" alt="" style="width:100%;max-height:140px;object-fit:cover;border-radius:12px;margin-top:6px">':'')+
+  '<div class="kaGrid2"><div><label>📍 Where you live (city, state or country)</label><input type="text" data-f="location" maxlength="60" value="'+esc(f.location)+'"></div><div><label>🏠 Where you are from</label><input type="text" data-f="hometown" maxlength="60" value="'+esc(f.hometown)+'"></div>'+
+  '<div><label>⚧ Gender</label><select data-f="gender" data-nodice data-die="1">'+['','Woman','Man','Non-binary','Prefer to self-describe','Prefer not to say'].map(o=>'<option value="'+o+'"'+(f.gender===o?' selected':'')+'>'+(o||'Choose…')+'</option>').join('')+'</select></div><div><label>💬 Pronouns (optional)</label><input type="text" data-f="pronouns" maxlength="20" value="'+esc(f.pronouns)+'" placeholder="she/her, he/him, they/them…"></div>'+
+  '<div><label>💼 Work</label><input type="text" data-f="work" maxlength="60" value="'+esc(f.work)+'"></div><div><label>🎓 School</label><input type="text" data-f="school" maxlength="60" value="'+esc(f.school)+'"></div>'+
+  '<div><label>🗣 Languages</label><input type="text" data-f="langs" maxlength="60" value="'+esc(f.langs)+'" placeholder="English, Spanish…"></div><div><label>💞 Relationship</label><select data-f="rel" data-nodice data-die="1">'+['','Single','In a relationship','Engaged','Married','It’s complicated','Prefer not to say'].map(o=>'<option value="'+o+'"'+(f.rel===o?' selected':'')+'>'+(o||'Choose…')+'</option>').join('')+'</select></div>'+
+  '<div><label>🔗 Website (https://…)</label><input type="text" data-f="website" maxlength="100" value="'+esc(f.website)+'"></div><div><label style="display:flex;gap:6px;align-items:center;margin-top:30px"><input type="checkbox" data-f="showAge"'+(f.showAge?' checked':'')+'> 🎂 Show my age (needs the birthday below)</label></div></div>'+
+  '<label>Bio</label><textarea data-f="bio" maxlength="200" placeholder="A line about you">'+esc(f.bio)+'</textarea>'+
+  '<label>Birthday (sets your LuvMyZodiac sign; only the month and day show)</label><input type="date" data-f="birth" value="'+esc(f.birth)+'">'+
+  '<label>Interests (up to 8)</label><div class="kaRow">'+INTERESTS.map(x=>'<button type="button" class="kaChip'+(f.likes.includes(x)?' on':'')+'" data-like="'+esc(x)+'" data-noul>'+esc(x)+'</button>').join('')+'</div>'+
+  '<label>Who sees my page</label><div class="kaRow"><button type="button" class="kaChip'+(f.pub?' on':'')+'" data-pub="1" data-noul>🌐 Everyone signed in</button><button type="button" class="kaChip'+(!f.pub?' on':'')+'" data-pub="0" data-noul>🔒 Hidden (off the people list and feeds)</button></div>'+
+  (edit?'':'<label><input type="checkbox" data-f="rules"'+(f.rules?' checked':'')+'> I agree to the house rules: be kind, post only what is mine to share, no hate, no harassment, nothing unsafe. The owner may remove posts that break them.</label>')+
+  '<p class="kaErr" id="kaErr"></p><div class="kaRow"><button type="button" class="kaGo" data-ka="'+(edit?'save':'make')+'" data-noul>'+(edit?'💾 Save':'✅ Create my account')+'</button><button type="button" data-ka="cancel" data-noul>Cancel</button></div></div>'; }
+ const handleOK=h=>/^[A-Za-z0-9_]{3,20}$/.test(h);
+ const taken=h=>Object.entries(people).some(([id,p])=>id!==uid&&String(p.handle||'').toLowerCase()===h.toLowerCase());
+ /* ---------- my page and anyone's page ---------- */
+ const nameOf=id=>{ const p=people[id]||(id===uid?acct:null)||{}; return {av:p.av||'🙂',name:p.name||'Someone',handle:p.handle||'',color:p.color||COLS[0],pub:p.pub!==false}; };
+ const postsOf=id=>{ const w=id===uid?myWall():Object.assign({posts:[]},walls[id]||{}); return (w.posts||[]).map(p=>Object.assign({by:id},p)); };
+ const likesFor=(by,pid)=>Object.values(Object.assign({},walls,uid?{[uid]:myWall()}:{})).reduce((n,w)=>n+((w.likes||[]).includes(by+':'+pid)?1:0),0);
+ const repliesFor=(by,pid)=>{ const out=[]; Object.entries(Object.assign({},walls,uid?{[uid]:myWall()}:{})).forEach(([id,w])=>(w.posts||[]).forEach(p=>{ if(p.re&&p.re.by===by&&p.re.id===pid) out.push(Object.assign({by:id},p)); })); return out.sort((a,b)=>a.at-b.at); };
+ const okURL=u=>typeof u==='string'&&(u.startsWith('/_blob/')||u.startsWith('https://')||u.startsWith('blob:'));
+ const mediaTag=(kind,url)=>!okURL(url)?'':kind==='image'?'<img src="'+esc(url)+'" alt="" style="max-width:100%;max-height:280px;border-radius:10px;display:block;margin:6px 0">':kind==='video'?'<video src="'+esc(url)+'" controls playsinline style="max-width:100%;max-height:280px;border-radius:10px;display:block;margin:6px 0"></video>':kind==='audio'?'<audio src="'+esc(url)+'" controls style="width:100%;margin:6px 0"></audio>':'';
+ /* ---------- v252: hashtags and trending, repost and quote, polls, saved, 24-hour stories, mute, block, report, owner moderation ---------- */
+ let tagF='', quoteOf=null, pollOn=false, isOwner=false; setTimeout(async()=>{ try{ isOwner=!!(user&&await user.isOwner()); }catch(_){ } },2500);
+ const W=()=>Object.assign({posts:[],likes:[],saved:[],muted:[],blocked:[],votes:{},reports:[]},wall||{});
+ const wset=patch=>write('wall/'+uid,r=>r.set(Object.assign({posts:[],likes:[]},wall||{},patch)));
+ const hidden=id=>id!==uid&&(W().muted.includes(id)||W().blocked.includes(id)||((walls[id]||{}).blocked||[]).includes(uid));
+ const tagsOf=t=>(String(t||'').match(/#[A-Za-z0-9_]{2,30}/g)||[]).map(x=>x.slice(1).toLowerCase());
+ const linkTags=h=>h.replace(/(^|\s)#([A-Za-z0-9_]{2,30})/g,'$1<span class="kaTag" data-ka="tag" data-tag="$2">#$2</span>');
+ const byTag=p=>!tagF||tagsOf(p.text).includes(tagF);
+ function trending(){ const c={}, since=Date.now()-7*864e5; Object.entries(Object.assign({},walls,{[uid]:W()})).forEach(([id,w])=>{ if(hidden(id)) return; (w.posts||[]).forEach(p=>{ if((p.at||0)<since) return; tagsOf(p.text).forEach(t=>c[t]=(c[t]||0)+1); }); }); return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,10); }
+ function trendHTML(){ const T=trending(); return (tagF?'<div class="kaCard">Showing <span class="kaTag">#'+esc(tagF)+'</span> <button type="button" data-ka="tag" data-tag="" data-noul>✕ Show everything</button></div>':'')+(T.length?'<div class="kaRow" style="margin:6px 0"><b class="kaNote">🔥 Trending this week:</b>'+T.map(([t,n])=>'<button type="button" class="kaChip" data-ka="tag" data-tag="'+esc(t)+'" data-noul>#'+esc(t)+' · '+n+'</button>').join('')+'</div>':''); }
+ function votesFor(by,pid,n){ const c=Array(n).fill(0); Object.values(Object.assign({},walls,{[uid]:W()})).forEach(w=>{ const v=(w.votes||{})[by+':'+pid]; if(v!=null&&v<n) c[v]++; }); return c; }
+ function pollHTML(p){ if(!p.poll||!Array.isArray(p.poll.opts)) return ''; const n=p.poll.opts.length, c=votesFor(p.by,p.id,n), tot=c.reduce((a,b)=>a+b,0), mine=W().votes[p.by+':'+p.id]; return '<div class="kaPoll">'+p.poll.opts.map((o,i)=>{ const pc=tot?Math.round(c[i]*100/tot):0; return '<button type="button" data-ka="vote" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" data-i="'+i+'" data-noul style="background:linear-gradient(90deg,rgba(42,212,255,.35) '+pc+'%,rgba(255,255,255,.04) '+pc+'%)!important">'+(mine===i?'✅ ':'')+esc(o)+' <span class="kaNote">'+pc+'%</span></button>'; }).join('')+'<div class="kaNote">'+tot+' vote'+(tot===1?'':'s')+'</div></div>'; }
+ const origOf=r=>postsOf(r.by).find(x=>x.id===r.id);
+ function stories(){ const since=Date.now()-864e5, out={}; Object.keys(Object.assign({},walls,{[uid]:1})).forEach(id=>{ if(hidden(id)||(id!==uid&&!nameOf(id).pub)) return; const L=postsOf(id).filter(p=>p.story&&(p.at||0)>since); if(L.length) out[id]=L.sort((a,b)=>a.at-b.at); }); return out; }
+ function storiesHTML(){ const S=stories(), ids=Object.keys(S); if(!ids.length) return ''; return '<div class="kaStories">'+ids.map(id=>{ const n=nameOf(id); return '<button type="button" data-ka="story" data-id="'+esc(id)+'" data-noul><span class="kaRing">'+esc(n.av)+'</span><small>'+esc(id===uid?'Your story':n.name)+'</small></button>'; }).join('')+'</div>'; }
+ let storyT=0; function showStory(id,i){ clearTimeout(storyT); const L=stories()[id]||[]; const p=L[i]; let v=$('kaStory'); if(!p){ if(v) v.remove(); return; } if(!v){ v=document.createElement('div'); v.id='kaStory'; $('kAcct').appendChild(v); v.addEventListener('click',e=>{ const b=e.target.closest('[data-st]'); if(!b) return; e.stopPropagation(); const a=b.dataset.st; if(a==='x'){ clearTimeout(storyT); v.remove(); return; } showStory(v.dataset.id,(+v.dataset.i)+(a==='n'?1:-1)); }); }
+  v.dataset.id=id; v.dataset.i=i; const n=nameOf(id); v.innerHTML='<div class="kaStoryIn"><div class="kaBars">'+L.map((_,j)=>'<i class="'+(j<i?'done':j===i?'on':'')+'"></i>').join('')+'</div><div class="who">'+esc(n.av)+' '+esc(n.name)+' <span class="kaNote">'+ago(p.at)+'</span></div><div class="t" style="font-size:20px">'+linkTags(esc(p.text))+'</div>'+(p.media?mediaTag(p.media.type,p.media.url):'')+'<div class="kaRow"><button type="button" data-st="p" data-noul>◀</button><button type="button" data-st="n" data-noul>▶</button><button type="button" data-st="x" data-noul>✕ Close</button></div></div>'; storyT=setTimeout(()=>showStory(id,i+1),6000); }
+ /* ---------- v253: a full profile: photo and cover, where you live and come from, age, gender, work, school, languages, relationship,
+    website; friends (people who follow each other), photos, and a community for every interest ---------- */
+ const okImg=u=>typeof u==='string'&&(u.startsWith('/_blob/')||u.startsWith('https://')||/^data:image\/(jpeg|png|webp);base64,/.test(u));
+ const avHTML=(id,sz)=>{ const P=people[id]||(id===uid?acct:null)||{}; return okImg(P.photo)?'<img src="'+esc(P.photo)+'" alt="" style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;object-fit:cover;vertical-align:middle">':esc(P.av||'🙂'); };
+ const ageOf=P=>{ if(!P.showAge||!P.byear||!P.birth) return ''; const d=new Date(); const [m,dd]=String(P.birth).split('-').map(Number); let a=d.getFullYear()-(+P.byear); if(d.getMonth()+1<m||(d.getMonth()+1===m&&d.getDate()<dd)) a--; return a>0&&a<120?String(a):''; };
+ function profDetails(P){ const L=[['📍','Lives in',P.location],['🏠','From',P.hometown],['🎂','Age',ageOf(P)],['⚧','Gender',P.gender],['💬','Pronouns',P.pronouns],['💼','Work',P.work],['🎓','School',P.school],['🗣','Languages',P.langs],['💞','Relationship',P.rel]].filter(x=>x[2]);
+  const w=typeof P.website==='string'&&P.website.startsWith('https://')?'<a href="'+esc(P.website)+'" target="_blank" rel="noopener">🔗 '+esc(P.website.replace(/^https:\/\//,'').slice(0,40))+'</a>':'';
+  return L.length||w?'<div class="kaDet">'+L.map(([i,l,v])=>'<span title="'+l+'">'+i+' '+esc(v)+'</span>').join('')+w+'</div>':''; }
+ const friendsOf=id=>{ const mine=((people[id]||(id===uid?acct:{}))||{}).following||[]; return mine.filter(x=>((people[x]||{}).following||[]).includes(id)); };
+ const followersOf=id=>Object.entries(people).filter(([,p])=>(p.following||[]).includes(id)).map(([i])=>i);
+ let grpF='';
+ async function shrink(file,maxW,maxH,crop){ const url=URL.createObjectURL(file); try{ const img=await new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=url; }); let sw=img.width, sh=img.height, sx=0, sy=0; if(crop){ const r=maxW/maxH; if(sw/sh>r){ const nw=sh*r; sx=(sw-nw)/2; sw=nw; } else { const nh=sw/r; sy=(sh-nh)/2; sh=nh; } }
+   const sc=Math.min(1,maxW/sw,maxH/sh); const c=document.createElement('canvas'); c.width=Math.round(sw*sc); c.height=Math.round(sh*sc); c.getContext('2d').drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height); return c; } finally{ URL.revokeObjectURL(url); } }
+ async function onFile(e){ const inp=e.target; if(!inp||!inp.dataset.up||!form) return; const f=inp.files&&inp.files[0]; if(!f) return; if(!/^image\//.test(f.type)) return say('Pick a picture file (JPG, PNG or WebP).'); const isCover=inp.dataset.up==='cover';
+  try{ say('📷 Getting your picture ready…'); const c=await shrink(f,isCover?1200:400,isCover?400:400,true); const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.85)); let url='';
+   try{ assets=assets||await claude.use('assets'); if(assets&&blob){ const r=await assets.upload(blob); if(r&&r.url) url=r.url; } }catch(_){ url=''; }
+   if(!url){ const s=await shrink(f,isCover?600:160,isCover?200:160,true); url=s.toDataURL('image/jpeg',.72); }
+   form[isCover?'cover':'photo']=url; render(); say(isCover?'🖼 Cover ready. Save to keep it.':'📷 Photo ready. Save to keep it.'); }catch(_){ say('That picture did not load. Try another.'); } }
+ function postHTML(p,deep){ const n=nameOf(p.by); const liked=myWall().likes.includes(p.by+':'+p.id); const a=p.app&&appOf(p.app); const reps=deep?repliesFor(p.by,p.id):[];
+  return '<div class="kaPost"><div class="who" data-ka="open" data-id="'+esc(p.by)+'" style="cursor:pointer">'+avHTML(p.by,24)+' '+esc(n.name)+' <span class="kaNote">@'+esc(n.handle)+' · '+ago(p.at||Date.now())+'</span></div>'+(p.re?'<div class="kaNote">↪ replying to @'+esc(nameOf(p.re.by).handle)+'</div>':'')+(p.repost&&!p.text?'<div class="kaNote">🔁 reposted</div>':'')+'<div class="t">'+linkTags(esc(p.text))+'</div>'+(p.repost?(()=>{ const o=origOf(p.repost); return o?'<div class="kaQuote">'+esc(nameOf(o.by).av)+' <b>'+esc(nameOf(o.by).name)+'</b><div class="t">'+linkTags(esc(o.text))+'</div>'+(o.media?mediaTag(o.media.type,o.media.url):'')+pollHTML(Object.assign({by:o.by},o))+'</div>':'<div class="kaNote">(the original post is gone)</div>'; })():'')+pollHTML(p)+(p.media?mediaTag(p.media.type,p.media.url):'')+(a?'<div class="kaRow"><button type="button" data-app="'+a[0]+'" data-noul>'+a[1]+' Open '+esc(a[2])+'</button></div>':'')+
+   (p.re?'':'<div class="kaRow"><button type="button" data-ka="like" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" data-noul>'+(liked?'❤️':'🤍')+' '+likesFor(p.by,p.id)+'</button><button type="button" data-ka="reply" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" data-noul>💬 '+repliesFor(p.by,p.id).length+'</button><button type="button" data-ka="repost" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" title="Repost" data-noul>🔁</button><button type="button" data-ka="quote" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" title="Quote" data-noul>❝</button><button type="button" data-ka="bkm" data-key="'+esc(p.by+':'+p.id)+'" title="Save" data-noul>'+(W().saved.includes(p.by+':'+p.id)?'🔖':'📑')+'</button>'+(p.by!==uid?'<button type="button" data-ka="mute" data-id="'+esc(p.by)+'" title="Mute this person" data-noul>🔇</button><button type="button" data-ka="report" data-key="'+esc(p.by+':'+p.id)+'" title="Report" data-noul>🚩</button>':'')+(isOwner&&p.by!==uid?'<button type="button" data-ka="modrm" data-by="'+esc(p.by)+'" data-pid="'+esc(p.id)+'" title="Remove (owner)" data-noul>🛡 Remove</button>':'')+(p.by===uid?'<button type="button" data-ka="del" data-pid="'+esc(p.id)+'" data-noul>🗑</button>':'')+'</div>')+
+   reps.map(r=>'<div class="kaPost" style="margin-left:18px"><div class="who">'+esc(nameOf(r.by).av)+' '+esc(nameOf(r.by).name)+' <span class="kaNote">'+ago(r.at)+'</span></div><div class="t">'+esc(r.text)+'</div></div>').join('')+'</div>'; }
+ function page(){ listenAll(); const id=viewing||uid; const n=nameOf(id), mine=id===uid; const P=people[id]||(mine?acct:{})||{}; const fol=(mine?acct:P).following||[]; const followers=Object.entries(people).filter(([,p])=>(p.following||[]).includes(id)).length;
+  let h='<div class="kaCover" style="background:'+(okImg(P.cover)?'linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,.15)),url('+esc(P.cover)+') center/cover':'linear-gradient(135deg,'+esc(n.color)+',#14163a)')+'"><div class="kaBig" style="overflow:hidden">'+avHTML(id,84)+'</div><div style="flex:1;min-width:0"><div class="kaName">'+esc(n.name)+'</div><div class="kaHandle">@'+esc(n.handle)+(n.pub?'':' · 🔒 hidden')+'</div><div>'+esc(P.bio||'')+'</div>'+profDetails(P)+'<div class="kaNote">'+followers+' followers · '+fol.length+' following'+((P.likes||[]).length?' · '+esc((P.likes||[]).join(', ')):'')+'</div></div>'+
+   (mine?'<div class="kaRow"><button type="button" data-ka="edit" data-noul>✏️ Edit</button></div>':'<div class="kaRow"><button type="button" data-ka="follow" data-id="'+esc(id)+'" data-noul>'+((acct.following||[]).includes(id)?'✓ Following':'➕ Follow')+'</button><button type="button" data-ka="block" data-id="'+esc(id)+'" data-noul>'+(W().blocked.includes(id)?'✅ Unblock':'⛔ Block')+'</button><button type="button" data-ka="home" data-noul>⬅ My page</button></div>')+'</div>';
+  if(!mine){ h+=(n.pub?postsOf(id).filter(p=>!p.re).sort((a,b)=>b.at-a.at).map(p=>postHTML(p,true)).join('')||'<p>No posts yet.</p>':'<p>🔒 This page is hidden.</p>'); return h; }
+  const T=[['posts','📝 My posts'],['feed','🌐 My feed'],['cannon','💥 My Cannon'],['people','🌌 Community'],['friends','👫 Friends'],['photos','🖼 Photos'],['apps','📱 My apps'],['saved','🔖 Saved'],['set','⚙ Settings']];
+  h+='<div class="kaTabs">'+T.map(([k,l])=>'<button type="button" data-tab="'+k+'" class="'+(tab===k?'on':'')+'" data-noul>'+l+'</button>').join('')+'</div>';
+  if(tab==='posts'||tab==='feed') h+='<div class="kaCard"><textarea data-f="post" maxlength="500" placeholder="'+(replyTo?'Write your reply…':'What are you making today?')+'"></textarea>'+(quoteOf?'<div class="kaNote">❝ Quoting @'+esc(nameOf(quoteOf.by).handle)+' <button type="button" data-ka="noquote" data-noul>✕</button></div>':'')+(pollOn?'<div class="kaPollIn">'+[0,1,2,3].map(i=>'<input type="text" data-f="opt'+i+'" maxlength="60" placeholder="Poll option '+(i+1)+(i<2?'':' (optional)')+'">').join('')+'</div>':'')+'<div class="kaRow"><select data-f="app" aria-label="Share from" data-nodice data-die="1"><option value="">Share from… (optional)</option>'+APPS.map(a=>'<option value="'+a[0]+'">'+a[1]+' '+esc(a[2])+'</option>').join('')+'</select><label class="kaNote" style="display:inline-flex;gap:4px;align-items:center;margin:0"><input type="checkbox" data-f="story"> ⏳ Story (24 h)</label><button type="button" data-ka="pollon" data-noul>📊 '+(pollOn?'No poll':'Poll')+'</button><button type="button" class="kaGo" data-ka="post" data-noul>'+(replyTo?'💬 Reply':'📣 Post')+'</button>'+(replyTo?'<button type="button" data-ka="noreply" data-noul>Cancel reply</button>':'')+'</div></div>';
+  if(tab==='posts'){ h+=actHTML(); setTimeout(()=>{ markSeen(); badge(); },1500); }
+  if(tab==='posts') h+=postsOf(uid).filter(p=>!p.re).sort((a,b)=>b.at-a.at).map(p=>postHTML(p,true)).join('')||'<p>Your first post goes here.</p>';
+  if(tab==='cannon') h+=cannonHTML();
+  if(tab==='feed'&&news.length) h+='<div class="kaCard"><h3>📰 Today\'s headlines</h3>'+news.slice(0,5).map(x=>'<div class="kaPost"><b>'+esc(x.title||'')+'</b><div class="kaNote">'+esc(x.summary||'')+'</div>'+(typeof x.url==='string'&&x.url.startsWith('https://')?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">Read the source ↗</a>':'')+'</div>').join('')+'<div class="kaRow"><button type="button" data-app="news" data-noul>📰 All the news</button></div></div>';
+  if(tab==='feed'||tab==='people') h+=storiesHTML()+trendHTML();
+  if(tab==='feed'){ const ids=[uid].concat(acct.following||[]); const all=[]; ids.forEach(i=>{ if(i===uid||nameOf(i).pub) postsOf(i).filter(p=>!p.re&&!p.story&&byTag(p)&&!hidden(i)).forEach(p=>all.push(p)); }); all.sort((a,b)=>b.at-a.at); h+=all.slice(0,80).map(p=>postHTML(p,true)).join('')||'<p>Follow people (👥 People) and their posts land here.</p>'; h+='<div class="kaRow"><button type="button" data-ka="official" data-noul>📣 The official DD Universe feed</button></div>'; }
+  if(tab==='people'){ const members=Object.entries(people).filter(([i,p])=>p.pub!==false||i===uid).length; const all=[]; Object.keys(Object.assign({},walls,{[uid]:1})).forEach(i=>{ if(i===uid||nameOf(i).pub) postsOf(i).filter(p=>!p.re&&!p.story&&byTag(p)&&!hidden(i)).forEach(p=>all.push(p)); }); all.sort((a,b)=>b.at-a.at);
+   h+='<div class="kaCard"><h3>🌌 The Omni-Galaxy Community</h3><p class="kaNote">Every signed-in member belongs to one community: '+members+' member'+(members===1?'':'s')+'. Everyone’s public posts land in this one feed; follow anyone to keep them in yours.</p></div>'+(all.slice(0,40).map(p=>postHTML(p,true)).join('')||'<p>The community feed fills as members post.</p>')+'<div class="kaCard"><h3>🏘 Communities by interest</h3><div class="kaRow">'+INTERESTS.map(g=>{ const n=Object.values(people).filter(p=>(p.likes||[]).includes(g)).length; return '<button type="button" class="kaChip'+(grpF===g?' on':'')+'" data-ka="grp" data-g="'+(grpF===g?'':esc(g))+'" data-noul>'+esc(g)+' · '+n+'</button>'; }).join('')+'</div>'+(grpF?'<p class="kaNote">Showing the '+esc(grpF)+' community: its members and posts tagged #'+esc(tagF)+'. Tap it again to show everyone.</p>':'')+'</div><h3 style="margin-top:14px">👥 Members</h3>';
+   const L=Object.entries(people).filter(([i,p])=>i!==uid&&p.pub!==false&&!hidden(i)&&(!grpF||(p.likes||[]).includes(grpF))&&(!q||(p.name+' '+p.handle).toLowerCase().includes(q.toLowerCase()))); h+='<input type="text" data-f="q" placeholder="🔎 Search people" value="'+esc(q)+'"><div class="kaPeople">'+(L.map(([i,p])=>'<div class="kaPost"><div class="kaBig" style="width:48px;height:48px;font-size:28px">'+esc(p.av||'🙂')+'</div><div style="flex:1;min-width:0" data-ka="open" data-id="'+esc(i)+'"><b>'+esc(p.name||'')+'</b> <span class="kaNote">@'+esc(p.handle||'')+'</span><div class="kaNote">'+esc(p.bio||'')+'</div></div><button type="button" data-ka="follow" data-id="'+esc(i)+'" data-noul>'+((acct.following||[]).includes(i)?'✓ Following':'➕ Follow')+'</button></div>').join('')||'<p>No one else yet. Share the app link and they appear here when they make an account.</p>')+'</div>'; }
+  if(tab==='apps'){ const pins=acct.apps||['studio','tracks','karaoke','games','zodiac','story']; h+='<div class="kaCard"><h3>📱 My apps</h3><p class="kaNote">Your own page of KAN-IN: tap to open, ★ to pin or unpin, ◀ ▶ to move.</p><div class="kaApps">'+pins.map((k,i)=>{ const a=appOf(k); return a?'<div><button type="button" data-app="'+k+'" style="width:100%" data-noul>'+a[1]+'<br>'+esc(a[2])+'</button><div class="kaRow" style="justify-content:center"><button type="button" class="kaChip" data-mv="'+i+'" data-d="-1" data-noul>◀</button><button type="button" class="kaChip on" data-pin="'+k+'" data-noul>★</button><button type="button" class="kaChip" data-mv="'+i+'" data-d="1" data-noul>▶</button></div></div>':''; }).join('')+'</div><h3 style="margin-top:14px">Add to my page</h3><div class="kaRow">'+APPS.filter(a=>!pins.includes(a[0])).map(a=>'<button type="button" class="kaChip" data-pin="'+a[0]+'" data-noul>☆ '+a[1]+' '+esc(a[2])+'</button>').join('')+'</div></div>'; }
+  if(tab==='friends'){ const sec=(t,L)=>'<div class="kaCard"><h3>'+t+' · '+L.length+'</h3><div class="kaPeople">'+(L.map(i=>{ const p=people[i]||{}; return '<div class="kaPost"><span class="kaBig" style="width:48px;height:48px;font-size:28px;overflow:hidden">'+avHTML(i,48)+'</span><div style="flex:1;min-width:0" data-ka="open" data-id="'+esc(i)+'"><b>'+esc(p.name||'Someone')+'</b> <span class="kaNote">@'+esc(p.handle||'')+'</span>'+profDetails(p)+'</div></div>'; }).join('')||'<p class="kaNote">Nobody yet.</p>')+'</div></div>'; h+=sec('👫 Friends (you follow each other)',friendsOf(uid))+sec('👀 Followers',followersOf(uid))+sec('➕ Following',acct.following||[]); }
+  if(tab==='photos'){ const I=[]; if(okImg(acct.photo)) I.push([acct.photo,'Profile photo']); if(okImg(acct.cover)) I.push([acct.cover,'Cover']); postsOf(uid).forEach(p=>{ if(p.media&&p.media.type==='image'&&okImg(p.media.url)) I.push([p.media.url,p.text||'']); }); h+='<div class="kaCard"><h3>🖼 My photos · '+I.length+'</h3><p class="kaNote">Your profile photo, cover and every picture you post. Post a picture from 💥 My Cannon or upload a photo in ✏️ Edit.</p><div class="kaPhotos">'+(I.map(([u,t])=>'<figure><img src="'+esc(u)+'" alt="" loading="lazy"><figcaption>'+esc(String(t).slice(0,40))+'</figcaption></figure>').join('')||'<p>No photos yet.</p>')+'</div></div>'; }
+  if(tab==='saved'){ const S=W().saved; h+='<div class="kaCard"><h3>🔖 Saved</h3><p class="kaNote">Posts you saved with 📑, newest first. Only you see this list.</p></div>'+(S.map(key=>{ const i=key.indexOf(':'); const by=key.slice(0,i), id=key.slice(i+1); const p=postsOf(by).find(x=>x.id===id); return p&&!hidden(by)?postHTML(Object.assign({by},p),true):''; }).join('')||'<p>Tap 📑 on any post to save it here.</p>'); }
+  if(tab==='set'){ h+='<div class="kaCard"><h3>🔇 Muted and ⛔ blocked</h3><p class="kaNote">'+W().muted.length+' muted · '+W().blocked.length+' blocked</p><button type="button" data-ka="unmuteall" data-noul>Unmute and unblock everyone</button></div>'; if(isOwner){ const R=[]; Object.entries(walls).forEach(([id,w])=>(w.reports||[]).forEach(r=>R.push(r))); h+='<div class="kaCard"><h3>🛡 Reports (owner only)</h3><p class="kaNote">Posts members reported. 🛡 Remove takes a post down.</p></div>'+(R.map(r=>{ const i=String(r.key).indexOf(':'); const by=r.key.slice(0,i), pid=r.key.slice(i+1); const p=postsOf(by).find(x=>x.id===pid); return p?postHTML(Object.assign({by},p),false):''; }).join('')||'<p>No reports.</p>'); } }
+  if(tab==='set') h+='<div class="kaCard"><h3>⚙ Settings</h3><div class="kaRow"><button type="button" data-ka="edit" data-noul>✏️ Edit my account</button><button type="button" data-ka="profile" data-noul>👤 Full profile (zodiac, song, photos)</button><button type="button" data-ka="signout" data-noul>🚪 Sign out</button><button type="button" data-ka="delask" data-noul>🗑 Delete my account</button></div><p class="kaNote" id="kaDelNote"></p></div>';
+  return h; }
+ /* ---------- 🔔 ACTIVITY: who liked, replied to or followed me ---------- */
+ function activity(){ if(!uid) return []; const out=[]; Object.entries(walls).forEach(([id,w])=>{ if(id===uid) return; (w.likes||[]).forEach(k=>{ if(k.startsWith(uid+':')) out.push({key:'l:'+id+':'+k,type:'like',by:id,pid:k.slice(uid.length+1),at:0}); }); (w.posts||[]).forEach(p=>{ if(p.re&&p.re.by===uid) out.push({key:'r:'+id+':'+p.id,type:'reply',by:id,pid:p.re.id,text:p.text,at:p.at||0}); }); });
+  Object.entries(people).forEach(([id,p])=>{ if(id!==uid&&(p.following||[]).includes(uid)) out.push({key:'f:'+id,type:'follow',by:id,at:0}); }); return out.sort((a,b)=>b.at-a.at); }
+ const seenSet=()=>new Set(getLS('kanin-act-seen',[])||[]);
+ const unseen=()=>{ const S=seenSet(); return activity().filter(a=>!S.has(a.key)); };
+ function markSeen(){ const A=activity(); if(!A.length) return; putLS('kanin-act-seen',A.map(a=>a.key).slice(0,800)); }
+ function actHTML(){ const A=activity(), S=seenSet(); if(!A.length) return ''; const myPost=pid=>((myWall().posts||[]).find(p=>p.id===pid)||{}).text||'your post';
+  return '<div class="kaCard"><h3>🔔 Activity'+(A.some(a=>!S.has(a.key))?' <span class="kaNote">· '+A.filter(a=>!S.has(a.key)).length+' new</span>':'')+'</h3>'+A.slice(0,12).map(a=>{ const n=nameOf(a.by); const what=a.type==='like'?'❤️ liked “'+esc(String(myPost(a.pid)).slice(0,60))+'”':a.type==='reply'?'💬 replied: “'+esc(String(a.text||'').slice(0,80))+'”':'➕ followed you'; return '<div class="kaNote" style="margin:4px 0'+(S.has(a.key)?'':';font-weight:800;opacity:1')+'"><span data-ka="open" data-id="'+esc(a.by)+'" style="cursor:pointer">'+esc(n.av)+' '+esc(n.name)+'</span> '+what+(a.at?' · '+ago(a.at):'')+'</div>'; }).join('')+'</div>'; }
+ function badge(){ const b=document.getElementById('kdProfile'); if(!b) return; const n=signedIn()?unseen().length:0; let s=b.querySelector(':scope > .kaBadge'); if(!n){ if(s) s.remove(); return; } if(getComputedStyle(b).position==='static') b.style.position='relative'; if(!s){ s=document.createElement('span'); s.className='kaBadge'; s.style.cssText='position:absolute;top:2px;right:2px;min-width:18px;height:18px;border-radius:9px;background:#ff2d55;color:#fff;font:900 11px/18px system-ui,sans-serif;text-align:center;padding:0 4px;pointer-events:none;z-index:2'; b.appendChild(s); } const t=n>99?'99+':String(n); if(s.textContent!==t) s.textContent=t; }
+ setInterval(()=>{ if(signedIn()) listenAll(); badge(); },2000);
+ /* ---------- 💥 MY CANNON: everything you and the cannon make, held in one place, ready to post ---------- */
+ const KIND={audio:['🎵','Sounds and songs','karaoke'],image:['🖼','Pictures and drawings','easel'],video:['🎬','Videos','video'],post:['📝','Posts kept on this device','library'],file:['📄','Files and notes','library']};
+ let inv=null, invBusy=false, objURL={}, invArm=null;
+ async function loadInv(){ if(invBusy) return; invBusy=true; try{ inv=await KLIB.list(); }catch(_){ inv=[]; } invBusy=false; render(); }
+ try{ KLIB.on(()=>{ if(inv!=null){ inv=null; if(tab==='cannon') paint(); } }); }catch(_){ }
+ const shots=()=>getLS('kanin-shots',[])||[];
+
+ function cannonHTML(){ if(inv==null){ loadInv(); return '<div class="kaCard"><p>Opening your inventory…</p></div>'; }
+  const n=+getLS('kanin-shotn',0)||0, S=shots(), counts={}; inv.forEach(x=>{ const k=KIND[x.kind]?x.kind:'file'; counts[k]=(counts[k]||0)+1; });
+  const stats=[['💥',n,'cannon shots'],['📝',myWall().posts.length,'posts on my page'],['👥',(acct.following||[]).length,'following'],['🎒',inv.length,'things I made']].concat(Object.keys(KIND).map(k=>[KIND[k][0],counts[k]||0,KIND[k][1]]));
+  let h='<div class="kaCard"><h3>💥 My Cannon</h3><p class="kaNote">The cannon makes things for you: a story, a beat, a song, a game, a reading. Everything you and the cannon make lands here. Hold it, open it, and post it to your page.</p><div class="kaRow"><button type="button" class="kaGo" data-ka="fire" data-noul>💥 Fire the cannon</button><button type="button" data-ka="lib" data-noul>📚 Whole library</button><button type="button" data-app="projects" data-noul>📁 Projects</button><button type="button" data-ka="mydata" data-noul>⬇ Download my data</button></div><div class="kaStats">'+stats.map(([i,v,l])=>'<div><b>'+i+' '+v+'</b><span>'+esc(l)+'</span></div>').join('')+'</div>'+(S.length?'<h3 style="margin-top:12px">Last shots</h3>'+S.slice(0,5).map(x=>'<div class="kaNote">💥 '+ago(x.at)+' · '+esc(x.what||'a surprise')+'</div>').join(''):'')+'</div>';
+  h+='<div class="kaCard"><h3>🎒 My inventory</h3>'+(inv.length?inv.slice(0,40).map(x=>{ const K=KIND[x.kind]||KIND.file; const media=x.blob&&/^(audio|image|video)$/.test(x.kind); return '<div class="kaPost"><div class="who">'+K[0]+' '+esc(x.name||'Untitled')+' <span class="kaNote">'+ago(x.at)+(x.meta&&x.meta.secs?' · '+esc(x.meta.secs)+' s':'')+'</span></div>'+(objURL[x.id]?mediaTag(x.kind,objURL[x.id]):'')+(x.kind==='post'&&x.meta&&x.meta.text?'<div class="t">'+esc(x.meta.text)+'</div>':'')+'<div class="kaRow">'+(media?'<button type="button" data-inv="open" data-id="'+esc(x.id)+'" data-noul>'+(objURL[x.id]?'✕ Hide':'▶ Open')+'</button>':'')+'<button type="button" data-inv="post" data-id="'+esc(x.id)+'" data-noul>📣 Post to my page</button>'+(x.blob?'<button type="button" data-inv="save" data-id="'+esc(x.id)+'" data-noul>⬇ Save</button>':'')+'<button type="button" data-inv="del" data-id="'+esc(x.id)+'" data-noul>'+(invArm===x.id?'Tap again to delete':'🗑')+'</button></div></div>'; }).join(''):'<p>Nothing yet. Fire the cannon, make a beat, sing a take or draw a picture and save it: it shows up here.</p>')+'</div>';
+  return h; }
+ const extOf=x=>{ const t=(x.blob&&x.blob.type)||''; return /wav/.test(t)?'.wav':/mpeg|mp3/.test(t)?'.mp3':/png/.test(t)?'.png':/jpe?g/.test(t)?'.jpg':/webm/.test(t)?'.webm':/mp4/.test(t)?'.mp4':/json/.test(t)?'.json':/plain/.test(t)?'.txt':''; };
+ async function invAct(k,id){ const x=(inv||[]).find(y=>y.id===id); if(!x) return;
+  if(k==='open'){ if(objURL[id]){ try{ URL.revokeObjectURL(objURL[id]); }catch(_){ } delete objURL[id]; } else { try{ objURL[id]=URL.createObjectURL(x.blob); }catch(_){ } } return render(); }
+  if(k==='save'){ try{ dls=dls||await claude.use('downloads'); if(!dls) throw 0; await dls.save({filename:(x.name||'kan-in')+extOf(x),data:x.blob}); }catch(e){ say(e&&e.code==='declined'?'Not saved.':'This view cannot save files.'); } return; }
+  if(k==='del'){ if(invArm!==id){ invArm=id; return render(); } invArm=null; try{ await KLIB.del(id); }catch(_){ } inv=(inv||[]).filter(y=>y.id!==id); say('🗑 Deleted from your library.'); return render(); }
+  if(k==='post'){ const K=KIND[x.kind]||KIND.file; let media=null;
+   if(x.blob&&/^(audio|image|video)$/.test(x.kind)&&x.blob.size<=20*1024*1024){ try{ assets=assets||await claude.use('assets'); if(assets){ say('📣 Posting '+(x.name||'it')+'…'); const r=await assets.upload(x.blob); if(r&&r.url) media={type:x.kind,url:r.url,id:r.id}; } }catch(_){ media=null; } }
+   const w=myWall(); const p={id:Date.now().toString(36),at:Date.now(),text:(K[0]+' '+(x.name||'Something I made')+(x.kind==='post'&&x.meta&&x.meta.text?'\n'+x.meta.text:'')).slice(0,500),app:K[2]}; if(media) p.media=media;
+   await write('wall/'+uid,r=>r.set(Object.assign({},wall||{},{posts:[p].concat(w.posts||[]).slice(0,60),likes:w.likes||[]}))); say(media?'📣 Posted to your page with the '+(x.kind==='image'?'picture':x.kind==='video'?'video':'sound')+'.':'📣 Posted to your page (the title; the file stays on this device for this viewer).'); tab='posts'; return render(); } }
+ let replyTo=null, delArm=false;
+ /* ---------- actions ---------- */
+ async function onClick(e){ const b=e.target.closest('[data-ka],[data-tab],[data-av],[data-col],[data-like],[data-pub],[data-app],[data-pin],[data-mv],[data-inv]'); if(!b) return; e.stopPropagation(); const k=b.dataset.ka;  if(b.dataset.inv) return invAct(b.dataset.inv,b.dataset.id);
+  if(k==='tag'){ tagF=(b.dataset.tag||'').toLowerCase(); if(tab!=='feed'&&tab!=='people') tab='people'; viewing=null; return render(); }
+  if(k==='repost'){ const w=W(); const p={id:Date.now().toString(36),at:Date.now(),text:'',repost:{by:b.dataset.by,id:b.dataset.pid}}; await wset({posts:[p].concat(w.posts).slice(0,60)}); say('🔁 Reposted to your page.'); return; }
+  if(k==='quote'){ quoteOf={by:b.dataset.by,id:b.dataset.pid}; tab='feed'; viewing=null; render(); const ta=$('kAcct').querySelector('[data-f="post"]'); if(ta) ta.focus(); return; }
+  if(k==='noquote'){ quoteOf=null; return render(); }
+  if(k==='pollon'){ pollOn=!pollOn; return render(); }
+  if(k==='bkm'){ const S=W().saved.slice(); const i=S.indexOf(b.dataset.key); if(i>=0) S.splice(i,1); else S.unshift(b.dataset.key); await wset({saved:S.slice(0,300)}); say(i>=0?'Removed from 🔖 Saved.':'🔖 Saved.'); return; }
+  if(k==='vote'){ const V=Object.assign({},W().votes); V[b.dataset.by+':'+b.dataset.pid]=+b.dataset.i; await wset({votes:V}); return; }
+  if(k==='mute'){ const M=W().muted.slice(); if(!M.includes(b.dataset.id)) M.push(b.dataset.id); await wset({muted:M}); say('🔇 Muted. Undo it in ⚙ Settings.'); return; }
+  if(k==='block'){ const B=W().blocked.slice(); const i=B.indexOf(b.dataset.id); if(i>=0) B.splice(i,1); else B.push(b.dataset.id); const f=(acct.following||[]).filter(x=>x!==b.dataset.id); if(i<0&&f.length!==(acct.following||[]).length) await write('people/'+uid,r=>r.update({following:f})); await wset({blocked:B}); say(i>=0?'✅ Unblocked.':'⛔ Blocked: neither of you sees the other’s posts.'); return; }
+  if(k==='unmuteall'){ await wset({muted:[],blocked:[]}); say('Everyone is unmuted and unblocked.'); return; }
+  if(k==='report'){ const R=W().reports.slice(); if(!R.some(r=>r.key===b.dataset.key)) R.push({key:b.dataset.key,at:Date.now()}); await wset({reports:R.slice(-100)}); say('🚩 Reported to the owner. Thank you.'); return; }
+  if(k==='modrm'){ const by=b.dataset.by, pid=b.dataset.pid; const w=Object.assign({posts:[]},walls[by]||{}); await write('wall/'+by,r=>r.set(Object.assign({},w,{posts:(w.posts||[]).filter(x=>x.id!==pid)}))); say('🛡 Post removed.'); return; }
+  if(k==='story') return showStory(b.dataset.id,0);
+
+  if(k==='fire'){ close(); setTimeout(()=>{ try{ KJUMP.open(); setTimeout(()=>{ try{ KJUMP.jump(); }catch(_){ } },350); }catch(_){ say('The cannon is loading. Try again in a moment.'); } },150); return; }
+  if(k==='lib'){ close(); try{ KSOCIAL.open('library'); }catch(_){ } return; }
+  if(k==='mydata'){ try{ dls=dls||await claude.use('downloads'); if(!dls) throw 0; const data={account:acct,posts:myWall().posts,likes:myWall().likes,following:acct.following||[],inventory:(inv||[]).map(x=>({name:x.name,kind:x.kind,at:x.at,meta:x.meta})),cannonShots:shots()}; await dls.save({filename:'my-kan-in-data.json',data:JSON.stringify(data,null,2)}); }catch(e2){ say('This view cannot save files.'); } return; }
+
+  if(b.dataset.tab){ tab=b.dataset.tab; viewing=null; return render(); }
+  if(b.dataset.av){ form.av=b.dataset.av; return render(); } if(b.dataset.col){ form.color=b.dataset.col; return render(); }
+  if(b.dataset.like){ const x=b.dataset.like; form.likes=form.likes.includes(x)?form.likes.filter(y=>y!==x):form.likes.concat(x).slice(0,8); return render(); }
+  if(b.dataset.pub){ form.pub=b.dataset.pub==='1'; return render(); }
+  if(b.dataset.app){ const a=appOf(b.dataset.app); if(a){ close(); setTimeout(()=>{ try{ a[3](); }catch(_){ say('That part is loading. Try again in a moment.'); } },150); } return; }
+  if(b.dataset.pin){ const pins=(acct.apps||['studio','tracks','karaoke','games','zodiac','story']).slice(); const i=pins.indexOf(b.dataset.pin); if(i>=0) pins.splice(i,1); else pins.push(b.dataset.pin); return write('people/'+uid,r=>r.update({apps:pins})); }
+  if(b.dataset.mv){ const pins=(acct.apps||['studio','tracks','karaoke','games','zodiac','story']).slice(); const i=+b.dataset.mv, j=i+(+b.dataset.d); if(j<0||j>=pins.length) return; [pins[i],pins[j]]=[pins[j],pins[i]]; return write('people/'+uid,r=>r.update({apps:pins})); }
+  if(k==='x'||k==='guest'){ if(k==='guest') putSS('kanin-guest','1'); return close(); }
+  if(k==='create'){ form=blankForm(); listenAll(); return render(); }
+  if(k==='cancel'){ form=null; return render(); }
+  if(k==='make'||k==='save'){ const f=form; const err=m=>{ const el=$('kaErr'); if(el) el.textContent=m; };
+   if(!f.name.trim()) return err('Write your display name.'); if(!handleOK(f.handle)) return err('Your @handle needs 3 to 20 letters, numbers or _.'); if(taken(f.handle)) return err('@'+f.handle+' is taken. Pick another.'); if(k==='make'&&!f.rules) return err('Tick the house rules to create your account.');
+   const data={name:f.name.trim().slice(0,40),handle:f.handle,av:f.av,color:f.color,bio:(f.bio||'').slice(0,200),birth:f.birth?f.birth.slice(5):'' ,likes:f.likes,pub:f.pub,photo:okImg(f.photo)?f.photo:'',cover:okImg(f.cover)?f.cover:'',location:(f.location||'').slice(0,60),hometown:(f.hometown||'').slice(0,60),gender:f.gender||'',pronouns:(f.pronouns||'').slice(0,20),work:(f.work||'').slice(0,60),school:(f.school||'').slice(0,60),langs:(f.langs||'').slice(0,60),rel:f.rel||'',website:/^https:\/\//.test(f.website||'')?f.website.slice(0,100):'',showAge:!!f.showAge,byear:f.showAge&&f.birth?f.birth.slice(0,4):'',at:acct&&acct.at||Date.now(),following:acct&&acct.following||[],apps:acct&&acct.apps||['studio','tracks','karaoke','games','zodiac','story']};
+   await write('people/'+uid,r=>r.set(data)); const me=getLS('kanin-me',{})||{}; putLS('kanin-me',Object.assign(me,{name:data.name,handle:'@'+data.handle,av:data.av,color:data.color,bio:data.bio,likes:data.likes},f.birth?{birth:f.birth}:{}));
+   form=null; putSS('kanin-signed',uid); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
+  if(k==='signin'){ putSS('kanin-signed',uid); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
+  if(k==='signout'){ putSS('kanin-signed',null); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
+  if(k==='nophoto'){ form.photo=''; return render(); } if(k==='nocover'){ form.cover=''; return render(); }
+  if(k==='grp'){ grpF=b.dataset.g||''; tagF=grpF.toLowerCase().replace(/[^a-z0-9_]/g,''); return render(); }
+  if(k==='edit'){ form=Object.assign(blankForm(),{name:acct.name,handle:acct.handle,av:acct.av,color:acct.color,bio:acct.bio||'',likes:acct.likes||[],pub:acct.pub!==false,rules:true},['photo','cover','location','hometown','gender','pronouns','work','school','langs','rel','website','showAge'].reduce((o,k)=>{ if(acct[k]!=null) o[k]=acct[k]; return o; },{}),acct.byear&&acct.birth?{birth:acct.byear+'-'+acct.birth}:{}); return render(); }
+  if(k==='profile'){ close(); try{ KPROFILE.open(); }catch(_){ } return; }
+  if(k==='official'){ close(); try{ KSOCIAL.open(); }catch(_){ } return; }
+  if(k==='open'){ viewing=b.dataset.id===uid?null:b.dataset.id; return render(); } if(k==='home'){ viewing=null; return render(); }
+  if(k==='follow'){ const id=b.dataset.id; const f=(acct.following||[]).slice(); const i=f.indexOf(id); if(i>=0) f.splice(i,1); else f.push(id); return write('people/'+uid,r=>r.update({following:f.slice(-500)})); }
+  if(k==='post'){ const ta=$('kAcct').querySelector('[data-f="post"]'); const t=(ta&&ta.value||'').trim(); if(!t) return say('Write something first.'); const app=($('kAcct').querySelector('[data-f="app"]')||{}).value||''; const w=myWall(); const p={id:Date.now().toString(36),at:Date.now(),text:t.slice(0,500)}; if(app) p.app=app; if(replyTo) p.re=replyTo; const sto=$('kAcct').querySelector('[data-f="story"]'); if(sto&&sto.checked) p.story=true; if(pollOn){ const opts=[0,1,2,3].map(i=>(($('kAcct').querySelector('[data-f="opt'+i+'"]')||{}).value||'').trim()).filter(Boolean); if(opts.length>=2) p.poll={opts}; } if(quoteOf) p.repost=quoteOf; quoteOf=null; pollOn=false; const posts=[p].concat(w.posts||[]).slice(0,60); replyTo=null; await write('wall/'+uid,r=>r.set(Object.assign({},wall||{},{posts,likes:w.likes||[]}))); say('📣 Posted.'); return; }
+  if(k==='reply'){ replyTo={by:b.dataset.by,id:b.dataset.pid}; if(tab!=='posts'&&tab!=='feed') tab='feed'; viewing=null; render(); const ta=$('kAcct').querySelector('[data-f="post"]'); if(ta) ta.focus(); return; }
+  if(k==='noreply'){ replyTo=null; return render(); }
+  if(k==='like'){ const key=b.dataset.by+':'+b.dataset.pid; const w=myWall(); const L=(w.likes||[]).slice(); const i=L.indexOf(key); if(i>=0) L.splice(i,1); else L.push(key); return write('wall/'+uid,r=>r.set(Object.assign({},wall||{},{posts:w.posts||[],likes:L.slice(-400)}))); }
+  if(k==='del'){ const w=myWall(); const posts=(w.posts||[]).filter(p=>p.id!==b.dataset.pid); return write('wall/'+uid,r=>r.set(Object.assign({},wall||{},{posts,likes:w.likes||[]}))); }
+  if(k==='delask'){ if(!delArm){ delArm=true; const n=$('kaDelNote'); if(n) n.textContent='Tap 🗑 Delete my account again to delete your account, your posts, likes and replies for good.'; return; } delArm=false; await write('wall/'+uid,r=>r.delete()); await write('people/'+uid,r=>r.delete()); putSS('kanin-signed',null); say('🗑 Your account is deleted.'); return render(); } }
+ function onInput(e){ const f=e.target.dataset.f; if(!f) return; if(f==='q'){ q=e.target.value; const pos=e.target.selectionStart; render(); const el=$('kAcct').querySelector('[data-f="q"]'); if(el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){ } } return; }
+  if(!form||f==='post'||f==='app') return; form[f]=e.target.type==='checkbox'?e.target.checked:e.target.value; if(f==='handle'){ const n=$('kaHandleNote'); if(n) n.textContent=!form.handle?'':!handleOK(form.handle)?'3 to 20 letters, numbers or _':taken(form.handle)?'@'+form.handle+' is taken':'@'+form.handle+' is free ✓'; } }
+ /* repaint on data, but never while someone is typing in the page */
+ function paint(){ const d=$('kAcct'); if(!d||d.hidden) return; const ae=document.activeElement; if(ae&&d.contains(ae)&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return; render(); }
+ function open(t){ if(typeof t==='string'){ tab=t; viewing=null; } const d=host(); d.hidden=false; try{ ['kKara','libDock','fileDock','kManual','kMe'].forEach(i=>{ const x=$(i); if(x&&x!==d) x.hidden=true; }); }catch(_){ } render(); }
+ function close(){ const d=$('kAcct'); if(d) d.hidden=true; form=null; }
+ /* the landing game opens the app, then SIGN IN comes up */
+ addEventListener('kanin',e=>{ if(e.detail==='gate-open'&&!signedIn()&&!getSS('kanin-guest')) setTimeout(open,700); });
+ /* the rail's 👤 Profile opens the account: sign in first, then my page */
+ document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#kdProf,#kdProfile,[data-kd-l="Profile"]'); if(!b) return; e.preventDefault(); e.stopImmediatePropagation(); open(); },true);
+ (window.KFINDX=window.KFINDX||[]).push(add=>{ add('You','🔐','Sign in, my account and my page','Account',()=>open()); });
+ boot();
+ window.KACCT={open,close,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
 })();
 
 </script>

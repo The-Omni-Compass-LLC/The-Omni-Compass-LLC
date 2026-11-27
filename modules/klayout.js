@@ -8,14 +8,14 @@
    live wherever it sits. ● REC on the pads or the keyboard records both: one sequencer, one mixing board. */
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
- const KEYS=[['pads','🥁','Pads',1],['keys','🎹','Keys',1.5],['dj','🎧','DJ',1.3],['kara','🎤','Mic',.9],['seq','🎼','Tracks',0]];
+ const KEYS=[['pads','🥁','Pads',1],['keys','🎹','Keys',1.5],['rack','🎛','Steps',1.6],['dj','🎧','DJ',1.3],['kara','🎤','Mic',.9],['seq','🎼','Tracks',0]];
  const phone=()=>innerWidth<=760;
  const openKeys=()=>KEYS.filter(([k])=>{ try{ return F().isOpen(k); }catch(_){ return false; } });
  const put=(k,g)=>{ try{ localStorage.setItem('kanin-float-'+k,JSON.stringify(g)); }catch(_){ } };
  function arrange(quiet){ const f=F(); if(!f) return; let L=openKeys(); if(!L.length){ ['pads','keys','seq'].forEach(k=>{ try{ f.open(k); }catch(_){ } }); L=openKeys(); }
   const W=innerWidth-(phone()?58:76), H=innerHeight, gap=8; let top=8; const bb=$('bbBar'); if(!phone()&&bb&&bb.getClientRects().length){ const r=bb.getBoundingClientRect(); if(r.bottom>0&&r.bottom<H*.6) top=Math.round(r.bottom)+4; }
   if(phone()){ L.forEach(([k])=>put(k,{x:4,y:56,w:W-8,h:Math.round(H*.72)})); }
-  else { const WT={pads:1,keys:1.4,dj:1.2,kara:.9,seq:1.6}; const order=['pads','keys','seq','dj','kara']; const cols=order.map(k=>L.find(x=>x[0]===k)).filter(Boolean); const tot=cols.reduce((a,[k])=>a+WT[k],0)||1; const avail=W-gap*(cols.length+1); let x=gap;
+  else { const WT={pads:1,keys:1.4,rack:1.6,dj:1.2,kara:.9,seq:1.6}; const order=['pads','keys','rack','seq','dj','kara']; const cols=order.map(k=>L.find(x=>x[0]===k)).filter(Boolean); const tot=cols.reduce((a,[k])=>a+WT[k],0)||1; const avail=W-gap*(cols.length+1); let x=gap;
    cols.forEach(([k])=>{ const w=Math.max(280,Math.round(avail*WT[k]/tot)); put(k,{x:Math.min(x,W-w-gap),y:top,w,h:H-top-gap}); x+=w+gap; }); }
   L.forEach(([k])=>{ try{ f.open(k); }catch(_){ } }); if(!quiet) say(phone()?'🪟 The panels are stacked for the phone: the strip at the bottom brings any one to the front.':'🪟 The panels are laid out across the screen over the mixing board. Drag any top bar to move one.'); paint(); }
  /* the phone strip: bring any open panel to the front */
