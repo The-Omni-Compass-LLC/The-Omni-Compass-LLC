@@ -7,14 +7,14 @@
    And one account everywhere: 🌐 Social and 👤 Profile (the rail and the Menu) open your page (sign in first). */
  const $=id=>document.getElementById(id);
  const css=document.createElement('style'); css.textContent=`
-html.lvl-easy #mpcBar:not(.kAll) .kScr [data-sf]:not([data-sf="snd"]):not([data-sf^="bank"]){display:none!important}
-html.lvl-easy #kbDash:not(.kAll) .kScr [data-sf]:not([data-sf="snd"]):not([data-sf="octd"]):not([data-sf="octu"]){display:none!important}
-html.lvl-easy :is(#mpcBar,#kbDash):not(.kAll) .kDevTx :is([data-tx="skip"],[data-tx="clear"],[data-tx="latch"]){display:none!important}
-html.lvl-easy #mpcBar:not(.kAll) .kDjBar :is([data-dm="roll"],[data-dm="fx"],[data-dm="samp"],[data-dm="open"]){display:none!important}
-html.lvl-easy #mpcBar:not(.kAll) .kDjBar [data-dm="cue"]{font-size:0!important}
-html.lvl-easy #mpcBar:not(.kAll) .kDjBar [data-dm="cue"]::after{content:"🎧 DJ";font:900 11.5px system-ui,sans-serif}
-html.lvl-easy #kSeqWin:not(.kAll) .sqTop :is([data-sq="loop"],[data-sq="q"],[data-sq="mix"],[data-sq="demo"]){display:none!important}
-html.lvl-easy #kSeqWin:not(.kAll) .sqHead :is([data-tk="q"],[data-tk="clr"],[data-tk="del"],[data-tk="dev"],input[type=range]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) #mpcBar:not(.kAll) .kScr [data-sf]:not([data-sf="snd"]):not([data-sf^="bank"]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) #kbDash:not(.kAll) .kScr [data-sf]:not([data-sf="snd"]):not([data-sf="octd"]):not([data-sf="octu"]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) :is(#mpcBar,#kbDash):not(.kAll) .kDevTx :is([data-tx="skip"],[data-tx="clear"],[data-tx="latch"]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) #mpcBar:not(.kAll) .kDjBar :is([data-dm="roll"],[data-dm="fx"],[data-dm="samp"],[data-dm="open"]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) #mpcBar:not(.kAll) .kDjBar [data-dm="cue"]{font-size:0!important}
+html.lvl-easy body:not(.kDemoOn) #mpcBar:not(.kAll) .kDjBar [data-dm="cue"]::after{content:"🎧 DJ";font:900 11.5px system-ui,sans-serif}
+html.lvl-easy body:not(.kDemoOn) #kSeqWin:not(.kAll) .sqTop :is([data-sq="loop"],[data-sq="q"],[data-sq="mix"],[data-sq="demo"]){display:none!important}
+html.lvl-easy body:not(.kDemoOn) #kSeqWin:not(.kAll) .sqHead :is([data-tk="q"],[data-tk="clr"],[data-tk="del"],[data-tk="dev"],input[type=range]){display:none!important}
 .kEzMore{display:none}
 html.lvl-easy .kEzMore{display:inline-flex;align-items:center;justify-content:center}
 .kEzMore.on{background:#ffe94a!important;color:#14163a!important}`; document.head.appendChild(css);

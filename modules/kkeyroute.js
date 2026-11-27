@@ -9,7 +9,7 @@
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } };
  const putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
- const PADK='1234qwerasdfzxcv', KMAP='zsxdcvgbhnjmq2w3er5t6y7ui';
+ const PADK='1234qwerasdfzxcv', KMAP='y7u8io0p-[=]\\'; /* v245 split keyboard: the piano is on the right hand */
  let owner=getLS('kanin-keyowner','pads'); const was={pads:false,keys:false}; let more=getLS('kanin-devmore',{pads:false,keys:false}); if(!more||typeof more!=='object') more={pads:false,keys:false};
  const physical=()=>{ try{ return matchMedia('(hover:hover) and (pointer:fine)').matches||window.INPUTMODE==='keys'||window.INPUTMODE==='both'&&!matchMedia('(pointer:coarse)').matches; }catch(_){ return true; } };
  const css=document.createElement('style'); css.textContent=`
@@ -30,9 +30,9 @@ html body #padGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
  const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
  const isOpen=k=>{ const f=F(); try{ return !!(f&&f.isOpen(k)); }catch(_){ return false; } };
  function setOwner(k,quiet){ if(k!=='pads'&&k!=='keys') return; const ch=owner!==k; owner=k; putLS('kanin-keyowner',k); apply(); if(ch&&!quiet&&physical()) say(k==='keys'?'🎹 Your keys now play the PIANO: Z X C V B N M and Q W E R T Y U I, black keys on S D G H J and 2 3 5 6 7.':'🥁 Your keys now play the PADS: 1 2 3 4 · Q W E R · A S D F · Z X C V.'); }
- function apply(){ const sel=$('kbKeyMode'); const want=owner==='keys'?'keys':'pads'; if(sel&&sel.value!==want){ sel.value=want; sel.dispatchEvent(new Event('change',{bubbles:true})); } paint(); }
+ function apply(){ const sel=$('kbKeyMode'); const want=window.KSPLIT?'pads':(owner==='keys'?'keys':'pads'); /* v245: with the split keyboard the old one-device piano mode stays off */ if(sel&&sel.value!==want){ sel.value=want; sel.dispatchEvent(new Event('change',{bubbles:true})); } paint(); }
  /* the device you touch takes your keys */
- document.addEventListener('pointerdown',e=>{ const t=e.target; if(!t||!t.closest) return; if(t.closest('#kbTop')) setOwner('keys'); else if(t.closest('#pad .pmain.kFloat')) setOwner('pads'); },true);
+ document./* v245: the hand-off happens when the tap ends, so the strip changing size never moves a button out from under the finger */ addEventListener('pointerup',e=>{ const t=e.target; if(!t||!t.closest) return; if(t.closest('#kbTop')) setTimeout(()=>setOwner('keys'),0); else if(t.closest('#pad .pmain.kFloat')) setTimeout(()=>setOwner('pads'),0); },true);
  function strip(dev){ const bar=dev==='pads'?$('mpcBar'):$('kbDash'); if(!bar) return null; let s=bar.querySelector(':scope > .kKeyOwn'); if(s) return s; s=document.createElement('div'); s.className='kKeyOwn'; s.setAttribute('role','button'); s.tabIndex=0;
   s.addEventListener('click',e=>{ e.stopPropagation(); if(e.target.closest('[data-ko="map"]')){ try{ KKBD.open(dev==='pads'?'pads':'piano'); }catch(_){ } return; } setOwner(dev); });
   bar.insertBefore(s,bar.firstChild); return s; }
@@ -55,7 +55,7 @@ html body #padGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
   if(!ko&&owner!=='pads') setOwner('pads',true); if(ko&&!po&&owner!=='keys') setOwner('keys',true);
   was.pads=po; was.keys=ko; apply(); },400);
  /* while the piano has your keys, the pad-only keys (1 and 4) stay quiet instead of firing a pad behind your back */
- addEventListener('keydown',e=>{ if(owner!=='keys'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; const k=(e.key||'').toLowerCase(); if(PADK.includes(k)&&!KMAP.includes(k)&&$('pad')&&$('pad').classList.contains('on')){ e.stopImmediatePropagation(); } },true);
+ addEventListener('keydown',e=>{ if(window.KSPLIT||owner!=='keys'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; const k=(e.key||'').toLowerCase(); if(PADK.includes(k)&&!KMAP.includes(k)&&$('pad')&&$('pad').classList.contains('on')){ e.stopImmediatePropagation(); } },true);
  /* "/" is 👆 TAP TEMPO in the controls block while a device is open (kdevkeys); Ctrl+K opens Find */
  /* the keyboard window never lands on top of the pad window on a laptop: it sits beside it, or below it when there is no room */
  function apart(){ if(innerWidth<=760||!isOpen('pads')||!isOpen('keys')) return; const pe=document.querySelector('#pad .pmain'), ke=$('kbTop'); if(!pe||!ke||ke.dataset.kApart==='1') return; const a=pe.getBoundingClientRect(), b=ke.getBoundingClientRect();

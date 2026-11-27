@@ -54,11 +54,12 @@
   ring(); if(!auto) speak(s.t.replace(/^\d+ · /,'')+'. '+s.d); }
  function ring(){ const r=$('kDemoRing'); if(!r||!running) return; const s=STEPS[i]; const el=s&&q(s.ring); if(!el||!el.getClientRects().length){ r.hidden=true; return; } const b=el.getBoundingClientRect(); r.hidden=false; r.style.left=(b.left-5)+'px'; r.style.top=(b.top-5)+'px'; r.style.width=(b.width+10)+'px'; r.style.height=(b.height+10)+'px'; }
  setInterval(ring,300);
- function start(){ running=true; auto=false; i=0; card().hidden=false; paint(); STEPS[0].go(); }
+ function start(){ document.body.classList.add('kDemoOn'); running=true; auto=false; i=0; card().hidden=false; paint(); STEPS[0].go(); }
  function stop(){ running=false; auto=false; const c=$('kDemo'); if(c) c.hidden=true; const r=$('kDemoRing'); if(r) r.hidden=true; try{ speechSynthesis.cancel(); }catch(_){ } }
  function finish(){ auto=false; const c=card(); c.innerHTML='<h3>🎬 Done: you made a track</h3><p>Drums recorded in real time, a bassline on its own track, mixed and saved. Now make your own: arm a track, press ● REC and play.</p><div class="dmRow"><button type="button" data-dm="x" class="go" data-noul>✓ Finish</button></div>'; const r=$('kDemoRing'); if(r) r.hidden=true; speak('Done. You made a track.'); }
  /* ways in: the Menu, Find, the Easy Studio panel */
  setInterval(()=>{ const ez=$('kEasyStudio'); if(ez&&!ez.querySelector('[data-kdemo]')){ const g=ez.querySelector('.ezGrid'); if(g){ const b=document.createElement('button'); b.type='button'; b.dataset.kdemo='1'; b.setAttribute('data-noul',''); b.className='go'; b.innerHTML='<i>🎬</i>Demo: make a beat'; b.addEventListener('click',e=>{ e.stopPropagation(); start(); }); g.insertBefore(b,g.firstChild); } } },1000);
  (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Studio','🎬','Demo: make a beat, step by step','guided tour',()=>start()); });
  window.KDEMO={start,stop,steps:STEPS.length};
+ /* v245: while the demo runs, every button it points at is shown */ setInterval(()=>document.body.classList.toggle('kDemoOn',!!running),500);
 })();

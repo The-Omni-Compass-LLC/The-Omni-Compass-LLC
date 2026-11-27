@@ -10,7 +10,7 @@
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const PS=()=>window.PADSTUDIO; const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
- const PADK='1234qwerasdfzxcv', KMAP='zsxdcvgbhnjmq2w3er5t6y7ui';
+ const PADK='1234qwerasdfzxcv', KMAP='y7u8io0p-[=]\\';
  let mode=getLS('kanin-djpads','beat'); if(!['beat','cue','roll','fx','samp'].includes(mode)) mode='beat';
  const PAGES={cue:['CUE 1','CUE 2','CUE 3','CUE 4','▶ ⏸','CLEAR','◀ NUDGE','NUDGE ▶'],roll:['ROLL 1/8','ROLL 1/4','ROLL 1/2','ROLL 1','ROLL 2','ROLL 4','◀ NUDGE','NUDGE ▶'],fx:['ECHO','SWEEP','BRAKE','SPIN','STUTTER','▶ ⏸','◀ NUDGE','NUDGE ▶']};
  const ROLL=['0.125','0.25','0.5','1','2','4'], FX=['echo','sweep','brake','spin','stutter'];
@@ -41,7 +41,7 @@
  const held=new Map();
  addEventListener('keydown',e=>{ if(e.ctrlKey||e.metaKey||e.altKey||typing(e.target)) return; const key=(e.key||'').toLowerCase();
   if(key==='`'&&padsLive()&&isOpen('pads')){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat) setMode(djOn()?'beat':(getLS('kanin-djpads-last','cue'))); return; }
-  if(e.shiftKey) return;
+  if(e.shiftKey||window.KSPLIT) return; /* v245: the split keyboard (ksplit) plays the pads, the piano and the DJ decks */
   if(djOn()&&padsLive()&&isOpen('pads')&&owner()!=='keys'){ const k=PADK.indexOf(key); if(k>=0&&/^(Digit|Key)/.test(e.code||'')){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat){ act(k); flash(k); } return; } }
   /* over Karaoke the studio is not the screen, so the pads and the piano are played from here */
   if(over()&&!$('pad').classList.contains('on')){ if(owner()==='keys'&&isOpen('keys')){ const k=KMAP.indexOf(key); if(k>=0&&/^(Digit|Key)/.test(e.code||'')){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat&&!held.has(key)){ held.set(key,k); try{ KEYS.down(k); }catch(_){ } } return; } }
@@ -62,6 +62,10 @@ body.kDJpads #padGrid .pd.kbHit::after{filter:brightness(1.6)}
 /* 🎤 the devices over Karaoke: the studio stays alive under the song, only its floating devices show */
 body.kDevOver #pad{display:block!important;position:fixed!important;inset:0!important;visibility:hidden!important;pointer-events:none!important;z-index:8600!important;background:transparent!important;overflow:visible!important}
 body.kDevOver #pad .kFloat.kFOn:not(.kFOff){visibility:visible!important;pointer-events:auto!important}
+#aivDock .kkDev{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0;padding:8px 10px;border-radius:12px;background:rgba(42,212,255,.08);border:1px solid rgba(42,212,255,.35)}
+#aivDock .kkDev b{font:800 13px system-ui,sans-serif;color:#7ff;flex:1 1 100%}
+#aivDock .kkDev button{min-height:44px;border-radius:12px;padding:0 14px;font:800 14px system-ui,sans-serif}
+#aivDock .kkDev button.on{background:#2ad4ff!important;color:#07121f!important}
 #kKara .kkDev{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0;padding:8px 10px;border-radius:12px;background:rgba(42,212,255,.08);border:1px solid rgba(42,212,255,.35)}
 #kKara .kkDev b{font:800 13px system-ui,sans-serif;color:#7ff;flex:1 1 100%}
 #kKara .kkDev button{min-height:44px;border-radius:12px;padding:0 14px;font:800 14px system-ui,sans-serif}
@@ -75,6 +79,7 @@ body.kDevOver #pad .kFloat.kFOn:not(.kFOff){visibility:visible!important;pointer
  function setMode(m){ mode=m; putLS('kanin-djpads',m); if(m!=='beat') putLS('kanin-djpads-last',m); paint(); if(m==='beat') say('🥁 The pads play the beat machine again.'); else { const D=deck('A'), E=deck('B'); say('🎧 DJ '+({cue:'HOT CUE',roll:'ROLL',fx:'FX',samp:'SAMPLER'}[m])+': top two rows play deck A, bottom two rows deck B.'+((!D||!D.buf)&&(!E||!E.buf)&&m!=='samp'?' Load a song on a deck first (🎧 Decks).':'')); if(m!=='samp'&&(!D||!D.buf)) try{ F().open('dj'); }catch(_){ } } }
  function paint(){ bar(); document.body.classList.toggle('kDJpads',djOn()); if(!djOn()) return; const g=$('padGrid'); if(!g) return; g.querySelectorAll('.pd').forEach(el=>{ const k=(+el.dataset.i)%16; const t=label(k); if(el.dataset.dj!==t) el.dataset.dj=t; el.classList.toggle('kDjB',k>=8); }); }
  /* the Karaoke page: bring the devices up over the song */
+ function vidBar(){ const V=$('aivDock'); if(!V||!V.getClientRects().length) return; let d=V.querySelector('.kkDev'); if(d) return paintKara(); d=document.createElement('div'); d.className='kkDev kvDev'; d.innerHTML='<b>🎛 Play live over the video: the same beat, tracks and mixing board</b><button type="button" data-kd="pads" data-noul>🥁 Pads</button><button type="button" data-kd="keys" data-noul>🎹 Keys</button><button type="button" data-kd="dj" data-noul>🎧 DJ decks</button><button type="button" data-kd="seq" data-noul>🎼 Tracks</button><button type="button" data-kd="kara" data-noul>🎤 Mic</button>'; d.addEventListener('click',e=>{ const x=e.target.closest('[data-kd]'); if(!x) return; e.stopPropagation(); const k=x.dataset.kd, f=F(); if(!f) return; const vis=over()&&f.isOpen(k); document.body.classList.add('kDevOver'); if(vis) f.close(k); else f.open(k); paintKara(); }); V.insertBefore(d,V.firstChild.nextSibling||null); }
  function karaBar(){ const K=$('kKara'); if(!K||K.hidden) return; const inn=K.querySelector('.kkIn'); if(!inn) return; let d=inn.querySelector('.kkDev'); if(!d){ d=document.createElement('div'); d.className='kkDev';
    d.innerHTML='<b>🎛 Play live over the song: the same beat, the same tracks, the same mixing board</b><button type="button" data-kd="pads" data-noul>🥁 Pads</button><button type="button" data-kd="keys" data-noul>🎹 Keys</button><button type="button" data-kd="dj" data-noul>🎧 DJ decks</button><button type="button" data-kd="seq" data-noul>🎼 Tracks</button><button type="button" data-kd="mix" data-noul>🎚 Mixing board</button>';
    d.addEventListener('click',e=>{ const x=e.target.closest('[data-kd]'); if(!x) return; e.stopPropagation(); const k=x.dataset.kd; const f=F(); if(!f) return;
@@ -83,10 +88,10 @@ body.kDevOver #pad .kFloat.kFOn:not(.kFOff){visibility:visible!important;pointer
     say(f.isOpen(k)?({pads:'🥁 The pads are over the song: hit them or 1 2 3 4 · Q W E R · A S D F · Z X C V. ● REC records them on the beat.',keys:'🎹 The keyboard is over the song: Z to M and Q to I play it. ● REC records it onto its track.',dj:'🎧 The DJ decks are over the song.',seq:'🎼 The track sequencer is over the song: the Karaoke takes are on it too.'}[k]):'Closed.'); paintKara(); });
    const rows=inn.querySelectorAll('.kkRow'); const at=rows[1]||rows[0]; if(at&&at.parentNode) at.parentNode.insertBefore(d,at.nextSibling); else inn.insertBefore(d,inn.firstChild); }
   paintKara(); }
- function paintKara(){ const d=document.querySelector('#kKara .kkDev'); if(!d) return; d.querySelectorAll('[data-kd]').forEach(x=>{ const k=x.dataset.kd; if(k!=='mix') x.classList.toggle('on',over()&&isOpen(k)); }); }
+ function paintKara(){ document.querySelectorAll('#kKara .kkDev,#aivDock .kkDev').forEach(d=>d.querySelectorAll('[data-kd]').forEach(x=>{ const k=x.dataset.kd; if(k!=='mix') x.classList.toggle('on',over()&&isOpen(k)); })); }
  /* Karaoke redraws its page often: the device bar goes back in at once */
  let mo=null; function watchKara(){ const K=$('kKara'); if(!K||mo) return; mo=new MutationObserver(()=>{ if(!K.hidden&&!K.querySelector('.kkDev')) karaBar(); }); mo.observe(K,{childList:true,subtree:false}); const inn=K.querySelector('.kkIn'); if(inn) mo.observe(inn,{childList:true}); }
- setInterval(()=>{ watchKara(); paint(); karaBar(); const K=$('kKara'); const karaUp=!!K&&!K.hidden; if(over()&&(!karaUp||$('pad').classList.contains('on'))) document.body.classList.remove('kDevOver'); },600);
+ setInterval(()=>{ watchKara(); paint(); karaBar(); vidBar(); const K=$('kKara'); const V=$('aivDock'); const karaUp=(!!K&&!K.hidden)||(!!V&&V.getClientRects().length>0); if(over()&&(!karaUp||$('pad').classList.contains('on'))) document.body.classList.remove('kDevOver'); },600);
  (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Studio','🎧','DJ pads: the 16 pads play both DJ decks (hot cue, roll, FX, sampler)','Studio',()=>{ try{ KRAIL.goTo('pad'); }catch(_){ } setTimeout(()=>{ try{ F().open('pads'); }catch(_){ } setMode('cue'); },900); }); });
  window.KWIRE={get mode(){ return mode; },setMode,act,label};
 })();
