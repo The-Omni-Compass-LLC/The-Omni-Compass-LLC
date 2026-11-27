@@ -29852,67 +29852,7 @@ html.lvl-easy .kEzMore{display:inline-flex;align-items:center;justify-content:ce
 
 </script>
 
-<script>
-(()=>{ /* 💥 THE CANNON, ONE TRIGGER EVERYWHERE (v245). The cannon is KAN-IN's own mechanism: it makes the thing for you. Every screen has its
-   own shot (a beat in the Studio, a song in Karaoke, a joke in Laugh, a spin in LuvMyZodiac, a craft, a storybook, a canvas on the
-   Omni-Compass, a random game, a dish, a lesson, a headline), and one 💥 CANNON button, the same on every screen, fires that screen's shot.
-   Every shot, from this button or any 💥 button anywhere, is counted and kept in 💥 My Cannon on your page.
-   And the devices float over every studio: 🎤 the Karaoke mic joins the pads, the keyboard, the DJ decks and the track sequencer as a
-   movable panel over the mixing board, and the same devices come up over the 🎬 Video studio. */
- const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
- const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
- const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
- const press=sel=>{ const b=document.querySelector(sel); if(b){ b.click(); return true; } return false; };
- const randomTile=sel=>{ const L=[...document.querySelectorAll(sel)].filter(x=>x.getClientRects().length&&!x.disabled); if(!L.length) return false; L[Math.floor(Math.random()*L.length)].click(); return true; };
- const NAME={pad:'Studio',home:'Story',kKara:'Karaoke',kHumor:'Laugh',zodDock:'LuvMyZodiac',omniDock:'Omni-Compass',swDock:'Songwriter',craftDock:'Craft',sbDock:'Storybook',langDock:'Language',musicDock:'Music',mutDock:'Mutate',gamesDock:'Games',kVG:'Games',kKnow:'Knowledge',kNews:'News',kRelig:'Cultures & Religion',kMarket:'Stock Market',kEasel:'The Easel',aivDock:'Video studio',voiceDock:'Voices',recipeDock:'Recipes',kAcct:'My page'};
- const SHOT={pad:()=>press('#bmFire')||press('#cFire'),home:()=>press('#kCanAll')||press('[data-to="all"]'),kKara:()=>press('#kKara [data-kk="cannon"]'),kHumor:()=>press('#kHumor [data-kh="cannon"]'),zodDock:()=>press('#z4SpinGo')||press('#zlFire'),omniDock:()=>press('#otBoom'),swDock:()=>press('#swFire'),craftDock:()=>press('#crFire'),sbDock:()=>press('#sbFireAll'),langDock:()=>press('[data-kl="cannon"]'),musicDock:()=>press('[data-m="cannon"]'),mutDock:()=>press('#mrFire'),
-  gamesDock:()=>randomTile('#gamesDock .gsTile,#gamesDock [data-game]'),kVG:()=>randomTile('#kVG .vgList button,#kVG .ghGrid button'),kKnow:()=>{ const L=[...document.querySelectorAll('#knList > details')]; if(!L.length) return false; const d=L[Math.floor(Math.random()*L.length)]; d.open=true; d.scrollIntoView({block:'center',behavior:'smooth'}); return true; },
-  kNews:()=>randomTile('#kNews .nwItem button,#kNews article button'),recipeDock:()=>{ const b=[...document.querySelectorAll('#recipeDock button')].find(x=>/Surprise/.test(x.textContent)&&x.getClientRects().length); if(b){ b.click(); return true; } return false; }};
- /* every 💥 anywhere is a shot, kept for My Cannon */
- let lastLog=0;
- function log(where,what){ const now=Date.now(); if(now-lastLog<600) return; lastLog=now; const L=getLS('kanin-shots',[])||[]; L.unshift({at:now,what:(where?where+': ':'')+String(what||'a surprise').replace(/^💥\s*/,'').slice(0,60)}); putLS('kanin-shots',L.slice(0,80)); putLS('kanin-shotn',(+getLS('kanin-shotn',0)||0)+1); }
- document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b||b.id==='kCannonBtn') return; const t=(b.textContent||'').trim(); if(/^💥/.test(t)) log(NAME[cur()]||'',t); },true);
- function fire(){ const c=cur(); let ok=false; try{ ok=!!(SHOT[c]&&SHOT[c]()); }catch(_){ ok=false; }
-  if(!ok){ try{ KJUMP.open(); setTimeout(()=>{ try{ KJUMP.jump(); }catch(_){ } },350); ok=true; log(NAME[c]||'Anywhere','the jump generator'); }catch(_){ say('The cannon is loading. Try again in a moment.'); return; } }
-  else log(NAME[c]||c,'fired on '+(NAME[c]||'this screen'));
-  boom(); }
- /* the button: the same on every screen */
- const css=document.createElement('style'); css.textContent=`
-#kCannonBtn{position:fixed;z-index:9750;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(64px + env(safe-area-inset-bottom,0px));width:64px;height:64px;border-radius:50%;border:3px solid #ffe94a!important;background:radial-gradient(circle at 35% 30%,#ff9f43,#d4145a 70%)!important;color:#fff!important;font:900 26px/1 system-ui,sans-serif!important;box-shadow:0 8px 24px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0!important;cursor:pointer}
-#kCannonBtn small{font:900 9.5px system-ui,sans-serif;letter-spacing:.04em;margin-top:2px}
-#kCannonBtn:active{transform:scale(.94)}
-body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
-.kBoom{position:fixed;z-index:9751;pointer-events:none;width:10px;height:10px;border-radius:50%;background:#ffe94a;box-shadow:0 0 18px #ff9f43;animation:kBoom .7s ease-out forwards}
-@keyframes kBoom{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
-#kKaraMini{display:none;color:#eef;font:14px/1.4 system-ui,sans-serif}
-#kKaraMini.kFOn{display:flex!important;flex-direction:column;gap:6px}
-#kKaraMini .kmRow{display:flex;flex-wrap:wrap;gap:6px}
-#kKaraMini button{min-height:44px!important;padding:0 12px!important;border-radius:12px!important;font:800 13.5px system-ui,sans-serif!important}
-#kKaraMini .kmRec{background:#ff2d55!important;color:#fff!important;flex:1 1 140px}
-#kKaraMini .kmTake{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border-radius:10px;padding:4px 8px}
-#kKaraMini .kmTake span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
-#kKaraMini .kmTake button{min-height:32px!important;padding:0 8px!important}`; document.head.appendChild(css);
- function btn(){ let b=$('kCannonBtn'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kCannonBtn'; b.setAttribute('data-noul',''); b.title='💥 Fire the cannon: it makes the thing for you, on this screen'; b.setAttribute('aria-label','Fire the cannon'); b.innerHTML='💥<small>CANNON</small>'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); fire(); }); document.body.appendChild(b); }
-  const t=$('tourTab'); const menuOpen=!!(t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40); const hide=menuOpen||!!document.querySelector('#kDemo:not([hidden])'); if(b.hidden!==hide) b.hidden=hide; }
- function boom(){ const b=$('kCannonBtn'); if(!b) return; const r=b.getBoundingClientRect(); for(let i=0;i<14;i++){ const d=document.createElement('i'); d.className='kBoom'; d.style.left=(r.left+r.width/2)+'px'; d.style.top=(r.top+r.height/2)+'px'; const a=-Math.PI/2+(Math.random()-.2)*Math.PI*.9; const L=90+Math.random()*160; d.style.setProperty('--dx',Math.cos(a)*L+'px'); d.style.setProperty('--dy',Math.sin(a)*L+'px'); document.body.appendChild(d); setTimeout(()=>d.remove(),800); } }
- /* 🎤 the Karaoke mic, a floating panel over the mixing board */
- const kk=a=>{ if(!$('kKara')){ try{ KKARA.open(); KKARA.close(); }catch(_){ } } return press('#kKara [data-kk="'+a+'"]'); };
- function mini(){ const pad=$('pad'); if(!pad) return null; let m=$('kKaraMini'); if(m) return m; m=document.createElement('div'); m.id='kKaraMini'; pad.appendChild(m);
-  m.addEventListener('click',e=>{ const b=e.target.closest('[data-km]'); if(!b) return; e.stopPropagation(); const a=b.dataset.km;
-   if(a==='full'){ try{ KKARA.open(); }catch(_){ } return; } if(a==='mute'){ const o=document.querySelector('#kKara [data-kk="lmute"][data-i="'+b.dataset.i+'"]'); if(o) o.click(); else { const T=(KKARA.takes()||[])[+b.dataset.i]; if(T) T.mute=!T.mute; } setTimeout(paintMini,150); return; }
-   kk(a); setTimeout(paintMini,300); });
-  return m; }
- function paintMini(){ const m=$('kKaraMini'); if(!m||!m.classList.contains('kFOn')) return; let takes=[]; try{ takes=KKARA.takes()||[]; }catch(_){ } const recB=document.querySelector('#kKara [data-kk="rec"]'); const recOn=!!recB&&/Stop/.test(recB.textContent);
-  const h='<div class="kmRow"><button type="button" class="kmRec" data-km="rec" data-noul>'+(recOn?'■ Stop the take':'● Record a take')+'</button><button type="button" data-km="lbeat" data-noul>▶ Takes + beat</button><button type="button" data-km="lstop" data-noul>■ Stop</button></div><div class="kmRow"><button type="button" data-km="cannon" data-noul>💥 Cannon song</button><button type="button" data-km="sing" data-noul>🎤 Lyrics full screen</button><button type="button" data-km="full" data-noul>⤢ Full Karaoke</button></div>'+(takes.length?takes.slice(-6).map((t,j)=>{ const i=takes.length-Math.min(6,takes.length)+j; return '<div class="kmTake"><span>🎙 '+String(t.name||'Take').replace(/[<>&]/g,'')+(t.buf?' · '+t.buf.duration.toFixed(1)+' s':'')+'</span><button type="button" data-km="mute" data-i="'+i+'" data-noul>'+(t.mute?'🔇':'🔊')+'</button></div>'; }).join(''):'<div style="opacity:.8">No takes yet. ● Record a take sings over the beat; each take lands on its own microphone strip of the mixing board.</div>');
-  if(m.dataset.h!==h){ m.dataset.h=h; m.innerHTML=h; } }
- function register(){ let F; try{ F=KRAIL.FLOAT; }catch(_){ return; } if(!F||!F.add||!mini()) return; F.add('kara',{get:()=>$('kKaraMini'),t:'🎤 Karaoke mic',i:'🎤',l:'Mic'});
-  if(!getLS('kanin-float-kara',null)){ const W=innerWidth-(innerWidth<=760?58:76); putLS('kanin-float-kara',innerWidth<=760?{x:4,y:60,w:W-8,h:300}:{x:Math.max(8,W-380),y:90,w:360,h:340}); }
-  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-kmo]')){ const b=document.createElement('button'); b.type='button'; b.dataset.kmo='1'; b.setAttribute('data-noul',''); b.textContent='🎤 Mic'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); try{ F.toggle('kara'); }catch(_){ } setTimeout(paintMini,100); },true); bb.appendChild(b); } }
- setInterval(()=>{ btn(); register(); paintMini(); },700);
- window.KCANNON={fire,log,SHOT,NAME};
-})();
 
-</script>
 
 <script>
 (()=>{ /* 🟢 EASY FOLDS THE BIG SCREENS (v245). On the Easy level a screen shows what a first-timer needs and folds the rest away, one tap
@@ -30046,6 +29986,147 @@ body:not(.kKBon) .kSplitStrip{display:none}`; document.head.appendChild(css);
  function strips(){ [['mpcBar','⌨ Left hand plays the pads','1 2 3 4 · Q W E R · A S D F · Z X C V'+(djMode()?'  ·  DJ: deck A 1234 QWER · deck B 7890 UIOP':'')],['kbDash','⌨ Right hand plays the piano','white Y U I O P [ ] \\ · black 7 8 · 0 - = · controls H J K L ; \' · N M , . /']].forEach(([id,t,s])=>{ const bar=$(id); if(!bar) return; let el=bar.parentElement&&bar.parentElement.querySelector(':scope > .kSplitStrip'); if(!el){ el=document.createElement('div'); el.className='kSplitStrip'; bar.parentElement.insertBefore(el,bar); } const h='<b>'+t+'</b><small>'+s+'</small>'; if(el.dataset.h!==h){ el.dataset.h=h; el.innerHTML=h; } }); }
  setInterval(strips,800);
  window.KSPLIT={on:true,PIANO,PADK};
+})();
+
+</script>
+<script>
+(()=>{ /* ⬡ THE 2026 SKIN (v246). One look for the whole platform, a different shape for each kind of control, so a hand knows what it is
+   touching before reading it:
+   • DEVICE PANELS (pads, keyboard, tracks, DJ, mic) sit in a HUD frame: dark glass, a neon edge, corner brackets, a grid-lined title bar.
+   • TRANSPORT keys are round hardware buttons (▶ green, ■ red, ● record red with a lit ring, ⏮ ↶ steel); SOFT KEYS under each screen
+     are backlit rubber keys; the ⚙ More key is a hexagon.
+   • MENU ENTRIES are angled holographic cards; EASY tiles are cut-corner plates; the RAIL is a column of glass keys with a lit edge.
+   • CHIPS and small buttons are beveled tags; the big go-buttons are angled with a light sweep.
+   The shapes never change what a control does, its size or its key. */
+ const css=document.createElement('style'); css.id='kSkin246'; css.textContent=`
+:root{--k6a:#2ad4ff;--k6b:#b46bff;--k6c:#ff2d95;--k6g:#00e08a;--k6r:#ff2d55;--k6glass:rgba(14,16,34,.82);--k6edge:rgba(42,212,255,.55)}
+/* ── device panels: the HUD frame ── */
+html body .kFloat.kFOn:not(.kFOff){background:linear-gradient(160deg,rgba(18,22,44,.94),rgba(8,9,22,.96))!important;border:1px solid var(--k6edge)!important;border-radius:14px!important;box-shadow:0 0 0 1px rgba(180,107,255,.25),0 18px 48px rgba(0,0,0,.6),inset 0 0 40px rgba(42,212,255,.06)!important;backdrop-filter:blur(8px)}
+html body .kFloat.kFOn:not(.kFOff)::before,html body .kFloat.kFOn:not(.kFOff)::after{content:"";position:absolute;width:18px;height:18px;pointer-events:none;z-index:3}
+html body .kFloat.kFOn:not(.kFOff)::before{left:-1px;top:-1px;border-left:3px solid var(--k6a);border-top:3px solid var(--k6a);border-top-left-radius:14px}
+html body .kFloat.kFOn:not(.kFOff)::after{right:-1px;bottom:-1px;border-right:3px solid var(--k6b);border-bottom:3px solid var(--k6b);border-bottom-right-radius:14px}
+html body .kFloat .kFHead{background:linear-gradient(90deg,rgba(42,212,255,.16),rgba(180,107,255,.12)),repeating-linear-gradient(90deg,transparent 0 11px,rgba(255,255,255,.04) 11px 12px)!important;border-bottom:1px solid var(--k6edge)!important;letter-spacing:.04em;text-transform:none}
+html body .kFloat .kFHead b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;font-weight:800!important;color:#bff3ff!important;text-shadow:0 0 10px rgba(42,212,255,.45)}
+html body .kFloat .kFHead [data-fh]{border-radius:8px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.18)!important}
+html body .kFloat .kFHead [data-fh="x"],html body .kFloat .kFHead [data-fh]:last-child{border-color:rgba(255,45,85,.6)!important;color:#ffb3c4!important}
+/* ── transport: round hardware buttons ── */
+html body :is(#mpcBar,#kbDash) .kDevTx button{border-radius:50%/46%!important;background:radial-gradient(circle at 50% 30%,#3a4058,#171a28 70%)!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.12),inset 0 -3px 6px rgba(0,0,0,.6),0 3px 8px rgba(0,0,0,.5)!important;color:#e9f6ff!important}
+html body :is(#mpcBar,#kbDash) .kDevTx button[data-tx="play"]{background:radial-gradient(circle at 50% 30%,#2fe38f,#0b6b3d 72%)!important;border-color:#7dffb8!important}
+html body :is(#mpcBar,#kbDash) .kDevTx button[data-tx="stop"]{background:radial-gradient(circle at 50% 30%,#ff6b7f,#8f1026 72%)!important;border-color:#ffb3c0!important}
+html body :is(#mpcBar,#kbDash) .kDevTx button[data-tx="rec"]{background:radial-gradient(circle at 50% 30%,#ff4d6d,#7a0a1f 72%)!important;border-color:#ff8fa3!important;box-shadow:0 0 0 2px rgba(255,45,85,.35),0 0 14px rgba(255,45,85,.45),inset 0 2px 0 rgba(255,255,255,.15)!important}
+html body .kDevTx button:active{transform:translateY(1px) scale(.97)}
+/* ── soft keys under the screens: backlit rubber ── */
+html body :is(#mpcBar,#kbDash) .kScr button[data-sf]{border-radius:7px 7px 11px 11px!important;background:linear-gradient(180deg,#2b3045,#191c2b)!important;border:1px solid rgba(255,255,255,.14)!important;border-bottom:3px solid rgba(42,212,255,.55)!important;box-shadow:0 2px 6px rgba(0,0,0,.5)!important;color:#dff7ff!important}
+html body .kScr [data-sf].on,html body .kScr [data-sf][aria-pressed="true"]{border-bottom-color:#ffe94a!important;box-shadow:0 0 12px rgba(255,233,74,.35)!important}
+/* ── ⚙ More: a hexagon ── */
+html body .kEzMore{clip-path:polygon(12% 0,88% 0,100% 50%,88% 100%,12% 100%,0 50%)!important;border-radius:0!important;background:linear-gradient(135deg,#3b2a7a,#1b1640)!important;color:#e9dcff!important;border:0!important;padding:0 16px!important}
+html body .kEzMore.on{background:linear-gradient(135deg,#ffe94a,#ffb800)!important;color:#14163a!important}
+/* ── the transport bar and the DJ mode bar ── */
+html body #bbBar button,html body .kDjBar button{border-radius:4px 12px 4px 12px!important;background:linear-gradient(180deg,rgba(42,212,255,.14),rgba(20,22,44,.9))!important;border:1px solid rgba(42,212,255,.4)!important}
+html body .kDjBar button.on{background:linear-gradient(135deg,#ffe94a,#ffb800)!important;color:#14163a!important}
+html body .kDjBar button.dj.on{background:linear-gradient(135deg,#2ad4ff,#1f7dff)!important;color:#04121f!important}
+/* ── the track sequencer ── */
+html body #kSeqWin .sqTop button{border-radius:4px 12px 4px 12px!important}
+html body #kSeqWin .sqHead .c button{border-radius:5px!important;border:1px solid rgba(255,255,255,.16)!important}
+html body #kSeqWin .sqHead .c button.arm.on{box-shadow:0 0 10px rgba(255,45,85,.6)!important}
+html body #kSeqWin .sqBody{border-color:var(--k6edge)!important;box-shadow:inset 0 0 30px rgba(42,212,255,.05)}
+/* ── the menu: angled holographic cards ── */
+html body #tourTab .kStartB{border-radius:6px 18px 6px 18px!important;background:linear-gradient(135deg,rgba(122,44,255,.9),rgba(255,45,149,.85))!important;border:1px solid rgba(255,255,255,.35)!important;box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.35)!important;position:relative;overflow:hidden}
+html body #tourTab .kStartB::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.18) 45%,transparent 60%);transform:translateX(-120%);transition:transform .6s ease;pointer-events:none}
+html body #tourTab .kStartB:hover::after{transform:translateX(120%)}
+html body #tourTab .kMenuH{font-family:ui-monospace,Menlo,monospace!important;letter-spacing:.06em}
+/* ── Easy tiles: cut-corner plates ── */
+html body .kEasy .ezGrid button{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));border-radius:0!important;background:linear-gradient(160deg,#2c2780,#15123f)!important;border:0!important;box-shadow:inset 0 0 0 2px rgba(42,212,255,.35)!important}
+html body .kEasy .ezGrid button.go{background:linear-gradient(160deg,#18a957,#0b5e32)!important}
+html body .kEasy .ezGrid button.st{background:linear-gradient(160deg,#d42a44,#7c0a1d)!important}
+html body .kEasy .ezGrid button.ud{background:linear-gradient(160deg,#ffe94a,#ffb800)!important;color:#14163a!important}
+html body .kEasy{border-image:linear-gradient(135deg,var(--k6a),var(--k6b),var(--k6c)) 1!important;border-radius:0!important}
+html body .kEzRow button{border-radius:4px 14px 4px 14px!important}
+/* ── the rail: glass keys with a lit edge ── */
+html body #rDock#rDock > button{background:linear-gradient(180deg,rgba(30,34,64,.92),rgba(12,13,30,.92))!important;border:1px solid rgba(42,212,255,.35)!important;border-left:3px solid var(--k6a)!important;border-radius:10px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.4)!important}
+html body #rDock#rDock > button:hover{border-left-color:var(--k6c)!important;box-shadow:0 0 14px rgba(42,212,255,.35)!important}
+/* ── my page and its cards ── */
+html body #kAcct .kaCard{background:linear-gradient(160deg,rgba(24,26,54,.85),rgba(10,10,26,.85))!important;border:1px solid var(--k6edge)!important;border-radius:4px 18px 4px 18px!important;box-shadow:inset 0 0 30px rgba(42,212,255,.05)}
+html body #kAcct button{border-radius:4px 12px 4px 12px!important}
+html body #kAcct .kaGo{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%);border-radius:0!important;padding-right:26px!important}
+html body #kAcct .kaChip,html body .kEzMoreChip{border-radius:3px 10px 3px 10px!important}
+html body #kAcct .kaStats div{border-left:3px solid var(--k6a);border-radius:2px 10px 2px 10px!important}
+/* ── the cannon: a rotating targeting ring ── */
+#kCannonBtn::before{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px dashed rgba(255,233,74,.7);animation:k6spin 6s linear infinite;pointer-events:none}
+@keyframes k6spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ #kCannonBtn::before{animation:none} html body #tourTab .kStartB::after{display:none} }
+/* ── compress: a little tighter everywhere it is safe ── */
+html body .kDevTx{gap:4px!important}
+html body .kScr .kSoft{gap:4px!important}`; document.head.appendChild(css);
+ window.KSKIN={version:'246'};
+})();
+
+</script>
+<script>
+(()=>{ /* 💥 THE CANNON, ONE TRIGGER EVERYWHERE (v245). The cannon is KAN-IN's own mechanism: it makes the thing for you. Every screen has its
+   own shot (a beat in the Studio, a song in Karaoke, a joke in Laugh, a spin in LuvMyZodiac, a craft, a storybook, a canvas on the
+   Omni-Compass, a random game, a dish, a lesson, a headline), and one 💥 CANNON button, the same on every screen, fires that screen's shot.
+   Every shot, from this button or any 💥 button anywhere, is counted and kept in 💥 My Cannon on your page.
+   And the devices float over every studio: 🎤 the Karaoke mic joins the pads, the keyboard, the DJ decks and the track sequencer as a
+   movable panel over the mixing board, and the same devices come up over the 🎬 Video studio. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const cur=()=>{ try{ return KRAIL.cur(); }catch(_){ return 'home'; } };
+ const press=sel=>{ const b=document.querySelector(sel); if(b){ b.click(); return true; } return false; };
+ const randomTile=sel=>{ const L=[...document.querySelectorAll(sel)].filter(x=>x.getClientRects().length&&!x.disabled); if(!L.length) return false; L[Math.floor(Math.random()*L.length)].click(); return true; };
+ const NAME={pad:'Studio',home:'Story',kKara:'Karaoke',kHumor:'Laugh',zodDock:'LuvMyZodiac',omniDock:'Omni-Compass',swDock:'Songwriter',craftDock:'Craft',sbDock:'Storybook',langDock:'Language',musicDock:'Music',mutDock:'Mutate',gamesDock:'Games',kVG:'Games',kKnow:'Knowledge',kNews:'News',kRelig:'Cultures & Religion',kMarket:'Stock Market',kEasel:'The Easel',aivDock:'Video studio',voiceDock:'Voices',recipeDock:'Recipes',kAcct:'My page'};
+ const SHOT={pad:()=>press('#bmFire')||press('#cFire'),home:()=>press('#kCanAll')||press('[data-to="all"]'),kKara:()=>press('#kKara [data-kk="cannon"]'),kHumor:()=>press('#kHumor [data-kh="cannon"]'),zodDock:()=>press('#z4SpinGo')||press('#zlFire'),omniDock:()=>press('#otBoom'),swDock:()=>press('#swFire'),craftDock:()=>press('#crFire'),sbDock:()=>press('#sbFireAll'),langDock:()=>press('[data-kl="cannon"]'),musicDock:()=>press('[data-m="cannon"]'),mutDock:()=>press('#mrFire'),
+  gamesDock:()=>randomTile('#gamesDock .gsTile,#gamesDock [data-game]'),kVG:()=>randomTile('#kVG .vgList button,#kVG .ghGrid button'),kKnow:()=>{ const L=[...document.querySelectorAll('#knList > details')]; if(!L.length) return false; const d=L[Math.floor(Math.random()*L.length)]; d.open=true; d.scrollIntoView({block:'center',behavior:'smooth'}); return true; },
+  kNews:()=>randomTile('#kNews .nwItem button,#kNews article button'),recipeDock:()=>{ const b=[...document.querySelectorAll('#recipeDock button')].find(x=>/Surprise/.test(x.textContent)&&x.getClientRects().length); if(b){ b.click(); return true; } return false; }};
+ /* every 💥 anywhere is a shot, kept for My Cannon */
+ let lastLog=0;
+ function log(where,what){ const now=Date.now(); if(now-lastLog<600) return; lastLog=now; const L=getLS('kanin-shots',[])||[]; L.unshift({at:now,what:(where?where+': ':'')+String(what||'a surprise').replace(/^💥\s*/,'').slice(0,60)}); putLS('kanin-shots',L.slice(0,80)); putLS('kanin-shotn',(+getLS('kanin-shotn',0)||0)+1); }
+ document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b||b.id==='kCannonBtn') return; const t=(b.textContent||'').trim(); if(/^💥/.test(t)) log(NAME[cur()]||'',t); },true);
+ function fire(){ const c=cur(); let ok=false; try{ ok=!!(SHOT[c]&&SHOT[c]()); }catch(_){ ok=false; }
+  if(!ok){ try{ KJUMP.open(); setTimeout(()=>{ try{ KJUMP.jump(); }catch(_){ } },350); ok=true; log(NAME[c]||'Anywhere','the jump generator'); }catch(_){ say('The cannon is loading. Try again in a moment.'); return; } }
+  else log(NAME[c]||c,'fired on '+(NAME[c]||'this screen'));
+  boom(); }
+ /* the button: the same on every screen */
+ const css=document.createElement('style'); css.textContent=`
+#kCannonBtn{position:fixed;z-index:9750;left:calc(50% - 32px);bottom:calc(10px + env(safe-area-inset-bottom,0px));touch-action:none;width:64px;height:64px;border-radius:50%;border:3px solid #ffe94a!important;background:radial-gradient(circle at 35% 30%,#ff9f43,#d4145a 70%)!important;color:#fff!important;font:900 26px/1 system-ui,sans-serif!important;box-shadow:0 8px 24px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0!important;cursor:pointer}
+#kCannonBtn small{font:900 9.5px system-ui,sans-serif;letter-spacing:.04em;margin-top:2px}
+#kCannonBtn:active{transform:scale(.94)}
+body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
+.kBoom{position:fixed;z-index:9751;pointer-events:none;width:10px;height:10px;border-radius:50%;background:#ffe94a;box-shadow:0 0 18px #ff9f43;animation:kBoom .7s ease-out forwards}
+@keyframes kBoom{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+#kKaraMini{display:none;color:#eef;font:14px/1.4 system-ui,sans-serif}
+#kKaraMini.kFOn{display:flex!important;flex-direction:column;gap:6px}
+#kKaraMini .kmRow{display:flex;flex-wrap:wrap;gap:6px}
+#kKaraMini button{min-height:44px!important;padding:0 12px!important;border-radius:12px!important;font:800 13.5px system-ui,sans-serif!important}
+#kKaraMini .kmRec{background:#ff2d55!important;color:#fff!important;flex:1 1 140px}
+#kKaraMini .kmTake{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border-radius:10px;padding:4px 8px}
+#kKaraMini .kmTake span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+#kKaraMini .kmTake button{min-height:32px!important;padding:0 8px!important}`; document.head.appendChild(css);
+ function btn(){ let b=$('kCannonBtn'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kCannonBtn'; b.setAttribute('data-noul',''); b.title='💥 Fire the cannon: it makes the thing for you, on this screen. Drag it to move it.'; b.setAttribute('aria-label','Fire the cannon'); b.innerHTML='💥<small>CANNON</small>'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); if(b.__dragged){ b.__dragged=false; return; } fire(); }); document.body.appendChild(b); drag(b); }
+  const t=$('tourTab'); const menuOpen=!!(t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40); const hide=menuOpen||!!document.querySelector('#kDemo:not([hidden])'); if(b.hidden!==hide) b.hidden=hide; }
+ /* the cannon moves: drag it anywhere, tap it to fire; it remembers where it was put */
+ function drag(b){ const pos=getLS('kanin-cannon-pos',null); const placeAt=(x,y)=>{ x=Math.max(4,Math.min(innerWidth-72,x)); y=Math.max(4,Math.min(innerHeight-72,y)); b.style.left=x+'px'; b.style.top=y+'px'; b.style.bottom='auto'; };
+  if(pos) placeAt(pos.x,pos.y); let sx=0,sy=0,ox=0,oy=0,on=false;
+  b.addEventListener('pointerdown',e=>{ const r=b.getBoundingClientRect(); sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top; on=true; b.__dragged=false; try{ b.setPointerCapture(e.pointerId); }catch(_){ } });
+  b.addEventListener('pointermove',e=>{ if(!on) return; const dx=e.clientX-sx, dy=e.clientY-sy; if(!b.__dragged&&Math.hypot(dx,dy)<6) return; b.__dragged=true; placeAt(ox+dx,oy+dy); });
+  b.addEventListener('pointerup',()=>{ if(on&&b.__dragged){ const r=b.getBoundingClientRect(); putLS('kanin-cannon-pos',{x:r.left,y:r.top}); } on=false; });
+  addEventListener('resize',()=>{ const p2=getLS('kanin-cannon-pos',null); if(p2) placeAt(p2.x,p2.y); }); }
+ function boom(){ const b=$('kCannonBtn'); if(!b) return; const r=b.getBoundingClientRect(); for(let i=0;i<14;i++){ const d=document.createElement('i'); d.className='kBoom'; d.style.left=(r.left+r.width/2)+'px'; d.style.top=(r.top+r.height/2)+'px'; const a=-Math.PI/2+(Math.random()-.2)*Math.PI*.9; const L=90+Math.random()*160; d.style.setProperty('--dx',Math.cos(a)*L+'px'); d.style.setProperty('--dy',Math.sin(a)*L+'px'); document.body.appendChild(d); setTimeout(()=>d.remove(),800); } }
+ /* 🎤 the Karaoke mic, a floating panel over the mixing board */
+ const kk=a=>{ if(!$('kKara')){ try{ KKARA.open(); KKARA.close(); }catch(_){ } } return press('#kKara [data-kk="'+a+'"]'); };
+ function mini(){ const pad=$('pad'); if(!pad) return null; let m=$('kKaraMini'); if(m) return m; m=document.createElement('div'); m.id='kKaraMini'; pad.appendChild(m);
+  m.addEventListener('click',e=>{ const b=e.target.closest('[data-km]'); if(!b) return; e.stopPropagation(); const a=b.dataset.km;
+   if(a==='full'){ try{ KKARA.open(); }catch(_){ } return; } if(a==='mute'){ const o=document.querySelector('#kKara [data-kk="lmute"][data-i="'+b.dataset.i+'"]'); if(o) o.click(); else { const T=(KKARA.takes()||[])[+b.dataset.i]; if(T) T.mute=!T.mute; } setTimeout(paintMini,150); return; }
+   kk(a); setTimeout(paintMini,300); });
+  return m; }
+ function paintMini(){ const m=$('kKaraMini'); if(!m||!m.classList.contains('kFOn')) return; let takes=[]; try{ takes=KKARA.takes()||[]; }catch(_){ } const recB=document.querySelector('#kKara [data-kk="rec"]'); const recOn=!!recB&&/Stop/.test(recB.textContent);
+  const h='<div class="kmRow"><button type="button" class="kmRec" data-km="rec" data-noul>'+(recOn?'■ Stop the take':'● Record a take')+'</button><button type="button" data-km="lbeat" data-noul>▶ Takes + beat</button><button type="button" data-km="lstop" data-noul>■ Stop</button></div><div class="kmRow"><button type="button" data-km="cannon" data-noul>💥 Cannon song</button><button type="button" data-km="sing" data-noul>🎤 Lyrics full screen</button><button type="button" data-km="full" data-noul>⤢ Full Karaoke</button></div>'+(takes.length?takes.slice(-6).map((t,j)=>{ const i=takes.length-Math.min(6,takes.length)+j; return '<div class="kmTake"><span>🎙 '+String(t.name||'Take').replace(/[<>&]/g,'')+(t.buf?' · '+t.buf.duration.toFixed(1)+' s':'')+'</span><button type="button" data-km="mute" data-i="'+i+'" data-noul>'+(t.mute?'🔇':'🔊')+'</button></div>'; }).join(''):'<div style="opacity:.8">No takes yet. ● Record a take sings over the beat; each take lands on its own microphone strip of the mixing board.</div>');
+  if(m.dataset.h!==h){ m.dataset.h=h; m.innerHTML=h; } }
+ function register(){ let F; try{ F=KRAIL.FLOAT; }catch(_){ return; } if(!F||!F.add||!mini()) return; F.add('kara',{get:()=>$('kKaraMini'),t:'🎤 Karaoke mic',i:'🎤',l:'Mic'});
+  if(!getLS('kanin-float-kara',null)){ const W=innerWidth-(innerWidth<=760?58:76); putLS('kanin-float-kara',innerWidth<=760?{x:4,y:60,w:W-8,h:300}:{x:Math.max(8,W-380),y:90,w:360,h:340}); }
+  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-kmo]')){ const b=document.createElement('button'); b.type='button'; b.dataset.kmo='1'; b.setAttribute('data-noul',''); b.textContent='🎤 Mic'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); try{ F.toggle('kara'); }catch(_){ } setTimeout(paintMini,100); },true); bb.appendChild(b); } }
+ setInterval(()=>{ btn(); register(); paintMini(); },700);
+ window.KCANNON={fire,log,SHOT,NAME};
 })();
 
 </script>

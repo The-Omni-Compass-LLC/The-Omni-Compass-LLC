@@ -23,7 +23,7 @@
   boom(); }
  /* the button: the same on every screen */
  const css=document.createElement('style'); css.textContent=`
-#kCannonBtn{position:fixed;z-index:9750;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(64px + env(safe-area-inset-bottom,0px));width:64px;height:64px;border-radius:50%;border:3px solid #ffe94a!important;background:radial-gradient(circle at 35% 30%,#ff9f43,#d4145a 70%)!important;color:#fff!important;font:900 26px/1 system-ui,sans-serif!important;box-shadow:0 8px 24px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0!important;cursor:pointer}
+#kCannonBtn{position:fixed;z-index:9750;left:calc(50% - 32px);bottom:calc(10px + env(safe-area-inset-bottom,0px));touch-action:none;width:64px;height:64px;border-radius:50%;border:3px solid #ffe94a!important;background:radial-gradient(circle at 35% 30%,#ff9f43,#d4145a 70%)!important;color:#fff!important;font:900 26px/1 system-ui,sans-serif!important;box-shadow:0 8px 24px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0!important;cursor:pointer}
 #kCannonBtn small{font:900 9.5px system-ui,sans-serif;letter-spacing:.04em;margin-top:2px}
 #kCannonBtn:active{transform:scale(.94)}
 body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
@@ -37,8 +37,15 @@ body.gated #kCannonBtn,#kCannonBtn[hidden]{display:none!important}
 #kKaraMini .kmTake{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border-radius:10px;padding:4px 8px}
 #kKaraMini .kmTake span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
 #kKaraMini .kmTake button{min-height:32px!important;padding:0 8px!important}`; document.head.appendChild(css);
- function btn(){ let b=$('kCannonBtn'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kCannonBtn'; b.setAttribute('data-noul',''); b.title='💥 Fire the cannon: it makes the thing for you, on this screen'; b.setAttribute('aria-label','Fire the cannon'); b.innerHTML='💥<small>CANNON</small>'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); fire(); }); document.body.appendChild(b); }
+ function btn(){ let b=$('kCannonBtn'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kCannonBtn'; b.setAttribute('data-noul',''); b.title='💥 Fire the cannon: it makes the thing for you, on this screen. Drag it to move it.'; b.setAttribute('aria-label','Fire the cannon'); b.innerHTML='💥<small>CANNON</small>'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); if(b.__dragged){ b.__dragged=false; return; } fire(); }); document.body.appendChild(b); drag(b); }
   const t=$('tourTab'); const menuOpen=!!(t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40); const hide=menuOpen||!!document.querySelector('#kDemo:not([hidden])'); if(b.hidden!==hide) b.hidden=hide; }
+ /* the cannon moves: drag it anywhere, tap it to fire; it remembers where it was put */
+ function drag(b){ const pos=getLS('kanin-cannon-pos',null); const placeAt=(x,y)=>{ x=Math.max(4,Math.min(innerWidth-72,x)); y=Math.max(4,Math.min(innerHeight-72,y)); b.style.left=x+'px'; b.style.top=y+'px'; b.style.bottom='auto'; };
+  if(pos) placeAt(pos.x,pos.y); let sx=0,sy=0,ox=0,oy=0,on=false;
+  b.addEventListener('pointerdown',e=>{ const r=b.getBoundingClientRect(); sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top; on=true; b.__dragged=false; try{ b.setPointerCapture(e.pointerId); }catch(_){ } });
+  b.addEventListener('pointermove',e=>{ if(!on) return; const dx=e.clientX-sx, dy=e.clientY-sy; if(!b.__dragged&&Math.hypot(dx,dy)<6) return; b.__dragged=true; placeAt(ox+dx,oy+dy); });
+  b.addEventListener('pointerup',()=>{ if(on&&b.__dragged){ const r=b.getBoundingClientRect(); putLS('kanin-cannon-pos',{x:r.left,y:r.top}); } on=false; });
+  addEventListener('resize',()=>{ const p2=getLS('kanin-cannon-pos',null); if(p2) placeAt(p2.x,p2.y); }); }
  function boom(){ const b=$('kCannonBtn'); if(!b) return; const r=b.getBoundingClientRect(); for(let i=0;i<14;i++){ const d=document.createElement('i'); d.className='kBoom'; d.style.left=(r.left+r.width/2)+'px'; d.style.top=(r.top+r.height/2)+'px'; const a=-Math.PI/2+(Math.random()-.2)*Math.PI*.9; const L=90+Math.random()*160; d.style.setProperty('--dx',Math.cos(a)*L+'px'); d.style.setProperty('--dy',Math.sin(a)*L+'px'); document.body.appendChild(d); setTimeout(()=>d.remove(),800); } }
  /* 🎤 the Karaoke mic, a floating panel over the mixing board */
  const kk=a=>{ if(!$('kKara')){ try{ KKARA.open(); KKARA.close(); }catch(_){ } } return press('#kKara [data-kk="'+a+'"]'); };
