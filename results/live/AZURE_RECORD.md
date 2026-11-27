@@ -2,9 +2,9 @@
 
 > © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
-Written by `tools/azure_record.py` from each run's own receipt on the branch `raw` (`run-<id>/live-reps-aks/LIVE_REPS.json`, written by `tools/live_reps.py` in the run's own aggregate job); `results/live/AZURE_RECORD.json` is the same in a form a page reads. The runs' own records (title, commit, start, end, conclusion) are GitHub's, read 2026-11-22T16:59:34Z; each run's engine is the one its commit stands on (`tools/omni_version.py --commit`). Evidence class **L** (live software on Azure Kubernetes Service, the bill metered: Azure's own count of the machines it billed every 15 s, priced at list).
+Written by `tools/azure_record.py` from each run's own receipt on the branch `raw` (`run-<id>/live-reps-aks/LIVE_REPS.json`, written by `tools/live_reps.py` in the run's own aggregate job); `results/live/AZURE_RECORD.json` is the same in a form a page reads. The runs' own records (title, commit, start, end, conclusion) are GitHub's, read 2026-11-26T23:25:04Z; each run's engine is the one its commit stands on (`tools/omni_version.py --commit`). Evidence class **L** (live software on Azure Kubernetes Service, the bill metered: Azure's own count of the machines it billed every 15 s, priced at list).
 
-**34 Azure runs handed in a receipt**: 30 counted sets and 4 tuning cases, on 12 engines (no declared engine, omni-v1, omni-v5, omni-v6, omni-v7, omni-v9, omni-v10, omni-v11, omni-v18, omni-v21, omni-v25, omni-v26). Each run's word stands by itself, on its own number, by the one key; no two runs are pooled and no run is read across engines. A set of five repetitions has wide intervals: its words say what it measured, and how many of them stand beyond the noise. The sets before 31 October ran at the tune-down on the machines alone (the founder's order of 14 October, struck on 31 October): there Omni-Compass only parked a machine the cloud already made, so the work could not grow and the service rows read the noise of the same pods. The sets at the max on the work meter start after their tuning cases.
+**35 Azure runs handed in a receipt**: 30 counted sets and 5 tuning cases, on 13 engines (no declared engine, omni-v1, omni-v5, omni-v6, omni-v7, omni-v9, omni-v10, omni-v11, omni-v18, omni-v21, omni-v25, omni-v26, omni-v27). Each run's word stands by itself, on its own number, by the one key; no two runs are pooled and no run is read across engines. A set of five repetitions has wide intervals: its words say what it measured, and how many of them stand beyond the noise. The sets before 31 October ran at the tune-down on the machines alone (the founder's order of 14 October, struck on 31 October): there Omni-Compass only parked a machine the cloud already made, so the work could not grow and the service rows read the noise of the same pods. The sets at the max on the work meter start after their tuning cases.
 
 How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the direction and size of the change against native in words, then whether the run's paired 95% interval stands clear of zero. Why a word reads so: work done: more work is more output from the same organism; work bought with each dollar of the bill: more is more work for the bill; a resource the bill pays for: a fall is a cut, a rise is power given beside what it bought, never a loss; time waited, missed or failed: less helps the system, more hurts it; a count that must never rise: any rise hurts the system and reads LOSS, with no floor.
 
@@ -12,6 +12,7 @@ How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the d
 
 | Run | Engine | Set | Counts | Paired repetitions | Work inside the line | The bill | 95th percentile | 99th percentile | Failed requests | Time over the line |
 |---|---|---|---|---:|---|---|---|---|---|---|
+| [45500458659](#run-45500458659) | omni-v27 | the work meter at rates 2 4 6 8 10 12 16 20 a second | tuning case: sets the counted rates, never counted | 1 | GAIN, up 57.9%<br>(one repetition, no interval) | power given, up 6.3%<br>(one repetition, no interval) | GAIN, down 26.4%<br>(one repetition, no interval) | GAIN, down 46.4%<br>(one repetition, no interval) | GAIN or STEADY, down 100.0%<br>(one repetition, no interval) | GAIN, down 32.6%<br>(one repetition, no interval) |
 | [43364393684](#run-43364393684) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 68.3%<br>(beyond the noise) | power given, up 28.5%<br>(beyond the noise) | GAIN, down 30.2%<br>(beyond the noise) | GAIN, down 66.5%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 47.6%<br>(beyond the noise) |
 | [43177138720](#run-43177138720) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 59.0%<br>(beyond the noise) | power given, up 17.9%<br>(beyond the noise) | GAIN, down 25.6%<br>(beyond the noise) | GAIN, down 58.3%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 35.5%<br>(beyond the noise) |
 | [43005182097](#run-43005182097) | omni-v26 | the work meter at rates 2 4 6 8 10 12 16 20 a second under the stopping rule | counted set | 10 | GAIN, up 65.0%<br>(beyond the noise) | power given, up 27.6%<br>(beyond the noise) | GAIN, down 25.2%<br>(beyond the noise) | GAIN, down 57.0%<br>(beyond the noise) | GAIN or STEADY, down 100.0%<br>(beyond the noise) | GAIN, down 42.6%<br>(beyond the noise) |
@@ -48,6 +49,42 @@ How to read a cell: the word first (GAIN, STEADY, LOSS, power given), then the d
 | [37187059424](#run-37187059424) | no declared engine | the steady set | counted set | 4 | — | GAIN, down 0.6%<br>(inside the noise) | GAIN, down 17.1%<br>(inside the noise) | LOSS, up 37.6%<br>(inside the noise) | LOSS, up 60.5%<br>(inside the noise) | LOSS, up 19.3%<br>(inside the noise) |
 
 ## Each run, every gauge of its receipt
+
+### Run 45500458659
+
+<a id="run-45500458659"></a>
+
+`aks-metered`, work meter 2 4 6 8 10 12 16 20 dial max eastus Standard_D2s_v4; engine **omni-v27** (commit `c2a47aae19`, branch `bench/aks-native-ten-five`); started 2026-11-24 22:23 UTC, ended 2026-11-25 05:02 UTC; GitHub's conclusion **success**; 1 paired repetition; the dial max; tuning case: sets the counted rates, never counted. Receipt `raw:run-45500458659/live-reps-aks/LIVE_REPS.json`.
+
+| Gauge | native | Omni-Compass on native | Change against native | 95% interval of the difference | Reading |
+|---|---:|---:|---:|---:|---|
+| worker nodes in service, mean | 2.519 | 2.704 | up 7.3% | — to — | power given, up 7.3% (one repetition, no interval) |
+| node-hours | 0.8453 | 0.9028 | up 6.8% | — to — | power given, up 6.8% (one repetition, no interval) |
+| energy, parked workers still on at idle power (Wh) | 106.3 | 132.8 | up 25.0% | — to — | power given, up 25.0% (one repetition, no interval) |
+| energy (Wh) | 94.16 | 100.3 | up 6.6% | — to — | power given, up 6.6% (one repetition, no interval) |
+| response time (ms), mean | 428.3 | 335 | down 21.8% | — to — | GAIN, down 21.8% (one repetition, no interval) |
+| response time (ms), 95th percentile | 1034 | 760.8 | down 26.4% | — to — | GAIN, down 26.4% (one repetition, no interval) |
+| response time (ms), 99th percentile | 2288 | 1227 | down 46.4% | — to — | GAIN, down 46.4% (one repetition, no interval) |
+| time over the response line (% of samples) | 26.71 | 18 | down 32.6% | — to — | GAIN, down 32.6% (one repetition, no interval) |
+| failed requests (%) | 2.937 | 0 | down 100.0% | — to — | GAIN or STEADY, down 100.0% (one repetition, no interval) |
+| alert minutes (whole minutes whose 95th percentile, failed requests counted over, was over the line) | 20 | 20 | unchanged 0.0% | — to — | STEADY (one repetition, no interval) |
+| settings commands the governor wrote on its own (no person touched either arm) | 0 | 150 | — | — to — | shown, not judged |
+| pods with no machine to take them (unschedulable) | 3 | 16 | up 433.3% | — to — | LOSS, up 433.3% (one repetition, no interval) |
+| time pods had no machine to take them, pod-minutes | 2.65 | 33.17 | up 1151.6% | — to — | LOSS, up 1151.6% (one repetition, no interval) |
+| pending pods, pod-minutes | 7.2 | 13.17 | up 82.9% | — to — | shown, not judged |
+| utilisation (used / allocatable) | 0.3268 | 0.3029 | down 7.3% | — to — | shown, not judged |
+| CPU used (cores), mean | 1.564 | 1.556 | down 0.5% | — to — | shown, not judged |
+| Omni's own CPU (cores), mean | 0 | 0.0656 | — | — to — | shown, not judged |
+| CPU used with Omni's own (cores), mean | 1.564 | 1.622 | up 3.7% | — to — | shown, not judged |
+| energy per core-hour (Wh) | 179.4 | 193.1 | up 7.7% | — to — | shown, not judged |
+| HPA replicas, mean | 7.468 | 10.65 | up 42.6% | — to — | shown, not judged |
+| pods started | 8 | 32 | up 300.0% | — to — | shown, not judged |
+| pod start wait, total (s) | 211 | 2085 | up 888.2% | — to — | LOSS, up 888.2% (one repetition, no interval) |
+| pod start wait, mean (s) | 26.38 | 65.16 | up 147.0% | — to — | LOSS, up 147.0% (one repetition, no interval) |
+| machines billed, machine-hours | 0.8028 | 0.8531 | up 6.3% | — to — | power given, up 6.3% (one repetition, no interval) |
+| compute bill at list price ($) | 0.07707 | 0.08189 | up 6.3% | — to — | power given, up 6.3% (one repetition, no interval) |
+| work inside the response line (requests a second; the capacity test's own gauge) | 5.307 | 8.381 | up 57.9% | — to — | GAIN, up 57.9% (one repetition, no interval) |
+| work per dollar of the bill (answers inside the line for each $; the cloud's judged number) | 8.421e+04 | 1.23e+05 | up 46.1% | — to — | GAIN, up 46.1% (one repetition, no interval) |
 
 ### Run 43364393684
 
