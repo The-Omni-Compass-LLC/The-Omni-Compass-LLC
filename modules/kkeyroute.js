@@ -56,8 +56,7 @@ html body #padGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
   was.pads=po; was.keys=ko; apply(); },400);
  /* while the piano has your keys, the pad-only keys (1 and 4) stay quiet instead of firing a pad behind your back */
  addEventListener('keydown',e=>{ if(owner!=='keys'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; const k=(e.key||'').toLowerCase(); if(PADK.includes(k)&&!KMAP.includes(k)&&$('pad')&&$('pad').classList.contains('on')){ e.stopImmediatePropagation(); } },true);
- /* the "/" key sits right next to the piano keys: while a pad or piano window is open in the Studio it does nothing (Ctrl+K still opens Find) */
- addEventListener('keydown',e=>{ if(e.key!=='/'||e.ctrlKey||e.metaKey) return; const t=e.target; if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable)) return; if($('pad')&&$('pad').classList.contains('on')&&(isOpen('pads')||isOpen('keys'))){ e.stopImmediatePropagation(); e.preventDefault(); } },true);
+ /* "/" is 👆 TAP TEMPO in the controls block while a device is open (kdevkeys); Ctrl+K opens Find */
  /* the keyboard window never lands on top of the pad window on a laptop: it sits beside it, or below it when there is no room */
  function apart(){ if(innerWidth<=760||!isOpen('pads')||!isOpen('keys')) return; const pe=document.querySelector('#pad .pmain'), ke=$('kbTop'); if(!pe||!ke||ke.dataset.kApart==='1') return; const a=pe.getBoundingClientRect(), b=ke.getBoundingClientRect();
   const over=!(b.right<=a.left||b.left>=a.right||b.bottom<=a.top||b.top>=a.bottom); if(!over) { ke.dataset.kApart='1'; return; }
