@@ -712,7 +712,7 @@ fi
 omni_pid=""
 # the governor's full decision every OMNI_INTERVAL seconds and its fast checks (the scheduling floor, the pod reflex, and
 # the conveyance every 15 s) every OMNI_FLOOR_INTERVAL seconds: by default the factory beat for the cluster's place, read by
-# the engine itself (omni-v24, scripts/factory_beat.sh: 10 s on site, 60 s through a cloud), and 5 s (the heartbeat a dial,
+# the engine itself (omni-v24, scripts/factory_beat.sh: 10 s on site or through a recognized cloud), and 5 s (the heartbeat a dial,
 # the founder's word of 22 October). Every clock of the governor counts seconds, so the
 # decision period changes only how often it looks (docs/PACE_PREREGISTRATION.md; the pace arms compass5 to compass120 of
 # scripts/kind_paired.sh set it); the fast checks' period stays under the decision's. The period is written beside the

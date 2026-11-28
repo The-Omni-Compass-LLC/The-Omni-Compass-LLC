@@ -82,7 +82,9 @@ for arm in "${order[@]}"; do
   az aks show -g "$RG" -n "$name" -o json > "/tmp/aks-$name.json"
   echo "######## ARM $arm (repetition $REP)"
   mkdir -p "bench-$arm-$REP"; cp "/tmp/aks-$name.json" "bench-$arm-$REP/aks_cluster.json"
-  if ! PLATFORM=aks ARM="$arm" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
+  base="$arm"; pace="${OMNI_INTERVAL:-}"
+  case "$arm" in compass5|compass10|compass60) base=compass; pace="${arm#compass}";; esac
+  if ! PLATFORM=aks OMNI_INTERVAL="$pace" ARM="$base" OUT_DIR="bench-$arm-$REP" bash scripts/kind_bench.sh; then
     echo "ARM $arm (repetition $REP) FAILED its checks: marked invalid"
     [ -f "bench-$arm-$REP/INVALID" ] || echo "arm failed before its evidence finalizer" > "bench-$arm-$REP/INVALID"
     fail=1

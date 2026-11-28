@@ -104,14 +104,14 @@ class EdgePace(unittest.TestCase):
 class ControllerClocks(unittest.TestCase):
     def test_the_factory_beat_is_the_places(self):
         """omni-v24 (the founder's order of 23 October: the factory beat is the best beat the sweeps read): unset, the engine
-        decides every 10 s on site and every 60 s through a cloud, the place read from the cluster's own nodes; the beat a
+        decides every 10 s on site and every 10 s through a cloud, the place read from the cluster's own nodes; the beat a
         dial any value can be set on (5, 15, 30, 60, 75, 90, 120 s), the fast checks every 5 s at every beat, in the governor
         and in every place that starts it (the rigs ask the engine, the install files set none, the alert rules' staleness
         bound counts beats)."""
         a = parser().parse_args(["--audit", ""])
         self.assertEqual((a.interval, a.floor_interval), (None, 5.0))
         from omni_controller.controller import FACTORY_BEAT, factory_beat
-        self.assertEqual(FACTORY_BEAT, {"on site": 10.0, "through the cloud": 60.0})
+        self.assertEqual(FACTORY_BEAT, {"on site": 10.0, "through the cloud": 10.0})
 
         class K:
             def __init__(self, ids, fail=False):
@@ -124,13 +124,13 @@ class ControllerClocks(unittest.TestCase):
 
         self.assertEqual(factory_beat(K(["kind://docker/omni/omni-worker", "kind://docker/omni/omni-worker2"]))[:2], (10.0, "on site"))
         self.assertEqual(factory_beat(K(["", ""]))[:2], (10.0, "on site"))                          # the owner's own machines
-        self.assertEqual(factory_beat(K(["azure:///subscriptions/x/vm/0"]))[:2], (60.0, "through the cloud"))
-        self.assertEqual(factory_beat(K(["gce://p/us-central1-a/n0"]))[:2], (60.0, "through the cloud"))
-        self.assertEqual(factory_beat(K(["aws:///us-east-1a/i-0"]))[:2], (60.0, "through the cloud"))
-        self.assertEqual(factory_beat(K([], fail=True))[:2], (60.0, "unread"))                       # blind: the longer beat
-        self.assertEqual(factory_beat(K([]))[:2], (60.0, "unread"))
+        self.assertEqual(factory_beat(K(["azure:///subscriptions/x/vm/0"]))[:2], (10.0, "through the cloud"))
+        self.assertEqual(factory_beat(K(["gce://p/us-central1-a/n0"]))[:2], (10.0, "through the cloud"))
+        self.assertEqual(factory_beat(K(["aws:///us-east-1a/i-0"]))[:2], (10.0, "through the cloud"))
+        self.assertEqual(factory_beat(K([], fail=True))[:2], (10.0, "unread"))                       # unread: same default
+        self.assertEqual(factory_beat(K([]))[:2], (10.0, "unread"))
         c = controller("--law", "compass", "--floor-interval", "5")                                  # unset, on a model cluster
-        self.assertIn(c.g.period_s, (10.0, 60.0))
+        self.assertEqual(c.g.period_s, 10.0)
         self.assertIn('OMNI_INTERVAL="${OMNI_INTERVAL:-$(bash scripts/factory_beat.sh)}"', (ROOT / "scripts" / "kind_bench.sh").read_text())
         self.assertIn("--print-factory-beat", (ROOT / "scripts" / "factory_beat.sh").read_text())
         shadow = (ROOT / "scripts" / "pilot_shadow.sh").read_text()             # the pilot's shadow kit decides at the same beat
@@ -142,7 +142,7 @@ class ControllerClocks(unittest.TestCase):
         # the staleness bound follows the beat: three of the beats the exporter measures, at any setting of the dial
         self.assertIn("omni_last_decision_timestamp_seconds > 3 * clamp_min(omni_heartbeat_seconds, 5)",
                       (ROOT / "deploy/prometheus/omni-compass-rules.yaml").read_text())
-        for beat in ("5", "15", "30", "75", "90", "120"):         # every setting of the dial runs, each keeping its rules' time
+        for beat in ("5", "10", "15", "30", "60", "75", "90", "120"):         # every setting of the dial runs, each keeping its rules' time
             c = controller("--interval", beat, "--law", "compass", "--floor-interval", "5")
             self.assertEqual(c.g.period_s, float(beat))
             self.assertEqual(c.n_convey, 3)
