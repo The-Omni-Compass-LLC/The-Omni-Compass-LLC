@@ -3694,7 +3694,7 @@ firmware; using it or its results to build or train a competing product (`LICENS
 License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
-**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with Dubra Software Inc. /
+**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with
 Dubra Software Inc. / The Omni-Compass LLC and paid before the pilot's first day (`LICENSE`, section 5.4; the pilot's steps are
 `docs/PILOT_PROTOCOL.md`). A pilot agreement permits only the systems, the dates and the uses it names. It is not an
 Enterprise License: every other production use, commercialization or monetization still needs one.
@@ -3994,7 +3994,7 @@ reported to its own maintainers.
 
 
 
-This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-28 16:46 UTC on omni-v27 (digest 34548e45437a05bd) from commit ef97ac77b04d.
+This appendix is the live benchmark engine page itself, written from `docs/engine/OMNI_COMPASS_LIVE_ENGINE.html` at every build of this book (`docs/book/build_live_manual.py`): every section in the page's own order with its number, title, summary and controls line; every monitor under the number its badge carries, with its evidence class, its state, the open-source feed that would carry it on a running system and its knobs; every knob; and every LOSS row with whose it is, its cause and the knob that answers it. Nothing here is typed twice: what the page says, this appendix says, so the book and the page read each other both ways. This edition was written from the page built 2026-11-28 22:02 UTC on omni-v27 (digest 34548e45437a05bd) from commit c0c9215287f3.
 
 
 Each part below is one section of the page, in the page's order and under its number: what the page says it is, its controls, its panels, and every monitor in it under its own number, with what it shows, its evidence and state, the feed that would carry it live, its knobs, how to read it and what to do with it.
@@ -5288,7 +5288,7 @@ Every line is read from Omni-Compass's own records at the moment on screen (the 
 **Ask Omni-Compass**
 
 
-Omni-Compass's answers are drawn from this page's records and are not reviewed by any outside party. © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with LICENSE, NOTICE and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+Omni-Compass's answers are drawn from this page's records and are not reviewed by any outside party. © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. Evaluation and Simulation use only. Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with LICENSE, NOTICE and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 **Its monitors.**
 
