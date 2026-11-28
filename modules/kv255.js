@@ -15,7 +15,7 @@
  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const PS=()=>window.PADSTUDIO; window.KREMOTE_RETIRED=true; /* v256: the floating remote is retired; its own repaint loop stands down */
  /* ---------- 🏠 Home closes every platform page ---------- */
- const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX'];
+ const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX','kArr'];
  const closeAll=()=>OVL.forEach(id=>{ const x=$(id); if(x&&!x.hidden) x.hidden=true; });
  addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome')) closeAll(); },true);
  const wrapHome=()=>{ const g=window.GOHOME; if(typeof g!=='function'||g.__v255) return; const w=function(){ closeAll(); return g.apply(this,arguments); }; w.__v255=true; window.GOHOME=w; }; wrapHome(); setTimeout(wrapHome,2500);

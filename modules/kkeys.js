@@ -21,11 +21,11 @@
   ['KeyN','N','📰 Current News',call('KNEWS','open')],['KeyT','T','📈 Stock Market',call('KMARKET','open')],
   ['KeyX','X','🏟 Sports',call('KSPORTS','open')],['KeyV','V','🧾 Services',call('KSERVICES','open')],
   ['KeyI','I','⚖️ Legal & Safety',call('KLEGAL','open')],
-  ['Digit0','0','🌐 The Doorway: every outside platform',call('KDOOR','open')],['Minus','-','💃 Dance Karaoke',call('KDANCE','open')],
+  ['Digit0','0','🌐 The Doorway: every outside platform',call('KDOOR','open')],['Minus','-','💃 Dance Karaoke',call('KDANCE','open')],['Equal','=','🎼 Song Arranger',call('KARR','open')],
   ['KeyU','U','⬆ Upload a sound or file',()=>tool('up')],['KeyW','W','⬇ Save this page',()=>tool('save')],['KeyJ','J','🌐 Language',()=>tool('lang')]].filter(r=>r[2]);
  const tool=t=>{ const b=document.querySelector('#kToolsPop [data-t="'+t+'"]'); if(b){ b.click(); return true; } say('The tools are still loading.'); return false; };
  /* the page or screen in front, and its tabs */
- const OVL=['kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
+ const OVL=['kArr','kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
  function front(){ for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length) return x; } let c=''; try{ c=KRAIL.cur(); }catch(_){ } return (c&&c!=='home'&&$(c))||document.querySelector('.wrap')||document.body; }
  const TABSEL='[role=tab],.rxTabs button[data-rx="tab"],.svRow button[data-sv="cat"],.kTabs button,.vgTabs button,.mtabs button,.tabs button,[data-tab],.spRow button,.nwRow button,.mkRow button,.rgRow button,.kaTabs button,[data-ka-tab]';
  function tabs(){ const f=front(); return [...f.querySelectorAll(TABSEL)].filter(b=>b.getClientRects().length&&!b.disabled); }
@@ -33,7 +33,7 @@
  function stepTab(d){ const T=tabs(); if(!T.length){ say('This screen has no tabs.'); return; } let i=T.findIndex(isOn); i=i<0?(d>0?0:T.length-1):(i+d+T.length)%T.length; T[i].click(); T[i].focus&&T[i].focus({preventScroll:false}); say('Tab '+(i+1)+' of '+T.length+': '+T[i].textContent.trim().slice(0,40)); }
  function nthTab(n){ const T=tabs(); if(!T[n]){ say('This screen has '+T.length+' tab'+(T.length===1?'':'s')+'.'); return; } T[n].click(); say('Tab '+(n+1)+': '+T[n].textContent.trim().slice(0,40)); }
  function closeFront(){ for(const id of ['kKeysPop','kLangPop','kToolsPop']){ const x=$(id); if(x&&!x.hidden){ x.hidden=true; const b=$('kToolsBtn'); if(id==='kToolsPop'&&b) b.classList.remove('on'); return true; } }
-  for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length){ const b=x.querySelector('[data-rx="x"],[data-zp="x"],[data-sv="x"],[data-lg="x"],[data-ss="x"],button[aria-label*="Close"],button[title*="Close"]'); if(b) b.click(); else x.hidden=true; return true; } } const pop=$('kToolsPop'); if(pop&&!pop.hidden){ pop.hidden=true; return true; } const kp=$('kKeysPop'); if(kp&&!kp.hidden){ kp.hidden=true; return true; } return false; }
+  for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length){ const b=x.querySelector('[data-ar="x"],[data-rx="x"],[data-zp="x"],[data-sv="x"],[data-lg="x"],[data-ss="x"],button[aria-label*="Close"],button[title*="Close"]'); if(b) b.click(); else x.hidden=true; return true; } } const pop=$('kToolsPop'); if(pop&&!pop.hidden){ pop.hidden=true; return true; } const kp=$('kKeysPop'); if(kp&&!kp.hidden){ kp.hidden=true; return true; } return false; }
  const typing=t=>t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable);
  addEventListener('keydown',e=>{
   if(e.key==='Escape'&&!e.altKey&&!e.ctrlKey&&!e.metaKey){ if(closeFront()){ e.preventDefault(); } return; }

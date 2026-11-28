@@ -7085,7 +7085,7 @@ window.STOCK=STOCK;
  $('padClick').addEventListener('click',e=>{ click=!click; e.currentTarget.textContent='🕒 Click track: '+(click?'on':'off'); e.currentTarget.classList.toggle('on',click); });
  let taps=[]; $('padTap').addEventListener('click',()=>{ const n=performance.now(); taps=taps.filter(t=>n-t<2500); taps.push(n); if(taps.length>=2){ const iv=(taps[taps.length-1]-taps[0])/(taps.length-1); $('padBpm').value=Math.round(Math.max(40,Math.min(240,60000/iv))); toast('Tempo '+$('padBpm').value+' BPM'); } });
  $('padRecLive').addEventListener('click',e=>{ recLive=!recLive; e.currentTarget.classList.toggle('rec',recLive); e.currentTarget.textContent=recLive?'⏺ Recording taps: on':'⏺ Record taps into the loop'; if(recLive&&!playing) play(); });
- $('padLoopBars').addEventListener('change',()=>{ const nb=+$('padLoopBars').value; snap(); if(nb>bars){ const L=bars*spb; pads.forEach(P=>{ for(let s=L;s<nb*spb;s++) P.steps[s]=P.steps[s%L]; }); } bars=nb; page=Math.min(page,bars-1); step=0; tracks.forEach(k=>{ while(k.on.length<bars) k.on.push(k.on[k.on.length%Math.max(1,k.on.length)]||false); }); renderAll(); toast(`Loop is ${bars} bar${bars>1?'s':''} long.`); });
+ $('padLoopBars').addEventListener('change',()=>{ const nb=+$('padLoopBars').value; snap(); if(nb>bars){ const L=bars*spb; pads.forEach(P=>{ for(let s=L;s<nb*spb;s++) P.steps[s]=P.steps[s%L]; }); } bars=nb; page=Math.min(page,bars-1); step=window.__padWrap?-1:0; window.__padWrap=false; /* the 🎼 Arranger changes the loop's length on its last step: −1 so the clock's next step is the new loop's one */ tracks.forEach(k=>{ while(k.on.length<bars) k.on.push(k.on[k.on.length%Math.max(1,k.on.length)]||false); }); renderAll(); toast(`Loop is ${bars} bar${bars>1?'s':''} long.`); });
  $('padSpb').addEventListener('change',()=>{ const ns=+$('padSpb').value; snap(); pads.forEach(P=>{ const old=P.steps.slice(); P.steps=blank(); for(let s=0;s<bars*spb;s++) if(old[s]){ const b=Math.floor(s/spb), x=s%spb; const nx=Math.round(x*ns/spb); if(nx<ns) P.steps[b*ns+nx]=1; } }); spb=ns; step=0; renderAll(); });
  $('padBank').addEventListener('change',()=>{ bank=+$('padBank').value; selPad=bank*16; renderPads(); selUI(); });
  $('padKit').innerHTML=KITS.map((k,i)=>`<option value="${i}">${k[1]}</option>`).join('');
@@ -7859,6 +7859,11 @@ window.PADSTUDIO={renderBeat,refresh:()=>renderAll(),setBars(n){ $('padLoopBars'
  document.getElementById('padLoopBars').addEventListener('change',()=>setTimeout(roll,50));
  // ---------- scenes and song ----------
  const SC={};
+ /* the scenes, open to the 🎼 Song Arranger (v261): save the loop as a scene, load one (quietly, mid-song, without redrawing the composer), list and remove */
+ window.KSCN={all:()=>SC,has:k=>!!SC[k],
+  save:k=>{ SC[k]={bars:P.barsN,spb:P.spbN,steps:P.pads.map(p=>p.steps.slice(0,P.barsN*P.spbN)),CT:JSON.parse(JSON.stringify(CT)),KT:JSON.parse(JSON.stringify(K.KT)),chart:JSON.parse(JSON.stringify(chart))}; try{ $('scInfo').textContent='Saved: '+Object.keys(SC).sort().join(' ')+'.'; }catch(_){ } return SC[k]; },
+  load:(k,quiet)=>{ const sc=SC[k]; if(!sc) return false; if(P.barsN!==sc.bars) P.setBars(sc.bars); P.pads.forEach((p,i)=>{ const a=new Array(512).fill(0); (sc.steps[i]||[]).forEach((v,s)=>a[s]=v); p.steps=a; }); CT=JSON.parse(JSON.stringify(sc.CT)); K.KT.length=0; sc.KT.forEach(n=>K.KT.push(n)); chart=JSON.parse(JSON.stringify(sc.chart)); if(quiet){ setTimeout(()=>{ try{ P.refresh(); }catch(_){ } },0); } else { P.refresh(); show(); roll(); } return true; },
+  put:(k,sc)=>{ if(sc) SC[k]=JSON.parse(JSON.stringify(sc)); },del:k=>{ delete SC[k]; }};
  $('scSave').addEventListener('click',()=>{ const k=val('scSlot'); SC[k]={bars:P.barsN,spb:P.spbN,steps:P.pads.map(p=>p.steps.slice(0,P.barsN*P.spbN)),CT:JSON.parse(JSON.stringify(CT)),KT:JSON.parse(JSON.stringify(K.KT)),chart:JSON.parse(JSON.stringify(chart))}; $('scInfo').textContent=`Scene ${k} saved (${P.barsN} bar${P.barsN>1?'s':''}). Saved: ${Object.keys(SC).sort().join(' ')}.`; });
  $('scLoad').addEventListener('click',()=>{ const k=val('scSlot'), sc=SC[k]; if(!sc) return toast('Scene '+k+' is empty.'); if(P.barsN!==sc.bars) P.setBars(sc.bars); P.pads.forEach((p,i)=>{ p.steps=new Array(512).fill(0); sc.steps[i].forEach((v,s)=>p.steps[s]=v); }); CT=JSON.parse(JSON.stringify(sc.CT)); K.KT.length=0; sc.KT.forEach(n=>K.KT.push(n)); chart=JSON.parse(JSON.stringify(sc.chart)); P.refresh(); show(); roll(); $('scInfo').textContent='Scene '+k+' loaded.'; });
  $('scBuild').addEventListener('click',()=>{ const seq=val('scChain').toUpperCase().split(/[\s,]+/).filter(x=>SC[x]); if(!seq.length) return toast('Save scenes first, then write the order, like A A B A.'); const S=SC[seq[0]].spb; let total=seq.reduce((a,k)=>a+SC[k].bars,0); total=Math.min(32,total); const sizes=[1,2,4,8,16,20,24,32]; const bars=sizes.find(x=>x>=total)||32; P.setBars(bars);
@@ -28833,7 +28838,7 @@ html body .kSpd select.snd{min-height:30px!important;max-width:112px;border-radi
  setInterval(()=>{ const open=dockOpen(); if(open&&!wasOpen){ paint(); if(simple) showPick('groups'); } if(!open&&wasOpen){ hidePick(); } if(!open){ const p=$('gsPick'); if(p&&!p.hidden) p.hidden=true; }
   wasOpen=open; if(open){ paint(); relabel(); } else paintBtn(); },300);
  /* opening a game any other way (Find, a link, the remote) closes the picker */
- const wrap=()=>{ const G=window.GAMES; if(!G||typeof G.open!=='function'||G.open.__gs) return; const f=G.open; const w=function(...a){ const r=f.apply(this,a); if(picking&&Date.now()-pickAt>1500) hidePick(); return r; }; w.__gs=1; G.open=w; }; setInterval(wrap,700);
+ const wrap=()=>{ const G=window.GAMES; if(!G||typeof G.open!=='function'||G.open.__gs) return; const f=G.open; const w=function(...a){ const r=f.apply(this,a); if(picking&&Date.now()-pickAt>1500) hidePick(); /* a game asked for by name (Find, a link, Video games, a shortcut): the picker steps aside for it (v261) */ if(a[0]&&typeof a[0]==='string'){ [60,400,900].forEach(ms=>setTimeout(()=>{ if(picking) hidePick(); },ms)); } return r; }; w.__gs=1; G.open=w; }; setInterval(wrap,700);
  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const p=$('gsPick'); if(p&&!p.hidden&&view==='list'){ view='groups'; paintPick(); e.stopPropagation(); } } },true);
  window.KGSIMPLE={show:showPick,hide:hidePick,get simple(){ return simple; },set simple(v){ simple=!!v; putLS('kanin-gsimple',simple); paint(); },groups:GROUPS.map(g=>g[0])};
 })();
@@ -30265,7 +30270,9 @@ html.lvl-easy #pad #crSec.kFloat.kFOn:not(.kFOff){display:block!important}
  const APPS=[['story','📖','Story builder',()=>KRAIL.goTo('home')],['studio','🎛','Studio',()=>KRAIL.goTo('pad')],['tracks','🎼','Track sequencer',()=>KSEQ.open()],['karaoke','🎤','Karaoke',()=>KKARA.open()],['music','🎵','Music',()=>KRAIL.goTo('musicDock')],['games','🕹','Games',()=>KVG.open()],['zodiac','♈','LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['compass','🧭','Omni-Compass',()=>KRAIL.goTo('omniDock')],['recipes','🍳','Recipes',()=>KRAIL.goTo('recipeDock')],['laugh','😂','Laugh',()=>KHUMOR.open('day')],['ai','🤖','AI',()=>KAI.open()],['easel','🎨','The Easel',()=>KEASEL.open()],['video','🎬','Video studio',()=>KRAIL.goTo('aivDock')],['news','📰','Current News',()=>KNEWS.open()],['faith','✝️','Cultures & Religion',()=>KRELIG.open()],['market','📈','Stock Market',()=>KMARKET.open()],['library','📚','My library',()=>KSOCIAL.open('lib')],['projects','📁','Projects',()=>KRAIL.goTo('fileDock')]];
  const appOf=k=>APPS.find(a=>a[0]===k);
  let db=null, user=null, uid=null, state='boot', acct=null, wall=null, people={}, walls={}, unsubP=null, unsubW=null, tab='posts', viewing=null, q='', news=[], assets=null, dls=null;
- const signedIn=()=>!!acct&&getSS('kanin-signed')===uid;
+ /* signed in for this visit, or remembered on this device (v261): the account belongs to whoever the platform says is viewing, so remembering it never lets anyone else in */
+ const REM='kanin-signed-device'; const remember=on=>{ try{ if(on) localStorage.setItem(REM,JSON.stringify(uid)); else localStorage.removeItem(REM); }catch(_){ } };
+ const signedIn=()=>!!acct&&(getSS('kanin-signed')===uid||getLS(REM,null)===uid);
  /* ---------- connect ---------- */
  async function boot(){ try{ if(!window.claude||!claude.use){ state='none'; return; } [db,user]=await Promise.all([claude.use('db').catch(()=>null),claude.use('user').catch(()=>null)]); if(!db||!user){ state='none'; paint(); return; } uid=await user.id().catch(()=>null); if(!uid){ state='none'; paint(); return; }
    state='loading'; const to=setTimeout(()=>{ if(state==='loading'){ state='none'; paint(); } },10000);
@@ -30503,9 +30510,9 @@ html.lvl-easy #pad #crSec.kFloat.kFOn:not(.kFOff){display:block!important}
    if(!f.name.trim()) return err('Write your display name.'); if(!handleOK(f.handle)) return err('Your @handle needs 3 to 20 letters, numbers or _.'); if(taken(f.handle)) return err('@'+f.handle+' is taken. Pick another.'); if(k==='make'&&!f.rules) return err('Tick the house rules to create your account.');
    const data={name:f.name.trim().slice(0,40),handle:f.handle,av:f.av,color:f.color,bio:(f.bio||'').slice(0,200),birth:f.birth?f.birth.slice(5):'' ,likes:f.likes,pub:f.pub,photo:okImg(f.photo)?f.photo:'',cover:okImg(f.cover)?f.cover:'',location:(f.location||'').slice(0,60),hometown:(f.hometown||'').slice(0,60),gender:f.gender||'',pronouns:(f.pronouns||'').slice(0,20),work:(f.work||'').slice(0,60),school:(f.school||'').slice(0,60),langs:(f.langs||'').slice(0,60),rel:f.rel||'',website:/^https:\/\//.test(f.website||'')?f.website.slice(0,100):'',showAge:!!f.showAge,byear:f.showAge&&f.birth?f.birth.slice(0,4):'',at:acct&&acct.at||Date.now(),following:acct&&acct.following||[],apps:acct&&acct.apps||['studio','tracks','karaoke','games','zodiac','story']};
    await write('people/'+uid,r=>r.set(data)); const me=getLS('kanin-me',{})||{}; putLS('kanin-me',Object.assign(me,{name:data.name,handle:'@'+data.handle,av:data.av,color:data.color,bio:data.bio,likes:data.likes},f.birth?{birth:f.birth}:{}));
-   form=null; putSS('kanin-signed',uid); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
-  if(k==='signin'){ putSS('kanin-signed',uid); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
-  if(k==='signout'){ putSS('kanin-signed',null); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
+   form=null; putSS('kanin-signed',uid); remember(true); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
+  if(k==='signin'){ putSS('kanin-signed',uid); remember(true); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
+  if(k==='signout'){ putSS('kanin-signed',null); remember(false); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
   if(k==='nophoto'){ form.photo=''; return render(); } if(k==='nocover'){ form.cover=''; return render(); }
   if(k==='grp'){ grpF=b.dataset.g||''; tagF=grpF.toLowerCase().replace(/[^a-z0-9_]/g,''); return render(); }
   if(k==='edit'){ form=Object.assign(blankForm(),{name:acct.name,handle:acct.handle,av:acct.av,color:acct.color,bio:acct.bio||'',likes:acct.likes||[],pub:acct.pub!==false,rules:true},['photo','cover','location','hometown','gender','pronouns','work','school','langs','rel','website','showAge'].reduce((o,k)=>{ if(acct[k]!=null) o[k]=acct[k]; return o; },{}),acct.byear&&acct.birth?{birth:acct.byear+'-'+acct.birth}:{}); return render(); }
@@ -30526,12 +30533,21 @@ html.lvl-easy #pad #crSec.kFloat.kFOn:not(.kFOff){display:block!important}
  function open(t){ if(typeof t==='string'){ tab=t; viewing=null; } const d=host(); d.hidden=false; try{ ['kKara','libDock','fileDock','kManual','kMe'].forEach(i=>{ const x=$(i); if(x&&x!==d) x.hidden=true; }); }catch(_){ } render(); }
  function close(){ const d=$('kAcct'); if(d) d.hidden=true; form=null; }
  /* the landing game opens the app, then SIGN IN comes up */
- addEventListener('kanin',e=>{ if(e.detail==='gate-open'&&!signedIn()&&!getSS('kanin-guest')) setTimeout(open,700); });
+ /* opening the app (v261): once the landing game is done, a person with an account who is signed in on this device goes straight to
+    their own page, their platform inside the platform, with the app open behind it; anyone else gets the Sign in card (a person with
+    no account is offered Create your account). It waits for the account to load, at most ten seconds. */
+ let arrived=false;
+ function arrive(){ if(arrived) return; if(getSS('kanin-guest')) { arrived=true; return; } const t0=Date.now();
+  (function wait(){ if(state==='boot'||state==='loading'){ if(Date.now()-t0<10000) return setTimeout(wait,250); }
+   arrived=true; if(state==='none') return; if(signedIn()){ listenAll(); open('posts'); say('👋 Welcome back, @'+((acct&&acct.handle)||'')+'. This is your page: everything you make, your feed and your apps.'); } else open(); })(); }
+ addEventListener('kanin',e=>{ if(e.detail==='gate-open') setTimeout(arrive,700); });
+ /* if the landing game is not shown on this visit, arrive anyway once the app is up */
+ setTimeout(()=>{ const g=document.body.classList.contains('gated'); if(!g) arrive(); },6000);
  /* the rail's 👤 Profile opens the account: sign in first, then my page */
  document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#kdProf,#kdProfile,[data-kd-l="Profile"]'); if(!b) return; e.preventDefault(); e.stopImmediatePropagation(); open(); },true);
  (window.KFINDX=window.KFINDX||[]).push(add=>{ add('You','🔐','Sign in, my account and my page','Account',()=>open()); });
  boot();
- window.KACCT={open,close,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
+ window.KACCT={open,close,arrive,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
 })();
 
 </script>
@@ -30675,7 +30691,7 @@ html body .mast .ddlogo.ddlogo{width:min(640px,100%)!important;opacity:1!importa
  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const PS=()=>window.PADSTUDIO; window.KREMOTE_RETIRED=true; /* v256: the floating remote is retired; its own repaint loop stands down */
  /* ---------- 🏠 Home closes every platform page ---------- */
- const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX'];
+ const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX','kArr'];
  const closeAll=()=>OVL.forEach(id=>{ const x=$(id); if(x&&!x.hidden) x.hidden=true; });
  addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome')) closeAll(); },true);
  const wrapHome=()=>{ const g=window.GOHOME; if(typeof g!=='function'||g.__v255) return; const w=function(){ closeAll(); return g.apply(this,arguments); }; w.__v255=true; window.GOHOME=w; }; wrapHome(); setTimeout(wrapHome,2500);
@@ -31127,11 +31143,11 @@ html body .mast .ddlogo.ddlogo{width:min(640px,100%)!important;opacity:1!importa
   ['KeyN','N','📰 Current News',call('KNEWS','open')],['KeyT','T','📈 Stock Market',call('KMARKET','open')],
   ['KeyX','X','🏟 Sports',call('KSPORTS','open')],['KeyV','V','🧾 Services',call('KSERVICES','open')],
   ['KeyI','I','⚖️ Legal & Safety',call('KLEGAL','open')],
-  ['Digit0','0','🌐 The Doorway: every outside platform',call('KDOOR','open')],['Minus','-','💃 Dance Karaoke',call('KDANCE','open')],
+  ['Digit0','0','🌐 The Doorway: every outside platform',call('KDOOR','open')],['Minus','-','💃 Dance Karaoke',call('KDANCE','open')],['Equal','=','🎼 Song Arranger',call('KARR','open')],
   ['KeyU','U','⬆ Upload a sound or file',()=>tool('up')],['KeyW','W','⬇ Save this page',()=>tool('save')],['KeyJ','J','🌐 Language',()=>tool('lang')]].filter(r=>r[2]);
  const tool=t=>{ const b=document.querySelector('#kToolsPop [data-t="'+t+'"]'); if(b){ b.click(); return true; } say('The tools are still loading.'); return false; };
  /* the page or screen in front, and its tabs */
- const OVL=['kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
+ const OVL=['kArr','kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
  function front(){ for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length) return x; } let c=''; try{ c=KRAIL.cur(); }catch(_){ } return (c&&c!=='home'&&$(c))||document.querySelector('.wrap')||document.body; }
  const TABSEL='[role=tab],.rxTabs button[data-rx="tab"],.svRow button[data-sv="cat"],.kTabs button,.vgTabs button,.mtabs button,.tabs button,[data-tab],.spRow button,.nwRow button,.mkRow button,.rgRow button,.kaTabs button,[data-ka-tab]';
  function tabs(){ const f=front(); return [...f.querySelectorAll(TABSEL)].filter(b=>b.getClientRects().length&&!b.disabled); }
@@ -31139,7 +31155,7 @@ html body .mast .ddlogo.ddlogo{width:min(640px,100%)!important;opacity:1!importa
  function stepTab(d){ const T=tabs(); if(!T.length){ say('This screen has no tabs.'); return; } let i=T.findIndex(isOn); i=i<0?(d>0?0:T.length-1):(i+d+T.length)%T.length; T[i].click(); T[i].focus&&T[i].focus({preventScroll:false}); say('Tab '+(i+1)+' of '+T.length+': '+T[i].textContent.trim().slice(0,40)); }
  function nthTab(n){ const T=tabs(); if(!T[n]){ say('This screen has '+T.length+' tab'+(T.length===1?'':'s')+'.'); return; } T[n].click(); say('Tab '+(n+1)+': '+T[n].textContent.trim().slice(0,40)); }
  function closeFront(){ for(const id of ['kKeysPop','kLangPop','kToolsPop']){ const x=$(id); if(x&&!x.hidden){ x.hidden=true; const b=$('kToolsBtn'); if(id==='kToolsPop'&&b) b.classList.remove('on'); return true; } }
-  for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length){ const b=x.querySelector('[data-rx="x"],[data-zp="x"],[data-sv="x"],[data-lg="x"],[data-ss="x"],button[aria-label*="Close"],button[title*="Close"]'); if(b) b.click(); else x.hidden=true; return true; } } const pop=$('kToolsPop'); if(pop&&!pop.hidden){ pop.hidden=true; return true; } const kp=$('kKeysPop'); if(kp&&!kp.hidden){ kp.hidden=true; return true; } return false; }
+  for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length){ const b=x.querySelector('[data-ar="x"],[data-rx="x"],[data-zp="x"],[data-sv="x"],[data-lg="x"],[data-ss="x"],button[aria-label*="Close"],button[title*="Close"]'); if(b) b.click(); else x.hidden=true; return true; } } const pop=$('kToolsPop'); if(pop&&!pop.hidden){ pop.hidden=true; return true; } const kp=$('kKeysPop'); if(kp&&!kp.hidden){ kp.hidden=true; return true; } return false; }
  const typing=t=>t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable);
  addEventListener('keydown',e=>{
   if(e.key==='Escape'&&!e.altKey&&!e.ctrlKey&&!e.metaKey){ if(closeFront()){ e.preventDefault(); } return; }
@@ -31657,6 +31673,253 @@ html body #z4LiveMini button{min-height:34px!important;padding:0 10px!important}
  /* 6. A contents entry whose section is not built yet: say when it appears, instead of scrolling nowhere */
  addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#toc2 [data-goto]'); if(!b||b.dataset.goto==='s-extra') return; const t=document.getElementById(b.dataset.goto); const shown=t&&!t.hidden&&!t.closest('[hidden]')&&t.getClientRects().length; if(!shown){ const name=(b.textContent||'').replace(/^[\d.\s]+/,'').trim()||'That section'; setTimeout(()=>say('“'+name+'” appears once a story is built (⚡ Quick Pick builds one in a tap).'),60); } },true);
  addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b) return; const t=(b.textContent||'').trim(); if(!/^(⏹|■)\uFE0F?\s*Stop( reading| the layers| the beat| everything)?$/.test(t)) return; if(playing()) return; /* checked before the button's own handler runs, so a real stop never shows this note */ setTimeout(()=>say('■ Nothing is playing right now.'),60); },true);
+})();
+
+</script>
+<script>
+(()=>{ /* 🎼 THE SONG ARRANGER (v261). A whole song, section by section, as long as it needs to be. Each section is a scene of the
+   studio (A to H: a loop with its drums, bass, chords, melody and keys), a name (Intro, Verse, Chorus…), how many times it plays and
+   its lyrics. ▶ Play song plays the sections in order on the studio's own clock: at the end of a section's last pass the next scene is
+   loaded just before its first beat is scheduled, so the song moves on without a gap and without the 32-bar limit of a single loop.
+   ⚡ Make 5 scenes builds an intro, verse, pre-chorus, chorus and breakdown from the loop you have; the templates lay out common song
+   forms; ⬇ Export renders every section in turn and joins them into one WAV; 💾 keeps the arrangement in the library. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const P=()=>window.PADSTUDIO, S=()=>window.KSCN;
+ const TYPES=[['Intro','#5b8cff'],['Verse','#2fbf71'],['Pre-chorus','#18a3a3'],['Chorus','#ff8a3d'],['Hook','#ff5ea8'],['Bridge','#a66bff'],['Drop','#ff3b3b'],['Breakdown','#7f8cff'],['Solo','#e0b400'],['Interlude','#8fa3b8'],['Outro','#5b6b8c']];
+ const COL=n=>(TYPES.find(t=>t[0]===n)||TYPES[0])[1];
+ const SHORT={Intro:'In',Verse:'V','Pre-chorus':'Pre',Chorus:'Ch',Hook:'Hk',Bridge:'Br',Drop:'Dr',Breakdown:'Bd',Solo:'So',Interlude:'It',Outro:'Out'};
+ const SLOTS='ABCDEFGH'.split('');
+ /* song forms: [section, scene, passes]. The ⚡ scenes: A intro, B verse, C pre-chorus, D chorus, E breakdown */
+ const TPL={
+  'Pop':[['Intro','A',1],['Verse','B',2],['Pre-chorus','C',1],['Chorus','D',2],['Verse','B',2],['Pre-chorus','C',1],['Chorus','D',2],['Bridge','E',1],['Chorus','D',2],['Outro','A',1]],
+  'Hip-hop':[['Intro','A',1],['Hook','D',2],['Verse','B',4],['Hook','D',2],['Verse','B',4],['Hook','D',2],['Outro','A',1]],
+  'Trap':[['Intro','A',2],['Hook','D',2],['Verse','B',4],['Hook','D',2],['Breakdown','E',1],['Verse','B',2],['Hook','D',2],['Outro','A',1]],
+  'R&B':[['Intro','A',1],['Verse','B',2],['Pre-chorus','C',1],['Chorus','D',2],['Verse','B',2],['Chorus','D',2],['Bridge','E',1],['Chorus','D',2],['Outro','A',2]],
+  'EDM / house':[['Intro','A',2],['Breakdown','E',1],['Pre-chorus','C',1],['Drop','D',2],['Breakdown','E',1],['Pre-chorus','C',1],['Drop','D',2],['Outro','A',2]],
+  'Rock':[['Intro','A',1],['Verse','B',2],['Chorus','D',2],['Verse','B',2],['Chorus','D',2],['Solo','C',2],['Chorus','D',2],['Outro','A',1]],
+  'Ballad':[['Intro','A',1],['Verse','B',2],['Chorus','D',1],['Verse','B',2],['Chorus','D',1],['Bridge','E',1],['Chorus','D',2],['Outro','A',1]],
+  'Country':[['Intro','A',1],['Verse','B',2],['Chorus','D',2],['Verse','B',2],['Chorus','D',2],['Bridge','E',1],['Chorus','D',2],['Outro','A',1]],
+  'Reggaeton':[['Intro','A',1],['Hook','D',2],['Verse','B',2],['Pre-chorus','C',1],['Hook','D',2],['Verse','B',2],['Hook','D',2],['Outro','A',1]],
+  'Short (about a minute)':[['Intro','A',1],['Verse','B',1],['Chorus','D',1],['Outro','A',1]]};
+ let A={name:'My song',sections:[]}, sel=0;
+ const LS='kanin-arr1'; const keep=()=>{ try{ localStorage.setItem(LS,JSON.stringify(A)); }catch(_){ } };
+ try{ const v=JSON.parse(localStorage.getItem(LS)||'null'); if(v&&Array.isArray(v.sections)) A=v; }catch(_){ }
+ const sec=(n,s,r,ly)=>({n:n||'Verse',s:s||'A',r:Math.max(1,Math.min(16,+r||1)),ly:ly||''});
+ const scene=k=>{ try{ return S()&&S().all()[k]; }catch(_){ return null; } };
+ const barsOf=x=>{ const sc=scene(x.s); return (sc?sc.bars:0)*x.r; };
+ const secs=()=>{ try{ return 60/P().bpm()*4; }catch(_){ return 2.67; } }; /* seconds in one 4-beat bar */
+ const tm=t=>{ t=Math.round(t); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
+ /* ---------- ⚡ five scenes from the loop you have ---------- */
+ function quick(){ const ps=P(), sx=S(); if(!ps||!sx) return say('Open the 🎛 Studio first.'); const T=ps.total; const base=ps.pads.map(p=>p.steps.slice(0,T)); if(!base.some(a=>a.some(Boolean))) return say('Make a beat in the 🎛 Studio first (or press ✨ Auto-create there), then ⚡ Make 5 scenes.');
+  const spb=ps.spb, bars=ps.bars; const put=(slot,fn)=>{ ps.pads.forEach((p,i)=>{ const a=new Array(512).fill(0); for(let s=0;s<T;s++) a[s]=base[i][s]; p.steps=a; }); fn&&fn(ps.pads,T,spb,bars); sx.save(slot); };
+  put('B',null); /* the verse: the loop as it is */
+  put('A',(pd,T)=>{ pd.forEach((p,i)=>{ if(![4,5,11,12].includes(i)) for(let s=0;s<T;s++) p.steps[s]=0; }); for(let s=0;s<T;s+=spb/2) pd[4].steps[s]=pd[4].steps[s]||1; });  /* intro: hats, ride and shaker over the chords */
+  put('C',(pd,T)=>{ const L=T-spb; for(let s=L+spb/2;s<T;s++) pd[2].steps[s]=1; [7,8,9].forEach((i,k)=>{ pd[i].steps[L+spb/2+k*2]=1; }); });  /* pre-chorus: a snare roll and a tom fill into the chorus */
+  put('D',(pd,T)=>{ pd[10].steps[0]=1; for(let s=0;s<T;s++){ if(s%(spb/4)===spb/8) pd[5].steps[s]=1; if(pd[2].steps[s]) pd[3].steps[s]=1; } });  /* chorus: crash on the one, open hats on the off-beats, claps on the snares */
+  put('E',(pd,T)=>{ pd.forEach((p,i)=>{ if(i!==0&&i!==15&&i!==11) for(let s=0;s<T;s++) p.steps[s]=0; }); for(let s=0;s<T;s++) pd[0].steps[s]=(s%spb===0)?1:0; });  /* breakdown: the kick on each bar's one, the chords breathe */
+  sx.load('B',false); render(); say('⚡ Five scenes from your loop: A intro, B verse, C pre-chorus, D chorus, E breakdown. Pick a song form or build your own.'); }
+ /* ---------- playing the song on the studio's clock ---------- */
+ const R={on:false,i:0,pass:0,t0:0,hooked:false,bar:0};
+ function hook(){ const ps=P(); if(R.hooked||!ps||!ps.STEPHOOKS) return; R.hooked=true;
+  ps.STEPHOOKS.push((c,dest,t,s,sd)=>{ if(!R.on||c!==ps.ac()) return; const T=ps.total, spb=ps.spb;
+   if(s%spb===0){ const b=Math.floor(s/spb); const d=Math.max(0,(t-c.currentTime)*1000); setTimeout(()=>{ R.bar=b; live(); },d); }
+   if(s===T-1){ R.pass++; const cur=A.sections[R.i]; if(cur&&R.pass>=cur.r){ const at=t+sd; let n=R.i+1; while(n<A.sections.length&&!scene(A.sections[n].s)) n++;
+     if(n>=A.sections.length){ R.on=false; const lastS=cur.s; const sc=scene(lastS);
+      /* the song ends on this step: a silent loop goes in now, so the step the clock has already looked ahead to plays nothing; the last scene comes back once it has stopped */
+      try{ S().put('__end',{bars:sc.bars,spb:sc.spb,steps:ps.pads.map(()=>[]),CT:{bass:[],chords:[],melody:[],gtr:[]},KT:[],chart:sc.chart}); S().load('__end',true); }catch(_){ }
+      setTimeout(()=>{ try{ ps.stop(); }catch(_){ } try{ S().load(lastS,true); S().del('__end'); }catch(_){ } render(); say('🎼 The song is done. ▶ Play it again, or ⬇ Export it as one WAV.'); },Math.max(0,(at-c.currentTime)*1000)+60); return; }
+     /* swap now, on the loop's last step, inside the studio's clock: the very next step it schedules is the new scene's one */
+     R.i=n; R.pass=0; window.__padWrap=true; S().load(A.sections[n].s,true); window.__padWrap=false; setTimeout(()=>{ R.bar=0; live(); },Math.max(0,(at-c.currentTime)*1000)); } } }); }
+ function play(from){ const ps=P(), sx=S(); if(!ps||!sx) return say('Open the 🎛 Studio first.'); if(!A.sections.length) return say('Add sections first: pick a song form, or ➕ Add a section.');
+  let i=Math.max(0,from||0); while(i<A.sections.length&&!scene(A.sections[i].s)) i++; if(i>=A.sections.length) return say('These sections use empty scenes. Press ⚡ Make 5 scenes, or save loops as scenes in the 🎛 Studio (Scenes and song).');
+  hook(); if(ps.playing) ps.stop(); sx.load(A.sections[i].s,true); R.on=true; R.i=i; R.pass=0; R.bar=0; R.t0=Date.now(); try{ window.KAUDIO&&KAUDIO.gesture&&KAUDIO.gesture(); }catch(_){ } ps.play(); render(); live(); }
+ function stop(){ R.on=false; try{ if(P().playing) P().stop(); }catch(_){ } render(); }
+ /* ---------- one WAV of the whole song ---------- */
+ async function exportWav(){ const ps=P(), sx=S(); if(!ps||!sx) return say('Open the 🎛 Studio first.'); const L=A.sections.filter(x=>scene(x.s)); if(!L.length) return say('Nothing to export yet: the sections need scenes.'); if(!ps.renderBeat||!ps.toWav) return say('This studio cannot render here.');
+  stop(); say('⬇ Rendering '+L.length+' sections… this takes a few seconds.'); const parts=[];
+  try{ for(const x of L){ sx.load(x.s,true); const b=await ps.renderBeat(x.r); const keepS=Math.round(scene(x.s).bars*ps.spb*x.r*ps.stepDur()*b.sampleRate); parts.push({b,n:Math.min(b.length,keepS)}); }
+   const last=parts[parts.length-1]; last.n=last.b.length; const sr=parts[0].b.sampleRate, ch=2, tot=parts.reduce((a,p)=>a+p.n,0); const oc=new OfflineAudioContext(ch,tot,sr); const out=oc.createBuffer(ch,tot,sr); let o=0;
+   for(const p of parts){ for(let c=0;c<ch;c++){ const src=p.b.getChannelData(Math.min(c,p.b.numberOfChannels-1)).subarray(0,p.n); out.getChannelData(c).set(src,o); } o+=p.n; }
+   const name=(A.name||'My song')+' (arranged)'; let saved=false; try{ if(window.KLIB&&KLIB.saveAudio){ await KLIB.saveAudio(out,name,{from:'Song Arranger',sections:L.length}); saved=true; } }catch(_){ }
+   try{ const blob=new Blob([ps.toWav(out)],{type:'audio/wav'}); if(window.KLIB&&KLIB.download) KLIB.download(blob,name+'.wav'); }catch(_){ }
+   sx.load(L[0].s,false); say('⬇ '+name+': '+tm(tot/sr)+(saved?', saved in 📚 My library':'')+'.'); }catch(e){ say('The song could not be rendered here.'); } }
+ /* ---------- the library ---------- */
+ async function saveLib(){ try{ if(!window.KLIB) throw 0; const scenes={}; A.sections.forEach(x=>{ const sc=scene(x.s); if(sc) scenes[x.s]=sc; }); const blob=new Blob([JSON.stringify({arr:A,scenes})],{type:'application/json'}); await KLIB.save({kind:'arrangement',name:A.name||'My song',blob,meta:{from:'Song Arranger',sections:A.sections.length}}); say('💾 '+(A.name||'My song')+' is in 📚 My library, with its scenes.'); }catch(_){ say('It could not be saved here.'); } }
+ async function openLib(){ const box=$('kArr').querySelector('.arLib'); try{ const L=(await KLIB.list()).filter(x=>x.kind==='arrangement'); box.innerHTML=L.length?L.map(x=>'<button type="button" data-ar="libopen" data-id="'+esc(x.id)+'" data-noul>📂 '+esc(x.name)+'</button>').join(''):'<span class="arNote">No saved songs yet: 💾 Save keeps this one.</span>'; box.hidden=false; }catch(_){ box.innerHTML='<span class="arNote">The library is not open here.</span>'; box.hidden=false; } }
+ async function libOpen(id){ try{ const x=await KLIB.get(id); const o=JSON.parse(await x.blob.text()); if(o.scenes) Object.entries(o.scenes).forEach(([k,v])=>S().put(k,v)); A=o.arr; sel=0; keep(); render(); say('📂 '+A.name+' is open: '+A.sections.length+' sections.'); }catch(_){ say('That song could not be opened.'); } }
+ /* ---------- the screen ---------- */
+ const css=document.createElement('style'); css.textContent=`
+#kArr{position:fixed;inset:0;right:var(--kRailW,58px);z-index:9500;background:linear-gradient(180deg,#0b0a22,#140d33);color:#eef;overflow-y:auto;font:15px/1.5 system-ui,sans-serif;padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 90px}
+#kArr[hidden]{display:none!important}
+#kArr .arIn{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+#kArr h2{margin:0;font:900 24px system-ui,sans-serif;color:#ffe94a}
+#kArr .arTop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-right:120px}
+#kArr .arRow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#kArr button,#kArr select,#kArr input{min-height:42px;border-radius:4px 12px 4px 12px;border:1.5px solid #8f86ff;background:#231d5c;color:#fff;font:800 14px system-ui,sans-serif;padding:0 12px}
+#kArr button.go{background:linear-gradient(180deg,#2fd27a,#139a52);border-color:#9effc6}
+#kArr button.on{background:linear-gradient(180deg,#ffd84a,#e0a10c);color:#1a1200;border-color:#ffe94a}
+#kArr .arName{flex:1;min-width:160px}
+#kArr .arTime{display:flex;gap:2px;height:46px;border-radius:8px;overflow:hidden;border:1px solid #3a3380;background:#0a0920}
+#kArr .arTime div{display:flex;align-items:center;justify-content:center;font:800 11px system-ui;color:#0b0820;cursor:pointer;min-width:6px;white-space:nowrap;overflow:hidden;position:relative}
+#kArr .arTime div.sel{outline:3px solid #fff;outline-offset:-3px}
+#kArr .arTime div.now::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:rgba(255,255,255,.35)}
+#kArr .arTime div.empty{background:repeating-linear-gradient(45deg,#333,#333 4px,#222 4px,#222 8px)!important;color:#bbb}
+#kArr .arLive{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:6px 16px 6px 16px;background:#1d1640;border:1px solid #ff8ad8}
+#kArr .arLive b{font:900 18px system-ui;color:#ffe94a}
+#kArr .arLive .ly{font:800 22px/1.35 system-ui,sans-serif;white-space:pre-wrap;color:#fff}
+#kArr .arList{display:flex;flex-direction:column;gap:6px}
+#kArr .arSec{display:grid;grid-template-columns:10px minmax(0,1fr);gap:8px;padding:8px;border-radius:8px;background:#17123a;border:1px solid #2e2770}
+#kArr .arSec.sel{border-color:#ffe94a}
+#kArr .arSec .tag{border-radius:4px}
+#kArr .arSec textarea{width:100%;min-height:54px;border-radius:8px;border:1px solid #3a3380;background:#0c0a26;color:#fff;font:15px/1.45 system-ui;padding:6px 8px;box-sizing:border-box}
+#kArr .arNote{opacity:.8;font-size:13px}
+#kArr .arLib{display:flex;flex-wrap:wrap;gap:6px}
+#kArr .arTime .ls{display:none}
+#kArr .arSec select{max-width:100%}
+@media (max-width:700px){ #kArr{padding-top:calc(64px + env(safe-area-inset-top,0px))} #kArr .arTop{padding-right:0} #kArr .arTime .lf{display:none} #kArr .arTime .ls{display:inline} #kArr .arTime div{font-size:10px} }`; document.head.appendChild(css);
+ function box(){ let d=$('kArr'); if(d) return d; d=document.createElement('div'); d.id='kArr'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Song Arranger'); document.body.appendChild(d);
+  d.addEventListener('click',e=>{ const b=e.target.closest('[data-ar]'); if(!b) return; const k=b.dataset.ar, i=+b.dataset.i;
+   if(k==='x') return close(); if(k==='play') return R.on?stop():play(sel); if(k==='fromtop') return play(0); if(k==='quick') return quick(); if(k==='export') return exportWav(); if(k==='save') return saveLib(); if(k==='open') return openLib(); if(k==='libopen') return libOpen(b.dataset.id);
+   if(k==='add'){ const last=A.sections[A.sections.length-1]; A.sections.push(sec(last?'Chorus':'Intro',last?'D':'A',2)); sel=A.sections.length-1; keep(); return render(); }
+   if(k==='sel'||k==='blk'){ sel=i; render(); if(R.on&&k==='blk') play(i); return; }
+   if(k==='up'&&i>0){ [A.sections[i-1],A.sections[i]]=[A.sections[i],A.sections[i-1]]; sel=i-1; keep(); return render(); }
+   if(k==='down'&&i<A.sections.length-1){ [A.sections[i+1],A.sections[i]]=[A.sections[i],A.sections[i+1]]; sel=i+1; keep(); return render(); }
+   if(k==='dup'){ A.sections.splice(i+1,0,JSON.parse(JSON.stringify(A.sections[i]))); sel=i+1; keep(); return render(); }
+   if(k==='del'){ A.sections.splice(i,1); sel=Math.max(0,Math.min(sel,A.sections.length-1)); keep(); return render(); }
+   if(k==='savescene'){ const x=A.sections[i]; if(!S()) return say('Open the 🎛 Studio first.'); S().save(x.s); render(); return say('💾 The loop in the studio is now scene '+x.s+' ('+x.n+').'); }
+   if(k==='hear'){ const x=A.sections[i]; if(!scene(x.s)) return say('Scene '+x.s+' is empty: 💾 put the studio loop in it first.'); stop(); S().load(x.s,false); try{ P().play(); }catch(_){ } return say('▶ Scene '+x.s+' ('+x.n+') is looping in the studio. ■ Stop when done.'); } });
+  d.addEventListener('change',e=>{ const t=e.target, k=t.dataset.ar, i=+t.dataset.i; if(k==='tpl'){ const f=TPL[t.value]; if(!f) return; A.sections=f.map(x=>sec(x[0],x[1],x[2])); sel=0; keep(); render(); const miss=[...new Set(A.sections.map(x=>x.s))].filter(s=>!scene(s)); return say('🎼 '+t.value+': '+A.sections.length+' sections.'+(miss.length?' Scenes '+miss.join(' ')+' are empty: press ⚡ Make 5 scenes.':'')); }
+   if(k==='n'){ A.sections[i].n=t.value; } if(k==='s'){ A.sections[i].s=t.value; } if(k==='r'){ A.sections[i].r=+t.value; } if(k==='name'){ A.name=t.value.trim()||'My song'; } keep(); render(); });
+  d.addEventListener('input',e=>{ const t=e.target; if(t.dataset.ar==='ly'){ A.sections[+t.dataset.i].ly=t.value; keep(); if(R.on&&+t.dataset.i===R.i) live(); } });
+  return d; }
+ function live(){ const d=$('kArr'); if(!d||d.hidden) return; const L=d.querySelector('.arLive'); if(!L) return; const tot=A.sections.reduce((a,x)=>a+barsOf(x),0), bs=secs();
+  if(!R.on){ L.innerHTML='<b>'+(A.sections.length?A.sections.length+' sections · '+tot+' bars · '+tm(tot*bs):'No sections yet')+'</b><span class="arNote">▶ Play song plays every section in order on the studio’s clock, with no 32-bar limit. Tap a block to choose it; while the song plays, tap a block to jump there.</span>'; return; }
+  const x=A.sections[R.i]; if(!x) return; const sc=scene(x.s), b=(sc?sc.bars:1); let done=0; for(let k=0;k<R.i;k++) done+=barsOf(A.sections[k]); done+=R.pass*b+R.bar;
+  L.innerHTML='<b>▶ '+esc(x.n)+' · pass '+(R.pass+1)+' of '+x.r+' · bar '+(R.bar+1)+' of '+b+'</b><span class="arNote">'+tm(done*bs)+' / '+tm(tot*bs)+' · section '+(R.i+1)+' of '+A.sections.length+' · scene '+x.s+'</span>'+(x.ly?'<div class="ly">'+esc(x.ly)+'</div>':'');
+  d.querySelectorAll('.arTime div').forEach((el,k)=>{ el.classList.toggle('now',k===R.i); if(k===R.i) el.style.setProperty('--p',Math.round(((R.pass*b+R.bar)/(b*x.r))*100)+'%'); }); }
+ function render(){ const d=box(); const tot=A.sections.reduce((a,x)=>a+barsOf(x),0)||1;
+  const opts=(arr,v)=>arr.map(o=>'<option'+(String(o)===String(v)?' selected':'')+'>'+esc(o)+'</option>').join('');
+  d.innerHTML='<div class="arIn"><div class="arTop"><h2>🎼 Song Arranger</h2><button type="button" data-ar="x" data-noul>✕ Close</button></div>'+
+   '<div class="arRow"><input class="arName" data-ar="name" value="'+esc(A.name)+'" aria-label="Song name" maxlength="80"><button type="button" class="go'+(R.on?' on':'')+'" data-ar="play" data-noul>'+(R.on?'■ Stop':'▶ Play song')+'</button><button type="button" data-ar="fromtop" data-noul>⏮ From the top</button></div>'+
+   '<div class="arRow"><label>Song form <select data-die="off" data-ar="tpl" aria-label="Song form"><option value="">Pick a form…</option>'+Object.keys(TPL).map(k=>'<option>'+esc(k)+'</option>').join('')+'</select></label><button type="button" data-ar="quick" data-noul>⚡ Make 5 scenes from my loop</button><button type="button" data-ar="add" data-noul>➕ Add a section</button></div>'+
+   '<div class="arTime">'+A.sections.map((x,i)=>{ const sc=scene(x.s); const w=sc?barsOf(x):1; return '<div data-ar="blk" data-i="'+i+'" class="'+(i===sel?'sel ':'')+(sc?'':'empty')+'" style="flex:'+w+';background:'+COL(x.n)+'" title="'+esc(x.n)+' · scene '+x.s+(sc?' · '+barsOf(x)+' bars':' · empty')+'"><span class="lf">'+esc(x.n)+'</span><span class="ls">'+esc(SHORT[x.n]||x.n.slice(0,3))+'</span></div>'; }).join('')+'</div>'+
+   '<div class="arLive"></div>'+
+   '<div class="arRow"><button type="button" data-ar="export" data-noul>⬇ Export the song as one WAV</button><button type="button" data-ar="save" data-noul>💾 Save to my library</button><button type="button" data-ar="open" data-noul>📂 Open a saved song</button></div><div class="arLib" hidden></div>'+
+   '<div class="arList">'+A.sections.map((x,i)=>{ const sc=scene(x.s); return '<div class="arSec'+(i===sel?' sel':'')+'"><div class="tag" style="background:'+COL(x.n)+'"></div><div><div class="arRow"><b>'+(i+1)+'.</b>'+
+    '<select data-die="off" data-ar="n" data-i="'+i+'" aria-label="Section">'+opts(TYPES.map(t=>t[0]),x.n)+'</select>'+
+    '<select data-die="off" data-ar="s" data-i="'+i+'" aria-label="Scene">'+SLOTS.map(k=>'<option value="'+k+'"'+(k===x.s?' selected':'')+'>Scene '+k+(scene(k)?' · '+scene(k).bars+' bar'+(scene(k).bars>1?'s':''):' · empty')+'</option>').join('')+'</select>'+
+    '<select data-die="off" data-ar="r" data-i="'+i+'" aria-label="Plays">'+[1,2,3,4,6,8,12,16].map(n=>'<option value="'+n+'"'+(n===x.r?' selected':'')+'>×'+n+'</option>').join('')+'</select>'+
+    '<span class="arNote">'+(sc?barsOf(x)+' bars · '+tm(barsOf(x)*secs()):'scene '+x.s+' is empty')+'</span>'+
+    '<button type="button" data-ar="hear" data-i="'+i+'" title="Loop this scene in the studio" data-noul>🔊</button><button type="button" data-ar="savescene" data-i="'+i+'" title="Put the studio’s loop in this scene" data-noul>💾 Loop → '+x.s+'</button>'+
+    '<button type="button" data-ar="up" data-i="'+i+'" aria-label="Move up" data-noul>▲</button><button type="button" data-ar="down" data-i="'+i+'" aria-label="Move down" data-noul>▼</button><button type="button" data-ar="dup" data-i="'+i+'" aria-label="Copy" data-noul>⧉</button><button type="button" data-ar="del" data-i="'+i+'" aria-label="Remove" data-noul>✕</button></div>'+
+    '<textarea data-ar="ly" data-i="'+i+'" placeholder="Lyrics for this '+esc(x.n.toLowerCase())+' (they show here, big, while the song plays)" aria-label="Lyrics">'+esc(x.ly)+'</textarea></div></div>'; }).join('')+'</div>'+
+   (A.sections.length?'':'<p class="arNote">Start with ⚡ Make 5 scenes from the loop in the studio, then pick a song form. Or build it yourself: ➕ Add a section, choose its scene and how many times it plays.</p>')+'</div>'; live(); }
+ function open(){ const d=box(); render(); d.hidden=false; d.scrollTop=0; }
+ function close(){ stop(); const d=$('kArr'); if(d) d.hidden=true; }
+ /* the scenes stay on this device: saved compactly (only the steps that sound) whenever one is saved, and put back when the app opens */
+ const SLS='kanin-scenes1';
+ const pack=sc=>({bars:sc.bars,spb:sc.spb,st:sc.steps.map(a=>{ const o=[]; (a||[]).forEach((v,i)=>{ if(v) o.push(v===1?i:[i,v]); }); return o; }),CT:sc.CT,KT:sc.KT,chart:sc.chart});
+ const unpack=o=>({bars:o.bars,spb:o.spb,steps:o.st.map(l=>{ const a=new Array(o.bars*o.spb).fill(0); l.forEach(x=>{ if(Array.isArray(x)) a[x[0]]=x[1]; else a[x]=1; }); return a; }),CT:o.CT,KT:o.KT||[],chart:o.chart||[]});
+ const persist=()=>{ try{ const all=S().all(), o={}; Object.keys(all).filter(k=>SLOTS.includes(k)).forEach(k=>o[k]=pack(all[k])); localStorage.setItem(SLS,JSON.stringify(o)); }catch(_){ } };
+ (function wire(){ const sx=S(); if(!sx||!sx.save){ return setTimeout(wire,1000); } if(sx.__kept) return; sx.__kept=true;
+  try{ const o=JSON.parse(localStorage.getItem(SLS)||'null'); if(o&&!Object.keys(sx.all()).length) Object.entries(o).forEach(([k,v])=>sx.put(k,unpack(v))); }catch(_){ }
+  const f1=sx.save, f2=sx.put, f3=sx.del; sx.save=k=>{ const r=f1(k); if(SLOTS.includes(k)) persist(); return r; }; sx.put=(k,v)=>{ f2(k,v); if(SLOTS.includes(k)) persist(); }; sx.del=k=>{ f3(k); if(SLOTS.includes(k)) persist(); }; })();
+ /* a button beside 🎼 Build song in the studio, and an entry in Find */
+ setInterval(()=>{ const b=$('ktBuild'); if(b&&!$('ktArr')){ const a=document.createElement('button'); a.type='button'; a.id='ktArr'; a.setAttribute('data-noul',''); a.title='Arrange a whole song, section by section'; a.textContent='🎼 Arranger'; a.addEventListener('click',open); b.insertAdjacentElement('afterend',a); } },1500);
+ try{ (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Studio','🎼','Song Arranger: intro, verse, chorus, bridge… a whole song','Arranger',()=>open()); }); }catch(_){ }
+ window.KARR={open,close,play,stop,quick,exportWav,get song(){ return A; },set song(v){ A=v; keep(); render(); },get state(){ return {on:R.on,i:R.i,pass:R.pass,bar:R.bar}; },TPL:Object.keys(TPL)};
+})();
+
+</script>
+<script>
+(()=>{ /* 🂡 FIVE-CARD ROW (v261): Omni-Galaxy's own card-and-board game for 2 or 3 players. A 10 × 10 board shows every card of two
+   decks except the jacks, each twice, with the four corners free for everyone. Play a card from your hand to put a chip on one of
+   its two squares, then draw. Five chips in a line (across, down or diagonal; a corner counts for you) make a row; the first to the
+   rows the game asks for wins. A ♦ or ♣ jack is wild: a chip on any free square. A ♠ or ♥ jack bumps one rival chip off the board
+   (never one in a finished row). A card whose two squares are both taken is dead: swap it for a new one, once a turn. */
+ const G=window.GAMES; if(!G||!G.reg||!G.lib) return; const L=G.lib, h=L.h, SU=L.SU, VS=L.VS||'', rl=L.rl, cardEl=L.cardEl, shuffle=L.shuffle;
+ const OPT=(ctx,id,defs)=>window.KGOPT?KGOPT.row(ctx,id,defs):Object.fromEntries(defs.map(d=>[d[0],d[3]]));
+ const beep=(f,d)=>{ try{ L.beep(f,d||.04); }catch(_){ } };
+ const NM=['You','Nova','Orion'], CH=['#2f7bff','#ff4b4b','#2fbf71'];
+ /* the board: a fixed layout (the same every game, so it can be learned), made by a seeded shuffle of the 96 non-jack cards */
+ const BOARD=(()=>{ const cards=[]; for(let k=0;k<2;k++) for(let s=0;s<4;s++) for(let r=1;r<=13;r++) if(r!==11) cards.push({r,s}); let seed=20261128; const rnd=()=>{ seed=(seed*1103515245+12345)%2147483648; return seed/2147483648; }; for(let i=cards.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [cards[i],cards[j]]=[cards[j],cards[i]]; }
+  const B=[]; let k=0; for(let y=0;y<10;y++){ const row=[]; for(let x=0;x<10;x++){ const corner=(x===0||x===9)&&(y===0||y===9); row.push(corner?null:cards[k++]); } B.push(row); } return B; })();
+ const css=document.createElement('style'); css.textContent=`
+#gamesDock .fcr{display:flex;flex-direction:column;gap:8px;align-items:center}
+#gamesDock .fcrB{display:grid;grid-template-columns:repeat(10,var(--c));gap:2px;background:#0b3d24;padding:4px;border-radius:8px;border:2px solid #d4af37}
+#gamesDock .fcrB .q{width:var(--c);height:calc(var(--c)*1.25);border-radius:4px;background:#f7f3e8;color:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 calc(var(--c)*.32)/1.05 system-ui,sans-serif;position:relative;cursor:pointer;user-select:none}
+#gamesDock .fcrB .q.red{color:#c4161c}
+#gamesDock .fcrB .q.free{background:linear-gradient(135deg,#ffd84a,#e0a10c);color:#3a2600;font-size:calc(var(--c)*.42)}
+#gamesDock .fcrB .q.can{box-shadow:0 0 0 3px #e08a00 inset,0 0 10px 2px #ffe94a;background:#ffec7a;z-index:1}
+#gamesDock .fcrB .q.bump{box-shadow:0 0 0 3px #ff5ea8 inset}
+#gamesDock .fcrB .q .chip{position:absolute;inset:12%;border-radius:50%;border:2px solid rgba(255,255,255,.85);box-shadow:0 2px 3px rgba(0,0,0,.5)}
+#gamesDock .fcrB .q .chip.lock{outline:3px solid #ffe94a;outline-offset:-1px}
+#gamesDock .fcrB .q.last{animation:fcrP .8s ease 2}
+@keyframes fcrP{50%{transform:scale(1.12)}}
+#gamesDock .fcrHand{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+#gamesDock .fcrHand .gcard{cursor:pointer}
+#gamesDock .fcrHand .gcard.sel{outline:3px solid #ffe94a;transform:translateY(-6px)}
+#gamesDock .fcrMsg{font:800 14px system-ui,sans-serif;color:#ffe94a;text-align:center;min-height:20px}
+#gamesDock .fcrScore{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font:800 13px system-ui}
+#gamesDock .fcrScore span{display:inline-flex;align-items:center;gap:4px}
+#gamesDock .fcrScore i{width:14px;height:14px;border-radius:50%;display:inline-block}
+#gamesDock .fcrBar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+#gamesDock .fcrBar button{min-height:42px;padding:0 14px;border-radius:4px 12px 4px 12px;font:800 14px system-ui}`; document.head.appendChild(css);
+ G.reg('c_fivecardrow','Five-Card Row (card board game)','Cards','Omni-Galaxy’s own card-and-board game. Play a card to put a chip on one of its two squares on the 10 × 10 board; five in a line across, down or diagonal make a row (a free corner counts for you). A ♦ or ♣ jack is wild (any free square); a ♠ or ♥ jack bumps a rival chip off, never one in a finished row. A card whose two squares are both taken is dead: swap it, once a turn. First to the rows needed wins.',ctx=>{
+  const O=OPT(ctx,'c_fivecardrow',[['n','Players',[[2,'You and Nova'],[3,'You, Nova and Orion']],2],['rows','Rows to win',[[1,'One row'],[2,'Two rows'],[3,'Three rows']],2],['lvl','Computer',[[0,'Gentle'],[1,'Steady'],[2,'Sharp'],[3,'Shark'],[4,'Grandmaster']],2],['speed','Computer speed',[[1800,'Slow'],[1200,'Relaxed'],[800,'Normal'],[500,'Quick'],[250,'Lightning']],800]]);
+  const N=+O.n, NEED=+O.rows, HS=N===2?7:6;
+  const st={chip:[],lock:[],deck:[],hand:[],turn:0,sel:null,rows:Array(N).fill(0),over:false,msg:'',traded:false,last:null};
+  const root=h('div',{className:'fcr'}); ctx.area.appendChild(root);
+  function deal(){ st.chip=[...Array(10)].map(()=>Array(10).fill(-1)); st.lock=[...Array(10)].map(()=>Array(10).fill(false)); const d=shuffle(L.mkDeck(true).concat(L.mkDeck(true)).filter(c=>!c.j)); st.deck=d; st.hand=[...Array(N)].map(()=>d.splice(0,HS)); st.turn=0; st.sel=null; st.rows=Array(N).fill(0); st.over=false; st.traded=false; st.last=null; st.msg='Your turn: pick a card, then a square that shows it.'; render(); }
+  const isCorner=(x,y)=>(x===0||x===9)&&(y===0||y===9);
+  const kind=c=>c.r===11?((c.s===2||c.s===3)?'wild':'bump'):'card';
+  const owns=(p,x,y)=>x>=0&&y>=0&&x<10&&y<10&&(isCorner(x,y)||st.chip[y][x]===p);
+  const spots=c=>{ const out=[]; for(let y=0;y<10;y++) for(let x=0;x<10;x++){ const b=BOARD[y][x]; if(b&&b.r===c.r&&b.s===c.s&&st.chip[y][x]<0) out.push([x,y]); } return out; };
+  const freeAll=()=>{ const out=[]; for(let y=0;y<10;y++) for(let x=0;x<10;x++) if(BOARD[y][x]&&st.chip[y][x]<0) out.push([x,y]); return out; };
+  const rivals=p=>{ const out=[]; for(let y=0;y<10;y++) for(let x=0;x<10;x++) if(st.chip[y][x]>=0&&st.chip[y][x]!==p&&!st.lock[y][x]) out.push([x,y]); return out; };
+  const targets=(p,c)=>kind(c)==='wild'?freeAll():kind(c)==='bump'?rivals(p):spots(c);
+  const dead=c=>kind(c)==='card'&&!spots(c).length;
+  const DIRS=[[1,0],[0,1],[1,1],[1,-1]];
+  /* new rows for p through (x,y): a run of 5 with no locked chip of p's own reused more than once (a second row may share one chip) */
+  function newRows(p,x,y){ let made=0; for(const [dx,dy] of DIRS){ const line=[]; for(let k=-9;k<=9;k++){ const X=x+dx*k, Y=y+dy*k; if(X<0||Y<0||X>9||Y>9) continue; line.push([X,Y]); }
+    let run=[]; const runs=[]; for(const [X,Y] of line){ if(owns(p,X,Y)) run.push([X,Y]); else { if(run.length>=5) runs.push(run); run=[]; } } if(run.length>=5) runs.push(run);
+    for(const r of runs){ for(let i=0;i+5<=r.length;i++){ const seg=r.slice(i,i+5); if(!seg.some(([X,Y])=>X===x&&Y===y)) continue; const shared=seg.filter(([X,Y])=>st.lock[Y][X]).length; if(shared<=1){ seg.forEach(([X,Y])=>{ if(!isCorner(X,Y)) st.lock[Y][X]=true; }); made++; break; } } } } return made; }
+  function place(p,i,x,y){ const c=st.hand[p][i]; const k=kind(c); if(k==='bump'){ st.chip[y][x]=-1; st.msg=NM[p]+' bumped a chip off '+lab(BOARD[y][x])+'.'; beep(220,.06); }
+   else { st.chip[y][x]=p; const m=newRows(p,x,y); if(m){ st.rows[p]+=m; beep(880,.12); } else beep(p?330:600,.04); st.msg=NM[p]+(k==='wild'?' played a wild jack on ':' played ')+lab(BOARD[y][x])+(m?' and made a row! ('+st.rows[p]+' of '+NEED+')':'')+'.'; }
+   st.last=[x,y]; st.hand[p].splice(i,1); if(st.deck.length) st.hand[p].push(st.deck.pop());
+   if(st.rows[p]>=NEED){ st.over=true; st.msg=(p?NM[p]+' wins with '+st.rows[p]+' row'+(st.rows[p]>1?'s':''):'🏆 You win with '+st.rows[p]+' row'+(st.rows[p]>1?'s':'')+'!'); try{ ctx.status&&ctx.status(st.msg); }catch(_){ } render(); return; }
+   if(!st.hand.some(hd=>hd.length)){ st.over=true; const mx=Math.max(...st.rows), w=st.rows.indexOf(mx), tie=st.rows.filter(v=>v===mx).length>1; st.msg='No cards left. '+(tie?'A draw on rows.':w===0?'🏆 You win on rows ('+mx+').':NM[w]+' wins on rows ('+mx+').'); render(); return; }
+   st.turn=(p+1)%N; st.traded=false; st.sel=null; render(); if(st.turn!==0) ctx.after(+O.speed,ai); }
+  const lab=b=>b?rl(b.r)+SU[b.s]+VS:'a corner';
+  /* the computer: scores every legal move by the lines it builds or blocks */
+  function lineScore(p,x,y){ let best=0; for(const [dx,dy] of DIRS){ for(let s=-4;s<=0;s++){ let mine=0, ok=true; for(let k=0;k<5;k++){ const X=x+dx*(s+k), Y=y+dy*(s+k); if(X<0||Y<0||X>9||Y>9){ ok=false; break; } if(X===x&&Y===y){ mine++; continue; } if(owns(p,X,Y)) mine++; else if(st.chip[Y][X]>=0) { ok=false; break; } } if(ok) best=Math.max(best,mine); } } return best; }
+  function ai(){ if(st.over) return; const p=st.turn; if(p===0) return; const hd=st.hand[p]; const lvl=+O.lvl;
+   for(let i=0;i<hd.length;i++){ if(dead(hd[i])&&!st.traded&&st.deck.length){ hd.splice(i,1); hd.push(st.deck.pop()); st.traded=true; i--; } }
+   let best=null, bs=-1e9;
+   hd.forEach((c,i)=>{ const k=kind(c); targets(p,c).forEach(([x,y])=>{ let s;
+     if(k==='bump'){ const q=st.chip[y][x]; s=Math.pow(lineScore(q,x,y),3)*2-20; }
+     else { const mine=lineScore(p,x,y); let block=0; for(let q=0;q<N;q++) if(q!==p) block=Math.max(block,lineScore(q,x,y)); s=Math.pow(mine,3)*3+(mine>=5?1000:0)+Math.pow(block,3)*(lvl>=2?2.6:1.2)+(block>=5?600:0)-(k==='wild'?(mine>=5||block>=5?0:40):0)+(4.5-Math.abs(4.5-x))+(4.5-Math.abs(4.5-y)); }
+     s+=Math.random()*(lvl<=0?40:lvl===1?16:lvl===2?6:2); if(s>bs){ bs=s; best=[i,x,y]; } }); });
+   if(!best){ st.msg=NM[p]+' has no move and passes.'; st.turn=(p+1)%N; render(); if(st.turn!==0) ctx.after(+O.speed,ai); return; }
+   place(p,best[0],best[1],best[2]); }
+  function render(){ root.innerHTML=''; const W=(ctx.W&&ctx.W())||360; const c=Math.max(24,Math.min(58,Math.floor((W-40)/10)-2));
+   root.appendChild(h('div',{className:'fcrScore'})); const sc=root.lastChild; for(let p=0;p<N;p++){ const s=h('span'); s.appendChild(h('i',{style:'background:'+CH[p]})); s.appendChild(document.createTextNode(NM[p]+': '+st.rows[p]+' / '+NEED+(p===st.turn&&!st.over?' ◀':''))); sc.appendChild(s); }
+   root.appendChild(h('div',{className:'fcrMsg'},st.msg));
+   const my=st.turn===0&&!st.over; const selC=my&&st.sel!=null?st.hand[0][st.sel]:null; const tg=selC?targets(0,selC):[]; const isT=(x,y)=>tg.some(t=>t[0]===x&&t[1]===y);
+   const B=h('div',{className:'fcrB',style:'--c:'+c+'px'}); for(let y=0;y<10;y++) for(let x=0;x<10;x++){ const b=BOARD[y][x]; const q=h('div',{className:'q'+(b?((b.s===1||b.s===2)?' red':''):' free')+(isT(x,y)?(kind(selC)==='bump'?' bump':' can'):'')+(st.last&&st.last[0]===x&&st.last[1]===y?' last':'')});
+    if(b){ q.appendChild(h('span',null,rl(b.r))); q.appendChild(h('span',null,SU[b.s]+VS)); } else q.textContent='★';
+    if(st.chip[y][x]>=0){ const ch=h('div',{className:'chip'+(st.lock[y][x]?' lock':''),style:'background:'+CH[st.chip[y][x]]}); q.appendChild(ch); }
+    q.setAttribute('aria-label',(b?lab(b):'free corner')+(st.chip[y][x]>=0?', '+NM[st.chip[y][x]]+'’s chip':''));
+    q.addEventListener('click',()=>{ if(!my||st.sel==null) return; if(!isT(x,y)) return; place(0,st.sel,x,y); }); B.appendChild(q); }
+   root.appendChild(B);
+   const hand=h('div',{className:'fcrHand'}); st.hand[0].forEach((cd,i)=>{ const e=cardEl(cd,Math.max(34,Math.min(60,Math.floor((W-40)/8))),false,(st.sel===i?'sel':'')+(dead(cd)?' dim':'')); e.title=kind(cd)==='wild'?'Wild jack: any free square':kind(cd)==='bump'?'Bump jack: take a rival chip off':dead(cd)?'Dead card: both squares are taken':'Two squares on the board'; e.addEventListener('click',()=>{ if(!my) return; st.sel=st.sel===i?null:i; const k=kind(cd); st.msg=st.sel==null?'Pick a card.':k==='wild'?'Wild jack: tap any free square.':k==='bump'?'Bump jack: tap a rival chip (not in a finished row).':dead(cd)?'Dead card: both its squares are taken. Swap it below.':'Tap one of the glowing squares.'; render(); }); hand.appendChild(e); });
+   root.appendChild(hand);
+   const bar=h('div',{className:'fcrBar'}); const add=(t,f)=>{ const b=h('button',{type:'button'},t); b.addEventListener('click',f); bar.appendChild(b); };
+   if(my&&selC&&dead(selC)&&!st.traded) add('♻ Swap the dead card',()=>{ st.hand[0].splice(st.sel,1); if(st.deck.length) st.hand[0].push(st.deck.pop()); st.traded=true; st.sel=null; st.msg='Swapped. Pick a card.'; render(); });
+   add(st.over?'🔄 Play again':'🔄 New game',deal); root.appendChild(bar); }
+  deal(); window.__kgst=()=>st; return {state:()=>st};
+ });
 })();
 
 </script>

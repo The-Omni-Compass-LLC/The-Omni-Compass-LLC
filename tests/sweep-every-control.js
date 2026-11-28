@@ -56,6 +56,8 @@ const SCREENS=[
  ['storylib',M('🗂 Story library'),''],
  ['tac',"TAC.open()",'#tacMenu'],
  ['hub',"OPSHUB.open()",'#opsHub'],
+ ['arr',"(KARR.open(),KARR.quick(),(()=>{ const s=document.querySelector('#kArr [data-ar=\"tpl\"]'); s.value='Pop'; s.dispatchEvent(new Event('change',{bubbles:true})); })())",'#kArr'],
+ ['fcr',"GAMES.open('c_fivecardrow')",'#gamesDock'],
  ['deadtest',"(()=>{ KKEYS.show(); const i=document.querySelector('#kKeysPop .kkIn'); if(!i.querySelector('.dt')){ const b=document.createElement('button'); b.className='dt'; b.textContent='DEADTEST'; i.appendChild(b); const c=document.createElement('button'); c.className='dt'; c.textContent='LIVETEST'; c.onclick=()=>{ c.textContent='LIVE OK'; }; i.appendChild(c); } })()",'#kKeysPop'],
 ];
 const CLEAN=`(()=>{ const t=f=>{ try{ f(); }catch(e){} };
@@ -118,7 +120,8 @@ const TOP=`(sel)=>{ const vis=el=>{ const s=getComputedStyle(el),r=el.getBoundin
    const A=[...Rt.querySelectorAll('a[href^="http"]')]; const bad=A.filter(a=>a.target!=='_blank'||!/noopener/.test(a.rel||'')||!/^https:/.test(a.href)).map(a=>(a.textContent||'').trim().slice(0,30)+' '+a.href.slice(0,60));
    return {o,sm,links:A.length,bad,wide:document.documentElement.scrollWidth>innerWidth+2}; },[root,MODE==='phone']);
   R.offEdge=lay.o.slice(0,40); R.small=lay.sm.slice(0,60); R.smallCount=lay.sm.length; R.links={n:lay.links,bad:lay.bad.slice(0,20),badCount:lay.bad.length}; R.wide=lay.wide;
-  const per={}; R.repeats=0; for(const it of items){ per[it.sig]=(per[it.sig]||0)+1; if(per[it.sig]>3){ R.repeats++; continue; } if(Date.now()-T0>(+process.env.SWEEP_MIN||40)*60*1000){ R.note="stopped at the time limit for one screen"; break; }
+  const SKIP=new Set(); try{ if(process.env.SWEEP_SKIP) JSON.parse(fs.readFileSync(process.env.SWEEP_SKIP,'utf8')).order.forEach(o=>SKIP.add(o[0]+'#'+o[1])); }catch(_){ } R.preDone=0;
+  const per={}; R.repeats=0; for(const it of items){ per[it.sig]=(per[it.sig]||0)+1; if(per[it.sig]>3){ R.repeats++; continue; } if(SKIP.has(it.sig+'#'+it.n)){ R.preDone++; continue; } if(Date.now()-T0>(+process.env.SWEEP_MIN||40)*60*1000){ R.note="stopped at the time limit for one screen"; break; }
    const FIND=`(()=>{ const e=__find(${JSON.stringify(root)},${JSON.stringify(it.sig)},${it.n}); window.__cur=e; return !!e; })()`;
    let here=await p.evaluate(FIND);
    if(!here){ await reopen(); await CAL(); here=await p.evaluate(`(()=>{ const e=__find(${JSON.stringify(root)},${JSON.stringify(it.sig)},${it.n}); window.__cur=e; return !!e; })()`); if(!here){ R.skipped=(R.skipped||0)+1; (R.skippedList=R.skippedList||[]).push(it.t); continue; } }
@@ -142,7 +145,7 @@ const TOP=`(sel)=>{ const vis=el=>{ const s=getComputedStyle(el),r=el.getBoundin
   }
   R.secs=Math.round((Date.now()-T0)/1000);
   fs.writeFileSync(`${OUT}/${MODE}-${name}.json`,JSON.stringify(R,null,1));
-  console.log(`${MODE} ${name} (${root}): ${R.pressed}/${R.controls} pressed · errors ${R.errors.length} · no effect ${R.dead.length} · covered ${R.covered.length} · small ${R.smallCount||0} · repeats sampled ${R.repeats} · skipped ${R.skipped||0} · off edge ${R.offEdge.length} · links ${R.links.n} bad ${R.links.badCount} · wide ${R.wide} · ${R.secs}s`);
+  console.log(`${MODE} ${name} (${root}): ${R.pressed}/${R.controls} pressed · errors ${R.errors.length} · no effect ${R.dead.length} · covered ${R.covered.length} · small ${R.smallCount||0} · repeats sampled ${R.repeats} · done before ${R.preDone||0} · skipped ${R.skipped||0} · off edge ${R.offEdge.length} · links ${R.links.n} bad ${R.links.badCount} · wide ${R.wide} · ${R.secs}s`);
  }catch(e){ console.log(MODE,name,'CRASHED',(e.message||'').slice(0,120)); fs.writeFileSync(`${OUT}/${MODE}-${name}.json`,JSON.stringify({screen:name,mode:MODE,crashed:(e.message||'').slice(0,200)},null,1)); }
  }
  await b.close(); })();

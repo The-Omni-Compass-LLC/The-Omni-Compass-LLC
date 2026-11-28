@@ -22,7 +22,9 @@
  const APPS=[['story','📖','Story builder',()=>KRAIL.goTo('home')],['studio','🎛','Studio',()=>KRAIL.goTo('pad')],['tracks','🎼','Track sequencer',()=>KSEQ.open()],['karaoke','🎤','Karaoke',()=>KKARA.open()],['music','🎵','Music',()=>KRAIL.goTo('musicDock')],['games','🕹','Games',()=>KVG.open()],['zodiac','♈','LuvMyZodiac',()=>KRAIL.goTo('zodDock')],['compass','🧭','Omni-Compass',()=>KRAIL.goTo('omniDock')],['recipes','🍳','Recipes',()=>KRAIL.goTo('recipeDock')],['laugh','😂','Laugh',()=>KHUMOR.open('day')],['ai','🤖','AI',()=>KAI.open()],['easel','🎨','The Easel',()=>KEASEL.open()],['video','🎬','Video studio',()=>KRAIL.goTo('aivDock')],['news','📰','Current News',()=>KNEWS.open()],['faith','✝️','Cultures & Religion',()=>KRELIG.open()],['market','📈','Stock Market',()=>KMARKET.open()],['library','📚','My library',()=>KSOCIAL.open('lib')],['projects','📁','Projects',()=>KRAIL.goTo('fileDock')]];
  const appOf=k=>APPS.find(a=>a[0]===k);
  let db=null, user=null, uid=null, state='boot', acct=null, wall=null, people={}, walls={}, unsubP=null, unsubW=null, tab='posts', viewing=null, q='', news=[], assets=null, dls=null;
- const signedIn=()=>!!acct&&getSS('kanin-signed')===uid;
+ /* signed in for this visit, or remembered on this device (v261): the account belongs to whoever the platform says is viewing, so remembering it never lets anyone else in */
+ const REM='kanin-signed-device'; const remember=on=>{ try{ if(on) localStorage.setItem(REM,JSON.stringify(uid)); else localStorage.removeItem(REM); }catch(_){ } };
+ const signedIn=()=>!!acct&&(getSS('kanin-signed')===uid||getLS(REM,null)===uid);
  /* ---------- connect ---------- */
  async function boot(){ try{ if(!window.claude||!claude.use){ state='none'; return; } [db,user]=await Promise.all([claude.use('db').catch(()=>null),claude.use('user').catch(()=>null)]); if(!db||!user){ state='none'; paint(); return; } uid=await user.id().catch(()=>null); if(!uid){ state='none'; paint(); return; }
    state='loading'; const to=setTimeout(()=>{ if(state==='loading'){ state='none'; paint(); } },10000);
@@ -260,9 +262,9 @@
    if(!f.name.trim()) return err('Write your display name.'); if(!handleOK(f.handle)) return err('Your @handle needs 3 to 20 letters, numbers or _.'); if(taken(f.handle)) return err('@'+f.handle+' is taken. Pick another.'); if(k==='make'&&!f.rules) return err('Tick the house rules to create your account.');
    const data={name:f.name.trim().slice(0,40),handle:f.handle,av:f.av,color:f.color,bio:(f.bio||'').slice(0,200),birth:f.birth?f.birth.slice(5):'' ,likes:f.likes,pub:f.pub,photo:okImg(f.photo)?f.photo:'',cover:okImg(f.cover)?f.cover:'',location:(f.location||'').slice(0,60),hometown:(f.hometown||'').slice(0,60),gender:f.gender||'',pronouns:(f.pronouns||'').slice(0,20),work:(f.work||'').slice(0,60),school:(f.school||'').slice(0,60),langs:(f.langs||'').slice(0,60),rel:f.rel||'',website:/^https:\/\//.test(f.website||'')?f.website.slice(0,100):'',showAge:!!f.showAge,byear:f.showAge&&f.birth?f.birth.slice(0,4):'',at:acct&&acct.at||Date.now(),following:acct&&acct.following||[],apps:acct&&acct.apps||['studio','tracks','karaoke','games','zodiac','story']};
    await write('people/'+uid,r=>r.set(data)); const me=getLS('kanin-me',{})||{}; putLS('kanin-me',Object.assign(me,{name:data.name,handle:'@'+data.handle,av:data.av,color:data.color,bio:data.bio,likes:data.likes},f.birth?{birth:f.birth}:{}));
-   form=null; putSS('kanin-signed',uid); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
-  if(k==='signin'){ putSS('kanin-signed',uid); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
-  if(k==='signout'){ putSS('kanin-signed',null); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
+   form=null; putSS('kanin-signed',uid); remember(true); tab='posts'; say(k==='make'?'✅ Your account is made and you are signed in. This is your page.':'💾 Saved.'); return render(); }
+  if(k==='signin'){ putSS('kanin-signed',uid); remember(true); tab='posts'; viewing=null; listenAll(); say('➡ Signed in as @'+acct.handle+'.'); return render(); }
+  if(k==='signout'){ putSS('kanin-signed',null); remember(false); say('🚪 Signed out. Sign in again from 👤 Profile.'); return render(); }
   if(k==='nophoto'){ form.photo=''; return render(); } if(k==='nocover'){ form.cover=''; return render(); }
   if(k==='grp'){ grpF=b.dataset.g||''; tagF=grpF.toLowerCase().replace(/[^a-z0-9_]/g,''); return render(); }
   if(k==='edit'){ form=Object.assign(blankForm(),{name:acct.name,handle:acct.handle,av:acct.av,color:acct.color,bio:acct.bio||'',likes:acct.likes||[],pub:acct.pub!==false,rules:true},['photo','cover','location','hometown','gender','pronouns','work','school','langs','rel','website','showAge'].reduce((o,k)=>{ if(acct[k]!=null) o[k]=acct[k]; return o; },{}),acct.byear&&acct.birth?{birth:acct.byear+'-'+acct.birth}:{}); return render(); }
@@ -283,10 +285,19 @@
  function open(t){ if(typeof t==='string'){ tab=t; viewing=null; } const d=host(); d.hidden=false; try{ ['kKara','libDock','fileDock','kManual','kMe'].forEach(i=>{ const x=$(i); if(x&&x!==d) x.hidden=true; }); }catch(_){ } render(); }
  function close(){ const d=$('kAcct'); if(d) d.hidden=true; form=null; }
  /* the landing game opens the app, then SIGN IN comes up */
- addEventListener('kanin',e=>{ if(e.detail==='gate-open'&&!signedIn()&&!getSS('kanin-guest')) setTimeout(open,700); });
+ /* opening the app (v261): once the landing game is done, a person with an account who is signed in on this device goes straight to
+    their own page, their platform inside the platform, with the app open behind it; anyone else gets the Sign in card (a person with
+    no account is offered Create your account). It waits for the account to load, at most ten seconds. */
+ let arrived=false;
+ function arrive(){ if(arrived) return; if(getSS('kanin-guest')) { arrived=true; return; } const t0=Date.now();
+  (function wait(){ if(state==='boot'||state==='loading'){ if(Date.now()-t0<10000) return setTimeout(wait,250); }
+   arrived=true; if(state==='none') return; if(signedIn()){ listenAll(); open('posts'); say('👋 Welcome back, @'+((acct&&acct.handle)||'')+'. This is your page: everything you make, your feed and your apps.'); } else open(); })(); }
+ addEventListener('kanin',e=>{ if(e.detail==='gate-open') setTimeout(arrive,700); });
+ /* if the landing game is not shown on this visit, arrive anyway once the app is up */
+ setTimeout(()=>{ const g=document.body.classList.contains('gated'); if(!g) arrive(); },6000);
  /* the rail's 👤 Profile opens the account: sign in first, then my page */
  document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#kdProf,#kdProfile,[data-kd-l="Profile"]'); if(!b) return; e.preventDefault(); e.stopImmediatePropagation(); open(); },true);
  (window.KFINDX=window.KFINDX||[]).push(add=>{ add('You','🔐','Sign in, my account and my page','Account',()=>open()); });
  boot();
- window.KACCT={open,close,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
+ window.KACCT={open,close,arrive,get signedIn(){ return signedIn(); },get account(){ return acct; },get state(){ return state; }};
 })();

@@ -79,7 +79,7 @@
  setInterval(()=>{ const open=dockOpen(); if(open&&!wasOpen){ paint(); if(simple) showPick('groups'); } if(!open&&wasOpen){ hidePick(); } if(!open){ const p=$('gsPick'); if(p&&!p.hidden) p.hidden=true; }
   wasOpen=open; if(open){ paint(); relabel(); } else paintBtn(); },300);
  /* opening a game any other way (Find, a link, the remote) closes the picker */
- const wrap=()=>{ const G=window.GAMES; if(!G||typeof G.open!=='function'||G.open.__gs) return; const f=G.open; const w=function(...a){ const r=f.apply(this,a); if(picking&&Date.now()-pickAt>1500) hidePick(); return r; }; w.__gs=1; G.open=w; }; setInterval(wrap,700);
+ const wrap=()=>{ const G=window.GAMES; if(!G||typeof G.open!=='function'||G.open.__gs) return; const f=G.open; const w=function(...a){ const r=f.apply(this,a); if(picking&&Date.now()-pickAt>1500) hidePick(); /* a game asked for by name (Find, a link, Video games, a shortcut): the picker steps aside for it (v261) */ if(a[0]&&typeof a[0]==='string'){ [60,400,900].forEach(ms=>setTimeout(()=>{ if(picking) hidePick(); },ms)); } return r; }; w.__gs=1; G.open=w; }; setInterval(wrap,700);
  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const p=$('gsPick'); if(p&&!p.hidden&&view==='list'){ view='groups'; paintPick(); e.stopPropagation(); } } },true);
  window.KGSIMPLE={show:showPick,hide:hidePick,get simple(){ return simple; },set simple(v){ simple=!!v; putLS('kanin-gsimple',simple); paint(); },groups:GROUPS.map(g=>g[0])};
 })();
