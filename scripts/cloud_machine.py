@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """Rent one Google Cloud or Amazon machine for one detached Omni-Compass run, and always give it back
 (.github/workflows/cloud-organism.yml: the same big-organism test Azure runs in big-organism-detached.yml).

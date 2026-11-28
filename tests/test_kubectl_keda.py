@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The add-on test's plug (scripts/kubectl_keda.py) against a stand-in cluster where KEDA owns the HPA and undoes any write
 to it (tests/standin_keda/kubectl): the engine's own writes, in the order the controller makes them, land on the ScaledObject

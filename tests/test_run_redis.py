@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The Redis runner (tools/run_redis.py) without a Redis: the decision rule (misses grow the ceiling by notches, calm with
 nothing evicted gives back one notch after the dwell, the wall puts the whole cover on at once, the cover holds), the

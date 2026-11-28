@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """One global closure-law setting for every workload (no per-workload table). Candidates: each workload's frozen
 setting from tuning/CLOSURE_FINAL_DEV.json applied to all four workloads (pods at 0.8 for services; job workloads have no

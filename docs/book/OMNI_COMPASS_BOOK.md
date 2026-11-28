@@ -1,6 +1,6 @@
 # THE OMNI-COMPASS OPERATOR'S MANUAL
 
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 October 2026
 
@@ -8312,6 +8312,14 @@ firmware; using it or its results to build or train a competing product (`LICENS
 License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
+**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with Dubra Software Inc. /
+Dubra Software Inc. / The Omni-Compass LLC and paid before the pilot's first day (`LICENSE`, section 5.4; the pilot's steps are
+`docs/PILOT_PROTOCOL.md`). A pilot agreement permits only the systems, the dates and the uses it names. It is not an
+Enterprise License: every other production use, commercialization or monetization still needs one.
+
+**Who stands behind the disclaimers?** Dubra Software Inc. / The Omni-Compass LLC and all of their entities (`LICENSE`, 1.1):
+the no-warranty, limitation-of-liability and indemnity sections (`LICENSE`, 15 to 17) are made by and for each of them.
+
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
 section 3(c); `ENTERPRISE_LICENSE.md`, section 1).
 
@@ -8392,6 +8400,7 @@ right, and that signed agreement controls over this page in every respect.
 | **Hosted service** | The licensee offers Omni-Compass's function to its own customers as a hosted, managed or software-as-a-service offering, under a hosted-service rider (per customer, per managed unit or revenue share) |
 | **OEM and embedded** | The licensee ships Omni-Compass inside its own product, appliance, firmware or platform, under an OEM rider (per unit or per installed base) |
 | **Managed service provider** | The licensee operates Omni-Compass for named third parties under a managed-service rider |
+| **Pilot** | The licensee runs Omni-Compass on top of its own named systems for the named dates only, under a pilot agreement signed and paid before day one (`LICENSE`, 5.4; `docs/PILOT_PROTOCOL.md`); it grants nothing it does not name, and any use past it needs one of the licenses above |
 | **Research** | A university or public laboratory uses Omni-Compass beyond evaluation for non-commercial research and publication, under a research rider |
 
 **Scope** is set in each order form: the licensed systems and their size (machines, cores, cards, sites, muscles or
@@ -8609,4 +8618,4 @@ Dubra Software Inc. / The Omni-Compass LLC. Owner and developer: AJ Dubra. Main 
 
 ---
 
-*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

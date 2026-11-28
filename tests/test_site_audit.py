@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The graded audit of every page (the founder's order of 1 November, tools/site_audit.py): the rules read a page to the
 letter (a heading's anchor as GitHub writes it, a link to a file that is not there, an outside link that is not secure), and

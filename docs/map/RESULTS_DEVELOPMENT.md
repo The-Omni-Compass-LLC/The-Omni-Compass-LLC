@@ -1,0 +1,25 @@
+# The map: results/development
+
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+Every file below is the property of Dubra Software Inc. / The Omni-Compass LLC unless its row names a third party, and carries the owner's notice as its row says. The ID is the file's map ID, given once and never changed; each is an anchor: `docs/map/RESULTS_DEVELOPMENT.md#<id in lower case>`. Written by `tools/repo_map.py` from `results/REPO_MAP.json`; back to [the map's index](README.md).
+
+| Map ID | File | What it is | Engine | Owner | How it carries the owner's notice |
+|---|---|---|---|---|---|
+| <a id="oc-res-00568"></a>OC-RES-00568 | [`results/development/JOINT_121.jsonl`](../../results/development/JOINT_121.jsonl) | log (JSON lines) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00569"></a>OC-RES-00569 | [`results/development/REFINE_61.jsonl`](../../results/development/REFINE_61.jsonl) | log (JSON lines) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00570"></a>OC-RES-00570 | [`results/development/SEARCH_81.jsonl`](../../results/development/SEARCH_81.jsonl) | log (JSON lines) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00571"></a>OC-RES-00571 | [`results/development/joint_search.py`](../../results/development/joint_search.py) | program (Python) |  | Dubra Software Inc. / The Omni-Compass LLC | the notice in the file |
+| <a id="oc-res-00572"></a>OC-RES-00572 | [`results/development/refine.py`](../../results/development/refine.py) | program (Python) |  | Dubra Software Inc. / The Omni-Compass LLC | the notice in the file |
+| <a id="oc-res-00573"></a>OC-RES-00573 | [`results/development/search.py`](../../results/development/search.py) | program (Python) |  | Dubra Software Inc. / The Omni-Compass LLC | the notice in the file |
+| <a id="oc-res-00574"></a>OC-RES-00574 | [`results/development/seed_1000/RUNS.csv`](../../results/development/seed_1000/RUNS.csv) | data table (CSV) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00575"></a>OC-RES-00575 | [`results/development/seed_1000/SUMMARY.json`](../../results/development/seed_1000/SUMMARY.json) | data (JSON) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00576"></a>OC-RES-00576 | [`results/development/throughput_search_round1.jsonl`](../../results/development/throughput_search_round1.jsonl) | log (JSON lines) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00577"></a>OC-RES-00577 | [`results/development/throughput_search_round2.jsonl`](../../results/development/throughput_search_round2.jsonl) | log (JSON lines) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00578"></a>OC-RES-00578 | [`results/development/wiring/WIRING_CARDS.json`](../../results/development/wiring/WIRING_CARDS.json) | data (JSON) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00579"></a>OC-RES-00579 | [`results/development/wiring/WIRING_DEV.csv`](../../results/development/wiring/WIRING_DEV.csv) | data table (CSV) |  | Dubra Software Inc. / The Omni-Compass LLC | REUSE.toml and the LICENSE (a data or binary file) |
+| <a id="oc-res-00580"></a>OC-RES-00580 | [`results/development/wiring/WIRING_DEV.md`](../../results/development/wiring/WIRING_DEV.md) | The wiring search, development seeds |  | Dubra Software Inc. / The Omni-Compass LLC | the notice in the file |
+
+---
+
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

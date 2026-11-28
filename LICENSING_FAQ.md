@@ -1,6 +1,6 @@
 # Licensing: Questions and Answers
 
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 Plain answers to the questions buyers, engineers and their lawyers ask. The binding terms are in `LICENSE`; where
 this page and `LICENSE` differ, `LICENSE` governs. Every declaration is in `DISCLOSURES.md`.
@@ -22,6 +22,14 @@ offering; redistributing it; incorporating it, or any part or derivative of it, 
 firmware; using it or its results to build or train a competing product (`LICENSE`, sections 3 and 5). The Enterprise
 License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
+
+**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with Dubra Software Inc. /
+The Omni-Compass LLC and paid before the pilot's first day (`LICENSE`, section 5.4; the pilot's steps are
+`docs/PILOT_PROTOCOL.md`). A pilot agreement permits only the systems, the dates and the uses it names. It is not an
+Enterprise License: every other production use, commercialization or monetization still needs one.
+
+**Who stands behind the disclaimers?** Dubra Software Inc. / The Omni-Compass LLC and all of their entities (`LICENSE`, 1.1):
+the no-warranty, limitation-of-liability and indemnity sections (`LICENSE`, 15 to 17) are made by and for each of them.
 
 **May I run it as a service for others?** Not without an Enterprise License with a hosted-service rider (`LICENSE`,
 section 3(c); `ENTERPRISE_LICENSE.md`, section 1).
@@ -62,4 +70,4 @@ section 19). Dubra Software Inc. / The Omni-Compass LLC is based in Florida.
 
 ---
 
-*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

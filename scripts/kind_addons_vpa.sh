@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 # The Vertical Pod Autoscaler in place, as a product Omni-Compass competes with (ADDONS=vpa in scripts/kind_bench.sh;
 # docs/COMPETITORS_PREREGISTRATION.md). The VPA (Kubernetes SIG Autoscaling, kubernetes/autoscaler, Apache-2.0) at release

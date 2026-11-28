@@ -1,6 +1,22 @@
 # Changelog
 
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+
+## 2026-11-28: every file mapped, anchored and owned; two paid ways past evaluation; the owners and all their entities in every disclaimer (no engine change; omni-v27 stands; no run started)
+- **The map** (`tools/repo_map.py`, `results/REPO_MAP.json`, `docs/map/README.md`): every tracked file, 6,369 of them, has a map
+  ID (OC-<area>-<number>), given once and never changed or reused, an anchor on its area's page, its owner (Dubra Software Inc. /
+  The Omni-Compass LLC, or the third party whose file it is), how it carries the owner's notice, its role and its engine.
+  `verify.py` fails a push where an ID moved, was given twice or a page differs from the register.
+- **The notice and the license papers**: the notice on every file now names both ways past evaluation and simulation, a signed,
+  paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names.
+  `LICENSE` 1.1: Licensor is Dubra Software Inc. / The Omni-Compass LLC with every entity that controls, is controlled by or is
+  under common control with either, and every disclaimer, limit and indemnity it states is stated for each; 5.4: the pilot;
+  17(b): the indemnity names use without a license or pilot agreement. `DISCLOSURES.md` (sections 1 and 5), `LICENSING_FAQ.md`,
+  `ENTERPRISE_LICENSE.md` and `docs/PILOT_PROTOCOL.md` say the same; the README opens with the notice, who owns it, the two
+  ways past evaluation and the map.
+- **Found and fixed while aligning**: the LICENSE's copy for the scanners (`LICENSES/LicenseRef-OmniCompass-Evaluation-1.0.txt`)
+  and one Grafana dashboard named only The Omni-Compass LLC; both now name both owners, and a test keeps the LICENSE and its
+  copy byte for byte the same. `DISCLOSURES.md` section 1 had named only The Omni-Compass LLC as the owner.
 
 ## 2026-11-22: the compass loop proved on its declared model; where the proof stops, computed (no engine change; omni-v27 stands)
 - **L1 to L4** (`tools/prove_engine.py`, `docs/ENGINE_PROOFS.md`, section 1b): the compass law's loop, one decision a beat, on
@@ -4456,4 +4472,4 @@ See `docs/HISTORY.md` and `docs/STATE_OF_PLAY.md`.
 
 ---
 
-*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

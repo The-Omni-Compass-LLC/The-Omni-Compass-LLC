@@ -1,6 +1,6 @@
 # The receipts, in their totality: what every result shows, and what it does not
 
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 A **receipt** here is a result file in this repository made by a paired run: the system as it runs on its own
 (native) and the same system with Omni-Compass on top, the same work in both arms, the rules written down before the
@@ -49,6 +49,9 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | Test | Class | Engine | Reading | By the index's rule | Table |
 |---|---|---|---|---:|---|
 | Every real test together: the Omni index | L | omni-v26 | **GAIN AND LOSS** | 20.0% GAIN | `results/OMNI_INDEX.md` |
+| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
+| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 | Robustness: the two-hour run | L | omni-v26 | **GAIN AND LOSS** | 6.0% LOSS | `results/live/V26_ROBUST_LONG.md` |
 | Robustness: the governor killed outright mid-run | L | omni-v26 | **GAIN AND LOSS** | 1.7% LOSS | `results/live/V26_ROBUST_KILL.md` |
 | Robot arms (MuJoCo), the three untouched robots | S | omni-v26 | **GAIN** | 3.8% GAIN | `results/live/V26_MUJOCO.md` |
@@ -68,12 +71,9 @@ tools/results_chapter.py`; the gauges behind each reading, in the table's own wo
 | PostgreSQL, the pooler's pool size | L | omni-v26 | **GAIN AND LOSS** | 1.8% LOSS | `results/live/V26_PGBENCH.md` |
 | MySQL, the buffer pool's size | L | omni-v26 | **GAIN, power given** | 12.5% LOSS | `results/live/V26_SYSBENCH.md` |
 | MongoDB, the storage engine's cache size | L | omni-v26 | **GAIN AND LOSS** | 7.1% LOSS | `results/live/V26_YCSB.md` |
+| Kafka, the consumer group's size | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
 | Drone swarms, the three untouched cells | S | omni-v26 | **GAIN** | 2.2% GAIN | `results/live/V26_SWARM.md` |
 | Buildings and batteries (CityLearn), the districts with batteries | S | omni-v26 | **GAIN** | 1.4% GAIN | `results/live/V26_CITYLEARN.md` |
-| Kafka, the consumer group's size | L | omni-v26 | **GAIN, power given** | 221.1% GAIN | `results/live/V26_KAFKA.md` |
-| The six organisms with the real cluster inside, 10 and 100 copies | L | omni-v3 | **GAIN, power given** | 5.3% GAIN | `results/live/V3_SIX_KUBE.md` |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | L | omni-v3 | **GAIN** | 155.0% GAIN | `results/live/V3_BIG_ORGANISM.md` |
-| The 945 modelled muscles as one tower, every muscle written at once | S | omni-v3 | **GAIN** | 0.3% GAIN | `results/realms/REALMS.md` |
 <!-- end of results: sheet -->
 
 ### Through a cloud (L)
@@ -169,4 +169,4 @@ outside body.
 
 ---
 
-*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

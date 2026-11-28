@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The legal notice, written once, and the check that it stands everywhere.
 
@@ -40,7 +40,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 BODY = ("© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial "
         "use, commercialization, monetization, production use, redistribution or hosted service of any part of "
-        "Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, "
+        "Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the "
+        "systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, "
         "report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`.")
 CLOSE = "All patents, copyrights and trademarks filed in the USA. www.omni-compass.com"
 NOTICE = f"{BODY} {CLOSE}"
@@ -58,7 +59,7 @@ HEADER = (
     "SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0",
     "Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.",
     "Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid",
-    "Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.",
+    "Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.",
     "All patents, copyrights and trademarks filed in the USA. www.omni-compass.com",
 )
 BUNDLE = ("README.md", "LICENSE", "NOTICE", "DISCLOSURES.md", "PATENTS.md", "TRADEMARKS.md")

@@ -1,6 +1,6 @@
 # CLAUDE.md: standing orders for any session working on this repository
 
-> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
+> © 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. `SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0` All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 
 These are the founder's orders, gathered from the full working record. They load every session. Follow them unless
 the founder overrides one in the conversation.
@@ -669,6 +669,25 @@ the founder overrides one in the conversation.
   search reads it (`docs/THE_TUNE.md`, section 4b); the on-site beat is read on the kind rig's own fixed machines, a plant of its
   own, before it is picked.
 
+## Orders of 28 November
+
+- **No runs; align, map and anchor the repository** (the founder's words of 28 November: "We're not running anymore. We're
+  just tightening and aligning and benchmarking and defensively aligning the fucking GitHub ... check every file, align, map
+  everything so everything has its map ID tag ... anchor it"). Every tracked file has a map ID, OC-<area>-<number>, given once
+  and never changed or reused, an anchor on its area's page and its owner (`tools/repo_map.py`, `results/REPO_MAP.json`,
+  `docs/map/README.md`; `--check` in `verify.py`). A new file takes its ID at the map's next write; a file that leaves keeps
+  its ID among the retired. No Azure, Amazon, Google or chip run starts: every paid queue stays `switch=off`.
+- **Two ways past evaluation and simulation, both signed and paid; the owners and all their entities in every disclaimer**
+  (the same day: "a paid pilot or license through the Omni paid sign license must be for commercialization, monetization,
+  and everything else"; "Disclosure disclaimers is to be added with Omnicompass LLC / Dubra Software Inc. and all of its
+  entities"). The notice (`tools/legal.py`, on every file) names the Enterprise License and, for a pilot, a signed, paid pilot
+  agreement for the systems and dates it names; `LICENSE` 1.1 makes Licensor Dubra Software Inc. / The Omni-Compass LLC with
+  every entity that controls, is controlled by or is under common control with either (each an Omni-Compass Entity, every
+  disclaimer, limit and indemnity stated for each) and 5.4 the pilot; `DISCLOSURES.md` sections 1 and 5, `LICENSING_FAQ.md`,
+  `ENTERPRISE_LICENSE.md` and `docs/PILOT_PROTOCOL.md` say the same, and the LICENSE's copy for the scanners
+  (`LICENSES/LicenseRef-OmniCompass-Evaluation-1.0.txt`) is the LICENSE byte for byte (`tests/test_repo_map.py`). The owners
+  keep the order of 6 November, Dubra Software Inc. / The Omni-Compass LLC, until the founder says otherwise.
+
 ## Orders of 20 November
 
 - **No new engine; strengthen what stands; a result that carries is not run again** (the founder's words of 20 November: "stop
@@ -1332,4 +1351,4 @@ the founder overrides one in the conversation.
 
 ---
 
-*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*
+*© 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved. **Evaluation and Simulation use only.** Any commercial use, commercialization, monetization, production use, redistribution or hosted service of any part of Omni-Compass requires a signed, paid Omni-Compass Enterprise License, or, for a pilot, a signed, paid pilot agreement for the systems and dates it names, from Dubra Software Inc. / The Omni-Compass LLC. Every copy, export, report and printout carries this notice with `LICENSE`, `NOTICE` and `DISCLOSURES.md`. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com*

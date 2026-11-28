@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """One-command verification of the Omni-Compass package.
 
@@ -533,6 +533,10 @@ def main():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "census.py"), "--check"], capture_output=True, text=True)
     check("the census reads every run, file, table and catalog row from both ends: docs/CENSUS.md is what its records give "
           "(tools/census.py --check; the founder's order of 11 November)", r.returncode == 0, (r.stdout + r.stderr).strip()[-300:])
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "repo_map.py"), "--check"], capture_output=True, text=True)
+    check("every file has its map ID, its anchor and its owner: no ID moved or given twice, and docs/map/ is what "
+          "results/REPO_MAP.json gives (tools/repo_map.py --check; the founder's order of 28 November)", r.returncode == 0,
+          (r.stdout + r.stderr).strip()[-300:])
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "land_engine.py"), "--check"], capture_output=True, text=True)
     check("every place that names the engine that stands names the newest one (tools/land_engine.py --check: the version list, the "
           "conductor's campaign, the grid's manifest and workflows, the package, the front page, CLAUDE.md, the manual, the live "

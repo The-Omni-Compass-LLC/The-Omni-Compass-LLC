@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-OmniCompass-Evaluation-1.0
 # Copyright (c) 2026 Dubra Software Inc. / The Omni-Compass LLC. All rights reserved.
 # Evaluation and Simulation use only; any commercialization, monetization or other use requires a signed, paid
-# Omni-Compass Enterprise License. See LICENSE, NOTICE and DISCLOSURES.md.
+# Omni-Compass Enterprise License or, for a pilot, a signed, paid pilot agreement. See LICENSE, NOTICE and DISCLOSURES.md.
 # All patents, copyrights and trademarks filed in the USA. www.omni-compass.com
 """The engines, fingerprinted file by file: Omni v27, the engine that stands (OMNI_V27.json, docs/OMNI_V27.md), Omni v26 (OMNI_V26.json), Omni v25 (OMNI_V25.json), Omni v24 (OMNI_V24.json), Omni v23 (OMNI_V23.json), Omni v22 (OMNI_V22.json), Omni v21 (OMNI_V21.json), Omni v20 (OMNI_V20.json), Omni v19 (OMNI_V19.json), Omni v18 (OMNI_V18.json), Omni v17 (OMNI_V17.json), Omni v16 (OMNI_V16.json), Omni v15 (OMNI_V15.json), Omni v14 (OMNI_V14.json), Omni v13 (OMNI_V13.json), Omni v12 (OMNI_V12.json), Omni v11 (OMNI_V11.json), Omni v10 (OMNI_V10.json), Omni v9
 (OMNI_V9.json), Omni v8 (OMNI_V8.json),
