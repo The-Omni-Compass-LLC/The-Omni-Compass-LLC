@@ -25,7 +25,7 @@
   ['KeyU','U','⬆ Upload a sound or file',()=>tool('up')],['KeyW','W','⬇ Save this page',()=>tool('save')],['KeyJ','J','🌐 Language',()=>tool('lang')]].filter(r=>r[2]);
  const tool=t=>{ const b=document.querySelector('#kToolsPop [data-t="'+t+'"]'); if(b){ b.click(); return true; } say('The tools are still loading.'); return false; };
  /* the page or screen in front, and its tabs */
- const OVL=['kArr','kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
+ const OVL=['kCosmos','kSci','kArr','kReligX','kZRingPage','kSndSheet','kLegal','kAcct','kServices','kSports','kNews','kMarket','kRelig','kKnow','kFind'];
  function front(){ for(const id of OVL){ const x=$(id); if(x&&!x.hidden&&x.getClientRects().length) return x; } let c=''; try{ c=KRAIL.cur(); }catch(_){ } return (c&&c!=='home'&&$(c))||document.querySelector('.wrap')||document.body; }
  const TABSEL='[role=tab],.rxTabs button[data-rx="tab"],.svRow button[data-sv="cat"],.kTabs button,.vgTabs button,.mtabs button,.tabs button,[data-tab],.spRow button,.nwRow button,.mkRow button,.rgRow button,.kaTabs button,[data-ka-tab]';
  function tabs(){ const f=front(); return [...f.querySelectorAll(TABSEL)].filter(b=>b.getClientRects().length&&!b.disabled); }

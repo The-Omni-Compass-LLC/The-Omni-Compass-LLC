@@ -33,7 +33,7 @@
  /* ================= where the deck is: the screen in front ================= */
  let LASTWIN='';
  document.addEventListener('pointerdown',e=>{ const t=e.target; if(!t.closest||t.closest('#kDeck')) return; const f=t.closest('.kFloat.kFOn,.kWin'); if(f) LASTWIN=f.id==='djSec'?'dj':(f.id||'win'); else if(t.closest('#pad,#kKara')) LASTWIN='page'; },true);
- const OVL=['kAcct','kArr','kFind','kLegal','kOwner','kAudit','kVG','kProj','kSocial','kDoor','kDance','kCBeat','kHumor','kJump','kLock','kKnow','kNews','kRelig','kReligX','kMarket','kSports','kServices','kZRingPage','kSndSheet','kKeysPop','kEasel','kAI'];
+ const OVL=['kCosmos','kSci','kAcct','kArr','kFind','kLegal','kOwner','kAudit','kVG','kProj','kSocial','kDoor','kDance','kCBeat','kHumor','kJump','kLock','kKnow','kNews','kRelig','kReligX','kMarket','kSports','kServices','kZRingPage','kSndSheet','kKeysPop','kEasel','kAI'];
  function ctx(){ const B=document.body; if(B.classList.contains('gated')) return null; const ag=$('kAgree'); if(ag&&vis(ag)) return null;
   const t=$('tourTab'); if(t&&vis(t)&&t.getBoundingClientRect().width>40) return null;
   for(const id of OVL){ if(vis($(id))) return null; }
