@@ -13,7 +13,7 @@
  const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
  const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
- const PS=()=>window.PADSTUDIO;
+ const PS=()=>window.PADSTUDIO; window.KREMOTE_RETIRED=true; /* v256: the floating remote is retired; its own repaint loop stands down */
  /* ---------- 🏠 Home closes every platform page ---------- */
  const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX'];
  const closeAll=()=>OVL.forEach(id=>{ const x=$(id); if(x&&!x.hidden) x.hidden=true; });

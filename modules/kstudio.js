@@ -57,7 +57,7 @@ html body #padMixer#padMixer small{width:100%!important;font-size:8.5px!importan
   railBtn('kdProfile','👤','Profile','Your profile: photo, birth date, sign, compass letter, song, posts',()=>{ try{ KPROFILE.open(); }catch(_){ say('The profile is loading. Try again in a moment.'); } });
   railBtn('kdProj','📁','Projects','Projects: save, open, continue and export everything you make',()=>{ try{ KPROJ.open(); }catch(_){ say('Projects is loading. Try again in a moment.'); } });
   paintPS(); }
- setInterval(rail,600); rail();
+ setInterval(rail,900); rail();
  /* ---------- the 24-channel console ---------- */
  const BANKS=[['all','All 40'],['r1','1–20'],['r2','21–40'],['drums','🥁 1–16 Pads'],['music','🎹 17–23 Instruments'],['vox','🎤 5 mics 24–28'],['dj','🎧 DJ 29–30'],['midi','🎹 MIDI 31–38, cannon, click']];
  let bank='all';

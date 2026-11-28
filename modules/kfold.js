@@ -40,6 +40,6 @@ html.lvl-easy .kEzMoreChip{display:inline-flex;align-items:center;justify-conten
    c.dataset.ezc='1'; kids.forEach((x,i)=>{ if(i>=10){ if(!x.hasAttribute('data-ezx')) x.setAttribute('data-ezx',''); x.classList.toggle('kEzKeep',x.classList.contains('on')||x.getAttribute('aria-pressed')==='true'); } else x.removeAttribute('data-ezx'); });
    let m=c.querySelector(':scope > .kEzMoreChip'); if(!m){ m=document.createElement('button'); m.type='button'; m.className='kEzMoreChip'; m.setAttribute('data-noul',''); m.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); c.classList.toggle('kEzOpen'); chips(); }); }
    if(m!==c.lastElementChild) c.appendChild(m); const t=c.classList.contains('kEzOpen')?'− Fewer':'＋ '+(kids.length-10)+' more'; if(m.textContent!==t) m.textContent=t; }); }
- setInterval(()=>{ tagStudio(); foldDetails(); chips(); },400);
+ setInterval(()=>{ tagStudio(); foldDetails(); chips(); },1200);
  window.KFOLD={show,get shown(){ return [...shown]; },get all(){ return all; }};
 })();

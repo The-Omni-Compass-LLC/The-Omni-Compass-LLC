@@ -41,6 +41,6 @@ body:not(.kKBon) .kKB{display:none}
    /* the bank keys: - and = step the bank; the bank buttons show which way */
    if(d==='pads'){ const b0=bar.querySelector('.kScr [data-sf="bank0"]'), b3=bar.querySelector('.kScr [data-sf="bank3"]'); [[b0,'N'],[b3,'M']].forEach(([b,t])=>{ if(!b) return; let s=b.querySelector(':scope > .kKB'); if(!s){ s=document.createElement('span'); s.className='kKB'; b.appendChild(s); } if(s.textContent!==t) s.textContent=t; }); } }); }
  function remoteBadges(){ const on=physical()&&UNIV.has(cur()); Object.entries(RKEY).forEach(([key,a])=>{ const b=document.querySelector('#kRemote [data-r="'+a+'"]'); if(!b) return; let s=b.querySelector(':scope > .kKB'); if(!on){ if(s) s.remove(); return; } if(getComputedStyle(b).position==='static') b.style.position='relative'; if(!s){ s=document.createElement('span'); s.className='kKB'; b.appendChild(s); } const txt=key==='\\'?'\\':key.toUpperCase(); if(s.textContent!==txt) s.textContent=txt; }); }
- setInterval(()=>{ badges(); remoteBadges(); },600);
+ setInterval(()=>{ badges(); remoteBadges(); },1200);
  window.KDEVKEYS={PADS,KEYS,run};
 })();

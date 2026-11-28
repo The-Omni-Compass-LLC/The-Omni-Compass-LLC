@@ -101,7 +101,7 @@
   const base=[['rew','⏮','Rewind'],['play','▶','Play'],['stop','■','Stop'],['rec','⏺','Record'],['skip','⏭','Skip'],['undo','↶','Undo'],['close','✕','Close']]; /* the same seven on every screen, nothing else */
   const all=[]; const small=true; const ex=[]; r.classList.toggle('easy',LVL==='easy');
   r.innerHTML='<div class="rmHead" title="Drag me anywhere"><b>⠿ 🎛 '+(NAME[id]||'Remote')+'</b><button type="button" data-rm="min" title="'+(mn?'Open the remote':'Shrink the remote')+'" data-noul>'+(mn?'🎛':'▁')+'</button></div><div class="rmBtns">'+base.map(([k,i,l])=>'<button type="button" data-r="'+k+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+ex.map(([i,l],n)=>'<button type="button" data-x="'+n+'" title="'+l+'" data-noul><span>'+i+'</span>'+l+'</button>').join('')+(small&&all.length?'<button type="button" data-rm="more" class="more" title="'+(moreOpen?'Fewer buttons':'This screen’s own buttons')+'" data-noul><span>'+(moreOpen?'➖':'➕')+'</span>'+(moreOpen?'Less':'More')+'</button>':'')+'</div>'; }
- setInterval(()=>paint(false),400);
+ setInterval(()=>{ if(window.KREMOTE_RETIRED) return; paint(false); },400);
  /* the landing page never shows the remote: hide it the moment home is reached, not on the next tick */
  const homeNow=()=>{ const r=$('kRemote'); if(r) r.hidden=true; shownFor=''; [60,300].forEach(t=>setTimeout(()=>paint(true),t)); };
  try{ const gh=window.GOHOME; if(gh&&!gh.__krm){ const w=function(){ const r=gh.apply(this,arguments); homeNow(); return r; }; w.__krm=1; Object.keys(gh).forEach(k=>{ w[k]=gh[k]; }); window.GOHOME=w; } }catch(_){ }
@@ -114,7 +114,7 @@
  function closeAll(){ stopAll(); const id=cur(); if(id!=='home'){ try{ ACT.close(); }catch(_){ } setTimeout(()=>{ if(cur()!=='home'){ try{ GOHOME(); }catch(_){ } } try{ speechSynthesis.cancel(); }catch(_){ } },250); } }
  function paintX(){ let b=$('kXAll'); if(!b){ b=document.createElement('button'); b.type='button'; b.id='kXAll'; b.setAttribute('data-noul',''); b.setAttribute('aria-label','Close and go home'); b.textContent='✕ Close'; b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); closeAll(); }); document.body.appendChild(b); }
   const id=cur(); const menuOpen=(()=>{ const t=$('tourTab'); return t&&t.getClientRects().length&&getComputedStyle(t).display!=='none'&&t.getBoundingClientRect().width>40; })(); const hide=id==='home'||menuOpen; if(b.hidden!==hide) b.hidden=hide; }
- setInterval(paintX,400);
+ setInterval(paintX,800);
  document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return; if(cur()!=='home') closeAll(); });
  window.KREMOTE.closeAll=closeAll;
  /* the seven controls, big and plain: one row on a wide screen, two on a phone */

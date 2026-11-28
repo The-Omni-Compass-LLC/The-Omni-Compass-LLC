@@ -95,7 +95,7 @@ html.lvl-easy #tourTab .kStartB[data-easy]{min-height:clamp(64px,7vw,140px)!impo
   const narrow=innerWidth<600; const tx=narrow?'↶':'↶ Undo'; if(b.textContent!==tx) b.textContent=tx; const xc=$('kXAll'); if(xc){ const t2=narrow?'✕':'✕ Close'; if(xc.textContent!==t2) xc.textContent=t2; }
   b.hidden=!!menuOpen||!(stack.length||OWN.has(id)); if(b.hidden) return; const x=$('kXAll'); const rw=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kRailW'))||58;
   const off=(x&&!x.hidden&&x.getClientRects().length)?x.getBoundingClientRect().width+8:0; b.style.right=(rw+10+off)+'px'; }
- setInterval(paintU,400);
+ setInterval(paintU,800);
  window.KUNDO={push:(fn,name)=>{ stack.push({fn,name:name||'the last edit',at:performance.now(),scr:cur()}); if(stack.length>200) stack.shift(); paintU(); },any,undo:undoOne,get count(){ return stack.length; },saved:()=>{ stack.length=0; paintU(); }};
  window.KEASY={act:ACT,tag};
 })();

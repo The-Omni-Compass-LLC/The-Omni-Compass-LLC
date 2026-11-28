@@ -83,7 +83,9 @@
  const sizePg=()=>{ const p=$('kZRingPage'); const w=p?p.querySelector('.zpBody > div').getBoundingClientRect().width:600; return Math.max(260,Math.min(760,w-8,Math.round(innerHeight*.78))); };
  function table(){ const p=$('kZRingPage'); if(!p||p.hidden) return; const sk=getSky(); const tb=p.querySelector('tbody'); if(!tb||!sk||!sk.pos) return; tb.innerHTML=BODIES.map(([n,gl,col])=>{ const q=sk.pos[n]; if(!q) return ''; const L=((q.lon%360)+360)%360, s=SIGNS[signOf(L)]; return '<tr><td><span style="color:'+col+';font-family:'+FONT.replace(/"/g,"'")+'">'+gl+VS+'</span> '+n+'</td><td>'+s[1]+VS+' '+s[0]+'</td><td>'+Math.floor(L%30)+'° '+String(Math.floor((L%1)*60)).padStart(2,'0')+'′</td><td>'+(q.retro?'℞ retrograde':'')+'</td></tr>'; }).join(''); }
  /* the clock: draw what is on screen, about 30 times a second */
- let last=0; function tick(t){ requestAnimationFrame(tick); if(t-last<33) return; last=t; pulse+=.08; stepSpin();
+ /* draws only while a ring is on screen; otherwise it looks again twice a second instead of every frame */
+ let last=0; const onScreen=()=>{ const b=$('kZRing'), p=$('kZRingPage'); return !!((b&&b.getClientRects().length)||(p&&!p.hidden)); };
+ function tick(t){ if(!onScreen()){ setTimeout(()=>requestAnimationFrame(tick),500); return; } requestAnimationFrame(tick); if(t-last<33) return; last=t; pulse+=.08; stepSpin();
   const b=$('kZRing'); if(b&&b.getClientRects().length){ const cv=b.querySelector('canvas'); if(cv) draw(cv,sizeIn(),false); }
   const p=$('kZRingPage'); if(p&&!p.hidden){ const cv=p.querySelector('canvas'); if(cv) draw(cv,sizePg(),true); if(t-(tick.tb||0)>30000){ tick.tb=t; sky=null; table(); } } }
  requestAnimationFrame(tick); setInterval(mount,800);
