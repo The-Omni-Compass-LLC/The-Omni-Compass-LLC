@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');(async()=>{ const b=await chromium.launch(); const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage(); const errs=[]; p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8771/pub6/ptest.html'); await p.waitForTimeout(5000); await p.evaluate(()=>{ const a=document.getElementById('kAgree'); if(a) a.hidden=true; KAUDIO.gesture&&KAUDIO.gesture(); }); await p.waitForTimeout(600);
+const R={}; R.home=await p.evaluate(()=>document.getElementById('kDeck').hidden);
+await p.evaluate(()=>KCOSMOS.open()); await p.waitForTimeout(600); R.cosmos=await p.evaluate(()=>document.getElementById('kDeck').hidden); await p.evaluate(()=>KCOSMOS.close());
+await p.evaluate(()=>PADSTUDIO.open()); await p.waitForTimeout(2200);
+R.studio=await p.evaluate(()=>{ const d=document.getElementById('kDeck'); return {hidden:d.hidden,mode:(d.querySelector('[data-d="mode"]')||{}).textContent,tabs:[...d.querySelectorAll('[data-tab]')].map(x=>x.textContent).join('|'),wins:[...d.querySelectorAll('.kdWins > *')].map(x=>x.textContent.trim()).join('|')}; });
+if(R.studio.mode&&/Simple/.test(R.studio.mode)&&await p.evaluate(()=>document.getElementById('kDeck').classList.contains('min'))) await p.evaluate(()=>KDECK.act('fold'));
+await p.evaluate(()=>{ const t=document.querySelector('#kDeck [data-tab="knobs"]'); t&&t.click(); }); await p.waitForTimeout(300);
+const box=await p.evaluate(()=>{ const d=document.querySelector('#kDeck .kdK[data-kg="beat"] .kdDial'); const r=d.getBoundingClientRect(); return [r.x+r.width/2,r.y+r.height/2]; });
+const v0=await p.evaluate(()=>PADSTUDIO.MIX[0].vol); await p.mouse.move(box[0],box[1]); await p.mouse.down(); await p.mouse.move(box[0],box[1]+60,{steps:6}); await p.mouse.up(); await p.waitForTimeout(300);
+R.knob=await p.evaluate(v0=>({v0,v1:PADSTUDIO.MIX[0].vol,v16:PADSTUDIO.MIX[16].vol,label:document.querySelector('#kDeck .kdK[data-kg="beat"] small').textContent,note:document.querySelector('#kDeck .kdNote').textContent.slice(0,80)}),v0);
+await p.evaluate(()=>{ document.querySelector('#kDeck .kdK[data-kg="beat"] [data-d="kgm"]').click(); }); R.mute=await p.evaluate(()=>PADSTUDIO.MIX.slice(0,17).every(m=>m.mute)); await p.evaluate(()=>{ document.querySelector('#kDeck .kdK[data-kg="beat"] [data-d="kgm"]').click(); });
+await p.evaluate(()=>{ document.querySelector('#kDeck [data-d="mode"]').click(); }); await p.waitForTimeout(300);
+R.pro=await p.evaluate(()=>{ const d=document.getElementById('kDeck'); return {mode:d.querySelector('[data-d="mode"]').textContent,tabs:[...d.querySelectorAll('[data-tab]')].map(x=>x.textContent).join('|'),wins:[...d.querySelectorAll('.kdWins > *')].map(x=>x.textContent.trim()).join('|')}; });
+await p.screenshot({path:'shots/t266-deck.png'});
+console.log(JSON.stringify(R,null,1)); console.log('errs',errs.slice(0,4)); await b.close(); })();
