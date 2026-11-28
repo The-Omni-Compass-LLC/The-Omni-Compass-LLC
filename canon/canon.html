@@ -30655,3 +30655,337 @@ html body .mast .ddlogo.ddlogo{width:min(640px,100%)!important;opacity:1!importa
 })();
 
 </script>
+<script>
+(()=>{ /* 🥁 THE BEAT LINK AND THE PAGE TOOLS (v255). Every screen is wired into the beat machine and carries the same tools:
+   • 🥁 BEAT LINK: the cannon and the games play the beat machine. Every 💥 cannon shot plays the kick, a hit or a point the snare, a win
+     the crash, a miss the low tom and a tap in a game the hi-hat, from the pad bank on screen. "With the beat" (the factory setting)
+     "On" (the factory setting) plays the pad at once while the beat is stopped, and while the beat plays holds each hit to the next
+     sixteenth so it lands on the grid; with ● REC on it is recorded into the pattern like a pad played by hand. "Only with the beat"
+     plays only while the beat runs; "Off" leaves the beat machine alone.
+   • 🎛 ON THE REMOTE, ON EVERY SCREEN: the beat link, the tempo (− BPM +), the master volume, ⬆ Upload (any sound goes onto the selected
+     pad and into your library; any other file into your library), ⬇ Save page (the screen's words and links as a file), 📚 Library,
+     🎵 Sounds (every sound in the app) and 🌐 Language (the whole app in another language).
+   • 🏠 Home closes every platform page (Find, Services, Sports, News, Markets, Religion, Knowledge, your page, Legal) as well as the screens. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const getLS=(k,d)=>{ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(_){ return d; } }, putLS=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ } };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const PS=()=>window.PADSTUDIO;
+ /* ---------- 🏠 Home closes every platform page ---------- */
+ const OVL=['kFind','kServices','kSports','kNews','kMarket','kRelig','kKnow','kAcct','kLegal','kSndSheet','kReligX'];
+ const closeAll=()=>OVL.forEach(id=>{ const x=$(id); if(x&&!x.hidden) x.hidden=true; });
+ addEventListener('click',e=>{ if(e.target.closest&&e.target.closest('#kdHome')) closeAll(); },true);
+ const wrapHome=()=>{ const g=window.GOHOME; if(typeof g!=='function'||g.__v255) return; const w=function(){ closeAll(); return g.apply(this,arguments); }; w.__v255=true; window.GOHOME=w; }; wrapHome(); setTimeout(wrapHome,2500);
+ /* ---------- 🥁 the beat link ---------- */
+ const MODES=[['on','On'],['grid','Only with the beat'],['off','Off']];
+ const mode=()=>{ const m=getLS('kanin-beatlink2','on'); return MODES.some(x=>x[0]===m)?m:'on'; };
+ const PADOF={cannon:0,score:2,hit:3,tap:4,miss:7,win:10};
+ const bank=()=>{ const b=$('padBank'); return Math.max(0,Math.min(3,+(b&&b.value)||0))*16; };
+ const Q=[]; let fired=0, lastTap=0, hooked=false;
+ function hook(){ const P=PS(); if(hooked||!P||!P.STEPHOOKS) return; hooked=true;
+  P.STEPHOOKS.push((c,dest,t,s,sd)=>{ if(!Q.length||c!==P.ac()) return; const take=[...new Set(Q.splice(0,4))]; const ms=Math.max(0,(t-c.currentTime)*1000); setTimeout(()=>take.forEach(i=>{ try{ P.hitPad(i); }catch(_){ } }),ms); }); }
+ function trig(kind){ const m=mode(); if(m==='off') return false; const P=PS(); if(!P) return false; hook(); const i=bank()+(PADOF[kind]!=null?PADOF[kind]:4);
+  if(P.playing){ if(Q.length<16) Q.push(i); } else if(m==='on'){ try{ P.hitPad(i); }catch(_){ return false; } } else return false;
+  fired++; const c=document.querySelector('#kRemote [data-bl="n"]'); if(c) c.textContent=String(fired); return true; }
+ const GAME=['gamesDock','kVG','tac','gsPick','kJump','omniDock'];
+ const inGame=el=>{ if(el&&el.closest&&el.closest(GAME.map(x=>'#'+x).join(','))) return true; let c=''; try{ c=KRAIL.cur(); }catch(_){ } return GAME.includes(c); };
+ /* the cannon, anywhere: the 💥 buttons, the floating cannon and the story's FIRE */
+ addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button,[role=button]'); if(!b||b.closest('#kRemote')) return; if(b.id==='kCannonBtn'||b.id==='fire'||/💥/.test(b.textContent||'')) trig('cannon'); },true);
+ /* a tap in a game */
+ addEventListener('pointerdown',e=>{ const t=e.target; if(!inGame(t)||t.closest('#kRemote,#rDock')) return; const now=performance.now(); if(now-lastTap<120) return; lastTap=now; if(t.closest('button,canvas,[data-i],[data-c],.card,.cell')) trig('tap'); },true);
+ /* what a game says: a win, a point, a miss */
+ const wrapToast=()=>{ const t0=window.toast; if(typeof t0!=='function'||t0.__v255) return; const w=function(m){ try{ if(inGame()){ const s=String(m||''); if(/\b(you win|you won|winner|victory|checkmate|bingo|yahtzee|jackpot|level up|cleared|champion)\b/i.test(s)) trig('win'); else if(/\b(miss|missed|you lose|lost|wrong|bust|game over|try again)\b/i.test(s)) trig('miss'); else if(/\b(hit|score|scored|point|goal|nice|great|perfect|match|correct)\b|\+\d+/i.test(s)) trig('score'); } }catch(_){ } return t0.apply(this,arguments); }; w.__v255=true; window.toast=w; };
+ wrapToast(); setTimeout(wrapToast,2500);
+ /* ---------- 🎛 the remote's tools ---------- */
+ const css=document.createElement('style'); css.textContent=`
+#kRemote .rmTools{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 6px;max-width:min(560px,calc(100vw - 90px))}
+#kRemote.min .rmTools,#kRemote.noTools .rmTools{display:none}
+#kRemote .rmHead [data-t="tg"].on{background:#ffe94a!important;color:#14163a!important}
+#kRemote .rmTools button{min-height:40px!important;min-width:0!important;padding:0 8px!important;border-radius:10px!important;font:800 11.5px system-ui,sans-serif!important;display:inline-flex!important;align-items:center;gap:4px}
+#kRemote .rmTools .bl{background:#2b5d1c!important;border-color:#7dffb0!important}
+#kRemote .rmTools .bl.off{background:#3a2a2a!important;border-color:#a88!important}
+#kRemote .rmTools .bpm{display:inline-flex;align-items:center;gap:2px;background:#1b1240;border:1.5px solid #cfc4ff;border-radius:10px;padding:0 2px}
+#kRemote .rmTools .bpm b{min-width:46px;text-align:center;color:#ffe94a;font:900 12px ui-monospace,monospace}
+#kRemote .rmTools .bpm button{min-height:34px!important;padding:0 7px!important}
+#kRemote .rmTools label{display:inline-flex;align-items:center;gap:4px;color:#ffe94a;font:800 11.5px system-ui,sans-serif;background:#1b1240;border:1.5px solid #cfc4ff;border-radius:10px;padding:0 6px;min-height:40px}
+#kRemote .rmTools input[type=range]{width:82px;accent-color:#ffe94a}
+#kLangPop{position:fixed;z-index:9790;left:50%;top:30%;transform:translateX(-50%);background:#141833;border:2px solid #ffe94a;border-radius:6px 16px 6px 16px;padding:14px;color:#eef;font:15px system-ui,sans-serif;display:flex;flex-direction:column;gap:8px;width:min(360px,calc(100vw - 32px))}
+#kLangPop[hidden]{display:none!important}
+#kLangPop select{min-height:44px;font-size:16px}
+#kLangPop .row{display:flex;gap:8px}#kLangPop button{min-height:44px;flex:1}`; document.head.appendChild(css);
+ const modeLabel=()=>'🥁 Beat link: '+MODES.find(x=>x[0]===mode())[1];
+ function tools(){ const R=$('kRemote'); if(!R) return; let T=R.querySelector('.rmTools'); if(T) return refresh(T);
+  T=document.createElement('div'); T.className='rmTools'; T.setAttribute('role','toolbar'); T.setAttribute('aria-label','Beat link, tempo, volume and page tools');
+  T.innerHTML='<button type="button" class="bl" data-t="bl" data-noul title="Games and the cannon play the beat machine">'+modeLabel()+' · <span data-bl="n">'+fired+'</span></button>'+
+   '<span class="bpm"><button type="button" data-t="bpm-" data-noul title="Slower">−</button><b data-t="bpmv">90 BPM</b><button type="button" data-t="bpm+" data-noul title="Faster">+</button></span>'+
+   '<label title="Master volume">🔊<input type="range" min="0" max="150" value="'+getLS('kanin-mvol',100)+'" data-t="vol" data-nodice data-die="1" aria-label="Master volume"></label>'+
+   '<button type="button" data-t="up" data-noul title="Upload a sound onto the selected pad, or any file into your library">⬆ Upload</button>'+
+   '<button type="button" data-t="save" data-noul title="Save this screen’s words and links as a file">⬇ Save page</button>'+
+   '<button type="button" data-t="lib" data-noul title="Your library and projects">📚 Library</button>'+
+   '<button type="button" data-t="snd" data-noul title="Every sound in the app">🎵 Sounds</button>'+
+   '<button type="button" data-t="lang" data-noul title="The whole app in another language">🌐 Language</button>';
+  R.appendChild(T); T.addEventListener('click',onClick);
+  /* 🎛 in the remote's top bar shows or folds the tools: open on a laptop, folded on a phone until tapped */
+  const hd=R.querySelector('.rmHead'); if(hd&&!hd.querySelector('[data-t="tg"]')){ const g=document.createElement('button'); g.type='button'; g.dataset.t='tg'; g.setAttribute('data-noul',''); g.title='Show or fold the beat link, tempo, volume and page tools'; g.textContent='🎛'; g.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); const on=R.classList.toggle('noTools'); putLS('kanin-rtools',!on); g.classList.toggle('on',!on); },true); const mn=hd.querySelector('button'); hd.insertBefore(g,mn||null); }
+  const want=getLS('kanin-rtools',innerWidth>760); R.classList.toggle('noTools',!want); const tg=R.querySelector('.rmHead [data-t="tg"]'); if(tg) tg.classList.toggle('on',!!want); T.addEventListener('input',e=>{ if(e.target.dataset.t==='vol') vol(+e.target.value); }); refresh(T); }
+ function refresh(T){ const b=T.querySelector('[data-t="bl"]'); if(b){ b.classList.toggle('off',mode()==='off'); const want=modeLabel(); if(!b.textContent.startsWith(want)){ b.innerHTML=want+' · <span data-bl="n">'+fired+'</span>'; } } const v=T.querySelector('[data-t="bpmv"]'); const bp=$('padBpm'); if(v&&bp){ const t=(+bp.value||90)+' BPM'; if(v.textContent!==t) v.textContent=t; } }
+ function vol(v){ putLS('kanin-mvol',v); const P=PS(); try{ const g=P&&P.out&&P.out(); if(g&&g.gain) g.gain.value=v/100; }catch(_){ } document.querySelectorAll('audio,video').forEach(m=>{ try{ m.volume=Math.min(1,v/100); }catch(_){ } }); }
+ function bpm(d){ const b=$('padBpm'); if(!b) return say('Open the studio once to set the tempo.'); b.value=String(Math.max(40,Math.min(240,(+b.value||90)+d))); b.dispatchEvent(new Event('input',{bubbles:true})); b.dispatchEvent(new Event('change',{bubbles:true})); const T=document.querySelector('#kRemote .rmTools'); if(T) refresh(T); }
+ const curName=()=>{ let c='home'; try{ c=KRAIL.cur(); }catch(_){ } const o=OVL.find(id=>{ const x=$(id); return x&&!x.hidden; }); return o||c||'home'; };
+ function topScreen(){ const o=OVL.map($).find(x=>x&&!x.hidden); if(o) return o; let c=''; try{ c=KRAIL.cur(); }catch(_){ } return (c&&$(c))||document.querySelector('.wrap')||document.body; }
+ async function upload(){ const inp=document.createElement('input'); inp.type='file'; inp.multiple=true; inp.accept='audio/*,video/*,image/*,.txt,.md,.json,.pdf,.csv';
+  inp.onchange=async()=>{ const fs=[...inp.files]; let n=0; for(const f of fs){ try{ if(/^audio\//.test(f.type)||/\.(wav|mp3|ogg|m4a|aac|flac)$/i.test(f.name)){ const P=PS(); const c=P&&P.ac&&P.ac(); if(c){ const buf=await c.decodeAudioData(await f.arrayBuffer()); const s=document.querySelector('#padGrid .pd.sel'); const i=s?+s.dataset.i:bank(); P.setBuf(i,buf,f.name.replace(/\.[^.]+$/,'').slice(0,18),true); try{ P.refresh(); }catch(_){ } try{ await KLIB.saveAudio(buf,f.name,{from:'upload',screen:curName()}); }catch(_){ } say('⬆ '+f.name+' is on pad '+'ABCD'[Math.floor(i/16)]+(i%16+1)+' and in your library.'); n++; continue; } }
+     await KLIB.save({kind:'file',name:f.name,blob:f,meta:{type:f.type,size:f.size,from:'upload',screen:curName()}}); n++; }catch(e){ say('That file could not be read: '+f.name); } }
+   if(n) say('⬆ '+n+' file'+(n>1?'s':'')+' saved to your library.'); };
+  inp.click(); }
+ async function savePage(){ const el=topScreen(); const title=(el.querySelector('h1,h2,h3')||{}).textContent||curName(); const lines=['# '+title.trim(),''];
+  const walk=n=>{ for(const k of n.childNodes){ if(k.nodeType===3){ const t=k.textContent.replace(/\s+/g,' ').trim(); if(t) lines.push(t); } else if(k.nodeType===1){ const st=getComputedStyle(k); if(st.display==='none'||k.matches('script,style,button,select,input,textarea,canvas,svg')) continue; if(k.tagName==='A'&&/^https:\/\//.test(k.href)){ lines.push('['+k.textContent.trim()+']('+k.href+')'); continue; } if(/^H[1-4]$/.test(k.tagName)){ lines.push('','## '+k.textContent.trim()); continue; } walk(k); } } };
+  walk(el); const N='© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and simulation use only. Any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com';
+  const txt=N+'\n\n'+lines.filter((l,i,a)=>l||a[i-1]).join('\n')+'\n\nFrom the Omni-Galaxy Multi-Media Studios Platform · www.omni-galaxy.com\n\n'+N+'\n';
+  const name=(title.trim().replace(/[^\w\- ]+/g,'').replace(/\s+/g,'-').slice(0,60)||'page')+'.md'; const blob=new Blob([txt],{type:'text/markdown'});
+  try{ const ok=await KLIB.download(blob,name); if(ok!==false) say('⬇ Saved '+name+'.'); }catch(_){ try{ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); }catch(__){ say('Saving is not allowed here.'); } } }
+ function lang(){ let p=$('kLangPop'); const src=$('appLang'); if(!src) return say('The language list is not ready yet.'); if(!p){ p=document.createElement('div'); p.id='kLangPop'; p.setAttribute('role','dialog'); p.setAttribute('aria-label','Language'); document.body.appendChild(p);
+   p.addEventListener('click',e=>{ const b=e.target.closest('[data-lp]'); if(!b) return; e.stopPropagation(); if(b.dataset.lp==='go'){ const s=p.querySelector('select'); src.value=s.value; src.dispatchEvent(new Event('change',{bubbles:true})); const go=$('appLangGo'); if(go) go.click(); } p.hidden=true; }); }
+  p.innerHTML='<b>🌐 The whole app in another language</b><select aria-label="Language">'+[...src.options].map(o=>'<option value="'+esc(o.value)+'"'+(o.value===src.value?' selected':'')+'>'+esc(o.textContent)+'</option>').join('')+'</select><div class="row"><button type="button" data-lp="go" data-noul>✅ Translate</button><button type="button" data-lp="x" data-noul>✕ Close</button></div>'; p.hidden=false; }
+ function onClick(e){ const b=e.target.closest('[data-t]'); if(!b) return; e.stopPropagation(); e.preventDefault(); const t=b.dataset.t;
+  if(t==='bl'){ const i=MODES.findIndex(x=>x[0]===mode()); putLS('kanin-beatlink2',MODES[(i+1)%MODES.length][0]); refresh(b.parentElement); say(modeLabel()+(mode()==='on'?': games and the cannon play the pads; while the beat plays each hit lands on the next sixteenth, and ● REC records it.':mode()==='grid'?': games play the pads only while the beat plays, always on the grid.':': games leave the beat machine alone.')); return; }
+  if(t==='bpm-') return bpm(-5); if(t==='bpm+') return bpm(5);
+  if(t==='up') return upload(); if(t==='save') return savePage();
+  if(t==='lib'){ try{ KPROJ.open(); }catch(_){ say('Projects are not ready yet.'); } return; }
+  if(t==='snd'){ try{ const s=document.querySelector('#padGrid .pd.sel'); const i=s?+s.dataset.i:bank(); KSNDPICK.open('pads',i,'for pad '+'ABCD'[Math.floor(i/16)]+(i%16+1)); }catch(_){ say('Open the studio once to load the sounds.'); } return; }
+  if(t==='lang') return lang(); }
+ setInterval(()=>{ tools(); hook(); },900);
+ setTimeout(()=>{ const v=getLS('kanin-mvol',100); if(v!==100) vol(v); },3000);
+ window.KBEAT={trig,mode,setMode:m=>{ if(MODES.some(x=>x[0]===m)) putLS('kanin-beatlink2',m); },get fired(){ return fired; },closeAll};
+})();
+
+</script>
+<script>
+(()=>{ /* 🎯 CANNON BEAT (v255): a game that plays and writes the beat machine. The cannon lays a target groove across four lanes (kick, snare,
+   hi-hat, clap, from the pad bank on screen) and the targets fall in time with the beat. Hit a lane's pad as its target reaches the line, by
+   its key on the computer keyboard (the pads' own keys), by tapping the lane, or on any pad, and the cannon fires that hit into the beat
+   machine's pattern on that exact step: Perfect, Good or Miss. A miss leaves the step empty, so the beat that plays back is the beat you hit.
+   🎲 lays a new target groove; Easy, Normal and Hard set how busy it is; "Play along" scores against the pattern already in the beat
+   machine and writes nothing. ↶ Undo puts back the pattern from before the game. It floats like the pads and keyboard, on every screen. */
+ const $=id=>document.getElementById(id); const say=m=>{ try{ toast(m); }catch(_){ } };
+ const PS=()=>window.PADSTUDIO; const F=()=>{ try{ return KRAIL.FLOAT; }catch(_){ return null; } };
+ const LANES=[[0,'Kick','#ffe94a'],[2,'Snare','#ff7ad1'],[4,'Hi-hat','#6fe8ff'],[3,'Clap','#7dffb0']];
+ const KEYS='1234qwerasdfzxcv';
+ const bank=()=>{ const b=$('padBank'); return Math.max(0,Math.min(3,+(b&&b.value)||0))*16; };
+ let st={run:false,mode:'build',level:'normal',T:null,hit:null,score:0,combo:0,best:0,perf:0,good:0,miss:0,fired:0,lastPass:-1,passes:0,clock:[],snap:null};
+ const css=document.createElement('style'); css.textContent=`
+#kCBeat{background:linear-gradient(170deg,#1c0f4a,#07041a);color:#eef;font:14px system-ui,sans-serif;display:none;flex-direction:column;gap:6px;padding:8px;box-sizing:border-box;border:2px solid #ffe94a;border-radius:6px 18px 6px 18px}
+#kCBeat.kFOn:not(.kFOff){display:flex}
+#kCBeat .cbBar{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+#kCBeat .cbBar button,#kCBeat .cbBar select{min-height:40px;padding:0 10px;border-radius:4px 12px 4px 12px;font:800 13px system-ui,sans-serif}
+#kCBeat .cbBar select{width:auto!important;max-width:170px!important;flex:0 1 auto!important}
+#kCBeat .cbBar .go{background:#137a3f!important;border-color:#7dffb0!important}
+#kCBeat .cbBar .st{background:#b3172f!important}
+#kCBeat .cbScore{display:flex;flex-wrap:wrap;gap:10px;font:800 13px ui-monospace,monospace;color:#ffe94a}
+#kCBeat canvas{flex:1;min-height:220px;width:100%;border-radius:10px;background:#05030f;touch-action:none;cursor:pointer}
+#kCBeat .cbNote{font-size:12px;opacity:.85;line-height:1.4}`; document.head.appendChild(css);
+ function el(){ let d=$('kCBeat'); if(d) return d; d=document.createElement('div'); d.id='kCBeat'; d.setAttribute('role','application'); d.setAttribute('aria-label','Cannon Beat game');
+  d.innerHTML='<div class="cbBar"><button type="button" class="go" data-cb="start" data-noul>▶ Start</button><button type="button" class="st" data-cb="stop" data-noul>■ Stop</button><button type="button" data-cb="new" data-noul>🎲 New targets</button>'+
+   '<select data-cb="level" aria-label="How busy"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option><option value="pro">Pro</option><option value="wild">Wild</option></select>'+
+   '<select data-cb="mode" aria-label="What a hit does"><option value="build" selected>Build the beat</option><option value="play">Play along</option><option value="fill">Fill the gaps</option><option value="double">Double time</option><option value="half">Half time</option></select>'+
+   '<button type="button" data-cb="undo" data-noul>↶ Undo</button></div>'+
+   '<div class="cbScore"><span data-cs="score">Score 0</span><span data-cs="combo">Combo 0</span><span data-cs="acc">Perfect 0 · Good 0 · Miss 0</span><span data-cs="fired">Fired in 0</span></div>'+
+   '<canvas width="640" height="360" aria-label="Lanes"></canvas>'+
+   '<div class="cbNote" data-cs="note">Hit each lane’s pad when its target reaches the line: by its key, by tapping the lane, or on the pads. Every hit is fired into the beat machine on that step.</div>';
+  document.body.appendChild(d);
+  d.addEventListener('click',e=>{ const b=e.target.closest('[data-cb]'); if(!b||b.tagName==='SELECT') return; e.stopPropagation(); const k=b.dataset.cb; if(k==='start') start(); if(k==='stop') stop(true); if(k==='new'){ lay(); say('🎲 The cannon laid new targets.'); } if(k==='undo') undo(); });
+  d.addEventListener('change',e=>{ const k=e.target.dataset.cb; if(k==='level'){ st.level=e.target.value; lay(); } if(k==='mode'){ st.mode=e.target.value; lay(); } });
+  const cv=d.querySelector('canvas'); cv.addEventListener('pointerdown',e=>{ const r=cv.getBoundingClientRect(); const l=Math.floor((e.clientX-r.left)/r.width*LANES.length); const P=PS(); if(P&&l>=0&&l<LANES.length){ e.preventDefault(); try{ P.hitPad(bank()+LANES[l][0]); }catch(_){ } } });
+  return d; }
+ /* the beat machine's own clock: every scheduled step, with its audio time */
+ let hooked=false; function hook(){ const P=PS(); if(hooked||!P||!P.STEPHOOKS) return; hooked=true; P.STEPHOOKS.push((c,dest,t,s,sd)=>{ if(c!==P.ac()) return; st.clock.push([t,s,sd]); if(st.clock.length>64) st.clock.splice(0,st.clock.length-64); }); }
+ function now(){ const P=PS(); const c=P&&P.ac&&P.ac(); if(!c||!st.clock.length) return null; const t=c.currentTime; let e=null; for(let i=st.clock.length-1;i>=0;i--){ if(st.clock[i][0]<=t){ e=st.clock[i]; break; } } if(!e) return null; return {pos:e[1]+(t-e[0])/e[2],sd:e[2]}; }
+ const total=()=>{ const P=PS(); return Math.max(16,(P&&P.total)||16); };
+ /* the cannon lays the targets */
+ const rnd=()=>Math.random();
+ function lay(){ const P=PS(); if(!P) return; const N=total(), spb=P.spb||16, q=spb/4; const D={easy:.35,normal:.6,hard:.85,pro:1,wild:1.2}[st.level]||.6;
+  if(st.mode==='play'){ st.T=LANES.map(([o])=>{ const p=P.pads[bank()+o]; return Array.from({length:N},(_,k)=>!!(p&&p.steps&&p.steps[k])); }); }
+  else { st.T=LANES.map(([o],l)=>Array.from({length:N},(_,k)=>{ const inBar=k%spb, beat=inBar%q===0, off=inBar%(q/2)===0;
+    if(st.mode==='half'&&k%2) return false;
+    if(l===0) return beat&&(inBar===0||rnd()<.45*D)||(!beat&&off&&rnd()<.22*D)||(st.mode==='double'&&off&&rnd()<.5*D);
+    if(l===1) return inBar===q||inBar===3*q||(st.level!=='easy'&&!beat&&rnd()<.08*D);
+    if(l===2) return off&&rnd()<(.55+.4*D)||(st.level==='hard'||st.level==='pro'||st.level==='wild')&&!off&&rnd()<.3*D;
+    return (inBar===q||inBar===3*q)&&rnd()<.5*D||(!beat&&rnd()<.06*D); }));
+   if(st.mode==='fill'){ st.T=st.T.map((row,l)=>row.map((v,k)=>{ const p=P.pads[bank()+LANES[l][0]]; return v&&!(p&&p.steps&&p.steps[k]); })); } }
+  st.hit=LANES.map(()=>Array(N).fill(0)); st.lastPass=-1; }
+ function paintScore(){ const d=$('kCBeat'); if(!d) return; const set=(k,v)=>{ const x=d.querySelector('[data-cs="'+k+'"]'); if(x&&x.textContent!==v) x.textContent=v; };
+  set('score','Score '+st.score); set('combo','Combo '+st.combo+(st.best?' (best '+st.best+')':'')); set('acc','Perfect '+st.perf+' · Good '+st.good+' · Miss '+st.miss); set('fired','Fired in '+st.fired); }
+ /* a pad was hit (by key, tap, click or MIDI): judge it against the nearest target in its lane */
+ let shots=[], flashes=[];
+ function onPad(i){ if(!st.run||!st.T) return; const l=LANES.findIndex(x=>bank()+x[0]===i); if(l<0) return; const n=now(); if(!n) return; const N=total(); const pos=n.pos;
+  let best=null; for(let d=-1;d<=1;d++){ const k=((Math.round(pos)+d)%N+N)%N; if(!st.T[l][k]||st.hit[l][k]) continue; let dk=pos-Math.round(pos)-d; if(Math.abs(dk)>.75) continue; if(!best||Math.abs(dk)<Math.abs(best.dk)) best={k,dk}; }
+  if(!best){ st.combo=0; paintScore(); return; }
+  const a=Math.abs(best.dk); const P=PS(); st.hit[l][best.k]=a<=.25?2:1; if(a<=.25){ st.perf++; st.score+=100+st.combo*5; } else { st.good++; st.score+=50+st.combo*2; } st.combo++; st.best=Math.max(st.best,st.combo);
+  if(st.mode!=='play'&&P){ const p=P.pads[i]; if(p&&p.steps&&!p.steps[best.k]){ p.steps[best.k]=1; st.fired++; try{ P.refresh(); }catch(_){ } } }
+  shots.push({l,t:performance.now(),q:a<=.25?'Perfect':'Good'}); paintScore(); }
+ let mo=null; function watchPads(){ const g=$('padGrid'); if(!g||mo) return; mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(m.attributeName==='class'&&t.classList&&t.classList.contains('hit')&&!m.oldValue?.includes('hit')&&t.dataset.i!=null) onPad(+t.dataset.i); } }); mo.observe(g,{subtree:true,attributes:true,attributeFilter:['class'],attributeOldValue:true}); }
+ function start(){ const P=PS(); if(!P) return say('The studio is still loading. Try again in a moment.'); hook(); watchPads();
+  st.snap=P.pads.map(p=>p.steps?p.steps.slice():null); try{ KUNDO.push(()=>undo(true),'the beat before Cannon Beat'); }catch(_){ }
+  if(!st.T) lay(); Object.assign(st,{run:true,score:0,combo:0,perf:0,good:0,miss:0,fired:0,passes:0}); st.hit=LANES.map(()=>Array(total()).fill(0));
+  try{ const f=F(); if(f&&!f.isOpen('pads')) f.open('pads'); }catch(_){ }
+  if(!P.playing){ try{ P.play(); }catch(_){ } } paintScore(); loop(); say('🎯 Cannon Beat: hit the targets as they reach the line. '+(st.mode==='play'?'Play along: nothing is written.':'Every hit is fired into the beat.')); }
+ function stop(tell){ const P=PS(); st.run=false; try{ if(P&&P.playing) P.stop(); }catch(_){ } if(tell){ const tot=st.perf+st.good+st.miss; const pct=tot?Math.round((st.perf+st.good)/tot*100):0; const n=$('kCBeat')&&$('kCBeat').querySelector('[data-cs="note"]'); const m='🎯 '+st.score+' points, '+pct+'% on target, best combo '+st.best+'. '+(st.mode==='play'?'':st.fired+' hits fired into the beat machine: press ▶ to hear the beat you built, or ↶ Undo for the old one.'); if(n) n.textContent=m; say(m); } }
+ function undo(quiet){ const P=PS(); if(!P||!st.snap) return; st.snap.forEach((s,i)=>{ if(s&&P.pads[i]) P.pads[i].steps=s.slice(); }); try{ P.refresh(); }catch(_){ } if(!quiet) say('↶ The beat is back to how it was before Cannon Beat.'); }
+ /* drawing */
+ function loop(){ const d=$('kCBeat'); if(!d||!st.run) return; const cv=d.querySelector('canvas'); const r=cv.getBoundingClientRect(); const W=Math.max(200,Math.round(r.width)), H=Math.max(160,Math.round(r.height)); if(cv.width!==W) cv.width=W; if(cv.height!==H) cv.height=H; const x=cv.getContext('2d');
+  x.fillStyle='#05030f'; x.fillRect(0,0,W,H); const L=LANES.length, lw=W/L, line=H-46, ahead=16, px=(line-10)/ahead; const n=now(); const N=total();
+  LANES.forEach(([o,name,col],l)=>{ x.fillStyle=l%2?'rgba(255,255,255,.035)':'rgba(255,255,255,.06)'; x.fillRect(l*lw,0,lw,H);
+   x.fillStyle=col; x.font='800 12px system-ui,sans-serif'; x.textAlign='center'; const key=(KEYS[o]||'').toUpperCase(); x.fillText(name+' · '+key,l*lw+lw/2,H-8);
+   /* the cannon at the foot of the lane */
+   x.save(); x.translate(l*lw+lw/2,line+18); x.fillStyle='#ffe94a'; x.fillRect(-7,-14,14,18); x.beginPath(); x.arc(0,6,9,0,7); x.fillStyle='#6b4ff5'; x.fill(); x.restore(); });
+  x.strokeStyle='#ffe94a'; x.lineWidth=3; x.beginPath(); x.moveTo(0,line); x.lineTo(W,line); x.stroke();
+  if(n&&st.T){ const pos=n.pos; const pass=Math.floor(pos/N);
+   for(let l=0;l<L;l++){ for(let a=-1;a<=ahead;a++){ const kk=Math.floor(pos)+a; const k=((kk%N)+N)%N; if(!st.T[l]||!st.T[l][k]) continue; const y=line-(kk-pos)*px; if(y<-20||y>line+30) continue; const h=st.hit[l][k];
+     if(!h&&kk-pos<-.75){ st.hit[l][k]=-1; st.miss++; st.combo=0; paintScore(); }
+     const hh=st.hit[l][k]; x.beginPath(); x.arc(l*lw+lw/2,y,Math.min(18,lw/4),0,7); x.fillStyle=hh>0?'rgba(125,255,176,.25)':hh<0?'rgba(255,90,110,.35)':LANES[l][2]; x.fill(); if(hh===0){ x.lineWidth=2; x.strokeStyle='#fff'; x.stroke(); } } }
+   /* a new pass of the loop: clear the marks so the next pass can be played again */
+   if(st.lastPass!==pass){ if(st.lastPass>=0){ st.passes++; st.hit=st.hit.map(row=>row.map(v=>v>0&&st.mode!=='play'?v:0)); } st.lastPass=pass; } }
+  else { x.fillStyle='#fff'; x.textAlign='center'; x.font='700 15px system-ui,sans-serif'; x.fillText('Waiting for the beat… press ▶ Start',W/2,H/2); }
+  const t=performance.now(); shots=shots.filter(s=>t-s.t<450); shots.forEach(s=>{ const k=(t-s.t)/450; const cx=s.l*lw+lw/2; x.globalAlpha=1-k; x.fillStyle='#fff'; x.beginPath(); x.arc(cx,line-k*(line-20),5+10*k,0,7); x.fill(); x.font='900 14px system-ui,sans-serif'; x.textAlign='center'; x.fillStyle=s.q==='Perfect'?'#7dffb0':'#ffe94a'; x.fillText(s.q,cx,line-24-k*20); x.globalAlpha=1; });
+  requestAnimationFrame(loop); }
+ /* a floating panel like the pads, opened from the studio bar, the Games screen and Find */
+ function reg(){ const f=F(); if(!f||!f.add) return; if(!reg.done){ el(); f.add('cbeat',{get:()=>$('kCBeat'),t:'🎯 Cannon Beat · hit the targets, build the beat',i:'🎯',l:'Cannon Beat'}); reg.done=true;
+   try{ if(!localStorage.getItem('kanin-float-cbeat')){ const ph=innerWidth<=760, W=innerWidth-(ph?58:76); localStorage.setItem('kanin-float-cbeat',JSON.stringify(ph?{x:4,y:56,w:W-8,h:Math.round(innerHeight*.7)}:{x:Math.round(W*.3),y:90,w:Math.min(680,Math.round(W*.5)),h:Math.round(innerHeight*.72)})); } }catch(_){ } }
+  const bb=$('bbBar'); if(bb&&!bb.querySelector('[data-cbo]')){ const b=document.createElement('button'); b.type='button'; b.dataset.cbo='1'; b.setAttribute('data-noul',''); b.textContent='🎯 Cannon Beat'; b.title='A game that builds the beat: hit the targets on time'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); open(); },true); bb.appendChild(b); }
+  const gd=$('gamesDock'); if(gd&&!gd.hidden&&!gd.querySelector('[data-cbg]')){ const b=document.createElement('button'); b.type='button'; b.dataset.cbg='1'; b.setAttribute('data-noul',''); b.textContent='🎯 Cannon Beat · the game that builds your beat'; b.style.cssText='display:block;margin:8px auto;min-height:52px;padding:0 20px;border-radius:4px 16px 4px 16px;background:#ffe94a;color:#14092e;font:900 16px system-ui,sans-serif'; b.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); open(); },true); const host=gd.querySelector('.gsIn,.gdIn,[class*="In"]')||gd; host.insertBefore(b,host.firstChild); } }
+ function idle(){ const d=$('kCBeat'); if(!d||st.run) return; const cv=d.querySelector('canvas'); const r=cv.getBoundingClientRect(); const W=Math.max(200,Math.round(r.width)), H=Math.max(160,Math.round(r.height)); cv.width=W; cv.height=H; const x=cv.getContext('2d'); x.fillStyle='#05030f'; x.fillRect(0,0,W,H); const lw=W/LANES.length; LANES.forEach(([o,n,c],l)=>{ x.fillStyle=l%2?'rgba(255,255,255,.035)':'rgba(255,255,255,.06)'; x.fillRect(l*lw,0,lw,H); x.fillStyle=c; x.font='800 12px system-ui,sans-serif'; x.textAlign='center'; x.fillText(n+' · '+(KEYS[o]||'').toUpperCase(),l*lw+lw/2,H-8); }); x.fillStyle='#ffe94a'; x.font='900 18px system-ui,sans-serif'; x.textAlign='center'; x.fillText('🎯 Press ▶ Start',W/2,H/2-8); x.fillStyle='#fff'; x.font='600 13px system-ui,sans-serif'; x.fillText('Hit each lane’s pad as its target reaches the line',W/2,H/2+16); }
+ function open(){ const f=F(); if(!f) return; reg(); f.open('cbeat'); setTimeout(idle,200); try{ const R=$('kRemote'); if(R&&innerWidth<=760) R.classList.add('min'); }catch(_){ } try{ if(!st.T) lay(); }catch(_){ } }
+ setInterval(reg,1000);
+ try{ (window.KFINDX=window.KFINDX||[]).push(add=>{ add('Play','🎯','Cannon Beat: the game that builds your beat on the beat machine','Cannon Beat',()=>open()); }); }catch(_){ }
+ try{ const hookCannon=()=>{ if(window.KCANNON&&KCANNON.SHOT&&!KCANNON.SHOT.kCBeat){ KCANNON.SHOT.kCBeat=()=>{ lay(); return true; }; KCANNON.NAME.kCBeat='Cannon Beat'; } }; hookCannon(); setTimeout(hookCannon,3000); }catch(_){ }
+ window.KCBEAT={open,start,stop,lay,undo,get state(){ return st; },onPad};
+})();
+
+</script>
+<script>
+(()=>{ /* 📖 EXPLORE A RELIGION (v255): each of the ten most widely known religions opens into its own page of what lives within it: its
+   branches and schools, its sacred texts, its holy days, its holy places, its practices, and its official and reference sites. Every item
+   carries one line in neutral words and a link out to the reference article about it (Wikipedia's article, reached through its own search,
+   so the link always lands); official sites are linked where a tradition has one. Nothing here endorses a belief; the words describe. */
+ const $=id=>document.getElementById(id); const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const WK=t=>'https://en.wikipedia.org/wiki/Special:Search?go=Go&search='+encodeURIComponent(t);
+ const BR=t=>'https://www.britannica.com/search?query='+encodeURIComponent(t);
+ const WEB=t=>'https://duckduckgo.com/?q='+encodeURIComponent(t);
+ /* each item: [name, one line, the reference article's title (defaults to the name)] */
+ const R={
+ 'Christianity':{b:[['Catholic Church','The largest Christian church, led by the Pope in Rome; seven sacraments and the Mass.'],['Eastern Orthodox Church','A communion of self-governing churches (Greek, Russian, Serbian and others) keeping the early councils and the Divine Liturgy.'],['Oriental Orthodox Churches','Coptic, Ethiopian, Armenian, Syriac, Eritrean and Malankara churches, separated since the 5th century.','Oriental Orthodox Churches'],['Protestantism','Churches that grew from the 16th-century Reformation, holding scripture and faith at the centre.'],['Anglicanism','The Church of England and churches in communion with it across the world.'],['Lutheranism','Churches that follow the teaching of Martin Luther.'],['Reformed Christianity','Churches in the tradition of John Calvin, among them Presbyterians.','Calvinism'],['Methodism','Churches from the revival led by John and Charles Wesley.'],['Baptists','Churches that baptize believers by immersion and govern each congregation locally.'],['Pentecostalism','Churches stressing the gifts of the Holy Spirit; among the fastest-growing movements today.'],['Evangelicalism','A movement across churches stressing conversion, the Bible and spreading the faith.'],['Seventh-day Adventist Church','A Protestant church that keeps Saturday as the Sabbath.'],['The Church of Jesus Christ of Latter-day Saints','A restorationist church founded by Joseph Smith in 1830.'],['Jehovah\'s Witnesses','A restorationist movement known for door-to-door ministry.'],['Assyrian Church of the East','The ancient Church of the East, with roots in Mesopotamia.']],
+  t:[['The Bible','The Christian scriptures: the Old Testament and the New Testament.','Bible'],['Old Testament','The scriptures shared with Judaism, from Genesis onward.'],['New Testament','Twenty-seven books on the life of Jesus and the early church.'],['The Gospels','Matthew, Mark, Luke and John: four accounts of the life of Jesus.','Gospel'],['Deuterocanonical books','Books kept in Catholic and Orthodox Bibles, such as Tobit and the Maccabees.'],['Nicene Creed','The 4th-century statement of faith said in many churches.']],
+  d:[['Christmas','The birth of Jesus, on 25 December (7 January in several Orthodox churches).'],['Easter','The resurrection of Jesus; the oldest and greatest Christian feast.'],['Good Friday','The day of the crucifixion, before Easter.'],['Lent','Forty days of fasting and prayer before Easter.'],['Pentecost','The coming of the Holy Spirit, fifty days after Easter.'],['Advent','The four weeks of preparation before Christmas.'],['Epiphany','The visit of the Magi and the baptism of Jesus, on 6 January.','Epiphany (holiday)']],
+  p:[['Church of the Holy Sepulchre','In Jerusalem, at the place of the crucifixion and the tomb.'],['Church of the Nativity','In Bethlehem, over the place of the birth of Jesus.'],['St. Peter\'s Basilica','In Vatican City, the great church of the Pope.'],['Mount Athos','A Greek peninsula of Orthodox monasteries.'],['Lourdes','A pilgrimage town in France, a place of healing for many Catholics.'],['Santiago de Compostela Cathedral','The end of the Camino de Santiago pilgrimage in Spain.'],['Canterbury Cathedral','The mother church of the Anglican Communion.']],
+  r:[['Baptism','Washing with water as the sign of entry into the church.'],['Eucharist','Holy Communion: bread and wine shared in memory of Jesus.'],['Christian prayer','The Lord\'s Prayer, the liturgy and personal prayer.'],['Sunday','The day of worship in most churches, the day of the resurrection.','Lord\'s Day'],['Sacrament','The rites that mark grace in a believer\'s life.']],
+  s:[['The Holy See (Vatican)','https://www.vatican.va'],['World Council of Churches','https://www.oikoumene.org'],['Anglican Communion','https://www.anglicancommunion.org'],['The Church of Jesus Christ of Latter-day Saints','https://www.churchofjesuschrist.org'],['Seventh-day Adventist Church','https://www.adventist.org'],['Jehovah’s Witnesses','https://www.jw.org']]},
+ 'Islam':{b:[['Sunni Islam','The largest branch, following the Sunnah of the Prophet and the four rightly guided caliphs.'],['Shia Islam','The second-largest branch, holding that leadership passed through Ali and the Imams.'],['Twelver Shi\'ism','The largest Shia school, recognizing twelve Imams.','Twelver Shi\'ism'],['Ismailism','A Shia branch whose largest community follows the Aga Khan.'],['Zaydism','A Shia school found mainly in Yemen.'],['Ibadi Islam','A distinct branch found mainly in Oman.','Ibadi Islam'],['Sufism','The mystical path within Islam, with its orders and remembrance of God.'],['Hanafi school','The oldest and most widely followed Sunni school of law.','Hanafi school'],['Maliki school','A Sunni school of law common in North and West Africa.','Maliki school'],['Shafi\'i school','A Sunni school of law common in East Africa and Southeast Asia.','Shafi\'i school'],['Hanbali school','A Sunni school of law common in the Arabian Peninsula.','Hanbali school'],['Ja\'fari school','The main Shia school of law.','Ja\'fari school']],
+  t:[['Quran','The holy book of Islam, revealed to the Prophet Muhammad.'],['Hadith','Reports of the sayings and deeds of the Prophet.'],['Sahih al-Bukhari','The most respected Sunni collection of hadith.'],['Sahih Muslim','The second great Sunni collection of hadith.'],['Nahj al-Balagha','Sermons and letters of Ali, treasured by Shia Muslims.'],['Sunnah','The example of the Prophet, the second source of guidance.']],
+  d:[['Ramadan','The month of fasting from dawn to sunset.'],['Eid al-Fitr','The festival that ends Ramadan.'],['Eid al-Adha','The festival of sacrifice, at the time of the Hajj.'],['Laylat al-Qadr','The Night of Power, when the Quran was first revealed.'],['Ashura','The 10th of Muharram; for Shia Muslims, the mourning of Husayn.'],['Mawlid','The birthday of the Prophet, kept by many Muslims.'],['Islamic New Year','The first day of Muharram.']],
+  p:[['Masjid al-Haram','The great mosque of Mecca around the Kaaba, the holiest site in Islam.'],['Kaaba','The cube-shaped house at the centre of the Masjid al-Haram, the direction of prayer.'],['Al-Masjid an-Nabawi','The Prophet\'s Mosque in Medina.'],['Al-Aqsa Mosque','In Jerusalem, the third holiest site in Islam.'],['Imam Husayn Shrine','In Karbala, Iraq, a great place of Shia pilgrimage.'],['Imam Ali Shrine','In Najaf, Iraq.']],
+  r:[['Five Pillars of Islam','The declaration of faith, prayer, charity, fasting and pilgrimage.'],['Salah','The five daily prayers.'],['Zakat','The obligatory charity.'],['Hajj','The pilgrimage to Mecca, once in a lifetime for those able.'],['Halal','What is permitted, in food and in life.'],['Jumu\'ah','The Friday congregational prayer.']],
+  s:[['Pew Research Center: religion','https://www.pewresearch.org/religion/']]},
+ 'Hinduism':{b:[['Vaishnavism','Devotion to Vishnu and his avatars, among them Krishna and Rama.'],['Shaivism','Devotion to Shiva.'],['Shaktism','Devotion to the Goddess, Devi, as the supreme power.'],['Smartism','A tradition honoring five forms of the divine, following Adi Shankara.'],['ISKCON','The International Society for Krishna Consciousness, founded in 1966.','International Society for Krishna Consciousness'],['Swaminarayan Sampradaya','A Vaishnava tradition founded by Swaminarayan; its largest body is BAPS.'],['Arya Samaj','A 19th-century reform movement founded by Dayananda Saraswati.'],['Ramakrishna Mission','A movement founded by Swami Vivekananda.'],['Lingayatism','A Shaiva tradition of South India founded by Basava.']],
+  t:[['Vedas','The oldest scriptures: Rigveda, Samaveda, Yajurveda and Atharvaveda.'],['Upanishads','Philosophical texts on Brahman and the self.'],['Bhagavad Gita','Krishna\'s teaching to Arjuna, within the Mahabharata.'],['Ramayana','The epic of Rama and Sita.'],['Mahabharata','The great epic of the Kuru dynasty.'],['Puranas','Texts of stories of the gods, the universe and its history.'],['Yoga Sutras of Patanjali','The classic text of yoga.']],
+  d:[['Diwali','The festival of lights.'],['Holi','The spring festival of colours.'],['Navaratri','Nine nights honoring the Goddess.'],['Durga Puja','The worship of Durga, above all in Bengal.'],['Maha Shivaratri','The great night of Shiva.'],['Krishna Janmashtami','The birth of Krishna.'],['Ganesh Chaturthi','The birth of Ganesha.']],
+  p:[['Varanasi','The holy city on the Ganges.'],['Ganges','The sacred river.'],['Kumbh Mela','The great pilgrimage gathering held in turn at four river cities.'],['Tirumala Venkateswara Temple','In Andhra Pradesh, one of the most visited temples in the world.'],['Kedarnath Temple','A Himalayan temple of Shiva.'],['Meenakshi Temple','In Madurai, Tamil Nadu.'],['Angkor Wat','In Cambodia, built as a Hindu temple to Vishnu.']],
+  r:[['Puja','Worship with offerings, light and prayer.'],['Yoga','Disciplines of body, breath and mind.'],['Dharma','Right living and duty.'],['Karma','The law of action and its fruits.'],['Moksha','Liberation from the cycle of rebirth.']],
+  s:[['ISKCON','https://www.iskcon.org'],['BAPS Swaminarayan Sanstha','https://www.baps.org'],['Ramakrishna Math and Mission','https://belurmath.org']]},
+ 'Buddhism':{b:[['Theravada','The "teaching of the elders", in Sri Lanka and Southeast Asia.'],['Mahayana','The "great vehicle", in East Asia.'],['Vajrayana','The tantric path, above all in Tibet and the Himalayas.'],['Tibetan Buddhism','The Buddhism of Tibet, with the Dalai Lama among its teachers.'],['Zen','The meditation school of Japan, from Chinese Chan.'],['Chan Buddhism','The meditation school of China.'],['Pure Land Buddhism','Devotion to Amitabha Buddha and rebirth in his Pure Land.'],['Nichiren Buddhism','Japanese schools centred on the Lotus Sutra.']],
+  t:[['Pali Canon','The Tipitaka, the scriptures of Theravada.'],['Dhammapada','Verses of the Buddha\'s teaching.'],['Lotus Sutra','A central Mahayana scripture.'],['Heart Sutra','A short sutra on emptiness, chanted widely.'],['Diamond Sutra','A Mahayana sutra on perfect wisdom.'],['Bardo Thodol','The "Tibetan Book of the Dead".']],
+  d:[['Vesak','The birth, enlightenment and passing of the Buddha.'],['Asalha Puja','The Buddha\'s first teaching.'],['Magha Puja','The gathering of 1,250 disciples.'],['Losar','The Tibetan New Year.'],['Bodhi Day','The Buddha\'s enlightenment, kept in Mahayana lands.'],['Ghost Festival','The festival for the dead, Ullambana.']],
+  p:[['Lumbini','The birthplace of the Buddha, in Nepal.'],['Mahabodhi Temple','At Bodh Gaya, India, where the Buddha attained enlightenment.'],['Sarnath','Where the Buddha first taught.'],['Kushinagar','Where the Buddha passed away.'],['Borobudur','The great Buddhist monument of Java.'],['Temple of the Tooth','In Kandy, Sri Lanka.'],['Shwedagon Pagoda','In Yangon, Myanmar.']],
+  r:[['Buddhist meditation','Calm and insight practices.'],['Noble Eightfold Path','Right view, intention, speech, action, livelihood, effort, mindfulness and concentration.'],['Four Noble Truths','Suffering, its cause, its end and the path.'],['Five precepts','The basic ethics of lay Buddhists.','Five precepts'],['Sangha','The community of monks, nuns and lay followers.']],
+  s:[['The Office of His Holiness the Dalai Lama','https://www.dalailama.com'],['Plum Village (Thich Nhat Hanh)','https://plumvillage.org'],['Soka Gakkai International','https://www.sokaglobal.org']]},
+ 'Chinese traditional religion and Taoism':{b:[['Taoism','The tradition of the Tao, the Way.'],['Zhengyi Dao','The "Orthodox Unity" school of Taoist priests.','Zhengyi Dao'],['Quanzhen School','The "Complete Perfection" monastic school of Taoism.'],['Confucianism','The ethics and rites taught by Confucius.'],['Neo-Confucianism','The revival of Confucian thought from the Song dynasty.'],['Chinese folk religion','Local gods, festivals and temples across China.'],['Ancestor veneration in China','Honouring the family\'s ancestors.'],['Mazuism','The worship of Mazu, goddess of the sea.']],
+  t:[['Tao Te Ching','The classic of the Tao, attributed to Laozi.'],['Zhuangzi','The writings of Zhuangzi.','Zhuangzi (book)'],['I Ching','The Book of Changes.'],['Analects','The sayings of Confucius.'],['Mencius','The teaching of Mencius.','Mencius (book)'],['Daozang','The Taoist canon.']],
+  d:[['Chinese New Year','The Spring Festival.'],['Qingming Festival','Tomb-sweeping day, honouring the ancestors.'],['Mid-Autumn Festival','The moon festival.'],['Ghost Festival','The month of the wandering spirits.'],['Dragon Boat Festival','Duanwu, on the fifth day of the fifth month.'],['Lantern Festival','The end of the New Year season.']],
+  p:[['Mount Tai','The foremost of China\'s sacred mountains.'],['Wudang Mountains','A centre of Taoism and martial arts.'],['Temple of Confucius, Qufu','At Confucius\'s hometown.','Temple of Confucius, Qufu'],['White Cloud Temple','The Quanzhen headquarters in Beijing.'],['Mount Qingcheng','A birthplace of Taoism, in Sichuan.']],
+  r:[['Feng shui','Arranging space in harmony with the flow of qi.'],['Tai chi','A meditative martial art.'],['Qigong','Breath and movement practice.'],['Joss paper','Paper offerings burned for the ancestors.'],['Yin and yang','The balance of complementary forces.']],
+  s:[]},
+ 'Sikhism':{b:[['Khalsa','The community of initiated Sikhs founded by Guru Gobind Singh in 1699.'],['Udasi','An ascetic order tracing to Sri Chand, son of Guru Nanak.'],['Nanakpanthi','Followers of Guru Nanak\'s teaching outside the Khalsa form.'],['Namdhari','A reform movement founded in the 19th century.'],['Nirankari','A 19th-century reform movement.'],['Sahajdhari','Sikhs who have not taken Khalsa initiation.']],
+  t:[['Guru Granth Sahib','The scripture, honoured as the living Guru.'],['Dasam Granth','Writings attributed to Guru Gobind Singh.'],['Japji Sahib','Guru Nanak\'s morning prayer that opens the scripture.'],['Sukhmani Sahib','The "Psalm of Peace" by Guru Arjan.'],['Rehras Sahib','The evening prayer.']],
+  d:[['Vaisakhi','The founding of the Khalsa and the harvest festival.'],['Guru Nanak Gurpurab','The birth of Guru Nanak.'],['Bandi Chhor Divas','The release of Guru Hargobind, kept with Diwali.'],['Hola Mohalla','A festival of martial skill after Holi.'],['Martyrdom of Guru Arjan','Remembered with service of cool drinks.','Guru Arjan']],
+  p:[['Golden Temple','Harmandir Sahib in Amritsar, the holiest gurdwara.'],['Akal Takht','The throne of temporal authority, at the Golden Temple.'],['Gurdwara Darbar Sahib Kartarpur','Where Guru Nanak spent his last years, in Pakistan.'],['Nankana Sahib','The birthplace of Guru Nanak.'],['Takht Sri Hazur Sahib','In Nanded, where Guru Gobind Singh passed away.','Hazur Sahib'],['Takht Sri Kesgarh Sahib','In Anandpur Sahib, where the Khalsa was founded.']],
+  r:[['Langar','The free community kitchen open to all.'],['Five Ks','The five articles of faith of the Khalsa.'],['Seva','Selfless service.'],['Naam Japo','Remembering God\'s name.','Simran'],['Amrit Sanchar','The Khalsa initiation.']],
+  s:[['Shiromani Gurdwara Parbandhak Committee','https://sgpc.net']]},
+ 'Judaism':{b:[['Orthodox Judaism','Holds the written and oral Torah as binding and unchanged.'],['Haredi Judaism','Strictly traditional Orthodox communities.'],['Hasidic Judaism','A movement of joy and devotion founded by the Baal Shem Tov.'],['Modern Orthodox Judaism','Orthodox observance joined with modern life.'],['Conservative Judaism','Masorti Judaism: tradition with change over time.'],['Reform Judaism','A liberal movement adapting practice to modern life.'],['Reconstructionist Judaism','Judaism as an evolving civilization.'],['Karaite Judaism','Holds the written Torah alone as authoritative.'],['Ashkenazi Jews','The Jewish communities of Central and Eastern Europe.'],['Sephardic Jews','The Jewish communities of Spain, Portugal and their diaspora.','Sephardic Jews']],
+  t:[['Torah','The five books of Moses.'],['Tanakh','The Hebrew Bible: Torah, Prophets and Writings.'],['Talmud','The Mishnah and Gemara, the core of rabbinic law and thought.'],['Mishnah','The first written collection of the oral law.'],['Midrash','Rabbinic interpretation of scripture.'],['Zohar','The foundational work of Kabbalah.'],['Siddur','The prayer book.'],['Shulchan Aruch','The code of Jewish law.']],
+  d:[['Shabbat','The weekly Sabbath, Friday evening to Saturday night.'],['Rosh Hashanah','The Jewish New Year.'],['Yom Kippur','The Day of Atonement.'],['Passover','The Exodus from Egypt.'],['Sukkot','The Feast of Booths.'],['Shavuot','The giving of the Torah.'],['Hanukkah','The festival of lights.'],['Purim','The story of Esther.']],
+  p:[['Western Wall','The remaining wall of the Temple Mount in Jerusalem.'],['Temple Mount','The site of the First and Second Temples.'],['Cave of the Patriarchs','In Hebron.'],['Safed','A centre of Kabbalah in Galilee.'],['Tiberias','A holy city on the Sea of Galilee.'],['Rachel\'s Tomb','Near Bethlehem.']],
+  r:[['Kashrut','The dietary laws.'],['Brit milah','The covenant of circumcision.'],['Bar and bat mitzvah','Coming of age in the commandments.'],['Synagogue','The house of prayer and study.'],['Tefillin','Phylacteries worn in weekday morning prayer.']],
+  s:[['Orthodox Union','https://www.ou.org'],['Union for Reform Judaism','https://reformjudaism.org'],['United Synagogue of Conservative Judaism','https://uscj.org'],['Chabad.org','https://www.chabad.org']]},
+ 'Bahá’í Faith':{b:[['Universal House of Justice','The governing body of the Bahá\'í Faith, in Haifa.'],['Bahá\'í administration','Local and national spiritual assemblies elected by the members.','Bahá\'í administration'],['Bahá\'í World Centre','The spiritual and administrative centre in Haifa and Acre.']],
+  t:[['Kitáb-i-Aqdas','The "Most Holy Book" of Bahá\'u\'lláh.'],['Kitáb-i-Íqán','The "Book of Certitude".'],['The Hidden Words','Short verses of Bahá\'u\'lláh.'],['The Seven Valleys','A mystical work of Bahá\'u\'lláh.']],
+  d:[['Naw-Rúz','The Bahá\'í New Year, at the March equinox.'],['Ridván','The twelve-day festival of Bahá\'u\'lláh\'s declaration.'],['Declaration of the Báb','The beginning of the faith in 1844.','Bahá\'í Holy Days'],['Twin Holy Birthdays','The births of the Báb and of Bahá\'u\'lláh.'],['Nineteen-Day Fast','The fast before Naw-Rúz.','Nineteen-Day Fast']],
+  p:[['Shrine of the Báb','On Mount Carmel in Haifa.'],['Shrine of Bahá\'u\'lláh','Near Acre, the holiest place for Bahá\'ís.'],['Lotus Temple','The Bahá\'í House of Worship in New Delhi.'],['Bahá\'í House of Worship (Wilmette)','Near Chicago.','Bahá\'í House of Worship (Wilmette, Illinois)']],
+  r:[['Bahá\'í prayer','The daily obligatory prayer.','Prayer in the Bahá\'í Faith'],['Nineteen Day Feast','The community gathering of each Bahá\'í month.'],['Unity of humanity','The oneness of all people.','Bahá\'í Faith and the unity of humanity']],
+  s:[['The Bahá’í Faith (official site)','https://www.bahai.org']]},
+ 'Jainism':{b:[['Digambara','The "sky-clad" tradition, whose monks renounce clothing.'],['Śvētāmbara','The "white-clad" tradition.','Śvētāmbara'],['Sthānakavāsī','A Śvētāmbara reform rejecting temple images.','Sthānakavāsī'],['Terapanth','A Śvētāmbara order founded by Acharya Bhikshu.','Śvetāmbara Terapanth']],
+  t:[['Jain Agamas','The canonical scriptures.'],['Tattvartha Sutra','A text accepted by all Jains.'],['Kalpa Sūtra','The lives of the Tirthankaras, read at Paryushana.','Kalpa Sūtra'],['Samayasāra','A Digambara work by Kundakunda.','Samayasāra']],
+  d:[['Mahavir Jayanti','The birth of Mahavira.'],['Paryushana','The festival of forgiveness and fasting.'],['Diwali (Jainism)','The liberation of Mahavira.','Diwali (Jainism)'],['Das Lakshana','The Digambara festival of ten virtues.','Das Lakshana']],
+  p:[['Palitana temples','On Shatrunjaya hill in Gujarat.'],['Shikharji','In Jharkhand, where twenty Tirthankaras attained liberation.'],['Shravanabelagola','With the great statue of Gommateshwara.'],['Dilwara Temples','At Mount Abu.'],['Ranakpur Jain Temple','In Rajasthan.']],
+  r:[['Ahimsa in Jainism','Non-violence toward every living being.','Ahimsa in Jainism'],['Anekāntavāda','Many-sidedness of truth.','Anekāntavāda'],['Aparigraha','Non-possessiveness.'],['Jain vegetarianism','The strict Jain diet.'],['Sallekhana','The vow of a peaceful death by gradual fasting.']],
+  s:[]},
+ 'Shinto':{b:[['Shrine Shinto','The practice centred on the shrines.'],['Sect Shinto','Thirteen recognized Shinto sects of the 19th century.'],['Folk Shinto','Local and household practice.'],['Imperial House Shinto','The rites of the imperial household.','Imperial House of Japan']],
+  t:[['Kojiki','The "Record of Ancient Matters", 712 CE.'],['Nihon Shoki','The "Chronicles of Japan", 720 CE.'],['Engishiki','Rules and prayers of the 10th century.'],['Kogo Shūi','A 9th-century record.','Kogo Shūi']],
+  d:[['Japanese New Year','Hatsumōde, the first shrine visit of the year.','Japanese New Year'],['Setsubun','The day before spring.'],['Shichi-Go-San','A rite for children of three, five and seven.'],['Niiname-no-Matsuri','The harvest thanksgiving.','Niiname-no-Matsuri'],['Matsuri','Shrine festivals throughout the year.']],
+  p:[['Ise Grand Shrine','The holiest shrine, of Amaterasu.'],['Izumo-taisha','One of the oldest shrines.'],['Fushimi Inari-taisha','With thousands of torii gates, in Kyoto.'],['Itsukushima Shrine','With its gate in the sea.'],['Meiji Shrine','In Tokyo.'],['Mount Fuji','A sacred mountain.']],
+  r:[['Kami','The sacred spirits.'],['Misogi','Purification by water.'],['Harae','Purification rites.'],['Torii','The shrine gate.'],['Kagura','Sacred dance.']],
+  s:[['Association of Shinto Shrines','https://www.jinjahoncho.or.jp']]}};
+ const TABS=[['b','🌳 Branches and schools'],['t','📜 Sacred texts'],['d','🗓 Holy days'],['p','🕌 Holy places'],['r','🙏 Practices'],['s','🔗 Official and reference']];
+ let cur=null, tab='b';
+ const css=document.createElement('style'); css.textContent=`
+#kReligX{position:fixed;inset:0;right:var(--kRailW,58px);z-index:8700;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3a2a10,#0b0704 70%);color:#fff6e3;font:15px/1.55 system-ui,sans-serif;padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 40px}
+#kReligX[hidden]{display:none!important}
+#kReligX .rxIn{max-width:1100px;margin:0 auto}
+#kReligX .rxTop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#kReligX h2{margin:0;font:900 clamp(22px,4vw,32px)/1.1 system-ui,sans-serif;color:#ffd678}
+#kReligX button{min-height:44px;padding:0 14px;border-radius:4px 12px 4px 12px;font:800 14px system-ui,sans-serif}
+#kReligX .rxTabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+#kReligX .rxTabs button.on{background:#ffd678!important;color:#1a1004!important}
+#kReligX .rxGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#kReligX .rxCard{background:rgba(0,0,0,.3);border-left:3px solid #ffd678;border-radius:2px 12px 2px 12px;padding:10px;display:flex;flex-direction:column;gap:4px}
+#kReligX .rxCard b{font:900 15.5px system-ui,sans-serif}
+#kReligX .rxCard p{margin:0;font-size:13.5px}
+#kReligX .rxCard .rxL{display:flex;flex-wrap:wrap;gap:8px;font-size:12.5px}
+#kReligX a{color:#ffd678;font-weight:800}
+#kReligX .rxNote{font-size:12.5px;opacity:.8;margin-top:12px}
+#kFaith10 .f10 .rxGo{margin-top:6px;min-height:40px;padding:0 12px;border-radius:4px 12px 4px 12px;font:800 13px system-ui,sans-serif;background:#ffd678!important;color:#1a1004!important}`; document.head.appendChild(css);
+ function box(){ let d=$('kReligX'); if(d) return d; d=document.createElement('div'); d.id='kReligX'; d.hidden=true; d.setAttribute('role','dialog'); d.setAttribute('aria-label','Explore a religion'); document.body.appendChild(d);
+  d.addEventListener('click',e=>{ const b=e.target.closest('[data-rx]'); if(!b) return; e.stopPropagation(); const k=b.dataset.rx; if(k==='x'){ d.hidden=true; return; } if(k==='tab'){ tab=b.dataset.v; paint(); } if(k==='rel'){ cur=b.dataset.v; tab='b'; paint(); d.scrollTop=0; } }); return d; }
+ const links=(nm,art)=>'<span class="rxL"><a href="'+WK(art||nm)+'" target="_blank" rel="noopener">Wikipedia ↗</a><a href="'+BR(nm)+'" target="_blank" rel="noopener">Britannica ↗</a><a href="'+WEB(nm)+'" target="_blank" rel="noopener">Web ↗</a></span>';
+ function paint(){ const d=box(); const D=R[cur]; if(!D) return; const L=D[tab]||[]; const names=Object.keys(R);
+  const N='© 2026 The Omni-Compass LLC. All rights reserved. Evaluation and simulation use only. Any commercialization or monetization requires a signed, paid Omni-Compass Enterprise License. All patents, copyrights and trademarks filed in the USA. www.omni-compass.com';
+  d.innerHTML='<div class="rxIn"><div class="rxTop"><h2>📖 '+esc(cur)+'</h2><button type="button" data-rx="x" data-noul>✕ Close</button></div>'+
+   '<div class="rxTabs">'+names.map(n=>'<button type="button" data-rx="rel" data-v="'+esc(n)+'" class="'+(n===cur?'on':'')+'" data-noul>'+esc(n)+'</button>').join('')+'</div>'+
+   '<div class="rxTabs">'+TABS.map(([k,l])=>'<button type="button" data-rx="tab" data-v="'+k+'" class="'+(k===tab?'on':'')+'" data-noul>'+l+' ('+((D[k]||[]).length)+')</button>').join('')+'</div>'+
+   '<div class="rxGrid">'+(tab==='s'?(L.map(([n,u])=>'<div class="rxCard"><b>'+esc(n)+'</b><a href="'+esc(u)+'" target="_blank" rel="noopener">Open the site ↗</a></div>').join('')+'<div class="rxCard"><b>Reference</b><span class="rxL"><a href="'+WK(cur)+'" target="_blank" rel="noopener">Wikipedia ↗</a><a href="'+BR(cur)+'" target="_blank" rel="noopener">Britannica ↗</a><a href="https://www.pewresearch.org/religion/" target="_blank" rel="noopener">Pew Research Center ↗</a><a href="'+WEB(cur)+'" target="_blank" rel="noopener">Web ↗</a></span></div>')
+    :L.map(([n,line,art])=>'<div class="rxCard"><b>'+esc(n)+'</b><p>'+esc(line)+'</p>'+links(n,art)+'</div>').join(''))+'</div>'+
+   '<p class="rxNote">Described in neutral words for information; links open outside sites in a new tab, which have their own content and terms. Practice and belief vary widely within every tradition.</p><p class="rxNote">'+N+'</p></div>'; }
+ function open(name){ if(!R[name]) name=Object.keys(R)[0]; cur=name; tab='b'; const d=box(); d.hidden=false; paint(); d.scrollTop=0; }
+ /* an Explore button on each of the ten cards */
+ function mount(){ const box10=$('kFaith10'); if(!box10) return; box10.querySelectorAll('.f10').forEach(c=>{ if(c.querySelector('.rxGo')) return; const t=(c.querySelector('b')||{}).textContent||''; const name=Object.keys(R).find(n=>t.includes(n)); if(!name) return; const b=document.createElement('button'); b.type='button'; b.className='rxGo'; b.setAttribute('data-noul',''); b.textContent='📖 Explore '+name.replace(' and Taoism',''); b.addEventListener('click',e=>{ e.stopPropagation(); open(name); }); c.appendChild(b); }); }
+ setInterval(mount,900);
+ const count=()=>Object.values(R).reduce((a,D)=>a+TABS.reduce((x,[k])=>x+(D[k]||[]).length,0),0);
+ try{ (window.KFINDX=window.KFINDX||[]).push(add=>{ Object.keys(R).forEach(n=>add('Learn','📖','Explore '+n+': branches, texts, holy days, holy places, practices','Religion',()=>open(n))); }); }catch(_){ }
+ window.KRELIGX={open,count,names:()=>Object.keys(R)};
+})();
+
+</script>
+<script>
+(()=>{ /* 🔗 EVERY TOPIC LINKS OUT (v255): every card that names a topic (the Knowledge Library's cards, the religions and traditions, the
+   sports, the markets) carries one row of links to where that topic lives on the web: its Wikipedia article (reached through Wikipedia's
+   own search, so the link always lands), Britannica, and a web search. The app's own words stay first; the links take the reader further. */
+ const enc=encodeURIComponent; const WK=t=>'https://en.wikipedia.org/wiki/Special:Search?go=Go&search='+enc(t), BR=t=>'https://www.britannica.com/search?query='+enc(t), WEB=t=>'https://duckduckgo.com/?q='+enc(t);
+ const SEL='.knCard,.rgCard,.spCard,.mkCard';
+ const css=document.createElement('style'); css.textContent='.ogLearn{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;font:700 12px system-ui,sans-serif;opacity:.95}.ogLearn span{opacity:.75}.ogLearn a{color:#8ff4ff;text-decoration:none;font-weight:800}.ogLearn a:hover{text-decoration:underline}'; document.head.appendChild(css);
+ const clean=t=>String(t||'').replace(/^[\s\d.·:)\-–]+/,'').replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'').replace(/\s*[·(].*$/,'').replace(/\s+/g,' ').trim();
+ let n=0;
+ function add(){ document.querySelectorAll(SEL).forEach(c=>{ if(c.querySelector(':scope > .ogLearn')) return; const t=clean((c.querySelector('b,h3,h4,strong')||{}).textContent); if(!t||t.length<2) return; const d=document.createElement('div'); d.className='ogLearn'; d.innerHTML='<span>🔗 Learn more:</span><a href="'+WK(t)+'" target="_blank" rel="noopener">Wikipedia ↗</a><a href="'+BR(t)+'" target="_blank" rel="noopener">Britannica ↗</a><a href="'+WEB(t)+'" target="_blank" rel="noopener">Web ↗</a>'; c.appendChild(d); n++; }); }
+ /* throttled, never starved: a screen that redraws all the time still gets its links */
+ let due=false; const mo=new MutationObserver(()=>{ if(due) return; due=true; setTimeout(()=>{ due=false; add(); },400); }); mo.observe(document.documentElement,{childList:true,subtree:true});
+ setInterval(add,1500);
+ window.KWEB={add,get count(){ return n; }};
+})();
+
+</script>
