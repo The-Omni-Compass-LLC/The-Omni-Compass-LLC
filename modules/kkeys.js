@@ -21,6 +21,7 @@
   ['KeyN','N','📰 Current News',call('KNEWS','open')],['KeyT','T','📈 Stock Market',call('KMARKET','open')],
   ['KeyX','X','🏟 Sports',call('KSPORTS','open')],['KeyV','V','🧾 Services',call('KSERVICES','open')],
   ['KeyI','I','⚖️ Legal & Safety',call('KLEGAL','open')],
+  ['Digit0','0','🌐 The Doorway: every outside platform',call('KDOOR','open')],['Minus','-','💃 Dance Karaoke',call('KDANCE','open')],
   ['KeyU','U','⬆ Upload a sound or file',()=>tool('up')],['KeyW','W','⬇ Save this page',()=>tool('save')],['KeyJ','J','🌐 Language',()=>tool('lang')]].filter(r=>r[2]);
  const tool=t=>{ const b=document.querySelector('#kToolsPop [data-t="'+t+'"]'); if(b){ b.click(); return true; } say('The tools are still loading.'); return false; };
  /* the page or screen in front, and its tabs */
