@@ -81,10 +81,17 @@
  function front(el){ const pr=el.parentElement; let m=0; document.querySelectorAll('.kFloat.kFOn,.kWin:not([hidden])').forEach(x=>{ if(x!==el&&x.parentElement===pr) m=Math.max(m,zOf(x)); });
   m=Math.max(m,pr===document.body?8700:72); /* never under the studio's own bars (the floating windows' base layer is 70) */ if(el.classList.contains('kWin')) el.style.setProperty('--wz',String(m+1)); else el.style.setProperty('--fz',String(m+1)); }
  document.addEventListener('pointerdown',e=>{ const f=e.target.closest&&e.target.closest('.kFloat.kFOn,.kWin'); if(f) setTimeout(()=>front(f),0); },true);
+ /* v264: a window that is added lands in full view, in the clearest spot: the place that covers the least of the other open windows and the deck */
+ function others(el){ return [...document.querySelectorAll('.kFloat.kFOn:not(.kFOff),.kWin:not([hidden]),#kDeck:not([hidden])')].filter(x=>x!==el&&x.getClientRects().length&&!x.classList.contains('kMin')).map(x=>x.getBoundingClientRect()); }
+ const ovl=(a,b)=>Math.max(0,Math.min(a.x+a.w,b.right)-Math.max(a.x,b.left))*Math.max(0,Math.min(a.y+a.h,b.bottom)-Math.max(a.y,b.top));
+ function setXY(el,x,y){ if(el.classList.contains('kWin')){ el.style.setProperty('--wx',Math.round(x)+'px'); el.style.setProperty('--wy',Math.round(y)+'px'); } else { el.style.setProperty('--fx',Math.round(x)+'px'); el.style.setProperty('--fy',Math.round(y)+'px'); } }
+ function smartPlace(el){ if(!el||!el.getClientRects().length) return; const r=el.getBoundingClientRect(); const Wd=innerWidth-rail()-8, H=innerHeight-6; const w=Math.min(r.width,Wd-4), h=Math.min(r.height,H-6); const O=others(el);
+  const xs=[6,Math.round((Wd-w)/2),Math.max(6,Math.round(Wd-w)),Math.round(Math.max(6,Math.min(r.left,Wd-w)))], ys=[6,Math.max(6,Math.round((H-h)/2)),Math.max(6,Math.round(H-h)),Math.round(Math.max(6,Math.min(r.top,H-h)))];
+  let best=null; xs.forEach(x=>ys.forEach(y=>{ const a={x,y,w,h}; const sc=O.reduce((t,o)=>t+ovl(a,o),0)+Math.abs(x-r.left)*.01; if(!best||sc<best.sc) best={x,y,sc}; })); setXY(el,best.x,best.y); }
  /* where a window lives: inside the studio with the other devices (so they share one stacking order), or over the Karaoke page */
  function home(key){ const el=W[key].el; const p=pin(); const want=(studioOn()||devOver())&&p?p:document.body; if(el.parentElement!==want){ want.appendChild(el); front(el); } }
  function allowed(key){ if(key==='seq') return studioOn(); return studioOn()||karaOn(); }
- function open(key){ const w=W[key]; if(!w) return; build(key); S.open[key]=true; sSave(); home(key); w.el.hidden=!allowed(key); w.el.classList.remove('min'); place(key); front(w.el); if(key==='seq') seqShow(S.seqTab); paint(key); }
+ function open(key){ const w=W[key]; if(!w) return; const was=S.open[key]&&!w.el.hidden; build(key); S.open[key]=true; sSave(); home(key); w.el.hidden=!allowed(key); w.el.classList.remove('min'); place(key); front(w.el); if(key==='seq') seqShow(S.seqTab); paint(key); if(!was) requestAnimationFrame(()=>smartPlace(w.el)); }
  function close(key){ const w=W[key]; if(!w) return; S.open[key]=false; sSave(); w.el.hidden=true; if(key==='seq') putBack(); }
  function fold(key,v){ if(KR[key]){ const el=KR[key](); if(el){ el.classList.toggle('kMin',v); if(!v) front(el); } return; } const w=W[key]; if(!w) return; w.el.classList.toggle('min',v); if(!v) front(w.el); geoSave(key); }
 
@@ -174,18 +181,19 @@
    if(KR[k]){ const el=KR[k](); if(!el) return; el.style.setProperty('--fx',x+'px'); el.style.setProperty('--fy',y+'px'); el.style.setProperty('--fw',w+'px'); el.style.setProperty('--fh',h+'px'); el.style.setProperty('--fmh',h+'px'); el.style.setProperty('height',h+'px','important'); el.style.setProperty('max-height',h+'px','important'); el.dataset.kwTidy='1'; }
    else { const el=W[k].el; el.style.setProperty('--wx',x+'px'); el.style.setProperty('--wy',y+'px'); el.style.setProperty('--ww',w+'px'); el.style.setProperty('--wh',h+'px'); geoSave(k); } });
   say('⤢ '+n+' window'+(n>1?'s':'')+' side by side. Drag any title bar to move it; ▁ folds it.'); }
- function rowHTML(cx){ const L=[['pads','🥁','Pads'],['keys','🎹','Keys'],['dj','🎧','DJ'],['kara','🎤','Karaoke'],['seq','🎼','Sequencer']];
-  return L.map(([k,i,n])=>{ const st=state(k); return '<button type="button" data-w="'+k+'" class="kdW '+(st==='open'?'on':st==='folded'?'fold':'')+'" aria-pressed="'+(st!=='closed')+'" title="'+n+': '+(st==='closed'?'open it':st==='open'?'fold it to its tab':'bring it back')+'">'+i+' '+n+(st==='folded'?' ▴':'')+'</button>'; }).join('')+
+ function rowHTML(cx){ const L=[['pads','🥁','Pads'],['keys','🎹','Keys'],['dj','🎧','DJ'],['kara','🎤','Karaoke'],['seq','🎼','Sequencer']]; const none=L.every(([k])=>state(k)==='closed');
+  return '<span class="kdAdd" title="The studio starts clear, at the factory setting: add one, two, three devices or all of them">'+(none?'＋ Add equipment':'🪟 Windows')+'</span>'+L.map(([k,i,n])=>{ const st=state(k); return '<button type="button" data-w="'+k+'" class="kdW '+(st==='open'?'on':st==='folded'?'fold':'')+'" aria-pressed="'+(st!=='closed')+'" title="'+n+': '+(st==='closed'?'add it (it opens in full view; drag its title bar anywhere)':st==='open'?'fold it to its tab':'bring it back')+'">'+i+' '+n+(st==='folded'?' ▴':'')+'</button>'; }).join('')+
    '<button type="button" data-w="console" title="The mixing board underneath">🎚 Console</button><button type="button" data-w="tidy" title="Lay every open window side by side">⤢ Tidy</button><button type="button" data-w="foldall" title="Fold every window to its tab, or bring them all back">▁ Fold all</button>'; }
  const sig=()=>['pads','keys','dj','kara','seq'].map(state).join(',');
 
  /* ================= keep everything in step ================= */
- let djWas=false;
+ let djWas=false; const krWas={};
  setInterval(()=>{ ['kara','seq'].forEach(k=>{ const w=W[k]; if(!S.open[k]){ if(!w.el.hidden) w.el.hidden=true; return; } home(k); const ok=allowed(k); if(ok){ if(k==='kara'&&w.sig!==karaOn()) build('kara'); if(k==='seq'&&w.built) pull(); } w.el.hidden=!ok; if(!ok&&k==='seq') putBack(); });
   Object.keys(KR).forEach(k=>{ const el=KR[k](); if(el&&el.dataset.kwTidy&&!(F()&&F().isOpen(k))){ el.style.removeProperty('height'); el.style.removeProperty('max-height'); delete el.dataset.kwTidy; } });
+  Object.keys(KR).forEach(k=>{ const o=!!(F()&&F().isOpen(k)); if(o&&!krWas[k]){ const el=KR[k](); setTimeout(()=>smartPlace(el),700); } krWas[k]=o; });
   paintHeads(); linkStrips(); karaLcd();
   const dj=$('djSec'); const djOn=!!(dj&&F()&&F().isOpen('dj')); if(djOn&&!djWas&&innerWidth>=1100){ const r=dj.getBoundingClientRect(); if(r.width<=780){ const w=Math.min(1120,innerWidth-rail()-24); dj.style.setProperty('--fw',w+'px'); dj.style.setProperty('--fx',Math.max(8,Math.min(r.left,innerWidth-rail()-w-8))+'px'); } } djWas=djOn;
   if(dj) dj.classList.toggle('kdjWide',djOn&&dj.getBoundingClientRect().width>=820); },500);
  function paint(){ }
- window.KWIN={open,close,fold,tab,state,rowHTML,sig,tidy,foldAll,grpSet,grpState,GROUPS,LINK,get wins(){ return W; },seqShow,openAny};
+ window.KWIN={smartPlace,open,close,fold,tab,state,rowHTML,sig,tidy,foldAll,grpSet,grpState,GROUPS,LINK,get wins(){ return W; },seqShow,openAny};
 })();

@@ -231,6 +231,7 @@
 #kDeck .kdT .kdBpm button{min-width:36px;font-size:15px;padding:0 6px}
 #kDeck .kdWins{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 0;padding-top:6px;border-top:1px dashed #2c3470}
 #kDeck .kdWins button{min-height:36px;font-size:12.5px;padding:0 9px}
+#kDeck .kdWins .kdAdd{display:inline-flex;align-items:center;padding:0 6px;font:900 11.5px ui-monospace,monospace;letter-spacing:.06em;color:#ffe94a;text-transform:uppercase}
 #kDeck .kdWins button.fold{background:#2a2350;border-style:dashed;color:#ffe94a}
 #kDeck .kdTabs{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 6px}
 #kDeck .kdTabs button{min-height:34px;font-size:12.5px;padding:0 9px;border-radius:999px}
@@ -395,7 +396,13 @@
  const TKEYS={KeyH:'rew',KeyJ:'play',KeyK:'stop',KeyL:'rec',Semicolon:'undo'};
  const typing=t=>t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable);
  const heldK=new Map();
- addEventListener('keydown',e=>{ if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||typing(e.target)) return; const c=CX; if(c!=='kara'&&c!=='dj') return; const code=e.code||'';
+ addEventListener('keydown',e=>{ if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||typing(e.target)) return; const c=CX; const code=e.code||'';
+  /* 🎛 the studio starts with no device windows: the first pad key brings the pads up and plays, the first piano key brings the keyboard up */
+  if(c==='studio'){ if(e.repeat) return; const p=PADC.indexOf(code); let djp=false; try{ djp=KWIRE.mode!=='beat'; }catch(_){ }
+   if(p>=0&&!isOpen('pads')&&!djp){ e.preventDefault(); e.stopImmediatePropagation(); try{ KRAIL.FLOAT.open('pads'); }catch(_){ } say('🥁 The pads are added: your left hand plays them (1 2 3 4 · Q W E R · A S D F · Z X C V).'); setTimeout(()=>{ try{ const bank=Math.max(0,Math.min(3,+(($('padBank')||{}).value)||0)); PADSTUDIO.hitPad(bank*16+p); }catch(_){ } },300); return; }
+   if((code in PIANOC)&&!isOpen('keys')&&!heldK.has(code)){ e.preventDefault(); e.stopImmediatePropagation(); const n=PIANOC[code]; heldK.set(code,n); try{ KRAIL.FLOAT.open('keys'); }catch(_){ } say('🎹 The keyboard is added: your right hand plays it.'); setTimeout(()=>{ try{ KEYS.down(n); }catch(_){ } },300); return; }
+   return; }
+  if(c!=='kara'&&c!=='dj') return;
   const over=document.body.classList.contains('kDevOver')||($('pad')&&$('pad').classList.contains('on'));
   /* the transport keys drive this screen's own transport when no device window owns them */
   if(TKEYS[code]&&!(isOpen('pads')||isOpen('keys'))){ if(e.repeat) return; const a=TKEYS[code]; const map=c==='kara'?{rew:'krew',play:'kplay',stop:'kstop',rec:'krec',undo:'kundo'}:{rew:'acue',play:'aplay',stop:'aplay',rec:'djrec',undo:'undo'};
