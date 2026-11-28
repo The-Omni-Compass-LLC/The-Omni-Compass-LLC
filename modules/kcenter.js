@@ -1,4 +1,4 @@
-(()=>{ /* THE LANDING PAGE, CENTERED: the KAN-IN cannon logo, the DD Universe logo, every line of text and every row of chips sit in the
+(()=>{ /* THE LANDING PAGE, CENTERED: the KAN-IN cannon logo, the Omni-Galaxy logo, every line of text and every row of chips sit in the
    middle of the screen on a phone, a tablet and a desktop. The page keeps the same space on its left as it does beside the rail. */
  const css=document.createElement('style'); css.textContent=`
 html body{margin:0!important;padding-left:max(16px,env(safe-area-inset-left,0px))!important;padding-right:calc(var(--kRailW,58px) + 16px)!important}
