@@ -71,10 +71,10 @@
  const TABS=[['b','🌳 Branches and schools'],['t','📜 Sacred texts'],['d','🗓 Holy days'],['p','🕌 Holy places'],['r','🙏 Practices'],['s','🔗 Official and reference']];
  let cur=null, tab='b';
  const css=document.createElement('style'); css.textContent=`
-#kReligX{position:fixed;inset:0;right:var(--kRailW,58px);z-index:8700;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3a2a10,#0b0704 70%);color:#fff6e3;font:15px/1.55 system-ui,sans-serif;padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 40px}
+#kReligX{position:fixed;inset:0;right:var(--kRailW,58px);z-index:9600;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3a2a10,#0b0704 70%);color:#fff6e3;font:15px/1.55 system-ui,sans-serif;padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-left,0px)) 40px}
 #kReligX[hidden]{display:none!important}
 #kReligX .rxIn{max-width:1100px;margin:0 auto}
-#kReligX .rxTop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#kReligX .rxTop{padding-right:min(300px,34vw);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 #kReligX h2{margin:0;font:900 clamp(22px,4vw,32px)/1.1 system-ui,sans-serif;color:#ffd678}
 #kReligX button{min-height:44px;padding:0 14px;border-radius:4px 12px 4px 12px;font:800 14px system-ui,sans-serif}
 #kReligX .rxTabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
