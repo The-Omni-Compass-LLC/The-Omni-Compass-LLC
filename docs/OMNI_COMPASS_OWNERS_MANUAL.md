@@ -789,6 +789,9 @@ installed is a quarter off the bill.
 | Benchmark | Engine | Its one number | Its word | Class |
 |---|---|---:|---|---|
 | Every real test together: the Omni index | omni-v26 | 20.0% | GAIN AND LOSS | L |
+| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
+| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
+| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 | Robustness: the two-hour run | omni-v26 | 6.0% | GAIN AND LOSS | L |
 | Robustness: the governor killed outright mid-run | omni-v26 | 1.7% | GAIN AND LOSS | L |
 | Robot arms (MuJoCo), the three untouched robots | omni-v26 | 3.8% | GAIN | S |
@@ -808,12 +811,9 @@ installed is a quarter off the bill.
 | PostgreSQL, the pooler's pool size | omni-v26 | 1.8% | GAIN AND LOSS | L |
 | MySQL, the buffer pool's size | omni-v26 | 12.5% | GAIN, power given | L |
 | MongoDB, the storage engine's cache size | omni-v26 | 7.1% | GAIN AND LOSS | L |
+| Kafka, the consumer group's size | omni-v26 | 221.1% | GAIN, power given | L |
 | Drone swarms, the three untouched cells | omni-v26 | 2.2% | GAIN | S |
 | Buildings and batteries (CityLearn), the districts with batteries | omni-v26 | 1.4% | GAIN | S |
-| Kafka, the consumer group's size | omni-v26 | 221.1% | GAIN, power given | L |
-| The six organisms with the real cluster inside, 10 and 100 copies | omni-v3 | 5.3% | GAIN, power given | L, the cluster; S, the organism around it |
-| The big organisms with the real cluster inside, 1,000 copies on Azure | omni-v3 | 155.0% | GAIN | L, the cluster; S, the organism around it |
-| The 945 modelled muscles as one tower, every muscle written at once | omni-v3 | 0.3% | GAIN | S |
 
 Run and scored by Dubra Software Inc. / The Omni-Compass LLC's own code. No outside party has reviewed or approved these results. Preregistered means the rules were written down in our own repository before the runs; nothing was filed with any outside body.
 

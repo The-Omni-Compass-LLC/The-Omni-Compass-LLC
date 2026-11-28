@@ -48,7 +48,8 @@ KEEP_WORDS_OF_THEIR_DAY = (re.compile(r"^docs/history/"), re.compile(r"_20\d\d-?
                            re.compile(r"(^|/)CHANGELOG\.md$"), re.compile(r"PREREGISTRATION"), re.compile(r"^results/[^/]+/"),
                            re.compile(r"^(CLAUDE|AGENTS|GEMINI)\.md$"), re.compile(r"^docs/WEBSITE_CLAIMS\.md$"),
                            re.compile(r"^\.github/"), re.compile(r"^docs/omni_v5/"), re.compile(r"^docs/handoff/"),
-                           re.compile(r"CONSENSUS_AUDIT"), re.compile(r"^docs/DEVIATIONS\.md$"))
+                           re.compile(r"CONSENSUS_AUDIT"), re.compile(r"^docs/DEVIATIONS\.md$"),
+                           re.compile(r"^docs/map/"))   # the map quotes every file's own name and title as the file has it
 
 WORD = r"(?:GAIN|LOSS|STEADY|power given)"
 NUM = r"[+\-−]\d+(?:\.\d+)?\s?%"

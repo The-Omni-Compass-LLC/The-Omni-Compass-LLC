@@ -7,8 +7,8 @@ and every report point here. Where any other page seems to say more than this pa
 
 ## 1. Rights
 
-1. Omni-Compass, its engine, its mathematics, its software and its documentation are the property of Dubra Software
-   Inc. / The Omni-Compass LLC and their entities (every entity that controls, is controlled by, or is under common
+1. Omni-Compass, its engine, its mathematics, its software and its documentation are the property of
+   Dubra Software Inc. / The Omni-Compass LLC and their entities (every entity that controls, is controlled by, or is under common
    control with either of them; `LICENSE`, 1.1). Every file is mapped to its owner by its map ID (`docs/map/README.md`).
    All patents, copyrights and trademarks covering them have been filed in the
    United States by Dubra Software Inc. / The Omni-Compass LLC. No filing number is stated here, and no grant, registration or approval is

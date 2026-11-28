@@ -23,8 +23,8 @@ firmware; using it or its results to build or train a competing product (`LICENS
 License is a written agreement signed by Dubra Software Inc. / The Omni-Compass LLC and paid for; its standard terms are summarized in
 `ENTERPRISE_LICENSE.md` (production, hosted service, OEM and embedded, managed service provider, research).
 
-**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with Dubra Software Inc. /
-The Omni-Compass LLC and paid before the pilot's first day (`LICENSE`, section 5.4; the pilot's steps are
+**May I run a pilot on my own production systems first?** Yes, under a pilot agreement signed with
+Dubra Software Inc. / The Omni-Compass LLC and paid before the pilot's first day (`LICENSE`, section 5.4; the pilot's steps are
 `docs/PILOT_PROTOCOL.md`). A pilot agreement permits only the systems, the dates and the uses it names. It is not an
 Enterprise License: every other production use, commercialization or monetization still needs one.
 

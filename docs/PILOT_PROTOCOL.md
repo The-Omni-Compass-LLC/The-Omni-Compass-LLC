@@ -16,8 +16,8 @@ receipts and the service gauges, read by the one key.
 - The evaluation license covers evaluation and simulation: test and staging systems, the models and `verify.py`.
 - Governing live, customer-facing traffic is production use, and production use needs the signed, paid Omni-Compass
   Enterprise License first.
-- A pilot on a production system, the read-only shadow included, runs only under a pilot agreement signed with Dubra
-  Software Inc. / The Omni-Compass LLC and paid before day one (`LICENSE`, 5.4). The agreement names the systems, the
+- A pilot on a production system, the read-only shadow included, runs only under a pilot agreement signed with
+  Dubra Software Inc. / The Omni-Compass LLC and paid before day one (`LICENSE`, 5.4). The agreement names the systems, the
   dates, the rules on this page and who receives the readings, and permits nothing it does not name.
 
 ## What runs, and what does not
